@@ -14,7 +14,7 @@ console.log(s)
 
 sayHelloWorld()
 
-export const a: number = 111
+export const a: number = 1112233445566
 
 // export class AAA {
 //   eat() {

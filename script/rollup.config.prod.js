@@ -24,7 +24,7 @@ module.exports = defineConfig([
         format: 'cjs'
       },
       {
-        file: './dist/player.min.cjs.js',
+        file: './dist/player.cjs.min.js',
         format: 'cjs',
         plugins: [terser()]
       },
@@ -33,7 +33,7 @@ module.exports = defineConfig([
         format: 'es'
       },
       {
-        file: './dist/player.min.es.js',
+        file: './dist/player.es.min.js',
         format: 'es',
         plugins: [terser()]
       },
@@ -43,7 +43,7 @@ module.exports = defineConfig([
         name: 'Player'
       },
       {
-        file: './dist/player.min.umd.js',
+        file: './dist/player.umd.min.js',
         format: 'umd',
         name: 'Player',
         plugins: [terser()]
@@ -54,6 +54,7 @@ module.exports = defineConfig([
       nodeResolve({
         browser: true
       }),
+      commonjs(),
       babel({
         // 编译库使用
         babelHelpers: 'runtime',
@@ -62,7 +63,6 @@ module.exports = defineConfig([
         // babel 默认不支持 ts 需要手动添加
         extensions: [...DEFAULT_EXTENSIONS, '.ts']
       }),
-      commonjs(),
       json(),
       builtins(),
       globals(),
@@ -75,9 +75,7 @@ module.exports = defineConfig([
         ]
       }),
       postcss({
-        plugins:[
-          autoprefixer()
-        ]
+        plugins: [autoprefixer()]
       })
     ]
   }

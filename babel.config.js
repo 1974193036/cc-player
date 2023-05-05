@@ -12,12 +12,12 @@ module.exports = {
     [
       // 与 babelHelpers: 'runtime' 配合使用
       '@babel/plugin-transform-runtime',
-      // {
-      //   corejs: {
-      //     version: 3,
-      //     proposals: true
-      //   }
-      // }
+      {
+        corejs: {
+          version: 3,
+          proposals: true
+        }
+      }
     ]
   ]
 }

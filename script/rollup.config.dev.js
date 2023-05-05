@@ -11,8 +11,6 @@ const livereload = require('rollup-plugin-livereload')
 const path = require('path')
 const alias = require('@rollup/plugin-alias')
 
-const extensions = ['.ts', '.less']
-
 module.exports = defineConfig([
   {
     input: './src/index.ts',
@@ -27,8 +25,9 @@ module.exports = defineConfig([
     plugins: [
       ts(),
       nodeResolve({
-        extensions
+        browser: true
       }),
+      commonjs(),
       babel({
         // 编译库使用
         babelHelpers: 'runtime',
@@ -37,7 +36,6 @@ module.exports = defineConfig([
         // babel 默认不支持 ts 需要手动添加
         extensions: [...DEFAULT_EXTENSIONS, '.ts']
       }),
-      commonjs(),
       postcss({
         plugins: [autoprefixer()]
       }),
