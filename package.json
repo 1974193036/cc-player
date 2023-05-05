@@ -1,0 +1,45 @@
+{
+  "name": "niplayer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/player.umd.js",
+  "module": "./dist/player.es.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean:dist": "rimraf dist",
+    "dev": "rollup -c script/rollup.config.dev.js --watch",
+    "build": "rollup -c script/rollup.config.prod.js",
+    "build:tsc": "tsc",
+    "build:dts": "dts-bundle-generator -o ./dist/index.d.ts ./src/index.ts --project tsconfig.json  --no-check"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/plugin-transform-runtime": "^7.21.4",
+    "@babel/preset-env": "^7.21.5",
+    "@rollup/plugin-alias": "^5.0.0",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.1",
+    "@types/babel__core": "^7.20.0",
+    "autoprefixer": "^10.4.14",
+    "core-js": "^3.30.1",
+    "dts-bundle-generator": "^8.0.1",
+    "rimraf": "^5.0.0",
+    "rollup": "^3.21.5",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-serve": "^2.0.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "typescript": "^4.9.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
