@@ -48,7 +48,9 @@ module.exports = defineConfig([
         ]
       }),
       // 热更新 默认监听根文件夹
-      livereload(),
+      livereload({
+        watch: 'dist'
+      }),
       // 本地服务器
       serve({
         open: true, // 自动打开页面

@@ -1,23 +1,10 @@
-import { sayHelloWorld } from '@/test'
-
-const arr = [1, 2, 3]
-
-console.log(arr.includes(2))
-
-const fn = (a: string, b: string): string => {
-  return a + b
-}
-
-var s = fn('hello', 'world')
-console.log(s)
-
-
-sayHelloWorld()
-
-export const a: number = 1112233445566
-
-// export class AAA {
-//   eat() {
-//     alert('eat')
-//   }
-// }
+export * from './types/PlayerOptions'
+export * from './utils/warn'
+export * from './styles/icon'
+export * from './styles/style'
+export * from './components/Player/player'
+export * from './components/Toolbar/toolbar'
+export * from './components/Progress/progress'
+export * from './components/Controller/controller'
+export * from './components/LoadingMask/loadingMask'
+export * from './components/ErrorMask/errorMask'

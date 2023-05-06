@@ -12,6 +12,14 @@
     <div class="video"></div>
     <script>
       console.log(Player)
+      window.onload = function() {
+        let player = new Player.Player({
+          url: './video.mp4',
+          container: document.getElementsByClassName('video')[0],
+          width: '600px',
+          height: '400px'
+        })
+      }
     </script>
 </body>
 </html>
