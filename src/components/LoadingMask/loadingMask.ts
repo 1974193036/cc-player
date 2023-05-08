@@ -3,8 +3,10 @@ import './LoadingMask.less'
 
 export class LoadingMask {
   private _template: HTMLElement | string
+  private container: HTMLElement
 
-  constructor() {
+  constructor(container: HTMLElement) {
+    this.container = container
     this.init()
   }
 
@@ -13,6 +15,10 @@ export class LoadingMask {
   }
 
   init() {
+    this._template = this.generateLoadingMask()
+  }
+
+  generateLoadingMask() {
     let mask = document.createElement('div') as HTMLElement
     mask.className = styles['loading-mask']
     let loadingContainer = document.createElement('div') as HTMLElement
@@ -25,6 +31,18 @@ export class LoadingMask {
     loadingContainer.appendChild(loadingItem)
     loadingContainer.appendChild(loadingTitle)
     mask.appendChild(loadingContainer)
-    this._template = mask
+    return mask
+  }
+
+  addLoadingMask() {
+    if (![...this.container.children].includes(this._template as HTMLElement)) {
+      this.container.appendChild(this.template as HTMLElement)
+    }
+  }
+
+  removeLoadingMask() {
+    if ([...this.container.children].includes(this._template as HTMLElement)) {
+      this.container.removeChild(this.template as HTMLElement)
+    }
   }
 }

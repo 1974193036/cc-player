@@ -3,10 +3,10 @@ import { styles } from '@/styles/style'
 import { $warn } from '@/utils/warn'
 import { PlayerOptions } from '@/types/PlayerOptions'
 import { Toolbar } from '@/components/Toolbar/toolbar'
-
+import { BaseEvent } from '@/class/BaseEvent'
 import './player.less'
 
-export class Player {
+export class Player extends BaseEvent {
   private playerOptions = {
     url: '',
     width: '100%',
@@ -16,12 +16,16 @@ export class Player {
 
   private container: HTMLElement
   private toolbar: Toolbar
+  private video: HTMLVideoElement
 
   constructor(options: PlayerOptions) {
+    super()
     this.playerOptions = Object.assign(this.playerOptions, options)
     this.init()
     this.initComponent()
     this.initContainer()
+    // 初始化播放器事件
+    this.initEvent()
   }
 
   init() {
@@ -37,7 +41,7 @@ export class Player {
 
   initComponent() {
     // 初始化视频播放器的工具栏组件
-    this.toolbar = new Toolbar()
+    this.toolbar = new Toolbar(this.container)
   }
 
   initContainer() {
@@ -53,6 +57,30 @@ export class Player {
       </div>
     `
     this.container.appendChild(this.toolbar.template)
+    this.video = this.container.querySelector('video')
+  }
+
+  initEvent() {
+    this.container.onclick = (e: Event) => {
+      if (e.target === this.video) {
+        if (this.video.paused) {
+          this.video.play()
+        } else if (this.video.played) {
+          this.video.pause()
+        }
+      }
+    }
+    this.video.onplay = (e: Event) => {
+      // console.log('onplay')
+      this.toolbar.emit('play')
+    }
+    this.video.onpause = (e: Event) => {
+      // console.log('onpause')
+      this.toolbar.emit('pause')
+    }
+    this.video.onwaiting = (e: Event) => {
+      console.log('onwaiting')
+    }
   }
 
   isTagValidate(el: HTMLElement): boolean {
