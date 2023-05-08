@@ -3,6 +3,8 @@ import { styles } from '@/styles/style'
 import { $warn } from '@/utils/warn'
 import { PlayerOptions } from '@/types/PlayerOptions'
 import { Toolbar } from '@/components/Toolbar/toolbar'
+import { LoadingMask } from '@/components/LoadingMask/loadingMask'
+import { ErrorMask } from '@/components/ErrorMask/errorMask'
 import { BaseEvent } from '@/class/BaseEvent'
 import './player.less'
 
@@ -17,6 +19,8 @@ export class Player extends BaseEvent {
   private container: HTMLElement
   private toolbar: Toolbar
   private video: HTMLVideoElement
+  private loadingMask: LoadingMask
+  private errorMask: ErrorMask
 
   constructor(options: PlayerOptions) {
     super()
@@ -42,6 +46,9 @@ export class Player extends BaseEvent {
   initComponent() {
     // 初始化视频播放器的工具栏组件
     this.toolbar = new Toolbar(this.container)
+
+    this.loadingMask = new LoadingMask(this.container)
+    this.errorMask = new ErrorMask(this.container)
   }
 
   initContainer() {
@@ -58,6 +65,7 @@ export class Player extends BaseEvent {
     `
     this.container.appendChild(this.toolbar.template)
     this.video = this.container.querySelector('video')
+    this.toolbar.emit('mounted')
   }
 
   initEvent() {
@@ -70,17 +78,67 @@ export class Player extends BaseEvent {
         }
       }
     }
-    this.video.onplay = (e: Event) => {
-      // console.log('onplay')
+
+    this.container.addEventListener('mouseenter', (e: MouseEvent) => {
+      this.toolbar.emit('showtoolbar', e)
+    })
+
+    this.container.addEventListener('mousemove', (e: MouseEvent) => {
+      this.toolbar.emit('showtoolbar', e)
+    })
+
+    this.container.addEventListener('mouseleave', (e: MouseEvent) => {
+      this.toolbar.emit('hidetoolbar', e)
+    })
+
+    this.video.addEventListener('loadedmetadata', (e: Event) => {
+      console.log('元数据加载完毕', this.video.duration)
+      this.toolbar.emit('loadedmetadata', this.video.duration)
+    })
+
+    // 视频播放状态时，返回视频当前的播放时间
+    // 视频暂停，则不会触发这个回调
+    this.video.addEventListener('timeupdate', (e: Event) => {
+      // console.log('currentTime', this.video.currentTime)
+      this.toolbar.emit('timeupdate', this.video.currentTime)
+    })
+
+    // 当视频可以再次播放的时候就移除loading和error的mask，通常是为了应对在播放的过程中出现需要缓冲或者播放错误这种情况从而需要展示对应的mask
+    this.video.addEventListener('play', (e: Event) => {
+      this.loadingMask.removeLoadingMask()
+      this.errorMask.removeErrorMask()
       this.toolbar.emit('play')
-    }
-    this.video.onpause = (e: Event) => {
-      // console.log('onpause')
+    })
+
+    this.video.addEventListener('pause', (e: Event) => {
       this.toolbar.emit('pause')
-    }
-    this.video.onwaiting = (e: Event) => {
-      console.log('onwaiting')
-    }
+    })
+
+    this.video.addEventListener('waiting', (e: Event) => {
+      this.loadingMask.removeLoadingMask()
+      this.errorMask.removeErrorMask()
+      this.loadingMask.addLoadingMask()
+    })
+
+    // 当浏览器请求视频发生错误的时候
+    this.video.addEventListener('stalled', (e) => {
+      console.log('视频加载发生错误')
+      this.loadingMask.removeLoadingMask()
+      this.errorMask.removeErrorMask()
+      this.errorMask.addErrorMask()
+    })
+
+    this.video.addEventListener('error', (e) => {
+      this.loadingMask.removeLoadingMask()
+      this.errorMask.removeErrorMask()
+      this.errorMask.addErrorMask()
+    })
+
+    this.video.addEventListener('abort', (e: Event) => {
+      this.loadingMask.removeLoadingMask()
+      this.errorMask.removeErrorMask()
+      this.errorMask.addErrorMask()
+    })
   }
 
   isTagValidate(el: HTMLElement): boolean {

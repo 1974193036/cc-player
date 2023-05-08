@@ -6,7 +6,8 @@ export const styles = {
 
   // 'video-controls': 'toolbar_video-controls__z6g6I',
   'video-controls': 'video-controls',
-  'video-controls-hidden': '',
+  // 'video-controls-hidden': 'toolbar_video-controls-hidden__Fyvfe',
+  'video-controls-hidden': 'video-controls-hidden',
 
   // 'video-progress': 'progress_video-progress__QjWkP',
   'video-progress': 'video-progress',

@@ -1,6 +1,7 @@
 import { styles } from '@/styles/style'
 import { icon } from '@/styles/icon'
 import { BaseEvent } from '@/class/BaseEvent'
+import { formatTime } from '@/utils/format'
 import './controller.less'
 
 export class Controller extends BaseEvent {
@@ -49,24 +50,29 @@ export class Controller extends BaseEvent {
         </div>
       </div>
     `
-    this.videoPlayBtn = this.container.querySelector(`.${styles['video-start-pause']} i`)
-    this.currentTime = this.container.querySelector(`.${styles['video-duration-completed']}`)
-    this.summaryTime = this.container.querySelector(`.${styles['video-duration-all']}`)
   }
 
   initEvent() {
     this.on('play', () => {
-      if (!this.videoPlayBtn) {
-        this.videoPlayBtn = this.container.querySelector(`.${styles['video-start-pause']} i`)
-      }
       this.videoPlayBtn.className = `${icon['iconfont']} ${icon['icon-zanting']}`
     })
 
     this.on('pause', () => {
-      if (!this.videoPlayBtn) {
-        this.videoPlayBtn = this.container.querySelector(`.${styles['video-start-pause']} i`)
-      }
       this.videoPlayBtn.className = `${icon['iconfont']} ${icon['icon-bofang']}`
+    })
+
+    this.on('loadedmetadata', (summary: number) => {
+      this.summaryTime.innerHTML = formatTime(summary)
+    })
+
+    this.on('timeupdate', (currentTime: number) => {
+      this.currentTime.innerHTML = formatTime(currentTime)
+    })
+
+    this.on('mounted', () => {
+      this.videoPlayBtn = this.container.querySelector(`.${styles['video-start-pause']} i`)
+      this.currentTime = this.container.querySelector(`.${styles['video-duration-completed']}`)
+      this.summaryTime = this.container.querySelector(`.${styles['video-duration-all']}`)
     })
   }
 }

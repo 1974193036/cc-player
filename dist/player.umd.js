@@ -1,3 +1,5 @@
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -2916,6 +2918,9 @@
     return addZero(minute) + ':' + addZero(second);
   }
 
+  var LOADING_MASK_MAP = new Array();
+  var ERROR_MASK_MAP = new Array();
+
   var icon = {
     iconfont: 'iconfont',
     'icon-bofang': 'icon-bofang',
@@ -2933,7 +2938,8 @@
     'video-wrapper': 'video-wrapper',
     // 'video-controls': 'toolbar_video-controls__z6g6I',
     'video-controls': 'video-controls',
-    'video-controls-hidden': '',
+    // 'video-controls-hidden': 'toolbar_video-controls-hidden__Fyvfe',
+    'video-controls-hidden': 'video-controls-hidden',
     // 'video-progress': 'progress_video-progress__QjWkP',
     'video-progress': 'video-progress',
     // 'video-pretime': 'progress_video-pretime__JInJt',
@@ -3477,9 +3483,6 @@
       value: function init() {
         var _context, _context2, _context3, _context4, _context5, _context6, _context7, _context8, _context9, _context10, _context11, _context12, _context13, _context14, _context15, _context16, _context17, _context18, _context19, _context20;
         this._template = _concatInstanceProperty(_context = _concatInstanceProperty(_context2 = _concatInstanceProperty(_context3 = _concatInstanceProperty(_context4 = _concatInstanceProperty(_context5 = _concatInstanceProperty(_context6 = _concatInstanceProperty(_context7 = _concatInstanceProperty(_context8 = _concatInstanceProperty(_context9 = _concatInstanceProperty(_context10 = _concatInstanceProperty(_context11 = _concatInstanceProperty(_context12 = _concatInstanceProperty(_context13 = _concatInstanceProperty(_context14 = _concatInstanceProperty(_context15 = _concatInstanceProperty(_context16 = _concatInstanceProperty(_context17 = _concatInstanceProperty(_context18 = _concatInstanceProperty(_context19 = _concatInstanceProperty(_context20 = "\n      <div class=\"".concat(styles['video-play'], "\">\n        <div class=\"")).call(_context20, styles['video-subplay'], "\">\n            <div class=\"")).call(_context19, styles['video-start-pause'], "\">\n              <i class=\"")).call(_context18, icon['iconfont'], " ")).call(_context17, icon['icon-bofang'], "\"></i>\n            </div>\n            <div class=\"")).call(_context16, styles['video-duration'], "\">\n              <span class=\"")).call(_context15, styles['video-duration-completed'], "\">00:00</span>&nbsp;/&nbsp;<span class=\"")).call(_context14, styles['video-duration-all'], "\">00:00</span>\n            </div>\n        </div>\n        <div class=\"")).call(_context13, styles['video-settings'], "\">\n          <div class=\"")).call(_context12, styles['video-subsettings'], "\">\n            <i class=\"")).call(_context11, icon['iconfont'], " ")).call(_context10, icon['icon-shezhi'], "\"></i>\n          </div>\n          <div class=\"")).call(_context9, styles['video-volume'], "\">\n            <i class=\"")).call(_context8, icon['iconfont'], " ")).call(_context7, icon['icon-yinliang'], "\"></i>\n            <div class=\"")).call(_context6, styles['video-volume-progress'], "\">\n              <div class=\"")).call(_context5, styles['video-volume-completed'], "\"></div>\n              <div class=\"")).call(_context4, styles['video-volume-dot'], "\"></div>\n            </div>\n          </div>\n          <div class=\"")).call(_context3, styles['video-fullscreen'], "\">\n            <i class=\"")).call(_context2, icon['iconfont'], " ")).call(_context, icon['icon-quanping'], "\"></i>\n          </div>\n        </div>\n      </div>\n    ");
-        this.videoPlayBtn = this.container.querySelector(".".concat(styles['video-start-pause'], " i"));
-        this.currentTime = this.container.querySelector(".".concat(styles['video-duration-completed']));
-        this.summaryTime = this.container.querySelector(".".concat(styles['video-duration-all']));
       }
     }, {
       key: "initEvent",
@@ -3487,17 +3490,22 @@
         var _this2 = this;
         this.on('play', function () {
           var _context21;
-          if (!_this2.videoPlayBtn) {
-            _this2.videoPlayBtn = _this2.container.querySelector(".".concat(styles['video-start-pause'], " i"));
-          }
           _this2.videoPlayBtn.className = _concatInstanceProperty(_context21 = "".concat(icon['iconfont'], " ")).call(_context21, icon['icon-zanting']);
         });
         this.on('pause', function () {
           var _context22;
-          if (!_this2.videoPlayBtn) {
-            _this2.videoPlayBtn = _this2.container.querySelector(".".concat(styles['video-start-pause'], " i"));
-          }
           _this2.videoPlayBtn.className = _concatInstanceProperty(_context22 = "".concat(icon['iconfont'], " ")).call(_context22, icon['icon-bofang']);
+        });
+        this.on('loadedmetadata', function (summary) {
+          _this2.summaryTime.innerHTML = formatTime(summary);
+        });
+        this.on('timeupdate', function (currentTime) {
+          _this2.currentTime.innerHTML = formatTime(currentTime);
+        });
+        this.on('mounted', function () {
+          _this2.videoPlayBtn = _this2.container.querySelector(".".concat(styles['video-start-pause'], " i"));
+          _this2.currentTime = _this2.container.querySelector(".".concat(styles['video-duration-completed']));
+          _this2.summaryTime = _this2.container.querySelector(".".concat(styles['video-duration-all']));
         });
       }
     }]);
@@ -3520,6 +3528,8 @@
       _defineProperty(_assertThisInitialized(_this), "progress", void 0);
       _defineProperty(_assertThisInitialized(_this), "controller", void 0);
       _defineProperty(_assertThisInitialized(_this), "container", void 0);
+      _defineProperty(_assertThisInitialized(_this), "timer", void 0);
+      _defineProperty(_assertThisInitialized(_this), "video", void 0);
       _this.container = container;
       _this.init();
       _this.initComponent();
@@ -3552,115 +3562,57 @@
         this._template = div;
       }
     }, {
+      key: "showToolBar",
+      value: function showToolBar(e) {
+        var _this2 = this;
+        this.container.querySelector(".".concat(styles['video-controls'])).className = styles['video-controls'];
+        if (e.target !== this.video) ; else {
+          this.timer = window.setTimeout(function () {
+            _this2.hideToolbar();
+          }, 3000);
+        }
+      }
+    }, {
+      key: "hideToolbar",
+      value: function hideToolbar() {
+        var _context2;
+        this.container.querySelector(".".concat(styles['video-controls'])).className = _concatInstanceProperty(_context2 = "".concat(styles['video-controls'], " ")).call(_context2, styles['video-controls-hidden']);
+      }
+    }, {
       key: "initEvent",
       value: function initEvent() {
-        var _this2 = this;
+        var _this3 = this;
+        this.on('showtoolbar', function (e) {
+          if (_this3.timer) {
+            clearTimeout(_this3.timer);
+            _this3.timer = null;
+          }
+          _this3.showToolBar(e);
+        });
+        this.on('hidetoolbar', function () {
+          _this3.hideToolbar();
+        });
+        this.on('loadedmetadata', function (summary) {
+          // console.log('duration', summary)
+          _this3.controller.emit('loadedmetadata', summary);
+        });
+        this.on('timeupdate', function (currentTime) {
+          // console.log('currentTime', currentTime)
+          _this3.controller.emit('timeupdate', currentTime);
+        });
         this.on('play', function () {
-          _this2.controller.emit('play');
+          _this3.controller.emit('play');
         });
         this.on('pause', function () {
-          _this2.controller.emit('pause');
+          _this3.controller.emit('pause');
+        });
+        this.on('mounted', function () {
+          _this3.video = _this3.container.querySelector('video');
+          _this3.controller.emit('mounted');
         });
       }
     }]);
     return Toolbar;
-  }(BaseEvent);
-
-  var css_248z$2 = ".video-container {\n  position: relative;\n  overflow: hidden;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n";
-  styleInject(css_248z$2);
-
-  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var Player = /*#__PURE__*/function (_BaseEvent) {
-    _inherits(Player, _BaseEvent);
-    var _super = _createSuper(Player);
-    function Player(options) {
-      var _this;
-      _classCallCheck(this, Player);
-      _this = _super.call(this);
-      _defineProperty(_assertThisInitialized(_this), "playerOptions", {
-        url: '',
-        width: '100%',
-        height: '100%',
-        autoPlay: false
-      });
-      _defineProperty(_assertThisInitialized(_this), "container", void 0);
-      _defineProperty(_assertThisInitialized(_this), "toolbar", void 0);
-      _defineProperty(_assertThisInitialized(_this), "video", void 0);
-      _this.playerOptions = _Object$assign(_this.playerOptions, options);
-      _this.init();
-      _this.initComponent();
-      _this.initContainer();
-      // 初始化播放器事件
-      _this.initEvent();
-      return _this;
-    }
-    _createClass(Player, [{
-      key: "init",
-      value: function init() {
-        var container = this.playerOptions.container;
-        // 标签判断
-        if (!this.isTagValidate(container)) {
-          $warn('你传入的容器的元素类型不适合，建议传入块元素或者行内块元素，拒绝传入具有交互类型的元素例如input框等表单类型的元素');
-        }
-        this.container = container;
-      }
-    }, {
-      key: "initComponent",
-      value: function initComponent() {
-        // 初始化视频播放器的工具栏组件
-        this.toolbar = new Toolbar(this.container);
-      }
-    }, {
-      key: "initContainer",
-      value: function initContainer() {
-        var _context;
-        this.container.style.width = this.playerOptions.width;
-        this.container.style.height = this.playerOptions.height;
-        this.container.className = styles['video-container'];
-        this.container.innerHTML = _concatInstanceProperty(_context = "\n      <div class=".concat(styles['video-wrapper'], ">\n        <video>\n          <source src=\"")).call(_context, this.playerOptions.url, "\" type=\"video/mp4\">\n          \u60A8\u7684\u6D4F\u89C8\u5668\u4E0D\u652F\u6301 HTML5 video \u6807\u7B7E\u3002\n        </video>\n      </div>\n    ");
-        this.container.appendChild(this.toolbar.template);
-        this.video = this.container.querySelector('video');
-      }
-    }, {
-      key: "initEvent",
-      value: function initEvent() {
-        var _this2 = this;
-        this.container.onclick = function (e) {
-          if (e.target === _this2.video) {
-            if (_this2.video.paused) {
-              _this2.video.play();
-            } else if (_this2.video.played) {
-              _this2.video.pause();
-            }
-          }
-        };
-        this.video.onplay = function (e) {
-          // console.log('onplay')
-          _this2.toolbar.emit('play');
-        };
-        this.video.onpause = function (e) {
-          // console.log('onpause')
-          _this2.toolbar.emit('pause');
-        };
-        this.video.onwaiting = function (e) {
-          console.log('onwaiting');
-        };
-      }
-    }, {
-      key: "isTagValidate",
-      value: function isTagValidate(el) {
-        if (window.getComputedStyle(el).display === 'block') return true;
-        if (window.getComputedStyle(el).display === 'inline') return false;
-        if (window.getComputedStyle(el).display === 'inline-block') {
-          if (el instanceof HTMLImageElement || el instanceof HTMLInputElement || el instanceof HTMLButtonElement || el instanceof HTMLCanvasElement || el instanceof HTMLVideoElement || el instanceof HTMLAudioElement) {
-            return false;
-          }
-        }
-        return true;
-      }
-    }]);
-    return Player;
   }(BaseEvent);
 
   var $$4 = _export;
@@ -4146,8 +4098,8 @@
 
   var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes);
 
-  var css_248z$1 = "";
-  styleInject(css_248z$1);
+  var css_248z$2 = "";
+  styleInject(css_248z$2);
 
   var LoadingMask = /*#__PURE__*/function () {
     function LoadingMask(container) {
@@ -4204,8 +4156,8 @@
     return LoadingMask;
   }();
 
-  var css_248z = "";
-  styleInject(css_248z);
+  var css_248z$1 = "";
+  styleInject(css_248z$1);
 
   var ErrorMask = /*#__PURE__*/function () {
     function ErrorMask(container) {
@@ -4268,10 +4220,153 @@
     return ErrorMask;
   }();
 
+  var css_248z = ".video-container {\n  position: relative;\n  overflow: hidden;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n";
+  styleInject(css_248z);
+
+  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var Player = /*#__PURE__*/function (_BaseEvent) {
+    _inherits(Player, _BaseEvent);
+    var _super = _createSuper(Player);
+    function Player(options) {
+      var _this;
+      _classCallCheck(this, Player);
+      _this = _super.call(this);
+      _defineProperty(_assertThisInitialized(_this), "playerOptions", {
+        url: '',
+        width: '100%',
+        height: '100%',
+        autoPlay: false
+      });
+      _defineProperty(_assertThisInitialized(_this), "container", void 0);
+      _defineProperty(_assertThisInitialized(_this), "toolbar", void 0);
+      _defineProperty(_assertThisInitialized(_this), "video", void 0);
+      _defineProperty(_assertThisInitialized(_this), "loadingMask", void 0);
+      _defineProperty(_assertThisInitialized(_this), "errorMask", void 0);
+      _this.playerOptions = _Object$assign(_this.playerOptions, options);
+      _this.init();
+      _this.initComponent();
+      _this.initContainer();
+      // 初始化播放器事件
+      _this.initEvent();
+      return _this;
+    }
+    _createClass(Player, [{
+      key: "init",
+      value: function init() {
+        var container = this.playerOptions.container;
+        // 标签判断
+        if (!this.isTagValidate(container)) {
+          $warn('你传入的容器的元素类型不适合，建议传入块元素或者行内块元素，拒绝传入具有交互类型的元素例如input框等表单类型的元素');
+        }
+        this.container = container;
+      }
+    }, {
+      key: "initComponent",
+      value: function initComponent() {
+        // 初始化视频播放器的工具栏组件
+        this.toolbar = new Toolbar(this.container);
+        this.loadingMask = new LoadingMask(this.container);
+        this.errorMask = new ErrorMask(this.container);
+      }
+    }, {
+      key: "initContainer",
+      value: function initContainer() {
+        var _context;
+        this.container.style.width = this.playerOptions.width;
+        this.container.style.height = this.playerOptions.height;
+        this.container.className = styles['video-container'];
+        this.container.innerHTML = _concatInstanceProperty(_context = "\n      <div class=".concat(styles['video-wrapper'], ">\n        <video>\n          <source src=\"")).call(_context, this.playerOptions.url, "\" type=\"video/mp4\">\n          \u60A8\u7684\u6D4F\u89C8\u5668\u4E0D\u652F\u6301 HTML5 video \u6807\u7B7E\u3002\n        </video>\n      </div>\n    ");
+        this.container.appendChild(this.toolbar.template);
+        this.video = this.container.querySelector('video');
+        this.toolbar.emit('mounted');
+      }
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        var _this2 = this;
+        this.container.onclick = function (e) {
+          if (e.target === _this2.video) {
+            if (_this2.video.paused) {
+              _this2.video.play();
+            } else if (_this2.video.played) {
+              _this2.video.pause();
+            }
+          }
+        };
+        this.container.addEventListener('mouseenter', function (e) {
+          _this2.toolbar.emit('showtoolbar', e);
+        });
+        this.container.addEventListener('mousemove', function (e) {
+          _this2.toolbar.emit('showtoolbar', e);
+        });
+        this.container.addEventListener('mouseleave', function (e) {
+          _this2.toolbar.emit('hidetoolbar', e);
+        });
+        this.video.addEventListener('loadedmetadata', function (e) {
+          console.log('元数据加载完毕', _this2.video.duration);
+          _this2.toolbar.emit('loadedmetadata', _this2.video.duration);
+        });
+        // 视频播放状态时，返回视频当前的播放时间
+        // 视频暂停，则不会触发这个回调
+        this.video.addEventListener('timeupdate', function (e) {
+          // console.log('currentTime', this.video.currentTime)
+          _this2.toolbar.emit('timeupdate', _this2.video.currentTime);
+        });
+        // 当视频可以再次播放的时候就移除loading和error的mask，通常是为了应对在播放的过程中出现需要缓冲或者播放错误这种情况从而需要展示对应的mask
+        this.video.addEventListener('play', function (e) {
+          _this2.loadingMask.removeLoadingMask();
+          _this2.errorMask.removeErrorMask();
+          _this2.toolbar.emit('play');
+        });
+        this.video.addEventListener('pause', function (e) {
+          _this2.toolbar.emit('pause');
+        });
+        this.video.addEventListener('waiting', function (e) {
+          _this2.loadingMask.removeLoadingMask();
+          _this2.errorMask.removeErrorMask();
+          _this2.loadingMask.addLoadingMask();
+        });
+        // 当浏览器请求视频发生错误的时候
+        this.video.addEventListener('stalled', function (e) {
+          console.log('视频加载发生错误');
+          _this2.loadingMask.removeLoadingMask();
+          _this2.errorMask.removeErrorMask();
+          _this2.errorMask.addErrorMask();
+        });
+        this.video.addEventListener('error', function (e) {
+          _this2.loadingMask.removeLoadingMask();
+          _this2.errorMask.removeErrorMask();
+          _this2.errorMask.addErrorMask();
+        });
+        this.video.addEventListener('abort', function (e) {
+          _this2.loadingMask.removeLoadingMask();
+          _this2.errorMask.removeErrorMask();
+          _this2.errorMask.addErrorMask();
+        });
+      }
+    }, {
+      key: "isTagValidate",
+      value: function isTagValidate(el) {
+        if (window.getComputedStyle(el).display === 'block') return true;
+        if (window.getComputedStyle(el).display === 'inline') return false;
+        if (window.getComputedStyle(el).display === 'inline-block') {
+          if (el instanceof HTMLImageElement || el instanceof HTMLInputElement || el instanceof HTMLButtonElement || el instanceof HTMLCanvasElement || el instanceof HTMLVideoElement || el instanceof HTMLAudioElement) {
+            return false;
+          }
+        }
+        return true;
+      }
+    }]);
+    return Player;
+  }(BaseEvent);
+
   exports.$warn = $warn;
   exports.BaseEvent = BaseEvent;
   exports.Controller = Controller;
+  exports.ERROR_MASK_MAP = ERROR_MASK_MAP;
   exports.ErrorMask = ErrorMask;
+  exports.LOADING_MASK_MAP = LOADING_MASK_MAP;
   exports.LoadingMask = LoadingMask;
   exports.Player = Player;
   exports.Progress = Progress;
@@ -4281,3 +4376,4 @@
   exports.styles = styles;
 
 }));
+//# sourceMappingURL=player.umd.js.map
