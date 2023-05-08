@@ -7,7 +7,16 @@ export type PlayerOptions = {
 	height?: string;
 	autoPlay?: boolean;
 };
+export type EventObject = {
+	[props: string]: Function[];
+};
+export declare class BaseEvent {
+	$events: EventObject;
+	on(event: string, cb: Function): void;
+	emit(event: string, ...args: any[]): void;
+}
 export declare function $warn(msg: string): never;
+export declare function formatTime(seconds: number): string;
 export declare const icon: {
 	iconfont: string;
 	"icon-bofang": string;
@@ -15,6 +24,7 @@ export declare const icon: {
 	"icon-yinliang": string;
 	"icon-quanping": string;
 	"icon-cuowutishi": string;
+	"icon-zanting": string;
 };
 export declare const styles: {
 	"video-container": string;
@@ -49,21 +59,29 @@ export declare const styles: {
 	"error-item": string;
 	"error-title": string;
 };
-export declare class Player {
+export declare class Player extends BaseEvent {
 	private playerOptions;
 	private container;
 	private toolbar;
+	private video;
 	constructor(options: PlayerOptions);
 	init(): void;
 	initComponent(): void;
 	initContainer(): void;
+	initEvent(): void;
 	isTagValidate(el: HTMLElement): boolean;
 }
-export declare class Toolbar {
+export declare class Toolbar extends BaseEvent {
 	private _template;
-	constructor();
+	private progress;
+	private controller;
+	private container;
+	constructor(container: HTMLElement);
 	get template(): HTMLElement;
 	init(): void;
+	initComponent(): void;
+	initTemplate(): void;
+	initEvent(): void;
 }
 export declare class Progress {
 	private _template;
@@ -71,24 +89,36 @@ export declare class Progress {
 	get template(): HTMLElement | string;
 	init(): void;
 }
-export declare class Controller {
+export declare class Controller extends BaseEvent {
 	private _template;
-	constructor();
+	private container;
+	private videoPlayBtn;
+	private currentTime;
+	private summaryTime;
+	constructor(container: HTMLElement);
 	get template(): HTMLElement | string;
 	init(): void;
+	initEvent(): void;
 }
 export declare class LoadingMask {
 	private _template;
-	constructor();
+	private container;
+	constructor(container: HTMLElement);
 	get template(): HTMLElement | string;
 	init(): void;
+	generateLoadingMask(): HTMLElement;
+	addLoadingMask(): void;
+	removeLoadingMask(): void;
 }
 export declare class ErrorMask {
 	private _template;
-	constructor();
+	private container;
+	constructor(container: HTMLElement);
 	get template(): string | HTMLElement;
 	init(): void;
 	generateErrorMask(): HTMLElement;
+	addErrorMask(): void;
+	removeErrorMask(): void;
 }
 
 export {};

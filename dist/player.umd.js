@@ -1,5 +1,3 @@
-
-(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -2908,6 +2906,16 @@
     throw new Error(msg);
   }
 
+  function addZero(num) {
+    return num > 9 ? '' + num : '0' + num;
+  }
+  function formatTime(seconds) {
+    seconds = Math.floor(seconds);
+    var minute = Math.floor(seconds / 60);
+    var second = seconds % 60;
+    return addZero(minute) + ':' + addZero(second);
+  }
+
   var icon = {
     iconfont: 'iconfont',
     'icon-bofang': 'icon-bofang',
@@ -4268,8 +4276,8 @@
   exports.Player = Player;
   exports.Progress = Progress;
   exports.Toolbar = Toolbar;
+  exports.formatTime = formatTime;
   exports.icon = icon;
   exports.styles = styles;
 
 }));
-//# sourceMappingURL=player.umd.js.map
