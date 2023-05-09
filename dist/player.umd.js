@@ -3427,14 +3427,31 @@
     }
   }
 
-  var css_248z$5 = ".video-progress {\n  width: 100%;\n  height: 5px;\n  background-color: #fff;\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: gray;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #00aeec;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 10px;\n  width: 10px;\n  border-radius: 100%;\n  background-color: black;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  cursor: pointer;\n  z-index: 1003;\n}\n";
-  styleInject(css_248z$5);
+  var css_248z$6 = ".video-progress {\n  width: 100%;\n  height: 5px;\n  background-color: #fff;\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: gray;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  -webkit-transition: all 0.6s;\n  transition: all 0.6s;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #00aeec;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n  -webkit-transition: all 0.6s;\n  transition: all 0.6s;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 10px;\n  width: 10px;\n  border-radius: 100%;\n  background-color: black;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  cursor: pointer;\n  z-index: 1003;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n";
+  styleInject(css_248z$6);
 
-  var Progress = /*#__PURE__*/function () {
-    function Progress() {
+  function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var Progress = /*#__PURE__*/function (_BaseEvent) {
+    _inherits(Progress, _BaseEvent);
+    var _super = _createSuper$3(Progress);
+    function Progress(container) {
+      var _this;
       _classCallCheck(this, Progress);
-      _defineProperty(this, "_template", void 0);
-      this.init();
+      _this = _super.call(this);
+      _defineProperty(_assertThisInitialized(_this), "_template", void 0);
+      _defineProperty(_assertThisInitialized(_this), "container", void 0);
+      _defineProperty(_assertThisInitialized(_this), "progress", void 0);
+      _defineProperty(_assertThisInitialized(_this), "pretime", void 0);
+      _defineProperty(_assertThisInitialized(_this), "bufferedProgress", void 0);
+      _defineProperty(_assertThisInitialized(_this), "completedProgress", void 0);
+      _defineProperty(_assertThisInitialized(_this), "dot", void 0);
+      _defineProperty(_assertThisInitialized(_this), "video", void 0);
+      _defineProperty(_assertThisInitialized(_this), "mouseDown", false);
+      _this.container = container;
+      _this.init();
+      _this.initEvent();
+      return _this;
     }
     _createClass(Progress, [{
       key: "template",
@@ -3447,12 +3464,110 @@
         var _context, _context2, _context3, _context4, _context5;
         this._template = _concatInstanceProperty(_context = _concatInstanceProperty(_context2 = _concatInstanceProperty(_context3 = _concatInstanceProperty(_context4 = _concatInstanceProperty(_context5 = "\n      <div class=\"".concat(styles['video-progress'], "\">\n        <div class=\"")).call(_context5, styles['video-pretime'], "\">00:00</div>\n        <div class=\"")).call(_context4, styles['video-buffered'], "\"></div>\n        <div class=\"")).call(_context3, styles['video-completed'], "\"></div>\n        <div class=\"")).call(_context2, styles['video-dot'], " ")).call(_context, styles['video-dot-hidden'], "\"></div>\n      </div>\n    ");
       }
+    }, {
+      key: "initProgressEvent",
+      value: function initProgressEvent() {
+        var _this2 = this;
+        this.progress.onmouseenter = function () {
+          _this2.dot.className = "".concat(styles['video-dot']);
+        };
+        this.progress.onmouseleave = function () {
+          if (!_this2.mouseDown) {
+            var _context6;
+            _this2.dot.className = _concatInstanceProperty(_context6 = "".concat(styles['video-dot'], " ")).call(_context6, styles['video-dot-hidden']);
+          }
+          _this2.pretime.style.display = 'none';
+        };
+        this.progress.onmousemove = function (e) {
+          var scale = e.offsetX / _this2.progress.offsetWidth;
+          if (scale < 0) {
+            scale = 0;
+          } else if (scale > 1) {
+            scale = 1;
+          }
+          _this2.pretime.innerHTML = formatTime(_this2.video.duration * scale);
+          _this2.pretime.style.display = 'block';
+          _this2.pretime.style.left = e.offsetX - 17 + 'px';
+          e.preventDefault();
+        };
+        this.progress.addEventListener('click', function (e) {
+          if (e.target === _this2.dot) return;
+          var scale = e.offsetX / _this2.progress.offsetWidth;
+          if (scale < 0) {
+            scale = 0;
+          } else if (scale > 1) {
+            scale = 1;
+          }
+          _this2.dot.style.left = _this2.progress.offsetWidth * scale - 5 + 'px';
+          _this2.bufferedProgress.style.width = scale * 100 + '%';
+          _this2.completedProgress.style.width = scale * 100 + '%';
+          _this2.video.currentTime = Math.floor(scale * _this2.video.duration);
+          if (_this2.video.paused) _this2.video.play();
+        });
+        this.dot.addEventListener('mousedown', function (e) {
+          e.stopPropagation();
+          var left = _this2.completedProgress.offsetWidth;
+          var mouseX = e.pageX;
+          _this2.mouseDown = true;
+          document.onmousemove = function (e) {
+            var scale = (e.pageX - mouseX + left) / _this2.progress.offsetWidth;
+            if (scale < 0) {
+              scale = 0;
+            } else if (scale > 1) {
+              scale = 1;
+            }
+            _this2.dot.style.left = _this2.progress.offsetWidth * scale - 5 + 'px';
+            _this2.bufferedProgress.style.width = scale * 100 + '%';
+            _this2.completedProgress.style.width = scale * 100 + '%';
+            _this2.video.currentTime = Math.floor(scale * _this2.video.duration);
+            if (_this2.video.paused) _this2.video.play();
+            e.preventDefault();
+          };
+          document.onmouseup = function (e) {
+            document.onmousemove = document.onmouseup = null;
+            _this2.mouseDown = false;
+            e.preventDefault();
+          };
+          e.preventDefault();
+        });
+      }
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        var _this3 = this;
+        this.on('mounted', function () {
+          var _context7;
+          _this3.progress = _this3.container.querySelector(_concatInstanceProperty(_context7 = ".".concat(styles['video-controls'], " .")).call(_context7, styles['video-progress']));
+          _this3.pretime = _this3.progress.children[0];
+          _this3.bufferedProgress = _this3.progress.children[1];
+          _this3.completedProgress = _this3.progress.children[2];
+          _this3.dot = _this3.progress.children[3];
+          _this3.video = _this3.container.querySelector('video');
+          _this3.initProgressEvent();
+        });
+        this.on('loadedmetadata', function (summary) {
+          //this.summaryTime.innerHTML = formatTime(summary)
+        });
+        this.on('timeupdate', function (currentTime) {
+          //this.currentTime.innerHTML = formatTime(currentTime)
+          // console.log('currentTime', currentTime)
+          // console.log(this.video.currentTime, this.video.duration)
+          var scaleCurr = _this3.video.currentTime / _this3.video.duration * 100;
+          // console.log(scaleCurr) 进度
+          // 首个缓冲范围的结束位置
+          var scaleBuffer = (_this3.video.currentTime + _this3.video.buffered.end(0)) / _this3.video.duration * 100;
+          if (scaleBuffer > 100) scaleBuffer = 100;
+          _this3.completedProgress.style.width = scaleCurr + '%';
+          _this3.dot.style.left = _this3.progress.offsetWidth * (scaleCurr / 100) - 5 + 'px';
+          _this3.bufferedProgress.style.width = scaleBuffer + '%';
+        });
+      }
     }]);
     return Progress;
-  }();
+  }(BaseEvent);
 
-  var css_248z$4 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 15px 5px 0 5px;\n}\n.video-play .video-subplay {\n  margin-left: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-play .video-subplay .video-start-pause {\n  margin-right: 5px;\n  cursor: pointer;\n}\n.video-play .video-subplay .video-duration {\n  font-size: 12px;\n  margin-left: 5px;\n}\n.video-play .video-subplay .video-duration .video-duration-completed {\n  font-size: 12px;\n}\n.video-play .video-subplay .video-duration .video-duration-all {\n  font-size: 12px;\n}\n.video-play .video-settings {\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 18px;\n}\n.video-play .video-settings .video-subsettings {\n  margin-right: 10px;\n}\n.video-play .video-settings .video-subsettings i {\n  cursor: pointer;\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n}\n.video-play .video-settings .video-subsettings i:hover {\n  -webkit-transform: rotateX(180deg);\n          transform: rotateX(180deg);\n}\n.video-play .video-settings .video-volume {\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-play .video-settings .video-volume i {\n  cursor: pointer;\n  font-size: 18px;\n  margin-right: 8px;\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n}\n.video-play .video-settings .video-volume i:hover {\n  -webkit-transform: rotateX(180deg);\n          transform: rotateX(180deg);\n}\n.video-play .video-settings .video-volume .video-volume-progress {\n  height: 5px;\n  background-color: #fff;\n  width: 50px;\n  border-radius: 5px;\n}\n.video-play .video-settings .video-volume .video-volume-progress .video-volume-completed {\n  width: 50%;\n  background-color: #00aeec;\n  border-radius: 5px;\n  height: 100%;\n}\n.video-play .video-settings .video-fullscreen i {\n  cursor: pointer;\n  font-size: 18px;\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n}\n.video-play .video-settings .video-fullscreen i:hover {\n  -webkit-transform: rotateX(180deg);\n          transform: rotateX(180deg);\n}\n";
-  styleInject(css_248z$4);
+  var css_248z$5 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 15px 5px 0 5px;\n}\n.video-play .video-subplay {\n  margin-left: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-play .video-subplay .video-start-pause {\n  margin-right: 5px;\n  cursor: pointer;\n}\n.video-play .video-subplay .video-duration {\n  font-size: 12px;\n  margin-left: 5px;\n}\n.video-play .video-subplay .video-duration .video-duration-completed {\n  font-size: 12px;\n}\n.video-play .video-subplay .video-duration .video-duration-all {\n  font-size: 12px;\n}\n.video-play .video-settings {\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 18px;\n}\n.video-play .video-settings .video-subsettings {\n  margin-right: 10px;\n}\n.video-play .video-settings .video-subsettings i {\n  cursor: pointer;\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n}\n.video-play .video-settings .video-subsettings i:hover {\n  -webkit-transform: rotateX(180deg);\n          transform: rotateX(180deg);\n}\n.video-play .video-settings .video-volume {\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-play .video-settings .video-volume i {\n  cursor: pointer;\n  font-size: 18px;\n  margin-right: 8px;\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n}\n.video-play .video-settings .video-volume i:hover {\n  -webkit-transform: rotateX(180deg);\n          transform: rotateX(180deg);\n}\n.video-play .video-settings .video-volume .video-volume-progress {\n  height: 5px;\n  background-color: #fff;\n  width: 50px;\n  border-radius: 5px;\n}\n.video-play .video-settings .video-volume .video-volume-progress .video-volume-completed {\n  width: 50%;\n  background-color: #00aeec;\n  border-radius: 5px;\n  height: 100%;\n}\n.video-play .video-settings .video-fullscreen i {\n  cursor: pointer;\n  font-size: 18px;\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n}\n.video-play .video-settings .video-fullscreen i:hover {\n  -webkit-transform: rotateX(180deg);\n          transform: rotateX(180deg);\n}\n";
+  styleInject(css_248z$5);
 
   function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
   function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -3468,6 +3583,8 @@
       _defineProperty(_assertThisInitialized(_this), "videoPlayBtn", void 0);
       _defineProperty(_assertThisInitialized(_this), "currentTime", void 0);
       _defineProperty(_assertThisInitialized(_this), "summaryTime", void 0);
+      _defineProperty(_assertThisInitialized(_this), "video", void 0);
+      _defineProperty(_assertThisInitialized(_this), "fullScreen", void 0);
       _this.container = container;
       _this.init();
       _this.initEvent();
@@ -3485,35 +3602,57 @@
         this._template = _concatInstanceProperty(_context = _concatInstanceProperty(_context2 = _concatInstanceProperty(_context3 = _concatInstanceProperty(_context4 = _concatInstanceProperty(_context5 = _concatInstanceProperty(_context6 = _concatInstanceProperty(_context7 = _concatInstanceProperty(_context8 = _concatInstanceProperty(_context9 = _concatInstanceProperty(_context10 = _concatInstanceProperty(_context11 = _concatInstanceProperty(_context12 = _concatInstanceProperty(_context13 = _concatInstanceProperty(_context14 = _concatInstanceProperty(_context15 = _concatInstanceProperty(_context16 = _concatInstanceProperty(_context17 = _concatInstanceProperty(_context18 = _concatInstanceProperty(_context19 = _concatInstanceProperty(_context20 = "\n      <div class=\"".concat(styles['video-play'], "\">\n        <div class=\"")).call(_context20, styles['video-subplay'], "\">\n            <div class=\"")).call(_context19, styles['video-start-pause'], "\">\n              <i class=\"")).call(_context18, icon['iconfont'], " ")).call(_context17, icon['icon-bofang'], "\"></i>\n            </div>\n            <div class=\"")).call(_context16, styles['video-duration'], "\">\n              <span class=\"")).call(_context15, styles['video-duration-completed'], "\">00:00</span>&nbsp;/&nbsp;<span class=\"")).call(_context14, styles['video-duration-all'], "\">00:00</span>\n            </div>\n        </div>\n        <div class=\"")).call(_context13, styles['video-settings'], "\">\n          <div class=\"")).call(_context12, styles['video-subsettings'], "\">\n            <i class=\"")).call(_context11, icon['iconfont'], " ")).call(_context10, icon['icon-shezhi'], "\"></i>\n          </div>\n          <div class=\"")).call(_context9, styles['video-volume'], "\">\n            <i class=\"")).call(_context8, icon['iconfont'], " ")).call(_context7, icon['icon-yinliang'], "\"></i>\n            <div class=\"")).call(_context6, styles['video-volume-progress'], "\">\n              <div class=\"")).call(_context5, styles['video-volume-completed'], "\"></div>\n              <div class=\"")).call(_context4, styles['video-volume-dot'], "\"></div>\n            </div>\n          </div>\n          <div class=\"")).call(_context3, styles['video-fullscreen'], "\">\n            <i class=\"")).call(_context2, icon['iconfont'], " ")).call(_context, icon['icon-quanping'], "\"></i>\n          </div>\n        </div>\n      </div>\n    ");
       }
     }, {
+      key: "initControllerEvent",
+      value: function initControllerEvent() {
+        var _this2 = this;
+        this.videoPlayBtn.onclick = function (e) {
+          if (_this2.video.paused) {
+            _this2.video.play();
+          } else if (_this2.video.played) {
+            _this2.video.pause();
+          }
+        };
+        this.fullScreen.onclick = function () {
+          if (_this2.container.requestFullscreen && !document.fullscreenElement) {
+            _this2.container.requestFullscreen(); //该函数请求全屏，把一个div容器全屏
+          } else if (document.fullscreenElement) {
+            document.exitFullscreen(); //退出全屏函数仅仅绑定在document对象上，该点需要切记！！！
+          }
+        };
+      }
+    }, {
       key: "initEvent",
       value: function initEvent() {
-        var _this2 = this;
+        var _this3 = this;
         this.on('play', function () {
           var _context21;
-          _this2.videoPlayBtn.className = _concatInstanceProperty(_context21 = "".concat(icon['iconfont'], " ")).call(_context21, icon['icon-zanting']);
+          _this3.videoPlayBtn.className = _concatInstanceProperty(_context21 = "".concat(icon['iconfont'], " ")).call(_context21, icon['icon-zanting']);
         });
         this.on('pause', function () {
           var _context22;
-          _this2.videoPlayBtn.className = _concatInstanceProperty(_context22 = "".concat(icon['iconfont'], " ")).call(_context22, icon['icon-bofang']);
+          _this3.videoPlayBtn.className = _concatInstanceProperty(_context22 = "".concat(icon['iconfont'], " ")).call(_context22, icon['icon-bofang']);
         });
         this.on('loadedmetadata', function (summary) {
-          _this2.summaryTime.innerHTML = formatTime(summary);
+          _this3.summaryTime.innerHTML = formatTime(summary);
         });
         this.on('timeupdate', function (currentTime) {
-          _this2.currentTime.innerHTML = formatTime(currentTime);
+          _this3.currentTime.innerHTML = formatTime(currentTime);
         });
         this.on('mounted', function () {
-          _this2.videoPlayBtn = _this2.container.querySelector(".".concat(styles['video-start-pause'], " i"));
-          _this2.currentTime = _this2.container.querySelector(".".concat(styles['video-duration-completed']));
-          _this2.summaryTime = _this2.container.querySelector(".".concat(styles['video-duration-all']));
+          _this3.videoPlayBtn = _this3.container.querySelector(".".concat(styles['video-start-pause'], " i"));
+          _this3.currentTime = _this3.container.querySelector(".".concat(styles['video-duration-completed']));
+          _this3.summaryTime = _this3.container.querySelector(".".concat(styles['video-duration-all']));
+          _this3.video = _this3.container.querySelector('video');
+          _this3.fullScreen = _this3.container.querySelector(".".concat(styles['video-fullscreen'], " i"));
+          _this3.initControllerEvent();
         });
       }
     }]);
     return Controller;
   }(BaseEvent);
 
-  var css_248z$3 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.4);\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 1000;\n}\n";
-  styleInject(css_248z$3);
+  var css_248z$4 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.4);\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 1000;\n}\n";
+  styleInject(css_248z$4);
 
   function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
   function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -3548,7 +3687,7 @@
     }, {
       key: "initComponent",
       value: function initComponent() {
-        this.progress = new Progress();
+        this.progress = new Progress(this.container);
         this.controller = new Controller(this.container);
       }
     }, {
@@ -3595,10 +3734,12 @@
         this.on('loadedmetadata', function (summary) {
           // console.log('duration', summary)
           _this3.controller.emit('loadedmetadata', summary);
+          _this3.progress.emit('loadedmetadata', summary);
         });
         this.on('timeupdate', function (currentTime) {
           // console.log('currentTime', currentTime)
           _this3.controller.emit('timeupdate', currentTime);
+          _this3.progress.emit('timeupdate', currentTime);
         });
         this.on('play', function () {
           _this3.controller.emit('play');
@@ -3609,6 +3750,7 @@
         this.on('mounted', function () {
           _this3.video = _this3.container.querySelector('video');
           _this3.controller.emit('mounted');
+          _this3.progress.emit('mounted');
         });
       }
     }]);
@@ -4098,8 +4240,8 @@
 
   var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes);
 
-  var css_248z$2 = "";
-  styleInject(css_248z$2);
+  var css_248z$3 = "";
+  styleInject(css_248z$3);
 
   var LoadingMask = /*#__PURE__*/function () {
     function LoadingMask(container) {
@@ -4156,8 +4298,8 @@
     return LoadingMask;
   }();
 
-  var css_248z$1 = "";
-  styleInject(css_248z$1);
+  var css_248z$2 = "";
+  styleInject(css_248z$2);
 
   var ErrorMask = /*#__PURE__*/function () {
     function ErrorMask(container) {
@@ -4219,6 +4361,9 @@
     }]);
     return ErrorMask;
   }();
+
+  var css_248z$1 = "@font-face {\n  font-family: \"iconfont\";\n  /* Project id 3797258 */\n  src: url(\"//at.alicdn.com/t/c/font_3797258_88colj2uuv9.woff2?t=1670043636699\") format(\"woff2\"), url(\"//at.alicdn.com/t/c/font_3797258_88colj2uuv9.woff?t=1670043636699\") format(\"woff\"), url(\"//at.alicdn.com/t/c/font_3797258_88colj2uuv9.ttf?t=1670043636699\") format(\"truetype\");\n}\n.iconfont {\n  font-family: \"iconfont\" !important;\n  font-size: 16px;\n  font-style: normal;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.icon-cuowutishi:before {\n  content: \"\\e656\";\n}\n.icon-shezhi:before {\n  content: \"\\e64b\";\n}\n.icon-quanping:before {\n  content: \"\\eb11\";\n}\n.icon-yinliang:before {\n  content: \"\\e63c\";\n}\n.icon-zanting:before {\n  content: \"\\e87a\";\n}\n.icon-bofang:before {\n  content: \"\\e87c\";\n}\n";
+  styleInject(css_248z$1);
 
   var css_248z = ".video-container {\n  position: relative;\n  overflow: hidden;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n";
   styleInject(css_248z);
@@ -4305,6 +4450,12 @@
         });
         this.video.addEventListener('loadedmetadata', function (e) {
           console.log('元数据加载完毕', _this2.video.duration);
+          // 设置自动播放
+          // setTimeout(() => {
+          //   this.video.muted = false
+          //   this.playerOptions.autoPlay && this.video.play()
+          // }, 500)
+          // 
           _this2.toolbar.emit('loadedmetadata', _this2.video.duration);
         });
         // 视频播放状态时，返回视频当前的播放时间

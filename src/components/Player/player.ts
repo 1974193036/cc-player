@@ -6,6 +6,7 @@ import { Toolbar } from '@/components/Toolbar/toolbar'
 import { LoadingMask } from '@/components/LoadingMask/loadingMask'
 import { ErrorMask } from '@/components/ErrorMask/errorMask'
 import { BaseEvent } from '@/class/BaseEvent'
+import '../../main.less'
 import './player.less'
 
 export class Player extends BaseEvent {
@@ -46,7 +47,6 @@ export class Player extends BaseEvent {
   initComponent() {
     // 初始化视频播放器的工具栏组件
     this.toolbar = new Toolbar(this.container)
-
     this.loadingMask = new LoadingMask(this.container)
     this.errorMask = new ErrorMask(this.container)
   }
@@ -93,6 +93,13 @@ export class Player extends BaseEvent {
 
     this.video.addEventListener('loadedmetadata', (e: Event) => {
       console.log('元数据加载完毕', this.video.duration)
+      // 设置自动播放
+      // setTimeout(() => {
+      //   this.video.muted = false
+      //   this.playerOptions.autoPlay && this.video.play()
+      // }, 500)
+     
+      // 
       this.toolbar.emit('loadedmetadata', this.video.duration)
     })
 

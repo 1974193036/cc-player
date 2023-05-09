@@ -29,7 +29,7 @@ export class Toolbar extends BaseEvent {
   init() {}
 
   initComponent() {
-    this.progress = new Progress()
+    this.progress = new Progress(this.container)
     this.controller = new Controller(this.container)
   }
 
@@ -75,11 +75,13 @@ export class Toolbar extends BaseEvent {
     this.on('loadedmetadata', (summary: number) => {
       // console.log('duration', summary)
       this.controller.emit('loadedmetadata', summary)
+      this.progress.emit('loadedmetadata', summary)
     })
 
     this.on('timeupdate', (currentTime: number) => {
       // console.log('currentTime', currentTime)
       this.controller.emit('timeupdate', currentTime)
+      this.progress.emit('timeupdate', currentTime)
     })
 
     this.on('play', () => {
@@ -93,6 +95,7 @@ export class Toolbar extends BaseEvent {
     this.on('mounted', () => {
       this.video = this.container.querySelector('video')
       this.controller.emit('mounted')
+      this.progress.emit('mounted')
     })
   }
 }

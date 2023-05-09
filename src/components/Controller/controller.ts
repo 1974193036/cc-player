@@ -10,6 +10,8 @@ export class Controller extends BaseEvent {
   private videoPlayBtn: HTMLElement
   private currentTime: HTMLElement
   private summaryTime: HTMLElement
+  private video: HTMLVideoElement
+  private fullScreen: HTMLElement
 
   constructor(container: HTMLElement) {
     super()
@@ -52,6 +54,24 @@ export class Controller extends BaseEvent {
     `
   }
 
+  initControllerEvent() {
+    this.videoPlayBtn.onclick = (e: MouseEvent) => {
+      if (this.video.paused) {
+        this.video.play()
+      } else if (this.video.played) {
+        this.video.pause()
+      }
+    }
+
+    this.fullScreen.onclick = () => {
+      if (this.container.requestFullscreen && !document.fullscreenElement) {
+        this.container.requestFullscreen() //该函数请求全屏，把一个div容器全屏
+      } else if (document.fullscreenElement) {
+        document.exitFullscreen() //退出全屏函数仅仅绑定在document对象上，该点需要切记！！！
+      }
+    }
+  }
+
   initEvent() {
     this.on('play', () => {
       this.videoPlayBtn.className = `${icon['iconfont']} ${icon['icon-zanting']}`
@@ -73,6 +93,9 @@ export class Controller extends BaseEvent {
       this.videoPlayBtn = this.container.querySelector(`.${styles['video-start-pause']} i`)
       this.currentTime = this.container.querySelector(`.${styles['video-duration-completed']}`)
       this.summaryTime = this.container.querySelector(`.${styles['video-duration-all']}`)
+      this.video = this.container.querySelector('video')
+      this.fullScreen = this.container.querySelector(`.${styles['video-fullscreen']} i`)
+      this.initControllerEvent()
     })
   }
 }

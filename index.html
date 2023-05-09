@@ -10,14 +10,17 @@
 </head>
 <body>
     <div class="video"></div>
+
     <script>
       console.log(Player)
       window.onload = function() {
         let player = new Player.Player({
-          url: './video.mp4',
+          // url: './video.mp4',
+          url: 'http://localhost:8889/video.mp4',
           container: document.getElementsByClassName('video')[0],
-          width: '600px',
-          height: '400px'
+          width: '640px',
+          height: '480px',
+          autoPlay: false
         })
       }
     </script>
