@@ -8,7 +8,7 @@ import {
   Initialization,
   SegmentURL,
   SegmentBase
-} from '../types/MpdFile'
+} from '../types/dash/MpdFile'
 
 /**
  * @description 类型守卫函数

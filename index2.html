@@ -11,7 +11,7 @@
 </head>
 <body>
     <input type="file" id="file">
-    <div>
+    <div id="video">
         <!-- <video id="videoPlayer" controls width="500" height="300"></video> -->
     </div>
     <!-- <script src="./dash.all.debug.js"></script> -->
@@ -21,7 +21,16 @@
         //     var player = dashjs.MediaPlayer().create();
         //     player.initialize(document.querySelector("#videoPlayer"), url, true);
         // })();
+        
+        let player = new Player.Player({
+          url: 'https://dash.akamaized.net/envivio/EnvivioDash3/manifest.mpd',
+          // url: 'http://localhost:8889/video.mp4',
+          container: document.getElementById('video'),
+          width: '500px',
+          height: '300px'
+        })
     </script>
+
     <script>
       let fileReder = new FileReader()
       let File = document.getElementById('file')
@@ -40,14 +49,14 @@
         }
       }
 
-      let axios = new Player.Axios()
-      console.log(axios)
-      axios.post('http://localhost/login', {'Content-Type': 'application/json'}, 'arraybuffer', JSON.stringify({
-        username: 'nyc757791',
-        password: 'ddddd'
-      })).then((val)=>{
-        console.log(val)
-      })
+      // let axios = new Player.Axios()
+      // console.log(axios)
+      // axios.post('http://localhost:8889/login', {'Content-Type': 'application/json'}, 'arraybuffer', JSON.stringify({
+      //   username: 'nyc757791',
+      //   password: 'ddddd'
+      // })).then((val)=>{
+      //   console.log(val)
+      // })
     </script>
 </body>
 </html>

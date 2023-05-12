@@ -3,11 +3,12 @@ import {
   MediaType,
   MediaVideoResolve,
   MeidaAudioResolve,
+  PeriodRequest,
   RangeRequest,
   Representation,
   SegmentRequest,
   SegmentTemplate
-} from '../types/MpdFile'
+} from '../types/dash/MpdFile'
 import { parseDuration, switchToSeconds } from '../utils/format'
 import {
   checkAdaptationSet,
@@ -32,7 +33,7 @@ export function parseMpd(mpd: Document, BASE_URL: string = '') {
     ? Math.ceil(mediaPresentationDuration / maxSegmentDuration)
     : null
   // 代表的是整个MPD文档中的需要发送的所有xhr请求地址，包括多个Period对应的视频和音频请求地址
-  let mpdRequest = []
+  let mpdRequest = new Array<PeriodRequest>()
   // 遍历文档中的每一个Period，Period代表着一个完整的音视频，不同的Period具有不同内容的音视频，例如广告和正片就属于不同的Period
   mpdModel.children.forEach((period) => {
     let path = '' + BASE_URL
@@ -48,9 +49,19 @@ export function parseMpd(mpd: Document, BASE_URL: string = '') {
     period.children.forEach((child) => {
       if (checkAdaptationSet(child)) {
         if (child.mimeType === 'audio/mp4') {
-          audioRequest = parseAdaptationSet(child, path, sumSegment, child.mimeType)
+          audioRequest = parseAdaptationSet(
+            child,
+            path,
+            sumSegment,
+            child.mimeType
+          ) as MeidaAudioResolve
         } else if (child.mimeType === 'video/mp4') {
-          videoRequest = parseAdaptationSet(child, path, sumSegment, child.mimeType)
+          videoRequest = parseAdaptationSet(
+            child,
+            path,
+            sumSegment,
+            child.mimeType
+          ) as MediaVideoResolve
         }
       }
     })
@@ -75,15 +86,15 @@ export function parseMpd(mpd: Document, BASE_URL: string = '') {
         '768*432': [
           {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v1_257-Header.m4s'},
           {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v1_257-270146-i-1.m4s'},
-          {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v1_257-270146-i-1.m4s'},
-          {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v1_257-270146-i-1.m4s'},
+          {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v1_257-270146-i-2.m4s'},
+          {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v1_257-270146-i-3.m4s'},
           ...
         ],
         '1024*576': [
           {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v2_257-Header.m4s'},
           {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v2_257-270146-i-1.m4s'},
-          {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v2_257-270146-i-1.m4s'},
-          {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v2_257-270146-i-1.m4s'},
+          {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v2_257-270146-i-2.m4s'},
+          {type: 'segement', url: 'https://dash.akamaized.net/envivio/EnvivioDash3/v2_257-270146-i-3.m4s'},
         ],
         ...
       }
@@ -91,8 +102,8 @@ export function parseMpd(mpd: Document, BASE_URL: string = '') {
         '48000': [
           {type: 'segement', url: 'v4_258-Header.m4s'},
           {type: 'segement', url: 'v4_257-270146-i-1.m4s'},
-          {type: 'segement', url: 'v4_257-270146-i-1.m4s'},
-          {type: 'segement', url: 'v4_257-270146-i-1.m4s'},
+          {type: 'segement', url: 'v4_257-270146-i-2.m4s'},
+          {type: 'segement', url: 'v4_257-270146-i-3.m4s'},
         ]
       }
     }
@@ -104,7 +115,7 @@ export function parseAdaptationSet(
   path: string = '',
   sumSegment: number | null,
   type: MediaType
-) {
+): Object {
   let children = adaptationSet.children
   let hasTemplate = false
   let template: SegmentTemplate
@@ -210,14 +221,15 @@ export function parseRepresentationWithSegmentTemplateOuter(
     }
   }
   for (let index = 1; index <= sumSegment; index++) {
+    let copy = [...mediaFormat]
     for (let i in mediaFormat) {
-      if (mediaFormat[i] === 'Number') {
-        mediaFormat[i] = `${index}`
+      if (copy[i] === "Number") {
+        copy[i] = `${index}`
       }
     }
     requestArray.push({
       type: 'segement',
-      url: path + generateMediaUrl(...mediaFormat)
+      url: path + generateMediaUrl(...copy)
     })
   }
 

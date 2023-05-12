@@ -10,6 +10,11 @@ export type MediaType =
   | 'image/png'
   | 'image/jpeg'
 
+export type PeriodRequest = {
+  videoRequest: MediaVideoResolve
+  audioRequest: MeidaAudioResolve
+}
+
 /**
  * @description video类型媒体的分辨率
  */
@@ -42,6 +47,11 @@ export type RangeRequest = {
 export type SegmentRequest = {
   type: 'segement'
   url: string
+}
+
+export type Document = {
+  tag: 'Document'
+  root: Mpd
 }
 
 /**
@@ -91,12 +101,12 @@ export type SegmentTemplate = {
  */
 export type Representation = {
   tag: 'Representation'
-  bandWidth: number | null;
-  codecs: string | null;
-  audioSamplingRate: string | null;
-  id: string | null;
-  width: number | null;
-  height: number | null;
+  bandWidth: number | null
+  codecs: string | null
+  audioSamplingRate: string | null
+  id: string | null
+  width: number | null
+  height: number | null
   mimeType: MediaType | null
   children?: Array<BaseURL | SegmentBase | SegmentList>
 }
