@@ -34,7 +34,7 @@ export class Player extends BaseEvent {
     this.initContainer()
 
     if (getFileExtension(this.playerOptions.url) === 'mpd') {
-      // new MpdPlayer(this)
+      new MpdPlayer(this)
     } else if (getFileExtension(this.playerOptions.url) === 'mp4') {
       new Mp4Player(this)
     }
