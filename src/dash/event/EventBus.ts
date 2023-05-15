@@ -19,7 +19,7 @@ class EventBus {
           scope
         }
       ]
-      console.log(this.__events[type])
+      // console.log(this.__events[type])
       return
     }
     if (
