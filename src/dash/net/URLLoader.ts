@@ -1,5 +1,5 @@
 import { FactoryObject } from '../../types/dash/Factory'
-import { URLConfig, XHRConfig } from '../../types/dash/Net'
+import { RequestType, URLConfig, XHRConfig } from '../../types/dash/Net'
 import FactoryMaker from '../FactoryMaker'
 import HTTPRequest from './HTTPRequest'
 import XHRLoaderFactory, { XHRLoader } from './XHRLoader'
@@ -16,7 +16,7 @@ class URLLoader {
     this.setup()
   }
   private _loadManifest(config: XHRConfig) {
-    this.xhrLoader.loadManifest(config)
+    this.xhrLoader.load(config)
   }
 
   setup() {
@@ -28,22 +28,24 @@ class URLLoader {
     this.eventBus = EventBusFactory({}).getInstance()
   }
   // 每调用一次load函数就发送一次请求
-  load(config: URLConfig) {
+  load(config: URLConfig, type: RequestType) {
     //一个HTTPRequest对象才对应一个请求
     let request = new HTTPRequest(config)
     let ctx = this
 
-    this._loadManifest({
-      request: request,
-      success: function (data) {
-        request.getResponseTime = new Date().getTime()
-        ctx.eventBus.trigger(EventConstants.MANIFEST_LOADED, data)
-        // console.log(this, data)
-      },
-      error: function (error) {
-        console.log(this, error)
-      }
-    })
+    if (type === 'Manifest') {
+      this._loadManifest({
+        request: request,
+        success: function (data) {
+          request.getResponseTime = new Date().getTime()
+          ctx.eventBus.trigger(EventConstants.MANIFEST_LOADED, data)
+        },
+        error: function (error) {
+          console.log(this, error)
+        }
+      })
+    } else if (type === 'Segment') {
+    }
   }
 }
 

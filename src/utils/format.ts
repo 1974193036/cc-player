@@ -41,9 +41,9 @@ export function switchToSeconds(time: Time): number {
 // 解析MPD文件的时间字符串
 export function parseDuration(pt: string): Time {
   // Parse time from format "PT#H#M##.##S"
-  // PT193.680S
-  // PT10H22M193.08S
-  let hours, minutes, seconds
+  let hours = 0,
+    minutes = 0,
+    seconds = 0
   for (let i = pt.length - 1; i >= 0; i--) {
     if (pt[i] === 'S') {
       let j = i

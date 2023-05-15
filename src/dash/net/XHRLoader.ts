@@ -11,7 +11,7 @@ class XHRLoader {
 
   setup() {}
 
-  loadManifest(config: XHRConfig) {
+  load(config: XHRConfig) {
     let request = config.request
     let xhr = new XMLHttpRequest()
     if (request.header) {

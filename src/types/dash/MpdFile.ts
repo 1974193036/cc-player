@@ -10,44 +10,6 @@ export type MediaType =
   | 'image/png'
   | 'image/jpeg'
 
-export type PeriodRequest = {
-  videoRequest: MediaVideoResolve
-  audioRequest: MeidaAudioResolve
-}
-
-/**
- * @description video类型媒体的分辨率
- */
-export type MediaVideoResolve = {
-  '320*180'?: Array<SegmentRequest | RangeRequest>
-  '512*288'?: Array<SegmentRequest | RangeRequest>
-  '640*360'?: Array<SegmentRequest | RangeRequest>
-  '768*432'?: Array<SegmentRequest | RangeRequest>
-  '1024*576'?: Array<SegmentRequest | RangeRequest>
-  '1280*720'?: Array<SegmentRequest | RangeRequest>
-  '1920*1080'?: Array<SegmentRequest | RangeRequest>
-}
-
-export type MeidaAudioResolve = {
-  [props: string]: Array<SegmentRequest | RangeRequest>
-}
-
-/**
- * @description 用于请求某一个资源的一部分,范围请求
- */
-export type RangeRequest = {
-  type: 'range'
-  url: string
-  range?: string
-}
-
-/**
- * @description 请求整个媒体段
- */
-export type SegmentRequest = {
-  type: 'segement'
-  url: string
-}
 
 export type MpdDocument = {
   tag: 'Document'
@@ -59,13 +21,14 @@ export type MpdDocument = {
  */
 export type Mpd = {
   tag: 'MPD'
-  type: 'static' | 'dynamic'
-  children: Array<Period>
-  maxSegmentDuration: string | null
-  availabilityStartTime: string | null
-  mediaPresentationDuration: string | null
-  minBufferTime: string | null
-  minimumUpdatePeriod: string | null
+  type?: 'static' | 'dynamic'
+  __children?: Array<Period>
+  maxSegmentDuration?: string
+  availabilityStartTime?: string
+  mediaPresentationDuration?: string
+  minBufferTime?: string
+  minimumUpdatePeriod?: string
+  [props: string]: any
 }
 
 export type Period = {
@@ -93,22 +56,26 @@ export type AdaptationSet = {
  */
 export type SegmentTemplate = {
   tag: 'SegmentTemplate'
-  initialization: string | null
-  media: string | null
+  initialization?: string
+  media?: string
+  timescale?: number
+  duration?: number
+  [props: string]: any
 }
 /**
  * @description width * height --> 视频的分辨率
  */
 export type Representation = {
   tag: 'Representation'
-  bandWidth: number | null
-  codecs: string | null
-  audioSamplingRate: string | null
-  id: string | null
-  width: number | null
-  height: number | null
-  mimeType: MediaType | null
+  bandWidth?: number
+  codecs?: string
+  audioSamplingRate?: string
+  id?: string
+  width?: number
+  height?: number
+  mimeType?: MediaType
   children?: Array<BaseURL | SegmentBase | SegmentList>
+  [props: string]: any
 }
 
 export type SegmentBase = {

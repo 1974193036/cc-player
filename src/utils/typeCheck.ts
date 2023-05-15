@@ -7,7 +7,9 @@ import {
   SegmentList,
   Initialization,
   SegmentURL,
-  SegmentBase
+  SegmentBase,
+  Mpd,
+  Period
 } from '../types/dash/MpdFile'
 
 /**
@@ -24,6 +26,15 @@ export function checkMediaType(s: any): s is MediaType {
     s === 'image/png' ||
     s === 'image/jpeg'
   )
+}
+
+export function checkMpd(s: any): s is Mpd {
+  if (s.tag === 'MPD') return true
+  return false
+}
+
+export function checkPeriod(s: any): s is Period {
+  return s.tag === 'Period'
 }
 
 /**
@@ -70,25 +81,4 @@ export function checkSegmentURL(s: any): s is SegmentURL {
 
 export function checkSegmentBase(s: any): s is SegmentBase {
   return s.tag === 'SegmentBase'
-}
-
-export let checkUtils = {
-  checkMediaType,
-  checkBaseURL,
-  checkAdaptationSet,
-  checkSegmentTemplate,
-  checkRepresentation,
-  checkSegmentList,
-  checkInitialization,
-  checkSegmentURL,
-  checkSegmentBase
-}
-
-export function findSpecificType(array: Array<unknown>, type: string): boolean {
-  array.forEach((item) => {
-    if (checkUtils[`check${type}`] && checkUtils[`check${type}`].call(this, item)) {
-      return true
-    }
-  })
-  return false
 }

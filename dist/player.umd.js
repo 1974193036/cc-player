@@ -3114,9 +3114,9 @@
   // 解析MPD文件的时间字符串
   function parseDuration(pt) {
     // Parse time from format "PT#H#M##.##S"
-    // PT193.680S
-    // PT10H22M193.08S
-    var hours, minutes, seconds;
+    var hours = 0,
+      minutes = 0,
+      seconds = 0;
     for (var i = pt.length - 1; i >= 0; i--) {
       if (pt[i] === 'S') {
         var j = i;
@@ -3158,6 +3158,13 @@
     if (!s) return true;
     return s === 'video/mp4' || s === 'audio/mp4' || s === 'text/html' || s === 'text/xml' || s === 'text/plain' || s === 'image/png' || s === 'image/jpeg';
   }
+  function checkMpd(s) {
+    if (s.tag === 'MPD') return true;
+    return false;
+  }
+  function checkPeriod(s) {
+    return s.tag === 'Period';
+  }
   /**
    * @description 类型守卫函数
    */
@@ -3198,26 +3205,6 @@
   }
   function checkSegmentBase(s) {
     return s.tag === 'SegmentBase';
-  }
-  var checkUtils = {
-    checkMediaType: checkMediaType,
-    checkBaseURL: checkBaseURL,
-    checkAdaptationSet: checkAdaptationSet,
-    checkSegmentTemplate: checkSegmentTemplate,
-    checkRepresentation: checkRepresentation,
-    checkSegmentList: checkSegmentList,
-    checkInitialization: checkInitialization,
-    checkSegmentURL: checkSegmentURL,
-    checkSegmentBase: checkSegmentBase
-  };
-  function findSpecificType(array, type) {
-    var _this = this;
-    _forEachInstanceProperty(array).call(array, function (item) {
-      if (checkUtils["check".concat(type)] && checkUtils["check".concat(type)].call(_this, item)) {
-        return true;
-      }
-    });
-    return false;
   }
 
   function string2booolean(s) {
@@ -4837,8 +4824,8 @@
       key: "setup",
       value: function setup() {}
     }, {
-      key: "loadManifest",
-      value: function loadManifest(config) {
+      key: "load",
+      value: function load(config) {
         var request = config.request;
         var xhr = new XMLHttpRequest();
         if (request.header) {
@@ -4871,7 +4858,7 @@
     }]);
     return XHRLoader;
   }();
-  var factory$4 = FactoryMaker.getSingleFactory(XHRLoader);
+  var factory$8 = FactoryMaker.getSingleFactory(XHRLoader);
 
   var $ = _export;
   var $filter = arrayIteration.filter;
@@ -4984,7 +4971,7 @@
     }]);
     return EventBus;
   }();
-  var factory$3 = FactoryMaker.getSingleFactory(EventBus);
+  var factory$7 = FactoryMaker.getSingleFactory(EventBus);
 
   var EventConstants = {
     MANIFEST_LOADED: 'manifestLoaded'
@@ -5002,42 +4989,42 @@
     _createClass(URLLoader, [{
       key: "_loadManifest",
       value: function _loadManifest(config) {
-        this.xhrLoader.loadManifest(config);
+        this.xhrLoader.load(config);
       }
     }, {
       key: "setup",
       value: function setup() {
         // 单例模式
         // this.xhrLoader = new XHRLoader({context: {}}, ...args)
-        this.xhrLoader = factory$4({}).getInstance();
+        this.xhrLoader = factory$8({}).getInstance();
         // 单例模式
         // this.eventBus = new EventBus({context: {}}, ...args)
-        this.eventBus = factory$3({}).getInstance();
+        this.eventBus = factory$7({}).getInstance();
       }
       // 每调用一次load函数就发送一次请求
     }, {
       key: "load",
-      value: function load(config) {
+      value: function load(config, type) {
         //一个HTTPRequest对象才对应一个请求
         var request = new HTTPRequest(config);
         var ctx = this;
-        this._loadManifest({
-          request: request,
-          success: function success(data) {
-            request.getResponseTime = new Date().getTime();
-            ctx.eventBus.trigger(EventConstants.MANIFEST_LOADED, data);
-            // console.log(this, data)
-          },
-
-          error: function error(_error) {
-            console.log(this, _error);
-          }
-        });
+        if (type === 'Manifest') {
+          this._loadManifest({
+            request: request,
+            success: function success(data) {
+              request.getResponseTime = new Date().getTime();
+              ctx.eventBus.trigger(EventConstants.MANIFEST_LOADED, data);
+            },
+            error: function error(_error) {
+              console.log(this, _error);
+            }
+          });
+        }
       }
     }]);
     return URLLoader;
   }();
-  var factory$2 = FactoryMaker.getSingleFactory(URLLoader);
+  var factory$6 = FactoryMaker.getSingleFactory(URLLoader);
 
   var DOMNodeTypes;
   (function (DOMNodeTypes) {
@@ -5048,27 +5035,176 @@
     DOMNodeTypes[DOMNodeTypes["DOCUMENT_NODE"] = 9] = "DOCUMENT_NODE";
   })(DOMNodeTypes || (DOMNodeTypes = {}));
 
+  /**
+   * @description 该类仅用于处理MPD文件中具有SegmentTemplate此种情况
+   */
+  var SegmentTemplateParser = /*#__PURE__*/function () {
+    function SegmentTemplateParser(ctx) {
+      _classCallCheck(this, SegmentTemplateParser);
+      _defineProperty(this, "config", void 0);
+      _defineProperty(this, "dashParser", void 0);
+      this.config = ctx.context;
+      this.setup();
+    }
+    _createClass(SegmentTemplateParser, [{
+      key: "setup",
+      value: function setup() {}
+    }, {
+      key: "parse",
+      value: function parse(Mpd) {
+        DashParser.setDurationForRepresentation(Mpd);
+        this.setSegmentDurationForRepresentation(Mpd);
+        this.parseNodeSegmentTemplate(Mpd);
+      }
+    }, {
+      key: "setSegmentDurationForRepresentation",
+      value: function setSegmentDurationForRepresentation(Mpd) {
+        var _context;
+        var maxSegmentDuration = switchToSeconds(parseDuration(Mpd.maxSegmentDuration));
+        _forEachInstanceProperty(_context = Mpd['Period_asArray']).call(_context, function (Period) {
+          var _context2;
+          _forEachInstanceProperty(_context2 = Period['AdaptationSet_asArray']).call(_context2, function (AdaptationSet) {
+            var _context3;
+            _forEachInstanceProperty(_context3 = AdaptationSet['Representation_asArray']).call(_context3, function (Representation) {
+              if (Representation['SegmentTemplate']) {
+                if (Representation['SegmentTemplate'].duration) {
+                  var duration = Representation['SegmentTemplate'].duration;
+                  var timescale = Representation['SegmentTemplate'].timescale || 1;
+                  Representation.segmentDuration = (duration / timescale).toFixed(1);
+                } else {
+                  if (maxSegmentDuration) {
+                    Representation.segmentDuration = maxSegmentDuration;
+                  } else {
+                    throw new Error('MPD文件格式错误');
+                  }
+                }
+              }
+            });
+          });
+        });
+      }
+    }, {
+      key: "parseNodeSegmentTemplate",
+      value: function parseNodeSegmentTemplate(Mpd) {
+        var _context4,
+          _this = this;
+        _forEachInstanceProperty(_context4 = Mpd['Period_asArray']).call(_context4, function (Period) {
+          var _context5;
+          _forEachInstanceProperty(_context5 = Period['AdaptationSet_asArray']).call(_context5, function (AdaptationSet) {
+            var _context6;
+            _forEachInstanceProperty(_context6 = AdaptationSet['Representation_asArray']).call(_context6, function (Representation) {
+              var SegmentTemplate = Representation['SegmentTemplate'];
+              if (SegmentTemplate) {
+                _this.generateInitializationURL(SegmentTemplate, Representation);
+                _this.generateMediaURL(SegmentTemplate, Representation);
+              }
+            });
+          });
+        });
+      }
+    }, {
+      key: "generateInitializationURL",
+      value: function generateInitializationURL(SegmentTemplate, parent) {
+        var templateReg = /\$(.+?)\$/gi;
+        var initialization = SegmentTemplate.initialization;
+        var r;
+        var formatArray = new Array();
+        var replaceArray = new Array();
+        if (templateReg.test(initialization)) {
+          templateReg.lastIndex = 0;
+          while (r = templateReg.exec(initialization)) {
+            formatArray.push(r[0]);
+            if (r[1] === 'Number') {
+              r[1] = '1';
+            } else if (r[1] === 'RepresentationID') {
+              r[1] = parent.id;
+            }
+            replaceArray.push(r[1]);
+          }
+          var index = 0;
+          while (index < replaceArray.length) {
+            initialization = initialization.replace(formatArray[index], replaceArray[index]);
+            index++;
+          }
+        }
+        parent.initializationURL = initialization;
+      }
+    }, {
+      key: "generateMediaURL",
+      value: function generateMediaURL(SegmentTemplate, parent) {
+        var templateReg = /\$(.+?)\$/gi;
+        var media = SegmentTemplate.media;
+        var r;
+        var formatArray = new Array();
+        var replaceArray = new Array();
+        parent.mediaURL = new Array();
+        if (templateReg.test(media)) {
+          templateReg.lastIndex = 0;
+          while (r = templateReg.exec(media)) {
+            formatArray.push(r[0]);
+            if (r[1] === 'Number') {
+              r[1] = '@Number@';
+            } else if (r[1] === 'RepresentationID') {
+              r[1] = parent.id;
+            }
+            replaceArray.push(r[1]);
+          }
+        }
+        var index = 0;
+        while (index < replaceArray.length) {
+          media = media.replace(formatArray[index], replaceArray[index]);
+          index++;
+        }
+        for (var i = 1; i <= Math.ceil(parent.duration / parent.segmentDuration); i++) {
+          var s = media;
+          while (_includesInstanceProperty(s).call(s, '@Number@')) {
+            s = s.replace('@Number@', "".concat(i));
+          }
+          parent.mediaURL[i] = s;
+        }
+      }
+    }]);
+    return SegmentTemplateParser;
+  }();
+  var factory$5 = FactoryMaker.getSingleFactory(SegmentTemplateParser);
+
   function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-  function _unsupportedIterableToArray(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+  function _unsupportedIterableToArray(o, minLen) { var _context15; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context15 = Object.prototype.toString.call(o)).call(_context15, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
   function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
   var DashParser = /*#__PURE__*/function () {
     function DashParser(ctx) {
       _classCallCheck(this, DashParser);
       _defineProperty(this, "config", {});
+      _defineProperty(this, "segmentTemplateParser", void 0);
       this.config = ctx.context;
+      this.setup();
     }
     _createClass(DashParser, [{
+      key: "setup",
+      value: function setup() {
+        this.segmentTemplateParser = factory$5().getInstance();
+      }
+    }, {
       key: "string2xml",
       value: function string2xml(s) {
         var parser = new DOMParser();
         return parser.parseFromString(s, 'text/xml');
       }
+      // 解析请求到的xml类型的文本字符串，生成MPD对象,方便后续的解析
     }, {
       key: "parse",
       value: function parse(manifest) {
         var xml = this.string2xml(manifest);
-        var Mpd = this.parseDOMChildren('MpdDocument', xml);
+        var Mpd;
+        if (this.config.override) {
+          Mpd = this.parseDOMChildren('Mpd', xml);
+        } else {
+          Mpd = this.parseDOMChildren('MpdDocument', xml);
+        }
         this.mergeNodeSegementTemplate(Mpd);
+        this.setResolvePowerForRepresentation(Mpd);
+        this.segmentTemplateParser.parse(Mpd);
+        console.log(Mpd);
         return Mpd;
       }
     }, {
@@ -5083,6 +5219,7 @@
           // 文档类型的节点一定只有一个子节点
           for (var index in node.childNodes) {
             if (node.childNodes[index].nodeType === DOMNodeTypes.ELEMENT_NODE) {
+              // 如果在配置指定需要忽略根节点的话，也就是忽略MpdDocument节点
               if (!this.config.ignoreRoot) {
                 result.__children[index] = this.parseDOMChildren(node.childNodes[index].nodeName, node.childNodes[index]);
                 result[node.childNodes[index].nodeName] = this.parseDOMChildren(node.childNodes[index].nodeName, node.childNodes[index]);
@@ -5093,6 +5230,7 @@
           }
           return result;
         } else if (node.nodeType === DOMNodeTypes.ELEMENT_NODE) {
+          var _context;
           var _result = {
             tag: node.nodeName,
             __chilren: []
@@ -5112,12 +5250,18 @@
               _result[child.nodeName].push(this.parseDOMChildren(child.nodeName, child));
             }
           }
+          // 2. 将node中的具有多个相同标签的子标签合并为一个数组
           for (var key in _result) {
             if (key !== 'tag' && key !== '__children') {
               _result[key + '_asArray'] = Array.isArray(_result[key]) ? _toConsumableArray(_result[key]) : [_result[key]];
             }
           }
-          // 2.解析node上挂载的属性
+          // 3.如果该Element节点中含有text节点，则需要合并为一个整体
+          _result['#text_asArray'] && _forEachInstanceProperty(_context = _result['#text_asArray']).call(_context, function (text) {
+            _result.__text = _result.__text || '';
+            _result.__text += "".concat(text.text, "/n");
+          });
+          // 4.解析node上挂载的属性
           var _iterator = _createForOfIteratorHelper(node.attributes),
             _step;
           try {
@@ -5160,16 +5304,16 @@
     }, {
       key: "mergeNodeSegementTemplate",
       value: function mergeNodeSegementTemplate(Mpd) {
-        var _context,
+        var _context2,
           _this = this;
         var segmentTemplate = null;
-        _forEachInstanceProperty(_context = Mpd['Period_asArray']).call(_context, function (Period) {
-          var _context2;
+        _forEachInstanceProperty(_context2 = Mpd['Period_asArray']).call(_context2, function (Period) {
+          var _context3;
           if (Period['SegmentTemplate_asArray']) {
             segmentTemplate = Period['SegmentTemplate_asArray'][0];
           }
-          _forEachInstanceProperty(_context2 = Period['AdaptationSet_asArray']).call(_context2, function (AdaptationSet) {
-            var _context3;
+          _forEachInstanceProperty(_context3 = Period['AdaptationSet_asArray']).call(_context3, function (AdaptationSet) {
+            var _context4;
             var template = segmentTemplate;
             if (segmentTemplate) {
               _this.mergeNode(AdaptationSet, segmentTemplate);
@@ -5177,7 +5321,7 @@
             if (AdaptationSet['SegmentTemplate_asArray']) {
               segmentTemplate = AdaptationSet['SegmentTemplate_asArray'][0];
             }
-            _forEachInstanceProperty(_context3 = AdaptationSet['Representation_asArray']).call(_context3, function (Representation) {
+            _forEachInstanceProperty(_context4 = AdaptationSet['Representation_asArray']).call(_context4, function (Representation) {
               if (segmentTemplate) {
                 _this.mergeNode(Representation, segmentTemplate);
               }
@@ -5186,13 +5330,288 @@
           });
         });
       }
+    }, {
+      key: "setResolvePowerForRepresentation",
+      value: function setResolvePowerForRepresentation(Mpd) {
+        var _context5;
+        _forEachInstanceProperty(_context5 = Mpd['Period_asArray']).call(_context5, function (Period) {
+          var _context6;
+          _forEachInstanceProperty(_context6 = Period['AdaptationSet_asArray']).call(_context6, function (AdaptationSet) {
+            var _context7;
+            _forEachInstanceProperty(_context7 = AdaptationSet['Representation_asArray']).call(_context7, function (Representation) {
+              if (Representation.width && Representation.height) {
+                var _context8;
+                Representation.resolvePower = _concatInstanceProperty(_context8 = "".concat(Representation.width, "*")).call(_context8, Representation.height);
+              }
+            });
+          });
+        });
+      }
+    }], [{
+      key: "getTotalDuration",
+      value: function getTotalDuration(Mpd) {
+        var totalDuration = 0;
+        var MpdDuration = NaN;
+        if (Mpd.mediaPresentationDuration) {
+          MpdDuration = switchToSeconds(parseDuration(Mpd.mediaPresentationDuration));
+        }
+        // MPD文件的总时间要么是由Mpd标签上的availabilityStartTime指定，要么是每一个Period上的duration之和
+        if (isNaN(MpdDuration)) {
+          _forEachInstanceProperty(Mpd).call(Mpd, function (Period) {
+            if (Period.duration) {
+              totalDuration += switchToSeconds(parseDuration(Period.duration));
+            } else {
+              throw new Error('MPD文件格式错误');
+            }
+          });
+        } else {
+          totalDuration = MpdDuration;
+        }
+        return totalDuration;
+      }
+      // 给每一个Representation对象上挂载duration属性
+    }, {
+      key: "setDurationForRepresentation",
+      value: function setDurationForRepresentation(Mpd) {
+        if (checkMpd(Mpd)) {
+          //1. 如果只有一个Period
+          if (Mpd['Period_asArray'].length === 1) {
+            var _context9;
+            var totalDuration = DashParser.getTotalDuration(Mpd);
+            _forEachInstanceProperty(_context9 = Mpd['Period_asArray']).call(_context9, function (Period) {
+              var _context10;
+              Period.duration = Period.duration || totalDuration;
+              _forEachInstanceProperty(_context10 = Period['AdaptationSet_asArray']).call(_context10, function (AdaptationSet) {
+                var _context11;
+                AdaptationSet.duration = totalDuration;
+                _forEachInstanceProperty(_context11 = AdaptationSet['Representation_asArray']).call(_context11, function (Representation) {
+                  Representation.duration = totalDuration;
+                });
+              });
+            });
+          } else {
+            var _context12;
+            _forEachInstanceProperty(_context12 = Mpd['Period_asArray']).call(_context12, function (Period) {
+              var _context13;
+              if (!Period.duration) {
+                throw new Error('MPD文件格式错误');
+              }
+              var duration = Period.duration;
+              _forEachInstanceProperty(_context13 = Period['AdaptationSet_asArray']).call(_context13, function (AdaptationSet) {
+                var _context14;
+                AdaptationSet.duration = duration;
+                _forEachInstanceProperty(_context14 = AdaptationSet['Representation_asArray']).call(_context14, function (Representation) {
+                  Representation.duration = duration;
+                });
+              });
+            });
+          }
+        } else if (checkPeriod(Mpd)) ;
+      }
     }]);
     return DashParser;
   }();
-  var factory$1 = FactoryMaker.getSingleFactory(DashParser);
+  var factory$4 = FactoryMaker.getSingleFactory(DashParser);
+
+  var URLNode = /*#__PURE__*/function () {
+    function URLNode(url) {
+      _classCallCheck(this, URLNode);
+      _defineProperty(this, "url", void 0);
+      _defineProperty(this, "children", []);
+      this.url = url || null;
+    }
+    _createClass(URLNode, [{
+      key: "setChild",
+      value: function setChild(index, child) {
+        this.children[index] = child;
+      }
+    }, {
+      key: "getChild",
+      value: function getChild(index) {
+        return this.children[index];
+      }
+    }]);
+    return URLNode;
+  }();
+  var BaseURLParser = /*#__PURE__*/function () {
+    function BaseURLParser(ctx) {
+      _classCallCheck(this, BaseURLParser);
+      _defineProperty(this, "config", {});
+      this.config = ctx.context;
+      this.setup();
+    }
+    _createClass(BaseURLParser, [{
+      key: "setup",
+      value: function setup() {}
+    }, {
+      key: "parseManifestForBaseURL",
+      value: function parseManifestForBaseURL(manifest) {
+        var _context;
+        var root = new URLNode(null);
+        //1. 首先遍历每一个Period，规定BaseURL节点只可能出现在Period,AdaptationSet,Representation中
+        _forEachInstanceProperty(_context = manifest['Period_asArray']).call(_context, function (p, pId) {
+          var _context2;
+          var url = null;
+          if (p['BaseURL_asArray']) {
+            url = p['BaseURL_asArray'][0];
+          }
+          var periodNode = new URLNode(url);
+          root.setChild(pId, periodNode);
+          _forEachInstanceProperty(_context2 = p['AdaptationSet_asArray']).call(_context2, function (a, aId) {
+            var _context3;
+            var url = null;
+            if (a['BaseURL_asArray']) {
+              url = a['BaseURL_asArray'][0];
+            }
+            var adaptationSetNode = new URLNode(url);
+            periodNode.setChild(aId, adaptationSetNode);
+            _forEachInstanceProperty(_context3 = a['Representation_asArray']).call(_context3, function (r, rId) {
+              var url = null;
+              if (r['BaseURL_asArray']) {
+                url = r['BaseURL_asArray'][0];
+              }
+              var representationNode = new URLNode(url);
+              adaptationSetNode.setChild(rId, representationNode);
+            });
+          });
+        });
+        return root;
+      }
+    }, {
+      key: "getBaseURLByPath",
+      value: function getBaseURLByPath(path, urlNode) {
+        var baseURL = '';
+        var root = urlNode;
+        for (var i = 0; i < path.length; i++) {
+          if (path[i] >= root.children.length || path[i] < 0) {
+            throw new Error('传入的路径不正确');
+          }
+          baseURL += root.children[path[i]].url;
+          root = root.children[path[i]];
+        }
+        if (root.children.length > 0) {
+          throw new Error('传入的路径不正确');
+        }
+        return baseURL;
+      }
+    }]);
+    return BaseURLParser;
+  }();
+  var factory$3 = FactoryMaker.getSingleFactory(BaseURLParser);
+
+  var URLUtils = /*#__PURE__*/function () {
+    function URLUtils(ctx) {
+      _classCallCheck(this, URLUtils);
+      _defineProperty(this, "config", void 0);
+      this.config = ctx.context;
+    }
+    _createClass(URLUtils, [{
+      key: "setup",
+      value: function setup() {}
+    }, {
+      key: "resolve",
+      value: function resolve() {
+        var index = 0;
+        var str = '';
+        for (var _len = arguments.length, urls = new Array(_len), _key = 0; _key < _len; _key++) {
+          urls[_key] = arguments[_key];
+        }
+        while (index < urls.length) {
+          var url = urls[index];
+          // 如果url不以/或者./,../这种形式开头的话
+          if (/^(?!(\.|\/))/.test(url)) {
+            if (str[str.length - 1] !== '/') {
+              str += '/';
+            }
+          } else if (/^\/.+/.test(url)) {
+            // 如果url以/开头
+            if (str[str.length - 1] === '/') {
+              url = _sliceInstanceProperty(url).call(url, 1);
+            }
+          } else ;
+          str += url;
+          index++;
+        }
+        return str;
+      }
+    }]);
+    return URLUtils;
+  }();
+  var factory$2 = FactoryMaker.getSingleFactory(URLUtils);
+
+  var StreamController = /*#__PURE__*/function () {
+    function StreamController(ctx) {
+      _classCallCheck(this, StreamController);
+      _defineProperty(this, "config", {});
+      _defineProperty(this, "baseURLParser", void 0);
+      _defineProperty(this, "baseURLPath", void 0);
+      _defineProperty(this, "URLUtils", void 0);
+      this.config = ctx.factory;
+      this.setup();
+    }
+    _createClass(StreamController, [{
+      key: "setup",
+      value: function setup() {
+        this.baseURLParser = factory$3().getInstance();
+        this.URLUtils = factory$2().getInstance();
+      }
+    }, {
+      key: "generateBaseURLPath",
+      value: function generateBaseURLPath(Mpd) {
+        this.baseURLPath = this.baseURLParser.parseManifestForBaseURL(Mpd);
+      }
+    }, {
+      key: "generateSegmentRequestStruct",
+      value: function generateSegmentRequestStruct(Mpd) {
+        this.generateBaseURLPath(Mpd);
+        var baseURL = Mpd['baseURL'] || '';
+        var mpdSegmentRequest = {
+          type: 'MpdSegmentRequest',
+          request: []
+        };
+        for (var i = 0; i < Mpd['Period_asArray'].length; i++) {
+          var Period = Mpd['Period_asArray'][i];
+          var periodSegmentRequest = {
+            VideoSegmentRequest: [],
+            AudioSegmentRequest: []
+          };
+          for (var j = 0; j < Period['AdaptationSet_asArray'].length; j++) {
+            var AdaptationSet = Period['AdaptationSet_asArray'][j];
+            var res = this.generateAdaptationSetVideoOrAudioSegmentRequest(AdaptationSet, baseURL, i, j);
+            if (AdaptationSet.mimeType === 'video/mp4') {
+              periodSegmentRequest.VideoSegmentRequest.push({
+                type: 'video',
+                video: res
+              });
+            } else if (AdaptationSet.mimeType === 'audio/mp4') {
+              periodSegmentRequest.AudioSegmentRequest.push({
+                lang: 'en',
+                audio: res
+              });
+            }
+          }
+          mpdSegmentRequest.request.push(periodSegmentRequest);
+        }
+        return mpdSegmentRequest;
+      }
+    }, {
+      key: "generateAdaptationSetVideoOrAudioSegmentRequest",
+      value: function generateAdaptationSetVideoOrAudioSegmentRequest(AdaptationSet, baseURL, i, j) {
+        var res = {};
+        for (var k = 0; k < AdaptationSet['Representation_asArray'].length; k++) {
+          var Representation = AdaptationSet['Representation_asArray'][k];
+          this.URLUtils.resolve(baseURL, this.baseURLParser.getBaseURLByPath([i, j, k], this.baseURLPath));
+          res[Representation.resolvePower] = [Representation.initializationURL, Representation.mediaURL];
+        }
+        return res;
+      }
+    }]);
+    return StreamController;
+  }();
+  var factory$1 = FactoryMaker.getClassFactory(StreamController);
 
   /**
-   * @description 整个dash处理流程的入口类MediaPlayer
+   * @description 整个dash处理流程的入口类MediaPlayer,类似于项目的中转中心，用于接收任务并且将任务分配给不同的解析器去完成
    */
   var MediaPlayer = /*#__PURE__*/function () {
     function MediaPlayer(ctx) {
@@ -5201,6 +5620,7 @@
       _defineProperty(this, "urlLoader", void 0);
       _defineProperty(this, "eventBus", void 0);
       _defineProperty(this, "dashParser", void 0);
+      _defineProperty(this, "streamController", void 0);
       this.config = ctx.context;
       this.setup();
       this.initializeEvent();
@@ -5211,27 +5631,34 @@
       value: function setup() {
         // 单例模式
         // this.urlLoader = new URLLoader({context: {}}, ...args)
-        this.urlLoader = factory$2().getInstance();
+        this.urlLoader = factory$6().getInstance();
         // 单例模式
         // this.eventBus = new EventBus({context: {}}, ...args)
-        this.eventBus = factory$3().getInstance();
+        this.eventBus = factory$7().getInstance();
         // 单例模式
         // this.dashParser = new DashParser({context: { ignoreRoot: true }}, ...args)
-        this.dashParser = factory$1({
+        // ignoreRoot -> 忽略Document节点，从MPD开始作为根节点
+        this.dashParser = factory$4({
           ignoreRoot: true
         }).getInstance();
+        // 工厂模式
+        // this.streamController = new StreamControllerFactory({context: {}}, ...args)
+        this.streamController = factory$1().create();
       }
     }, {
       key: "initializeEvent",
       value: function initializeEvent() {
         this.eventBus.on(EventConstants.MANIFEST_LOADED, this.onManifestLoaded, this);
       }
+      // MPD文件请求成功获得对应的data数据
     }, {
       key: "onManifestLoaded",
       value: function onManifestLoaded(data) {
         console.log(data);
         var manifest = this.dashParser.parse(data);
         console.log(manifest);
+        var res = this.streamController.generateSegmentRequestStruct(manifest);
+        console.log(res);
       }
       /**
        * @description 发送MPD文件的网络请求，我要做的事情很纯粹，具体实现细节由各个Loader去具体实现
@@ -5243,7 +5670,7 @@
         this.urlLoader.load({
           url: url,
           responseType: 'text'
-        });
+        }, 'Manifest');
       }
     }]);
     return MediaPlayer;
@@ -5534,13 +5961,13 @@
   exports.checkBaseURL = checkBaseURL;
   exports.checkInitialization = checkInitialization;
   exports.checkMediaType = checkMediaType;
+  exports.checkMpd = checkMpd;
+  exports.checkPeriod = checkPeriod;
   exports.checkRepresentation = checkRepresentation;
   exports.checkSegmentBase = checkSegmentBase;
   exports.checkSegmentList = checkSegmentList;
   exports.checkSegmentTemplate = checkSegmentTemplate;
   exports.checkSegmentURL = checkSegmentURL;
-  exports.checkUtils = checkUtils;
-  exports.findSpecificType = findSpecificType;
   exports.formatTime = formatTime;
   exports.icon = icon;
   exports.parseDuration = parseDuration;
