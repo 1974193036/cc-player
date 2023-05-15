@@ -1,6 +1,7 @@
 import { DOMNodeTypes, ManifestObjectNode } from '@/types/dash/DomNodeTypes'
 import { FactoryObject } from '@/types/dash/Factory'
-import FactoryMaker from './FactoryMaker'
+import FactoryMaker from '../FactoryMaker'
+import { SegmentTemplate } from '@/types/dash/MpdFile'
 
 class DashParser {
   private config: FactoryObject = {}
@@ -13,10 +14,11 @@ class DashParser {
     return parser.parseFromString(s, 'text/xml')
   }
 
-  parse(manifest: string): ManifestObjectNode['Document'] | ManifestObjectNode['Mpd'] {
+  parse(manifest: string): ManifestObjectNode['MpdDocument'] | ManifestObjectNode['Mpd'] {
     let xml = this.string2xml(manifest)
-
-    return this.parseDOMChildren('Document', xml)
+    let Mpd = this.parseDOMChildren('MpdDocument', xml)
+    this.mergeNodeSegementTemplate(Mpd)
+    return Mpd
   }
 
   parseDOMChildren<T extends string>(name: T, node: Node): ManifestObjectNode[T] {
@@ -50,7 +52,7 @@ class DashParser {
         __chilren: []
       }
       // 1.解析node的子节点
-      for (let index in node.childNodes) {
+      for (let index = 0; index < node.childNodes.length; index++) {
         let child = node.childNodes[index]
         result.__chilren[index] = this.parseDOMChildren(child.nodeName, child)
         if (!result[child.nodeName]) {
@@ -81,8 +83,50 @@ class DashParser {
       }
     }
   }
+
+  mergeNode(node: FactoryObject, compare: FactoryObject) {
+    if (node[compare.tag]) {
+      let target = node[`${compare.tag}_asArray`]
+      target.forEach((element) => {
+        for (let key in compare) {
+          if (!element.hasOwnProperty(key)) {
+            element[key] = compare[key]
+          }
+        }
+      })
+    } else {
+      node[compare.tag] = compare
+      node.__children = node.__children || []
+      node.__children.push(compare)
+      node[`${compare.tag}__asArray`] = [compare]
+    }
+  }
+
+  mergeNodeSegementTemplate(Mpd: FactoryObject) {
+    let segmentTemplate: SegmentTemplate | null = null
+    Mpd['Period_asArray'].forEach((Period) => {
+      if (Period['SegmentTemplate_asArray']) {
+        segmentTemplate = Period['SegmentTemplate_asArray'][0]
+      }
+      Period['AdaptationSet_asArray'].forEach((AdaptationSet) => {
+        let template = segmentTemplate
+        if (segmentTemplate) {
+          this.mergeNode(AdaptationSet, segmentTemplate)
+        }
+        if (AdaptationSet['SegmentTemplate_asArray']) {
+          segmentTemplate = AdaptationSet['SegmentTemplate_asArray'][0]
+        }
+        AdaptationSet['Representation_asArray'].forEach((Representation) => {
+          if (segmentTemplate) {
+            this.mergeNode(Representation, segmentTemplate)
+          }
+        })
+        segmentTemplate = template
+      })
+    })
+  }
 }
 
-const factory = FactoryMaker.getClassFactory(DashParser)
+const factory = FactoryMaker.getSingleFactory(DashParser)
 export default factory
 export { DashParser }

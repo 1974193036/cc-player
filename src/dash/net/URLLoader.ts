@@ -3,11 +3,14 @@ import { URLConfig, XHRConfig } from '../../types/dash/Net'
 import FactoryMaker from '../FactoryMaker'
 import HTTPRequest from './HTTPRequest'
 import XHRLoaderFactory, { XHRLoader } from './XHRLoader'
+import EventBusFactory, { EventBus } from '../event/EventBus'
+import { EventConstants } from '../event/EventConstants'
 
 class URLLoader {
   private config: FactoryObject = {}
   private xhrLoader: XHRLoader
-  
+  private eventBus: EventBus
+
   constructor(ctx: FactoryObject, ...args: any[]) {
     this.config = ctx.context
     this.setup()
@@ -20,17 +23,22 @@ class URLLoader {
     // 单例模式
     // this.xhrLoader = new XHRLoader({context: {}}, ...args)
     this.xhrLoader = XHRLoaderFactory({}).getInstance()
+    // 单例模式
+    // this.eventBus = new EventBus({context: {}}, ...args)
+    this.eventBus = EventBusFactory({}).getInstance()
   }
   // 每调用一次load函数就发送一次请求
   load(config: URLConfig) {
     //一个HTTPRequest对象才对应一个请求
     let request = new HTTPRequest(config)
+    let ctx = this
 
     this._loadManifest({
       request: request,
       success: function (data) {
         request.getResponseTime = new Date().getTime()
-        console.log(this, data)
+        ctx.eventBus.trigger(EventConstants.MANIFEST_LOADED, data)
+        // console.log(this, data)
       },
       error: function (error) {
         console.log(this, error)

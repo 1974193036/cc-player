@@ -2,6 +2,7 @@ import {
   AdaptationSet,
   Initialization,
   Mpd,
+  MpdDocument,
   Period,
   Representation,
   SegmentBase,
@@ -21,6 +22,7 @@ export enum DOMNodeTypes {
 export type ManifestObjectNode = {
   Document: Document
   Mpd: Mpd
+  MpdDocument: MpdDocument
   Period: Period
   AdaptationSet: AdaptationSet
   Representation: Representation
