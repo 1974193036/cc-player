@@ -1,5 +1,6 @@
 import { FactoryObject } from '@/types/dash/Factory'
 import { Mpd } from '@/types/dash/MpdFile'
+import { ConsumedSegment } from '@/types/dash/Stream'
 import FactoryMaker from './FactoryMaker'
 import URLLoaderFactory, { URLLoader } from './net/URLLoader'
 import EventBusFactory, { EventBus } from './event/EventBus'
@@ -7,6 +8,7 @@ import { EventConstants } from './event/EventConstants'
 import DashParserFactory, { DashParser } from './parser/DashParser'
 import BaseURLParserFactory, { BaseURLParser, URLNode } from './parser/BaseURLParser'
 import StreamControllerFactory, { StreamController } from './stream/StreamController'
+import MediaPlayerBufferFactory, { MediaPlayerBuffer } from './vo/MediaPlayerBuffer'
 import MediaPlayerControllerFactory, { MediaPlayerController } from './vo/MediaPlayerController'
 
 /**
@@ -19,7 +21,9 @@ class MediaPlayer {
   private dashParser: DashParser
   private streamController: StreamController
   private mediaPlayerController: MediaPlayerController
-  private video: HTMLVideoElement;
+  private video: HTMLVideoElement
+  private buffer: MediaPlayerBuffer
+  private firstCurrentRequest: number = 0
 
   constructor(ctx: FactoryObject, ...args: any[]) {
     this.config = ctx.context
@@ -40,11 +44,14 @@ class MediaPlayer {
     // ignoreRoot -> 忽略Document节点，从MPD开始作为根节点
     this.dashParser = DashParserFactory({ ignoreRoot: true }).getInstance()
     // 工厂模式
-    // this.streamController = new StreamController({context: {}}, ...args)
-    this.streamController = StreamControllerFactory().create()
+    // this.streamController = new StreamController({context: { num: 23 }}, ...args)
+    this.streamController = StreamControllerFactory({ num: 23 }).create()
     // 工厂模式
     // this.mediaPlayerController = new MediaPlayerController({context: {}}, ...args)
-    this.mediaPlayerController = MediaPlayerControllerFactory().create()
+    // this.mediaPlayerController = MediaPlayerControllerFactory().create()
+    // 单例模式
+    // this.buffer = new MediaPlayerBuffer({context: {}}, ...args)
+    this.buffer = MediaPlayerBufferFactory().getInstance()
   }
 
   initializeEvent() {
@@ -57,11 +64,21 @@ class MediaPlayer {
     this.eventBus.off(EventConstants.SEGEMTN_LOADED, this.onSegmentLoaded, this)
   }
 
-  onSegmentLoaded(data: ArrayBuffer[]) {
+  onSegmentLoaded(res: ConsumedSegment) {
     console.log('加载Segment成功')
-    console.log(data)
+    this.firstCurrentRequest++
+    if (this.firstCurrentRequest === 23) {
+      this.eventBus.trigger(EventConstants.FIRST_REQUEST_COMPLETED)
+    }
+    let data = res.data
     let videoBuffer = data[0]
     let audioBuffer = data[1]
+    this.buffer.push({
+      video: videoBuffer,
+      audio: audioBuffer,
+      streamId: res.streamId
+    })
+    this.eventBus.trigger(EventConstants.BUFFER_APPENDED)
   }
 
   // MPD文件请求成功获得对应的data数据
@@ -81,6 +98,13 @@ class MediaPlayer {
   public attachSource(url: string) {
     this.eventBus.trigger(EventConstants.SOURCE_ATTACHED, url)
     this.urlLoader.load({ url, responseType: 'text' }, 'Manifest')
+  }
+
+  public attachVideo(video: HTMLVideoElement) {
+    this.video = video
+    // 工厂模式
+    // this.mediaPlayerController = new MediaPlayerController({context: {video: video}}, ...args)
+    this.mediaPlayerController = MediaPlayerControllerFactory({ video: video }).create()
   }
 }
 

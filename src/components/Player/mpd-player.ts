@@ -3,10 +3,12 @@ import { Player } from './player'
 
 export class MpdPlayer {
   constructor(player: Player) {
-    // 工厂模式：每次创建一个新的实例 
+    // 工厂模式：每次创建一个新的实例
     // let mediaPlayer = new MediaPlayer({context: {}}, ...args)
     let mediaPlayer = MediaPlayeFactory().create()
     mediaPlayer.attachSource(player.playerOptions.url)
+    mediaPlayer.attachVideo(player.video)
+    player.video.controls = true
   }
 }
 

@@ -79,3 +79,9 @@ export type MpdSegmentRequest = {
   type: 'MpdSegmentRequest'
   request?: Array<PeriodSegmentRequest>
 }
+
+export type PlayerBuffer = {
+  video: ArrayBuffer
+  audio: ArrayBuffer
+  streamId: number
+}

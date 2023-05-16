@@ -4,7 +4,8 @@ import {
   AdaptationSetAudioSegmentRequest,
   AdaptationSetVideoSegmentRequest,
   MpdSegmentRequest,
-  PeriodSegmentRequest
+  PeriodSegmentRequest,
+  PlayerBuffer
 } from '../../types/dash/Net'
 import FactoryMaker from '../FactoryMaker'
 import BaseURLParserFactory, { BaseURLParser, URLNode } from '../parser/BaseURLParser'
@@ -22,11 +23,16 @@ class StreamController {
   //音视频的分辨率
   private videoResolvePower: string = '1920*1080'
   private audioResolvePower: string = '48000'
-  //整个MPD文件所需要发送请求的结构体对象
+  // 和索引相关的变量
+  private mediaIndex: number = 0
+  private streamId: number = 0
+  private firstRequestNumber: number
+  // 整个MPD文件所需要发送请求的结构体对象
   private segmentRequestStruct: MpdSegmentRequest
   constructor(ctx: FactoryObject, ...args: any[]) {
     this.config = ctx.context
     console.log(this.config)
+    this.firstRequestNumber = this.config.num || 23
     this.setup()
     this.initialEvent()
   }
@@ -40,6 +46,7 @@ class StreamController {
 
   initialEvent() {
     this.eventBus.on(EventConstants.MANIFEST_PARSE_COMPLETED, this.onManifestParseCompleted, this)
+    this.eventBus.on(EventConstants.SEGMENT_CONSUMED, this.onSegmentConsumed, this)
   }
 
   onManifestParseCompleted(mainifest: Mpd) {
@@ -113,21 +120,49 @@ class StreamController {
     return res
   }
 
-  startStream(Mpd: Mpd) {
-    Mpd['Period_asArray'].forEach(async (p, pid) => {
-      let ires = await this.loadInitialSegment(pid)
+  getNumberOfMediaSegmentForPeriod(streamId: number): number {
+    return this.segmentRequestStruct.request[this.streamId].VideoSegmentRequest[0].video[
+      this.videoResolvePower
+    ][1].length
+  }
 
-      this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, ires)
-      let number =
-        this.segmentRequestStruct.request[pid].VideoSegmentRequest[0].video[
-          this.videoResolvePower
-        ][1].length
+  //初始化播放流，一次至多加载23个Segement过来
+  async startStream(Mpd: Mpd) {
+    let p = Mpd['Period_asArray'][this.streamId]
 
-      for (let i = 0; i < number; i++) {
-        let mres = await this.loadMediaSegment(pid, i)
-        this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, mres)
-      }
-    })
+    let ires = await this.loadInitialSegment(this.streamId)
+
+    this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, { data: ires, streamId: this.streamId })
+    let number = this.getNumberOfMediaSegmentForPeriod(this.streamId)
+
+    for (
+      let i = 0;
+      i < (number >= this.firstRequestNumber ? this.firstRequestNumber : number);
+      i++
+    ) {
+      let mres = await this.loadMediaSegment(this.streamId, this.mediaIndex)
+      this.mediaIndex++
+      this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, { data: mres, streamId: this.streamId })
+    }
+  }
+
+  //播放器消费一个Segment我就继续请求一个Segment
+  async onSegmentConsumed() {
+    if (!this.segmentRequestStruct.request[this.streamId]) return
+    let total = this.getNumberOfMediaSegmentForPeriod(this.streamId)
+    if (this.mediaIndex >= total) {
+      this.mediaIndex = 0
+      this.streamId++
+    } else {
+      this.mediaIndex++
+    }
+    if (this.segmentRequestStruct.request[this.streamId] === undefined) {
+      console.log('播放完毕')
+      this.eventBus.trigger(EventConstants.MEDIA_PLAYBACK_FINISHED)
+    } else {
+      let mres = await this.loadMediaSegment(this.streamId, this.mediaIndex)
+      this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, { data: mres, streamId: this.streamId })
+    }
   }
 
   //此处的streamId标识具体的Period对象
