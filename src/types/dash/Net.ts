@@ -25,6 +25,7 @@ export type XHRConfig = {
   abort?: Function
   progress?: Function
   error?: Function
+  load?: Function
 }
 
 export type URLConfig = {

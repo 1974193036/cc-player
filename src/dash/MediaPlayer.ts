@@ -15,7 +15,6 @@ import MediaPlayerControllerFactory, { MediaPlayerController } from './vo/MediaP
  * @description 整个dash处理流程的入口类MediaPlayer,类似于项目的中转中心，用于接收任务并且将任务分配给不同的解析器去完成
  */
 class MediaPlayer {
-  private config: FactoryObject = {}
   private urlLoader: URLLoader
   private eventBus: EventBus
   private dashParser: DashParser
@@ -23,7 +22,13 @@ class MediaPlayer {
   private mediaPlayerController: MediaPlayerController
   private video: HTMLVideoElement
   private buffer: MediaPlayerBuffer
+
+  // 私有属性
+  private config: FactoryObject = {}
   private firstCurrentRequest: number = 0
+  // 当前视频流的具体ID，也就是在请求第几个Period媒体片段
+  private currentStreamId: number = 0
+  // 媒体的总时长 -- duration
   private duration: number = 0
 
   constructor(ctx: FactoryObject, ...args: any[]) {
@@ -66,20 +71,22 @@ class MediaPlayer {
   }
 
   onSegmentLoaded(res: ConsumedSegment) {
-    console.log('加载Segment成功')
+    console.log('加载Segment成功', res.mediaId)
     this.firstCurrentRequest++
     if (this.firstCurrentRequest === 23) {
-      // this.eventBus.trigger(EventConstants.FIRST_REQUEST_COMPLETED)
+      this.eventBus.trigger(EventConstants.FIRST_REQUEST_COMPLETED)
     }
     let data = res.data
+    let id = res.streamId
     let videoBuffer = data[0]
     let audioBuffer = data[1]
+    this.currentStreamId = id
     this.buffer.push({
       video: videoBuffer,
       audio: audioBuffer,
       streamId: res.streamId
     })
-    this.eventBus.trigger(EventConstants.BUFFER_APPENDED)
+    this.eventBus.trigger(EventConstants.BUFFER_APPENDED, this.currentStreamId)
   }
 
   // MPD文件请求成功获得对应的data数据
@@ -90,7 +97,7 @@ class MediaPlayer {
     // let res = this.streamController.generateSegmentRequestStruct(manifest as Mpd)
     // console.log(res)
     this.duration = this.dashParser.getTotalDuration(manifest as Mpd)
-    this.eventBus.trigger(EventConstants.MANIFEST_PARSE_COMPLETED, manifest, this.duration)
+    this.eventBus.trigger(EventConstants.MANIFEST_PARSE_COMPLETED, manifest, this.duration, manifest)
   }
 
   /**

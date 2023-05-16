@@ -8,6 +8,7 @@ export default class HTTPRequest {
   header: RequestHeader | null
   method: RequestMethod | null
   responseType: ResponseType | null
+  xhr?: XMLHttpRequest
   constructor(config: FactoryObject) {
     this.sendRequestTime = new Date().getTime()
     this.url = config.url

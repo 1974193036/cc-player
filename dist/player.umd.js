@@ -4090,14 +4090,14 @@
 
   var _Array$isArray = /*@__PURE__*/getDefaultExportFromCjs(isArray$2);
 
-  function _arrayLikeToArray$1(arr, len) {
+  function _arrayLikeToArray$2(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
     for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
     return arr2;
   }
 
   function _arrayWithoutHoles(arr) {
-    if (_Array$isArray(arr)) return _arrayLikeToArray$1(arr);
+    if (_Array$isArray(arr)) return _arrayLikeToArray$2(arr);
   }
 
   var classof$3 = classof$b;
@@ -4324,14 +4324,14 @@
     if (typeof _Symbol !== "undefined" && _getIteratorMethod(iter) != null || iter["@@iterator"] != null) return _Array$from(iter);
   }
 
-  function _unsupportedIterableToArray$1(o, minLen) {
+  function _unsupportedIterableToArray$2(o, minLen) {
     var _context;
     if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray$1(o, minLen);
+    if (typeof o === "string") return _arrayLikeToArray$2(o, minLen);
     var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
     if (n === "Map" || n === "Set") return _Array$from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen);
   }
 
   function _nonIterableSpread() {
@@ -4339,7 +4339,7 @@
   }
 
   function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$1(arr) || _nonIterableSpread();
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$2(arr) || _nonIterableSpread();
   }
 
   var $$k = _export;
@@ -5962,46 +5962,235 @@
 
   var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
 
+  /* eslint-disable es/no-array-prototype-indexof -- required for testing */
   var $$7 = _export;
-  var $filter = arrayIteration.filter;
-  var arrayMethodHasSpeciesSupport$2 = arrayMethodHasSpeciesSupport$5;
+  var uncurryThis$4 = functionUncurryThisClause;
+  var $indexOf = arrayIncludes.indexOf;
+  var arrayMethodIsStrict = arrayMethodIsStrict$2;
 
-  var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport$2('filter');
+  var nativeIndexOf = uncurryThis$4([].indexOf);
 
-  // `Array.prototype.filter` method
-  // https://tc39.es/ecma262/#sec-array.prototype.filter
-  // with adding support of @@species
-  $$7({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
-    filter: function filter(callbackfn /* , thisArg */) {
-      return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  var NEGATIVE_ZERO = !!nativeIndexOf && 1 / nativeIndexOf([1], 1, -0) < 0;
+  var FORCED = NEGATIVE_ZERO || !arrayMethodIsStrict('indexOf');
+
+  // `Array.prototype.indexOf` method
+  // https://tc39.es/ecma262/#sec-array.prototype.indexof
+  $$7({ target: 'Array', proto: true, forced: FORCED }, {
+    indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
+      var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
+      return NEGATIVE_ZERO
+        // convert -0 to +0
+        ? nativeIndexOf(this, searchElement, fromIndex) || 0
+        : $indexOf(this, searchElement, fromIndex);
     }
   });
 
   var entryVirtual$4 = entryVirtual$b;
 
-  var filter$6 = entryVirtual$4('Array').filter;
+  var indexOf$6 = entryVirtual$4('Array').indexOf;
 
   var isPrototypeOf$4 = objectIsPrototypeOf;
-  var method$4 = filter$6;
+  var method$4 = indexOf$6;
 
   var ArrayPrototype$4 = Array.prototype;
 
-  var filter$5 = function (it) {
-    var own = it.filter;
-    return it === ArrayPrototype$4 || (isPrototypeOf$4(ArrayPrototype$4, it) && own === ArrayPrototype$4.filter) ? method$4 : own;
+  var indexOf$5 = function (it) {
+    var own = it.indexOf;
+    return it === ArrayPrototype$4 || (isPrototypeOf$4(ArrayPrototype$4, it) && own === ArrayPrototype$4.indexOf) ? method$4 : own;
   };
 
-  var parent$i = filter$5;
+  var parent$i = indexOf$5;
 
-  var filter$4 = parent$i;
+  var indexOf$4 = parent$i;
 
-  var parent$h = filter$4;
+  var parent$h = indexOf$4;
 
-  var filter$3 = parent$h;
+  var indexOf$3 = parent$h;
 
-  var parent$g = filter$3;
+  var parent$g = indexOf$3;
 
-  var filter$2 = parent$g;
+  var indexOf$2 = parent$g;
+
+  var indexOf$1 = indexOf$2;
+
+  var indexOf = indexOf$1;
+
+  var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
+
+  var DESCRIPTORS$3 = descriptors;
+  var isArray$1 = isArray$d;
+
+  var $TypeError$1 = TypeError;
+  // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+  var getOwnPropertyDescriptor$1 = Object.getOwnPropertyDescriptor;
+
+  // Safari < 13 does not throw an error in this case
+  var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS$3 && !function () {
+    // makes no sense without proper strict mode support
+    if (this !== undefined) return true;
+    try {
+      // eslint-disable-next-line es/no-object-defineproperty -- safe
+      Object.defineProperty([], 'length', { writable: false }).length = 1;
+    } catch (error) {
+      return error instanceof TypeError;
+    }
+  }();
+
+  var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
+    if (isArray$1(O) && !getOwnPropertyDescriptor$1(O, 'length').writable) {
+      throw $TypeError$1('Cannot set read only .length');
+    } return O.length = length;
+  } : function (O, length) {
+    return O.length = length;
+  };
+
+  var tryToString = tryToString$6;
+
+  var $TypeError = TypeError;
+
+  var deletePropertyOrThrow$1 = function (O, P) {
+    if (!delete O[P]) throw $TypeError('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
+  };
+
+  var $$6 = _export;
+  var toObject = toObject$9;
+  var toAbsoluteIndex = toAbsoluteIndex$4;
+  var toIntegerOrInfinity = toIntegerOrInfinity$4;
+  var lengthOfArrayLike = lengthOfArrayLike$8;
+  var setArrayLength = arraySetLength;
+  var doesNotExceedSafeInteger = doesNotExceedSafeInteger$2;
+  var arraySpeciesCreate = arraySpeciesCreate$3;
+  var createProperty = createProperty$5;
+  var deletePropertyOrThrow = deletePropertyOrThrow$1;
+  var arrayMethodHasSpeciesSupport$2 = arrayMethodHasSpeciesSupport$5;
+
+  var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport$2('splice');
+
+  var max = Math.max;
+  var min = Math.min;
+
+  // `Array.prototype.splice` method
+  // https://tc39.es/ecma262/#sec-array.prototype.splice
+  // with adding support of @@species
+  $$6({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
+    splice: function splice(start, deleteCount /* , ...items */) {
+      var O = toObject(this);
+      var len = lengthOfArrayLike(O);
+      var actualStart = toAbsoluteIndex(start, len);
+      var argumentsLength = arguments.length;
+      var insertCount, actualDeleteCount, A, k, from, to;
+      if (argumentsLength === 0) {
+        insertCount = actualDeleteCount = 0;
+      } else if (argumentsLength === 1) {
+        insertCount = 0;
+        actualDeleteCount = len - actualStart;
+      } else {
+        insertCount = argumentsLength - 2;
+        actualDeleteCount = min(max(toIntegerOrInfinity(deleteCount), 0), len - actualStart);
+      }
+      doesNotExceedSafeInteger(len + insertCount - actualDeleteCount);
+      A = arraySpeciesCreate(O, actualDeleteCount);
+      for (k = 0; k < actualDeleteCount; k++) {
+        from = actualStart + k;
+        if (from in O) createProperty(A, k, O[from]);
+      }
+      A.length = actualDeleteCount;
+      if (insertCount < actualDeleteCount) {
+        for (k = actualStart; k < len - actualDeleteCount; k++) {
+          from = k + actualDeleteCount;
+          to = k + insertCount;
+          if (from in O) O[to] = O[from];
+          else deletePropertyOrThrow(O, to);
+        }
+        for (k = len; k > len - actualDeleteCount + insertCount; k--) deletePropertyOrThrow(O, k - 1);
+      } else if (insertCount > actualDeleteCount) {
+        for (k = len - actualDeleteCount; k > actualStart; k--) {
+          from = k + actualDeleteCount - 1;
+          to = k + insertCount - 1;
+          if (from in O) O[to] = O[from];
+          else deletePropertyOrThrow(O, to);
+        }
+      }
+      for (k = 0; k < insertCount; k++) {
+        O[k + actualStart] = arguments[k + 2];
+      }
+      setArrayLength(O, len - actualDeleteCount + insertCount);
+      return A;
+    }
+  });
+
+  var entryVirtual$3 = entryVirtual$b;
+
+  var splice$7 = entryVirtual$3('Array').splice;
+
+  var isPrototypeOf$3 = objectIsPrototypeOf;
+  var method$3 = splice$7;
+
+  var ArrayPrototype$3 = Array.prototype;
+
+  var splice$6 = function (it) {
+    var own = it.splice;
+    return it === ArrayPrototype$3 || (isPrototypeOf$3(ArrayPrototype$3, it) && own === ArrayPrototype$3.splice) ? method$3 : own;
+  };
+
+  var parent$f = splice$6;
+
+  var splice$5 = parent$f;
+
+  var parent$e = splice$5;
+
+  var splice$4 = parent$e;
+
+  var parent$d = splice$4;
+
+  var splice$3 = parent$d;
+
+  var splice$2 = splice$3;
+
+  var splice$1 = splice$2;
+
+  var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice$1);
+
+  var $$5 = _export;
+  var $filter = arrayIteration.filter;
+  var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
+
+  var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('filter');
+
+  // `Array.prototype.filter` method
+  // https://tc39.es/ecma262/#sec-array.prototype.filter
+  // with adding support of @@species
+  $$5({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
+    filter: function filter(callbackfn /* , thisArg */) {
+      return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    }
+  });
+
+  var entryVirtual$2 = entryVirtual$b;
+
+  var filter$6 = entryVirtual$2('Array').filter;
+
+  var isPrototypeOf$2 = objectIsPrototypeOf;
+  var method$2 = filter$6;
+
+  var ArrayPrototype$2 = Array.prototype;
+
+  var filter$5 = function (it) {
+    var own = it.filter;
+    return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.filter) ? method$2 : own;
+  };
+
+  var parent$c = filter$5;
+
+  var filter$4 = parent$c;
+
+  var parent$b = filter$4;
+
+  var filter$3 = parent$b;
+
+  var parent$a = filter$3;
+
+  var filter$2 = parent$a;
 
   var filter$1 = filter$2;
 
@@ -6073,7 +6262,7 @@
     }]);
     return EventBus;
   }();
-  var factory$a = FactoryMaker.getSingleFactory(EventBus);
+  var factory$b = FactoryMaker.getSingleFactory(EventBus);
 
   var EventConstants = {
     MANIFEST_LOADED: 'manifestLoaded',
@@ -6082,6 +6271,7 @@
     SEGEMTN_LOADED: 'segmentLoaded',
     BUFFER_APPENDED: 'bufferAppended',
     SEGMENT_CONSUMED: 'segmentConsumed',
+    SEGEMTN_REQUEST: 'segmentRequest',
     MEDIA_PLAYBACK_FINISHED: 'mediaPlaybackFinished',
     FIRST_REQUEST_COMPLETED: 'firstRequestCompleted'
   };
@@ -6094,6 +6284,7 @@
     _defineProperty(this, "header", void 0);
     _defineProperty(this, "method", void 0);
     _defineProperty(this, "responseType", void 0);
+    _defineProperty(this, "xhr", void 0);
     this.sendRequestTime = new Date().getTime();
     this.url = config.url;
     this.header = config.header;
@@ -6116,6 +6307,7 @@
       value: function load(config) {
         var request = config.request;
         var xhr = new XMLHttpRequest();
+        request.xhr = xhr;
         if (request.header) {
           for (var key in request.header) {
             xhr.setRequestHeader(key, request.header[key]);
@@ -6146,7 +6338,7 @@
     }]);
     return XHRLoader;
   }();
-  var factory$9 = FactoryMaker.getSingleFactory(XHRLoader);
+  var factory$a = FactoryMaker.getSingleFactory(XHRLoader);
 
   var URLLoader = /*#__PURE__*/function () {
     function URLLoader(ctx) {
@@ -6154,6 +6346,7 @@
       _defineProperty(this, "config", {});
       _defineProperty(this, "xhrLoader", void 0);
       _defineProperty(this, "eventBus", void 0);
+      _defineProperty(this, "xhrArray", []);
       this.config = ctx.context;
       this.setup();
     }
@@ -6170,8 +6363,8 @@
     }, {
       key: "setup",
       value: function setup() {
-        this.xhrLoader = factory$9({}).getInstance();
-        this.eventBus = factory$a({}).getInstance();
+        this.xhrLoader = factory$a({}).getInstance();
+        this.eventBus = factory$b({}).getInstance();
       }
       // 每调用一次load函数就发送一次请求
     }, {
@@ -6180,6 +6373,7 @@
         //一个HTTPRequest对象才对应一个请求
         var request = new HTTPRequest(config);
         var ctx = this;
+        this.xhrArray.push(request);
         if (type === 'Manifest') {
           ctx._loadManifest({
             request: request,
@@ -6189,6 +6383,12 @@
             },
             error: function error(_error) {
               console.log(this, _error);
+            },
+            load: function load() {
+              ctx.deleteRequestFromArray(request, ctx.xhrArray);
+            },
+            abort: function abort() {
+              ctx.deleteRequestFromArray(request, ctx.xhrArray);
             }
           });
         } else if (type === 'Segment') {
@@ -6200,15 +6400,39 @@
               },
               error: function error(_error2) {
                 rej(_error2);
+              },
+              load: function load() {
+                ctx.deleteRequestFromArray(request, ctx.xhrArray);
+              },
+              abort: function abort(e) {
+                ctx.deleteRequestFromArray(request, ctx.xhrArray);
               }
             });
           });
         }
       }
+    }, {
+      key: "abortAllXHR",
+      value: function abortAllXHR() {
+        var _context;
+        _forEachInstanceProperty(_context = this.xhrArray).call(_context, function (xhr) {
+          if (xhr.xhr) {
+            xhr.xhr.abort();
+          }
+        });
+      }
+    }, {
+      key: "deleteRequestFromArray",
+      value: function deleteRequestFromArray(request, array) {
+        var index = _indexOfInstanceProperty(array).call(array, request);
+        if (index !== -1) {
+          _spliceInstanceProperty(array).call(array, index, 1);
+        }
+      }
     }]);
     return URLLoader;
   }();
-  var factory$8 = FactoryMaker.getSingleFactory(URLLoader);
+  var factory$9 = FactoryMaker.getSingleFactory(URLLoader);
 
   var DOMNodeTypes;
   (function (DOMNodeTypes) {
@@ -6320,7 +6544,7 @@
     }]);
     return SegmentTemplateParser;
   }();
-  var factory$7 = FactoryMaker.getSingleFactory(SegmentTemplateParser);
+  var factory$8 = FactoryMaker.getSingleFactory(SegmentTemplateParser);
 
   var URLUtils = /*#__PURE__*/function () {
     function URLUtils(ctx) {
@@ -6370,11 +6594,11 @@
     }]);
     return URLUtils;
   }();
-  var factory$6 = FactoryMaker.getSingleFactory(URLUtils);
+  var factory$7 = FactoryMaker.getSingleFactory(URLUtils);
 
-  function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-  function _unsupportedIterableToArray(o, minLen) { var _context20; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context20 = Object.prototype.toString.call(o)).call(_context20, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-  function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+  function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+  function _unsupportedIterableToArray$1(o, minLen) { var _context22; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context22 = Object.prototype.toString.call(o)).call(_context22, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+  function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
   var DashParser = /*#__PURE__*/function () {
     function DashParser(ctx) {
       _classCallCheck(this, DashParser);
@@ -6390,9 +6614,9 @@
     _createClass(DashParser, [{
       key: "setup",
       value: function setup() {
-        this.segmentTemplateParser = factory$7().getInstance();
-        this.eventBus = factory$a().getInstance();
-        this.URLUtils = factory$6().getInstance();
+        this.segmentTemplateParser = factory$8().getInstance();
+        this.eventBus = factory$b().getInstance();
+        this.URLUtils = factory$7().getInstance();
       }
     }, {
       key: "initialEvent",
@@ -6480,7 +6704,7 @@
             _result.__text += "".concat(text.text, "/n");
           });
           // 4.解析node上挂载的属性
-          var _iterator = _createForOfIteratorHelper(node.attributes),
+          var _iterator = _createForOfIteratorHelper$1(node.attributes),
             _step;
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -6581,6 +6805,25 @@
         });
       }
     }, {
+      key: "getSegmentDuration",
+      value: function getSegmentDuration(Mpd, streamId) {
+        var _context10;
+        var Period = Mpd['Period_asArray'][streamId];
+        if (!Period) {
+          throw new Error('传入的流不存在');
+        }
+        var segmentDuration = 0;
+        _forEachInstanceProperty(_context10 = Period['AdaptationSet_asArray']).call(_context10, function (AdaptationSet) {
+          var _context11;
+          _forEachInstanceProperty(_context11 = AdaptationSet['Representation_asArray']).call(_context11, function (Representation) {
+            if (Representation.segmentDuration) {
+              segmentDuration = Number(Representation.segmentDuration);
+            }
+          });
+        });
+        return segmentDuration;
+      }
+    }, {
       key: "getTotalDuration",
       value: function getTotalDuration(Mpd) {
         var totalDuration = 0;
@@ -6590,8 +6833,8 @@
         }
         // MPD文件的总时间要么是由Mpd标签上的availabilityStartTime指定，要么是每一个Period上的duration之和
         if (MpdDuration < 0) {
-          var _context10;
-          _forEachInstanceProperty(_context10 = Mpd['Period_asArray']).call(_context10, function (Period) {
+          var _context12;
+          _forEachInstanceProperty(_context12 = Mpd['Period_asArray']).call(_context12, function (Period) {
             if (Period.duration) {
               totalDuration += switchToSeconds(parseDuration(Period.duration));
             } else {
@@ -6609,31 +6852,31 @@
       value: function setDurationForRepresentation(Mpd) {
         //1. 如果只有一个Period
         if (Mpd['Period_asArray'].length === 1) {
-          var _context11;
+          var _context13;
           var totalDuration = this.getTotalDuration(Mpd);
-          _forEachInstanceProperty(_context11 = Mpd['Period_asArray']).call(_context11, function (Period) {
-            var _context12;
+          _forEachInstanceProperty(_context13 = Mpd['Period_asArray']).call(_context13, function (Period) {
+            var _context14;
             Period.duration = Period.duration || totalDuration;
-            _forEachInstanceProperty(_context12 = Period['AdaptationSet_asArray']).call(_context12, function (AdaptationSet) {
-              var _context13;
+            _forEachInstanceProperty(_context14 = Period['AdaptationSet_asArray']).call(_context14, function (AdaptationSet) {
+              var _context15;
               AdaptationSet.duration = totalDuration;
-              _forEachInstanceProperty(_context13 = AdaptationSet['Representation_asArray']).call(_context13, function (Representation) {
+              _forEachInstanceProperty(_context15 = AdaptationSet['Representation_asArray']).call(_context15, function (Representation) {
                 Representation.duration = totalDuration;
               });
             });
           });
         } else {
-          var _context14;
-          _forEachInstanceProperty(_context14 = Mpd['Period_asArray']).call(_context14, function (Period) {
-            var _context15;
+          var _context16;
+          _forEachInstanceProperty(_context16 = Mpd['Period_asArray']).call(_context16, function (Period) {
+            var _context17;
             if (!Period.duration) {
               throw new Error('MPD文件格式错误');
             }
             var duration = Period.duration;
-            _forEachInstanceProperty(_context15 = Period['AdaptationSet_asArray']).call(_context15, function (AdaptationSet) {
-              var _context16;
+            _forEachInstanceProperty(_context17 = Period['AdaptationSet_asArray']).call(_context17, function (AdaptationSet) {
+              var _context18;
               AdaptationSet.duration = duration;
-              _forEachInstanceProperty(_context16 = AdaptationSet['Representation_asArray']).call(_context16, function (Representation) {
+              _forEachInstanceProperty(_context18 = AdaptationSet['Representation_asArray']).call(_context18, function (Representation) {
                 Representation.duration = duration;
               });
             });
@@ -6644,13 +6887,13 @@
     }, {
       key: "setSegmentDurationForRepresentation",
       value: function setSegmentDurationForRepresentation(Mpd) {
-        var _context17;
+        var _context19;
         var maxSegmentDuration = switchToSeconds(parseDuration(Mpd.maxSegmentDuration));
-        _forEachInstanceProperty(_context17 = Mpd['Period_asArray']).call(_context17, function (Period) {
-          var _context18;
-          _forEachInstanceProperty(_context18 = Period['AdaptationSet_asArray']).call(_context18, function (AdaptationSet) {
-            var _context19;
-            _forEachInstanceProperty(_context19 = AdaptationSet['Representation_asArray']).call(_context19, function (Representation) {
+        _forEachInstanceProperty(_context19 = Mpd['Period_asArray']).call(_context19, function (Period) {
+          var _context20;
+          _forEachInstanceProperty(_context20 = Period['AdaptationSet_asArray']).call(_context20, function (AdaptationSet) {
+            var _context21;
+            _forEachInstanceProperty(_context21 = AdaptationSet['Representation_asArray']).call(_context21, function (Representation) {
               if (Representation['SegmentTemplate']) {
                 if (Representation['SegmentTemplate'].duration) {
                   var duration = Representation['SegmentTemplate'].duration;
@@ -6676,7 +6919,47 @@
     }]);
     return DashParser;
   }();
-  var factory$5 = FactoryMaker.getSingleFactory(DashParser);
+  var factory$6 = FactoryMaker.getSingleFactory(DashParser);
+
+  function _arrayWithHoles(arr) {
+    if (_Array$isArray(arr)) return arr;
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    var _i = null == arr ? null : "undefined" != typeof _Symbol && _getIteratorMethod(arr) || arr["@@iterator"];
+    if (null != _i) {
+      var _s,
+        _e,
+        _x,
+        _r,
+        _arr = [],
+        _n = !0,
+        _d = !1;
+      try {
+        if (_x = (_i = _i.call(arr)).next, 0 === i) {
+          if (Object(_i) !== _i) return;
+          _n = !1;
+        } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0);
+      } catch (err) {
+        _d = !0, _e = err;
+      } finally {
+        try {
+          if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+        } finally {
+          if (_d) throw _e;
+        }
+      }
+      return _arr;
+    }
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$2(arr, i) || _nonIterableRest();
+  }
 
   function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     try {
@@ -6730,50 +7013,50 @@
 
   var _typeofExports = _typeof.exports;
 
-  var $$6 = _export;
-  var uncurryThis$4 = functionUncurryThis;
-  var isArray$1 = isArray$d;
+  var $$4 = _export;
+  var uncurryThis$3 = functionUncurryThis;
+  var isArray = isArray$d;
 
-  var nativeReverse = uncurryThis$4([].reverse);
+  var nativeReverse = uncurryThis$3([].reverse);
   var test = [1, 2];
 
   // `Array.prototype.reverse` method
   // https://tc39.es/ecma262/#sec-array.prototype.reverse
   // fix for Safari 12.0 bug
   // https://bugs.webkit.org/show_bug.cgi?id=188794
-  $$6({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
+  $$4({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
     reverse: function reverse() {
       // eslint-disable-next-line no-self-assign -- dirty hack
-      if (isArray$1(this)) this.length = this.length;
+      if (isArray(this)) this.length = this.length;
       return nativeReverse(this);
     }
   });
 
-  var entryVirtual$3 = entryVirtual$b;
+  var entryVirtual$1 = entryVirtual$b;
 
-  var reverse$6 = entryVirtual$3('Array').reverse;
+  var reverse$6 = entryVirtual$1('Array').reverse;
 
-  var isPrototypeOf$3 = objectIsPrototypeOf;
-  var method$3 = reverse$6;
+  var isPrototypeOf$1 = objectIsPrototypeOf;
+  var method$1 = reverse$6;
 
-  var ArrayPrototype$3 = Array.prototype;
+  var ArrayPrototype$1 = Array.prototype;
 
   var reverse$5 = function (it) {
     var own = it.reverse;
-    return it === ArrayPrototype$3 || (isPrototypeOf$3(ArrayPrototype$3, it) && own === ArrayPrototype$3.reverse) ? method$3 : own;
+    return it === ArrayPrototype$1 || (isPrototypeOf$1(ArrayPrototype$1, it) && own === ArrayPrototype$1.reverse) ? method$1 : own;
   };
 
-  var parent$f = reverse$5;
+  var parent$9 = reverse$5;
 
-  var reverse$4 = parent$f;
+  var reverse$4 = parent$9;
 
-  var parent$e = reverse$4;
+  var parent$8 = reverse$4;
 
-  var reverse$3 = parent$e;
+  var reverse$3 = parent$8;
 
-  var parent$d = reverse$3;
+  var parent$7 = reverse$3;
 
-  var reverse$2 = parent$d;
+  var reverse$2 = parent$7;
 
   var reverse$1 = reverse$2;
 
@@ -7116,46 +7399,46 @@
 
   var _regeneratorRuntime = /*@__PURE__*/getDefaultExportFromCjs(regenerator);
 
-  var $$5 = _export;
+  var $$3 = _export;
   var $map = arrayIteration.map;
-  var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
+  var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$5;
 
-  var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('map');
+  var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map');
 
   // `Array.prototype.map` method
   // https://tc39.es/ecma262/#sec-array.prototype.map
   // with adding support of @@species
-  $$5({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
+  $$3({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
     map: function map(callbackfn /* , thisArg */) {
       return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
     }
   });
 
-  var entryVirtual$2 = entryVirtual$b;
+  var entryVirtual = entryVirtual$b;
 
-  var map$6 = entryVirtual$2('Array').map;
+  var map$6 = entryVirtual('Array').map;
 
-  var isPrototypeOf$2 = objectIsPrototypeOf;
-  var method$2 = map$6;
+  var isPrototypeOf = objectIsPrototypeOf;
+  var method = map$6;
 
-  var ArrayPrototype$2 = Array.prototype;
+  var ArrayPrototype = Array.prototype;
 
   var map$5 = function (it) {
     var own = it.map;
-    return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.map) ? method$2 : own;
+    return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.map) ? method : own;
   };
 
-  var parent$c = map$5;
+  var parent$6 = map$5;
 
-  var map$4 = parent$c;
+  var map$4 = parent$6;
 
-  var parent$b = map$4;
+  var parent$5 = map$4;
 
-  var map$3 = parent$b;
+  var map$3 = parent$5;
 
-  var parent$a = map$3;
+  var parent$4 = map$3;
 
-  var map$2 = parent$a;
+  var map$2 = parent$4;
 
   var map$1 = map$2;
 
@@ -7249,7 +7532,104 @@
     }]);
     return BaseURLParser;
   }();
-  var factory$4 = FactoryMaker.getSingleFactory(BaseURLParser);
+  var factory$5 = FactoryMaker.getSingleFactory(BaseURLParser);
+
+  function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+  function _unsupportedIterableToArray(o, minLen) { var _context; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+  function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+  var TimeRangeUtils = /*#__PURE__*/function () {
+    function TimeRangeUtils(ctx) {
+      _classCallCheck(this, TimeRangeUtils);
+      _defineProperty(this, "config", {});
+      _defineProperty(this, "dashParser", void 0);
+      this.config = ctx.context;
+      this.setup();
+    }
+    _createClass(TimeRangeUtils, [{
+      key: "setup",
+      value: function setup() {
+        this.dashParser = factory$6().getInstance();
+      }
+      /**
+       * @description 返回特定stream之前的所有stream的时间总和
+       * @param streamId
+       * @param Mpd
+       * @returns {number} Number
+       */
+    }, {
+      key: "getSummaryTimeBeforeStream",
+      value: function getSummaryTimeBeforeStream(streamId, Mpd) {
+        if (streamId === 0) return 0;
+        var Period = Mpd['Period_asArray'];
+        var sum = 0;
+        for (var i = 0; i < streamId; i++) {
+          sum += Period[i].duration;
+        }
+        return sum;
+      }
+    }, {
+      key: "getOffestTimeOfMediaSegment",
+      value: function getOffestTimeOfMediaSegment(streamId, mediaId, Mpd) {
+        var beforeTime = this.getSummaryTimeBeforeStream(streamId, Mpd);
+        var segmentDuration = this.dashParser.getSegmentDuration(Mpd, streamId);
+        return beforeTime + segmentDuration * (mediaId + 1);
+      }
+    }, {
+      key: "inVideoBuffered",
+      value: function inVideoBuffered(time, ranges) {
+        var _iterator = _createForOfIteratorHelper(ranges),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var range = _step.value;
+            if (time >= range.start && time <= range.end) return true;
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+        return false;
+      }
+    }, {
+      key: "inSpecificStreamRange",
+      value: function inSpecificStreamRange(streamId, currentTime, Mpd) {
+        var totalTime = this.dashParser.getTotalDuration(Mpd);
+        if (currentTime > totalTime) return false;
+        var start = this.getSummaryTimeBeforeStream(streamId, Mpd);
+        var end = start + Mpd['Period_asArray'][streamId].duration;
+        if (currentTime < start || currentTime > end) return false;
+        return true;
+      }
+    }, {
+      key: "getSegmentAndStreamIndexByTime",
+      value: function getSegmentAndStreamIndexByTime(streamId, currentTime, Mpd) {
+        if (this.inSpecificStreamRange(streamId, currentTime, Mpd)) {
+          var segmentDuration = this.dashParser.getSegmentDuration(Mpd, streamId);
+          console.log(segmentDuration);
+          var index = Math.floor(currentTime / segmentDuration);
+          return [streamId, index];
+        } else {
+          var totalTime = this.dashParser.getTotalDuration(Mpd);
+          if (currentTime > totalTime) {
+            throw new Error('传入的当前时间大于媒体的总时长');
+          }
+          var sum = 0;
+          for (var i = 0; i < Mpd['Period_asArray'].length; i++) {
+            var Period = Mpd['Period_asArray'][i];
+            sum += Period.duration;
+            if (sum > currentTime) {
+              var _segmentDuration = this.dashParser.getSegmentDuration(Mpd, i);
+              var _index = Math.floor(currentTime / _segmentDuration);
+              return [i, _index];
+            }
+          }
+        }
+      }
+    }]);
+    return TimeRangeUtils;
+  }();
+  var factory$4 = FactoryMaker.getSingleFactory(TimeRangeUtils);
 
   var StreamController = /*#__PURE__*/function () {
     function StreamController(ctx) {
@@ -7260,15 +7640,17 @@
       _defineProperty(this, "URLUtils", void 0);
       _defineProperty(this, "eventBus", void 0);
       _defineProperty(this, "urlLoader", void 0);
+      _defineProperty(this, "timeRangeUtils", void 0);
       //音视频的分辨率
       _defineProperty(this, "videoResolvePower", '1920*1080');
       _defineProperty(this, "audioResolvePower", '48000');
       // 和索引相关的变量
-      _defineProperty(this, "mediaIndex", 0);
+      _defineProperty(this, "mediaId", 0);
       _defineProperty(this, "streamId", 0);
       _defineProperty(this, "firstRequestNumber", void 0);
       // 整个MPD文件所需要发送请求的结构体对象
       _defineProperty(this, "segmentRequestStruct", void 0);
+      _defineProperty(this, "Mpd", void 0);
       this.config = ctx.context;
       console.log(this.config);
       this.firstRequestNumber = this.config.num || 23;
@@ -7278,21 +7660,24 @@
     _createClass(StreamController, [{
       key: "setup",
       value: function setup() {
-        this.baseURLParser = factory$4().getInstance();
-        this.URLUtils = factory$6().getInstance();
-        this.eventBus = factory$a().getInstance();
-        this.urlLoader = factory$8().getInstance();
+        this.baseURLParser = factory$5().getInstance();
+        this.URLUtils = factory$7().getInstance();
+        this.eventBus = factory$b().getInstance();
+        this.urlLoader = factory$9().getInstance();
+        this.timeRangeUtils = factory$4().getInstance();
       }
     }, {
       key: "initialEvent",
       value: function initialEvent() {
         this.eventBus.on(EventConstants.MANIFEST_PARSE_COMPLETED, this.onManifestParseCompleted, this);
         this.eventBus.on(EventConstants.SEGMENT_CONSUMED, this.onSegmentConsumed, this);
+        this.eventBus.on(EventConstants.SEGEMTN_REQUEST, this.onSegmentRequest, this);
       }
     }, {
       key: "onManifestParseCompleted",
       value: function onManifestParseCompleted(mainifest) {
         this.segmentRequestStruct = this.generateSegmentRequestStruct(mainifest);
+        this.Mpd = mainifest;
         console.log(this.segmentRequestStruct);
         this.startStream(mainifest);
       }
@@ -7372,7 +7757,7 @@
               case 0:
                 Mpd['Period_asArray'][this.streamId];
                 _context2.next = 3;
-                return this.loadInitialSegment(this.streamId);
+                return this.loadInitialSegment();
               case 3:
                 ires = _context2.sent;
                 this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, {
@@ -7387,13 +7772,14 @@
                   break;
                 }
                 _context2.next = 10;
-                return this.loadMediaSegment(this.streamId, this.mediaIndex);
+                return this.loadMediaSegment();
               case 10:
                 mres = _context2.sent;
-                this.mediaIndex++;
+                this.mediaId++;
                 this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, {
                   data: mres,
-                  streamId: this.streamId
+                  streamId: this.streamId,
+                  mediaId: this.mediaId
                 });
               case 13:
                 i++;
@@ -7409,60 +7795,105 @@
           return _startStream.apply(this, arguments);
         }
         return startStream;
-      }() //播放器消费一个Segment我就继续请求一个Segment
+      }()
+      /**
+       * @description 只有在触发seek事件后才会触发此方法
+       * @param tuple
+       */
     }, {
-      key: "onSegmentConsumed",
+      key: "onSegmentRequest",
       value: function () {
-        var _onSegmentConsumed = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
-          var total, mres;
+        var _onSegmentRequest = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(tuple) {
+          var _tuple, streamId, mediaId, mres;
           return _regeneratorRuntime.wrap(function _callee2$(_context3) {
             while (1) switch (_context3.prev = _context3.next) {
               case 0:
-                if (this.segmentRequestStruct.request[this.streamId]) {
-                  _context3.next = 2;
-                  break;
-                }
-                return _context3.abrupt("return");
-              case 2:
-                total = this.getNumberOfMediaSegmentForPeriod(this.streamId);
-                if (this.mediaIndex >= total) {
-                  this.mediaIndex = 0;
-                  this.streamId++;
-                } else {
-                  this.mediaIndex++;
-                }
-                if (!(this.segmentRequestStruct.request[this.streamId] === undefined)) {
-                  _context3.next = 9;
-                  break;
-                }
-                console.log('播放完毕');
-                this.eventBus.trigger(EventConstants.MEDIA_PLAYBACK_FINISHED);
-                _context3.next = 13;
-                break;
-              case 9:
-                _context3.next = 11;
-                return this.loadMediaSegment(this.streamId, this.mediaIndex);
-              case 11:
+                this.abortAllXHR();
+                _tuple = _slicedToArray(tuple, 2), streamId = _tuple[0], mediaId = _tuple[1];
+                this.streamId = streamId;
+                this.mediaId = mediaId;
+                _context3.next = 6;
+                return this.loadMediaSegment();
+              case 6:
                 mres = _context3.sent;
                 this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, {
                   data: mres,
-                  streamId: this.streamId
+                  streamId: this.streamId,
+                  mediaId: mediaId
                 });
-              case 13:
+              case 8:
               case "end":
                 return _context3.stop();
             }
           }, _callee2, this);
         }));
-        function onSegmentConsumed() {
+        function onSegmentRequest(_x2) {
+          return _onSegmentRequest.apply(this, arguments);
+        }
+        return onSegmentRequest;
+      }() //播放器消费一个Segment我就继续请求一个Segment
+    }, {
+      key: "onSegmentConsumed",
+      value: function () {
+        var _onSegmentConsumed = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(range) {
+          var total, time, mres;
+          return _regeneratorRuntime.wrap(function _callee3$(_context4) {
+            while (1) switch (_context4.prev = _context4.next) {
+              case 0:
+                if (this.segmentRequestStruct.request[this.streamId]) {
+                  _context4.next = 2;
+                  break;
+                }
+                return _context4.abrupt("return");
+              case 2:
+                total = this.getNumberOfMediaSegmentForPeriod(this.streamId);
+                if (this.mediaId >= total) {
+                  this.mediaId = 0;
+                  this.streamId++;
+                } else {
+                  this.mediaId++;
+                }
+                if (!(this.segmentRequestStruct.request[this.streamId] === undefined)) {
+                  _context4.next = 9;
+                  break;
+                }
+                console.log('播放完毕');
+                this.eventBus.trigger(EventConstants.MEDIA_PLAYBACK_FINISHED);
+                _context4.next = 16;
+                break;
+              case 9:
+                // let mres = await this.loadMediaSegment(this.streamId, this.mediaIndex)
+                // this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, { data: mres, streamId: this.streamId })
+                time = this.timeRangeUtils.getOffestTimeOfMediaSegment(this.streamId, this.mediaId, this.Mpd);
+                console.log(time, range);
+                if (this.timeRangeUtils.inVideoBuffered(time, range)) {
+                  _context4.next = 16;
+                  break;
+                }
+                _context4.next = 14;
+                return this.loadMediaSegment();
+              case 14:
+                mres = _context4.sent;
+                this.eventBus.trigger(EventConstants.SEGEMTN_LOADED, {
+                  data: mres,
+                  streamId: this.streamId,
+                  mediaId: this.mediaId
+                });
+              case 16:
+              case "end":
+                return _context4.stop();
+            }
+          }, _callee3, this);
+        }));
+        function onSegmentConsumed(_x3) {
           return _onSegmentConsumed.apply(this, arguments);
         }
         return onSegmentConsumed;
       }() //此处的streamId标识具体的Period对象
     }, {
       key: "loadInitialSegment",
-      value: function loadInitialSegment(streamId) {
-        var stream = this.segmentRequestStruct.request[streamId];
+      value: function loadInitialSegment() {
+        var stream = this.segmentRequestStruct.request[this.streamId];
         // 先默认选择音视频的第一个版本
         var audioRequest = stream.AudioSegmentRequest[0].audio;
         var videoRequest = stream.VideoSegmentRequest[0].video;
@@ -7470,20 +7901,20 @@
       }
     }, {
       key: "loadMediaSegment",
-      value: function loadMediaSegment(streamId, mediaId) {
-        var stream = this.segmentRequestStruct.request[streamId];
+      value: function loadMediaSegment() {
+        var stream = this.segmentRequestStruct.request[this.streamId];
         // 先默认选择音视频的第一个版本
         var audioRequest = stream.AudioSegmentRequest[0].audio;
         var videoRequest = stream.VideoSegmentRequest[0].video;
-        return this.loadSegment(videoRequest[this.videoResolvePower][1][mediaId], audioRequest[this.audioResolvePower][1][mediaId]);
+        return this.loadSegment(videoRequest[this.videoResolvePower][1][this.mediaId], audioRequest[this.audioResolvePower][1][this.mediaId]);
       }
     }, {
       key: "loadSegment",
       value: function () {
-        var _loadSegment = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(videoURL, audioURL) {
+        var _loadSegment = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(videoURL, audioURL) {
           var p1, p2, p;
-          return _regeneratorRuntime.wrap(function _callee3$(_context4) {
-            while (1) switch (_context4.prev = _context4.next) {
+          return _regeneratorRuntime.wrap(function _callee4$(_context5) {
+            while (1) switch (_context5.prev = _context5.next) {
               case 0:
                 p1 = this.urlLoader.load({
                   url: videoURL,
@@ -7493,215 +7924,31 @@
                   url: audioURL,
                   responseType: 'arraybuffer'
                 }, 'Segment');
-                _context4.next = 4;
+                _context5.next = 4;
                 return _Promise.all([p1, p2]);
               case 4:
-                p = _context4.sent;
-                return _context4.abrupt("return", p);
+                p = _context5.sent;
+                return _context5.abrupt("return", p);
               case 6:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
-          }, _callee3, this);
+          }, _callee4, this);
         }));
-        function loadSegment(_x2, _x3) {
+        function loadSegment(_x4, _x5) {
           return _loadSegment.apply(this, arguments);
         }
         return loadSegment;
       }()
+    }, {
+      key: "abortAllXHR",
+      value: function abortAllXHR() {
+        this.urlLoader.abortAllXHR();
+      }
     }]);
     return StreamController;
   }();
   var factory$3 = FactoryMaker.getClassFactory(StreamController);
-
-  /* eslint-disable es/no-array-prototype-indexof -- required for testing */
-  var $$4 = _export;
-  var uncurryThis$3 = functionUncurryThisClause;
-  var $indexOf = arrayIncludes.indexOf;
-  var arrayMethodIsStrict = arrayMethodIsStrict$2;
-
-  var nativeIndexOf = uncurryThis$3([].indexOf);
-
-  var NEGATIVE_ZERO = !!nativeIndexOf && 1 / nativeIndexOf([1], 1, -0) < 0;
-  var FORCED = NEGATIVE_ZERO || !arrayMethodIsStrict('indexOf');
-
-  // `Array.prototype.indexOf` method
-  // https://tc39.es/ecma262/#sec-array.prototype.indexof
-  $$4({ target: 'Array', proto: true, forced: FORCED }, {
-    indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
-      var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
-      return NEGATIVE_ZERO
-        // convert -0 to +0
-        ? nativeIndexOf(this, searchElement, fromIndex) || 0
-        : $indexOf(this, searchElement, fromIndex);
-    }
-  });
-
-  var entryVirtual$1 = entryVirtual$b;
-
-  var indexOf$6 = entryVirtual$1('Array').indexOf;
-
-  var isPrototypeOf$1 = objectIsPrototypeOf;
-  var method$1 = indexOf$6;
-
-  var ArrayPrototype$1 = Array.prototype;
-
-  var indexOf$5 = function (it) {
-    var own = it.indexOf;
-    return it === ArrayPrototype$1 || (isPrototypeOf$1(ArrayPrototype$1, it) && own === ArrayPrototype$1.indexOf) ? method$1 : own;
-  };
-
-  var parent$9 = indexOf$5;
-
-  var indexOf$4 = parent$9;
-
-  var parent$8 = indexOf$4;
-
-  var indexOf$3 = parent$8;
-
-  var parent$7 = indexOf$3;
-
-  var indexOf$2 = parent$7;
-
-  var indexOf$1 = indexOf$2;
-
-  var indexOf = indexOf$1;
-
-  var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
-
-  var DESCRIPTORS$3 = descriptors;
-  var isArray = isArray$d;
-
-  var $TypeError$1 = TypeError;
-  // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-  var getOwnPropertyDescriptor$1 = Object.getOwnPropertyDescriptor;
-
-  // Safari < 13 does not throw an error in this case
-  var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS$3 && !function () {
-    // makes no sense without proper strict mode support
-    if (this !== undefined) return true;
-    try {
-      // eslint-disable-next-line es/no-object-defineproperty -- safe
-      Object.defineProperty([], 'length', { writable: false }).length = 1;
-    } catch (error) {
-      return error instanceof TypeError;
-    }
-  }();
-
-  var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
-    if (isArray(O) && !getOwnPropertyDescriptor$1(O, 'length').writable) {
-      throw $TypeError$1('Cannot set read only .length');
-    } return O.length = length;
-  } : function (O, length) {
-    return O.length = length;
-  };
-
-  var tryToString = tryToString$6;
-
-  var $TypeError = TypeError;
-
-  var deletePropertyOrThrow$1 = function (O, P) {
-    if (!delete O[P]) throw $TypeError('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
-  };
-
-  var $$3 = _export;
-  var toObject = toObject$9;
-  var toAbsoluteIndex = toAbsoluteIndex$4;
-  var toIntegerOrInfinity = toIntegerOrInfinity$4;
-  var lengthOfArrayLike = lengthOfArrayLike$8;
-  var setArrayLength = arraySetLength;
-  var doesNotExceedSafeInteger = doesNotExceedSafeInteger$2;
-  var arraySpeciesCreate = arraySpeciesCreate$3;
-  var createProperty = createProperty$5;
-  var deletePropertyOrThrow = deletePropertyOrThrow$1;
-  var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$5;
-
-  var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
-
-  var max = Math.max;
-  var min = Math.min;
-
-  // `Array.prototype.splice` method
-  // https://tc39.es/ecma262/#sec-array.prototype.splice
-  // with adding support of @@species
-  $$3({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
-    splice: function splice(start, deleteCount /* , ...items */) {
-      var O = toObject(this);
-      var len = lengthOfArrayLike(O);
-      var actualStart = toAbsoluteIndex(start, len);
-      var argumentsLength = arguments.length;
-      var insertCount, actualDeleteCount, A, k, from, to;
-      if (argumentsLength === 0) {
-        insertCount = actualDeleteCount = 0;
-      } else if (argumentsLength === 1) {
-        insertCount = 0;
-        actualDeleteCount = len - actualStart;
-      } else {
-        insertCount = argumentsLength - 2;
-        actualDeleteCount = min(max(toIntegerOrInfinity(deleteCount), 0), len - actualStart);
-      }
-      doesNotExceedSafeInteger(len + insertCount - actualDeleteCount);
-      A = arraySpeciesCreate(O, actualDeleteCount);
-      for (k = 0; k < actualDeleteCount; k++) {
-        from = actualStart + k;
-        if (from in O) createProperty(A, k, O[from]);
-      }
-      A.length = actualDeleteCount;
-      if (insertCount < actualDeleteCount) {
-        for (k = actualStart; k < len - actualDeleteCount; k++) {
-          from = k + actualDeleteCount;
-          to = k + insertCount;
-          if (from in O) O[to] = O[from];
-          else deletePropertyOrThrow(O, to);
-        }
-        for (k = len; k > len - actualDeleteCount + insertCount; k--) deletePropertyOrThrow(O, k - 1);
-      } else if (insertCount > actualDeleteCount) {
-        for (k = len - actualDeleteCount; k > actualStart; k--) {
-          from = k + actualDeleteCount - 1;
-          to = k + insertCount - 1;
-          if (from in O) O[to] = O[from];
-          else deletePropertyOrThrow(O, to);
-        }
-      }
-      for (k = 0; k < insertCount; k++) {
-        O[k + actualStart] = arguments[k + 2];
-      }
-      setArrayLength(O, len - actualDeleteCount + insertCount);
-      return A;
-    }
-  });
-
-  var entryVirtual = entryVirtual$b;
-
-  var splice$7 = entryVirtual('Array').splice;
-
-  var isPrototypeOf = objectIsPrototypeOf;
-  var method = splice$7;
-
-  var ArrayPrototype = Array.prototype;
-
-  var splice$6 = function (it) {
-    var own = it.splice;
-    return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.splice) ? method : own;
-  };
-
-  var parent$6 = splice$6;
-
-  var splice$5 = parent$6;
-
-  var parent$5 = splice$5;
-
-  var splice$4 = parent$5;
-
-  var parent$4 = splice$4;
-
-  var splice$3 = parent$4;
-
-  var splice$2 = splice$3;
-
-  var splice$1 = splice$2;
-
-  var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice$1);
 
   var MediaPlayerBuffer = /*#__PURE__*/function () {
     function MediaPlayerBuffer(ctx) {
@@ -9536,6 +9783,9 @@
       _defineProperty(this, "eventBus", void 0);
       _defineProperty(this, "isFirstRequestCompleted", false);
       _defineProperty(this, "mediaDuration", 0);
+      _defineProperty(this, "timeRangeUtils", void 0);
+      _defineProperty(this, "currentStreamId", 0);
+      _defineProperty(this, "Mpd", void 0);
       this.config = ctx.context;
       if (this.config.video) {
         this.video = this.config.video;
@@ -9553,24 +9803,32 @@
         this.buffer = factory$2().getInstance();
         // 单例模式
         // this.eventBus = new EventBus({context: {}}, ...args)
-        this.eventBus = factory$a().getInstance();
+        this.eventBus = factory$b().getInstance();
+        // 单例模式
+        // this.timeRangeUtils = new TimeRangeUtil({context: {}}, ...args)
+        this.timeRangeUtils = factory$4().getInstance();
       }
     }, {
       key: "initEvent",
       value: function initEvent() {
         var _this = this;
-        this.eventBus.on(EventConstants.BUFFER_APPENDED, function () {
+        this.eventBus.on(EventConstants.BUFFER_APPENDED, function (id) {
           if (!_this.videoSourceBuffer.updating && !_this.audioSourceBuffer.updating) {
             _this.appendSource();
+            _this.currentStreamId = id;
           }
         }, this);
         this.eventBus.on(EventConstants.FIRST_REQUEST_COMPLETED, function () {
           _this.isFirstRequestCompleted = true;
         }, this);
         this.eventBus.on(EventConstants.MEDIA_PLAYBACK_FINISHED, this.onMediaPlaybackFinished, this);
-        this.eventBus.on(EventConstants.MANIFEST_PARSE_COMPLETED, function (manifest, duration) {
+        this.eventBus.on(EventConstants.MANIFEST_PARSE_COMPLETED, function (manifest, duration, Mpd) {
           _this.mediaDuration = duration;
-          if (_this.mediaSource.readyState === 'open') ;
+          _this.Mpd = Mpd;
+          if (_this.mediaSource.readyState === 'open') {
+            // this.mediaSource.duration = duration
+            _this.setMediaSource();
+          }
         }, this);
       }
     }, {
@@ -9579,6 +9837,32 @@
         this.video.src = _URL.createObjectURL(this.mediaSource);
         this.video.pause();
         this.mediaSource.addEventListener('sourceopen', this.onSourceopen.bind(this));
+        // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+        this.video.addEventListener('seeking', this.onMediaSeeking.bind(this));
+      }
+      /**
+       * @description 配置MediaSource的相关选项和属性
+       */
+    }, {
+      key: "setMediaSource",
+      value: function setMediaSource() {
+        this.mediaSource.duration = this.mediaDuration;
+        this.mediaSource.setLiveSeekableRange(0, this.mediaDuration);
+      }
+    }, {
+      key: "getVideoBuffered",
+      value: function getVideoBuffered(video) {
+        var buffer = this.video.buffered;
+        var res = [];
+        for (var i = 0; i < buffer.length; i++) {
+          var start = buffer.start(i);
+          var end = buffer.end(i);
+          res.push({
+            start: start,
+            end: end
+          });
+        }
+        return res;
       }
     }, {
       key: "appendSource",
@@ -9600,10 +9884,32 @@
       value: function appendAudioSource(data) {
         this.audioSourceBuffer.appendBuffer(new Uint8Array(data));
       }
+      /**
+       * @description 当进度条发生跳转时触发
+       * @param { EventTarget} e
+       */
+    }, {
+      key: "onMediaSeeking",
+      value: function onMediaSeeking(e) {
+        var currentTime = this.video.currentTime;
+        console.log(currentTime);
+        var _this$timeRangeUtils$ = this.timeRangeUtils.getSegmentAndStreamIndexByTime(this.currentStreamId, currentTime, this.Mpd),
+          _this$timeRangeUtils$2 = _slicedToArray(_this$timeRangeUtils$, 2),
+          streamId = _this$timeRangeUtils$2[0],
+          mediaId = _this$timeRangeUtils$2[1];
+        console.log(streamId, mediaId);
+        var ranges = this.getVideoBuffered(this.video);
+        if (!this.timeRangeUtils.inVideoBuffered(currentTime, ranges)) {
+          console.log('超出缓存范围');
+          this.buffer.clear();
+          this.eventBus.trigger(EventConstants.SEGEMTN_REQUEST, [streamId, mediaId]);
+        } else {
+          console.log('在缓存范围之内');
+        }
+      }
     }, {
       key: "onSourceopen",
       value: function onSourceopen(e) {
-        this.mediaSource.duration = this.mediaDuration;
         this.videoSourceBuffer = this.mediaSource.addSourceBuffer('video/mp4; codecs="avc1.64001E"');
         this.audioSourceBuffer = this.mediaSource.addSourceBuffer('audio/mp4; codecs="mp4a.40.2"');
         this.videoSourceBuffer.addEventListener('updateend', this.onUpdateend.bind(this));
@@ -9613,16 +9919,17 @@
       key: "onUpdateend",
       value: function onUpdateend() {
         if (!this.videoSourceBuffer.updating && !this.audioSourceBuffer.updating) {
-          // if (this.isFirstRequestCompleted) {
-          //   this.eventBus.trigger(EventConstants.SEGMENT_CONSUMED)
-          // }
+          if (this.isFirstRequestCompleted) {
+            var ranges = this.getVideoBuffered(this.video);
+            this.eventBus.trigger(EventConstants.SEGMENT_CONSUMED, ranges);
+          }
           this.appendSource();
         }
       }
     }, {
       key: "onMediaPlaybackFinished",
       value: function onMediaPlaybackFinished() {
-        this.mediaSource.endOfStream();
+        // this.mediaSource.endOfStream()
         _URL.revokeObjectURL(this.video.src);
         console.log('播放流加载结束');
       }
@@ -9637,7 +9944,6 @@
   var MediaPlayer = /*#__PURE__*/function () {
     function MediaPlayer(ctx) {
       _classCallCheck(this, MediaPlayer);
-      _defineProperty(this, "config", {});
       _defineProperty(this, "urlLoader", void 0);
       _defineProperty(this, "eventBus", void 0);
       _defineProperty(this, "dashParser", void 0);
@@ -9645,7 +9951,12 @@
       _defineProperty(this, "mediaPlayerController", void 0);
       _defineProperty(this, "video", void 0);
       _defineProperty(this, "buffer", void 0);
+      // 私有属性
+      _defineProperty(this, "config", {});
       _defineProperty(this, "firstCurrentRequest", 0);
+      // 当前视频流的具体ID，也就是在请求第几个Period媒体片段
+      _defineProperty(this, "currentStreamId", 0);
+      // 媒体的总时长 -- duration
       _defineProperty(this, "duration", 0);
       this.config = ctx.context;
       this.setup();
@@ -9657,14 +9968,14 @@
       value: function setup() {
         // 单例模式
         // this.urlLoader = new URLLoader({context: {}}, ...args)
-        this.urlLoader = factory$8().getInstance();
+        this.urlLoader = factory$9().getInstance();
         // 单例模式
         // this.eventBus = new EventBus({context: {}}, ...args)
-        this.eventBus = factory$a().getInstance();
+        this.eventBus = factory$b().getInstance();
         // 单例模式
         // this.dashParser = new DashParser({context: { ignoreRoot: true }}, ...args)
         // ignoreRoot -> 忽略Document节点，从MPD开始作为根节点
-        this.dashParser = factory$5({
+        this.dashParser = factory$6({
           ignoreRoot: true
         }).getInstance();
         // 工厂模式
@@ -9694,18 +10005,22 @@
     }, {
       key: "onSegmentLoaded",
       value: function onSegmentLoaded(res) {
-        console.log('加载Segment成功');
+        console.log('加载Segment成功', res.mediaId);
         this.firstCurrentRequest++;
-        if (this.firstCurrentRequest === 23) ;
+        if (this.firstCurrentRequest === 23) {
+          this.eventBus.trigger(EventConstants.FIRST_REQUEST_COMPLETED);
+        }
         var data = res.data;
+        var id = res.streamId;
         var videoBuffer = data[0];
         var audioBuffer = data[1];
+        this.currentStreamId = id;
         this.buffer.push({
           video: videoBuffer,
           audio: audioBuffer,
           streamId: res.streamId
         });
-        this.eventBus.trigger(EventConstants.BUFFER_APPENDED);
+        this.eventBus.trigger(EventConstants.BUFFER_APPENDED, this.currentStreamId);
       }
       // MPD文件请求成功获得对应的data数据
     }, {
@@ -9717,7 +10032,7 @@
         // let res = this.streamController.generateSegmentRequestStruct(manifest as Mpd)
         // console.log(res)
         this.duration = this.dashParser.getTotalDuration(manifest);
-        this.eventBus.trigger(EventConstants.MANIFEST_PARSE_COMPLETED, manifest, this.duration);
+        this.eventBus.trigger(EventConstants.MANIFEST_PARSE_COMPLETED, manifest, this.duration, manifest);
       }
       /**
        * @description 发送MPD文件的网络请求，我要做的事情很纯粹，具体实现细节由各个Loader去具体实现

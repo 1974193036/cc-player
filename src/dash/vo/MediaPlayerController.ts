@@ -4,6 +4,9 @@ import MediaPlayerBufferFactory, { MediaPlayerBuffer } from '../vo/MediaPlayerBu
 import EventBusFactory, { EventBus } from '../event/EventBus'
 import { EventConstants } from '../event/EventConstants'
 import { PlayerBuffer } from '../../types/dash/Net'
+import TimeRangeUtilsFactory, { TimeRangeUtils } from '../utils/TimeRangeUtils'
+import { Mpd } from '../../types/dash/MpdFile'
+import { VideoBuffers } from '../../types/dash/Stream'
 
 class MediaPlayerController {
   private config: FactoryObject = {}
@@ -15,6 +18,9 @@ class MediaPlayerController {
   private eventBus: EventBus
   private isFirstRequestCompleted: boolean = false
   private mediaDuration: number = 0
+  private timeRangeUtils: TimeRangeUtils
+  private currentStreamId: number = 0
+  private Mpd: Mpd
 
   constructor(ctx: FactoryObject, ...args: any[]) {
     this.config = ctx.context
@@ -33,14 +39,18 @@ class MediaPlayerController {
     // 单例模式
     // this.eventBus = new EventBus({context: {}}, ...args)
     this.eventBus = EventBusFactory().getInstance()
+    // 单例模式
+    // this.timeRangeUtils = new TimeRangeUtil({context: {}}, ...args)
+    this.timeRangeUtils = TimeRangeUtilsFactory().getInstance()
   }
 
   initEvent() {
     this.eventBus.on(
       EventConstants.BUFFER_APPENDED,
-      () => {
+      (id: number) => {
         if (!this.videoSourceBuffer.updating && !this.audioSourceBuffer.updating) {
           this.appendSource()
+          this.currentStreamId = id
         }
       },
       this
@@ -58,10 +68,12 @@ class MediaPlayerController {
 
     this.eventBus.on(
       EventConstants.MANIFEST_PARSE_COMPLETED,
-      (manifest, duration) => {
+      (manifest, duration, Mpd) => {
         this.mediaDuration = duration
+        this.Mpd = Mpd
         if (this.mediaSource.readyState === 'open') {
-          this.mediaSource.duration = duration
+          // this.mediaSource.duration = duration
+          this.setMediaSource()
         }
       },
       this
@@ -72,6 +84,27 @@ class MediaPlayerController {
     this.video.src = window.URL.createObjectURL(this.mediaSource)
     this.video.pause()
     this.mediaSource.addEventListener('sourceopen', this.onSourceopen.bind(this))
+    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+    this.video.addEventListener('seeking', this.onMediaSeeking.bind(this))
+  }
+
+  /**
+   * @description 配置MediaSource的相关选项和属性
+   */
+  setMediaSource() {
+    this.mediaSource.duration = this.mediaDuration
+    this.mediaSource.setLiveSeekableRange(0, this.mediaDuration)
+  }
+
+  getVideoBuffered(video: HTMLVideoElement): VideoBuffers {
+    let buffer = this.video.buffered
+    let res: VideoBuffers = []
+    for (let i = 0; i < buffer.length; i++) {
+      let start = buffer.start(i)
+      let end = buffer.end(i)
+      res.push({ start, end })
+    }
+    return res
   }
 
   appendSource() {
@@ -91,8 +124,32 @@ class MediaPlayerController {
     this.audioSourceBuffer.appendBuffer(new Uint8Array(data))
   }
 
+  /**
+   * @description 当进度条发生跳转时触发
+   * @param { EventTarget} e
+   */
+  onMediaSeeking(e) {
+    let currentTime = this.video.currentTime
+    console.log(currentTime)
+    let [streamId, mediaId] = this.timeRangeUtils.getSegmentAndStreamIndexByTime(
+      this.currentStreamId,
+      currentTime,
+      this.Mpd
+    )
+    console.log(streamId, mediaId)
+
+    let ranges = this.getVideoBuffered(this.video)
+    if (!this.timeRangeUtils.inVideoBuffered(currentTime, ranges)) {
+      console.log('超出缓存范围')
+      this.buffer.clear()
+
+      this.eventBus.trigger(EventConstants.SEGEMTN_REQUEST, [streamId, mediaId])
+    } else {
+      console.log('在缓存范围之内')
+    }
+  }
+
   onSourceopen(e) {
-    this.mediaSource.duration = this.mediaDuration
     this.videoSourceBuffer = this.mediaSource.addSourceBuffer('video/mp4; codecs="avc1.64001E"')
     this.audioSourceBuffer = this.mediaSource.addSourceBuffer('audio/mp4; codecs="mp4a.40.2"')
 
@@ -102,15 +159,16 @@ class MediaPlayerController {
 
   onUpdateend() {
     if (!this.videoSourceBuffer.updating && !this.audioSourceBuffer.updating) {
-      // if (this.isFirstRequestCompleted) {
-      //   this.eventBus.trigger(EventConstants.SEGMENT_CONSUMED)
-      // }
+      if (this.isFirstRequestCompleted) {
+        let ranges = this.getVideoBuffered(this.video)
+        this.eventBus.trigger(EventConstants.SEGMENT_CONSUMED, ranges)
+      }
       this.appendSource()
     }
   }
 
   onMediaPlaybackFinished() {
-    this.mediaSource.endOfStream()
+    // this.mediaSource.endOfStream()
     window.URL.revokeObjectURL(this.video.src)
     console.log('播放流加载结束')
   }
