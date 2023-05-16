@@ -48,7 +48,11 @@ export const styles = {
   'video-fullscreen': 'video-fullscreen',
   // 'video-duration-all': 'controller_video-duration-all__MOXNR',
   'video-duration-all': 'video-duration-all',
-  
+
+  'video-controller': 'video-controller',
+  'video-playrate': 'video-playrate',
+  'video-resolvepower': 'video-resolvepower',
+
   'loading-mask': 'loading-mask',
   'loading-container': 'loading-container',
   'loading-item': 'loading-item',
