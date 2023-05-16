@@ -195,13 +195,13 @@ class DashParser {
 
   getTotalDuration(Mpd: Mpd): number | never {
     let totalDuration = 0
-    let MpdDuration = NaN
+    let MpdDuration = -1
     if (Mpd.mediaPresentationDuration) {
       MpdDuration = switchToSeconds(parseDuration(Mpd.mediaPresentationDuration))
     }
     // MPD文件的总时间要么是由Mpd标签上的availabilityStartTime指定，要么是每一个Period上的duration之和
-    if (isNaN(MpdDuration)) {
-      Mpd.forEach((Period) => {
+    if (MpdDuration < 0) {
+      Mpd['Period_asArray'].forEach((Period) => {
         if (Period.duration) {
           totalDuration += switchToSeconds(parseDuration(Period.duration))
         } else {

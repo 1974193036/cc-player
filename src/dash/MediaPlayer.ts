@@ -24,6 +24,7 @@ class MediaPlayer {
   private video: HTMLVideoElement
   private buffer: MediaPlayerBuffer
   private firstCurrentRequest: number = 0
+  private duration: number = 0
 
   constructor(ctx: FactoryObject, ...args: any[]) {
     this.config = ctx.context
@@ -68,7 +69,7 @@ class MediaPlayer {
     console.log('加载Segment成功')
     this.firstCurrentRequest++
     if (this.firstCurrentRequest === 23) {
-      this.eventBus.trigger(EventConstants.FIRST_REQUEST_COMPLETED)
+      // this.eventBus.trigger(EventConstants.FIRST_REQUEST_COMPLETED)
     }
     let data = res.data
     let videoBuffer = data[0]
@@ -88,7 +89,8 @@ class MediaPlayer {
     console.log(manifest)
     // let res = this.streamController.generateSegmentRequestStruct(manifest as Mpd)
     // console.log(res)
-    this.eventBus.trigger(EventConstants.MANIFEST_PARSE_COMPLETED, manifest)
+    this.duration = this.dashParser.getTotalDuration(manifest as Mpd)
+    this.eventBus.trigger(EventConstants.MANIFEST_PARSE_COMPLETED, manifest, this.duration)
   }
 
   /**

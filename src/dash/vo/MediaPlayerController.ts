@@ -14,6 +14,7 @@ class MediaPlayerController {
   private buffer: MediaPlayerBuffer
   private eventBus: EventBus
   private isFirstRequestCompleted: boolean = false
+  private mediaDuration: number = 0
 
   constructor(ctx: FactoryObject, ...args: any[]) {
     this.config = ctx.context
@@ -54,6 +55,17 @@ class MediaPlayerController {
     )
 
     this.eventBus.on(EventConstants.MEDIA_PLAYBACK_FINISHED, this.onMediaPlaybackFinished, this)
+
+    this.eventBus.on(
+      EventConstants.MANIFEST_PARSE_COMPLETED,
+      (manifest, duration) => {
+        this.mediaDuration = duration
+        if (this.mediaSource.readyState === 'open') {
+          this.mediaSource.duration = duration
+        }
+      },
+      this
+    )
   }
 
   initPlayer() {
@@ -80,6 +92,7 @@ class MediaPlayerController {
   }
 
   onSourceopen(e) {
+    this.mediaSource.duration = this.mediaDuration
     this.videoSourceBuffer = this.mediaSource.addSourceBuffer('video/mp4; codecs="avc1.64001E"')
     this.audioSourceBuffer = this.mediaSource.addSourceBuffer('audio/mp4; codecs="mp4a.40.2"')
 
@@ -89,15 +102,17 @@ class MediaPlayerController {
 
   onUpdateend() {
     if (!this.videoSourceBuffer.updating && !this.audioSourceBuffer.updating) {
-      if (this.isFirstRequestCompleted) {
-        this.eventBus.trigger(EventConstants.SEGMENT_CONSUMED)
-      }
+      // if (this.isFirstRequestCompleted) {
+      //   this.eventBus.trigger(EventConstants.SEGMENT_CONSUMED)
+      // }
       this.appendSource()
     }
   }
 
   onMediaPlaybackFinished() {
     this.mediaSource.endOfStream()
+    window.URL.revokeObjectURL(this.video.src)
+    console.log('播放流加载结束')
   }
 }
 

@@ -6373,7 +6373,7 @@
   var factory$6 = FactoryMaker.getSingleFactory(URLUtils);
 
   function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-  function _unsupportedIterableToArray(o, minLen) { var _context19; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context19 = Object.prototype.toString.call(o)).call(_context19, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+  function _unsupportedIterableToArray(o, minLen) { var _context20; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context20 = Object.prototype.toString.call(o)).call(_context20, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
   function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
   var DashParser = /*#__PURE__*/function () {
     function DashParser(ctx) {
@@ -6584,13 +6584,14 @@
       key: "getTotalDuration",
       value: function getTotalDuration(Mpd) {
         var totalDuration = 0;
-        var MpdDuration = NaN;
+        var MpdDuration = -1;
         if (Mpd.mediaPresentationDuration) {
           MpdDuration = switchToSeconds(parseDuration(Mpd.mediaPresentationDuration));
         }
         // MPD文件的总时间要么是由Mpd标签上的availabilityStartTime指定，要么是每一个Period上的duration之和
-        if (isNaN(MpdDuration)) {
-          _forEachInstanceProperty(Mpd).call(Mpd, function (Period) {
+        if (MpdDuration < 0) {
+          var _context10;
+          _forEachInstanceProperty(_context10 = Mpd['Period_asArray']).call(_context10, function (Period) {
             if (Period.duration) {
               totalDuration += switchToSeconds(parseDuration(Period.duration));
             } else {
@@ -6608,31 +6609,31 @@
       value: function setDurationForRepresentation(Mpd) {
         //1. 如果只有一个Period
         if (Mpd['Period_asArray'].length === 1) {
-          var _context10;
+          var _context11;
           var totalDuration = this.getTotalDuration(Mpd);
-          _forEachInstanceProperty(_context10 = Mpd['Period_asArray']).call(_context10, function (Period) {
-            var _context11;
+          _forEachInstanceProperty(_context11 = Mpd['Period_asArray']).call(_context11, function (Period) {
+            var _context12;
             Period.duration = Period.duration || totalDuration;
-            _forEachInstanceProperty(_context11 = Period['AdaptationSet_asArray']).call(_context11, function (AdaptationSet) {
-              var _context12;
+            _forEachInstanceProperty(_context12 = Period['AdaptationSet_asArray']).call(_context12, function (AdaptationSet) {
+              var _context13;
               AdaptationSet.duration = totalDuration;
-              _forEachInstanceProperty(_context12 = AdaptationSet['Representation_asArray']).call(_context12, function (Representation) {
+              _forEachInstanceProperty(_context13 = AdaptationSet['Representation_asArray']).call(_context13, function (Representation) {
                 Representation.duration = totalDuration;
               });
             });
           });
         } else {
-          var _context13;
-          _forEachInstanceProperty(_context13 = Mpd['Period_asArray']).call(_context13, function (Period) {
-            var _context14;
+          var _context14;
+          _forEachInstanceProperty(_context14 = Mpd['Period_asArray']).call(_context14, function (Period) {
+            var _context15;
             if (!Period.duration) {
               throw new Error('MPD文件格式错误');
             }
             var duration = Period.duration;
-            _forEachInstanceProperty(_context14 = Period['AdaptationSet_asArray']).call(_context14, function (AdaptationSet) {
-              var _context15;
+            _forEachInstanceProperty(_context15 = Period['AdaptationSet_asArray']).call(_context15, function (AdaptationSet) {
+              var _context16;
               AdaptationSet.duration = duration;
-              _forEachInstanceProperty(_context15 = AdaptationSet['Representation_asArray']).call(_context15, function (Representation) {
+              _forEachInstanceProperty(_context16 = AdaptationSet['Representation_asArray']).call(_context16, function (Representation) {
                 Representation.duration = duration;
               });
             });
@@ -6643,13 +6644,13 @@
     }, {
       key: "setSegmentDurationForRepresentation",
       value: function setSegmentDurationForRepresentation(Mpd) {
-        var _context16;
+        var _context17;
         var maxSegmentDuration = switchToSeconds(parseDuration(Mpd.maxSegmentDuration));
-        _forEachInstanceProperty(_context16 = Mpd['Period_asArray']).call(_context16, function (Period) {
-          var _context17;
-          _forEachInstanceProperty(_context17 = Period['AdaptationSet_asArray']).call(_context17, function (AdaptationSet) {
-            var _context18;
-            _forEachInstanceProperty(_context18 = AdaptationSet['Representation_asArray']).call(_context18, function (Representation) {
+        _forEachInstanceProperty(_context17 = Mpd['Period_asArray']).call(_context17, function (Period) {
+          var _context18;
+          _forEachInstanceProperty(_context18 = Period['AdaptationSet_asArray']).call(_context18, function (AdaptationSet) {
+            var _context19;
+            _forEachInstanceProperty(_context19 = AdaptationSet['Representation_asArray']).call(_context19, function (Representation) {
               if (Representation['SegmentTemplate']) {
                 if (Representation['SegmentTemplate'].duration) {
                   var duration = Representation['SegmentTemplate'].duration;
@@ -9534,6 +9535,7 @@
       _defineProperty(this, "buffer", void 0);
       _defineProperty(this, "eventBus", void 0);
       _defineProperty(this, "isFirstRequestCompleted", false);
+      _defineProperty(this, "mediaDuration", 0);
       this.config = ctx.context;
       if (this.config.video) {
         this.video = this.config.video;
@@ -9566,6 +9568,10 @@
           _this.isFirstRequestCompleted = true;
         }, this);
         this.eventBus.on(EventConstants.MEDIA_PLAYBACK_FINISHED, this.onMediaPlaybackFinished, this);
+        this.eventBus.on(EventConstants.MANIFEST_PARSE_COMPLETED, function (manifest, duration) {
+          _this.mediaDuration = duration;
+          if (_this.mediaSource.readyState === 'open') ;
+        }, this);
       }
     }, {
       key: "initPlayer",
@@ -9597,6 +9603,7 @@
     }, {
       key: "onSourceopen",
       value: function onSourceopen(e) {
+        this.mediaSource.duration = this.mediaDuration;
         this.videoSourceBuffer = this.mediaSource.addSourceBuffer('video/mp4; codecs="avc1.64001E"');
         this.audioSourceBuffer = this.mediaSource.addSourceBuffer('audio/mp4; codecs="mp4a.40.2"');
         this.videoSourceBuffer.addEventListener('updateend', this.onUpdateend.bind(this));
@@ -9606,9 +9613,9 @@
       key: "onUpdateend",
       value: function onUpdateend() {
         if (!this.videoSourceBuffer.updating && !this.audioSourceBuffer.updating) {
-          if (this.isFirstRequestCompleted) {
-            this.eventBus.trigger(EventConstants.SEGMENT_CONSUMED);
-          }
+          // if (this.isFirstRequestCompleted) {
+          //   this.eventBus.trigger(EventConstants.SEGMENT_CONSUMED)
+          // }
           this.appendSource();
         }
       }
@@ -9616,6 +9623,8 @@
       key: "onMediaPlaybackFinished",
       value: function onMediaPlaybackFinished() {
         this.mediaSource.endOfStream();
+        _URL.revokeObjectURL(this.video.src);
+        console.log('播放流加载结束');
       }
     }]);
     return MediaPlayerController;
@@ -9637,6 +9646,7 @@
       _defineProperty(this, "video", void 0);
       _defineProperty(this, "buffer", void 0);
       _defineProperty(this, "firstCurrentRequest", 0);
+      _defineProperty(this, "duration", 0);
       this.config = ctx.context;
       this.setup();
       this.initializeEvent();
@@ -9686,9 +9696,7 @@
       value: function onSegmentLoaded(res) {
         console.log('加载Segment成功');
         this.firstCurrentRequest++;
-        if (this.firstCurrentRequest === 23) {
-          this.eventBus.trigger(EventConstants.FIRST_REQUEST_COMPLETED);
-        }
+        if (this.firstCurrentRequest === 23) ;
         var data = res.data;
         var videoBuffer = data[0];
         var audioBuffer = data[1];
@@ -9708,7 +9716,8 @@
         console.log(manifest);
         // let res = this.streamController.generateSegmentRequestStruct(manifest as Mpd)
         // console.log(res)
-        this.eventBus.trigger(EventConstants.MANIFEST_PARSE_COMPLETED, manifest);
+        this.duration = this.dashParser.getTotalDuration(manifest);
+        this.eventBus.trigger(EventConstants.MANIFEST_PARSE_COMPLETED, manifest, this.duration);
       }
       /**
        * @description 发送MPD文件的网络请求，我要做的事情很纯粹，具体实现细节由各个Loader去具体实现
