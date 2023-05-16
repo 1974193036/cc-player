@@ -35,7 +35,7 @@ export const styles = {
   // 'video-settings': 'controller_video-settings__vL60f',
   'video-settings': 'video-settings',
   // 'video-subsettings': 'controller_video-subsettings__lRckv',
-  'video-subsettings': 'video-subsetting',
+  'video-subsettings': 'video-subsettings',
   // 'video-volume': 'controller_video-volume__6xzJB',
   'video-volume': 'video-volume',
   // 'video-volume-progress': 'controller_video-volume-progress__f4U3J',

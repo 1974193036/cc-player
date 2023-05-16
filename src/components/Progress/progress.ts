@@ -2,6 +2,7 @@
 import { styles } from '@/styles/style'
 import { BaseEvent } from '@/class/BaseEvent'
 import { formatTime } from '@/utils/format'
+import { televisionSVG } from '../SVGTool/TelevisionDotModel'
 import './progress.less'
 
 export class Progress extends BaseEvent {
@@ -32,7 +33,7 @@ export class Progress extends BaseEvent {
         <div class="${styles['video-pretime']}">00:00</div>
         <div class="${styles['video-buffered']}"></div>
         <div class="${styles['video-completed']}"></div>
-        <div class="${styles['video-dot']} ${styles['video-dot-hidden']}"></div>
+        <div class="${styles['video-dot']} ${styles['video-dot-hidden']}">${televisionSVG}</div>
       </div>
     `
   }
@@ -76,7 +77,6 @@ export class Progress extends BaseEvent {
       this.video.currentTime = Math.floor(scale * this.video.duration)
       if (this.video.paused) this.video.play()
     })
-
 
     this.dot.addEventListener('mousedown', (e: MouseEvent) => {
       e.stopPropagation()
@@ -131,7 +131,8 @@ export class Progress extends BaseEvent {
       let scaleCurr = (this.video.currentTime / this.video.duration) * 100
       // console.log(scaleCurr) 进度
       // 首个缓冲范围的结束位置
-      let scaleBuffer = ((this.video.currentTime + this.video.buffered.end(0)) / this.video.duration) * 100
+      let scaleBuffer =
+        ((this.video.currentTime + this.video.buffered.end(0)) / this.video.duration) * 100
       if (scaleBuffer > 100) scaleBuffer = 100
 
       this.completedProgress.style.width = scaleCurr + '%'
