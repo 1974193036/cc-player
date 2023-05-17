@@ -3900,6 +3900,29 @@
       y: t
     };
   }
+  /**
+   * @description 查看当前的鼠标位置是否在父元素和绝对定位的子元素的组合范围内，如果超出则返回false
+   * @param parent
+   * @param topChild
+   * @param pageX
+   * @param pageY
+   * @returns {boolean}
+   */
+  function checkIsMouseInRange(parent, topChild, pageX, pageY) {
+    var _getDOMPoint = getDOMPoint(parent),
+      x = _getDOMPoint.x,
+      y = _getDOMPoint.y;
+    var allTop = y - _parseInt$1(topChild.style.bottom) - topChild.clientHeight;
+    var allBottom = y + parent.clientHeight;
+    var allLeft = x + Math.round(parent.clientWidth / 2) - Math.round(topChild.clientWidth / 2);
+    var allRight = x + Math.round(parent.clientWidth / 2) + Math.round(topChild.clientWidth / 2);
+    y - _parseInt$1(topChild.style.bottom);
+    var parentLeft = x;
+    var parentRight = x + parent.clientWidth;
+    if (pageX >= allLeft && pageX <= allRight && pageY <= y && pageY >= allTop) return true;
+    if (pageX >= parentLeft && pageX <= parentRight && pageY >= y && pageY <= allBottom) return true;
+    return false;
+  }
 
   function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
   function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -3971,23 +3994,34 @@
          */
         this.volumeBtn.onmouseenter = function (e) {
           _this2.volumeSet.style.display = 'block';
-          var _getDOMPoint = getDOMPoint(_this2.volumeBtn),
-            x = _getDOMPoint.x,
-            y = _getDOMPoint.y;
-          // volumeSet顶部 距离页面顶部距离，多减了一点点
-          var top = y - _parseInt$1(_this2.volumeSet.style.bottom) - _this2.volumeSet.clientHeight;
-          // volumeSet底部 距离页面顶部距离
-          y - (_parseInt$1(_this2.volumeSet.style.bottom) - _this2.volumeBtn.clientHeight);
-          // volumeSet左侧 距离页面左侧距离
-          var left = x + Math.round(_this2.volumeBtn.clientWidth / 2) - Math.round(_this2.volumeSet.clientWidth / 2);
-          // volumeSet右侧 距离页面左侧距离
-          var right = x + Math.round(_this2.volumeBtn.clientWidth / 2) + Math.round(_this2.volumeSet.clientWidth / 2);
+          // let { x, y } = getDOMPoint(this.volumeBtn)
+          // // volumeSet顶部 距离页面顶部距离，多减了一点点
+          // let top = y - parseInt(this.volumeSet.style.bottom) - this.volumeSet.clientHeight
+          // // volumeSet底部 距离页面顶部距离
+          // let bottom = y - (parseInt(this.volumeSet.style.bottom) - this.volumeBtn.clientHeight)
+          // // volumeSet左侧 距离页面左侧距离
+          // let left =
+          //   x + Math.round(this.volumeBtn.clientWidth / 2) - Math.round(this.volumeSet.clientWidth / 2)
+          // // volumeSet右侧 距离页面左侧距离
+          // let right =
+          //   x + Math.round(this.volumeBtn.clientWidth / 2) + Math.round(this.volumeSet.clientWidth / 2)
           document.body.onmousemove = function (e) {
             var pX = e.pageX,
               pY = e.pageY;
-            if (!(pX >= left && pX <= right && pY <= y && pY >= top || pX >= x && pX <= x + _this2.volumeBtn.clientWidth && pY >= y && pY <= y + _this2.volumeBtn.clientHeight)) {
+            if (!checkIsMouseInRange(_this2.volumeBtn, _this2.volumeSet, pX, pY)) {
               _this2.volumeSet.style.display = 'none';
             }
+            // if (
+            //   !(
+            //     (pX >= left && pX <= right && pY <= y && pY >= top) ||
+            //     (pX >= x &&
+            //       pX <= x + this.volumeBtn.clientWidth &&
+            //       pY >= y &&
+            //       pY <= y + this.volumeBtn.clientHeight)
+            //   )
+            // ) {
+            //   this.volumeSet.style.display = 'none'
+            // }
           };
         };
       }

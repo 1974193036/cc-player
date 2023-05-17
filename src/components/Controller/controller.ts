@@ -6,7 +6,7 @@ import './controller.less'
 import { volumeSVG } from '../SVGTool/VolumeModel'
 import { settingSVG } from '../SVGTool/SettingsModel'
 import { fullScreenSVG } from '../SVGTool/FullScreenModel'
-import { getDOMPoint } from '../../utils/getDOMPoint'
+import { checkIsMouseInRange, getDOMPoint } from '../../utils/getDOMPoint'
 
 export class Controller extends BaseEvent {
   private _template: HTMLElement | string
@@ -105,32 +105,8 @@ export class Controller extends BaseEvent {
      */
     this.volumeBtn.onmouseenter = (e) => {
       this.volumeSet.style.display = 'block'
-      let { x, y } = getDOMPoint(this.volumeBtn)
-      // volumeSet顶部 距离页面顶部距离，多减了一点点
-      let top = y - parseInt(this.volumeSet.style.bottom) - this.volumeSet.clientHeight
-      // volumeSet底部 距离页面顶部距离
-      let bottom = y - (parseInt(this.volumeSet.style.bottom) - this.volumeBtn.clientHeight)
-      // volumeSet左侧 距离页面左侧距离
-      let left =
-        x + Math.round(this.volumeBtn.clientWidth / 2) - Math.round(this.volumeSet.clientWidth / 2)
-      // volumeSet右侧 距离页面左侧距离
-      let right =
-        x + Math.round(this.volumeBtn.clientWidth / 2) + Math.round(this.volumeSet.clientWidth / 2)
-      document.body.onmousemove = (e) => {
-        let pX = e.pageX,
-          pY = e.pageY
-        if (
-          !(
-            (pX >= left && pX <= right && pY <= y && pY >= top) ||
-            (pX >= x &&
-              pX <= x + this.volumeBtn.clientWidth &&
-              pY >= y &&
-              pY <= y + this.volumeBtn.clientHeight)
-          )
-        ) {
-          this.volumeSet.style.display = 'none'
-        }
-      }
+      let ctx = this
+      document.addEventListener('mousemove', this.handleMouseMove.bind(ctx))
     }
   }
 
@@ -164,5 +140,16 @@ export class Controller extends BaseEvent {
       this.volumeSet = this.container.querySelector(`.${styles['video-volume-set']}`)
       this.initControllerEvent()
     })
+  }
+
+  handleMouseMove(e: MouseEvent) {
+    let pX = e.pageX,
+      pY = e.pageY
+    let ctx = this
+    // console.log(pX,pY)
+    if (!checkIsMouseInRange(ctx.volumeBtn, ctx.volumeSet, pX, pY)) {
+      this.volumeSet.style.display = 'none'
+      document.removeEventListener('mousemove', ctx.handleMouseMove)
+    }
   }
 }
