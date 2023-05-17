@@ -55,7 +55,9 @@ export const styles = {
 
   'video-controller': 'video-controller',
   'video-playrate': 'video-playrate',
+  'video-playrate-set': 'video-playrate-set',
   'video-resolvepower': 'video-resolvepower',
+  'video-resolvepower-set': 'video-resolvepower-set',
 
   'loading-mask': 'loading-mask',
   'loading-container': 'loading-container',

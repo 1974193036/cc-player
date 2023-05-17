@@ -22,8 +22,11 @@ export class Controller extends BaseEvent {
   private volumeSet: HTMLElement
   private volumeDot: HTMLElement
   private volumeProgress: HTMLElement
+  private volumeCompleted: HTMLElement
   private playRate: HTMLElement
+  private playRateSet: HTMLElement
   private resolvePower: HTMLElement
+  private resolvePowerSet: HTMLElement
   private settings: HTMLElement
 
   constructor(container: HTMLElement) {
@@ -51,16 +54,31 @@ export class Controller extends BaseEvent {
         <div class="${styles['video-settings']}">
           <div class="${styles['video-resolvepower']} ${styles['video-controller']}">
             分辨率
+            <ul class="${styles['video-resolvepower-set']}" style="display:none;bottom:41px">
+              <li><span>1080p超清</span></li>
+              <li><span>720p高清</span></li>
+              <li><span>480p标清</span></li>
+              <li><span>360p流畅</span></li>
+              <li><span>自动</span></li>
+            </ul>
           </div>
           <div class="${styles['video-playrate']} ${styles['video-controller']}" aria-label="倍速">
             倍速
+            <ul class="${styles['video-playrate-set']}" aria-label="调节播放速度" style="display:none; bottom:41px">
+              <li>2.0x</li>
+              <li>1.5x</li>
+              <li>1.25x</li>
+              <li>1.0x</li>
+              <li>0.75x</li>
+              <li>0.5x</li>
+            </ul>
           </div>
           <div class="${styles['video-volume']} ${styles['video-controller']}" aria-label="音量">
             <div class="${styles['video-volume-set']}" aria-label="调节音量" style="display:none; bottom:41px" >
               <div class="${styles['video-volume-show']}">48</div>
-              <div class="${styles['video-volume-progress']}">
-                <div class="${styles['video-volume-completed']}"></div>
-                <div class="${styles['video-volume-dot']}"></div>
+              <div class="${styles['video-volume-progress']}" style="height: 70px">
+                <div class="${styles['video-volume-completed']}" style="height: 0"></div>
+                <div class="${styles['video-volume-dot']}" style="bottom: 100%"></div>
               </div>
             </div>
             ${volumeSVG}
@@ -77,6 +95,10 @@ export class Controller extends BaseEvent {
   }
 
   initControllerEvent() {
+    this.volumeCompleted.style.height = this.video.volume * 100 + '%'
+    this.volumeDot.style.bottom =
+      parseInt(this.volumeProgress.style.height) * this.video.volume - 6 + 'px'
+
     /**
      * @description 监听鼠标的点击事件来决定是否暂停还是播放视频
      */
@@ -106,8 +128,46 @@ export class Controller extends BaseEvent {
     this.volumeBtn.onmouseenter = (e) => {
       this.volumeSet.style.display = 'block'
       let ctx = this
-      document.addEventListener('mousemove', this.handleMouseMove.bind(ctx))
+      document.body.onmousemove = (e: MouseEvent) => {
+        ctx.handleMouseMove(e, 'volume')
+      }
     }
+
+    this.playRate.onmouseenter = (e) => {
+      this.playRateSet.style.display = 'block'
+      let ctx = this
+      document.body.onmousemove = (e: MouseEvent) => {
+        ctx.handleMouseMove(e, 'playrate')
+      }
+    }
+
+    this.resolvePower.onmouseenter = (e) => {
+      this.resolvePowerSet.style.display = 'block'
+      let ctx = this
+      document.body.onmousemove = (e: MouseEvent) => {
+        ctx.handleMouseMove(e, 'resolvepower')
+      }
+    }
+
+    this.volumeDot.onmousedown = (e: MouseEvent) => {
+      let mouseY = e.pageY
+      let comHeight = this.volumeCompleted.clientHeight
+      document.body.onmousemove = (e: MouseEvent) => {
+        let pageY = e.pageY
+        let scale = (mouseY - pageY + comHeight) / this.volumeProgress.clientHeight
+        if (scale > 1) scale = 1
+        else if (scale < 0) scale = 0
+        this.volumeCompleted.style.height = scale * 100 + '%'
+        this.volumeDot.style.bottom = this.volumeProgress.clientHeight * scale - 6 + 'px'
+        this.video.volume = scale
+      }
+      document.body.onmouseup = () => {
+        document.body.onmousemove = null
+      }
+      e.preventDefault()
+    }
+
+    
   }
 
   initEvent() {
@@ -136,20 +196,42 @@ export class Controller extends BaseEvent {
       this.summaryTime = this.container.querySelector(`.${styles['video-duration-all']}`)
       this.video = this.container.querySelector('video')
       this.fullScreen = this.container.querySelector(`.${styles['video-fullscreen']}`)
+
       this.volumeBtn = this.container.querySelector(`.${styles['video-volume']}`)
       this.volumeSet = this.container.querySelector(`.${styles['video-volume-set']}`)
+      this.volumeCompleted = this.container.querySelector(`.${styles['video-volume-completed']}`)
+      this.volumeProgress = this.container.querySelector(`.${styles['video-volume-progress']}`)
+      this.volumeDot = this.container.querySelector(`.${styles['video-volume-dot']}`)
+
+      this.playRate = this.container.querySelector(`.${styles['video-playrate']}`)
+      this.playRateSet = this.container.querySelector(`.${styles['video-playrate-set']}`)
+
+      this.resolvePower = this.container.querySelector(`.${styles['video-resolvepower']}`)
+      this.resolvePowerSet = this.container.querySelector(`.${styles['video-resolvepower-set']}`)
+
       this.initControllerEvent()
     })
   }
 
-  handleMouseMove(e: MouseEvent) {
+  handleMouseMove(e: MouseEvent, type: 'volume' | 'playrate' | 'resolvepower') {
     let pX = e.pageX,
       pY = e.pageY
     let ctx = this
-    // console.log(pX,pY)
-    if (!checkIsMouseInRange(ctx.volumeBtn, ctx.volumeSet, pX, pY)) {
-      this.volumeSet.style.display = 'none'
-      document.removeEventListener('mousemove', ctx.handleMouseMove)
+    if (type === 'volume') {
+      if (!checkIsMouseInRange(ctx.volumeBtn, ctx.volumeSet, pX, pY)) {
+        ctx.volumeSet.style.display = 'none'
+        document.body.onmousemove = null
+      }
+    } else if (type === 'playrate') {
+      if (!checkIsMouseInRange(ctx.playRate, ctx.playRateSet, pX, pY)) {
+        ctx.playRateSet.style.display = 'none'
+        document.body.onmousemove = null
+      }
+    } else if (type === 'resolvepower') {
+      if (!checkIsMouseInRange(ctx.resolvePower, ctx.resolvePowerSet, pX, pY)) {
+        ctx.resolvePowerSet.style.display = 'none'
+        document.body.onmousemove = null
+      }
     }
   }
 }

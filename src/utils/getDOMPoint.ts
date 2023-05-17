@@ -33,7 +33,6 @@ export function checkIsMouseInRange(
   let allBottom = y + parent.clientHeight
   let allLeft = x + Math.round(parent.clientWidth / 2) - Math.round(topChild.clientWidth / 2)
   let allRight = x + Math.round(parent.clientWidth / 2) + Math.round(topChild.clientWidth / 2)
-  let childBottom = y - parseInt(topChild.style.bottom)
   let parentLeft = x
   let parentRight = x + parent.clientWidth
   if (pageX >= allLeft && pageX <= allRight && pageY <= y && pageY >= allTop) return true

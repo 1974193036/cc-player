@@ -3284,7 +3284,9 @@
     'video-duration-all': 'video-duration-all',
     'video-controller': 'video-controller',
     'video-playrate': 'video-playrate',
+    'video-playrate-set': 'video-playrate-set',
     'video-resolvepower': 'video-resolvepower',
+    'video-resolvepower-set': 'video-resolvepower-set',
     'loading-mask': 'loading-mask',
     'loading-container': 'loading-container',
     'loading-item': 'loading-item',
@@ -3875,7 +3877,7 @@
     return Progress;
   }(BaseEvent);
 
-  var css_248z$5 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 15px 5px 0 5px;\n}\n.video-play .video-subplay {\n  margin-left: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 22px;\n}\n.video-play .video-subplay .video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-play .video-subplay .video-start-pause i {\n  font-size: 20px!important;\n}\n.video-play .video-subplay .video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 22px;\n}\n.video-play .video-settings .video-subsettings svg {\n  -webkit-transition: fill 0.15s ease-in-out;\n  transition: fill 0.15s ease-in-out;\n}\n.video-play .video-settings .video-volume {\n  position: relative;\n}\n.video-play .video-settings .video-volume .video-volume-set {\n  position: absolute;\n  bottom: 41px;\n  left: 50%;\n  margin-left: -16px;\n  width: 32px;\n  height: 100px;\n  background: rgba(21, 21, 21, 0.9);\n  border-radius: 2px;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  padding-top: 5px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-voulme-progress {\n  width: 2px;\n  height: calc(100% - 20px - 10px);\n  margin-top: 3px;\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-voulme-progress .video-volume-completed {\n  height: 50%;\n  width: 100%;\n  background-color: #00a1d6;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-voulme-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  bottom: 0;\n}\n.video-play .video-settings .video-playrate,\n.video-play .video-settings .video-resolvepower {\n  font-size: 14px;\n  font-weight: 600;\n  color: #fff;\n  padding: 0 10px;\n}\n.video-play .video-settings .video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 33px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n}\n";
+  var css_248z$5 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 15px 5px 0 5px;\n}\n.video-play .video-subplay {\n  margin-left: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 22px;\n}\n.video-play .video-subplay .video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-play .video-subplay .video-start-pause i {\n  font-size: 20px!important;\n}\n.video-play .video-subplay .video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 22px;\n}\n.video-play .video-settings .video-subsettings svg {\n  -webkit-transition: fill 0.15s ease-in-out;\n  transition: fill 0.15s ease-in-out;\n}\n.video-play .video-settings .video-volume {\n  position: relative;\n}\n.video-play .video-settings .video-volume .video-volume-set {\n  position: absolute;\n  bottom: 41px;\n  left: 50%;\n  margin-left: -16px;\n  width: 32px;\n  height: 100px;\n  padding-bottom: 8px;\n  background: rgba(21, 21, 21, 0.9);\n  border-radius: 2px;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  padding-top: 5px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-voulme-progress {\n  width: 2px;\n  height: calc(100% - 20px - 10px);\n  margin-top: 8px;\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-voulme-progress .video-volume-completed {\n  height: 50%;\n  width: 100%;\n  background-color: #00a1d6;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-voulme-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-play .video-settings .video-playrate {\n  position: relative;\n}\n.video-play .video-settings .video-playrate .video-playrate-set {\n  border-radius: 2px;\n  bottom: 41px;\n  background-color: rgba(21, 21, 21, 0.9);\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  text-align: center;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  list-style: none;\n  outline: none;\n}\n.video-play .video-settings .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-play .video-settings .video-playrate .video-playrate-set li:hover {\n  background-color: #C9CCD0;\n}\n.video-play .video-settings .video-resolvepower {\n  position: relative;\n}\n.video-play .video-settings .video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  border-radius: 2px;\n  bottom: 41px;\n  background-color: rgba(21, 21, 21, 0.9);\n  padding: 0;\n  margin: 0;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  cursor: pointer;\n  display: none;\n}\n.video-play .video-settings .video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-play .video-settings .video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #C9CCD0;\n}\n.video-play .video-settings .video-playrate,\n.video-play .video-settings .video-resolvepower {\n  font-size: 14px;\n  font-weight: 550;\n  color: #fff;\n  margin: 0 10px;\n}\n.video-play .video-settings .video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 33px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n}\n";
   styleInject(css_248z$5);
 
   var volumeSVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 88 88\" width=\"88\" height=\"88\" preserveAspectRatio=\"xMidYMid meet\" style=\"width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px);\">\n    <defs>\n        <clipPath id=\"__lottie_element_94\">\n            <rect width=\"88\" height=\"88\" x=\"0\" y=\"0\"></rect>\n        </clipPath>\n        <clipPath id=\"__lottie_element_96\">\n            <path d=\"M0,0 L88,0 L88,88 L0,88z\"></path>\n        </clipPath>\n    </defs>\n    <g clip-path=\"url(#__lottie_element_94)\">\n        <g clip-path=\"url(#__lottie_element_96)\" transform=\"matrix(1,0,0,1,0,0)\" opacity=\"1\" style=\"display: block;\">\n            <g transform=\"matrix(1,0,0,1,28,44)\" opacity=\"1\" style=\"display: block;\">\n                <g opacity=\"1\" transform=\"matrix(1,0,0,1,0,0)\">\n                    <path fill=\"rgb(255,255,255)\" fill-opacity=\"1\" d=\" M15.5600004196167,-25.089000701904297 C15.850000381469727,-24.729000091552734 16,-24.288999557495117 16,-23.839000701904297 C16,-23.839000701904297 16,23.840999603271484 16,23.840999603271484 C16,24.94099998474121 15.100000381469727,25.840999603271484 14,25.840999603271484 C13.550000190734863,25.840999603271484 13.109999656677246,25.680999755859375 12.75,25.400999069213867 C12.75,25.400999069213867 -4,12.00100040435791 -4,12.00100040435791 C-4,12.00100040435791 -8,12.00100040435791 -8,12.00100040435791 C-12.420000076293945,12.00100040435791 -16,8.420999526977539 -16,4.000999927520752 C-16,4.000999927520752 -16,-3.999000072479248 -16,-3.999000072479248 C-16,-8.418999671936035 -12.420000076293945,-11.99899959564209 -8,-11.99899959564209 C-8,-11.99899959564209 -4,-11.99899959564209 -4,-11.99899959564209 C-4,-11.99899959564209 12.75,-25.39900016784668 12.75,-25.39900016784668 C13.609999656677246,-26.089000701904297 14.869999885559082,-25.948999404907227 15.5600004196167,-25.089000701904297z\">\n                    </path>\n                </g>\n            </g>\n            <g style=\"display: none;\" transform=\"matrix(1.0111862421035767,0,0,1.0111862421035767,56.07423400878906,44.00048828125)\" opacity=\"0.003817207883531637\">\n                <g opacity=\"1\" transform=\"matrix(1,0,0,1,0,0)\">\n                    <path fill=\"rgb(255,255,255)\" fill-opacity=\"1\" d=\" M-4,-13.859000205993652 C0.7799999713897705,-11.08899974822998 4,-5.919000148773193 4,0.0010000000474974513 C4,5.921000003814697 0.7799999713897705,11.090999603271484 -4,13.861000061035156 C-4,13.861000061035156 -4,-13.859000205993652 -4,-13.859000205993652z\"></path>\n                </g>\n            </g>\n            <g style=\"display: none;\" transform=\"matrix(1.0126574039459229,0,0,1.0126574039459229,64.37825012207031,44.0057487487793)\" opacity=\"0.05925115693762535\">\n                <g opacity=\"1\" transform=\"matrix(1,0,0,1,0,0)\">\n                    <path fill=\"rgb(255,255,255)\" fill-opacity=\"1\" d=\" M-6.236000061035156,-28.895999908447266 C4.803999900817871,-23.615999221801758 11.984000205993652,-12.456000328063965 11.984000205993652,-0.006000000052154064 C11.984000205993652,12.454000473022461 4.794000148773193,23.624000549316406 -6.265999794006348,28.893999099731445 C-8.255999565124512,29.8439998626709 -10.645999908447266,29.003999710083008 -11.595999717712402,27.003999710083008 C-12.545999526977539,25.013999938964844 -11.696000099182129,22.624000549316406 -9.706000328063965,21.673999786376953 C-1.406000018119812,17.724000930786133 3.9839999675750732,9.343999862670898 3.9839999675750732,-0.006000000052154064 C3.9839999675750732,-9.345999717712402 -1.3960000276565552,-17.715999603271484 -9.675999641418457,-21.676000595092773 C-11.675999641418457,-22.625999450683594 -12.515999794006348,-25.016000747680664 -11.565999984741211,-27.006000518798828 C-10.616000175476074,-29.006000518798828 -8.22599983215332,-29.84600067138672 -6.236000061035156,-28.895999908447266z\">\n                    </path>\n                </g>\n            </g>\n            <g style=\"display: none;\" transform=\"matrix(1.000218152999878,0,0,1.000218152999878,56.002994537353516,44)\" opacity=\"1\">\n                <g opacity=\"1\" transform=\"matrix(1,0,0,1,0,0)\">\n                    <path fill=\"rgb(255,255,255)\" fill-opacity=\"1\" d=\" M-4,-13.859000205993652 C0.7799999713897705,-11.08899974822998 4,-5.919000148773193 4,0.0010000000474974513 C4,5.921000003814697 0.7799999713897705,11.090999603271484 -4,13.861000061035156 C-4,13.861000061035156 -4,-13.859000205993652 -4,-13.859000205993652z\">\n                    </path>\n                </g>\n            </g>\n            <g style=\"display: none;\" transform=\"matrix(1.0002059936523438,0,0,1.0002059936523438,64.00399780273438,44.00699996948242)\" opacity=\"1\">\n                <g opacity=\"1\" transform=\"matrix(1,0,0,1,0,0)\">\n                    <path fill=\"rgb(255,255,255)\" fill-opacity=\"1\" d=\" M-6.236000061035156,-28.895999908447266 C4.803999900817871,-23.615999221801758 11.984000205993652,-12.456000328063965 11.984000205993652,-0.006000000052154064 C11.984000205993652,12.454000473022461 4.794000148773193,23.624000549316406 -6.265999794006348,28.893999099731445 C-8.255999565124512,29.8439998626709 -10.645999908447266,29.003999710083008 -11.595999717712402,27.003999710083008 C-12.545999526977539,25.013999938964844 -11.696000099182129,22.624000549316406 -9.706000328063965,21.673999786376953 C-1.406000018119812,17.724000930786133 3.9839999675750732,9.343999862670898 3.9839999675750732,-0.006000000052154064 C3.9839999675750732,-9.345999717712402 -1.3960000276565552,-17.715999603271484 -9.675999641418457,-21.676000595092773 C-11.675999641418457,-22.625999450683594 -12.515999794006348,-25.016000747680664 -11.565999984741211,-27.006000518798828 C-10.616000175476074,-29.006000518798828 -8.22599983215332,-29.84600067138672 -6.236000061035156,-28.895999908447266z\">\n                    </path>\n                </g>\n            </g>\n            <g transform=\"matrix(0.9999999403953552,0,0,0.9999999403953552,56,44)\" opacity=\"1\" style=\"display: block;\">\n                <g opacity=\"1\" transform=\"matrix(1,0,0,1,0,0)\">\n                    <path fill=\"rgb(255,255,255)\" fill-opacity=\"1\" d=\" M-4,-13.859000205993652 C0.7799999713897705,-11.08899974822998 4,-5.919000148773193 4,0.0010000000474974513 C4,5.921000003814697 0.7799999713897705,11.090999603271484 -4,13.861000061035156 C-4,13.861000061035156 -4,-13.859000205993652 -4,-13.859000205993652z\">\n                    </path>\n                </g>\n            </g>\n            <g transform=\"matrix(0.9999999403953552,0,0,0.9999999403953552,64.01399993896484,44.00699996948242)\" opacity=\"1\" style=\"display: block;\">\n                <g opacity=\"1\" transform=\"matrix(1,0,0,1,0,0)\">\n                    <path fill=\"rgb(255,255,255)\" fill-opacity=\"1\" d=\" M-6.236000061035156,-28.895999908447266 C4.803999900817871,-23.615999221801758 11.984000205993652,-12.456000328063965 11.984000205993652,-0.006000000052154064 C11.984000205993652,12.454000473022461 4.794000148773193,23.624000549316406 -6.265999794006348,28.893999099731445 C-8.255999565124512,29.8439998626709 -10.645999908447266,29.003999710083008 -11.595999717712402,27.003999710083008 C-12.545999526977539,25.013999938964844 -11.696000099182129,22.624000549316406 -9.706000328063965,21.673999786376953 C-1.406000018119812,17.724000930786133 3.9839999675750732,9.343999862670898 3.9839999675750732,-0.006000000052154064 C3.9839999675750732,-9.345999717712402 -1.3960000276565552,-17.715999603271484 -9.675999641418457,-21.676000595092773 C-11.675999641418457,-22.625999450683594 -12.515999794006348,-25.016000747680664 -11.565999984741211,-27.006000518798828 C-10.616000175476074,-29.006000518798828 -8.22599983215332,-29.84600067138672 -6.236000061035156,-28.895999908447266z\">\n                    </path>\n                </g>\n            </g>\n        </g>\n    </g>\n</svg>";
@@ -3916,7 +3918,6 @@
     var allBottom = y + parent.clientHeight;
     var allLeft = x + Math.round(parent.clientWidth / 2) - Math.round(topChild.clientWidth / 2);
     var allRight = x + Math.round(parent.clientWidth / 2) + Math.round(topChild.clientWidth / 2);
-    y - _parseInt$1(topChild.style.bottom);
     var parentLeft = x;
     var parentRight = x + parent.clientWidth;
     if (pageX >= allLeft && pageX <= allRight && pageY <= y && pageY >= allTop) return true;
@@ -3945,8 +3946,11 @@
       _defineProperty(_assertThisInitialized(_this), "volumeSet", void 0);
       _defineProperty(_assertThisInitialized(_this), "volumeDot", void 0);
       _defineProperty(_assertThisInitialized(_this), "volumeProgress", void 0);
+      _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
       _defineProperty(_assertThisInitialized(_this), "playRate", void 0);
+      _defineProperty(_assertThisInitialized(_this), "playRateSet", void 0);
       _defineProperty(_assertThisInitialized(_this), "resolvePower", void 0);
+      _defineProperty(_assertThisInitialized(_this), "resolvePowerSet", void 0);
       _defineProperty(_assertThisInitialized(_this), "settings", void 0);
       _this.container = container;
       _this.init();
@@ -3961,13 +3965,15 @@
     }, {
       key: "init",
       value: function init() {
-        var _context, _context2, _context3, _context4, _context5, _context6, _context7, _context8, _context9, _context10, _context11, _context12, _context13, _context14, _context15, _context16, _context17, _context18, _context19, _context20, _context21, _context22, _context23, _context24, _context25, _context26;
-        this._template = _concatInstanceProperty(_context = _concatInstanceProperty(_context2 = _concatInstanceProperty(_context3 = _concatInstanceProperty(_context4 = _concatInstanceProperty(_context5 = _concatInstanceProperty(_context6 = _concatInstanceProperty(_context7 = _concatInstanceProperty(_context8 = _concatInstanceProperty(_context9 = _concatInstanceProperty(_context10 = _concatInstanceProperty(_context11 = _concatInstanceProperty(_context12 = _concatInstanceProperty(_context13 = _concatInstanceProperty(_context14 = _concatInstanceProperty(_context15 = _concatInstanceProperty(_context16 = _concatInstanceProperty(_context17 = _concatInstanceProperty(_context18 = _concatInstanceProperty(_context19 = _concatInstanceProperty(_context20 = _concatInstanceProperty(_context21 = _concatInstanceProperty(_context22 = _concatInstanceProperty(_context23 = _concatInstanceProperty(_context24 = _concatInstanceProperty(_context25 = _concatInstanceProperty(_context26 = "\n      <div class=\"".concat(styles['video-play'], "\">\n        <div class=\"")).call(_context26, styles['video-subplay'], "\">\n            <div class=\"")).call(_context25, styles['video-start-pause'], "\">\n              <i class=\"")).call(_context24, icon['iconfont'], " ")).call(_context23, icon['icon-bofang'], "\"></i>\n            </div>\n            <div class=\"")).call(_context22, styles['video-duration'], "\">\n              <span class=\"")).call(_context21, styles['video-duration-completed'], "\">00:00</span>&nbsp;/&nbsp;<span class=\"")).call(_context20, styles['video-duration-all'], "\">00:00</span>\n            </div>\n        </div>\n        <div class=\"")).call(_context19, styles['video-settings'], "\">\n          <div class=\"")).call(_context18, styles['video-resolvepower'], " ")).call(_context17, styles['video-controller'], "\">\n            \u5206\u8FA8\u7387\n          </div>\n          <div class=\"")).call(_context16, styles['video-playrate'], " ")).call(_context15, styles['video-controller'], "\" aria-label=\"\u500D\u901F\">\n            \u500D\u901F\n          </div>\n          <div class=\"")).call(_context14, styles['video-volume'], " ")).call(_context13, styles['video-controller'], "\" aria-label=\"\u97F3\u91CF\">\n            <div class=\"")).call(_context12, styles['video-volume-set'], "\" aria-label=\"\u8C03\u8282\u97F3\u91CF\" style=\"display:none; bottom:41px\" >\n              <div class=\"")).call(_context11, styles['video-volume-show'], "\">48</div>\n              <div class=\"")).call(_context10, styles['video-volume-progress'], "\">\n                <div class=\"")).call(_context9, styles['video-volume-completed'], "\"></div>\n                <div class=\"")).call(_context8, styles['video-volume-dot'], "\"></div>\n              </div>\n            </div>\n            ")).call(_context7, volumeSVG, "\n          </div>\n          <div class=\"")).call(_context6, styles['video-subsettings'], " ")).call(_context5, styles['video-controller'], "\" aria-label=\"\u8BBE\u7F6E\">\n            ")).call(_context4, settingSVG, "\n          </div>\n          <div class=\"")).call(_context3, styles['video-fullscreen'], " ")).call(_context2, styles['video-controller'], "\" aria-label=\"\u5168\u5C4F\">\n            ")).call(_context, fullScreenSVG, "\n          </div>\n        </div>\n      </div>\n    ");
+        var _context, _context2, _context3, _context4, _context5, _context6, _context7, _context8, _context9, _context10, _context11, _context12, _context13, _context14, _context15, _context16, _context17, _context18, _context19, _context20, _context21, _context22, _context23, _context24, _context25, _context26, _context27, _context28;
+        this._template = _concatInstanceProperty(_context = _concatInstanceProperty(_context2 = _concatInstanceProperty(_context3 = _concatInstanceProperty(_context4 = _concatInstanceProperty(_context5 = _concatInstanceProperty(_context6 = _concatInstanceProperty(_context7 = _concatInstanceProperty(_context8 = _concatInstanceProperty(_context9 = _concatInstanceProperty(_context10 = _concatInstanceProperty(_context11 = _concatInstanceProperty(_context12 = _concatInstanceProperty(_context13 = _concatInstanceProperty(_context14 = _concatInstanceProperty(_context15 = _concatInstanceProperty(_context16 = _concatInstanceProperty(_context17 = _concatInstanceProperty(_context18 = _concatInstanceProperty(_context19 = _concatInstanceProperty(_context20 = _concatInstanceProperty(_context21 = _concatInstanceProperty(_context22 = _concatInstanceProperty(_context23 = _concatInstanceProperty(_context24 = _concatInstanceProperty(_context25 = _concatInstanceProperty(_context26 = _concatInstanceProperty(_context27 = _concatInstanceProperty(_context28 = "\n      <div class=\"".concat(styles['video-play'], "\">\n        <div class=\"")).call(_context28, styles['video-subplay'], "\">\n            <div class=\"")).call(_context27, styles['video-start-pause'], "\">\n              <i class=\"")).call(_context26, icon['iconfont'], " ")).call(_context25, icon['icon-bofang'], "\"></i>\n            </div>\n            <div class=\"")).call(_context24, styles['video-duration'], "\">\n              <span class=\"")).call(_context23, styles['video-duration-completed'], "\">00:00</span>&nbsp;/&nbsp;<span class=\"")).call(_context22, styles['video-duration-all'], "\">00:00</span>\n            </div>\n        </div>\n        <div class=\"")).call(_context21, styles['video-settings'], "\">\n          <div class=\"")).call(_context20, styles['video-resolvepower'], " ")).call(_context19, styles['video-controller'], "\">\n            \u5206\u8FA8\u7387\n            <ul class=\"")).call(_context18, styles['video-resolvepower-set'], "\" style=\"display:none;bottom:41px\">\n              <li><span>1080p\u8D85\u6E05</span></li>\n              <li><span>720p\u9AD8\u6E05</span></li>\n              <li><span>480p\u6807\u6E05</span></li>\n              <li><span>360p\u6D41\u7545</span></li>\n              <li><span>\u81EA\u52A8</span></li>\n            </ul>\n          </div>\n          <div class=\"")).call(_context17, styles['video-playrate'], " ")).call(_context16, styles['video-controller'], "\" aria-label=\"\u500D\u901F\">\n            \u500D\u901F\n            <ul class=\"")).call(_context15, styles['video-playrate-set'], "\" aria-label=\"\u8C03\u8282\u64AD\u653E\u901F\u5EA6\" style=\"display:none; bottom:41px\">\n              <li>2.0x</li>\n              <li>1.5x</li>\n              <li>1.25x</li>\n              <li>1.0x</li>\n              <li>0.75x</li>\n              <li>0.5x</li>\n            </ul>\n          </div>\n          <div class=\"")).call(_context14, styles['video-volume'], " ")).call(_context13, styles['video-controller'], "\" aria-label=\"\u97F3\u91CF\">\n            <div class=\"")).call(_context12, styles['video-volume-set'], "\" aria-label=\"\u8C03\u8282\u97F3\u91CF\" style=\"display:none; bottom:41px\" >\n              <div class=\"")).call(_context11, styles['video-volume-show'], "\">48</div>\n              <div class=\"")).call(_context10, styles['video-volume-progress'], "\" style=\"height: 70px\">\n                <div class=\"")).call(_context9, styles['video-volume-completed'], "\" style=\"height: 0\"></div>\n                <div class=\"")).call(_context8, styles['video-volume-dot'], "\" style=\"bottom: 100%\"></div>\n              </div>\n            </div>\n            ")).call(_context7, volumeSVG, "\n          </div>\n          <div class=\"")).call(_context6, styles['video-subsettings'], " ")).call(_context5, styles['video-controller'], "\" aria-label=\"\u8BBE\u7F6E\">\n            ")).call(_context4, settingSVG, "\n          </div>\n          <div class=\"")).call(_context3, styles['video-fullscreen'], " ")).call(_context2, styles['video-controller'], "\" aria-label=\"\u5168\u5C4F\">\n            ")).call(_context, fullScreenSVG, "\n          </div>\n        </div>\n      </div>\n    ");
       }
     }, {
       key: "initControllerEvent",
       value: function initControllerEvent() {
         var _this2 = this;
+        this.volumeCompleted.style.height = this.video.volume * 100 + '%';
+        this.volumeDot.style.bottom = _parseInt$1(this.volumeProgress.style.height) * this.video.volume - 6 + 'px';
         /**
          * @description 监听鼠标的点击事件来决定是否暂停还是播放视频
          */
@@ -3994,35 +4000,40 @@
          */
         this.volumeBtn.onmouseenter = function (e) {
           _this2.volumeSet.style.display = 'block';
-          // let { x, y } = getDOMPoint(this.volumeBtn)
-          // // volumeSet顶部 距离页面顶部距离，多减了一点点
-          // let top = y - parseInt(this.volumeSet.style.bottom) - this.volumeSet.clientHeight
-          // // volumeSet底部 距离页面顶部距离
-          // let bottom = y - (parseInt(this.volumeSet.style.bottom) - this.volumeBtn.clientHeight)
-          // // volumeSet左侧 距离页面左侧距离
-          // let left =
-          //   x + Math.round(this.volumeBtn.clientWidth / 2) - Math.round(this.volumeSet.clientWidth / 2)
-          // // volumeSet右侧 距离页面左侧距离
-          // let right =
-          //   x + Math.round(this.volumeBtn.clientWidth / 2) + Math.round(this.volumeSet.clientWidth / 2)
+          var ctx = _this2;
           document.body.onmousemove = function (e) {
-            var pX = e.pageX,
-              pY = e.pageY;
-            if (!checkIsMouseInRange(_this2.volumeBtn, _this2.volumeSet, pX, pY)) {
-              _this2.volumeSet.style.display = 'none';
-            }
-            // if (
-            //   !(
-            //     (pX >= left && pX <= right && pY <= y && pY >= top) ||
-            //     (pX >= x &&
-            //       pX <= x + this.volumeBtn.clientWidth &&
-            //       pY >= y &&
-            //       pY <= y + this.volumeBtn.clientHeight)
-            //   )
-            // ) {
-            //   this.volumeSet.style.display = 'none'
-            // }
+            ctx.handleMouseMove(e, 'volume');
           };
+        };
+        this.playRate.onmouseenter = function (e) {
+          _this2.playRateSet.style.display = 'block';
+          var ctx = _this2;
+          document.body.onmousemove = function (e) {
+            ctx.handleMouseMove(e, 'playrate');
+          };
+        };
+        this.resolvePower.onmouseenter = function (e) {
+          _this2.resolvePowerSet.style.display = 'block';
+          var ctx = _this2;
+          document.body.onmousemove = function (e) {
+            ctx.handleMouseMove(e, 'resolvepower');
+          };
+        };
+        this.volumeDot.onmousedown = function (e) {
+          var mouseY = e.pageY;
+          var comHeight = _this2.volumeCompleted.clientHeight;
+          document.body.onmousemove = function (e) {
+            var pageY = e.pageY;
+            var scale = (mouseY - pageY + comHeight) / _this2.volumeProgress.clientHeight;
+            if (scale > 1) scale = 1;else if (scale < 0) scale = 0;
+            _this2.volumeCompleted.style.height = scale * 100 + '%';
+            _this2.volumeDot.style.bottom = _this2.volumeProgress.clientHeight * scale - 6 + 'px';
+            _this2.video.volume = scale;
+          };
+          document.body.onmouseup = function () {
+            document.body.onmousemove = null;
+          };
+          e.preventDefault();
         };
       }
     }, {
@@ -4030,12 +4041,12 @@
       value: function initEvent() {
         var _this3 = this;
         this.on('play', function () {
-          var _context27;
-          _this3.videoPlayBtn.className = _concatInstanceProperty(_context27 = "".concat(icon['iconfont'], " ")).call(_context27, icon['icon-zanting']);
+          var _context29;
+          _this3.videoPlayBtn.className = _concatInstanceProperty(_context29 = "".concat(icon['iconfont'], " ")).call(_context29, icon['icon-zanting']);
         });
         this.on('pause', function () {
-          var _context28;
-          _this3.videoPlayBtn.className = _concatInstanceProperty(_context28 = "".concat(icon['iconfont'], " ")).call(_context28, icon['icon-bofang']);
+          var _context30;
+          _this3.videoPlayBtn.className = _concatInstanceProperty(_context30 = "".concat(icon['iconfont'], " ")).call(_context30, icon['icon-bofang']);
         });
         this.on('loadedmetadata', function (summary) {
           _this3.summaryTime.innerHTML = formatTime(summary);
@@ -4054,8 +4065,38 @@
           _this3.fullScreen = _this3.container.querySelector(".".concat(styles['video-fullscreen']));
           _this3.volumeBtn = _this3.container.querySelector(".".concat(styles['video-volume']));
           _this3.volumeSet = _this3.container.querySelector(".".concat(styles['video-volume-set']));
+          _this3.volumeCompleted = _this3.container.querySelector(".".concat(styles['video-volume-completed']));
+          _this3.volumeProgress = _this3.container.querySelector(".".concat(styles['video-volume-progress']));
+          _this3.volumeDot = _this3.container.querySelector(".".concat(styles['video-volume-dot']));
+          _this3.playRate = _this3.container.querySelector(".".concat(styles['video-playrate']));
+          _this3.playRateSet = _this3.container.querySelector(".".concat(styles['video-playrate-set']));
+          _this3.resolvePower = _this3.container.querySelector(".".concat(styles['video-resolvepower']));
+          _this3.resolvePowerSet = _this3.container.querySelector(".".concat(styles['video-resolvepower-set']));
           _this3.initControllerEvent();
         });
+      }
+    }, {
+      key: "handleMouseMove",
+      value: function handleMouseMove(e, type) {
+        var pX = e.pageX,
+          pY = e.pageY;
+        var ctx = this;
+        if (type === 'volume') {
+          if (!checkIsMouseInRange(ctx.volumeBtn, ctx.volumeSet, pX, pY)) {
+            ctx.volumeSet.style.display = 'none';
+            document.body.onmousemove = null;
+          }
+        } else if (type === 'playrate') {
+          if (!checkIsMouseInRange(ctx.playRate, ctx.playRateSet, pX, pY)) {
+            ctx.playRateSet.style.display = 'none';
+            document.body.onmousemove = null;
+          }
+        } else if (type === 'resolvepower') {
+          if (!checkIsMouseInRange(ctx.resolvePower, ctx.resolvePowerSet, pX, pY)) {
+            ctx.resolvePowerSet.style.display = 'none';
+            document.body.onmousemove = null;
+          }
+        }
       }
     }]);
     return Controller;
