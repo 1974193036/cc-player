@@ -3,12 +3,14 @@ import { Player } from '@/page/player'
 import { ComponentItem, Node, DOMProps } from '@/types/Player'
 import { addClass, includeClass, removeClass } from '@/utils/domUtils'
 import { Progress } from '../Progress/progress'
+import { Controller } from '../Controller/controller'
 import './toolbar.less'
 
 export class ToolBar extends Component implements ComponentItem {
   readonly id = 'ToolBar'
   player: Player
   progress: Progress
+  controller: Controller
   props: DOMProps
   private timer: number = 0
 
@@ -37,6 +39,7 @@ export class ToolBar extends Component implements ComponentItem {
 
   initComponent() {
     this.progress = new Progress(this.player, this.el, 'div.video-progress')
+    this.controller = new Controller(this.player, this.el, 'div.video-play')
   }
 
   initEvent() {
