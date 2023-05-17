@@ -38,6 +38,10 @@ export const styles = {
   'video-subsettings': 'video-subsettings',
   // 'video-volume': 'controller_video-volume__6xzJB',
   'video-volume': 'video-volume',
+
+  'video-volume-set': 'video-volume-set',
+  'video-volume-show': 'video-volume-show',
+
   // 'video-volume-progress': 'controller_video-volume-progress__f4U3J',
   'video-volume-progress': 'video-volume-progress',
   // 'video-volume-completed': 'controller_video-volume-completed__R0FaX',
