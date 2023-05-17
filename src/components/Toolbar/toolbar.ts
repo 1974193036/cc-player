@@ -1,101 +1,81 @@
-// import { styles, Progress } from '../../index'
-import { styles } from '@/styles/style'
-import { Progress } from '@/components/Progress/progress'
-import { Controller } from '@/components/Controller/controller'
-import { BaseEvent } from '@/class/BaseEvent'
+import { Component } from '@/class/Component'
+import { Player } from '@/page/player'
+import { ComponentItem, Node, DOMProps } from '@/types/Player'
+import { addClass, includeClass, removeClass } from '@/utils/domUtils'
+import { Progress } from '../Progress/progress'
 import './toolbar.less'
 
-export class Toolbar extends BaseEvent {
-  private _template: HTMLElement
-  private progress: Progress
-  private controller: Controller
-  private container: HTMLElement
-  private timer: number | null
-  private video: HTMLVideoElement
+export class ToolBar extends Component implements ComponentItem {
+  readonly id = 'ToolBar'
+  player: Player
+  progress: Progress
+  props: DOMProps
+  private timer: number = 0
 
-  constructor(container: HTMLElement) {
-    super()
-    this.container = container
+  constructor(
+    player: Player,
+    container: HTMLElement,
+    desc?: string,
+    props?: DOMProps,
+    children?: Node[]
+  ) {
+    super(container, desc, props, children)
+    this.player = player
+    this.props = props
     this.init()
-    this.initComponent()
+  }
+
+  init() {
     this.initTemplate()
+    this.initComponent()
     this.initEvent()
   }
 
-  get template(): HTMLElement {
-    return this._template
+  initTemplate() {
+    addClass(this.el, ['video-controls', 'video-controls-hidden'])
   }
-
-  init() {}
 
   initComponent() {
-    this.progress = new Progress(this.container)
-    this.controller = new Controller(this.container)
+    this.progress = new Progress(this.player, this.el, 'div.video-progress')
   }
 
-  initTemplate() {
-    let div = document.createElement('div')
-    div.className = `${styles['video-controls']} ${styles['video-controls-hidden']}`
-    div.innerHTML += this.progress.template as string
-    div.innerHTML += this.controller.template as string
-    this._template = div
+  initEvent() {
+    this.player.on('showtoolbar', (e) => {
+      this.onShowToolBar(e)
+    })
+
+    this.player.on('hidetoolbar', (e) => {
+      this.onHideToolBar(e)
+    })
   }
 
-  showToolBar(e: MouseEvent) {
-    this.container.querySelector(`.${styles['video-controls']}`).className =
-      styles['video-controls']
-    if (e.target !== this.video) {
-      // To do
-    } else {
+  onShowToolBar(e: MouseEvent) {
+    if (this.timer) {
+      window.clearTimeout(this.timer)
+      this.timer = null
+    }
+    this.showToolBar(e)
+  }
+
+  onHideToolBar(e: MouseEvent) {
+    this.hideToolBar()
+  }
+
+  private showToolBar(e: MouseEvent) {
+    if (includeClass(this.el, 'video-controls-hidden')) {
+      removeClass(this.el, ['video-controls-hidden'])
+    }
+
+    if (e.target === this.player.video) {
       this.timer = window.setTimeout(() => {
-        this.hideToolbar()
+        this.hideToolBar()
       }, 3000)
     }
   }
 
-  hideToolbar() {
-    this.container.querySelector(
-      `.${styles['video-controls']}`
-    ).className = `${styles['video-controls']} ${styles['video-controls-hidden']}`
-  }
-
-  initEvent() {
-    this.on('showtoolbar', (e: MouseEvent) => {
-      if (this.timer) {
-        clearTimeout(this.timer)
-        this.timer = null
-      }
-      this.showToolBar(e)
-    })
-
-    this.on('hidetoolbar', () => {
-      this.hideToolbar()
-    })
-
-    this.on('loadedmetadata', (summary: number) => {
-      // console.log('duration', summary)
-      this.controller.emit('loadedmetadata', summary)
-      this.progress.emit('loadedmetadata', summary)
-    })
-
-    this.on('timeupdate', (currentTime: number) => {
-      // console.log('currentTime', currentTime)
-      this.controller.emit('timeupdate', currentTime)
-      this.progress.emit('timeupdate', currentTime)
-    })
-
-    this.on('play', () => {
-      this.controller.emit('play')
-    })
-
-    this.on('pause', () => {
-      this.controller.emit('pause')
-    })
-
-    this.on('mounted', () => {
-      this.video = this.container.querySelector('video')
-      this.controller.emit('mounted')
-      this.progress.emit('mounted')
-    })
+  private hideToolBar() {
+    if (!includeClass(this.el, 'video-controls-hidden')) {
+      addClass(this.el, ['video-controls-hidden'])
+    }
   }
 }

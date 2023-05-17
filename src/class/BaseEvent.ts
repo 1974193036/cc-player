@@ -1,4 +1,4 @@
-import { EventObject } from "@/types/EventObject";
+import { EventObject } from '@/types/EventObject'
 
 export class BaseEvent {
   $events: EventObject = {}
@@ -10,7 +10,7 @@ export class BaseEvent {
 
   emit(event: string, ...args: any[]) {
     if (this.$events[event]) {
-      this.$events[event].forEach(cb => {
+      this.$events[event].forEach((cb) => {
         cb.call(this, ...args)
       })
     }
