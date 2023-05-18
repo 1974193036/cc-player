@@ -1,5 +1,3 @@
-// import { ComponentItem, PlayerOptions, ToolBar } from '../index'
-
 import { ComponentItem, PlayerOptions } from '@/types/Player'
 import { Component } from '@/class/Component'
 import { ToolBar } from '@/components/ToolBar/toolbar'

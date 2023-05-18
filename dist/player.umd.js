@@ -25,7 +25,7 @@
   };
 
   // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-  var global$e =
+  var global$f =
     // eslint-disable-next-line es/no-global-this -- safe
     check(typeof globalThis == 'object' && globalThis) ||
     check(typeof window == 'object' && window) ||
@@ -33,7 +33,7 @@
     check(typeof self == 'object' && self) ||
     check(typeof commonjsGlobal == 'object' && commonjsGlobal) ||
     // eslint-disable-next-line no-new-func -- fallback
-    (function () { return this; })() || Function('return this')();
+    (function () { return this; })() || commonjsGlobal || Function('return this')();
 
   var fails$k = function (exec) {
     try {
@@ -215,7 +215,7 @@
   var path$e = {};
 
   var path$d = path$e;
-  var global$d = global$e;
+  var global$e = global$f;
   var isCallable$e = isCallable$g;
 
   var aFunction = function (variable) {
@@ -223,8 +223,8 @@
   };
 
   var getBuiltIn$a = function (namespace, method) {
-    return arguments.length < 2 ? aFunction(path$d[namespace]) || aFunction(global$d[namespace])
-      : path$d[namespace] && path$d[namespace][method] || global$d[namespace] && global$d[namespace][method];
+    return arguments.length < 2 ? aFunction(path$d[namespace]) || aFunction(global$e[namespace])
+      : path$d[namespace] && path$d[namespace][method] || global$e[namespace] && global$e[namespace][method];
   };
 
   var uncurryThis$k = functionUncurryThis;
@@ -233,11 +233,11 @@
 
   var engineUserAgent = typeof navigator != 'undefined' && String(navigator.userAgent) || '';
 
-  var global$c = global$e;
+  var global$d = global$f;
   var userAgent = engineUserAgent;
 
-  var process = global$c.process;
-  var Deno = global$c.Deno;
+  var process = global$d.process;
+  var Deno = global$d.Deno;
   var versions = process && process.versions || Deno && Deno.version;
   var v8 = versions && versions.v8;
   var match, version;
@@ -265,13 +265,18 @@
 
   var V8_VERSION$2 = engineV8Version;
   var fails$g = fails$k;
+  var global$c = global$f;
+
+  var $String$5 = global$c.String;
 
   // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
   var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$g(function () {
     var symbol = Symbol();
     // Chrome 38 Symbol has incorrect toString conversion
     // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
-    return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
+    // nb: Do not call `String` directly to avoid this being optimized out to `symbol+''` which will,
+    // of course, fail.
+    return !$String$5(symbol) || !(Object(symbol) instanceof Symbol) ||
       // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
       !Symbol.sham && V8_VERSION$2 && V8_VERSION$2 < 41;
   });
@@ -347,7 +352,7 @@
 
   var shared$7 = {exports: {}};
 
-  var global$b = global$e;
+  var global$b = global$f;
 
   // eslint-disable-next-line es/no-object-defineproperty -- safe
   var defineProperty$b = Object.defineProperty;
@@ -360,7 +365,7 @@
     } return value;
   };
 
-  var global$a = global$e;
+  var global$a = global$f;
   var defineGlobalProperty = defineGlobalProperty$1;
 
   var SHARED = '__core-js_shared__';
@@ -373,10 +378,10 @@
   (shared$7.exports = function (key, value) {
     return store$2[key] || (store$2[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.30.1',
+    version: '3.30.2',
     mode: 'pure' ,
     copyright: '© 2014-2023 Denis Pushkarev (zloirock.ru)',
-    license: 'https://github.com/zloirock/core-js/blob/v3.30.1/LICENSE',
+    license: 'https://github.com/zloirock/core-js/blob/v3.30.2/LICENSE',
     source: 'https://github.com/zloirock/core-js'
   });
 
@@ -414,7 +419,7 @@
     return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString$8(++id + postfix, 36);
   };
 
-  var global$9 = global$e;
+  var global$9 = global$f;
   var shared$6 = sharedExports;
   var hasOwn$d = hasOwnProperty_1;
   var uid$2 = uid$3;
@@ -469,7 +474,7 @@
     return isSymbol$3(key) ? key : key + '';
   };
 
-  var global$8 = global$e;
+  var global$8 = global$f;
   var isObject$8 = isObject$b;
 
   var document$1 = global$8.document;
@@ -633,7 +638,7 @@
     return object;
   };
 
-  var global$7 = global$e;
+  var global$7 = global$f;
   var apply$2 = functionApply;
   var uncurryThis$g = functionUncurryThisClause;
   var isCallable$9 = isCallable$g;
@@ -1424,7 +1429,7 @@
     }
   };
 
-  var global$6 = global$e;
+  var global$6 = global$f;
   var isCallable$5 = isCallable$g;
 
   var WeakMap$1 = global$6.WeakMap;
@@ -1432,7 +1437,7 @@
   var weakMapBasicDetection = isCallable$5(WeakMap$1) && /native code/.test(String(WeakMap$1));
 
   var NATIVE_WEAK_MAP = weakMapBasicDetection;
-  var global$5 = global$e;
+  var global$5 = global$f;
   var isObject$4 = isObject$b;
   var createNonEnumerableProperty$1 = createNonEnumerableProperty$5;
   var hasOwn$7 = hasOwnProperty_1;
@@ -1577,7 +1582,7 @@
   };
 
   var $$j = _export;
-  var global$4 = global$e;
+  var global$4 = global$f;
   var call$6 = functionCall;
   var uncurryThis$b = functionUncurryThis;
   var DESCRIPTORS$3 = descriptors;
@@ -2086,7 +2091,7 @@
   // https://tc39.es/ecma262/#sec-symbol.unscopables
   defineWellKnownSymbol$8('unscopables');
 
-  var global$3 = global$e;
+  var global$3 = global$f;
   var setToStringTag$2 = setToStringTag$5;
 
   // JSON[@@toStringTag] property
@@ -2438,7 +2443,7 @@
   };
 
   var DOMIterables$1 = domIterables;
-  var global$2 = global$e;
+  var global$2 = global$f;
   var classof$2 = classof$8;
   var createNonEnumerableProperty = createNonEnumerableProperty$5;
   var Iterators$2 = iterators;
@@ -2943,7 +2948,7 @@
     trim: createMethod(3)
   };
 
-  var global$1 = global$e;
+  var global$1 = global$f;
   var fails$3 = fails$k;
   var uncurryThis$2 = functionUncurryThis;
   var toString = toString$7;
@@ -4246,6 +4251,7 @@
       key: "init",
       value: function init() {
         this.initComponent();
+        this.initEvent();
       }
     }, {
       key: "initComponent",
@@ -4265,6 +4271,7 @@
           _this2.player.emit('progress-mouseleave', e, _this2);
         };
         this.el.onclick = function (e) {
+          // if (e.target === this.el) {
           _this2.player.emit('progress-click', e, _this2);
         };
       }

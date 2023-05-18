@@ -1,7 +1,7 @@
 const { defineConfig } = require('rollup')
 const nodeResolve = require('@rollup/plugin-node-resolve') // 解析第三方库依赖（即 node_module 内的依赖）
 const commonjs = require('@rollup/plugin-commonjs') // 识别 commonjs 格式依赖
-const ts = require('rollup-plugin-typescript2') // 编译 TypeScript
+const ts = require('@rollup/plugin-typescript') // 编译 TypeScript, 在使用rollup-plugin-typescript2的时候无法在--watch下自动编译，所以换成了@rollup/plugin-typescript
 const babel = require('@rollup/plugin-babel')
 const { DEFAULT_EXTENSIONS } = require('@babel/core')
 const postcss = require('rollup-plugin-postcss')
@@ -22,6 +22,10 @@ module.exports = defineConfig([
         sourcemap: true
       }
     ],
+    watch: {
+      include: 'src/**',
+      clearScreen: false
+    },
     plugins: [
       ts(),
       nodeResolve({
@@ -53,7 +57,7 @@ module.exports = defineConfig([
       }),
       // 本地服务器
       serve({
-        open: true, // 自动打开页面
+        open: false, // 自动打开页面
         port: 8888,
         host: 'localhost'
       })

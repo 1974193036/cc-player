@@ -1,7 +1,6 @@
 import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, Node, DOMProps } from '@/types/Player'
-import { addClass, includeClass, removeClass } from '@/utils/domUtils'
 import { Dot } from './parts/Dot'
 import { CompletedProgress } from './parts/CompletedProgress'
 import { BufferedProgress } from './parts/BufferedProgress'
@@ -30,6 +29,7 @@ export class Progress extends Component implements ComponentItem {
 
   init() {
     this.initComponent()
+    this.initEvent()
   }
 
   initComponent() {
@@ -48,7 +48,10 @@ export class Progress extends Component implements ComponentItem {
     }
 
     this.el.onclick = (e) => {
+      // if (e.target === this.el) {
       this.player.emit('progress-click', e, this)
+      // }
+      ;
     }
   }
 }
