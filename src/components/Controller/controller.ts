@@ -1,8 +1,9 @@
 import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
-import { $ } from '@/utils/domUtils'
+import { $, addClass } from '@/utils/domUtils'
 import { PlayButton } from './parts/PlayButton'
+import { Volume } from './parts/Volume'
 import './controller.less'
 
 export class Controller extends Component implements ComponentItem {
@@ -10,6 +11,7 @@ export class Controller extends Component implements ComponentItem {
   props: DOMProps
   player: Player
   playButton: PlayButton
+  volume: Volume
   private subPlay: HTMLElement
   private settings: HTMLElement
 
@@ -39,6 +41,8 @@ export class Controller extends Component implements ComponentItem {
 
   initComponent() {
     this.playButton = new PlayButton(this.player, this.subPlay, 'div.video-start-pause')
+    this.volume = new Volume(this.player, this.settings, 'div')
+    addClass(this.volume.el, ['video-volume', 'video-controller'])
   }
   // private template_: HTMLElement | string;
   // private container: HTMLElement;

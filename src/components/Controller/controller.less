@@ -71,8 +71,9 @@
           line-height: 15px;
           font-size: 12px;
         }
-        .video-voulme-progress {
-          width: 2px;
+        .video-volume-progress {
+          border-radius: 2px;
+          width: 5px;
           height: calc(100% - 20px - 10px);
           margin-top: 8px;
           margin-left: 50%;
@@ -85,6 +86,7 @@
             height: 50%;
             width: 100%;
             background-color: #00a1d6;
+            position: absolute;
           }
 
           .video-volume-dot {
@@ -96,6 +98,15 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1003;
+          }
+        }
+      }
+      .video-icon {
+        svg {
+          height: 20px;
+          width: 20px;
+          path {
+            fill: #fff;
           }
         }
       }
