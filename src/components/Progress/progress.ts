@@ -8,6 +8,7 @@ import './progress.less'
 
 export class Progress extends Component implements ComponentItem {
   readonly id = 'Progress'
+  // el: div.video-progress
   player: Player
   props: DOMProps
 

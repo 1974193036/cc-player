@@ -5,6 +5,7 @@ import { Progress } from '../progress'
 
 export class BufferedProgress extends Component implements ComponentItem {
   readonly id = 'BufferedProgress'
+  // el: div.video-buffered
   props: DOMProps
   player: Player
   

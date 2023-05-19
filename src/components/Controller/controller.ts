@@ -2,15 +2,20 @@ import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { $, addClass } from '@/utils/domUtils'
+import { FullScreen } from './parts/FullScreen'
 import { PlayButton } from './parts/PlayButton'
+import { Playrate } from './parts/Playrate'
 import { Volume } from './parts/Volume'
 import './controller.less'
 
 export class Controller extends Component implements ComponentItem {
   readonly id = 'Controller'
+  // el: div.video-play
   props: DOMProps
   player: Player
+  fullscreen: FullScreen
   playButton: PlayButton
+  playrate: Playrate
   volume: Volume
   private subPlay: HTMLElement
   private settings: HTMLElement
@@ -43,6 +48,9 @@ export class Controller extends Component implements ComponentItem {
     this.playButton = new PlayButton(this.player, this.subPlay, 'div.video-start-pause')
     this.volume = new Volume(this.player, this.settings, 'div')
     addClass(this.volume.el, ['video-volume', 'video-controller'])
+
+    this.playrate = new Playrate(this.player, this.settings, 'div')
+    this.fullscreen = new FullScreen(this.player, this.settings, 'div')
   }
   // private template_: HTMLElement | string;
   // private container: HTMLElement;

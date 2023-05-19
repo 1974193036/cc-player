@@ -8,6 +8,7 @@ import './toolbar.less'
 
 export class ToolBar extends Component implements ComponentItem {
   readonly id = 'ToolBar'
+  // el: div.video-controls.video-controls-hidden
   player: Player
   progress: Progress
   controller: Controller

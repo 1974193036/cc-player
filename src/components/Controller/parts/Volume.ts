@@ -7,6 +7,7 @@ import { volumePath$1, volumePath$2 } from '../path/defaultPath'
 
 export class Volume extends Options {
   readonly id = 'Volume'
+  // el: div.video-volume video-controller
   volumeProgress: HTMLElement
   volumeShow: HTMLElement
   volumeCompleted: CompletedProgress

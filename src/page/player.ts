@@ -7,6 +7,8 @@ import '../main.less'
 
 class Player extends Component implements ComponentItem {
   readonly id = 'Player'
+  // el: div.video-wrapper
+
   // 播放器的默认配置
   readonly playerOptions = {
     url: '',
@@ -15,13 +17,16 @@ class Player extends Component implements ComponentItem {
     height: '100%'
   }
   video: HTMLVideoElement
+  container: HTMLElement
   toolBar: ToolBar
+
   constructor(options: PlayerOptions) {
     super(options.container, 'div.video-wrapper')
     this.playerOptions = Object.assign(this.playerOptions, options)
     options.container.className = 'video-container'
     options.container.style.width = this.playerOptions.width
     options.container.style.height = this.playerOptions.height
+    this.container = options.container
     this.init()
   }
 

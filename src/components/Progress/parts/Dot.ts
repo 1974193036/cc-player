@@ -6,6 +6,7 @@ import { Progress } from '../progress'
 
 export class Dot extends Component implements ComponentItem {
   readonly id = 'Dot'
+  // el: div.video-dot.video-dot-hidden
   props: DOMProps
   player: Player
 
