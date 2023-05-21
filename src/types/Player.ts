@@ -1,4 +1,5 @@
 import { Player } from '../page/player'
+import { Component } from '../class/Component'
 
 export type PlayerOptions = {
   url: string
@@ -6,6 +7,8 @@ export type PlayerOptions = {
   autoplay?: boolean
   width?: string
   height?: string
+  leftControllers?: (ComponentConstructor | string)[]
+  rightControllers?: (ComponentConstructor | string)[]
 }
 
 export type DOMProps = {
@@ -39,7 +42,17 @@ export type registerOptions = {
 // 首先约束参数T必须是个函数类型
 // 判断T是否是函数类型，如果是则使用infer P暂时存一下函数的参数类型，后面的语句直接用 P 即可得到这个类型并返回，否则就返回never
 export type getFunctionParametersType<T extends (...args: any[]) => any> = T extends (
-...args: (infer P)[]
+  ...args: (infer P)[]
 ) => infer U
   ? P
   : never
+
+export interface ComponentConstructor {
+  new (
+    player: Player,
+    container: HTMLElement,
+    desc?: string,
+    props?: DOMProps,
+    children?: string | Node[]
+  ): Component & ComponentItem
+}

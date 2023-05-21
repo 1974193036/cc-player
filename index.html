@@ -36,7 +36,8 @@
           container: document.getElementsByClassName('video')[0],
           width: '640px',
           height: '480px',
-          autoplay: false
+          autoplay: false,
+          rightControllers: ['Playrate']
         })
 
         // player.attendSource('http://localhost:8889/video.mp4')
@@ -70,18 +71,18 @@
         //   }
         // })
 
-        player.use({
-          install(player) {
-            player.registerControls("Dot",{
-              id:"Dot",
-              props:{ 
-                style:{
-                  backgroundColor:"blue"
-                }
-              }
-            })
-          }
-        })
+        // player.use({
+        //   install(player) {
+        //     player.registerControls("Dot",{
+        //       id:"Dot",
+        //       props:{ 
+        //         style:{
+        //           backgroundColor:"blue"
+        //         }
+        //       }
+        //     })
+        //   }
+        // })
       }
     </script>
 </body>

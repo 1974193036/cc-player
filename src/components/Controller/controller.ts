@@ -1,12 +1,12 @@
 import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
-import { ComponentItem, DOMProps, Node } from '@/types/Player'
+import { ComponentConstructor, ComponentItem, DOMProps, Node, PlayerOptions } from '@/types/Player'
 import { $, addClass } from '@/utils/domUtils'
 import { FullScreen } from './parts/FullScreen'
 import { PlayButton } from './parts/PlayButton'
 import { Playrate } from './parts/Playrate'
 import { Volume } from './parts/Volume'
-import { storeControlComponent } from '@/utils/store'
+import { controllersMapping, storeControlComponent } from '@/utils/store'
 import './controller.less'
 
 export class Controller extends Component implements ComponentItem {
@@ -15,10 +15,12 @@ export class Controller extends Component implements ComponentItem {
   props: DOMProps = {}
   player: Player
   // 控件
-  fullscreen: FullScreen
-  playButton: PlayButton
-  playrate: Playrate
-  volume: Volume
+  leftControllers: ComponentConstructor[] = [PlayButton]
+  rightController: ComponentConstructor[] = [Playrate, Volume, FullScreen]
+  // fullscreen: FullScreen
+  // playButton: PlayButton
+  // playrate: Playrate
+  // volume: Volume
   private subPlay: HTMLElement
   private settings: HTMLElement
 
@@ -36,10 +38,41 @@ export class Controller extends Component implements ComponentItem {
   }
 
   init() {
+    this.initControllers()
     this.initTemplate()
     this.initComponent()
 
     storeControlComponent(this)
+  }
+
+  initControllers() {
+    let leftControllers = (this.player.playerOptions as PlayerOptions).leftControllers
+    let rightControllers = (this.player.playerOptions as PlayerOptions).rightControllers
+    if (leftControllers) {
+      this.leftControllers = leftControllers.map((item) => {
+        if (typeof item === 'string') {
+          if (!controllersMapping[item]) {
+            throw new Error(`传入的组件名${item}错误`)
+          }
+          return controllersMapping[item]
+        } else {
+          return item
+        }
+      })
+    }
+    if (rightControllers) {
+      this.rightController = rightControllers.map((item) => {
+        if (typeof item === 'string') {
+          if (!controllersMapping[item]) {
+            throw new Error(`传入的组件名${item}错误`)
+          }
+          return controllersMapping[item]
+        } else {
+          return item
+        }
+      })
+      console.log(this.rightController)
+    }
   }
 
   initTemplate() {
@@ -50,10 +83,19 @@ export class Controller extends Component implements ComponentItem {
   }
 
   initComponent() {
-    this.playButton = new PlayButton(this.player, this.subPlay, 'div')
-    this.volume = new Volume(this.player, this.settings, 'div')
-    this.playrate = new Playrate(this.player, this.settings, 'div')
-    this.fullscreen = new FullScreen(this.player, this.settings, 'div')
+    this.leftControllers.forEach((ControlConstructor) => {
+      let instance = new ControlConstructor(this.player, this.subPlay, 'div')
+      this[instance.id] = instance
+    })
+
+    this.rightController.forEach((ControlConstructor) => {
+      let instance = new ControlConstructor(this.player, this.settings, 'div')
+      this[instance.id] = instance
+    })
+    // this.playButton = new PlayButton(this.player, this.subPlay, 'div')
+    // this.volume = new Volume(this.player, this.settings, 'div')
+    // this.playrate = new Playrate(this.player, this.settings, 'div')
+    // this.fullscreen = new FullScreen(this.player, this.settings, 'div')
   }
   // private template_: HTMLElement | string;
   // private container: HTMLElement;

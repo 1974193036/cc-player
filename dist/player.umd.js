@@ -291,7 +291,7 @@
 
   var getBuiltIn$b = getBuiltIn$c;
   var isCallable$h = isCallable$k;
-  var isPrototypeOf$7 = objectIsPrototypeOf;
+  var isPrototypeOf$8 = objectIsPrototypeOf;
   var USE_SYMBOL_AS_UID$1 = useSymbolAsUid;
 
   var $Object$3 = Object;
@@ -300,7 +300,7 @@
     return typeof it == 'symbol';
   } : function (it) {
     var $Symbol = getBuiltIn$b('Symbol');
-    return isCallable$h($Symbol) && isPrototypeOf$7($Symbol.prototype, $Object$3(it));
+    return isCallable$h($Symbol) && isPrototypeOf$8($Symbol.prototype, $Object$3(it));
   };
 
   var $String$4 = String;
@@ -740,14 +740,14 @@
     }
   };
 
-  var $$H = _export;
+  var $$I = _export;
   var DESCRIPTORS$8 = descriptors;
   var defineProperty$c = objectDefineProperty.f;
 
   // `Object.defineProperty` method
   // https://tc39.es/ecma262/#sec-object.defineproperty
   // eslint-disable-next-line es/no-object-defineproperty -- safe
-  $$H({ target: 'Object', stat: true, forced: Object.defineProperty !== defineProperty$c, sham: !DESCRIPTORS$8 }, {
+  $$I({ target: 'Object', stat: true, forced: Object.defineProperty !== defineProperty$c, sham: !DESCRIPTORS$8 }, {
     defineProperty: defineProperty$c
   });
 
@@ -763,17 +763,17 @@
 
   var definePropertyExports = defineProperty$e.exports;
 
-  var parent$R = definePropertyExports;
+  var parent$U = definePropertyExports;
 
-  var defineProperty$a = parent$R;
+  var defineProperty$a = parent$U;
 
-  var parent$Q = defineProperty$a;
+  var parent$T = defineProperty$a;
 
-  var defineProperty$9 = parent$Q;
+  var defineProperty$9 = parent$T;
 
-  var parent$P = defineProperty$9;
+  var parent$S = defineProperty$9;
 
-  var defineProperty$8 = parent$P;
+  var defineProperty$8 = parent$S;
 
   var defineProperty$7 = defineProperty$8;
 
@@ -991,7 +991,7 @@
 
   var SPECIES$2 = wellKnownSymbol$e('species');
 
-  var arrayMethodHasSpeciesSupport$2 = function (METHOD_NAME) {
+  var arrayMethodHasSpeciesSupport$3 = function (METHOD_NAME) {
     // We can't use this feature detection in V8 since it causes
     // deoptimization and serious performance degradation
     // https://github.com/zloirock/core-js/issues/677
@@ -1005,7 +1005,7 @@
     });
   };
 
-  var $$G = _export;
+  var $$H = _export;
   var fails$e = fails$o;
   var isArray$9 = isArray$b;
   var isObject$8 = isObject$e;
@@ -1014,7 +1014,7 @@
   var doesNotExceedSafeInteger = doesNotExceedSafeInteger$1;
   var createProperty$3 = createProperty$4;
   var arraySpeciesCreate$1 = arraySpeciesCreate$2;
-  var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$2;
+  var arrayMethodHasSpeciesSupport$2 = arrayMethodHasSpeciesSupport$3;
   var wellKnownSymbol$d = wellKnownSymbol$j;
   var V8_VERSION = engineV8Version;
 
@@ -1035,12 +1035,12 @@
     return spreadable !== undefined ? !!spreadable : isArray$9(O);
   };
 
-  var FORCED$3 = !IS_CONCAT_SPREADABLE_SUPPORT || !arrayMethodHasSpeciesSupport$1('concat');
+  var FORCED$3 = !IS_CONCAT_SPREADABLE_SUPPORT || !arrayMethodHasSpeciesSupport$2('concat');
 
   // `Array.prototype.concat` method
   // https://tc39.es/ecma262/#sec-array.prototype.concat
   // with adding support of @@isConcatSpreadable and @@species
-  $$G({ target: 'Array', proto: true, arity: 1, forced: FORCED$3 }, {
+  $$H({ target: 'Array', proto: true, arity: 1, forced: FORCED$3 }, {
     // eslint-disable-next-line no-unused-vars -- required for `.length`
     concat: function concat(arg) {
       var O = toObject$6(this);
@@ -1581,7 +1581,7 @@
     filterReject: createMethod$2(7)
   };
 
-  var $$F = _export;
+  var $$G = _export;
   var global$5 = global$g;
   var call$c = functionCall;
   var uncurryThis$d = functionUncurryThis;
@@ -1589,7 +1589,7 @@
   var NATIVE_SYMBOL$3 = symbolConstructorDetection;
   var fails$d = fails$o;
   var hasOwn$7 = hasOwnProperty_1;
-  var isPrototypeOf$6 = objectIsPrototypeOf;
+  var isPrototypeOf$7 = objectIsPrototypeOf;
   var anObject$7 = anObject$b;
   var toIndexedObject$2 = toIndexedObject$8;
   var toPropertyKey = toPropertyKey$4;
@@ -1742,7 +1742,7 @@
   // https://tc39.es/ecma262/#sec-symbol-constructor
   if (!NATIVE_SYMBOL$3) {
     $Symbol = function Symbol() {
-      if (isPrototypeOf$6(SymbolPrototype, this)) throw TypeError$1('Symbol is not a constructor');
+      if (isPrototypeOf$7(SymbolPrototype, this)) throw TypeError$1('Symbol is not a constructor');
       var description = !arguments.length || arguments[0] === undefined ? undefined : $toString(arguments[0]);
       var tag = uid$1(description);
       var setter = function (value) {
@@ -1786,7 +1786,7 @@
     }
   }
 
-  $$F({ global: true, constructor: true, wrap: true, forced: !NATIVE_SYMBOL$3, sham: !NATIVE_SYMBOL$3 }, {
+  $$G({ global: true, constructor: true, wrap: true, forced: !NATIVE_SYMBOL$3, sham: !NATIVE_SYMBOL$3 }, {
     Symbol: $Symbol
   });
 
@@ -1794,12 +1794,12 @@
     defineWellKnownSymbol$l(name);
   });
 
-  $$F({ target: SYMBOL, stat: true, forced: !NATIVE_SYMBOL$3 }, {
+  $$G({ target: SYMBOL, stat: true, forced: !NATIVE_SYMBOL$3 }, {
     useSetter: function () { USE_SETTER = true; },
     useSimple: function () { USE_SETTER = false; }
   });
 
-  $$F({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3, sham: !DESCRIPTORS$6 }, {
+  $$G({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3, sham: !DESCRIPTORS$6 }, {
     // `Object.create` method
     // https://tc39.es/ecma262/#sec-object.create
     create: $create,
@@ -1814,7 +1814,7 @@
     getOwnPropertyDescriptor: $getOwnPropertyDescriptor
   });
 
-  $$F({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3 }, {
+  $$G({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3 }, {
     // `Object.getOwnPropertyNames` method
     // https://tc39.es/ecma262/#sec-object.getownpropertynames
     getOwnPropertyNames: $getOwnPropertyNames
@@ -1835,7 +1835,7 @@
   /* eslint-disable es/no-symbol -- safe */
   var symbolRegistryDetection = NATIVE_SYMBOL$2 && !!Symbol['for'] && !!Symbol.keyFor;
 
-  var $$E = _export;
+  var $$F = _export;
   var getBuiltIn$7 = getBuiltIn$c;
   var hasOwn$6 = hasOwnProperty_1;
   var toString$5 = toString$7;
@@ -1847,7 +1847,7 @@
 
   // `Symbol.for` method
   // https://tc39.es/ecma262/#sec-symbol.for
-  $$E({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY$1 }, {
+  $$F({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY$1 }, {
     'for': function (key) {
       var string = toString$5(key);
       if (hasOwn$6(StringToSymbolRegistry, string)) return StringToSymbolRegistry[string];
@@ -1858,7 +1858,7 @@
     }
   });
 
-  var $$D = _export;
+  var $$E = _export;
   var hasOwn$5 = hasOwnProperty_1;
   var isSymbol$2 = isSymbol$5;
   var tryToString$4 = tryToString$6;
@@ -1869,7 +1869,7 @@
 
   // `Symbol.keyFor` method
   // https://tc39.es/ecma262/#sec-symbol.keyfor
-  $$D({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
+  $$E({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
     keyFor: function keyFor(sym) {
       if (!isSymbol$2(sym)) throw TypeError(tryToString$4(sym) + ' is not a symbol');
       if (hasOwn$5(SymbolToStringRegistry, sym)) return SymbolToStringRegistry[sym];
@@ -1910,7 +1910,7 @@
     };
   };
 
-  var $$C = _export;
+  var $$D = _export;
   var getBuiltIn$6 = getBuiltIn$c;
   var apply$1 = functionApply;
   var call$b = functionCall;
@@ -1973,7 +1973,7 @@
   if ($stringify) {
     // `JSON.stringify` method
     // https://tc39.es/ecma262/#sec-json.stringify
-    $$C({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE }, {
+    $$D({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE }, {
       // eslint-disable-next-line no-unused-vars -- required for `.length`
       stringify: function stringify(it, replacer, space) {
         var args = arraySlice$2(arguments);
@@ -1983,7 +1983,7 @@
     });
   }
 
-  var $$B = _export;
+  var $$C = _export;
   var NATIVE_SYMBOL = symbolConstructorDetection;
   var fails$b = fails$o;
   var getOwnPropertySymbolsModule$1 = objectGetOwnPropertySymbols;
@@ -1995,7 +1995,7 @@
 
   // `Object.getOwnPropertySymbols` method
   // https://tc39.es/ecma262/#sec-object.getownpropertysymbols
-  $$B({ target: 'Object', stat: true, forced: FORCED$2 }, {
+  $$C({ target: 'Object', stat: true, forced: FORCED$2 }, {
     getOwnPropertySymbols: function getOwnPropertySymbols(it) {
       var $getOwnPropertySymbols = getOwnPropertySymbolsModule$1.f;
       return $getOwnPropertySymbols ? $getOwnPropertySymbols(toObject$4(it)) : [];
@@ -2265,7 +2265,7 @@
     };
   }() : undefined);
 
-  var $$A = _export;
+  var $$B = _export;
   var call$a = functionCall;
   var FunctionName = functionName;
   var createIteratorConstructor = iteratorCreateConstructor;
@@ -2339,7 +2339,7 @@
         if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
           defineBuiltIn$1(IterablePrototype, KEY, methods[KEY]);
         }
-      } else $$A({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
+      } else $$B({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
     }
 
     // define iterator
@@ -2460,10 +2460,10 @@
     Iterators$2[COLLECTION_NAME] = Iterators$2.Array;
   }
 
-  var parent$O = symbol$5;
+  var parent$R = symbol$5;
 
 
-  var symbol$4 = parent$O;
+  var symbol$4 = parent$R;
 
   var defineWellKnownSymbol$7 = wellKnownSymbolDefine;
 
@@ -2471,11 +2471,11 @@
   // https://github.com/tc39/proposal-explicit-resource-management
   defineWellKnownSymbol$7('dispose');
 
-  var parent$N = symbol$4;
+  var parent$Q = symbol$4;
 
 
 
-  var symbol$3 = parent$N;
+  var symbol$3 = parent$Q;
 
   var defineWellKnownSymbol$6 = wellKnownSymbolDefine;
 
@@ -2483,7 +2483,7 @@
   // https://github.com/tc39/proposal-async-explicit-resource-management
   defineWellKnownSymbol$6('asyncDispose');
 
-  var $$z = _export;
+  var $$A = _export;
   var getBuiltIn$4 = getBuiltIn$c;
   var uncurryThis$8 = functionUncurryThis;
 
@@ -2493,7 +2493,7 @@
 
   // `Symbol.isRegistered` method
   // https://tc39.es/proposal-symbol-predicates/#sec-symbol-isregistered
-  $$z({ target: 'Symbol', stat: true }, {
+  $$A({ target: 'Symbol', stat: true }, {
     isRegistered: function isRegistered(value) {
       try {
         return keyFor(thisSymbolValue$1(value)) !== undefined;
@@ -2503,7 +2503,7 @@
     }
   });
 
-  var $$y = _export;
+  var $$z = _export;
   var shared = sharedExports;
   var getBuiltIn$3 = getBuiltIn$c;
   var uncurryThis$7 = functionUncurryThis;
@@ -2527,7 +2527,7 @@
   // `Symbol.isWellKnown` method
   // https://tc39.es/proposal-symbol-predicates/#sec-symbol-iswellknown
   // We should patch it for newly added well-known symbols. If it's not required, this module just will not be injected
-  $$y({ target: 'Symbol', stat: true, forced: true }, {
+  $$z({ target: 'Symbol', stat: true, forced: true }, {
     isWellKnown: function isWellKnown(value) {
       if ($isWellKnown && $isWellKnown(value)) return true;
       try {
@@ -2577,7 +2577,7 @@
 
   defineWellKnownSymbol('replaceAll');
 
-  var parent$M = symbol$3;
+  var parent$P = symbol$3;
 
 
 
@@ -2589,7 +2589,7 @@
 
 
 
-  var symbol$2 = parent$M;
+  var symbol$2 = parent$P;
 
   var symbol$1 = symbol$2;
 
@@ -2669,18 +2669,18 @@
 
   var iterator$5 = WrappedWellKnownSymbolModule$1.f('iterator');
 
-  var parent$L = iterator$5;
+  var parent$O = iterator$5;
 
 
-  var iterator$4 = parent$L;
+  var iterator$4 = parent$O;
 
-  var parent$K = iterator$4;
+  var parent$N = iterator$4;
 
-  var iterator$3 = parent$K;
+  var iterator$3 = parent$N;
 
-  var parent$J = iterator$3;
+  var parent$M = iterator$3;
 
-  var iterator$2 = parent$J;
+  var iterator$2 = parent$M;
 
   var iterator$1 = iterator$2;
 
@@ -2702,17 +2702,17 @@
 
   var toPrimitive$5 = WrappedWellKnownSymbolModule.f('toPrimitive');
 
-  var parent$I = toPrimitive$5;
+  var parent$L = toPrimitive$5;
 
-  var toPrimitive$4 = parent$I;
+  var toPrimitive$4 = parent$L;
 
-  var parent$H = toPrimitive$4;
+  var parent$K = toPrimitive$4;
 
-  var toPrimitive$3 = parent$H;
+  var toPrimitive$3 = parent$K;
 
-  var parent$G = toPrimitive$3;
+  var parent$J = toPrimitive$3;
 
-  var toPrimitive$2 = parent$G;
+  var toPrimitive$2 = parent$J;
 
   var toPrimitive$1 = toPrimitive$2;
 
@@ -2791,36 +2791,36 @@
   // eslint-disable-next-line es/no-array-prototype-foreach -- safe
   } : [].forEach;
 
-  var $$x = _export;
+  var $$y = _export;
   var forEach$8 = arrayForEach;
 
   // `Array.prototype.forEach` method
   // https://tc39.es/ecma262/#sec-array.prototype.foreach
   // eslint-disable-next-line es/no-array-prototype-foreach -- safe
-  $$x({ target: 'Array', proto: true, forced: [].forEach != forEach$8 }, {
+  $$y({ target: 'Array', proto: true, forced: [].forEach != forEach$8 }, {
     forEach: forEach$8
   });
 
   var path$9 = path$f;
 
-  var entryVirtual$4 = function (CONSTRUCTOR) {
+  var entryVirtual$5 = function (CONSTRUCTOR) {
     return path$9[CONSTRUCTOR + 'Prototype'];
   };
 
-  var entryVirtual$3 = entryVirtual$4;
+  var entryVirtual$4 = entryVirtual$5;
 
-  var forEach$7 = entryVirtual$3('Array').forEach;
+  var forEach$7 = entryVirtual$4('Array').forEach;
 
-  var parent$F = forEach$7;
+  var parent$I = forEach$7;
 
-  var forEach$6 = parent$F;
+  var forEach$6 = parent$I;
 
   var classof$2 = classof$9;
   var hasOwn$2 = hasOwnProperty_1;
-  var isPrototypeOf$5 = objectIsPrototypeOf;
-  var method$3 = forEach$6;
+  var isPrototypeOf$6 = objectIsPrototypeOf;
+  var method$4 = forEach$6;
 
-  var ArrayPrototype$3 = Array.prototype;
+  var ArrayPrototype$4 = Array.prototype;
 
   var DOMIterables = {
     DOMTokenList: true,
@@ -2829,17 +2829,17 @@
 
   var forEach$5 = function (it) {
     var own = it.forEach;
-    return it === ArrayPrototype$3 || (isPrototypeOf$5(ArrayPrototype$3, it) && own === ArrayPrototype$3.forEach)
-      || hasOwn$2(DOMIterables, classof$2(it)) ? method$3 : own;
+    return it === ArrayPrototype$4 || (isPrototypeOf$6(ArrayPrototype$4, it) && own === ArrayPrototype$4.forEach)
+      || hasOwn$2(DOMIterables, classof$2(it)) ? method$4 : own;
   };
 
-  var parent$E = forEach$5;
+  var parent$H = forEach$5;
 
-  var forEach$4 = parent$E;
+  var forEach$4 = parent$H;
 
-  var parent$D = forEach$4;
+  var parent$G = forEach$4;
 
-  var forEach$3 = parent$D;
+  var forEach$3 = parent$G;
 
   var forEach$2 = forEach$3;
 
@@ -2847,31 +2847,31 @@
 
   var _forEachInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(forEach$1);
 
-  var entryVirtual$2 = entryVirtual$4;
+  var entryVirtual$3 = entryVirtual$5;
 
-  var concat$8 = entryVirtual$2('Array').concat;
+  var concat$8 = entryVirtual$3('Array').concat;
 
-  var isPrototypeOf$4 = objectIsPrototypeOf;
-  var method$2 = concat$8;
+  var isPrototypeOf$5 = objectIsPrototypeOf;
+  var method$3 = concat$8;
 
-  var ArrayPrototype$2 = Array.prototype;
+  var ArrayPrototype$3 = Array.prototype;
 
   var concat$7 = function (it) {
     var own = it.concat;
-    return it === ArrayPrototype$2 || (isPrototypeOf$4(ArrayPrototype$2, it) && own === ArrayPrototype$2.concat) ? method$2 : own;
+    return it === ArrayPrototype$3 || (isPrototypeOf$5(ArrayPrototype$3, it) && own === ArrayPrototype$3.concat) ? method$3 : own;
   };
 
-  var parent$C = concat$7;
+  var parent$F = concat$7;
 
-  var concat$6 = parent$C;
+  var concat$6 = parent$F;
 
-  var parent$B = concat$6;
+  var parent$E = concat$6;
 
-  var concat$5 = parent$B;
+  var concat$5 = parent$E;
 
-  var parent$A = concat$5;
+  var parent$D = concat$5;
 
-  var concat$4 = parent$A;
+  var concat$4 = parent$D;
 
   var concat$3 = concat$4;
 
@@ -2986,12 +2986,12 @@
     return $parseInt$1(S, (radix >>> 0) || (exec(hex, S) ? 16 : 10));
   } : $parseInt$1;
 
-  var $$w = _export;
+  var $$x = _export;
   var $parseInt = numberParseInt;
 
   // `parseInt` method
   // https://tc39.es/ecma262/#sec-parseint-string-radix
-  $$w({ global: true, forced: parseInt != $parseInt }, {
+  $$x({ global: true, forced: parseInt != $parseInt }, {
     parseInt: $parseInt
   });
 
@@ -2999,17 +2999,17 @@
 
   var _parseInt$6 = path$8.parseInt;
 
-  var parent$z = _parseInt$6;
+  var parent$C = _parseInt$6;
 
-  var _parseInt$5 = parent$z;
+  var _parseInt$5 = parent$C;
 
-  var parent$y = _parseInt$5;
+  var parent$B = _parseInt$5;
 
-  var _parseInt$4 = parent$y;
+  var _parseInt$4 = parent$B;
 
-  var parent$x = _parseInt$4;
+  var parent$A = _parseInt$4;
 
-  var _parseInt$3 = parent$x;
+  var _parseInt$3 = parent$A;
 
   var _parseInt$2 = _parseInt$3;
 
@@ -3017,7 +3017,7 @@
 
   var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
 
-  var $$v = _export;
+  var $$w = _export;
   var isArray$7 = isArray$b;
   var isConstructor$2 = isConstructor$4;
   var isObject$5 = isObject$e;
@@ -3026,10 +3026,10 @@
   var toIndexedObject = toIndexedObject$8;
   var createProperty$1 = createProperty$4;
   var wellKnownSymbol$4 = wellKnownSymbol$j;
-  var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$2;
+  var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$3;
   var nativeSlice = arraySlice$3;
 
-  var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('slice');
+  var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('slice');
 
   var SPECIES$1 = wellKnownSymbol$4('species');
   var $Array$1 = Array;
@@ -3038,7 +3038,7 @@
   // `Array.prototype.slice` method
   // https://tc39.es/ecma262/#sec-array.prototype.slice
   // fallback for not array-like ES3 strings and DOM objects
-  $$v({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  $$w({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
     slice: function slice(start, end) {
       var O = toIndexedObject(this);
       var length = lengthOfArrayLike$2(O);
@@ -3066,31 +3066,31 @@
     }
   });
 
-  var entryVirtual$1 = entryVirtual$4;
+  var entryVirtual$2 = entryVirtual$5;
 
-  var slice$6 = entryVirtual$1('Array').slice;
+  var slice$6 = entryVirtual$2('Array').slice;
 
-  var isPrototypeOf$3 = objectIsPrototypeOf;
-  var method$1 = slice$6;
+  var isPrototypeOf$4 = objectIsPrototypeOf;
+  var method$2 = slice$6;
 
-  var ArrayPrototype$1 = Array.prototype;
+  var ArrayPrototype$2 = Array.prototype;
 
   var slice$5 = function (it) {
     var own = it.slice;
-    return it === ArrayPrototype$1 || (isPrototypeOf$3(ArrayPrototype$1, it) && own === ArrayPrototype$1.slice) ? method$1 : own;
+    return it === ArrayPrototype$2 || (isPrototypeOf$4(ArrayPrototype$2, it) && own === ArrayPrototype$2.slice) ? method$2 : own;
   };
 
-  var parent$w = slice$5;
+  var parent$z = slice$5;
 
-  var slice$4 = parent$w;
+  var slice$4 = parent$z;
 
-  var parent$v = slice$4;
+  var parent$y = slice$4;
 
-  var slice$3 = parent$v;
+  var slice$3 = parent$y;
 
-  var parent$u = slice$3;
+  var parent$x = slice$3;
 
-  var slice$2 = parent$u;
+  var slice$2 = parent$x;
 
   var slice$1 = slice$2;
 
@@ -3283,7 +3283,7 @@
     throw $TypeError$6(tryToString$3(argument) + ' is not a constructor');
   };
 
-  var $$u = _export;
+  var $$v = _export;
   var getBuiltIn$2 = getBuiltIn$c;
   var apply = functionApply;
   var bind$j = functionBind;
@@ -3312,7 +3312,7 @@
 
   var FORCED = NEW_TARGET_BUG || ARGS_BUG;
 
-  $$u({ target: 'Reflect', stat: true, forced: FORCED, sham: FORCED }, {
+  $$v({ target: 'Reflect', stat: true, forced: FORCED, sham: FORCED }, {
     construct: function construct(Target, args /* , newTarget */) {
       aConstructor$1(Target);
       anObject$5(args);
@@ -3344,17 +3344,17 @@
 
   var construct$5 = path$7.Reflect.construct;
 
-  var parent$t = construct$5;
+  var parent$w = construct$5;
 
-  var construct$4 = parent$t;
+  var construct$4 = parent$w;
 
-  var parent$s = construct$4;
+  var parent$v = construct$4;
 
-  var construct$3 = parent$s;
+  var construct$3 = parent$v;
 
-  var parent$r = construct$3;
+  var parent$u = construct$3;
 
-  var construct$2 = parent$r;
+  var construct$2 = parent$u;
 
   var construct$1 = construct$2;
 
@@ -3370,13 +3370,13 @@
   }
 
   // TODO: Remove from `core-js@4`
-  var $$t = _export;
+  var $$u = _export;
   var DESCRIPTORS$4 = descriptors;
   var create$7 = objectCreate;
 
   // `Object.create` method
   // https://tc39.es/ecma262/#sec-object.create
-  $$t({ target: 'Object', stat: true, sham: !DESCRIPTORS$4 }, {
+  $$u({ target: 'Object', stat: true, sham: !DESCRIPTORS$4 }, {
     create: create$7
   });
 
@@ -3388,17 +3388,17 @@
     return Object$1.create(P, D);
   };
 
-  var parent$q = create$6;
+  var parent$t = create$6;
 
-  var create$5 = parent$q;
+  var create$5 = parent$t;
 
-  var parent$p = create$5;
+  var parent$s = create$5;
 
-  var create$4 = parent$p;
+  var create$4 = parent$s;
 
-  var parent$o = create$4;
+  var parent$r = create$4;
 
-  var create$3 = parent$o;
+  var create$3 = parent$r;
 
   var create$2 = create$3;
 
@@ -3406,12 +3406,12 @@
 
   var _Object$create = /*@__PURE__*/getDefaultExportFromCjs(create$1);
 
-  var $$s = _export;
+  var $$t = _export;
   var setPrototypeOf$6 = objectSetPrototypeOf;
 
   // `Object.setPrototypeOf` method
   // https://tc39.es/ecma262/#sec-object.setprototypeof
-  $$s({ target: 'Object', stat: true }, {
+  $$t({ target: 'Object', stat: true }, {
     setPrototypeOf: setPrototypeOf$6
   });
 
@@ -3419,17 +3419,17 @@
 
   var setPrototypeOf$5 = path$5.Object.setPrototypeOf;
 
-  var parent$n = setPrototypeOf$5;
+  var parent$q = setPrototypeOf$5;
 
-  var setPrototypeOf$4 = parent$n;
+  var setPrototypeOf$4 = parent$q;
 
-  var parent$m = setPrototypeOf$4;
+  var parent$p = setPrototypeOf$4;
 
-  var setPrototypeOf$3 = parent$m;
+  var setPrototypeOf$3 = parent$p;
 
-  var parent$l = setPrototypeOf$3;
+  var parent$o = setPrototypeOf$3;
 
-  var setPrototypeOf$2 = parent$l;
+  var setPrototypeOf$2 = parent$o;
 
   var setPrototypeOf$1 = setPrototypeOf$2;
 
@@ -3438,41 +3438,41 @@
   var _Object$setPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(setPrototypeOf);
 
   // TODO: Remove from `core-js@4`
-  var $$r = _export;
+  var $$s = _export;
   var bind$i = functionBind;
 
   // `Function.prototype.bind` method
   // https://tc39.es/ecma262/#sec-function.prototype.bind
   // eslint-disable-next-line es/no-function-prototype-bind -- detection
-  $$r({ target: 'Function', proto: true, forced: Function.bind !== bind$i }, {
+  $$s({ target: 'Function', proto: true, forced: Function.bind !== bind$i }, {
     bind: bind$i
   });
 
-  var entryVirtual = entryVirtual$4;
+  var entryVirtual$1 = entryVirtual$5;
 
-  var bind$h = entryVirtual('Function').bind;
+  var bind$h = entryVirtual$1('Function').bind;
 
-  var isPrototypeOf$2 = objectIsPrototypeOf;
-  var method = bind$h;
+  var isPrototypeOf$3 = objectIsPrototypeOf;
+  var method$1 = bind$h;
 
   var FunctionPrototype = Function.prototype;
 
   var bind$g = function (it) {
     var own = it.bind;
-    return it === FunctionPrototype || (isPrototypeOf$2(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method : own;
+    return it === FunctionPrototype || (isPrototypeOf$3(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$1 : own;
   };
 
-  var parent$k = bind$g;
+  var parent$n = bind$g;
 
-  var bind$f = parent$k;
+  var bind$f = parent$n;
 
-  var parent$j = bind$f;
+  var parent$m = bind$f;
 
-  var bind$e = parent$j;
+  var bind$e = parent$m;
 
-  var parent$i = bind$e;
+  var parent$l = bind$e;
 
-  var bind$d = parent$i;
+  var bind$d = parent$l;
 
   var bind$c = bind$d;
 
@@ -3515,7 +3515,7 @@
     return _assertThisInitialized(self);
   }
 
-  var $$q = _export;
+  var $$r = _export;
   var fails$5 = fails$o;
   var toObject$2 = toObject$8;
   var nativeGetPrototypeOf = objectGetPrototypeOf;
@@ -3525,7 +3525,7 @@
 
   // `Object.getPrototypeOf` method
   // https://tc39.es/ecma262/#sec-object.getprototypeof
-  $$q({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$1, sham: !CORRECT_PROTOTYPE_GETTER }, {
+  $$r({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$1, sham: !CORRECT_PROTOTYPE_GETTER }, {
     getPrototypeOf: function getPrototypeOf(it) {
       return nativeGetPrototypeOf(toObject$2(it));
     }
@@ -3535,17 +3535,17 @@
 
   var getPrototypeOf$5 = path$4.Object.getPrototypeOf;
 
-  var parent$h = getPrototypeOf$5;
+  var parent$k = getPrototypeOf$5;
 
-  var getPrototypeOf$4 = parent$h;
+  var getPrototypeOf$4 = parent$k;
 
-  var parent$g = getPrototypeOf$4;
+  var parent$j = getPrototypeOf$4;
 
-  var getPrototypeOf$3 = parent$g;
+  var getPrototypeOf$3 = parent$j;
 
-  var parent$f = getPrototypeOf$3;
+  var parent$i = getPrototypeOf$3;
 
-  var getPrototypeOf$2 = parent$f;
+  var getPrototypeOf$2 = parent$i;
 
   var getPrototypeOf$1 = getPrototypeOf$2;
 
@@ -3618,13 +3618,13 @@
     } return T;
   } : $assign;
 
-  var $$p = _export;
+  var $$q = _export;
   var assign$6 = objectAssign;
 
   // `Object.assign` method
   // https://tc39.es/ecma262/#sec-object.assign
   // eslint-disable-next-line es/no-object-assign -- required for testing
-  $$p({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$6 }, {
+  $$q({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$6 }, {
     assign: assign$6
   });
 
@@ -3632,17 +3632,17 @@
 
   var assign$5 = path$3.Object.assign;
 
-  var parent$e = assign$5;
+  var parent$h = assign$5;
 
-  var assign$4 = parent$e;
+  var assign$4 = parent$h;
 
-  var parent$d = assign$4;
+  var parent$g = assign$4;
 
-  var assign$3 = parent$d;
+  var assign$3 = parent$g;
 
-  var parent$c = assign$3;
+  var parent$f = assign$3;
 
-  var assign$2 = parent$c;
+  var assign$2 = parent$f;
 
   var assign$1 = assign$2;
 
@@ -3650,12 +3650,12 @@
 
   var _Object$assign = /*@__PURE__*/getDefaultExportFromCjs(assign);
 
-  var $$o = _export;
+  var $$p = _export;
   var isArray$6 = isArray$b;
 
   // `Array.isArray` method
   // https://tc39.es/ecma262/#sec-array.isarray
-  $$o({ target: 'Array', stat: true }, {
+  $$p({ target: 'Array', stat: true }, {
     isArray: isArray$6
   });
 
@@ -3663,17 +3663,17 @@
 
   var isArray$5 = path$2.Array.isArray;
 
-  var parent$b = isArray$5;
+  var parent$e = isArray$5;
 
-  var isArray$4 = parent$b;
+  var isArray$4 = parent$e;
 
-  var parent$a = isArray$4;
+  var parent$d = isArray$4;
 
-  var isArray$3 = parent$a;
+  var isArray$3 = parent$d;
 
-  var parent$9 = isArray$3;
+  var parent$c = isArray$3;
 
-  var isArray$2 = parent$9;
+  var isArray$2 = parent$c;
 
   var isArray$1 = isArray$2;
 
@@ -3709,18 +3709,18 @@
 
   var getIteratorMethod_1 = getIteratorMethod$8;
 
-  var parent$8 = getIteratorMethod_1;
+  var parent$b = getIteratorMethod_1;
 
 
-  var getIteratorMethod$7 = parent$8;
+  var getIteratorMethod$7 = parent$b;
 
-  var parent$7 = getIteratorMethod$7;
+  var parent$a = getIteratorMethod$7;
 
-  var getIteratorMethod$6 = parent$7;
+  var getIteratorMethod$6 = parent$a;
 
-  var parent$6 = getIteratorMethod$6;
+  var parent$9 = getIteratorMethod$6;
 
-  var getIteratorMethod$5 = parent$6;
+  var getIteratorMethod$5 = parent$9;
 
   var getIteratorMethod$4 = getIteratorMethod$5;
 
@@ -3768,11 +3768,11 @@
   var Iterators = iterators;
 
   var ITERATOR$1 = wellKnownSymbol$2('iterator');
-  var ArrayPrototype = Array.prototype;
+  var ArrayPrototype$1 = Array.prototype;
 
   // check on default Array iterator
   var isArrayIteratorMethod$2 = function (it) {
-    return it !== undefined && (Iterators.Array === it || ArrayPrototype[ITERATOR$1] === it);
+    return it !== undefined && (Iterators.Array === it || ArrayPrototype$1[ITERATOR$1] === it);
   };
 
   var call$7 = functionCall;
@@ -3874,7 +3874,7 @@
     return ITERATION_SUPPORT;
   };
 
-  var $$n = _export;
+  var $$o = _export;
   var from$7 = arrayFrom;
   var checkCorrectnessOfIteration = checkCorrectnessOfIteration$1;
 
@@ -3885,7 +3885,7 @@
 
   // `Array.from` method
   // https://tc39.es/ecma262/#sec-array.from
-  $$n({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+  $$o({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
     from: from$7
   });
 
@@ -3893,17 +3893,17 @@
 
   var from$6 = path$1.Array.from;
 
-  var parent$5 = from$6;
+  var parent$8 = from$6;
 
-  var from$5 = parent$5;
+  var from$5 = parent$8;
 
-  var parent$4 = from$5;
+  var parent$7 = from$5;
 
-  var from$4 = parent$4;
+  var from$4 = parent$7;
 
-  var parent$3 = from$4;
+  var parent$6 = from$4;
 
-  var from$3 = parent$3;
+  var from$3 = parent$6;
 
   var from$2 = from$3;
 
@@ -3982,7 +3982,7 @@
    * @param {Node[]} children
    * @returns
    */
-  function $$m(desc, props, children) {
+  function $$n(desc, props, children) {
     var match = [];
     var regArray = SELECTOR_REG.exec(desc);
     // /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/.exec('div#app.a.b')
@@ -4212,7 +4212,7 @@
       _classCallCheck(this, Component);
       _this = _super.call(this);
       _defineProperty(_assertThisInitialized(_this), "el", void 0);
-      var dom = $$m(desc, props, children);
+      var dom = $$n(desc, props, children);
       _this.el = dom;
       // 安装组件成功
       container.append(dom);
@@ -4258,7 +4258,7 @@
     return Object.isExtensible(Object.preventExtensions({}));
   });
 
-  var $$l = _export;
+  var $$m = _export;
   var uncurryThis$1 = functionUncurryThis;
   var hiddenKeys = hiddenKeys$6;
   var isObject$1 = isObject$e;
@@ -4333,7 +4333,7 @@
         } return result;
       };
 
-      $$l({ target: 'Object', stat: true, forced: true }, {
+      $$m({ target: 'Object', stat: true, forced: true }, {
         getOwnPropertyNames: getOwnPropertyNamesExternalModule.f
       });
     }
@@ -4356,7 +4356,7 @@
   var tryToString$1 = tryToString$6;
   var isArrayIteratorMethod = isArrayIteratorMethod$2;
   var lengthOfArrayLike = lengthOfArrayLike$7;
-  var isPrototypeOf$1 = objectIsPrototypeOf;
+  var isPrototypeOf$2 = objectIsPrototypeOf;
   var getIterator = getIterator$2;
   var getIteratorMethod = getIteratorMethod$9;
   var iteratorClose = iteratorClose$2;
@@ -4402,7 +4402,7 @@
       if (isArrayIteratorMethod(iterFn)) {
         for (index = 0, length = lengthOfArrayLike(iterable); length > index; index++) {
           result = callFn(iterable[index]);
-          if (result && isPrototypeOf$1(ResultPrototype, result)) return result;
+          if (result && isPrototypeOf$2(ResultPrototype, result)) return result;
         } return new Result(false);
       }
       iterator = getIterator(iterable, iterFn);
@@ -4415,20 +4415,20 @@
       } catch (error) {
         iteratorClose(iterator, 'throw', error);
       }
-      if (typeof result == 'object' && result && isPrototypeOf$1(ResultPrototype, result)) return result;
+      if (typeof result == 'object' && result && isPrototypeOf$2(ResultPrototype, result)) return result;
     } return new Result(false);
   };
 
-  var isPrototypeOf = objectIsPrototypeOf;
+  var isPrototypeOf$1 = objectIsPrototypeOf;
 
   var $TypeError$3 = TypeError;
 
   var anInstance$2 = function (it, Prototype) {
-    if (isPrototypeOf(Prototype, it)) return it;
+    if (isPrototypeOf$1(Prototype, it)) return it;
     throw $TypeError$3('Incorrect invocation');
   };
 
-  var $$k = _export;
+  var $$l = _export;
   var global$1 = global$g;
   var InternalMetadataModule = internalMetadataExports;
   var fails = fails$o;
@@ -4497,7 +4497,7 @@
     setToStringTag(Constructor, CONSTRUCTOR_NAME, false, true);
 
     exported[CONSTRUCTOR_NAME] = Constructor;
-    $$k({ global: true, forced: true }, exported);
+    $$l({ global: true, forced: true }, exported);
 
     if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
 
@@ -4749,16 +4749,16 @@
 
   var path = path$f;
 
-  var map$5 = path.Map;
+  var map$c = path.Map;
 
-  var parent$2 = map$5;
+  var parent$5 = map$c;
 
 
-  var map$4 = parent$2;
+  var map$b = parent$5;
 
-  var parent$1 = map$4;
+  var parent$4 = map$b;
 
-  var map$3 = parent$1;
+  var map$a = parent$4;
 
   // https://tc39.github.io/proposal-setmap-offrom/
   var bind$7 = functionBindContext;
@@ -4791,12 +4791,12 @@
     return new this(array);
   };
 
-  var $$j = _export;
+  var $$k = _export;
   var from = collectionFrom;
 
   // `Map.from` method
   // https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
-  $$j({ target: 'Map', stat: true, forced: true }, {
+  $$k({ target: 'Map', stat: true, forced: true }, {
     from: from
   });
 
@@ -4807,12 +4807,12 @@
     return new this(arraySlice(arguments));
   };
 
-  var $$i = _export;
+  var $$j = _export;
   var of = collectionOf;
 
   // `Map.of` method
   // https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
-  $$i({ target: 'Map', stat: true, forced: true }, {
+  $$j({ target: 'Map', stat: true, forced: true }, {
     of: of
   });
 
@@ -4846,13 +4846,13 @@
     proto: Map$5.prototype
   };
 
-  var $$h = _export;
+  var $$i = _export;
   var aMap$d = aMap$e;
   var remove = mapHelpers.remove;
 
   // `Map.prototype.deleteAll` method
   // https://github.com/tc39/proposal-collection-methods
-  $$h({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$i({ target: 'Map', proto: true, real: true, forced: true }, {
     deleteAll: function deleteAll(/* ...elements */) {
       var collection = aMap$d(this);
       var allDeleted = true;
@@ -4864,7 +4864,7 @@
     }
   });
 
-  var $$g = _export;
+  var $$h = _export;
   var aMap$c = aMap$e;
   var MapHelpers$4 = mapHelpers;
 
@@ -4874,7 +4874,7 @@
 
   // `Map.prototype.emplace` method
   // https://github.com/tc39/proposal-upsert
-  $$g({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$h({ target: 'Map', proto: true, real: true, forced: true }, {
     emplace: function emplace(key, handler) {
       var map = aMap$c(this);
       var value, inserted;
@@ -4910,14 +4910,14 @@
     }) : map.forEach(fn);
   };
 
-  var $$f = _export;
+  var $$g = _export;
   var bind$6 = functionBindContext;
   var aMap$b = aMap$e;
   var iterate$c = mapIterate;
 
   // `Map.prototype.every` method
   // https://github.com/tc39/proposal-collection-methods
-  $$f({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$g({ target: 'Map', proto: true, real: true, forced: true }, {
     every: function every(callbackfn /* , thisArg */) {
       var map = aMap$b(this);
       var boundFunction = bind$6(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4927,7 +4927,7 @@
     }
   });
 
-  var $$e = _export;
+  var $$f = _export;
   var bind$5 = functionBindContext;
   var aMap$a = aMap$e;
   var MapHelpers$3 = mapHelpers;
@@ -4938,7 +4938,7 @@
 
   // `Map.prototype.filter` method
   // https://github.com/tc39/proposal-collection-methods
-  $$e({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$f({ target: 'Map', proto: true, real: true, forced: true }, {
     filter: function filter(callbackfn /* , thisArg */) {
       var map = aMap$a(this);
       var boundFunction = bind$5(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4950,14 +4950,14 @@
     }
   });
 
-  var $$d = _export;
+  var $$e = _export;
   var bind$4 = functionBindContext;
   var aMap$9 = aMap$e;
   var iterate$a = mapIterate;
 
   // `Map.prototype.find` method
   // https://github.com/tc39/proposal-collection-methods
-  $$d({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$e({ target: 'Map', proto: true, real: true, forced: true }, {
     find: function find(callbackfn /* , thisArg */) {
       var map = aMap$9(this);
       var boundFunction = bind$4(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4968,14 +4968,14 @@
     }
   });
 
-  var $$c = _export;
+  var $$d = _export;
   var bind$3 = functionBindContext;
   var aMap$8 = aMap$e;
   var iterate$9 = mapIterate;
 
   // `Map.prototype.findKey` method
   // https://github.com/tc39/proposal-collection-methods
-  $$c({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$d({ target: 'Map', proto: true, real: true, forced: true }, {
     findKey: function findKey(callbackfn /* , thisArg */) {
       var map = aMap$8(this);
       var boundFunction = bind$3(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4986,7 +4986,7 @@
     }
   });
 
-  var $$b = _export;
+  var $$c = _export;
   var call$2 = functionCall;
   var uncurryThis = functionUncurryThis;
   var isCallable$2 = isCallable$k;
@@ -4998,7 +4998,7 @@
 
   // `Map.groupBy` method
   // https://github.com/tc39/proposal-collection-methods
-  $$b({ target: 'Map', stat: true, forced: true }, {
+  $$c({ target: 'Map', stat: true, forced: true }, {
     groupBy: function groupBy(iterable, keyDerivative) {
       var C = isCallable$2(this) ? this : Map$3;
       var newMap = new C();
@@ -5022,14 +5022,14 @@
     return x === y || x != x && y != y;
   };
 
-  var $$a = _export;
+  var $$b = _export;
   var sameValueZero = sameValueZero$1;
   var aMap$7 = aMap$e;
   var iterate$7 = mapIterate;
 
   // `Map.prototype.includes` method
   // https://github.com/tc39/proposal-collection-methods
-  $$a({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$b({ target: 'Map', proto: true, real: true, forced: true }, {
     includes: function includes(searchElement) {
       return iterate$7(aMap$7(this), function (value) {
         if (sameValueZero(value, searchElement)) return true;
@@ -5037,7 +5037,7 @@
     }
   });
 
-  var $$9 = _export;
+  var $$a = _export;
   var call$1 = functionCall;
   var iterate$6 = iterate$g;
   var isCallable$1 = isCallable$k;
@@ -5046,7 +5046,7 @@
 
   // `Map.keyBy` method
   // https://github.com/tc39/proposal-collection-methods
-  $$9({ target: 'Map', stat: true, forced: true }, {
+  $$a({ target: 'Map', stat: true, forced: true }, {
     keyBy: function keyBy(iterable, keyDerivative) {
       var C = isCallable$1(this) ? this : Map$2;
       var newMap = new C();
@@ -5059,13 +5059,13 @@
     }
   });
 
-  var $$8 = _export;
+  var $$9 = _export;
   var aMap$6 = aMap$e;
   var iterate$5 = mapIterate;
 
   // `Map.prototype.keyOf` method
   // https://github.com/tc39/proposal-collection-methods
-  $$8({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$9({ target: 'Map', proto: true, real: true, forced: true }, {
     keyOf: function keyOf(searchElement) {
       var result = iterate$5(aMap$6(this), function (value, key) {
         if (value === searchElement) return { key: key };
@@ -5074,7 +5074,7 @@
     }
   });
 
-  var $$7 = _export;
+  var $$8 = _export;
   var bind$2 = functionBindContext;
   var aMap$5 = aMap$e;
   var MapHelpers$2 = mapHelpers;
@@ -5085,7 +5085,7 @@
 
   // `Map.prototype.mapKeys` method
   // https://github.com/tc39/proposal-collection-methods
-  $$7({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$8({ target: 'Map', proto: true, real: true, forced: true }, {
     mapKeys: function mapKeys(callbackfn /* , thisArg */) {
       var map = aMap$5(this);
       var boundFunction = bind$2(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5097,7 +5097,7 @@
     }
   });
 
-  var $$6 = _export;
+  var $$7 = _export;
   var bind$1 = functionBindContext;
   var aMap$4 = aMap$e;
   var MapHelpers$1 = mapHelpers;
@@ -5108,7 +5108,7 @@
 
   // `Map.prototype.mapValues` method
   // https://github.com/tc39/proposal-collection-methods
-  $$6({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$7({ target: 'Map', proto: true, real: true, forced: true }, {
     mapValues: function mapValues(callbackfn /* , thisArg */) {
       var map = aMap$4(this);
       var boundFunction = bind$1(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5120,14 +5120,14 @@
     }
   });
 
-  var $$5 = _export;
+  var $$6 = _export;
   var aMap$3 = aMap$e;
   var iterate$2 = iterate$g;
   var set$1 = mapHelpers.set;
 
   // `Map.prototype.merge` method
   // https://github.com/tc39/proposal-collection-methods
-  $$5({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
+  $$6({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
     // eslint-disable-next-line no-unused-vars -- required for `.length`
     merge: function merge(iterable /* ...iterables */) {
       var map = aMap$3(this);
@@ -5142,7 +5142,7 @@
     }
   });
 
-  var $$4 = _export;
+  var $$5 = _export;
   var aCallable$2 = aCallable$b;
   var aMap$2 = aMap$e;
   var iterate$1 = mapIterate;
@@ -5151,7 +5151,7 @@
 
   // `Map.prototype.reduce` method
   // https://github.com/tc39/proposal-collection-methods
-  $$4({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$5({ target: 'Map', proto: true, real: true, forced: true }, {
     reduce: function reduce(callbackfn /* , initialValue */) {
       var map = aMap$2(this);
       var noInitial = arguments.length < 2;
@@ -5170,14 +5170,14 @@
     }
   });
 
-  var $$3 = _export;
+  var $$4 = _export;
   var bind = functionBindContext;
   var aMap$1 = aMap$e;
   var iterate = mapIterate;
 
   // `Map.prototype.some` method
   // https://github.com/tc39/proposal-collection-methods
-  $$3({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$4({ target: 'Map', proto: true, real: true, forced: true }, {
     some: function some(callbackfn /* , thisArg */) {
       var map = aMap$1(this);
       var boundFunction = bind(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5187,7 +5187,7 @@
     }
   });
 
-  var $$2 = _export;
+  var $$3 = _export;
   var aCallable$1 = aCallable$b;
   var aMap = aMap$e;
   var MapHelpers = mapHelpers;
@@ -5199,7 +5199,7 @@
 
   // `Map.prototype.update` method
   // https://github.com/tc39/proposal-collection-methods
-  $$2({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$3({ target: 'Map', proto: true, real: true, forced: true }, {
     update: function update(key, callback /* , thunk */) {
       var map = aMap(this);
       var length = arguments.length;
@@ -5246,26 +5246,26 @@
   };
 
   // TODO: remove from `core-js@4`
-  var $$1 = _export;
+  var $$2 = _export;
   var upsert$1 = mapUpsert;
 
   // `Map.prototype.upsert` method (replaced by `Map.prototype.emplace`)
   // https://github.com/thumbsupep/proposal-upsert
-  $$1({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$2({ target: 'Map', proto: true, real: true, forced: true }, {
     upsert: upsert$1
   });
 
   // TODO: remove from `core-js@4`
-  var $ = _export;
+  var $$1 = _export;
   var upsert = mapUpsert;
 
   // `Map.prototype.updateOrInsert` method (replaced by `Map.prototype.emplace`)
   // https://github.com/thumbsupep/proposal-upsert
-  $({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
+  $$1({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
     updateOrInsert: upsert
   });
 
-  var parent = map$3;
+  var parent$3 = map$a;
 
 
 
@@ -5289,24 +5289,413 @@
   // TODO: remove from `core-js@4`
 
 
-  var map$2 = parent;
+  var map$9 = parent$3;
 
-  var map$1 = map$2;
+  var map$8 = map$9;
 
-  var map = map$1;
+  var map$7 = map$8;
 
-  var _Map = /*@__PURE__*/getDefaultExportFromCjs(map);
+  var _Map = /*@__PURE__*/getDefaultExportFromCjs(map$7);
+
+  var playPath = 'M254.132978 880.390231c-6.079462 0-12.155854-1.511423-17.643845-4.497431-11.828396-6.482645-19.195178-18.85851-19.195178-32.341592L217.293955 180.465165c0-13.483082 7.366781-25.898857 19.195178-32.346709 11.787464-6.483668 26.226315-5.928013 37.57478 1.363044L789.797957 481.028615c10.536984 6.77531 16.908088 18.456351 16.908088 30.979572 0 12.523221-6.371104 24.203238-16.908088 30.982642L274.063913 874.53385C267.983427 878.403994 261.060761 880.390231 254.132978 880.390231L254.132978 880.390231zM254.132978 880.390231';
+  var pausePath = 'M304 176h80v672h-80zM712 176h-64c-4.4 0-8 3.6-8 8v656c0 4.4 3.6 8 8 8h64c4.4 0 8-3.6 8-8V184c0-4.4-3.6-8-8-8z';
+  var volumePath$1 = 'M318.577778 352.711111h-156.444445c-31.288889 0-56.888889 25.6-56.888889 56.888889v206.222222c0 31.288889 25.6 56.888889 56.888889 56.888889h156.444445L512 866.133333c27.022222 27.022222 72.533333 8.533333 72.533333-29.866666V187.733333c0-38.4-45.511111-56.888889-72.533333-29.866666L318.577778 352.711111z m210.488889 448L359.822222 631.466667c-11.377778-11.377778-25.6-17.066667-39.822222-17.066667h-156.444444V409.6h156.444444c15.644444 0 29.866667-5.688889 39.822222-17.066667l169.244445-169.244444v577.422222zM642.844444 341.333333v8.533334c0 7.111111 4.266667 14.222222 9.955556 19.911111 41.244444 34.133333 66.844444 85.333333 66.844444 142.222222s-25.6 108.088889-66.844444 142.222222c-5.688889 4.266667-9.955556 11.377778-9.955556 19.911111v8.533334c0 21.333333 24.177778 32.711111 41.244445 19.911111 56.888889-44.088889 92.444444-112.355556 92.444444-190.577778 0-76.8-35.555556-145.066667-92.444444-190.577778-17.066667-12.8-41.244444-1.422222-41.244445 19.911111z';
+  var volumePath$2 = 'M642.844444 183.466667c0 11.377778 7.111111 21.333333 17.066667 25.6 118.044444 49.777778 201.955556 166.4 201.955556 301.511111 0 136.533333-83.911111 253.155556-201.955556 301.511111-9.955556 4.266667-17.066667 14.222222-17.066667 25.6 0 19.911111 21.333333 34.133333 39.822223 25.6 137.955556-58.311111 236.088889-194.844444 236.088889-354.133333S822.044444 213.333333 682.666667 155.022222c-18.488889-5.688889-39.822222 8.533333-39.822223 28.444445z';
+  var fullscreenPath = 'M290 236.4l43.9-43.9c4.7-4.7 1.9-12.8-4.7-13.6L169 160c-5.1-0.6-9.5 3.7-8.9 8.9L179 329.1c0.8 6.6 8.9 9.4 13.6 4.7l43.7-43.7L370 423.7c3.1 3.1 8.2 3.1 11.3 0l42.4-42.3c3.1-3.1 3.1-8.2 0-11.3L290 236.4zM642.7 423.7c3.1 3.1 8.2 3.1 11.3 0l133.7-133.6 43.7 43.7c4.7 4.7 12.8 1.9 13.6-4.7L863.9 169c0.6-5.1-3.7-9.5-8.9-8.9L694.8 179c-6.6 0.8-9.4 8.9-4.7 13.6l43.9 43.9L600.3 370c-3.1 3.1-3.1 8.2 0 11.3l42.4 42.4zM845 694.9c-0.8-6.6-8.9-9.4-13.6-4.7l-43.7 43.7L654 600.3c-3.1-3.1-8.2-3.1-11.3 0l-42.4 42.3c-3.1 3.1-3.1 8.2 0 11.3L734 787.6l-43.9 43.9c-4.7 4.7-1.9 12.8 4.7 13.6L855 864c5.1 0.6 9.5-3.7 8.9-8.9L845 694.9zM381.3 600.3c-3.1-3.1-8.2-3.1-11.3 0L236.3 733.9l-43.7-43.7c-4.7-4.7-12.8-1.9-13.6 4.7L160.1 855c-0.6 5.1 3.7 9.5 8.9 8.9L329.2 845c6.6-0.8 9.4-8.9 4.7-13.6L290 787.6 423.7 654c3.1-3.1 3.1-8.2 0-11.3l-42.4-42.4z';
+  var fullscreenExitPath = 'M391 240.9c-0.8-6.6-8.9-9.4-13.6-4.7l-43.7 43.7L200 146.3c-3.1-3.1-8.2-3.1-11.3 0l-42.4 42.3c-3.1 3.1-3.1 8.2 0 11.3L280 333.6l-43.9 43.9c-4.7 4.7-1.9 12.8 4.7 13.6L401 410c5.1 0.6 9.5-3.7 8.9-8.9L391 240.9zM401.1 614.1L240.8 633c-6.6 0.8-9.4 8.9-4.7 13.6l43.9 43.9L146.3 824c-3.1 3.1-3.1 8.2 0 11.3l42.4 42.3c3.1 3.1 8.2 3.1 11.3 0L333.7 744l43.7 43.7c4.7 4.7 12.8 1.9 13.6-4.7l18.9-160.1c0.6-5.1-3.7-9.4-8.8-8.8zM622.9 409.9L783.2 391c6.6-0.8 9.4-8.9 4.7-13.6L744 333.6 877.7 200c3.1-3.1 3.1-8.2 0-11.3l-42.4-42.3c-3.1-3.1-8.2-3.1-11.3 0L690.3 279.9l-43.7-43.7c-4.7-4.7-12.8-1.9-13.6 4.7L614.1 401c-0.6 5.2 3.7 9.5 8.8 8.9zM744 690.4l43.9-43.9c4.7-4.7 1.9-12.8-4.7-13.6L623 614c-5.1-0.6-9.5 3.7-8.9 8.9L633 783.1c0.8 6.6 8.9 9.4 13.6 4.7l43.7-43.7L824 877.7c3.1 3.1 8.2 3.1 11.3 0l42.4-42.3c3.1-3.1 3.1-8.2 0-11.3L744 690.4z';
+
+  function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var FullScreen = /*#__PURE__*/function (_Component) {
+    _inherits(FullScreen, _Component);
+    var _super = _createSuper$b(FullScreen);
+    function FullScreen(player, container, desc, props, children) {
+      var _this;
+      _classCallCheck(this, FullScreen);
+      _this = _super.call(this, container, desc, props, children);
+      _defineProperty(_assertThisInitialized(_this), "id", 'FullScreen');
+      // el: div.video-fullscreen.video-controller
+      _defineProperty(_assertThisInitialized(_this), "player", void 0);
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
+      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
+      _defineProperty(_assertThisInitialized(_this), "fullscreenIcon", void 0);
+      _defineProperty(_assertThisInitialized(_this), "fullscreenExitIcon", void 0);
+      _this.player = player;
+      _this.props = props || {};
+      _this.init();
+      return _this;
+    }
+    _createClass(FullScreen, [{
+      key: "init",
+      value: function init() {
+        this.initTemplate();
+        this.initEvent();
+        storeControlComponent(this);
+      }
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {
+        addClass(this.el, ['video-fullscreen', 'video-controller']);
+        this.iconBox = $$n('div.video-icon');
+        this.fullscreenIcon = createSvg(fullscreenPath);
+        this.fullscreenExitIcon = createSvg(fullscreenExitPath);
+        this.icon = this.fullscreenIcon;
+        this.iconBox.appendChild(this.icon);
+        this.el.appendChild(this.iconBox);
+      }
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        this.onClick = this.onClick.bind(this);
+        this.el.onclick = this.onClick;
+      }
+    }, {
+      key: "onClick",
+      value: function onClick(e) {
+        if (this.player.container.requestFullscreen && !document.fullscreenElement) {
+          this.player.container.requestFullscreen(); //该函数请求全屏
+          this.iconBox.removeChild(this.icon);
+          this.icon = this.fullscreenExitIcon;
+          this.iconBox.appendChild(this.icon);
+        } else if (document.fullscreenElement) {
+          document.exitFullscreen(); //退出全屏函数仅仅绑定在document对象上，该点需要切记！！！
+          this.iconBox.removeChild(this.icon);
+          this.icon = this.fullscreenIcon;
+          this.iconBox.appendChild(this.icon);
+        }
+      }
+    }]);
+    return FullScreen;
+  }(Component);
+
+  function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var PlayButton = /*#__PURE__*/function (_Component) {
+    _inherits(PlayButton, _Component);
+    var _super = _createSuper$a(PlayButton);
+    function PlayButton(player, container, desc, props, children) {
+      var _this;
+      _classCallCheck(this, PlayButton);
+      _this = _super.call(this, container, desc, props, children);
+      _defineProperty(_assertThisInitialized(_this), "id", 'PlayButton');
+      // el: div.video-start-pause
+      _defineProperty(_assertThisInitialized(_this), "pauseIcon", void 0);
+      _defineProperty(_assertThisInitialized(_this), "playIcon", void 0);
+      _defineProperty(_assertThisInitialized(_this), "button", void 0);
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "player", void 0);
+      _this.player = player;
+      _this.props = props || {};
+      _this.init();
+      return _this;
+    }
+    _createClass(PlayButton, [{
+      key: "init",
+      value: function init() {
+        this.initTemplate();
+        this.initEvent();
+        storeControlComponent(this);
+      }
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {
+        addClass(this.el, ['video-start-pause']);
+        this.pauseIcon = createSvg(pausePath);
+        this.playIcon = createSvg(playPath);
+        this.button = this.playIcon;
+        this.el.appendChild(this.button);
+      }
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        var _this2 = this;
+        this.onClick = this.onClick.bind(this);
+        this.player.on('play', function (e) {
+          _this2.el.removeChild(_this2.button);
+          _this2.button = _this2.pauseIcon;
+          _this2.el.appendChild(_this2.button);
+        });
+        this.player.on('pause', function (e) {
+          _this2.el.removeChild(_this2.button);
+          _this2.button = _this2.playIcon;
+          _this2.el.appendChild(_this2.button);
+        });
+        this.el.onclick = this.onClick;
+      }
+    }, {
+      key: "resetEvent",
+      value: function resetEvent() {
+        this.onClick = this.onClick.bind(this);
+        this.el.onclick = null;
+        this.el.onclick = this.onClick;
+      }
+    }, {
+      key: "onClick",
+      value: function onClick(e) {
+        if (this.player.video.paused) {
+          this.player.video.play();
+        } else {
+          this.player.video.pause();
+        }
+      }
+    }]);
+    return PlayButton;
+  }(Component);
+
+  function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var Options = /*#__PURE__*/function (_Component) {
+    _inherits(Options, _Component);
+    var _super = _createSuper$9(Options);
+    function Options(player, container, hideWidth, hideHeight, desc, props, children) {
+      var _this;
+      _classCallCheck(this, Options);
+      _this = _super.call(this, container, desc, props, children);
+      _defineProperty(_assertThisInitialized(_this), "id", 'Options');
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "player", void 0);
+      _defineProperty(_assertThisInitialized(_this), "hideWidth", void 0);
+      _defineProperty(_assertThisInitialized(_this), "hideHeight", void 0);
+      _defineProperty(_assertThisInitialized(_this), "hideBox", void 0);
+      _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
+      _this.player = player;
+      props ? _this.props = props : _this.props = {};
+      _this.hideHeight = hideHeight;
+      _this.hideWidth = hideWidth;
+      _this.initBase();
+      return _this;
+    }
+    _createClass(Options, [{
+      key: "initBase",
+      value: function initBase() {
+        this.initBaseTemplate();
+        this.initBaseEvent();
+      }
+    }, {
+      key: "initBaseTemplate",
+      value: function initBaseTemplate() {
+        this.hideBox = $$n('div', {
+          style: {
+            display: 'none'
+          }
+        });
+        if (this.hideHeight && this.hideHeight > 0) {
+          this.hideBox.style.height = this.hideHeight + 'px';
+        }
+        if (this.hideWidth && this.hideWidth > 0) {
+          this.hideBox.style.width = this.hideWidth + 'px';
+        }
+        this.el.appendChild(this.hideBox);
+        this.iconBox = $$n('div');
+        this.el.appendChild(this.iconBox);
+      }
+    }, {
+      key: "initBaseEvent",
+      value: function initBaseEvent() {
+        var _this2 = this;
+        this.el.onmouseenter = function (e) {
+          var ctx = _this2;
+          ctx.hideBox.style.display = '';
+          document.body.onmousemove = ctx.handleMouseMove.bind(_this2);
+        };
+      }
+    }, {
+      key: "handleMouseMove",
+      value: function handleMouseMove(e) {
+        var pX = e.pageX,
+          pY = e.pageY;
+        var ctx = this;
+        if (!checkIsMouseInRange(ctx.el, ctx.hideBox, pX, pY)) {
+          ctx.hideBox.style.display = 'none';
+          document.body.onmousemove = null;
+        }
+      }
+    }]);
+    return Options;
+  }(Component);
+
+  function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  /**
+   * @description 播放速率的类
+   */
+  var Playrate = /*#__PURE__*/function (_Options) {
+    _inherits(Playrate, _Options);
+    var _super = _createSuper$8(Playrate);
+    // el: div.video-playrate.video-controller
+    function Playrate(player, container, desc, props, children) {
+      var _this;
+      _classCallCheck(this, Playrate);
+      _this = _super.call(this, player, container, 0, 0, desc);
+      _defineProperty(_assertThisInitialized(_this), "id", 'Playrate');
+      _this.init();
+      return _this;
+    }
+    _createClass(Playrate, [{
+      key: "init",
+      value: function init() {
+        this.initTemplate();
+        storeControlComponent(this);
+      }
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {
+        this.el['aria-label'] = '播放倍速';
+        addClass(this.el, ['video-playrate', 'video-controller']);
+        this.el.removeChild(this.iconBox);
+        this.iconBox = $$n('span', null, '倍速');
+        this.el.appendChild(this.iconBox);
+        this.el.removeChild(this.hideBox);
+        this.hideBox = $$n('ul', {
+          style: {
+            bottom: '41px'
+          },
+          'aria-label': '播放速度调节'
+        });
+        addClass(this.hideBox, ['video-playrate-set']);
+        this.el.appendChild(this.hideBox);
+        for (var i = 0; i < 6; i++) {
+          var li = $$n('li');
+          li.innerText = '2.0x';
+          this.hideBox.appendChild(li);
+        }
+      }
+    }]);
+    return Playrate;
+  }(Options);
+
+  function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var CompletedProgress = /*#__PURE__*/function (_Component) {
+    _inherits(CompletedProgress, _Component);
+    var _super = _createSuper$7(CompletedProgress);
+    function CompletedProgress(player, container, desc, props, children) {
+      var _this;
+      _classCallCheck(this, CompletedProgress);
+      _this = _super.call(this, container, desc, props, children);
+      _defineProperty(_assertThisInitialized(_this), "id", 'CompletedProgress');
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "player", void 0);
+      _this.props = props || {};
+      _this.player = player;
+      _this.init();
+      return _this;
+    }
+    _createClass(CompletedProgress, [{
+      key: "init",
+      value: function init() {
+        this.initEvent();
+        storeControlComponent(this);
+      }
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        var _this2 = this;
+        this.player.on('progress-click', function (e, ctx) {
+          _this2.onChangeSize(e, ctx);
+        });
+      }
+    }, {
+      key: "onChangeSize",
+      value: function onChangeSize(e, ctx) {
+        var scale = e.offsetX / ctx.el.offsetWidth;
+        if (scale < 0) {
+          scale = 0;
+        } else if (scale > 1) {
+          scale = 1;
+        }
+        this.el.style.width = scale * 100 + '%';
+      }
+    }]);
+    return CompletedProgress;
+  }(Component);
+
+  function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var Volume = /*#__PURE__*/function (_Options) {
+    _inherits(Volume, _Options);
+    var _super = _createSuper$6(Volume);
+    function Volume(player, container, desc, props, children) {
+      var _this;
+      _classCallCheck(this, Volume);
+      _this = _super.call(this, player, container, 0, 0, desc);
+      _defineProperty(_assertThisInitialized(_this), "id", 'Volume');
+      // el: div.video-volume video-controller
+      _defineProperty(_assertThisInitialized(_this), "volumeProgress", void 0);
+      _defineProperty(_assertThisInitialized(_this), "volumeShow", void 0);
+      _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
+      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
+      _this.init();
+      return _this;
+    }
+    _createClass(Volume, [{
+      key: "init",
+      value: function init() {
+        this.initTemplate();
+        this.initEvent();
+        storeControlComponent(this);
+      }
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {
+        addClass(this.el, ['video-volume', 'video-controller']);
+        this.el['aria-label'] = '音量';
+        this.hideBox.style.bottom = '41px';
+        addClass(this.hideBox, ['video-volume-set']);
+        this.volumeProgress = $$n('div.video-volume-progress', {
+          style: {
+            height: '70px'
+          }
+        });
+        this.volumeShow = $$n('div.video-volume-show');
+        this.volumeShow.innerText = '50';
+        this.volumeCompleted = new CompletedProgress(this.player, this.volumeProgress, 'div.video-volume-completed');
+        this.hideBox.appendChild(this.volumeShow);
+        this.hideBox.appendChild(this.volumeProgress);
+        addClass(this.iconBox, ['video-icon']);
+        this.icon = createSvgs([volumePath$1, volumePath$2]);
+        this.iconBox.appendChild(this.icon);
+      }
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        var _this2 = this;
+        this.player.on('volume-progress-click', function (e, ctx) {
+          var eoffsetY = e.pageY - getDOMPoint(_this2.volumeProgress).y;
+          var offsetY = _this2.volumeProgress.clientHeight - eoffsetY;
+          var scale = offsetY / _this2.volumeProgress.clientHeight;
+          if (scale < 0) {
+            scale = 0;
+          } else if (scale > 1) {
+            scale = 1;
+          }
+          _this2.volumeCompleted.el.style.height = scale * 100 + '%';
+        });
+        this.volumeProgress.onclick = function (e) {
+          _this2.player.emit('volume-progress-click', e, _this2);
+        };
+      }
+    }]);
+    return Volume;
+  }(Options);
 
   var CONTROL_COMPONENT_STORE = new _Map();
   function storeControlComponent(item) {
     CONTROL_COMPONENT_STORE.set(item.id, item);
   }
+  var controllersMapping = {
+    PlayButton: PlayButton,
+    Playrate: Playrate,
+    Volume: Volume,
+    FullScreen: FullScreen
+  };
 
-  function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Dot = /*#__PURE__*/function (_Component) {
     _inherits(Dot, _Component);
-    var _super = _createSuper$b(Dot);
+    var _super = _createSuper$5(Dot);
     function Dot(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Dot);
@@ -5365,57 +5754,11 @@
     return Dot;
   }(Component);
 
-  function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var CompletedProgress = /*#__PURE__*/function (_Component) {
-    _inherits(CompletedProgress, _Component);
-    var _super = _createSuper$a(CompletedProgress);
-    function CompletedProgress(player, container, desc, props, children) {
-      var _this;
-      _classCallCheck(this, CompletedProgress);
-      _this = _super.call(this, container, desc, props, children);
-      _defineProperty(_assertThisInitialized(_this), "id", 'CompletedProgress');
-      _defineProperty(_assertThisInitialized(_this), "props", void 0);
-      _defineProperty(_assertThisInitialized(_this), "player", void 0);
-      _this.props = props || {};
-      _this.player = player;
-      _this.init();
-      return _this;
-    }
-    _createClass(CompletedProgress, [{
-      key: "init",
-      value: function init() {
-        this.initEvent();
-        storeControlComponent(this);
-      }
-    }, {
-      key: "initEvent",
-      value: function initEvent() {
-        var _this2 = this;
-        this.player.on('progress-click', function (e, ctx) {
-          _this2.onChangeSize(e, ctx);
-        });
-      }
-    }, {
-      key: "onChangeSize",
-      value: function onChangeSize(e, ctx) {
-        var scale = e.offsetX / ctx.el.offsetWidth;
-        if (scale < 0) {
-          scale = 0;
-        } else if (scale > 1) {
-          scale = 1;
-        }
-        this.el.style.width = scale * 100 + '%';
-      }
-    }]);
-    return CompletedProgress;
-  }(Component);
-
-  function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var BufferedProgress = /*#__PURE__*/function (_Component) {
     _inherits(BufferedProgress, _Component);
-    var _super = _createSuper$9(BufferedProgress);
+    var _super = _createSuper$4(BufferedProgress);
     function BufferedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, BufferedProgress);
@@ -5488,11 +5831,11 @@
   var css_248z$4 = ".video-progress {\n  width: 100%;\n  height: 5px;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #00a1d6;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 10px;\n  width: 10px;\n  border-radius: 100%;\n  background-color: black;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
   styleInject(css_248z$4);
 
-  function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Progress = /*#__PURE__*/function (_Component) {
     _inherits(Progress, _Component);
-    var _super = _createSuper$8(Progress);
+    var _super = _createSuper$3(Progress);
     function Progress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Progress);
@@ -5685,342 +6028,52 @@
   //   }
   // }
 
-  var playPath = 'M254.132978 880.390231c-6.079462 0-12.155854-1.511423-17.643845-4.497431-11.828396-6.482645-19.195178-18.85851-19.195178-32.341592L217.293955 180.465165c0-13.483082 7.366781-25.898857 19.195178-32.346709 11.787464-6.483668 26.226315-5.928013 37.57478 1.363044L789.797957 481.028615c10.536984 6.77531 16.908088 18.456351 16.908088 30.979572 0 12.523221-6.371104 24.203238-16.908088 30.982642L274.063913 874.53385C267.983427 878.403994 261.060761 880.390231 254.132978 880.390231L254.132978 880.390231zM254.132978 880.390231';
-  var pausePath = 'M304 176h80v672h-80zM712 176h-64c-4.4 0-8 3.6-8 8v656c0 4.4 3.6 8 8 8h64c4.4 0 8-3.6 8-8V184c0-4.4-3.6-8-8-8z';
-  var volumePath$1 = 'M318.577778 352.711111h-156.444445c-31.288889 0-56.888889 25.6-56.888889 56.888889v206.222222c0 31.288889 25.6 56.888889 56.888889 56.888889h156.444445L512 866.133333c27.022222 27.022222 72.533333 8.533333 72.533333-29.866666V187.733333c0-38.4-45.511111-56.888889-72.533333-29.866666L318.577778 352.711111z m210.488889 448L359.822222 631.466667c-11.377778-11.377778-25.6-17.066667-39.822222-17.066667h-156.444444V409.6h156.444444c15.644444 0 29.866667-5.688889 39.822222-17.066667l169.244445-169.244444v577.422222zM642.844444 341.333333v8.533334c0 7.111111 4.266667 14.222222 9.955556 19.911111 41.244444 34.133333 66.844444 85.333333 66.844444 142.222222s-25.6 108.088889-66.844444 142.222222c-5.688889 4.266667-9.955556 11.377778-9.955556 19.911111v8.533334c0 21.333333 24.177778 32.711111 41.244445 19.911111 56.888889-44.088889 92.444444-112.355556 92.444444-190.577778 0-76.8-35.555556-145.066667-92.444444-190.577778-17.066667-12.8-41.244444-1.422222-41.244445 19.911111z';
-  var volumePath$2 = 'M642.844444 183.466667c0 11.377778 7.111111 21.333333 17.066667 25.6 118.044444 49.777778 201.955556 166.4 201.955556 301.511111 0 136.533333-83.911111 253.155556-201.955556 301.511111-9.955556 4.266667-17.066667 14.222222-17.066667 25.6 0 19.911111 21.333333 34.133333 39.822223 25.6 137.955556-58.311111 236.088889-194.844444 236.088889-354.133333S822.044444 213.333333 682.666667 155.022222c-18.488889-5.688889-39.822222 8.533333-39.822223 28.444445z';
-  var fullscreenPath = 'M290 236.4l43.9-43.9c4.7-4.7 1.9-12.8-4.7-13.6L169 160c-5.1-0.6-9.5 3.7-8.9 8.9L179 329.1c0.8 6.6 8.9 9.4 13.6 4.7l43.7-43.7L370 423.7c3.1 3.1 8.2 3.1 11.3 0l42.4-42.3c3.1-3.1 3.1-8.2 0-11.3L290 236.4zM642.7 423.7c3.1 3.1 8.2 3.1 11.3 0l133.7-133.6 43.7 43.7c4.7 4.7 12.8 1.9 13.6-4.7L863.9 169c0.6-5.1-3.7-9.5-8.9-8.9L694.8 179c-6.6 0.8-9.4 8.9-4.7 13.6l43.9 43.9L600.3 370c-3.1 3.1-3.1 8.2 0 11.3l42.4 42.4zM845 694.9c-0.8-6.6-8.9-9.4-13.6-4.7l-43.7 43.7L654 600.3c-3.1-3.1-8.2-3.1-11.3 0l-42.4 42.3c-3.1 3.1-3.1 8.2 0 11.3L734 787.6l-43.9 43.9c-4.7 4.7-1.9 12.8 4.7 13.6L855 864c5.1 0.6 9.5-3.7 8.9-8.9L845 694.9zM381.3 600.3c-3.1-3.1-8.2-3.1-11.3 0L236.3 733.9l-43.7-43.7c-4.7-4.7-12.8-1.9-13.6 4.7L160.1 855c-0.6 5.1 3.7 9.5 8.9 8.9L329.2 845c6.6-0.8 9.4-8.9 4.7-13.6L290 787.6 423.7 654c3.1-3.1 3.1-8.2 0-11.3l-42.4-42.4z';
-  var fullscreenExitPath = 'M391 240.9c-0.8-6.6-8.9-9.4-13.6-4.7l-43.7 43.7L200 146.3c-3.1-3.1-8.2-3.1-11.3 0l-42.4 42.3c-3.1 3.1-3.1 8.2 0 11.3L280 333.6l-43.9 43.9c-4.7 4.7-1.9 12.8 4.7 13.6L401 410c5.1 0.6 9.5-3.7 8.9-8.9L391 240.9zM401.1 614.1L240.8 633c-6.6 0.8-9.4 8.9-4.7 13.6l43.9 43.9L146.3 824c-3.1 3.1-3.1 8.2 0 11.3l42.4 42.3c3.1 3.1 8.2 3.1 11.3 0L333.7 744l43.7 43.7c4.7 4.7 12.8 1.9 13.6-4.7l18.9-160.1c0.6-5.1-3.7-9.4-8.8-8.8zM622.9 409.9L783.2 391c6.6-0.8 9.4-8.9 4.7-13.6L744 333.6 877.7 200c3.1-3.1 3.1-8.2 0-11.3l-42.4-42.3c-3.1-3.1-8.2-3.1-11.3 0L690.3 279.9l-43.7-43.7c-4.7-4.7-12.8-1.9-13.6 4.7L614.1 401c-0.6 5.2 3.7 9.5 8.8 8.9zM744 690.4l43.9-43.9c4.7-4.7 1.9-12.8-4.7-13.6L623 614c-5.1-0.6-9.5 3.7-8.9 8.9L633 783.1c0.8 6.6 8.9 9.4 13.6 4.7l43.7-43.7L824 877.7c3.1 3.1 8.2 3.1 11.3 0l42.4-42.3c3.1-3.1 3.1-8.2 0-11.3L744 690.4z';
+  var $ = _export;
+  var $map = arrayIteration.map;
+  var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$3;
 
-  function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var FullScreen = /*#__PURE__*/function (_Component) {
-    _inherits(FullScreen, _Component);
-    var _super = _createSuper$7(FullScreen);
-    function FullScreen(player, container, desc, props, children) {
-      var _this;
-      _classCallCheck(this, FullScreen);
-      _this = _super.call(this, container, desc, props, children);
-      _defineProperty(_assertThisInitialized(_this), "id", 'FullScreen');
-      // el: div.video-fullscreen.video-controller
-      _defineProperty(_assertThisInitialized(_this), "player", void 0);
-      _defineProperty(_assertThisInitialized(_this), "props", void 0);
-      _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
-      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
-      _defineProperty(_assertThisInitialized(_this), "fullscreenIcon", void 0);
-      _defineProperty(_assertThisInitialized(_this), "fullscreenExitIcon", void 0);
-      _this.player = player;
-      _this.props = props || {};
-      _this.init();
-      return _this;
-    }
-    _createClass(FullScreen, [{
-      key: "init",
-      value: function init() {
-        this.initTemplate();
-        this.initEvent();
-        storeControlComponent(this);
-      }
-    }, {
-      key: "initTemplate",
-      value: function initTemplate() {
-        addClass(this.el, ['video-fullscreen', 'video-controller']);
-        this.iconBox = $$m('div.video-icon');
-        this.fullscreenIcon = createSvg(fullscreenPath);
-        this.fullscreenExitIcon = createSvg(fullscreenExitPath);
-        this.icon = this.fullscreenIcon;
-        this.iconBox.appendChild(this.icon);
-        this.el.appendChild(this.iconBox);
-      }
-    }, {
-      key: "initEvent",
-      value: function initEvent() {
-        this.onClick = this.onClick.bind(this);
-        this.el.onclick = this.onClick;
-      }
-    }, {
-      key: "onClick",
-      value: function onClick(e) {
-        if (this.player.container.requestFullscreen && !document.fullscreenElement) {
-          this.player.container.requestFullscreen(); //该函数请求全屏
-          this.iconBox.removeChild(this.icon);
-          this.icon = this.fullscreenExitIcon;
-          this.iconBox.appendChild(this.icon);
-        } else if (document.fullscreenElement) {
-          document.exitFullscreen(); //退出全屏函数仅仅绑定在document对象上，该点需要切记！！！
-          this.iconBox.removeChild(this.icon);
-          this.icon = this.fullscreenIcon;
-          this.iconBox.appendChild(this.icon);
-        }
-      }
-    }]);
-    return FullScreen;
-  }(Component);
+  var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map');
 
-  function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var PlayButton = /*#__PURE__*/function (_Component) {
-    _inherits(PlayButton, _Component);
-    var _super = _createSuper$6(PlayButton);
-    function PlayButton(player, container, desc, props, children) {
-      var _this;
-      _classCallCheck(this, PlayButton);
-      _this = _super.call(this, container, desc, props, children);
-      _defineProperty(_assertThisInitialized(_this), "id", 'PlayButton');
-      // el: div.video-start-pause
-      _defineProperty(_assertThisInitialized(_this), "pauseIcon", void 0);
-      _defineProperty(_assertThisInitialized(_this), "playIcon", void 0);
-      _defineProperty(_assertThisInitialized(_this), "button", void 0);
-      _defineProperty(_assertThisInitialized(_this), "props", void 0);
-      _defineProperty(_assertThisInitialized(_this), "player", void 0);
-      _this.player = player;
-      _this.props = props || {};
-      _this.init();
-      return _this;
+  // `Array.prototype.map` method
+  // https://tc39.es/ecma262/#sec-array.prototype.map
+  // with adding support of @@species
+  $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+    map: function map(callbackfn /* , thisArg */) {
+      return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
     }
-    _createClass(PlayButton, [{
-      key: "init",
-      value: function init() {
-        this.initTemplate();
-        this.initEvent();
-        storeControlComponent(this);
-      }
-    }, {
-      key: "initTemplate",
-      value: function initTemplate() {
-        addClass(this.el, ['video-start-pause']);
-        this.pauseIcon = createSvg(pausePath);
-        this.playIcon = createSvg(playPath);
-        this.button = this.playIcon;
-        this.el.appendChild(this.button);
-      }
-    }, {
-      key: "initEvent",
-      value: function initEvent() {
-        var _this2 = this;
-        this.onClick = this.onClick.bind(this);
-        this.player.on('play', function (e) {
-          _this2.el.removeChild(_this2.button);
-          _this2.button = _this2.pauseIcon;
-          _this2.el.appendChild(_this2.button);
-        });
-        this.player.on('pause', function (e) {
-          _this2.el.removeChild(_this2.button);
-          _this2.button = _this2.playIcon;
-          _this2.el.appendChild(_this2.button);
-        });
-        this.el.onclick = this.onClick;
-      }
-    }, {
-      key: "resetEvent",
-      value: function resetEvent() {
-        this.onClick = this.onClick.bind(this);
-        this.el.onclick = null;
-        this.el.onclick = this.onClick;
-      }
-    }, {
-      key: "onClick",
-      value: function onClick(e) {
-        if (this.player.video.paused) {
-          this.player.video.play();
-        } else {
-          this.player.video.pause();
-        }
-      }
-    }]);
-    return PlayButton;
-  }(Component);
+  });
 
-  function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var Options = /*#__PURE__*/function (_Component) {
-    _inherits(Options, _Component);
-    var _super = _createSuper$5(Options);
-    function Options(player, container, hideWidth, hideHeight, desc, props, children) {
-      var _this;
-      _classCallCheck(this, Options);
-      _this = _super.call(this, container, desc, props, children);
-      _defineProperty(_assertThisInitialized(_this), "id", 'Options');
-      _defineProperty(_assertThisInitialized(_this), "props", void 0);
-      _defineProperty(_assertThisInitialized(_this), "player", void 0);
-      _defineProperty(_assertThisInitialized(_this), "hideWidth", void 0);
-      _defineProperty(_assertThisInitialized(_this), "hideHeight", void 0);
-      _defineProperty(_assertThisInitialized(_this), "hideBox", void 0);
-      _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
-      _this.player = player;
-      props ? _this.props = props : _this.props = {};
-      _this.hideHeight = hideHeight;
-      _this.hideWidth = hideWidth;
-      _this.initBase();
-      return _this;
-    }
-    _createClass(Options, [{
-      key: "initBase",
-      value: function initBase() {
-        this.initBaseTemplate();
-        this.initBaseEvent();
-      }
-    }, {
-      key: "initBaseTemplate",
-      value: function initBaseTemplate() {
-        this.hideBox = $$m('div', {
-          style: {
-            display: 'none'
-          }
-        });
-        if (this.hideHeight && this.hideHeight > 0) {
-          this.hideBox.style.height = this.hideHeight + 'px';
-        }
-        if (this.hideWidth && this.hideWidth > 0) {
-          this.hideBox.style.width = this.hideWidth + 'px';
-        }
-        this.el.appendChild(this.hideBox);
-        this.iconBox = $$m('div');
-        this.el.appendChild(this.iconBox);
-      }
-    }, {
-      key: "initBaseEvent",
-      value: function initBaseEvent() {
-        var _this2 = this;
-        this.el.onmouseenter = function (e) {
-          var ctx = _this2;
-          ctx.hideBox.style.display = '';
-          document.body.onmousemove = ctx.handleMouseMove.bind(_this2);
-        };
-      }
-    }, {
-      key: "handleMouseMove",
-      value: function handleMouseMove(e) {
-        var pX = e.pageX,
-          pY = e.pageY;
-        var ctx = this;
-        if (!checkIsMouseInRange(ctx.el, ctx.hideBox, pX, pY)) {
-          ctx.hideBox.style.display = 'none';
-          document.body.onmousemove = null;
-        }
-      }
-    }]);
-    return Options;
-  }(Component);
+  var entryVirtual = entryVirtual$5;
 
-  function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  /**
-   * @description 播放速率的类
-   */
-  var Playrate = /*#__PURE__*/function (_Options) {
-    _inherits(Playrate, _Options);
-    var _super = _createSuper$4(Playrate);
-    // el: div.video-playrate.video-controller
-    function Playrate(player, container, desc, props, children) {
-      var _this;
-      _classCallCheck(this, Playrate);
-      _this = _super.call(this, player, container, 0, 0, desc);
-      _defineProperty(_assertThisInitialized(_this), "id", 'Playrate');
-      _this.init();
-      return _this;
-    }
-    _createClass(Playrate, [{
-      key: "init",
-      value: function init() {
-        this.initTemplate();
-        storeControlComponent(this);
-      }
-    }, {
-      key: "initTemplate",
-      value: function initTemplate() {
-        this.el['aria-label'] = '播放倍速';
-        addClass(this.el, ['video-playrate', 'video-controller']);
-        this.el.removeChild(this.iconBox);
-        this.iconBox = $$m('span', null, '倍速');
-        this.el.appendChild(this.iconBox);
-        this.el.removeChild(this.hideBox);
-        this.hideBox = $$m('ul', {
-          style: {
-            bottom: '41px'
-          },
-          'aria-label': '播放速度调节'
-        });
-        addClass(this.hideBox, ['video-playrate-set']);
-        this.el.appendChild(this.hideBox);
-        for (var i = 0; i < 6; i++) {
-          var li = $$m('li');
-          li.innerText = '2.0x';
-          this.hideBox.appendChild(li);
-        }
-      }
-    }]);
-    return Playrate;
-  }(Options);
+  var map$6 = entryVirtual('Array').map;
 
-  function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var Volume = /*#__PURE__*/function (_Options) {
-    _inherits(Volume, _Options);
-    var _super = _createSuper$3(Volume);
-    function Volume(player, container, desc, props, children) {
-      var _this;
-      _classCallCheck(this, Volume);
-      _this = _super.call(this, player, container, 0, 0, desc);
-      _defineProperty(_assertThisInitialized(_this), "id", 'Volume');
-      // el: div.video-volume video-controller
-      _defineProperty(_assertThisInitialized(_this), "volumeProgress", void 0);
-      _defineProperty(_assertThisInitialized(_this), "volumeShow", void 0);
-      _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
-      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
-      _this.init();
-      return _this;
-    }
-    _createClass(Volume, [{
-      key: "init",
-      value: function init() {
-        this.initTemplate();
-        this.initEvent();
-        storeControlComponent(this);
-      }
-    }, {
-      key: "initTemplate",
-      value: function initTemplate() {
-        addClass(this.el, ['video-volume', 'video-controller']);
-        this.el['aria-label'] = '音量';
-        this.hideBox.style.bottom = '41px';
-        addClass(this.hideBox, ['video-volume-set']);
-        this.volumeProgress = $$m('div.video-volume-progress', {
-          style: {
-            height: '70px'
-          }
-        });
-        this.volumeShow = $$m('div.video-volume-show');
-        this.volumeShow.innerText = '50';
-        this.volumeCompleted = new CompletedProgress(this.player, this.volumeProgress, 'div.video-volume-completed');
-        this.hideBox.appendChild(this.volumeShow);
-        this.hideBox.appendChild(this.volumeProgress);
-        addClass(this.iconBox, ['video-icon']);
-        this.icon = createSvgs([volumePath$1, volumePath$2]);
-        this.iconBox.appendChild(this.icon);
-      }
-    }, {
-      key: "initEvent",
-      value: function initEvent() {
-        var _this2 = this;
-        this.player.on('volume-progress-click', function (e, ctx) {
-          var eoffsetY = e.pageY - getDOMPoint(_this2.volumeProgress).y;
-          var offsetY = _this2.volumeProgress.clientHeight - eoffsetY;
-          var scale = offsetY / _this2.volumeProgress.clientHeight;
-          if (scale < 0) {
-            scale = 0;
-          } else if (scale > 1) {
-            scale = 1;
-          }
-          _this2.volumeCompleted.el.style.height = scale * 100 + '%';
-        });
-        this.volumeProgress.onclick = function (e) {
-          _this2.player.emit('volume-progress-click', e, _this2);
-        };
-      }
-    }]);
-    return Volume;
-  }(Options);
+  var isPrototypeOf = objectIsPrototypeOf;
+  var method = map$6;
+
+  var ArrayPrototype = Array.prototype;
+
+  var map$5 = function (it) {
+    var own = it.map;
+    return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.map) ? method : own;
+  };
+
+  var parent$2 = map$5;
+
+  var map$4 = parent$2;
+
+  var parent$1 = map$4;
+
+  var map$3 = parent$1;
+
+  var parent = map$3;
+
+  var map$2 = parent;
+
+  var map$1 = map$2;
+
+  var map = map$1;
+
+  var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map);
 
   var css_248z$3 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 15px 5px 0 5px;\n}\n.video-play .video-subplay {\n  margin-left: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 22px;\n}\n.video-play .video-subplay .video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-play .video-subplay .video-start-pause svg {\n  width: 20px;\n  height: 20px;\n}\n.video-play .video-subplay .video-start-pause svg path {\n  fill: #fff;\n  stroke-width: 3px;\n}\n.video-play .video-subplay .video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 22px;\n}\n.video-play .video-settings .video-subsettings svg {\n  -webkit-transition: fill 0.15s ease-in-out;\n  transition: fill 0.15s ease-in-out;\n}\n.video-play .video-settings .video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-play .video-settings .video-volume .video-volume-set {\n  position: absolute;\n  bottom: 41px;\n  left: 50%;\n  -webkit-transform: translateX(-16px);\n          transform: translateX(-16px);\n  width: 32px;\n  height: 100px;\n  padding-bottom: 8px;\n  background: rgba(21, 21, 21, 0.9);\n  border-radius: 2px;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  padding-top: 5px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 5px;\n  height: calc(100% - 20px - 10px);\n  margin-top: 8px;\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  width: 100%;\n  background-color: #00a1d6;\n}\n.video-play .video-settings .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-play .video-settings .video-volume .video-icon svg {\n  height: 20px;\n  width: 20px;\n}\n.video-play .video-settings .video-volume .video-icon svg path {\n  fill: #fff;\n}\n.video-play .video-settings .video-fullscreen .video-icon svg {\n  height: 20px;\n  width: 20px;\n}\n.video-play .video-settings .video-fullscreen .video-icon svg path {\n  fill: #fff;\n}\n.video-play .video-settings .video-playrate {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-play .video-settings .video-playrate .video-playrate-set {\n  border-radius: 2px;\n  bottom: 41px;\n  background-color: rgba(21, 21, 21, 0.9);\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  text-align: center;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  list-style: none;\n  outline: none;\n}\n.video-play .video-settings .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-play .video-settings .video-playrate .video-playrate-set li:hover {\n  background-color: #C9CCD0;\n}\n.video-play .video-settings .video-playrate span {\n  width: 100%;\n  height: 100%;\n}\n.video-play .video-settings .video-resolvepower {\n  position: relative;\n}\n.video-play .video-settings .video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  border-radius: 2px;\n  bottom: 41px;\n  background-color: rgba(21, 21, 21, 0.9);\n  padding: 0;\n  margin: 0;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  cursor: pointer;\n  display: none;\n}\n.video-play .video-settings .video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-play .video-settings .video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #C9CCD0;\n}\n.video-play .video-settings .video-playrate,\n.video-play .video-settings .video-resolvepower {\n  font-size: 14px;\n  font-weight: 550;\n  color: #fff;\n  margin: 0 10px;\n}\n.video-play .video-settings .video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 33px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n}\n.video-play .video-settings .video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n";
   styleInject(css_248z$3);
@@ -6039,10 +6092,12 @@
       _defineProperty(_assertThisInitialized(_this), "props", {});
       _defineProperty(_assertThisInitialized(_this), "player", void 0);
       // 控件
-      _defineProperty(_assertThisInitialized(_this), "fullscreen", void 0);
-      _defineProperty(_assertThisInitialized(_this), "playButton", void 0);
-      _defineProperty(_assertThisInitialized(_this), "playrate", void 0);
-      _defineProperty(_assertThisInitialized(_this), "volume", void 0);
+      _defineProperty(_assertThisInitialized(_this), "leftControllers", [PlayButton]);
+      _defineProperty(_assertThisInitialized(_this), "rightController", [Playrate, Volume, FullScreen]);
+      // fullscreen: FullScreen
+      // playButton: PlayButton
+      // playrate: Playrate
+      // volume: Volume
       _defineProperty(_assertThisInitialized(_this), "subPlay", void 0);
       _defineProperty(_assertThisInitialized(_this), "settings", void 0);
       _this.player = player;
@@ -6053,25 +6108,68 @@
     _createClass(Controller, [{
       key: "init",
       value: function init() {
+        this.initControllers();
         this.initTemplate();
         this.initComponent();
         storeControlComponent(this);
       }
     }, {
+      key: "initControllers",
+      value: function initControllers() {
+        var leftControllers = this.player.playerOptions.leftControllers;
+        var rightControllers = this.player.playerOptions.rightControllers;
+        if (leftControllers) {
+          this.leftControllers = _mapInstanceProperty(leftControllers).call(leftControllers, function (item) {
+            if (typeof item === 'string') {
+              if (!controllersMapping[item]) {
+                throw new Error("\u4F20\u5165\u7684\u7EC4\u4EF6\u540D".concat(item, "\u9519\u8BEF"));
+              }
+              return controllersMapping[item];
+            } else {
+              return item;
+            }
+          });
+        }
+        if (rightControllers) {
+          this.rightController = _mapInstanceProperty(rightControllers).call(rightControllers, function (item) {
+            if (typeof item === 'string') {
+              if (!controllersMapping[item]) {
+                throw new Error("\u4F20\u5165\u7684\u7EC4\u4EF6\u540D".concat(item, "\u9519\u8BEF"));
+              }
+              return controllersMapping[item];
+            } else {
+              return item;
+            }
+          });
+          console.log(this.rightController);
+        }
+      }
+    }, {
       key: "initTemplate",
       value: function initTemplate() {
-        this.subPlay = $$m('div.video-subplay');
-        this.settings = $$m('div.video-settings');
+        this.subPlay = $$n('div.video-subplay');
+        this.settings = $$n('div.video-settings');
         this.el.appendChild(this.subPlay);
         this.el.appendChild(this.settings);
       }
     }, {
       key: "initComponent",
       value: function initComponent() {
-        this.playButton = new PlayButton(this.player, this.subPlay, 'div');
-        this.volume = new Volume(this.player, this.settings, 'div');
-        this.playrate = new Playrate(this.player, this.settings, 'div');
-        this.fullscreen = new FullScreen(this.player, this.settings, 'div');
+        var _context,
+          _this2 = this,
+          _context2;
+        _forEachInstanceProperty(_context = this.leftControllers).call(_context, function (ControlConstructor) {
+          var instance = new ControlConstructor(_this2.player, _this2.subPlay, 'div');
+          _this2[instance.id] = instance;
+        });
+        _forEachInstanceProperty(_context2 = this.rightController).call(_context2, function (ControlConstructor) {
+          var instance = new ControlConstructor(_this2.player, _this2.settings, 'div');
+          _this2[instance.id] = instance;
+        });
+        // this.playButton = new PlayButton(this.player, this.subPlay, 'div')
+        // this.volume = new Volume(this.player, this.settings, 'div')
+        // this.playrate = new Playrate(this.player, this.settings, 'div')
+        // this.fullscreen = new FullScreen(this.player, this.settings, 'div')
       }
     }]);
     return Controller;
@@ -6208,7 +6306,7 @@
     _createClass(Player, [{
       key: "init",
       value: function init() {
-        this.video = $$m('video');
+        this.video = $$n('video');
         this.video.src = this.playerOptions.url || '';
         this.el.appendChild(this.video);
         this.toolBar = new ToolBar(this, this.el, 'div');
