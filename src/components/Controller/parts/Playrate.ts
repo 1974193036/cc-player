@@ -2,6 +2,7 @@ import { Options } from './Options'
 import { Player } from '@/page/player'
 import { DOMProps, Node } from '@/types/Player'
 import { $, addClass } from '@/utils/domUtils'
+import { storeControlComponent } from '@/utils/store'
 
 /**
  * @description 播放速率的类
@@ -22,6 +23,7 @@ export class Playrate extends Options {
 
   init() {
     this.initTemplate()
+    storeControlComponent(this)
   }
 
   initTemplate() {

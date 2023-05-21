@@ -3,6 +3,7 @@ import { Player } from '../../../page/player'
 import { ComponentItem, DOMProps, Node } from '../../../types/Player'
 import { $, addClass, createSvg } from '../../../utils/domUtils'
 import { fullscreenExitPath, fullscreenPath } from '../path/defaultPath'
+import { storeControlComponent } from '@/utils/store'
 
 export class FullScreen extends Component implements ComponentItem {
   readonly id = 'FullScreen'
@@ -29,6 +30,8 @@ export class FullScreen extends Component implements ComponentItem {
   init() {
     this.initTemplate()
     this.initEvent()
+
+    storeControlComponent(this)
   }
 
   initTemplate() {
@@ -42,7 +45,8 @@ export class FullScreen extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.el.onclick = this.onClick.bind(this)
+    this.onClick = this.onClick.bind(this)
+    this.el.onclick = this.onClick
   }
 
   onClick(e: MouseEvent) {

@@ -6,6 +6,7 @@ import { FullScreen } from './parts/FullScreen'
 import { PlayButton } from './parts/PlayButton'
 import { Playrate } from './parts/Playrate'
 import { Volume } from './parts/Volume'
+import { storeControlComponent } from '@/utils/store'
 import './controller.less'
 
 export class Controller extends Component implements ComponentItem {
@@ -35,6 +36,8 @@ export class Controller extends Component implements ComponentItem {
   init() {
     this.initTemplate()
     this.initComponent()
+
+    storeControlComponent(this)
   }
 
   initTemplate() {
