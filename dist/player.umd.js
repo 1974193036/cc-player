@@ -2905,6 +2905,21 @@
           });
         }
       }
+    }, {
+      key: "init",
+      value: function init() {}
+    }, {
+      key: "initEvent",
+      value: function initEvent() {}
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {}
+    }, {
+      key: "initComponent",
+      value: function initComponent() {}
+    }, {
+      key: "resetEvent",
+      value: function resetEvent() {}
     }]);
     return BaseEvent;
   }();
@@ -4094,8 +4109,8 @@
       replaceElementType: 'replaceOuterHTMLOfComponent'
     };
     if (target.id !== another.id) throw new Error('需要合并的两个组件的id不相同');
-    for (var key in target) {
-      if (another.hasOwnProperty(key)) {
+    for (var key in another) {
+      if (key in target) {
         if (key === 'props') {
           patchDOMProps(target[key], another[key], target.el);
         } else if (key === 'el') {
@@ -4121,7 +4136,9 @@
             if (!(another[key] instanceof Function)) {
               throw new Error("\u5C5E\u6027".concat(key, "\u5BF9\u5E94\u7684\u503C\u5E94\u8BE5\u4E3A\u51FD\u6570\u7C7B\u578B"));
             }
-            patchFn(target[key], another[key], target);
+            console.log('合并函数', another[key]);
+            target[key] = patchFn(target[key], another[key], target);
+            target.resetEvent();
           } else if (target[key] instanceof HTMLElement) {
             if (!(another[key] instanceof HTMLElement) && typeof another[key] !== 'string') {
               throw new Error("\u5C5E\u6027".concat(key, "\u5BF9\u5E94\u7684\u503C\u5E94\u8BE5\u4E3ADOM\u5143\u7D20\u6216\u8005\u5B57\u7B26\u4E32\u7C7B\u578B"));
@@ -4170,17 +4187,18 @@
       el.style[_key] = targetStyle[_key];
     }
   }
-  function patchFn(targetFn, another, context) {
-    targetFn.arguments;
+  function patchFn(targetFn, anotherFn, context) {
+    // let args = targetFn.arguments;
+    console.log(targetFn, anotherFn, context);
     function fn() {
-      var _targetFn, _context3, _context4;
+      var _context3, _context4;
       for (var _len = arguments.length, args = new Array(_len), _key2 = 0; _key2 < _len; _key2++) {
         args[_key2] = arguments[_key2];
       }
-      (_targetFn = targetFn).call.apply(_targetFn, _concatInstanceProperty(_context3 = [context]).call(_context3, args));
-      another.call.apply(another, _concatInstanceProperty(_context4 = [context]).call(_context4, args));
+      targetFn.call.apply(targetFn, _concatInstanceProperty(_context3 = [context]).call(_context3, args));
+      anotherFn.call.apply(anotherFn, _concatInstanceProperty(_context4 = [context]).call(_context4, args));
     }
-    targetFn = fn;
+    return fn.bind(context);
   }
 
   function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -5651,7 +5669,6 @@
   var _Map = /*@__PURE__*/getDefaultExportFromCjs(map);
 
   var CONTROL_COMPONENT_STORE = new _Map();
-  new _Map();
   function storeControlComponent(item) {
     CONTROL_COMPONENT_STORE.set(item.id, item);
   }
@@ -5674,6 +5691,7 @@
       _defineProperty(_assertThisInitialized(_this), "fullscreenIcon", void 0);
       _defineProperty(_assertThisInitialized(_this), "fullscreenExitIcon", void 0);
       _this.player = player;
+      _this.props = props || {};
       _this.init();
       return _this;
     }
@@ -5730,12 +5748,14 @@
       _classCallCheck(this, PlayButton);
       _this = _super.call(this, container, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'PlayButton');
+      // el: div.video-start-pause
       _defineProperty(_assertThisInitialized(_this), "pauseIcon", void 0);
       _defineProperty(_assertThisInitialized(_this), "playIcon", void 0);
       _defineProperty(_assertThisInitialized(_this), "button", void 0);
       _defineProperty(_assertThisInitialized(_this), "props", void 0);
       _defineProperty(_assertThisInitialized(_this), "player", void 0);
       _this.player = player;
+      _this.props = props || {};
       _this.init();
       return _this;
     }
@@ -5769,7 +5789,14 @@
           _this2.button = _this2.playIcon;
           _this2.el.appendChild(_this2.button);
         });
-        this.el.onclick = this.onClick.bind(this);
+        this.el.onclick = this.onClick;
+      }
+    }, {
+      key: "resetEvent",
+      value: function resetEvent() {
+        this.onClick = this.onClick.bind(this);
+        this.el.onclick = null;
+        this.el.onclick = this.onClick;
       }
     }, {
       key: "onClick",
@@ -5801,7 +5828,7 @@
       _defineProperty(_assertThisInitialized(_this), "hideBox", void 0);
       _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
       _this.player = player;
-      props ? _this.props = props : _this.props = null;
+      props ? _this.props = props : _this.props = {};
       _this.hideHeight = hideHeight;
       _this.hideWidth = hideWidth;
       _this.initBase();
@@ -5988,7 +6015,7 @@
       _this = _super.call(this, container, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'Controller');
       // el: div.video-play
-      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "props", {});
       _defineProperty(_assertThisInitialized(_this), "player", void 0);
       _defineProperty(_assertThisInitialized(_this), "fullscreen", void 0);
       _defineProperty(_assertThisInitialized(_this), "playButton", void 0);
@@ -5997,6 +6024,7 @@
       _defineProperty(_assertThisInitialized(_this), "subPlay", void 0);
       _defineProperty(_assertThisInitialized(_this), "settings", void 0);
       _this.player = player;
+      _this.props = props || {};
       _this.init();
       return _this;
     }
@@ -6048,7 +6076,7 @@
       _defineProperty(_assertThisInitialized(_this), "props", void 0);
       _defineProperty(_assertThisInitialized(_this), "timer", 0);
       _this.player = player;
-      _this.props = props;
+      _this.props = props || {};
       _this.init();
       return _this;
     }
@@ -6058,6 +6086,7 @@
         this.initTemplate();
         this.initComponent();
         this.initEvent();
+        storeControlComponent(this);
       }
     }, {
       key: "initTemplate",

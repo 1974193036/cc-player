@@ -24,6 +24,7 @@ export class FullScreen extends Component implements ComponentItem {
   ) {
     super(container, desc, props, children)
     this.player = player
+    this.props = props || {}
     this.init()
   }
 

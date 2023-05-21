@@ -40,6 +40,35 @@
         })
 
         // player.attendSource('http://localhost:8889/video.mp4')
+
+        // player.use({
+        //   install(player) {
+        //     // console.log(player)
+        //     player.registerControls("PlayButton",{
+        //       id: "PlayButton",
+        //       props: {
+        //         id: "test",
+        //         style:{
+        //           backgroundColor:"red"
+        //         }         
+        //       },
+        //       onClick(e) {
+        //         console.log(1111)
+        //       }
+        //     })
+        //   }
+        // })
+
+        player.use({
+          install(player) {
+            player.registerControls("ToolBar",{
+              id: "ToolBar",
+              onHideToolBar(e) {
+                console.log("隐藏工具栏", this)
+              }
+            })
+          }
+        })
       }
     </script>
 </body>

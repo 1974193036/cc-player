@@ -12,7 +12,7 @@ import './controller.less'
 export class Controller extends Component implements ComponentItem {
   readonly id = 'Controller'
   // el: div.video-play
-  props: DOMProps
+  props: DOMProps = {}
   player: Player
   fullscreen: FullScreen
   playButton: PlayButton
@@ -30,6 +30,7 @@ export class Controller extends Component implements ComponentItem {
   ) {
     super(container, desc, props, children)
     this.player = player
+    this.props = props || {}
     this.init()
   }
 

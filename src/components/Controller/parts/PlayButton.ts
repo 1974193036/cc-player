@@ -7,6 +7,7 @@ import { storeControlComponent } from '@/utils/store'
 
 export class PlayButton extends Component implements ComponentItem {
   readonly id = 'PlayButton'
+  // el: div.video-start-pause
   private pauseIcon: SVGSVGElement | string
   private playIcon: SVGSVGElement | string
   private button: SVGSVGElement
@@ -22,6 +23,7 @@ export class PlayButton extends Component implements ComponentItem {
   ) {
     super(container, desc, props, children)
     this.player = player
+    this.props = props || {}
     this.init()
   }
 
@@ -54,7 +56,13 @@ export class PlayButton extends Component implements ComponentItem {
       this.el.appendChild(this.button)
     })
 
-    this.el.onclick = this.onClick.bind(this)
+    this.el.onclick = this.onClick
+  }
+
+  resetEvent() {
+    this.onClick = this.onClick.bind(this)
+    this.el.onclick = null
+    this.el.onclick = this.onClick
   }
 
   onClick(e: MouseEvent) {

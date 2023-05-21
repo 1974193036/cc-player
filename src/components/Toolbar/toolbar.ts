@@ -4,6 +4,7 @@ import { ComponentItem, Node, DOMProps } from '@/types/Player'
 import { addClass, includeClass, removeClass } from '@/utils/domUtils'
 import { Progress } from '../Progress/progress'
 import { Controller } from '../Controller/controller'
+import { storeControlComponent } from '@/utils/store'
 import './toolbar.less'
 
 export class ToolBar extends Component implements ComponentItem {
@@ -24,7 +25,7 @@ export class ToolBar extends Component implements ComponentItem {
   ) {
     super(container, desc, props, children)
     this.player = player
-    this.props = props
+    this.props =  props || {}
     this.init()
   }
 
@@ -32,6 +33,7 @@ export class ToolBar extends Component implements ComponentItem {
     this.initTemplate()
     this.initComponent()
     this.initEvent()
+    storeControlComponent(this)
   }
 
   initTemplate() {
