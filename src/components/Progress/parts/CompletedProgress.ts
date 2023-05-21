@@ -2,6 +2,7 @@ import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { Progress } from '../progress'
+import { storeControlComponent } from "@/utils/store";
 
 export class CompletedProgress extends Component implements ComponentItem {
   readonly id = 'CompletedProgress'
@@ -16,13 +17,15 @@ export class CompletedProgress extends Component implements ComponentItem {
     children?: Node[]
   ) {
     super(container, desc, props, children)
-    this.props = props
+    this.props = props || {}
     this.player = player
     this.init()
   }
 
   init() {
     this.initEvent()
+
+    storeControlComponent(this)
   }
 
   initEvent() {

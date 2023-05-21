@@ -2,13 +2,14 @@ import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { Progress } from '../progress'
+import { storeControlComponent } from '@/utils/store'
 
 export class BufferedProgress extends Component implements ComponentItem {
   readonly id = 'BufferedProgress'
   // el: div.video-buffered
   props: DOMProps
   player: Player
-  
+
   constructor(
     player: Player,
     container: HTMLElement,
@@ -17,13 +18,15 @@ export class BufferedProgress extends Component implements ComponentItem {
     children?: Node[]
   ) {
     super(container, desc, props, children)
-    this.props = props
+    this.props = props || {}
     this.player = player
     this.init()
   }
 
   init() {
     this.initEvent()
+
+    storeControlComponent(this)
   }
 
   initEvent() {

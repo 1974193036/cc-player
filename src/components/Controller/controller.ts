@@ -14,6 +14,7 @@ export class Controller extends Component implements ComponentItem {
   // el: div.video-play
   props: DOMProps = {}
   player: Player
+  // 控件
   fullscreen: FullScreen
   playButton: PlayButton
   playrate: Playrate
@@ -49,10 +50,8 @@ export class Controller extends Component implements ComponentItem {
   }
 
   initComponent() {
-    this.playButton = new PlayButton(this.player, this.subPlay, 'div.video-start-pause')
+    this.playButton = new PlayButton(this.player, this.subPlay, 'div')
     this.volume = new Volume(this.player, this.settings, 'div')
-    addClass(this.volume.el, ['video-volume', 'video-controller'])
-
     this.playrate = new Playrate(this.player, this.settings, 'div')
     this.fullscreen = new FullScreen(this.player, this.settings, 'div')
   }
