@@ -6287,6 +6287,7 @@
       // 播放器的默认配置
       _defineProperty(_assertThisInitialized(_this), "playerOptions", {
         url: '',
+        container: document.body,
         autoplay: false,
         width: '100%',
         height: '100%'
@@ -6311,6 +6312,7 @@
         this.el.appendChild(this.video);
         this.toolBar = new ToolBar(this, this.el, 'div');
         this.initEvent();
+        this.initPlugin();
       }
     }, {
       key: "initEvent",
@@ -6349,6 +6351,17 @@
         });
       }
     }, {
+      key: "initPlugin",
+      value: function initPlugin() {
+        var _this3 = this;
+        if (this.playerOptions.plugins) {
+          var _context;
+          _forEachInstanceProperty(_context = this.playerOptions.plugins).call(_context, function (plugin) {
+            _this3.use(plugin);
+          });
+        }
+      }
+    }, {
       key: "attendSource",
       value: function attendSource(url) {
         this.video.src = url;
@@ -6358,7 +6371,18 @@
       value: function registerControls(id, component) {
         var store = CONTROL_COMPONENT_STORE;
         if (store.has(id)) {
-          patchComponent(store.get(id), component);
+          // patchComponent(store.get(id), component)
+          if (component.replaceElementType) {
+            patchComponent(store.get(id), component, {
+              replaceElementType: component.replaceElementType
+            });
+          } else {
+            patchComponent(store.get(id), component);
+          }
+        } else {
+          // 如果该组件实例是用户自创的话
+          if (!component.el) throw new Error("\u4F20\u5165\u7684\u539F\u521B\u7EC4\u4EF6".concat(id, "\u6CA1\u6709\u5BF9\u5E94\u7684DOM\u5143\u7D20"));
+          this.toolBar.controller.settings.appendChild(component.el);
         }
       }
       /**
@@ -6434,10 +6458,18 @@
 
   exports.$warn = $warn;
   exports.BaseEvent = BaseEvent;
+  exports.BufferedProgress = BufferedProgress;
+  exports.CompletedProgress = CompletedProgress;
   exports.Controller = Controller;
+  exports.Dot = Dot;
+  exports.FullScreen = FullScreen;
+  exports.Options = Options;
+  exports.PlayButton = PlayButton;
   exports.Player = Player;
+  exports.Playrate = Playrate;
   exports.Progress = Progress;
   exports.ToolBar = ToolBar;
+  exports.Volume = Volume;
   exports.addZero = addZero;
   exports.checkAdaptationSet = checkAdaptationSet;
   exports.checkBaseURL = checkBaseURL;

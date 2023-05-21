@@ -97,7 +97,12 @@ class MediaPlayer {
     // let res = this.streamController.generateSegmentRequestStruct(manifest as Mpd)
     // console.log(res)
     this.duration = this.dashParser.getTotalDuration(manifest as Mpd)
-    this.eventBus.trigger(EventConstants.MANIFEST_PARSE_COMPLETED, manifest, this.duration, manifest)
+    this.eventBus.trigger(
+      EventConstants.MANIFEST_PARSE_COMPLETED,
+      manifest,
+      this.duration,
+      manifest
+    )
   }
 
   /**
@@ -109,6 +114,10 @@ class MediaPlayer {
     this.urlLoader.load({ url, responseType: 'text' }, 'Manifest')
   }
 
+  /**
+   * @description 让MediaPlayer类去接管传入的video dom元素
+   * @param video
+   */
   public attachVideo(video: HTMLVideoElement) {
     this.video = video
     // 工厂模式
