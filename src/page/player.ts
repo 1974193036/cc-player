@@ -4,6 +4,9 @@ import { ToolBar } from '@/components/ToolBar/toolbar'
 import { $, patchComponent } from '@/utils/domUtils'
 import { Plugin } from '@/types/Player'
 import { CONTROL_COMPONENT_STORE } from '@/utils/store'
+import { getFileExtension } from '@/utils/play'
+import MpdMediaPlayerFactory from '@/dash/MediaPlayer'
+import Mp4MediaPlayer from '../mp4/MediaPlayer'
 import './player.less'
 import '../main.less'
 
@@ -36,7 +39,7 @@ class Player extends Component implements ComponentItem {
 
   init() {
     this.video = $('video')
-    this.video.src = this.playerOptions.url || ''
+    this.attendSource(this.playerOptions.url)
     this.el.appendChild(this.video)
     this.toolBar = new ToolBar(this, this.el, 'div')
     this.initEvent()
@@ -92,8 +95,28 @@ class Player extends Component implements ComponentItem {
     }
   }
 
+  initMp4Player(url: string) {
+    let player = new Mp4MediaPlayer()
+  }
+
+  initMpdPlayer(url: string) {
+    // 工厂模式
+    // let player = new MediaPlayer({context: {}}, ...args)
+    let player = MpdMediaPlayerFactory().create()
+    player.attachVideo(this.video)
+    player.attachSource(url)
+  }
+
   attendSource(url: string) {
-    this.video.src = url
+    switch (getFileExtension(url)) {
+      case 'mp4':
+      case 'mp3':
+        this.initMp4Player(url)
+      case 'mpd':
+        this.initMpdPlayer(url)
+      case 'm3u8':
+      // ToDo
+    }
   }
 
   registerControls(id: string, component: Partial<ComponentItem> & registerOptions) {

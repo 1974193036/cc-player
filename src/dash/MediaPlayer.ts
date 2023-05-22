@@ -130,4 +130,6 @@ const factory = FactoryMaker.getClassFactory(MediaPlayer)
 // 创建工厂函数
 // factory().create(...args) ==> 每次创建一个新的实例 new MediaPlayer({context: {}}, ...args)
 
+export { MediaPlayer }
+
 export default factory
