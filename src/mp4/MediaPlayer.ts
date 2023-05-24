@@ -248,7 +248,7 @@ class MediaPlayer {
   }
 
   onUpdateEnd(isNotInit: boolean, isEndOfAppend: boolean, ctx: MediaPlayer) {
-    console.log(isNotInit, isEndOfAppend)
+    // console.log(isNotInit, isEndOfAppend)
     if (isEndOfAppend === true) {
       if (isNotInit === true) {
         // updateBufferedString(this, "Update ended");

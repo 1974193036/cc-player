@@ -5597,11 +5597,26 @@
         this.player.on('progress-click', function (e, ctx) {
           _this2.onChangeSize(e, ctx);
         });
+        this.player.on('timeupdate', function (e) {
+          _this2.updatePos(e);
+        });
       }
     }, {
       key: "onChangeSize",
       value: function onChangeSize(e, ctx) {
         var scale = e.offsetX / ctx.el.offsetWidth;
+        if (scale < 0) {
+          scale = 0;
+        } else if (scale > 1) {
+          scale = 1;
+        }
+        this.el.style.width = scale * 100 + '%';
+      }
+    }, {
+      key: "updatePos",
+      value: function updatePos(e) {
+        var video = e.target;
+        var scale = video.currentTime / video.duration;
         if (scale < 0) {
           scale = 0;
         } else if (scale > 1) {
@@ -5706,8 +5721,10 @@
       // el: div.video-dot.video-dot-hidden
       _defineProperty(_assertThisInitialized(_this), "props", void 0);
       _defineProperty(_assertThisInitialized(_this), "player", void 0);
+      _defineProperty(_assertThisInitialized(_this), "container", void 0);
       _this.props = props || {};
       _this.player = player;
+      _this.container = container;
       _this.init();
       return _this;
     }
@@ -5731,6 +5748,9 @@
         this.player.on('progress-click', function (e, ctx) {
           _this2.onChangePos(e, ctx);
         });
+        this.player.on('timeupdate', function (e) {
+          _this2.updatePos(e);
+        });
       }
     }, {
       key: "onShowDot",
@@ -5751,6 +5771,18 @@
       value: function onChangePos(e, ctx) {
         e.offsetX / ctx.el.offsetWidth;
         this.el.style.left = e.offsetX - getElementSize(this.el).width / 2 + 'px';
+      }
+    }, {
+      key: "updatePos",
+      value: function updatePos(e) {
+        var video = e.target;
+        var scale = video.currentTime / video.duration;
+        if (scale < 0) {
+          scale = 0;
+        } else if (scale > 1) {
+          scale = 1;
+        }
+        this.el.style.left = scale * this.container.clientWidth - getElementSize(this.el).width / 2 + 'px';
       }
     }]);
     return Dot;
@@ -20273,7 +20305,7 @@
     }, {
       key: "onUpdateEnd",
       value: function onUpdateEnd(isNotInit, isEndOfAppend, ctx) {
-        console.log(isNotInit, isEndOfAppend);
+        // console.log(isNotInit, isEndOfAppend)
         if (isEndOfAppend === true) {
           if (this.sampleNum) {
             ctx.mp4boxfile.releaseUsedSamples(this.id, this.sampleNum);
@@ -20358,7 +20390,6 @@
           _this2.emit('loadedmetadata', e);
         };
         this.video.ontimeupdate = function (e) {
-          console.log('timeupdate');
           _this2.emit('timeupdate', e);
         };
         this.video.onplay = function (e) {

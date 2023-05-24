@@ -10,6 +10,7 @@ export class Dot extends Component implements ComponentItem {
   // el: div.video-dot.video-dot-hidden
   props: DOMProps
   player: Player
+  container: HTMLElement
 
   constructor(
     player: Player,
@@ -21,6 +22,7 @@ export class Dot extends Component implements ComponentItem {
     super(container, desc, props, children)
     this.props = props || {}
     this.player = player
+    this.container = container
     this.init()
   }
 
@@ -42,6 +44,10 @@ export class Dot extends Component implements ComponentItem {
 
     this.player.on('progress-click', (e: MouseEvent, ctx: Progress) => {
       this.onChangePos(e, ctx)
+    })
+
+    this.player.on('timeupdate', (e) => {
+      this.updatePos(e)
     })
   }
 
@@ -65,5 +71,17 @@ export class Dot extends Component implements ComponentItem {
       scale = 1
     }
     this.el.style.left = e.offsetX - getElementSize(this.el).width / 2 + 'px'
+  }
+
+  updatePos(e: Event) {
+    let video = e.target as HTMLVideoElement
+    let scale = video.currentTime / video.duration
+    if (scale < 0) {
+      scale = 0
+    } else if (scale > 1) {
+      scale = 1
+    }
+    this.el.style.left =
+      scale * this.container.clientWidth - getElementSize(this.el).width / 2 + 'px'
   }
 }

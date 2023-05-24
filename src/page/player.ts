@@ -64,7 +64,6 @@ class Player extends Component implements ComponentItem {
     }
 
     this.video.ontimeupdate = (e) => {
-      console.log('timeupdate')
       this.emit('timeupdate', e)
     }
 
