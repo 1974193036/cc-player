@@ -5,13 +5,14 @@ import { $, addClass, createSvg, createSvgs, getDOMPoint } from '../../../utils/
 import { CompletedProgress } from '../../Progress/parts/CompletedProgress'
 import { volumePath$1, volumePath$2 } from '../path/defaultPath'
 import { storeControlComponent } from '@/utils/store'
+import { VolumeCompletedProgress } from './VolumeCompletedProgress'
 
 export class Volume extends Options {
   readonly id = 'Volume'
   // el: div.video-volume video-controller
   volumeProgress: HTMLElement
   volumeShow: HTMLElement
-  volumeCompleted: CompletedProgress
+  volumeCompleted: VolumeCompletedProgress
   icon: SVGSVGElement
 
   constructor(
@@ -40,7 +41,7 @@ export class Volume extends Options {
     this.volumeProgress = $('div.video-volume-progress', { style: { height: '70px' } })
     this.volumeShow = $('div.video-volume-show')
     this.volumeShow.innerText = '50'
-    this.volumeCompleted = new CompletedProgress(
+    this.volumeCompleted = new VolumeCompletedProgress(
       this.player,
       this.volumeProgress,
       'div.video-volume-completed'
