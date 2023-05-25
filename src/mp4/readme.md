@@ -1,3 +1,8 @@
+# 常见的流媒体协议
+所谓的流可以理解为前端通过分片向后端请求数据，获得一个个chunk接着添加到video的缓冲区中进行播放，也就是说基于Range的HTTP协议（206）；传统的方式是直接加载整个视频到前端接着再进行播放，现代的做法是边加载边播放
+
+
+
 # MediaSource
 
 MediaSource是Web API中的一个接口，用于表示媒体源。它允许JavaScript生成媒体源并将其绑定到HTMLMediaElement以进行播放。使用MediaSource，JavaScript可以将媒体数据追加到媒体源缓冲区中，并在缓冲区中积累足够的数据时通知HTMLMediaElement开始播放。以下是一个简单的使用MediaSource的示例：
@@ -289,6 +294,14 @@ xhr.send();
 ```
 
 
+# 关于MP4文件基本格式的调研
+__MP4文件由众多box组成，因此box是MP4文件的基本组成单位__
+
+
+#### Box列举
+1. __ftyp__ -- File Type Box，一般在文件的开始位置，描述的文件的版本、兼容协议等。
+2. __moov__ -- Movie Box，包含本文件中所有媒体数据的宏观描述信息以及每路媒体轨道的具体信息。一般位于 ftyp 之后，也有的视频放在文件末尾。
+
 
 # moov box 
 moov box 是 MP4 文件中的一个重要 box，包含了 MP4 文件的元数据信息，例如视频和音频的格式、时长和分辨率等。moov box 通常在 MP4 文件的开头位置，因此可以很快地获取 MP4 文件的元数据信息。
@@ -297,7 +310,7 @@ moov box 的结构如下：
 ```js
 moov
 ├── mvhd
-├── trak
+├── track
 │   ├── tkhd
 │   ├── mdia
 │   │   ├── mdhd
@@ -333,7 +346,11 @@ moov
     │       └── ctts
 
 ```
-其中，mvhd box 包含了 MP4 文件的基本信息，例如时长和时间戳等。trak box 包含了 MP4 文件中的一个轨道，例如视频或音频轨道。每个 trak box 包含了该轨道的详细信息，例如轨道的格式、时长和分辨率等。
+其中，mvhd box 包含了 MP4 文件的基本信息，例如时长和时间戳等。track box 包含了 MP4 文件中的一个轨道，例如视频或音频轨道。每个 trak box 包含了该轨道的详细信息，例如轨道的格式、时长和分辨率等。
+
+__tkhd__ -- Track Header Box，包含关于媒体流的头信息。此处的媒体流可以是视频流，音频流，文本字幕流等等。
+
+__mdia__ -- Media Data Box，存放具体的媒体数据。
 
 在解析 MP4 文件时，通常需要先解析 moov box，以获取 MP4 文件的元数据信息。
 

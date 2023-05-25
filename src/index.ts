@@ -1,5 +1,4 @@
 export * from './types/Player'
-export * from './types/EventObject'
 export * from './class/BaseEvent'
 export * from './utils/warn'
 export * from './utils/format'
