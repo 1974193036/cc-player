@@ -42,7 +42,7 @@ export function checkIsMouseInRange(
   let parentLeft = x
   let parentRight = x + parent.clientWidth
   if (pageX >= allLeft && pageX <= allRight && pageY <= y && pageY >= allTop) return true
-  if (pageX >= parentLeft - 5 && pageX <= parentRight + 5 && pageY >= y && pageY <= allBottom)
+  if (pageX >= parentLeft && pageX <= parentRight && pageY >= y && pageY <= allBottom)
     return true
   return false
 }
@@ -156,7 +156,7 @@ export function getElementSize(dom: HTMLElement): { width: number; height: numbe
 
 const svgNS = 'http://www.w3.org/2000/svg'
 
-export function createSvg(d?: string, viewBox = '0 0 1024 1024'): SVGSVGElement {
+export function createSvg(d?: string, viewBox = '0 0 24 24'): SVGSVGElement {
   const svg = document.createElementNS(svgNS, 'svg')
   svg.setAttribute('viewBox', viewBox)
   if (d) {
@@ -172,7 +172,7 @@ export function setSvgPath(svg: SVGSVGElement, d: string) {
   path.setAttributeNS(null, 'd', d)
 }
 
-export function createSvgs(d: string[], viewBox = '0 0 1024 1024'): SVGSVGElement {
+export function createSvgs(d: string[], viewBox = '0 0 24 24'): SVGSVGElement {
   const svg = document.createElementNS(svgNS, 'svg')
   svg.setAttribute('viewBox', viewBox)
   for (let str of d) {

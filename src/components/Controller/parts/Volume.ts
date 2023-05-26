@@ -2,8 +2,7 @@ import { Options } from './Options'
 import { Player } from '../../../page/player'
 import { DOMProps, Node } from '../../../types/Player'
 import { $, addClass, createSvg, createSvgs, getDOMPoint } from '../../../utils/domUtils'
-import { CompletedProgress } from '../../Progress/parts/CompletedProgress'
-import { volumePath$1, volumePath$2 } from '../path/defaultPath'
+import { volumePath$1 } from '../path/defaultPath'
 import { storeControlComponent } from '@/utils/store'
 import { VolumeCompletedProgress } from './VolumeCompletedProgress'
 
@@ -36,7 +35,6 @@ export class Volume extends Options {
   initTemplate() {
     addClass(this.el, ['video-volume', 'video-controller'])
     this.el['aria-label'] = '音量'
-    this.hideBox.style.bottom = '41px'
     addClass(this.hideBox, ['video-volume-set'])
     this.volumeProgress = $('div.video-volume-progress', { style: { height: '70px' } })
     this.volumeShow = $('div.video-volume-show')
@@ -49,8 +47,7 @@ export class Volume extends Options {
     this.hideBox.appendChild(this.volumeShow)
     this.hideBox.appendChild(this.volumeProgress)
 
-    addClass(this.iconBox, ['video-icon'])
-    this.icon = createSvgs([volumePath$1, volumePath$2])
+    this.icon = createSvg(volumePath$1);
     this.iconBox.appendChild(this.icon)
   }
 

@@ -5,6 +5,7 @@ import { $ } from '@/utils/domUtils'
 import { FullScreen } from './parts/FullScreen'
 import { PlayButton } from './parts/PlayButton'
 import { Playrate } from './parts/Playrate'
+import { SubSetting } from "./parts/SubSetting"
 import { Volume } from './parts/Volume'
 import { controllersMapping, storeControlComponent } from '@/utils/store'
 import './controller.less'
@@ -16,7 +17,7 @@ export class Controller extends Component implements ComponentItem {
   player: Player
   // 控件
   leftControllers: ComponentConstructor[] = [PlayButton]
-  rightController: ComponentConstructor[] = [Playrate, Volume, FullScreen]
+  rightController: ComponentConstructor[] = [Playrate, SubSetting, Volume, FullScreen]
   // fullscreen: FullScreen
   // playButton: PlayButton
   // playrate: Playrate
@@ -48,6 +49,7 @@ export class Controller extends Component implements ComponentItem {
   initControllers() {
     let leftControllers = (this.player.playerOptions as PlayerOptions).leftControllers
     let rightControllers = (this.player.playerOptions as PlayerOptions).rightControllers
+   
     if (leftControllers) {
       this.leftControllers = leftControllers.map((item) => {
         if (typeof item === 'string') {
@@ -71,8 +73,8 @@ export class Controller extends Component implements ComponentItem {
           return item
         }
       })
-      console.log(this.rightController)
     }
+
   }
 
   initTemplate() {
@@ -96,6 +98,7 @@ export class Controller extends Component implements ComponentItem {
     // this.volume = new Volume(this.player, this.settings, 'div')
     // this.playrate = new Playrate(this.player, this.settings, 'div')
     // this.fullscreen = new FullScreen(this.player, this.settings, 'div')
+    // this.SubSetting = new SubSetting(this.player, this.settings, 'div')
   }
   // private template_: HTMLElement | string;
   // private container: HTMLElement;
