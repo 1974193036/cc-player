@@ -5334,7 +5334,7 @@
         this.el.appendChild(this.hideBox);
         this.iconBox = $$H('div');
         // hideBox距离底部的距离先写死，到时候再做微调
-        this.hideBox.style.bottom = '50px';
+        this.hideBox.style.bottom = '45px';
         addClass(this.iconBox, ['video-icon']);
         this.el.appendChild(this.iconBox);
       }
@@ -5528,12 +5528,7 @@
         this.iconBox = $$H('span', null, '倍速');
         this.el.appendChild(this.iconBox);
         this.el.removeChild(this.hideBox);
-        this.hideBox = $$H('ul', {
-          style: {
-            display: 'none'
-          },
-          'aria-label': '播放速度调节'
-        });
+        // this.hideBox = $('ul', { style: { display: 'none' }, 'aria-label': '播放速度调节' })
         addClass(this.hideBox, ['video-playrate-set']);
         this.el.appendChild(this.hideBox);
         for (var i = 0; i < 6; i++) {
