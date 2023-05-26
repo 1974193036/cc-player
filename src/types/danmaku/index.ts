@@ -3,6 +3,7 @@ export type DanmakuData = {
   fontColor?: string
   fontSize?: number
   fontFamily?: string
+  fontWeight?: number
   dom?: HTMLElement
   useTracks?: number // 该弹幕占用了多少个轨道
   width?: number

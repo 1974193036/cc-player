@@ -7,6 +7,9 @@ import { CONTROL_COMPONENT_STORE } from '@/utils/store'
 import { getFileExtension } from '@/utils/play'
 import MpdMediaPlayerFactory from '@/dash/MediaPlayer'
 import Mp4MediaPlayer from '../mp4/MediaPlayer'
+import { Danmaku } from '@/danmaku'
+import { queue } from '@/mock/queue'
+
 import './player.less'
 import '../main.less'
 
@@ -44,6 +47,26 @@ class Player extends Component implements ComponentItem {
     this.toolBar = new ToolBar(this, this.el, 'div')
     this.initEvent()
     this.initPlugin()
+
+    let danmaku = new Danmaku([], this.el)
+    let i = 0
+    // let timer = setInterval(() => {
+    //   let data = queue[(i++) % queue.length]
+    //   danmaku.addData(data)
+
+    //   // 测试弹幕，先放30条数据
+    //   if (i >= 30) {
+    //     clearTimeout(timer)
+    //     timer = null
+    //   }
+    // }, 150)
+    const sendDanmaku = () => {
+      if (i >= 30) return
+      let data = queue[(i++) % queue.length]
+      danmaku.addData(data)
+      sendDanmaku()
+    }
+    sendDanmaku()
   }
 
   initEvent() {

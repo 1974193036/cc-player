@@ -1,8 +1,13 @@
 export class DanmakuController {
   private video: HTMLVideoElement
 
-  constructor(video?: HTMLVideoElement) {
+  constructor(video: HTMLVideoElement) {
     this.video = video
+    this.init()
+  }
+
+  init() {
+    this.initializeEvent()
   }
 
   attachVideo(video: HTMLVideoElement) {
@@ -19,5 +24,4 @@ export class DanmakuController {
     let video = e.target as HTMLVideoElement
     let currentTime = video.currentTime
   }
-
 }
