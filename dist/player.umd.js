@@ -2881,6 +2881,53 @@
 
   var _concatInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(concat$3);
 
+  var $$X = _export;
+  var $filter = arrayIteration.filter;
+  var arrayMethodHasSpeciesSupport$3 = arrayMethodHasSpeciesSupport$5;
+
+  var HAS_SPECIES_SUPPORT$3 = arrayMethodHasSpeciesSupport$3('filter');
+
+  // `Array.prototype.filter` method
+  // https://tc39.es/ecma262/#sec-array.prototype.filter
+  // with adding support of @@species
+  $$X({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$3 }, {
+    filter: function filter(callbackfn /* , thisArg */) {
+      return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    }
+  });
+
+  var entryVirtual$8 = entryVirtual$b;
+
+  var filter$6 = entryVirtual$8('Array').filter;
+
+  var isPrototypeOf$a = objectIsPrototypeOf;
+  var method$6 = filter$6;
+
+  var ArrayPrototype$7 = Array.prototype;
+
+  var filter$5 = function (it) {
+    var own = it.filter;
+    return it === ArrayPrototype$7 || (isPrototypeOf$a(ArrayPrototype$7, it) && own === ArrayPrototype$7.filter) ? method$6 : own;
+  };
+
+  var parent$1d = filter$5;
+
+  var filter$4 = parent$1d;
+
+  var parent$1c = filter$4;
+
+  var filter$3 = parent$1c;
+
+  var parent$1b = filter$3;
+
+  var filter$2 = parent$1b;
+
+  var filter$1 = filter$2;
+
+  var filter = filter$1;
+
+  var _filterInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(filter);
+
   var BaseEvent = /*#__PURE__*/function () {
     function BaseEvent() {
       _classCallCheck(this, BaseEvent);
@@ -2904,6 +2951,17 @@
           _forEachInstanceProperty(_context = this.$events[event]).call(_context, function (cb) {
             var _context2;
             cb.call.apply(cb, _concatInstanceProperty(_context2 = [_this]).call(_context2, args));
+          });
+        }
+      }
+    }, {
+      key: "off",
+      value: function off(event, cb) {
+        if (this.$events[event]) {
+          var _context3;
+          this.$events[event] = _filterInstanceProperty(_context3 = this.$events[event]).call(_context3, function (fn) {
+            if (fn !== cb) return true;
+            return false;
           });
         }
       }
@@ -2988,12 +3046,12 @@
     return $parseInt$1(S, (radix >>> 0) || (exec$2(hex, S) ? 16 : 10));
   } : $parseInt$1;
 
-  var $$X = _export;
+  var $$W = _export;
   var $parseInt = numberParseInt;
 
   // `parseInt` method
   // https://tc39.es/ecma262/#sec-parseint-string-radix
-  $$X({ global: true, forced: parseInt != $parseInt }, {
+  $$W({ global: true, forced: parseInt != $parseInt }, {
     parseInt: $parseInt
   });
 
@@ -3001,17 +3059,17 @@
 
   var _parseInt$6 = path$g.parseInt;
 
-  var parent$1d = _parseInt$6;
+  var parent$1a = _parseInt$6;
 
-  var _parseInt$5 = parent$1d;
+  var _parseInt$5 = parent$1a;
 
-  var parent$1c = _parseInt$5;
+  var parent$19 = _parseInt$5;
 
-  var _parseInt$4 = parent$1c;
+  var _parseInt$4 = parent$19;
 
-  var parent$1b = _parseInt$4;
+  var parent$18 = _parseInt$4;
 
-  var _parseInt$3 = parent$1b;
+  var _parseInt$3 = parent$18;
 
   var _parseInt$2 = _parseInt$3;
 
@@ -3019,7 +3077,7 @@
 
   var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
 
-  var $$W = _export;
+  var $$V = _export;
   var isArray$9 = isArray$d;
   var isConstructor$2 = isConstructor$4;
   var isObject$a = isObject$j;
@@ -3028,10 +3086,10 @@
   var toIndexedObject$2 = toIndexedObject$a;
   var createProperty$3 = createProperty$6;
   var wellKnownSymbol$b = wellKnownSymbol$q;
-  var arrayMethodHasSpeciesSupport$3 = arrayMethodHasSpeciesSupport$5;
+  var arrayMethodHasSpeciesSupport$2 = arrayMethodHasSpeciesSupport$5;
   var nativeSlice = arraySlice$7;
 
-  var HAS_SPECIES_SUPPORT$3 = arrayMethodHasSpeciesSupport$3('slice');
+  var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport$2('slice');
 
   var SPECIES$3 = wellKnownSymbol$b('species');
   var $Array$1 = Array;
@@ -3040,7 +3098,7 @@
   // `Array.prototype.slice` method
   // https://tc39.es/ecma262/#sec-array.prototype.slice
   // fallback for not array-like ES3 strings and DOM objects
-  $$W({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$3 }, {
+  $$V({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
     slice: function slice(start, end) {
       var O = toIndexedObject$2(this);
       var length = lengthOfArrayLike$3(O);
@@ -3068,31 +3126,31 @@
     }
   });
 
-  var entryVirtual$8 = entryVirtual$b;
+  var entryVirtual$7 = entryVirtual$b;
 
-  var slice$6 = entryVirtual$8('Array').slice;
+  var slice$6 = entryVirtual$7('Array').slice;
 
-  var isPrototypeOf$a = objectIsPrototypeOf;
-  var method$6 = slice$6;
+  var isPrototypeOf$9 = objectIsPrototypeOf;
+  var method$5 = slice$6;
 
-  var ArrayPrototype$7 = Array.prototype;
+  var ArrayPrototype$6 = Array.prototype;
 
   var slice$5 = function (it) {
     var own = it.slice;
-    return it === ArrayPrototype$7 || (isPrototypeOf$a(ArrayPrototype$7, it) && own === ArrayPrototype$7.slice) ? method$6 : own;
+    return it === ArrayPrototype$6 || (isPrototypeOf$9(ArrayPrototype$6, it) && own === ArrayPrototype$6.slice) ? method$5 : own;
   };
 
-  var parent$1a = slice$5;
+  var parent$17 = slice$5;
 
-  var slice$4 = parent$1a;
+  var slice$4 = parent$17;
 
-  var parent$19 = slice$4;
+  var parent$16 = slice$4;
 
-  var slice$3 = parent$19;
+  var slice$3 = parent$16;
 
-  var parent$18 = slice$3;
+  var parent$15 = slice$3;
 
-  var slice$2 = parent$18;
+  var slice$2 = parent$15;
 
   var slice$1 = slice$2;
 
@@ -3285,7 +3343,7 @@
     throw $TypeError$b(tryToString$4(argument) + ' is not a constructor');
   };
 
-  var $$V = _export;
+  var $$U = _export;
   var getBuiltIn$7 = getBuiltIn$h;
   var apply$2 = functionApply;
   var bind$o = functionBind;
@@ -3314,7 +3372,7 @@
 
   var FORCED$3 = NEW_TARGET_BUG || ARGS_BUG;
 
-  $$V({ target: 'Reflect', stat: true, forced: FORCED$3, sham: FORCED$3 }, {
+  $$U({ target: 'Reflect', stat: true, forced: FORCED$3, sham: FORCED$3 }, {
     construct: function construct(Target, args /* , newTarget */) {
       aConstructor$2(Target);
       anObject$9(args);
@@ -3346,17 +3404,17 @@
 
   var construct$5 = path$f.Reflect.construct;
 
-  var parent$17 = construct$5;
+  var parent$14 = construct$5;
 
-  var construct$4 = parent$17;
+  var construct$4 = parent$14;
 
-  var parent$16 = construct$4;
+  var parent$13 = construct$4;
 
-  var construct$3 = parent$16;
+  var construct$3 = parent$13;
 
-  var parent$15 = construct$3;
+  var parent$12 = construct$3;
 
-  var construct$2 = parent$15;
+  var construct$2 = parent$12;
 
   var construct$1 = construct$2;
 
@@ -3372,13 +3430,13 @@
   }
 
   // TODO: Remove from `core-js@4`
-  var $$U = _export;
+  var $$T = _export;
   var DESCRIPTORS$a = descriptors;
   var create$9 = objectCreate;
 
   // `Object.create` method
   // https://tc39.es/ecma262/#sec-object.create
-  $$U({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
+  $$T({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
     create: create$9
   });
 
@@ -3390,17 +3448,17 @@
     return Object$2.create(P, D);
   };
 
-  var parent$14 = create$8;
+  var parent$11 = create$8;
 
-  var create$7 = parent$14;
+  var create$7 = parent$11;
 
-  var parent$13 = create$7;
+  var parent$10 = create$7;
 
-  var create$6 = parent$13;
+  var create$6 = parent$10;
 
-  var parent$12 = create$6;
+  var parent$$ = create$6;
 
-  var create$5 = parent$12;
+  var create$5 = parent$$;
 
   var create$4 = create$5;
 
@@ -3408,12 +3466,12 @@
 
   var _Object$create = /*@__PURE__*/getDefaultExportFromCjs(create$3);
 
-  var $$T = _export;
+  var $$S = _export;
   var setPrototypeOf$7 = objectSetPrototypeOf;
 
   // `Object.setPrototypeOf` method
   // https://tc39.es/ecma262/#sec-object.setprototypeof
-  $$T({ target: 'Object', stat: true }, {
+  $$S({ target: 'Object', stat: true }, {
     setPrototypeOf: setPrototypeOf$7
   });
 
@@ -3421,17 +3479,17 @@
 
   var setPrototypeOf$6 = path$d.Object.setPrototypeOf;
 
-  var parent$11 = setPrototypeOf$6;
+  var parent$_ = setPrototypeOf$6;
 
-  var setPrototypeOf$5 = parent$11;
+  var setPrototypeOf$5 = parent$_;
 
-  var parent$10 = setPrototypeOf$5;
+  var parent$Z = setPrototypeOf$5;
 
-  var setPrototypeOf$4 = parent$10;
+  var setPrototypeOf$4 = parent$Z;
 
-  var parent$$ = setPrototypeOf$4;
+  var parent$Y = setPrototypeOf$4;
 
-  var setPrototypeOf$3 = parent$$;
+  var setPrototypeOf$3 = parent$Y;
 
   var setPrototypeOf$2 = setPrototypeOf$3;
 
@@ -3440,41 +3498,41 @@
   var _Object$setPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(setPrototypeOf$1);
 
   // TODO: Remove from `core-js@4`
-  var $$S = _export;
+  var $$R = _export;
   var bind$n = functionBind;
 
   // `Function.prototype.bind` method
   // https://tc39.es/ecma262/#sec-function.prototype.bind
   // eslint-disable-next-line es/no-function-prototype-bind -- detection
-  $$S({ target: 'Function', proto: true, forced: Function.bind !== bind$n }, {
+  $$R({ target: 'Function', proto: true, forced: Function.bind !== bind$n }, {
     bind: bind$n
   });
 
-  var entryVirtual$7 = entryVirtual$b;
+  var entryVirtual$6 = entryVirtual$b;
 
-  var bind$m = entryVirtual$7('Function').bind;
+  var bind$m = entryVirtual$6('Function').bind;
 
-  var isPrototypeOf$9 = objectIsPrototypeOf;
-  var method$5 = bind$m;
+  var isPrototypeOf$8 = objectIsPrototypeOf;
+  var method$4 = bind$m;
 
   var FunctionPrototype = Function.prototype;
 
   var bind$l = function (it) {
     var own = it.bind;
-    return it === FunctionPrototype || (isPrototypeOf$9(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$5 : own;
+    return it === FunctionPrototype || (isPrototypeOf$8(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$4 : own;
   };
 
-  var parent$_ = bind$l;
+  var parent$X = bind$l;
 
-  var bind$k = parent$_;
+  var bind$k = parent$X;
 
-  var parent$Z = bind$k;
+  var parent$W = bind$k;
 
-  var bind$j = parent$Z;
+  var bind$j = parent$W;
 
-  var parent$Y = bind$j;
+  var parent$V = bind$j;
 
-  var bind$i = parent$Y;
+  var bind$i = parent$V;
 
   var bind$h = bind$i;
 
@@ -3517,7 +3575,7 @@
     return _assertThisInitialized(self);
   }
 
-  var $$R = _export;
+  var $$Q = _export;
   var fails$e = fails$x;
   var toObject$4 = toObject$a;
   var nativeGetPrototypeOf = objectGetPrototypeOf;
@@ -3527,7 +3585,7 @@
 
   // `Object.getPrototypeOf` method
   // https://tc39.es/ecma262/#sec-object.getprototypeof
-  $$R({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
+  $$Q({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
     getPrototypeOf: function getPrototypeOf(it) {
       return nativeGetPrototypeOf(toObject$4(it));
     }
@@ -3537,17 +3595,17 @@
 
   var getPrototypeOf$6 = path$c.Object.getPrototypeOf;
 
-  var parent$X = getPrototypeOf$6;
+  var parent$U = getPrototypeOf$6;
 
-  var getPrototypeOf$5 = parent$X;
+  var getPrototypeOf$5 = parent$U;
 
-  var parent$W = getPrototypeOf$5;
+  var parent$T = getPrototypeOf$5;
 
-  var getPrototypeOf$4 = parent$W;
+  var getPrototypeOf$4 = parent$T;
 
-  var parent$V = getPrototypeOf$4;
+  var parent$S = getPrototypeOf$4;
 
-  var getPrototypeOf$3 = parent$V;
+  var getPrototypeOf$3 = parent$S;
 
   var getPrototypeOf$2 = getPrototypeOf$3;
 
@@ -3620,13 +3678,13 @@
     } return T;
   } : $assign;
 
-  var $$Q = _export;
+  var $$P = _export;
   var assign$7 = objectAssign;
 
   // `Object.assign` method
   // https://tc39.es/ecma262/#sec-object.assign
   // eslint-disable-next-line es/no-object-assign -- required for testing
-  $$Q({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$7 }, {
+  $$P({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$7 }, {
     assign: assign$7
   });
 
@@ -3634,17 +3692,17 @@
 
   var assign$6 = path$b.Object.assign;
 
-  var parent$U = assign$6;
+  var parent$R = assign$6;
 
-  var assign$5 = parent$U;
+  var assign$5 = parent$R;
 
-  var parent$T = assign$5;
+  var parent$Q = assign$5;
 
-  var assign$4 = parent$T;
+  var assign$4 = parent$Q;
 
-  var parent$S = assign$4;
+  var parent$P = assign$4;
 
-  var assign$3 = parent$S;
+  var assign$3 = parent$P;
 
   var assign$2 = assign$3;
 
@@ -3652,12 +3710,12 @@
 
   var _Object$assign = /*@__PURE__*/getDefaultExportFromCjs(assign$1);
 
-  var $$P = _export;
+  var $$O = _export;
   var isArray$8 = isArray$d;
 
   // `Array.isArray` method
   // https://tc39.es/ecma262/#sec-array.isarray
-  $$P({ target: 'Array', stat: true }, {
+  $$O({ target: 'Array', stat: true }, {
     isArray: isArray$8
   });
 
@@ -3665,17 +3723,17 @@
 
   var isArray$7 = path$a.Array.isArray;
 
-  var parent$R = isArray$7;
+  var parent$O = isArray$7;
 
-  var isArray$6 = parent$R;
+  var isArray$6 = parent$O;
 
-  var parent$Q = isArray$6;
+  var parent$N = isArray$6;
 
-  var isArray$5 = parent$Q;
+  var isArray$5 = parent$N;
 
-  var parent$P = isArray$5;
+  var parent$M = isArray$5;
 
-  var isArray$4 = parent$P;
+  var isArray$4 = parent$M;
 
   var isArray$3 = isArray$4;
 
@@ -3711,18 +3769,18 @@
 
   var getIteratorMethod_1 = getIteratorMethod$9;
 
-  var parent$O = getIteratorMethod_1;
+  var parent$L = getIteratorMethod_1;
 
 
-  var getIteratorMethod$8 = parent$O;
+  var getIteratorMethod$8 = parent$L;
 
-  var parent$N = getIteratorMethod$8;
+  var parent$K = getIteratorMethod$8;
 
-  var getIteratorMethod$7 = parent$N;
+  var getIteratorMethod$7 = parent$K;
 
-  var parent$M = getIteratorMethod$7;
+  var parent$J = getIteratorMethod$7;
 
-  var getIteratorMethod$6 = parent$M;
+  var getIteratorMethod$6 = parent$J;
 
   var getIteratorMethod$5 = getIteratorMethod$6;
 
@@ -3770,11 +3828,11 @@
   var Iterators = iterators;
 
   var ITERATOR$4 = wellKnownSymbol$9('iterator');
-  var ArrayPrototype$6 = Array.prototype;
+  var ArrayPrototype$5 = Array.prototype;
 
   // check on default Array iterator
   var isArrayIteratorMethod$2 = function (it) {
-    return it !== undefined && (Iterators.Array === it || ArrayPrototype$6[ITERATOR$4] === it);
+    return it !== undefined && (Iterators.Array === it || ArrayPrototype$5[ITERATOR$4] === it);
   };
 
   var call$e = functionCall;
@@ -3876,7 +3934,7 @@
     return ITERATION_SUPPORT;
   };
 
-  var $$O = _export;
+  var $$N = _export;
   var from$7 = arrayFrom$1;
   var checkCorrectnessOfIteration$1 = checkCorrectnessOfIteration$2;
 
@@ -3887,7 +3945,7 @@
 
   // `Array.from` method
   // https://tc39.es/ecma262/#sec-array.from
-  $$O({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+  $$N({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
     from: from$7
   });
 
@@ -3895,17 +3953,17 @@
 
   var from$6 = path$9.Array.from;
 
-  var parent$L = from$6;
+  var parent$I = from$6;
 
-  var from$5 = parent$L;
+  var from$5 = parent$I;
 
-  var parent$K = from$5;
+  var parent$H = from$5;
 
-  var from$4 = parent$K;
+  var from$4 = parent$H;
 
-  var parent$J = from$4;
+  var parent$G = from$4;
 
-  var from$3 = parent$J;
+  var from$3 = parent$G;
 
   var from$2 = from$3;
 
@@ -3984,7 +4042,7 @@
    * @param {Node[]} children
    * @returns
    */
-  function $$N(desc, props, children) {
+  function $$M(desc, props, children) {
     var match = [];
     var regArray = SELECTOR_REG.exec(desc);
     // /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/.exec('div#app.a.b')
@@ -4194,7 +4252,7 @@
       _classCallCheck(this, Component);
       _this = _super.call(this);
       _defineProperty(_assertThisInitialized(_this), "el", void 0);
-      var dom = $$N(desc, props, children);
+      var dom = $$M(desc, props, children);
       _this.el = dom;
       // 安装组件成功
       if (container) {
@@ -4242,7 +4300,7 @@
     return Object.isExtensible(Object.preventExtensions({}));
   });
 
-  var $$M = _export;
+  var $$L = _export;
   var uncurryThis$a = functionUncurryThis;
   var hiddenKeys = hiddenKeys$6;
   var isObject$6 = isObject$j;
@@ -4317,7 +4375,7 @@
         } return result;
       };
 
-      $$M({ target: 'Object', stat: true, forced: true }, {
+      $$L({ target: 'Object', stat: true, forced: true }, {
         getOwnPropertyNames: getOwnPropertyNamesExternalModule.f
       });
     }
@@ -4340,7 +4398,7 @@
   var tryToString$2 = tryToString$7;
   var isArrayIteratorMethod = isArrayIteratorMethod$2;
   var lengthOfArrayLike$1 = lengthOfArrayLike$8;
-  var isPrototypeOf$8 = objectIsPrototypeOf;
+  var isPrototypeOf$7 = objectIsPrototypeOf;
   var getIterator$1 = getIterator$3;
   var getIteratorMethod$1 = getIteratorMethod$a;
   var iteratorClose = iteratorClose$2;
@@ -4386,7 +4444,7 @@
       if (isArrayIteratorMethod(iterFn)) {
         for (index = 0, length = lengthOfArrayLike$1(iterable); length > index; index++) {
           result = callFn(iterable[index]);
-          if (result && isPrototypeOf$8(ResultPrototype, result)) return result;
+          if (result && isPrototypeOf$7(ResultPrototype, result)) return result;
         } return new Result(false);
       }
       iterator = getIterator$1(iterable, iterFn);
@@ -4399,20 +4457,20 @@
       } catch (error) {
         iteratorClose(iterator, 'throw', error);
       }
-      if (typeof result == 'object' && result && isPrototypeOf$8(ResultPrototype, result)) return result;
+      if (typeof result == 'object' && result && isPrototypeOf$7(ResultPrototype, result)) return result;
     } return new Result(false);
   };
 
-  var isPrototypeOf$7 = objectIsPrototypeOf;
+  var isPrototypeOf$6 = objectIsPrototypeOf;
 
   var $TypeError$8 = TypeError;
 
   var anInstance$5 = function (it, Prototype) {
-    if (isPrototypeOf$7(Prototype, it)) return it;
+    if (isPrototypeOf$6(Prototype, it)) return it;
     throw $TypeError$8('Incorrect invocation');
   };
 
-  var $$L = _export;
+  var $$K = _export;
   var global$c = global$r;
   var InternalMetadataModule = internalMetadataExports;
   var fails$9 = fails$x;
@@ -4481,7 +4539,7 @@
     setToStringTag$3(Constructor, CONSTRUCTOR_NAME, false, true);
 
     exported[CONSTRUCTOR_NAME] = Constructor;
-    $$L({ global: true, forced: true }, exported);
+    $$K({ global: true, forced: true }, exported);
 
     if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
 
@@ -4735,14 +4793,14 @@
 
   var map$c = path$8.Map;
 
-  var parent$I = map$c;
+  var parent$F = map$c;
 
 
-  var map$b = parent$I;
+  var map$b = parent$F;
 
-  var parent$H = map$b;
+  var parent$E = map$b;
 
-  var map$a = parent$H;
+  var map$a = parent$E;
 
   // https://tc39.github.io/proposal-setmap-offrom/
   var bind$c = functionBindContext;
@@ -4775,12 +4833,12 @@
     return new this(array);
   };
 
-  var $$K = _export;
+  var $$J = _export;
   var from = collectionFrom;
 
   // `Map.from` method
   // https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
-  $$K({ target: 'Map', stat: true, forced: true }, {
+  $$J({ target: 'Map', stat: true, forced: true }, {
     from: from
   });
 
@@ -4791,12 +4849,12 @@
     return new this(arraySlice$4(arguments));
   };
 
-  var $$J = _export;
+  var $$I = _export;
   var of = collectionOf;
 
   // `Map.of` method
   // https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
-  $$J({ target: 'Map', stat: true, forced: true }, {
+  $$I({ target: 'Map', stat: true, forced: true }, {
     of: of
   });
 
@@ -4830,13 +4888,13 @@
     proto: Map$5.prototype
   };
 
-  var $$I = _export;
+  var $$H = _export;
   var aMap$d = aMap$e;
   var remove = mapHelpers.remove;
 
   // `Map.prototype.deleteAll` method
   // https://github.com/tc39/proposal-collection-methods
-  $$I({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$H({ target: 'Map', proto: true, real: true, forced: true }, {
     deleteAll: function deleteAll(/* ...elements */) {
       var collection = aMap$d(this);
       var allDeleted = true;
@@ -4848,7 +4906,7 @@
     }
   });
 
-  var $$H = _export;
+  var $$G = _export;
   var aMap$c = aMap$e;
   var MapHelpers$4 = mapHelpers;
 
@@ -4858,7 +4916,7 @@
 
   // `Map.prototype.emplace` method
   // https://github.com/tc39/proposal-upsert
-  $$H({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$G({ target: 'Map', proto: true, real: true, forced: true }, {
     emplace: function emplace(key, handler) {
       var map = aMap$c(this);
       var value, inserted;
@@ -4894,14 +4952,14 @@
     }) : map.forEach(fn);
   };
 
-  var $$G = _export;
+  var $$F = _export;
   var bind$b = functionBindContext;
   var aMap$b = aMap$e;
   var iterate$h = mapIterate;
 
   // `Map.prototype.every` method
   // https://github.com/tc39/proposal-collection-methods
-  $$G({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$F({ target: 'Map', proto: true, real: true, forced: true }, {
     every: function every(callbackfn /* , thisArg */) {
       var map = aMap$b(this);
       var boundFunction = bind$b(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4911,7 +4969,7 @@
     }
   });
 
-  var $$F = _export;
+  var $$E = _export;
   var bind$a = functionBindContext;
   var aMap$a = aMap$e;
   var MapHelpers$3 = mapHelpers;
@@ -4922,7 +4980,7 @@
 
   // `Map.prototype.filter` method
   // https://github.com/tc39/proposal-collection-methods
-  $$F({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$E({ target: 'Map', proto: true, real: true, forced: true }, {
     filter: function filter(callbackfn /* , thisArg */) {
       var map = aMap$a(this);
       var boundFunction = bind$a(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4934,14 +4992,14 @@
     }
   });
 
-  var $$E = _export;
+  var $$D = _export;
   var bind$9 = functionBindContext;
   var aMap$9 = aMap$e;
   var iterate$f = mapIterate;
 
   // `Map.prototype.find` method
   // https://github.com/tc39/proposal-collection-methods
-  $$E({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$D({ target: 'Map', proto: true, real: true, forced: true }, {
     find: function find(callbackfn /* , thisArg */) {
       var map = aMap$9(this);
       var boundFunction = bind$9(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4952,14 +5010,14 @@
     }
   });
 
-  var $$D = _export;
+  var $$C = _export;
   var bind$8 = functionBindContext;
   var aMap$8 = aMap$e;
   var iterate$e = mapIterate;
 
   // `Map.prototype.findKey` method
   // https://github.com/tc39/proposal-collection-methods
-  $$D({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$C({ target: 'Map', proto: true, real: true, forced: true }, {
     findKey: function findKey(callbackfn /* , thisArg */) {
       var map = aMap$8(this);
       var boundFunction = bind$8(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4970,7 +5028,7 @@
     }
   });
 
-  var $$C = _export;
+  var $$B = _export;
   var call$9 = functionCall;
   var uncurryThis$9 = functionUncurryThis;
   var isCallable$8 = isCallable$q;
@@ -4982,7 +5040,7 @@
 
   // `Map.groupBy` method
   // https://github.com/tc39/proposal-collection-methods
-  $$C({ target: 'Map', stat: true, forced: true }, {
+  $$B({ target: 'Map', stat: true, forced: true }, {
     groupBy: function groupBy(iterable, keyDerivative) {
       var C = isCallable$8(this) ? this : Map$3;
       var newMap = new C();
@@ -5006,14 +5064,14 @@
     return x === y || x != x && y != y;
   };
 
-  var $$B = _export;
+  var $$A = _export;
   var sameValueZero = sameValueZero$1;
   var aMap$7 = aMap$e;
   var iterate$c = mapIterate;
 
   // `Map.prototype.includes` method
   // https://github.com/tc39/proposal-collection-methods
-  $$B({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$A({ target: 'Map', proto: true, real: true, forced: true }, {
     includes: function includes(searchElement) {
       return iterate$c(aMap$7(this), function (value) {
         if (sameValueZero(value, searchElement)) return true;
@@ -5021,7 +5079,7 @@
     }
   });
 
-  var $$A = _export;
+  var $$z = _export;
   var call$8 = functionCall;
   var iterate$b = iterate$l;
   var isCallable$7 = isCallable$q;
@@ -5030,7 +5088,7 @@
 
   // `Map.keyBy` method
   // https://github.com/tc39/proposal-collection-methods
-  $$A({ target: 'Map', stat: true, forced: true }, {
+  $$z({ target: 'Map', stat: true, forced: true }, {
     keyBy: function keyBy(iterable, keyDerivative) {
       var C = isCallable$7(this) ? this : Map$2;
       var newMap = new C();
@@ -5043,13 +5101,13 @@
     }
   });
 
-  var $$z = _export;
+  var $$y = _export;
   var aMap$6 = aMap$e;
   var iterate$a = mapIterate;
 
   // `Map.prototype.keyOf` method
   // https://github.com/tc39/proposal-collection-methods
-  $$z({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$y({ target: 'Map', proto: true, real: true, forced: true }, {
     keyOf: function keyOf(searchElement) {
       var result = iterate$a(aMap$6(this), function (value, key) {
         if (value === searchElement) return { key: key };
@@ -5058,7 +5116,7 @@
     }
   });
 
-  var $$y = _export;
+  var $$x = _export;
   var bind$7 = functionBindContext;
   var aMap$5 = aMap$e;
   var MapHelpers$2 = mapHelpers;
@@ -5069,7 +5127,7 @@
 
   // `Map.prototype.mapKeys` method
   // https://github.com/tc39/proposal-collection-methods
-  $$y({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$x({ target: 'Map', proto: true, real: true, forced: true }, {
     mapKeys: function mapKeys(callbackfn /* , thisArg */) {
       var map = aMap$5(this);
       var boundFunction = bind$7(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5081,7 +5139,7 @@
     }
   });
 
-  var $$x = _export;
+  var $$w = _export;
   var bind$6 = functionBindContext;
   var aMap$4 = aMap$e;
   var MapHelpers$1 = mapHelpers;
@@ -5092,7 +5150,7 @@
 
   // `Map.prototype.mapValues` method
   // https://github.com/tc39/proposal-collection-methods
-  $$x({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$w({ target: 'Map', proto: true, real: true, forced: true }, {
     mapValues: function mapValues(callbackfn /* , thisArg */) {
       var map = aMap$4(this);
       var boundFunction = bind$6(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5104,14 +5162,14 @@
     }
   });
 
-  var $$w = _export;
+  var $$v = _export;
   var aMap$3 = aMap$e;
   var iterate$7 = iterate$l;
   var set$2 = mapHelpers.set;
 
   // `Map.prototype.merge` method
   // https://github.com/tc39/proposal-collection-methods
-  $$w({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
+  $$v({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
     // eslint-disable-next-line no-unused-vars -- required for `.length`
     merge: function merge(iterable /* ...iterables */) {
       var map = aMap$3(this);
@@ -5126,7 +5184,7 @@
     }
   });
 
-  var $$v = _export;
+  var $$u = _export;
   var aCallable$8 = aCallable$h;
   var aMap$2 = aMap$e;
   var iterate$6 = mapIterate;
@@ -5135,7 +5193,7 @@
 
   // `Map.prototype.reduce` method
   // https://github.com/tc39/proposal-collection-methods
-  $$v({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$u({ target: 'Map', proto: true, real: true, forced: true }, {
     reduce: function reduce(callbackfn /* , initialValue */) {
       var map = aMap$2(this);
       var noInitial = arguments.length < 2;
@@ -5154,14 +5212,14 @@
     }
   });
 
-  var $$u = _export;
+  var $$t = _export;
   var bind$5 = functionBindContext;
   var aMap$1 = aMap$e;
   var iterate$5 = mapIterate;
 
   // `Map.prototype.some` method
   // https://github.com/tc39/proposal-collection-methods
-  $$u({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$t({ target: 'Map', proto: true, real: true, forced: true }, {
     some: function some(callbackfn /* , thisArg */) {
       var map = aMap$1(this);
       var boundFunction = bind$5(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5171,7 +5229,7 @@
     }
   });
 
-  var $$t = _export;
+  var $$s = _export;
   var aCallable$7 = aCallable$h;
   var aMap = aMap$e;
   var MapHelpers = mapHelpers;
@@ -5183,7 +5241,7 @@
 
   // `Map.prototype.update` method
   // https://github.com/tc39/proposal-collection-methods
-  $$t({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$s({ target: 'Map', proto: true, real: true, forced: true }, {
     update: function update(key, callback /* , thunk */) {
       var map = aMap(this);
       var length = arguments.length;
@@ -5230,26 +5288,26 @@
   };
 
   // TODO: remove from `core-js@4`
-  var $$s = _export;
+  var $$r = _export;
   var upsert$1 = mapUpsert;
 
   // `Map.prototype.upsert` method (replaced by `Map.prototype.emplace`)
   // https://github.com/thumbsupep/proposal-upsert
-  $$s({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$r({ target: 'Map', proto: true, real: true, forced: true }, {
     upsert: upsert$1
   });
 
   // TODO: remove from `core-js@4`
-  var $$r = _export;
+  var $$q = _export;
   var upsert = mapUpsert;
 
   // `Map.prototype.updateOrInsert` method (replaced by `Map.prototype.emplace`)
   // https://github.com/thumbsupep/proposal-upsert
-  $$r({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
+  $$q({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
     updateOrInsert: upsert
   });
 
-  var parent$G = map$a;
+  var parent$D = map$a;
 
 
 
@@ -5273,7 +5331,7 @@
   // TODO: remove from `core-js@4`
 
 
-  var map$9 = parent$G;
+  var map$9 = parent$D;
 
   var map$8 = map$9;
 
@@ -5321,7 +5379,7 @@
     }, {
       key: "initBaseTemplate",
       value: function initBaseTemplate() {
-        this.hideBox = $$N('div', {
+        this.hideBox = $$M('div', {
           style: {
             display: 'none'
           }
@@ -5334,7 +5392,7 @@
           this.hideBox.style.width = this.hideWidth + 'px';
         }
         this.el.appendChild(this.hideBox);
-        this.iconBox = $$N('div');
+        this.iconBox = $$M('div');
         // hideBox距离底部的距离先写死，到时候再做微调
         this.hideBox.style.bottom = '45px';
         addClass(this.iconBox, ['video-icon']);
@@ -5454,7 +5512,7 @@
       key: "initTemplate",
       value: function initTemplate() {
         addClass(this.el, ['video-start-pause', 'video-controller']);
-        this.iconBox = $$N('div.video-icon');
+        this.iconBox = $$M('div.video-icon');
         this.el.appendChild(this.iconBox);
         this.pauseIcon = createSvg(pausePath);
         this.playIcon = createSvg(playPath);
@@ -5527,14 +5585,14 @@
         this.el['aria-label'] = '播放倍速';
         addClass(this.el, ['video-playrate', 'video-controller']);
         this.el.removeChild(this.iconBox);
-        this.iconBox = $$N('span', null, '倍速');
+        this.iconBox = $$M('span', null, '倍速');
         this.el.appendChild(this.iconBox);
         this.el.removeChild(this.hideBox);
         // this.hideBox = $('ul', { style: { display: 'none' }, 'aria-label': '播放速度调节' })
         addClass(this.hideBox, ['video-playrate-set']);
         this.el.appendChild(this.hideBox);
         for (var i = 0; i < 6; i++) {
-          var li = $$N('li');
+          var li = $$M('li');
           li.innerText = '2.0x';
           this.hideBox.appendChild(li);
         }
@@ -5605,12 +5663,12 @@
         addClass(this.el, ['video-volume', 'video-controller']);
         this.el['aria-label'] = '音量';
         addClass(this.hideBox, ['video-volume-set']);
-        this.volumeProgress = $$N('div.video-volume-progress', {
+        this.volumeProgress = $$M('div.video-volume-progress', {
           style: {
             height: '70px'
           }
         });
-        this.volumeShow = $$N('div.video-volume-show');
+        this.volumeShow = $$M('div.video-volume-show');
         this.volumeShow.innerText = '50';
         this.volumeCompleted = new VolumeCompletedProgress(this.player, this.volumeProgress, 'div.video-volume-completed');
         this.hideBox.appendChild(this.volumeShow);
@@ -6067,46 +6125,46 @@
   //   }
   // }
 
-  var $$q = _export;
+  var $$p = _export;
   var $map = arrayIteration.map;
-  var arrayMethodHasSpeciesSupport$2 = arrayMethodHasSpeciesSupport$5;
+  var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
 
-  var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport$2('map');
+  var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('map');
 
   // `Array.prototype.map` method
   // https://tc39.es/ecma262/#sec-array.prototype.map
   // with adding support of @@species
-  $$q({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
+  $$p({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
     map: function map(callbackfn /* , thisArg */) {
       return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
     }
   });
 
-  var entryVirtual$6 = entryVirtual$b;
+  var entryVirtual$5 = entryVirtual$b;
 
-  var map$6 = entryVirtual$6('Array').map;
+  var map$6 = entryVirtual$5('Array').map;
 
-  var isPrototypeOf$6 = objectIsPrototypeOf;
-  var method$4 = map$6;
+  var isPrototypeOf$5 = objectIsPrototypeOf;
+  var method$3 = map$6;
 
-  var ArrayPrototype$5 = Array.prototype;
+  var ArrayPrototype$4 = Array.prototype;
 
   var map$5 = function (it) {
     var own = it.map;
-    return it === ArrayPrototype$5 || (isPrototypeOf$6(ArrayPrototype$5, it) && own === ArrayPrototype$5.map) ? method$4 : own;
+    return it === ArrayPrototype$4 || (isPrototypeOf$5(ArrayPrototype$4, it) && own === ArrayPrototype$4.map) ? method$3 : own;
   };
 
-  var parent$F = map$5;
+  var parent$C = map$5;
 
-  var map$4 = parent$F;
+  var map$4 = parent$C;
 
-  var parent$E = map$4;
+  var parent$B = map$4;
 
-  var map$3 = parent$E;
+  var map$3 = parent$B;
 
-  var parent$D = map$3;
+  var parent$A = map$3;
 
-  var map$2 = parent$D;
+  var map$2 = parent$A;
 
   var map$1 = map$2;
 
@@ -6226,9 +6284,9 @@
     }, {
       key: "initTemplate",
       value: function initTemplate() {
-        this.leftArea = $$N('div.video-subplay');
-        this.mediumArea = $$N('div.video-medium');
-        this.rightArea = $$N('div.video-settings');
+        this.leftArea = $$M('div.video-subplay');
+        this.mediumArea = $$M('div.video-medium');
+        this.rightArea = $$M('div.video-settings');
         this.el.appendChild(this.leftArea);
         this.el.appendChild(this.mediumArea);
         this.el.appendChild(this.rightArea);
@@ -6586,8 +6644,8 @@
     return argument === undefined ? arguments.length < 2 ? '' : $default : toString$3(argument);
   };
 
-  var $$p = _export;
-  var isPrototypeOf$5 = objectIsPrototypeOf;
+  var $$o = _export;
+  var isPrototypeOf$4 = objectIsPrototypeOf;
   var getPrototypeOf = objectGetPrototypeOf;
   var setPrototypeOf = objectSetPrototypeOf;
   var copyConstructorProperties = copyConstructorProperties$1;
@@ -6605,7 +6663,7 @@
   var push$3 = [].push;
 
   var $AggregateError = function AggregateError(errors, message /* , options */) {
-    var isInstance = isPrototypeOf$5(AggregateErrorPrototype, this);
+    var isInstance = isPrototypeOf$4(AggregateErrorPrototype, this);
     var that;
     if (setPrototypeOf) {
       that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
@@ -6633,7 +6691,7 @@
 
   // `AggregateError` constructor
   // https://tc39.es/ecma262/#sec-aggregate-error-constructor
-  $$p({ global: true, constructor: true, arity: 2 }, {
+  $$o({ global: true, constructor: true, arity: 2 }, {
     AggregateError: $AggregateError
   });
 
@@ -6999,7 +7057,7 @@
     return new PromiseCapability(C);
   };
 
-  var $$o = _export;
+  var $$n = _export;
   var IS_NODE = engineIsNode;
   var global$7 = global$r;
   var call$6 = functionCall;
@@ -7253,7 +7311,7 @@
     };
   }
 
-  $$o({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+  $$n({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
     Promise: PromiseConstructor
   });
 
@@ -7268,7 +7326,7 @@
     NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
   });
 
-  var $$n = _export;
+  var $$m = _export;
   var call$5 = functionCall;
   var aCallable$3 = aCallable$h;
   var newPromiseCapabilityModule$5 = newPromiseCapability$2;
@@ -7278,7 +7336,7 @@
 
   // `Promise.all` method
   // https://tc39.es/ecma262/#sec-promise.all
-  $$n({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
+  $$m({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
     all: function all(iterable) {
       var C = this;
       var capability = newPromiseCapabilityModule$5.f(C);
@@ -7307,7 +7365,7 @@
     }
   });
 
-  var $$m = _export;
+  var $$l = _export;
   var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
   var NativePromiseConstructor$2 = promiseNativeConstructor;
 
@@ -7315,13 +7373,13 @@
 
   // `Promise.prototype.catch` method
   // https://tc39.es/ecma262/#sec-promise.prototype.catch
-  $$m({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+  $$l({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
     'catch': function (onRejected) {
       return this.then(undefined, onRejected);
     }
   });
 
-  var $$l = _export;
+  var $$k = _export;
   var call$4 = functionCall;
   var aCallable$2 = aCallable$h;
   var newPromiseCapabilityModule$4 = newPromiseCapability$2;
@@ -7331,7 +7389,7 @@
 
   // `Promise.race` method
   // https://tc39.es/ecma262/#sec-promise.race
-  $$l({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
+  $$k({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
     race: function race(iterable) {
       var C = this;
       var capability = newPromiseCapabilityModule$4.f(C);
@@ -7347,14 +7405,14 @@
     }
   });
 
-  var $$k = _export;
+  var $$j = _export;
   var call$3 = functionCall;
   var newPromiseCapabilityModule$3 = newPromiseCapability$2;
   var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
 
   // `Promise.reject` method
   // https://tc39.es/ecma262/#sec-promise.reject
-  $$k({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+  $$j({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
     reject: function reject(r) {
       var capability = newPromiseCapabilityModule$3.f(this);
       call$3(capability.reject, undefined, r);
@@ -7375,7 +7433,7 @@
     return promiseCapability.promise;
   };
 
-  var $$j = _export;
+  var $$i = _export;
   var getBuiltIn$3 = getBuiltIn$h;
   var IS_PURE$1 = isPure;
   var NativePromiseConstructor$1 = promiseNativeConstructor;
@@ -7387,13 +7445,13 @@
 
   // `Promise.resolve` method
   // https://tc39.es/ecma262/#sec-promise.resolve
-  $$j({ target: 'Promise', stat: true, forced: IS_PURE$1  }, {
+  $$i({ target: 'Promise', stat: true, forced: IS_PURE$1  }, {
     resolve: function resolve(x) {
       return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
     }
   });
 
-  var $$i = _export;
+  var $$h = _export;
   var call$2 = functionCall;
   var aCallable$1 = aCallable$h;
   var newPromiseCapabilityModule$2 = newPromiseCapability$2;
@@ -7403,7 +7461,7 @@
 
   // `Promise.allSettled` method
   // https://tc39.es/ecma262/#sec-promise.allsettled
-  $$i({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+  $$h({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
     allSettled: function allSettled(iterable) {
       var C = this;
       var capability = newPromiseCapabilityModule$2.f(C);
@@ -7437,7 +7495,7 @@
     }
   });
 
-  var $$h = _export;
+  var $$g = _export;
   var call$1 = functionCall;
   var aCallable = aCallable$h;
   var getBuiltIn$2 = getBuiltIn$h;
@@ -7450,7 +7508,7 @@
 
   // `Promise.any` method
   // https://tc39.es/ecma262/#sec-promise.any
-  $$h({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+  $$g({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
     any: function any(iterable) {
       var C = this;
       var AggregateError = getBuiltIn$2('AggregateError');
@@ -7485,7 +7543,7 @@
     }
   });
 
-  var $$g = _export;
+  var $$f = _export;
   var NativePromiseConstructor = promiseNativeConstructor;
   var fails$6 = fails$x;
   var getBuiltIn$1 = getBuiltIn$h;
@@ -7503,7 +7561,7 @@
 
   // `Promise.prototype.finally` method
   // https://tc39.es/ecma262/#sec-promise.prototype.finally
-  $$g({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+  $$f({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
     'finally': function (onFinally) {
       var C = speciesConstructor(this, getBuiltIn$1('Promise'));
       var isFunction = isCallable$2(onFinally);
@@ -7522,23 +7580,23 @@
 
   var promise$5 = path$7.Promise;
 
-  var parent$C = promise$5;
+  var parent$z = promise$5;
 
 
-  var promise$4 = parent$C;
+  var promise$4 = parent$z;
 
-  var parent$B = promise$4;
+  var parent$y = promise$4;
 
-  var promise$3 = parent$B;
+  var promise$3 = parent$y;
 
   // TODO: Remove from `core-js@4`
-  var $$f = _export;
+  var $$e = _export;
   var newPromiseCapabilityModule = newPromiseCapability$2;
   var perform = perform$6;
 
   // `Promise.try` method
   // https://github.com/tc39/proposal-promise-try
-  $$f({ target: 'Promise', stat: true, forced: true }, {
+  $$e({ target: 'Promise', stat: true, forced: true }, {
     'try': function (callbackfn) {
       var promiseCapability = newPromiseCapabilityModule.f(this);
       var result = perform(callbackfn);
@@ -7547,14 +7605,14 @@
     }
   });
 
-  var parent$A = promise$3;
+  var parent$x = promise$3;
 
   // TODO: Remove from `core-js@4`
 
 
 
 
-  var promise$2 = parent$A;
+  var promise$2 = parent$x;
 
   var promise$1 = promise$2;
 
@@ -7563,7 +7621,7 @@
   var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
 
   /* eslint-disable es/no-array-prototype-indexof -- required for testing */
-  var $$e = _export;
+  var $$d = _export;
   var uncurryThis$6 = functionUncurryThisClause;
   var $indexOf = arrayIncludes.indexOf;
   var arrayMethodIsStrict = arrayMethodIsStrict$2;
@@ -7575,7 +7633,7 @@
 
   // `Array.prototype.indexOf` method
   // https://tc39.es/ecma262/#sec-array.prototype.indexof
-  $$e({ target: 'Array', proto: true, forced: FORCED$2 }, {
+  $$d({ target: 'Array', proto: true, forced: FORCED$2 }, {
     indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
       var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
       return NEGATIVE_ZERO
@@ -7585,31 +7643,31 @@
     }
   });
 
-  var entryVirtual$5 = entryVirtual$b;
+  var entryVirtual$4 = entryVirtual$b;
 
-  var indexOf$6 = entryVirtual$5('Array').indexOf;
+  var indexOf$6 = entryVirtual$4('Array').indexOf;
 
-  var isPrototypeOf$4 = objectIsPrototypeOf;
-  var method$3 = indexOf$6;
+  var isPrototypeOf$3 = objectIsPrototypeOf;
+  var method$2 = indexOf$6;
 
-  var ArrayPrototype$4 = Array.prototype;
+  var ArrayPrototype$3 = Array.prototype;
 
   var indexOf$5 = function (it) {
     var own = it.indexOf;
-    return it === ArrayPrototype$4 || (isPrototypeOf$4(ArrayPrototype$4, it) && own === ArrayPrototype$4.indexOf) ? method$3 : own;
+    return it === ArrayPrototype$3 || (isPrototypeOf$3(ArrayPrototype$3, it) && own === ArrayPrototype$3.indexOf) ? method$2 : own;
   };
 
-  var parent$z = indexOf$5;
+  var parent$w = indexOf$5;
 
-  var indexOf$4 = parent$z;
+  var indexOf$4 = parent$w;
 
-  var parent$y = indexOf$4;
+  var parent$v = indexOf$4;
 
-  var indexOf$3 = parent$y;
+  var indexOf$3 = parent$v;
 
-  var parent$x = indexOf$3;
+  var parent$u = indexOf$3;
 
-  var indexOf$2 = parent$x;
+  var indexOf$2 = parent$u;
 
   var indexOf$1 = indexOf$2;
 
@@ -7652,7 +7710,7 @@
     if (!delete O[P]) throw $TypeError$1('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
   };
 
-  var $$d = _export;
+  var $$c = _export;
   var toObject$1 = toObject$a;
   var toAbsoluteIndex = toAbsoluteIndex$4;
   var toIntegerOrInfinity = toIntegerOrInfinity$4;
@@ -7662,9 +7720,9 @@
   var arraySpeciesCreate = arraySpeciesCreate$3;
   var createProperty$1 = createProperty$6;
   var deletePropertyOrThrow = deletePropertyOrThrow$1;
-  var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
+  var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$5;
 
-  var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('splice');
+  var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
 
   var max = Math.max;
   var min = Math.min;
@@ -7672,7 +7730,7 @@
   // `Array.prototype.splice` method
   // https://tc39.es/ecma262/#sec-array.prototype.splice
   // with adding support of @@species
-  $$d({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
+  $$c({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
     splice: function splice(start, deleteCount /* , ...items */) {
       var O = toObject$1(this);
       var len = lengthOfArrayLike(O);
@@ -7719,84 +7777,37 @@
     }
   });
 
-  var entryVirtual$4 = entryVirtual$b;
+  var entryVirtual$3 = entryVirtual$b;
 
-  var splice$7 = entryVirtual$4('Array').splice;
+  var splice$7 = entryVirtual$3('Array').splice;
 
-  var isPrototypeOf$3 = objectIsPrototypeOf;
-  var method$2 = splice$7;
+  var isPrototypeOf$2 = objectIsPrototypeOf;
+  var method$1 = splice$7;
 
-  var ArrayPrototype$3 = Array.prototype;
+  var ArrayPrototype$2 = Array.prototype;
 
   var splice$6 = function (it) {
     var own = it.splice;
-    return it === ArrayPrototype$3 || (isPrototypeOf$3(ArrayPrototype$3, it) && own === ArrayPrototype$3.splice) ? method$2 : own;
+    return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.splice) ? method$1 : own;
   };
 
-  var parent$w = splice$6;
+  var parent$t = splice$6;
 
-  var splice$5 = parent$w;
+  var splice$5 = parent$t;
 
-  var parent$v = splice$5;
+  var parent$s = splice$5;
 
-  var splice$4 = parent$v;
+  var splice$4 = parent$s;
 
-  var parent$u = splice$4;
+  var parent$r = splice$4;
 
-  var splice$3 = parent$u;
+  var splice$3 = parent$r;
 
   var splice$2 = splice$3;
 
   var splice$1 = splice$2;
 
   var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice$1);
-
-  var $$c = _export;
-  var $filter = arrayIteration.filter;
-  var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$5;
-
-  var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
-
-  // `Array.prototype.filter` method
-  // https://tc39.es/ecma262/#sec-array.prototype.filter
-  // with adding support of @@species
-  $$c({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
-    filter: function filter(callbackfn /* , thisArg */) {
-      return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-    }
-  });
-
-  var entryVirtual$3 = entryVirtual$b;
-
-  var filter$6 = entryVirtual$3('Array').filter;
-
-  var isPrototypeOf$2 = objectIsPrototypeOf;
-  var method$1 = filter$6;
-
-  var ArrayPrototype$2 = Array.prototype;
-
-  var filter$5 = function (it) {
-    var own = it.filter;
-    return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.filter) ? method$1 : own;
-  };
-
-  var parent$t = filter$5;
-
-  var filter$4 = parent$t;
-
-  var parent$s = filter$4;
-
-  var filter$3 = parent$s;
-
-  var parent$r = filter$3;
-
-  var filter$2 = parent$r;
-
-  var filter$1 = filter$2;
-
-  var filter = filter$1;
-
-  var _filterInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(filter);
 
   var EventBus = /*#__PURE__*/function () {
     function EventBus(ctx) {
@@ -21061,7 +21072,8 @@
         });
         this.video.addEventListener('loadedmetadata', function (e) {});
         this.danmakuInput.on('sendData', function (data) {
-          console.log(data);
+          // console.log(data)
+          queue.push(data);
         });
       }
     }, {
@@ -21138,10 +21150,10 @@
       key: "initTemplate",
       value: function initTemplate() {
         addClass(this.el, ['danmaku-input-wrapper']);
-        this.inputBox = $$N('input.danmaku-input', {
+        this.inputBox = $$M('input.danmaku-input', {
           type: 'text'
         });
-        this.sendBox = $$N('span.danmaku-send');
+        this.sendBox = $$M('span.danmaku-send');
         this.sendBox.innerText = '发送';
         this.el.appendChild(this.inputBox);
         this.el.appendChild(this.sendBox);
@@ -21153,7 +21165,15 @@
         this.sendBox.onclick = function (e) {
           var value = _this2.inputBox.value;
           _this2.emit('sendData', value);
+          _this2.inputBox.value = '';
+          _this2.inputBox.blur();
         };
+        this.inputBox.addEventListener('focus', function () {
+          _this2.player.emit('inputFocus');
+        });
+        this.inputBox.addEventListener('blur', function () {
+          _this2.player.emit('inputBlur');
+        });
       }
     }]);
     return DanmakuInput;
@@ -21203,7 +21223,7 @@
     _createClass(Player, [{
       key: "init",
       value: function init() {
-        this.video = $$N('video');
+        this.video = $$M('video');
         this.attachSource(this.playerOptions.url);
         this.el.appendChild(this.video);
         this.toolBar = new ToolBar(this, this.el, 'div');
@@ -21245,6 +21265,14 @@
           }
           _this2.video.currentTime = Math.floor(scale * _this2.video.duration);
           _this2.video.paused && _this2.video.play();
+        });
+        this.on('inputFocus', function () {
+          _this2.el.onmouseleave = null;
+        });
+        this.on('inputBlur', function () {
+          _this2.el.onmouseleave = function (e) {
+            _this2.emit('hidetoolbar', e);
+          };
         });
       }
     }, {

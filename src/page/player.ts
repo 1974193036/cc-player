@@ -89,6 +89,16 @@ class Player extends Component implements ComponentItem {
       this.video.currentTime = Math.floor(scale * this.video.duration)
       this.video.paused && this.video.play()
     })
+
+    this.on('inputFocus', () => {
+      this.el.onmouseleave = null
+    })
+
+    this.on('inputBlur', () => {
+      this.el.onmouseleave = (e) => {
+        this.emit('hidetoolbar', e)
+      }
+    })
   }
 
   initPlugin() {

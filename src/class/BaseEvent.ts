@@ -16,6 +16,15 @@ export class BaseEvent {
     }
   }
 
+  off(event: string, cb: Function) {
+    if (this.$events[event]) {
+      this.$events[event] = this.$events[event].filter((fn) => {
+        if (fn !== cb) return true
+        return false
+      })
+    }
+  }
+
   init() {}
   initEvent() {}
   initTemplate() {}

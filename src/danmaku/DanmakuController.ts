@@ -56,7 +56,8 @@ export class DanmakuController {
     this.video.addEventListener('loadedmetadata', (e) => {})
 
     this.danmakuInput.on('sendData', function (data) {
-      console.log(data)
+      // console.log(data)
+      queue.push(data)
     })
   }
 
