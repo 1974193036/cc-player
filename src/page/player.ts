@@ -40,6 +40,7 @@ class Player extends Component implements ComponentItem {
 
   init() {
     this.video = $('video')
+    this.video.crossOrigin = 'anonymous'
     this.attachSource(this.playerOptions.url)
     this.el.appendChild(this.video)
     this.toolBar = new ToolBar(this, this.el, 'div')

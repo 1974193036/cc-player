@@ -4139,6 +4139,26 @@
     }
     return svg;
   }
+  function createSvgs(d) {
+    var viewBox = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0 0 24 24';
+    var svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', viewBox);
+    var _iterator3 = _createForOfIteratorHelper$2(d),
+      _step3;
+    try {
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var str = _step3.value;
+        var path = document.createElementNS(svgNS, 'path');
+        path.setAttributeNS(null, 'd', str);
+        svg.appendChild(path);
+      }
+    } catch (err) {
+      _iterator3.e(err);
+    } finally {
+      _iterator3.f();
+    }
+    return svg;
+  }
   /**
    * @description 合并两个组件的实例对象
    * @param target
@@ -4241,11 +4261,11 @@
     return fn.bind(context);
   }
 
-  function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Component = /*#__PURE__*/function (_BaseEvent) {
     _inherits(Component, _BaseEvent);
-    var _super = _createSuper$h(Component);
+    var _super = _createSuper$i(Component);
     //el代表着该组件对应的整个HTML元素
     function Component(container, desc, props, children) {
       var _this;
@@ -5349,12 +5369,14 @@
   var fullPagePath = "M10,21V19H6.41L10.91,14.5L9.5,13.09L5,17.59V14H3V21H10M14.5,10.91L19,6.41V10H21V3H14V5H17.59L13.09,9.5L14.5,10.91Z";
   var fullPageExitPath = "M19.5,3.09L15,7.59V4H13V11H20V9H16.41L20.91,4.5L19.5,3.09M4,13V15H7.59L3.09,19.5L4.5,20.91L9,16.41V20H11V13H4Z";
   var picInPicPath = "M768 213.333333H256a85.333333 85.333333 0 0 0-85.333333 85.333334v426.666666a85.333333 85.333333 0 0 0 85.333333 85.333334h170.666667a42.666667 42.666667 0 1 1 0 85.333333H256a170.666667 170.666667 0 0 1-170.666667-170.666667V298.666667a170.666667 170.666667 0 0 1 170.666667-170.666667h512a170.666667 170.666667 0 0 1 170.666667 170.666667v128a42.666667 42.666667 0 1 1-85.333334 0V298.666667a85.333333 85.333333 0 0 0-85.333333-85.333334z m-128 341.333334a128 128 0 0 0-128 128v85.333333a128 128 0 0 0 128 128h170.666667a128 128 0 0 0 128-128v-85.333333a128 128 0 0 0-128-128h-170.666667z";
+  var screenShot$1 = "M981.333333 789.333333h-106.666666V256c0-59.733333-46.933333-106.666667-106.666667-106.666667H234.666667V42.666667c0-25.6-17.066667-42.666667-42.666667-42.666667s-42.666667 17.066667-42.666667 42.666667v106.666666H42.666667c-25.6 0-42.666667 17.066667-42.666667 42.666667s17.066667 42.666667 42.666667 42.666667h106.666666V768c0 59.733333 46.933333 106.666667 106.666667 106.666667h533.333333V981.333333c0 25.6 17.066667 42.666667 42.666667 42.666667s42.666667-17.066667 42.666667-42.666667v-106.666666H981.333333c25.6 0 42.666667-17.066667 42.666667-42.666667s-17.066667-42.666667-42.666667-42.666667z m-213.333333-554.666666c12.8 0 21.333333 8.533333 21.333333 21.333333v341.333333l-145.066666-140.8c-17.066667-17.066667-42.666667-17.066667-59.733334 0l-140.8 145.066667L384 541.866667c-17.066667-17.066667-38.4-17.066667-55.466667-4.266667l-89.6 72.533333V234.666667H768z m-512 554.666666c-12.8 0-21.333333-8.533333-21.333333-21.333333v-42.666667l115.2-93.866666 64 64c8.533333 8.533333 17.066667 12.8 29.866666 12.8s21.333333-4.266667 29.866667-12.8l140.8-145.066667 174.933333 166.4v72.533333H256z";
+  var screenShot$2 = "M384 482.133333c51.2 0 93.866667-42.666667 93.866667-93.866666s-42.666667-93.866667-93.866667-93.866667-93.866667 38.4-93.866667 89.6 42.666667 98.133333 93.866667 98.133333z m0-128c17.066667 0 34.133333 12.8 34.133333 34.133334s-17.066667 29.866667-34.133333 29.866666-34.133333-17.066667-34.133333-34.133333 17.066667-29.866667 34.133333-29.866667z";
 
-  function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Options = /*#__PURE__*/function (_Component) {
     _inherits(Options, _Component);
-    var _super = _createSuper$g(Options);
+    var _super = _createSuper$h(Options);
     function Options(player, container, hideWidth, hideHeight, desc, props, children) {
       var _this;
       _classCallCheck(this, Options);
@@ -5434,11 +5456,11 @@
     return Options;
   }(Component);
 
-  function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var FullScreen = /*#__PURE__*/function (_Options) {
     _inherits(FullScreen, _Options);
-    var _super = _createSuper$f(FullScreen);
+    var _super = _createSuper$g(FullScreen);
     function FullScreen(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, FullScreen);
@@ -5492,11 +5514,11 @@
     return FullScreen;
   }(Options);
 
-  function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var PlayButton = /*#__PURE__*/function (_Component) {
     _inherits(PlayButton, _Component);
-    var _super = _createSuper$e(PlayButton);
+    var _super = _createSuper$f(PlayButton);
     function PlayButton(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, PlayButton);
@@ -5569,14 +5591,14 @@
     return PlayButton;
   }(Component);
 
-  function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   /**
    * @description 播放速率的类
    */
   var Playrate = /*#__PURE__*/function (_Options) {
     _inherits(Playrate, _Options);
-    var _super = _createSuper$d(Playrate);
+    var _super = _createSuper$e(Playrate);
     // el: div.video-playrate.video-controller
     function Playrate(player, container, desc, props, children) {
       var _this;
@@ -5614,11 +5636,11 @@
     return Playrate;
   }(Options);
 
-  function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var VolumeCompletedProgress = /*#__PURE__*/function (_Component) {
     _inherits(VolumeCompletedProgress, _Component);
-    var _super = _createSuper$c(VolumeCompletedProgress);
+    var _super = _createSuper$d(VolumeCompletedProgress);
     function VolumeCompletedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, VolumeCompletedProgress);
@@ -5645,11 +5667,11 @@
     return VolumeCompletedProgress;
   }(Component);
 
-  function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Volume = /*#__PURE__*/function (_Options) {
     _inherits(Volume, _Options);
-    var _super = _createSuper$b(Volume);
+    var _super = _createSuper$c(Volume);
     function Volume(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Volume);
@@ -5723,11 +5745,11 @@
     FullScreen: FullScreen
   };
 
-  function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Dot = /*#__PURE__*/function (_Component) {
     _inherits(Dot, _Component);
-    var _super = _createSuper$a(Dot);
+    var _super = _createSuper$b(Dot);
     function Dot(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Dot);
@@ -5803,11 +5825,11 @@
     return Dot;
   }(Component);
 
-  function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var CompletedProgress = /*#__PURE__*/function (_Component) {
     _inherits(CompletedProgress, _Component);
-    var _super = _createSuper$9(CompletedProgress);
+    var _super = _createSuper$a(CompletedProgress);
     function CompletedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, CompletedProgress);
@@ -5864,11 +5886,11 @@
     return CompletedProgress;
   }(Component);
 
-  function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var BufferedProgress = /*#__PURE__*/function (_Component) {
     _inherits(BufferedProgress, _Component);
-    var _super = _createSuper$8(BufferedProgress);
+    var _super = _createSuper$9(BufferedProgress);
     function BufferedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, BufferedProgress);
@@ -5941,11 +5963,11 @@
   var css_248z$4 = ".video-progress {\n  width: 100%;\n  height: 5px;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #00a1d6;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 10px;\n  width: 10px;\n  border-radius: 100%;\n  background-color: black;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
   styleInject(css_248z$4);
 
-  function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Progress = /*#__PURE__*/function (_Component) {
     _inherits(Progress, _Component);
-    var _super = _createSuper$7(Progress);
+    var _super = _createSuper$8(Progress);
     function Progress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Progress);
@@ -6185,11 +6207,11 @@
 
   var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map);
 
-  function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var FullPage = /*#__PURE__*/function (_Options) {
     _inherits(FullPage, _Options);
-    var _super = _createSuper$6(FullPage);
+    var _super = _createSuper$7(FullPage);
     function FullPage(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, FullPage);
@@ -6252,11 +6274,11 @@
     return FullPage;
   }(Options);
 
-  function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var PicInPic = /*#__PURE__*/function (_Options) {
     _inherits(PicInPic, _Options);
-    var _super = _createSuper$5(PicInPic);
+    var _super = _createSuper$6(PicInPic);
     function PicInPic(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, PicInPic);
@@ -6306,6 +6328,1865 @@
       }
     }]);
     return PicInPic;
+  }(Options);
+
+  var fails$8 = fails$x;
+  var wellKnownSymbol$6 = wellKnownSymbol$q;
+  var DESCRIPTORS$5 = descriptors;
+  var IS_PURE$1 = isPure;
+
+  var ITERATOR$2 = wellKnownSymbol$6('iterator');
+
+  var urlConstructorDetection = !fails$8(function () {
+    // eslint-disable-next-line unicorn/relative-url-style -- required for testing
+    var url = new URL('b?a=1&b=2&c=3', 'http://a');
+    var searchParams = url.searchParams;
+    var result = '';
+    url.pathname = 'c%20d';
+    searchParams.forEach(function (value, key) {
+      searchParams['delete']('b');
+      result += key + value;
+    });
+    return (IS_PURE$1 && !url.toJSON)
+      || (!searchParams.size && (IS_PURE$1 || !DESCRIPTORS$5))
+      || !searchParams.sort
+      || url.href !== 'http://a/c%20d?a=1&c=3'
+      || searchParams.get('c') !== '3'
+      || String(new URLSearchParams('?a=1')) !== 'a=1'
+      || !searchParams[ITERATOR$2]
+      // throws in Edge
+      || new URL('https://a@b').username !== 'a'
+      || new URLSearchParams(new URLSearchParams('a=b')).get('a') !== 'b'
+      // not punycoded in Edge
+      || new URL('http://тест').host !== 'xn--e1aybc'
+      // not escaped in Chrome 62-
+      || new URL('http://a#б').hash !== '#%D0%B1'
+      // fails in Chrome 66-
+      || result !== 'a1c3'
+      // throws in Safari
+      || new URL('http://x', undefined).host !== 'x';
+  });
+
+  // based on https://github.com/bestiejs/punycode.js/blob/master/punycode.js
+  var uncurryThis$8 = functionUncurryThis;
+
+  var maxInt = 2147483647; // aka. 0x7FFFFFFF or 2^31-1
+  var base = 36;
+  var tMin = 1;
+  var tMax = 26;
+  var skew = 38;
+  var damp = 700;
+  var initialBias = 72;
+  var initialN = 128; // 0x80
+  var delimiter = '-'; // '\x2D'
+  var regexNonASCII = /[^\0-\u007E]/; // non-ASCII chars
+  var regexSeparators = /[.\u3002\uFF0E\uFF61]/g; // RFC 3490 separators
+  var OVERFLOW_ERROR = 'Overflow: input needs wider integers to process';
+  var baseMinusTMin = base - tMin;
+
+  var $RangeError = RangeError;
+  var exec$1 = uncurryThis$8(regexSeparators.exec);
+  var floor$2 = Math.floor;
+  var fromCharCode = String.fromCharCode;
+  var charCodeAt = uncurryThis$8(''.charCodeAt);
+  var join$2 = uncurryThis$8([].join);
+  var push$3 = uncurryThis$8([].push);
+  var replace$3 = uncurryThis$8(''.replace);
+  var split$2 = uncurryThis$8(''.split);
+  var toLowerCase$1 = uncurryThis$8(''.toLowerCase);
+
+  /**
+   * Creates an array containing the numeric code points of each Unicode
+   * character in the string. While JavaScript uses UCS-2 internally,
+   * this function will convert a pair of surrogate halves (each of which
+   * UCS-2 exposes as separate characters) into a single code point,
+   * matching UTF-16.
+   */
+  var ucs2decode = function (string) {
+    var output = [];
+    var counter = 0;
+    var length = string.length;
+    while (counter < length) {
+      var value = charCodeAt(string, counter++);
+      if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+        // It's a high surrogate, and there is a next character.
+        var extra = charCodeAt(string, counter++);
+        if ((extra & 0xFC00) == 0xDC00) { // Low surrogate.
+          push$3(output, ((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+        } else {
+          // It's an unmatched surrogate; only append this code unit, in case the
+          // next code unit is the high surrogate of a surrogate pair.
+          push$3(output, value);
+          counter--;
+        }
+      } else {
+        push$3(output, value);
+      }
+    }
+    return output;
+  };
+
+  /**
+   * Converts a digit/integer into a basic code point.
+   */
+  var digitToBasic = function (digit) {
+    //  0..25 map to ASCII a..z or A..Z
+    // 26..35 map to ASCII 0..9
+    return digit + 22 + 75 * (digit < 26);
+  };
+
+  /**
+   * Bias adaptation function as per section 3.4 of RFC 3492.
+   * https://tools.ietf.org/html/rfc3492#section-3.4
+   */
+  var adapt = function (delta, numPoints, firstTime) {
+    var k = 0;
+    delta = firstTime ? floor$2(delta / damp) : delta >> 1;
+    delta += floor$2(delta / numPoints);
+    while (delta > baseMinusTMin * tMax >> 1) {
+      delta = floor$2(delta / baseMinusTMin);
+      k += base;
+    }
+    return floor$2(k + (baseMinusTMin + 1) * delta / (delta + skew));
+  };
+
+  /**
+   * Converts a string of Unicode symbols (e.g. a domain name label) to a
+   * Punycode string of ASCII-only symbols.
+   */
+  var encode = function (input) {
+    var output = [];
+
+    // Convert the input in UCS-2 to an array of Unicode code points.
+    input = ucs2decode(input);
+
+    // Cache the length.
+    var inputLength = input.length;
+
+    // Initialize the state.
+    var n = initialN;
+    var delta = 0;
+    var bias = initialBias;
+    var i, currentValue;
+
+    // Handle the basic code points.
+    for (i = 0; i < input.length; i++) {
+      currentValue = input[i];
+      if (currentValue < 0x80) {
+        push$3(output, fromCharCode(currentValue));
+      }
+    }
+
+    var basicLength = output.length; // number of basic code points.
+    var handledCPCount = basicLength; // number of code points that have been handled;
+
+    // Finish the basic string with a delimiter unless it's empty.
+    if (basicLength) {
+      push$3(output, delimiter);
+    }
+
+    // Main encoding loop:
+    while (handledCPCount < inputLength) {
+      // All non-basic code points < n have been handled already. Find the next larger one:
+      var m = maxInt;
+      for (i = 0; i < input.length; i++) {
+        currentValue = input[i];
+        if (currentValue >= n && currentValue < m) {
+          m = currentValue;
+        }
+      }
+
+      // Increase `delta` enough to advance the decoder's <n,i> state to <m,0>, but guard against overflow.
+      var handledCPCountPlusOne = handledCPCount + 1;
+      if (m - n > floor$2((maxInt - delta) / handledCPCountPlusOne)) {
+        throw $RangeError(OVERFLOW_ERROR);
+      }
+
+      delta += (m - n) * handledCPCountPlusOne;
+      n = m;
+
+      for (i = 0; i < input.length; i++) {
+        currentValue = input[i];
+        if (currentValue < n && ++delta > maxInt) {
+          throw $RangeError(OVERFLOW_ERROR);
+        }
+        if (currentValue == n) {
+          // Represent delta as a generalized variable-length integer.
+          var q = delta;
+          var k = base;
+          while (true) {
+            var t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+            if (q < t) break;
+            var qMinusT = q - t;
+            var baseMinusT = base - t;
+            push$3(output, fromCharCode(digitToBasic(t + qMinusT % baseMinusT)));
+            q = floor$2(qMinusT / baseMinusT);
+            k += base;
+          }
+
+          push$3(output, fromCharCode(digitToBasic(q)));
+          bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
+          delta = 0;
+          handledCPCount++;
+        }
+      }
+
+      delta++;
+      n++;
+    }
+    return join$2(output, '');
+  };
+
+  var stringPunycodeToAscii = function (input) {
+    var encoded = [];
+    var labels = split$2(replace$3(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
+    var i, label;
+    for (i = 0; i < labels.length; i++) {
+      label = labels[i];
+      push$3(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode(label) : label);
+    }
+    return join$2(encoded, '.');
+  };
+
+  var $TypeError$4 = TypeError;
+
+  var validateArgumentsLength$5 = function (passed, required) {
+    if (passed < required) throw $TypeError$4('Not enough arguments');
+    return passed;
+  };
+
+  var arraySlice$3 = arraySliceSimple;
+
+  var floor$1 = Math.floor;
+
+  var mergeSort = function (array, comparefn) {
+    var length = array.length;
+    var middle = floor$1(length / 2);
+    return length < 8 ? insertionSort(array, comparefn) : merge(
+      array,
+      mergeSort(arraySlice$3(array, 0, middle), comparefn),
+      mergeSort(arraySlice$3(array, middle), comparefn),
+      comparefn
+    );
+  };
+
+  var insertionSort = function (array, comparefn) {
+    var length = array.length;
+    var i = 1;
+    var element, j;
+
+    while (i < length) {
+      j = i;
+      element = array[i];
+      while (j && comparefn(array[j - 1], element) > 0) {
+        array[j] = array[--j];
+      }
+      if (j !== i++) array[j] = element;
+    } return array;
+  };
+
+  var merge = function (array, left, right, comparefn) {
+    var llength = left.length;
+    var rlength = right.length;
+    var lindex = 0;
+    var rindex = 0;
+
+    while (lindex < llength || rindex < rlength) {
+      array[lindex + rindex] = (lindex < llength && rindex < rlength)
+        ? comparefn(left[lindex], right[rindex]) <= 0 ? left[lindex++] : right[rindex++]
+        : lindex < llength ? left[lindex++] : right[rindex++];
+    } return array;
+  };
+
+  var arraySort$1 = mergeSort;
+
+  // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
+
+  var $$o = _export;
+  var global$b = global$r;
+  var call$6 = functionCall;
+  var uncurryThis$7 = functionUncurryThis;
+  var DESCRIPTORS$4 = descriptors;
+  var USE_NATIVE_URL$2 = urlConstructorDetection;
+  var defineBuiltIn$2 = defineBuiltIn$8;
+  var defineBuiltInAccessor$1 = defineBuiltInAccessor$5;
+  var defineBuiltIns = defineBuiltIns$2;
+  var setToStringTag$2 = setToStringTag$9;
+  var createIteratorConstructor = iteratorCreateConstructor;
+  var InternalStateModule$2 = internalState;
+  var anInstance$2 = anInstance$5;
+  var isCallable$5 = isCallable$q;
+  var hasOwn$3 = hasOwnProperty_1;
+  var bind$4 = functionBindContext;
+  var classof$2 = classof$c;
+  var anObject$3 = anObject$f;
+  var isObject$4 = isObject$j;
+  var $toString$1 = toString$b;
+  var create$1 = objectCreate;
+  var createPropertyDescriptor$2 = createPropertyDescriptor$8;
+  var getIterator = getIterator$3;
+  var getIteratorMethod = getIteratorMethod$a;
+  var validateArgumentsLength$4 = validateArgumentsLength$5;
+  var wellKnownSymbol$5 = wellKnownSymbol$q;
+  var arraySort = arraySort$1;
+
+  var ITERATOR$1 = wellKnownSymbol$5('iterator');
+  var URL_SEARCH_PARAMS = 'URLSearchParams';
+  var URL_SEARCH_PARAMS_ITERATOR = URL_SEARCH_PARAMS + 'Iterator';
+  var setInternalState$2 = InternalStateModule$2.set;
+  var getInternalParamsState = InternalStateModule$2.getterFor(URL_SEARCH_PARAMS);
+  var getInternalIteratorState = InternalStateModule$2.getterFor(URL_SEARCH_PARAMS_ITERATOR);
+  // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+  var getOwnPropertyDescriptor$9 = Object.getOwnPropertyDescriptor;
+
+  // Avoid NodeJS experimental warning
+  var safeGetBuiltIn = function (name) {
+    if (!DESCRIPTORS$4) return global$b[name];
+    var descriptor = getOwnPropertyDescriptor$9(global$b, name);
+    return descriptor && descriptor.value;
+  };
+
+  var nativeFetch = safeGetBuiltIn('fetch');
+  var NativeRequest = safeGetBuiltIn('Request');
+  var Headers = safeGetBuiltIn('Headers');
+  var RequestPrototype = NativeRequest && NativeRequest.prototype;
+  var HeadersPrototype = Headers && Headers.prototype;
+  var RegExp$1 = global$b.RegExp;
+  var TypeError$3 = global$b.TypeError;
+  var decodeURIComponent = global$b.decodeURIComponent;
+  var encodeURIComponent$1 = global$b.encodeURIComponent;
+  var charAt$2 = uncurryThis$7(''.charAt);
+  var join$1 = uncurryThis$7([].join);
+  var push$2 = uncurryThis$7([].push);
+  var replace$2 = uncurryThis$7(''.replace);
+  var shift$1 = uncurryThis$7([].shift);
+  var splice$7 = uncurryThis$7([].splice);
+  var split$1 = uncurryThis$7(''.split);
+  var stringSlice$1 = uncurryThis$7(''.slice);
+
+  var plus = /\+/g;
+  var sequences = Array(4);
+
+  var percentSequence = function (bytes) {
+    return sequences[bytes - 1] || (sequences[bytes - 1] = RegExp$1('((?:%[\\da-f]{2}){' + bytes + '})', 'gi'));
+  };
+
+  var percentDecode = function (sequence) {
+    try {
+      return decodeURIComponent(sequence);
+    } catch (error) {
+      return sequence;
+    }
+  };
+
+  var deserialize = function (it) {
+    var result = replace$2(it, plus, ' ');
+    var bytes = 4;
+    try {
+      return decodeURIComponent(result);
+    } catch (error) {
+      while (bytes) {
+        result = replace$2(result, percentSequence(bytes--), percentDecode);
+      }
+      return result;
+    }
+  };
+
+  var find = /[!'()~]|%20/g;
+
+  var replacements = {
+    '!': '%21',
+    "'": '%27',
+    '(': '%28',
+    ')': '%29',
+    '~': '%7E',
+    '%20': '+'
+  };
+
+  var replacer = function (match) {
+    return replacements[match];
+  };
+
+  var serialize = function (it) {
+    return replace$2(encodeURIComponent$1(it), find, replacer);
+  };
+
+  var URLSearchParamsIterator = createIteratorConstructor(function Iterator(params, kind) {
+    setInternalState$2(this, {
+      type: URL_SEARCH_PARAMS_ITERATOR,
+      iterator: getIterator(getInternalParamsState(params).entries),
+      kind: kind
+    });
+  }, 'Iterator', function next() {
+    var state = getInternalIteratorState(this);
+    var kind = state.kind;
+    var step = state.iterator.next();
+    var entry = step.value;
+    if (!step.done) {
+      step.value = kind === 'keys' ? entry.key : kind === 'values' ? entry.value : [entry.key, entry.value];
+    } return step;
+  }, true);
+
+  var URLSearchParamsState = function (init) {
+    this.entries = [];
+    this.url = null;
+
+    if (init !== undefined) {
+      if (isObject$4(init)) this.parseObject(init);
+      else this.parseQuery(typeof init == 'string' ? charAt$2(init, 0) === '?' ? stringSlice$1(init, 1) : init : $toString$1(init));
+    }
+  };
+
+  URLSearchParamsState.prototype = {
+    type: URL_SEARCH_PARAMS,
+    bindURL: function (url) {
+      this.url = url;
+      this.update();
+    },
+    parseObject: function (object) {
+      var iteratorMethod = getIteratorMethod(object);
+      var iterator, next, step, entryIterator, entryNext, first, second;
+
+      if (iteratorMethod) {
+        iterator = getIterator(object, iteratorMethod);
+        next = iterator.next;
+        while (!(step = call$6(next, iterator)).done) {
+          entryIterator = getIterator(anObject$3(step.value));
+          entryNext = entryIterator.next;
+          if (
+            (first = call$6(entryNext, entryIterator)).done ||
+            (second = call$6(entryNext, entryIterator)).done ||
+            !call$6(entryNext, entryIterator).done
+          ) throw TypeError$3('Expected sequence with length 2');
+          push$2(this.entries, { key: $toString$1(first.value), value: $toString$1(second.value) });
+        }
+      } else for (var key in object) if (hasOwn$3(object, key)) {
+        push$2(this.entries, { key: key, value: $toString$1(object[key]) });
+      }
+    },
+    parseQuery: function (query) {
+      if (query) {
+        var attributes = split$1(query, '&');
+        var index = 0;
+        var attribute, entry;
+        while (index < attributes.length) {
+          attribute = attributes[index++];
+          if (attribute.length) {
+            entry = split$1(attribute, '=');
+            push$2(this.entries, {
+              key: deserialize(shift$1(entry)),
+              value: deserialize(join$1(entry, '='))
+            });
+          }
+        }
+      }
+    },
+    serialize: function () {
+      var entries = this.entries;
+      var result = [];
+      var index = 0;
+      var entry;
+      while (index < entries.length) {
+        entry = entries[index++];
+        push$2(result, serialize(entry.key) + '=' + serialize(entry.value));
+      } return join$1(result, '&');
+    },
+    update: function () {
+      this.entries.length = 0;
+      this.parseQuery(this.url.query);
+    },
+    updateURL: function () {
+      if (this.url) this.url.update();
+    }
+  };
+
+  // `URLSearchParams` constructor
+  // https://url.spec.whatwg.org/#interface-urlsearchparams
+  var URLSearchParamsConstructor = function URLSearchParams(/* init */) {
+    anInstance$2(this, URLSearchParamsPrototype);
+    var init = arguments.length > 0 ? arguments[0] : undefined;
+    var state = setInternalState$2(this, new URLSearchParamsState(init));
+    if (!DESCRIPTORS$4) this.length = state.entries.length;
+  };
+
+  var URLSearchParamsPrototype = URLSearchParamsConstructor.prototype;
+
+  defineBuiltIns(URLSearchParamsPrototype, {
+    // `URLSearchParams.prototype.append` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-append
+    append: function append(name, value) {
+      validateArgumentsLength$4(arguments.length, 2);
+      var state = getInternalParamsState(this);
+      push$2(state.entries, { key: $toString$1(name), value: $toString$1(value) });
+      if (!DESCRIPTORS$4) this.length++;
+      state.updateURL();
+    },
+    // `URLSearchParams.prototype.delete` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-delete
+    'delete': function (name) {
+      validateArgumentsLength$4(arguments.length, 1);
+      var state = getInternalParamsState(this);
+      var entries = state.entries;
+      var key = $toString$1(name);
+      var index = 0;
+      while (index < entries.length) {
+        if (entries[index].key === key) splice$7(entries, index, 1);
+        else index++;
+      }
+      if (!DESCRIPTORS$4) this.length = entries.length;
+      state.updateURL();
+    },
+    // `URLSearchParams.prototype.get` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-get
+    get: function get(name) {
+      validateArgumentsLength$4(arguments.length, 1);
+      var entries = getInternalParamsState(this).entries;
+      var key = $toString$1(name);
+      var index = 0;
+      for (; index < entries.length; index++) {
+        if (entries[index].key === key) return entries[index].value;
+      }
+      return null;
+    },
+    // `URLSearchParams.prototype.getAll` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-getall
+    getAll: function getAll(name) {
+      validateArgumentsLength$4(arguments.length, 1);
+      var entries = getInternalParamsState(this).entries;
+      var key = $toString$1(name);
+      var result = [];
+      var index = 0;
+      for (; index < entries.length; index++) {
+        if (entries[index].key === key) push$2(result, entries[index].value);
+      }
+      return result;
+    },
+    // `URLSearchParams.prototype.has` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-has
+    has: function has(name) {
+      validateArgumentsLength$4(arguments.length, 1);
+      var entries = getInternalParamsState(this).entries;
+      var key = $toString$1(name);
+      var index = 0;
+      while (index < entries.length) {
+        if (entries[index++].key === key) return true;
+      }
+      return false;
+    },
+    // `URLSearchParams.prototype.set` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-set
+    set: function set(name, value) {
+      validateArgumentsLength$4(arguments.length, 1);
+      var state = getInternalParamsState(this);
+      var entries = state.entries;
+      var found = false;
+      var key = $toString$1(name);
+      var val = $toString$1(value);
+      var index = 0;
+      var entry;
+      for (; index < entries.length; index++) {
+        entry = entries[index];
+        if (entry.key === key) {
+          if (found) splice$7(entries, index--, 1);
+          else {
+            found = true;
+            entry.value = val;
+          }
+        }
+      }
+      if (!found) push$2(entries, { key: key, value: val });
+      if (!DESCRIPTORS$4) this.length = entries.length;
+      state.updateURL();
+    },
+    // `URLSearchParams.prototype.sort` method
+    // https://url.spec.whatwg.org/#dom-urlsearchparams-sort
+    sort: function sort() {
+      var state = getInternalParamsState(this);
+      arraySort(state.entries, function (a, b) {
+        return a.key > b.key ? 1 : -1;
+      });
+      state.updateURL();
+    },
+    // `URLSearchParams.prototype.forEach` method
+    forEach: function forEach(callback /* , thisArg */) {
+      var entries = getInternalParamsState(this).entries;
+      var boundFunction = bind$4(callback, arguments.length > 1 ? arguments[1] : undefined);
+      var index = 0;
+      var entry;
+      while (index < entries.length) {
+        entry = entries[index++];
+        boundFunction(entry.value, entry.key, this);
+      }
+    },
+    // `URLSearchParams.prototype.keys` method
+    keys: function keys() {
+      return new URLSearchParamsIterator(this, 'keys');
+    },
+    // `URLSearchParams.prototype.values` method
+    values: function values() {
+      return new URLSearchParamsIterator(this, 'values');
+    },
+    // `URLSearchParams.prototype.entries` method
+    entries: function entries() {
+      return new URLSearchParamsIterator(this, 'entries');
+    }
+  }, { enumerable: true });
+
+  // `URLSearchParams.prototype[@@iterator]` method
+  defineBuiltIn$2(URLSearchParamsPrototype, ITERATOR$1, URLSearchParamsPrototype.entries, { name: 'entries' });
+
+  // `URLSearchParams.prototype.toString` method
+  // https://url.spec.whatwg.org/#urlsearchparams-stringification-behavior
+  defineBuiltIn$2(URLSearchParamsPrototype, 'toString', function toString() {
+    return getInternalParamsState(this).serialize();
+  }, { enumerable: true });
+
+  // `URLSearchParams.prototype.size` getter
+  // https://github.com/whatwg/url/pull/734
+  if (DESCRIPTORS$4) defineBuiltInAccessor$1(URLSearchParamsPrototype, 'size', {
+    get: function size() {
+      return getInternalParamsState(this).entries.length;
+    },
+    configurable: true,
+    enumerable: true
+  });
+
+  setToStringTag$2(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
+
+  $$o({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
+    URLSearchParams: URLSearchParamsConstructor
+  });
+
+  // Wrap `fetch` and `Request` for correct work with polyfilled `URLSearchParams`
+  if (!USE_NATIVE_URL$2 && isCallable$5(Headers)) {
+    var headersHas = uncurryThis$7(HeadersPrototype.has);
+    var headersSet = uncurryThis$7(HeadersPrototype.set);
+
+    var wrapRequestOptions = function (init) {
+      if (isObject$4(init)) {
+        var body = init.body;
+        var headers;
+        if (classof$2(body) === URL_SEARCH_PARAMS) {
+          headers = init.headers ? new Headers(init.headers) : new Headers();
+          if (!headersHas(headers, 'content-type')) {
+            headersSet(headers, 'content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+          }
+          return create$1(init, {
+            body: createPropertyDescriptor$2(0, $toString$1(body)),
+            headers: createPropertyDescriptor$2(0, headers)
+          });
+        }
+      } return init;
+    };
+
+    if (isCallable$5(nativeFetch)) {
+      $$o({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
+        fetch: function fetch(input /* , init */) {
+          return nativeFetch(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
+        }
+      });
+    }
+
+    if (isCallable$5(NativeRequest)) {
+      var RequestConstructor = function Request(input /* , init */) {
+        anInstance$2(this, RequestPrototype);
+        return new NativeRequest(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
+      };
+
+      RequestPrototype.constructor = RequestConstructor;
+      RequestConstructor.prototype = RequestPrototype;
+
+      $$o({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
+        Request: RequestConstructor
+      });
+    }
+  }
+
+  var web_urlSearchParams_constructor = {
+    URLSearchParams: URLSearchParamsConstructor,
+    getState: getInternalParamsState
+  };
+
+  // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
+
+  var $$n = _export;
+  var DESCRIPTORS$3 = descriptors;
+  var USE_NATIVE_URL$1 = urlConstructorDetection;
+  var global$a = global$r;
+  var bind$3 = functionBindContext;
+  var uncurryThis$6 = functionUncurryThis;
+  var defineBuiltIn$1 = defineBuiltIn$8;
+  var defineBuiltInAccessor = defineBuiltInAccessor$5;
+  var anInstance$1 = anInstance$5;
+  var hasOwn$2 = hasOwnProperty_1;
+  var assign = objectAssign;
+  var arrayFrom = arrayFrom$1;
+  var arraySlice$2 = arraySliceSimple;
+  var codeAt = stringMultibyte.codeAt;
+  var toASCII = stringPunycodeToAscii;
+  var $toString = toString$b;
+  var setToStringTag$1 = setToStringTag$9;
+  var validateArgumentsLength$3 = validateArgumentsLength$5;
+  var URLSearchParamsModule = web_urlSearchParams_constructor;
+  var InternalStateModule$1 = internalState;
+
+  var setInternalState$1 = InternalStateModule$1.set;
+  var getInternalURLState = InternalStateModule$1.getterFor('URL');
+  var URLSearchParams$1 = URLSearchParamsModule.URLSearchParams;
+  var getInternalSearchParamsState = URLSearchParamsModule.getState;
+
+  var NativeURL = global$a.URL;
+  var TypeError$2 = global$a.TypeError;
+  var parseInt$1 = global$a.parseInt;
+  var floor = Math.floor;
+  var pow = Math.pow;
+  var charAt$1 = uncurryThis$6(''.charAt);
+  var exec = uncurryThis$6(/./.exec);
+  var join = uncurryThis$6([].join);
+  var numberToString = uncurryThis$6(1.0.toString);
+  var pop = uncurryThis$6([].pop);
+  var push$1 = uncurryThis$6([].push);
+  var replace$1 = uncurryThis$6(''.replace);
+  var shift = uncurryThis$6([].shift);
+  var split = uncurryThis$6(''.split);
+  var stringSlice = uncurryThis$6(''.slice);
+  var toLowerCase = uncurryThis$6(''.toLowerCase);
+  var unshift = uncurryThis$6([].unshift);
+
+  var INVALID_AUTHORITY = 'Invalid authority';
+  var INVALID_SCHEME = 'Invalid scheme';
+  var INVALID_HOST = 'Invalid host';
+  var INVALID_PORT = 'Invalid port';
+
+  var ALPHA = /[a-z]/i;
+  // eslint-disable-next-line regexp/no-obscure-range -- safe
+  var ALPHANUMERIC = /[\d+-.a-z]/i;
+  var DIGIT = /\d/;
+  var HEX_START = /^0x/i;
+  var OCT = /^[0-7]+$/;
+  var DEC = /^\d+$/;
+  var HEX = /^[\da-f]+$/i;
+  /* eslint-disable regexp/no-control-character -- safe */
+  var FORBIDDEN_HOST_CODE_POINT = /[\0\t\n\r #%/:<>?@[\\\]^|]/;
+  var FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT = /[\0\t\n\r #/:<>?@[\\\]^|]/;
+  var LEADING_C0_CONTROL_OR_SPACE = /^[\u0000-\u0020]+/;
+  var TRAILING_C0_CONTROL_OR_SPACE = /(^|[^\u0000-\u0020])[\u0000-\u0020]+$/;
+  var TAB_AND_NEW_LINE = /[\t\n\r]/g;
+  /* eslint-enable regexp/no-control-character -- safe */
+  var EOF;
+
+  // https://url.spec.whatwg.org/#ipv4-number-parser
+  var parseIPv4 = function (input) {
+    var parts = split(input, '.');
+    var partsLength, numbers, index, part, radix, number, ipv4;
+    if (parts.length && parts[parts.length - 1] == '') {
+      parts.length--;
+    }
+    partsLength = parts.length;
+    if (partsLength > 4) return input;
+    numbers = [];
+    for (index = 0; index < partsLength; index++) {
+      part = parts[index];
+      if (part == '') return input;
+      radix = 10;
+      if (part.length > 1 && charAt$1(part, 0) == '0') {
+        radix = exec(HEX_START, part) ? 16 : 8;
+        part = stringSlice(part, radix == 8 ? 1 : 2);
+      }
+      if (part === '') {
+        number = 0;
+      } else {
+        if (!exec(radix == 10 ? DEC : radix == 8 ? OCT : HEX, part)) return input;
+        number = parseInt$1(part, radix);
+      }
+      push$1(numbers, number);
+    }
+    for (index = 0; index < partsLength; index++) {
+      number = numbers[index];
+      if (index == partsLength - 1) {
+        if (number >= pow(256, 5 - partsLength)) return null;
+      } else if (number > 255) return null;
+    }
+    ipv4 = pop(numbers);
+    for (index = 0; index < numbers.length; index++) {
+      ipv4 += numbers[index] * pow(256, 3 - index);
+    }
+    return ipv4;
+  };
+
+  // https://url.spec.whatwg.org/#concept-ipv6-parser
+  // eslint-disable-next-line max-statements -- TODO
+  var parseIPv6 = function (input) {
+    var address = [0, 0, 0, 0, 0, 0, 0, 0];
+    var pieceIndex = 0;
+    var compress = null;
+    var pointer = 0;
+    var value, length, numbersSeen, ipv4Piece, number, swaps, swap;
+
+    var chr = function () {
+      return charAt$1(input, pointer);
+    };
+
+    if (chr() == ':') {
+      if (charAt$1(input, 1) != ':') return;
+      pointer += 2;
+      pieceIndex++;
+      compress = pieceIndex;
+    }
+    while (chr()) {
+      if (pieceIndex == 8) return;
+      if (chr() == ':') {
+        if (compress !== null) return;
+        pointer++;
+        pieceIndex++;
+        compress = pieceIndex;
+        continue;
+      }
+      value = length = 0;
+      while (length < 4 && exec(HEX, chr())) {
+        value = value * 16 + parseInt$1(chr(), 16);
+        pointer++;
+        length++;
+      }
+      if (chr() == '.') {
+        if (length == 0) return;
+        pointer -= length;
+        if (pieceIndex > 6) return;
+        numbersSeen = 0;
+        while (chr()) {
+          ipv4Piece = null;
+          if (numbersSeen > 0) {
+            if (chr() == '.' && numbersSeen < 4) pointer++;
+            else return;
+          }
+          if (!exec(DIGIT, chr())) return;
+          while (exec(DIGIT, chr())) {
+            number = parseInt$1(chr(), 10);
+            if (ipv4Piece === null) ipv4Piece = number;
+            else if (ipv4Piece == 0) return;
+            else ipv4Piece = ipv4Piece * 10 + number;
+            if (ipv4Piece > 255) return;
+            pointer++;
+          }
+          address[pieceIndex] = address[pieceIndex] * 256 + ipv4Piece;
+          numbersSeen++;
+          if (numbersSeen == 2 || numbersSeen == 4) pieceIndex++;
+        }
+        if (numbersSeen != 4) return;
+        break;
+      } else if (chr() == ':') {
+        pointer++;
+        if (!chr()) return;
+      } else if (chr()) return;
+      address[pieceIndex++] = value;
+    }
+    if (compress !== null) {
+      swaps = pieceIndex - compress;
+      pieceIndex = 7;
+      while (pieceIndex != 0 && swaps > 0) {
+        swap = address[pieceIndex];
+        address[pieceIndex--] = address[compress + swaps - 1];
+        address[compress + --swaps] = swap;
+      }
+    } else if (pieceIndex != 8) return;
+    return address;
+  };
+
+  var findLongestZeroSequence = function (ipv6) {
+    var maxIndex = null;
+    var maxLength = 1;
+    var currStart = null;
+    var currLength = 0;
+    var index = 0;
+    for (; index < 8; index++) {
+      if (ipv6[index] !== 0) {
+        if (currLength > maxLength) {
+          maxIndex = currStart;
+          maxLength = currLength;
+        }
+        currStart = null;
+        currLength = 0;
+      } else {
+        if (currStart === null) currStart = index;
+        ++currLength;
+      }
+    }
+    if (currLength > maxLength) {
+      maxIndex = currStart;
+      maxLength = currLength;
+    }
+    return maxIndex;
+  };
+
+  // https://url.spec.whatwg.org/#host-serializing
+  var serializeHost = function (host) {
+    var result, index, compress, ignore0;
+    // ipv4
+    if (typeof host == 'number') {
+      result = [];
+      for (index = 0; index < 4; index++) {
+        unshift(result, host % 256);
+        host = floor(host / 256);
+      } return join(result, '.');
+    // ipv6
+    } else if (typeof host == 'object') {
+      result = '';
+      compress = findLongestZeroSequence(host);
+      for (index = 0; index < 8; index++) {
+        if (ignore0 && host[index] === 0) continue;
+        if (ignore0) ignore0 = false;
+        if (compress === index) {
+          result += index ? ':' : '::';
+          ignore0 = true;
+        } else {
+          result += numberToString(host[index], 16);
+          if (index < 7) result += ':';
+        }
+      }
+      return '[' + result + ']';
+    } return host;
+  };
+
+  var C0ControlPercentEncodeSet = {};
+  var fragmentPercentEncodeSet = assign({}, C0ControlPercentEncodeSet, {
+    ' ': 1, '"': 1, '<': 1, '>': 1, '`': 1
+  });
+  var pathPercentEncodeSet = assign({}, fragmentPercentEncodeSet, {
+    '#': 1, '?': 1, '{': 1, '}': 1
+  });
+  var userinfoPercentEncodeSet = assign({}, pathPercentEncodeSet, {
+    '/': 1, ':': 1, ';': 1, '=': 1, '@': 1, '[': 1, '\\': 1, ']': 1, '^': 1, '|': 1
+  });
+
+  var percentEncode = function (chr, set) {
+    var code = codeAt(chr, 0);
+    return code > 0x20 && code < 0x7F && !hasOwn$2(set, chr) ? chr : encodeURIComponent(chr);
+  };
+
+  // https://url.spec.whatwg.org/#special-scheme
+  var specialSchemes = {
+    ftp: 21,
+    file: null,
+    http: 80,
+    https: 443,
+    ws: 80,
+    wss: 443
+  };
+
+  // https://url.spec.whatwg.org/#windows-drive-letter
+  var isWindowsDriveLetter = function (string, normalized) {
+    var second;
+    return string.length == 2 && exec(ALPHA, charAt$1(string, 0))
+      && ((second = charAt$1(string, 1)) == ':' || (!normalized && second == '|'));
+  };
+
+  // https://url.spec.whatwg.org/#start-with-a-windows-drive-letter
+  var startsWithWindowsDriveLetter = function (string) {
+    var third;
+    return string.length > 1 && isWindowsDriveLetter(stringSlice(string, 0, 2)) && (
+      string.length == 2 ||
+      ((third = charAt$1(string, 2)) === '/' || third === '\\' || third === '?' || third === '#')
+    );
+  };
+
+  // https://url.spec.whatwg.org/#single-dot-path-segment
+  var isSingleDot = function (segment) {
+    return segment === '.' || toLowerCase(segment) === '%2e';
+  };
+
+  // https://url.spec.whatwg.org/#double-dot-path-segment
+  var isDoubleDot = function (segment) {
+    segment = toLowerCase(segment);
+    return segment === '..' || segment === '%2e.' || segment === '.%2e' || segment === '%2e%2e';
+  };
+
+  // States:
+  var SCHEME_START = {};
+  var SCHEME = {};
+  var NO_SCHEME = {};
+  var SPECIAL_RELATIVE_OR_AUTHORITY = {};
+  var PATH_OR_AUTHORITY = {};
+  var RELATIVE = {};
+  var RELATIVE_SLASH = {};
+  var SPECIAL_AUTHORITY_SLASHES = {};
+  var SPECIAL_AUTHORITY_IGNORE_SLASHES = {};
+  var AUTHORITY = {};
+  var HOST = {};
+  var HOSTNAME = {};
+  var PORT = {};
+  var FILE = {};
+  var FILE_SLASH = {};
+  var FILE_HOST = {};
+  var PATH_START = {};
+  var PATH = {};
+  var CANNOT_BE_A_BASE_URL_PATH = {};
+  var QUERY = {};
+  var FRAGMENT = {};
+
+  var URLState = function (url, isBase, base) {
+    var urlString = $toString(url);
+    var baseState, failure, searchParams;
+    if (isBase) {
+      failure = this.parse(urlString);
+      if (failure) throw TypeError$2(failure);
+      this.searchParams = null;
+    } else {
+      if (base !== undefined) baseState = new URLState(base, true);
+      failure = this.parse(urlString, null, baseState);
+      if (failure) throw TypeError$2(failure);
+      searchParams = getInternalSearchParamsState(new URLSearchParams$1());
+      searchParams.bindURL(this);
+      this.searchParams = searchParams;
+    }
+  };
+
+  URLState.prototype = {
+    type: 'URL',
+    // https://url.spec.whatwg.org/#url-parsing
+    // eslint-disable-next-line max-statements -- TODO
+    parse: function (input, stateOverride, base) {
+      var url = this;
+      var state = stateOverride || SCHEME_START;
+      var pointer = 0;
+      var buffer = '';
+      var seenAt = false;
+      var seenBracket = false;
+      var seenPasswordToken = false;
+      var codePoints, chr, bufferCodePoints, failure;
+
+      input = $toString(input);
+
+      if (!stateOverride) {
+        url.scheme = '';
+        url.username = '';
+        url.password = '';
+        url.host = null;
+        url.port = null;
+        url.path = [];
+        url.query = null;
+        url.fragment = null;
+        url.cannotBeABaseURL = false;
+        input = replace$1(input, LEADING_C0_CONTROL_OR_SPACE, '');
+        input = replace$1(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
+      }
+
+      input = replace$1(input, TAB_AND_NEW_LINE, '');
+
+      codePoints = arrayFrom(input);
+
+      while (pointer <= codePoints.length) {
+        chr = codePoints[pointer];
+        switch (state) {
+          case SCHEME_START:
+            if (chr && exec(ALPHA, chr)) {
+              buffer += toLowerCase(chr);
+              state = SCHEME;
+            } else if (!stateOverride) {
+              state = NO_SCHEME;
+              continue;
+            } else return INVALID_SCHEME;
+            break;
+
+          case SCHEME:
+            if (chr && (exec(ALPHANUMERIC, chr) || chr == '+' || chr == '-' || chr == '.')) {
+              buffer += toLowerCase(chr);
+            } else if (chr == ':') {
+              if (stateOverride && (
+                (url.isSpecial() != hasOwn$2(specialSchemes, buffer)) ||
+                (buffer == 'file' && (url.includesCredentials() || url.port !== null)) ||
+                (url.scheme == 'file' && !url.host)
+              )) return;
+              url.scheme = buffer;
+              if (stateOverride) {
+                if (url.isSpecial() && specialSchemes[url.scheme] == url.port) url.port = null;
+                return;
+              }
+              buffer = '';
+              if (url.scheme == 'file') {
+                state = FILE;
+              } else if (url.isSpecial() && base && base.scheme == url.scheme) {
+                state = SPECIAL_RELATIVE_OR_AUTHORITY;
+              } else if (url.isSpecial()) {
+                state = SPECIAL_AUTHORITY_SLASHES;
+              } else if (codePoints[pointer + 1] == '/') {
+                state = PATH_OR_AUTHORITY;
+                pointer++;
+              } else {
+                url.cannotBeABaseURL = true;
+                push$1(url.path, '');
+                state = CANNOT_BE_A_BASE_URL_PATH;
+              }
+            } else if (!stateOverride) {
+              buffer = '';
+              state = NO_SCHEME;
+              pointer = 0;
+              continue;
+            } else return INVALID_SCHEME;
+            break;
+
+          case NO_SCHEME:
+            if (!base || (base.cannotBeABaseURL && chr != '#')) return INVALID_SCHEME;
+            if (base.cannotBeABaseURL && chr == '#') {
+              url.scheme = base.scheme;
+              url.path = arraySlice$2(base.path);
+              url.query = base.query;
+              url.fragment = '';
+              url.cannotBeABaseURL = true;
+              state = FRAGMENT;
+              break;
+            }
+            state = base.scheme == 'file' ? FILE : RELATIVE;
+            continue;
+
+          case SPECIAL_RELATIVE_OR_AUTHORITY:
+            if (chr == '/' && codePoints[pointer + 1] == '/') {
+              state = SPECIAL_AUTHORITY_IGNORE_SLASHES;
+              pointer++;
+            } else {
+              state = RELATIVE;
+              continue;
+            } break;
+
+          case PATH_OR_AUTHORITY:
+            if (chr == '/') {
+              state = AUTHORITY;
+              break;
+            } else {
+              state = PATH;
+              continue;
+            }
+
+          case RELATIVE:
+            url.scheme = base.scheme;
+            if (chr == EOF) {
+              url.username = base.username;
+              url.password = base.password;
+              url.host = base.host;
+              url.port = base.port;
+              url.path = arraySlice$2(base.path);
+              url.query = base.query;
+            } else if (chr == '/' || (chr == '\\' && url.isSpecial())) {
+              state = RELATIVE_SLASH;
+            } else if (chr == '?') {
+              url.username = base.username;
+              url.password = base.password;
+              url.host = base.host;
+              url.port = base.port;
+              url.path = arraySlice$2(base.path);
+              url.query = '';
+              state = QUERY;
+            } else if (chr == '#') {
+              url.username = base.username;
+              url.password = base.password;
+              url.host = base.host;
+              url.port = base.port;
+              url.path = arraySlice$2(base.path);
+              url.query = base.query;
+              url.fragment = '';
+              state = FRAGMENT;
+            } else {
+              url.username = base.username;
+              url.password = base.password;
+              url.host = base.host;
+              url.port = base.port;
+              url.path = arraySlice$2(base.path);
+              url.path.length--;
+              state = PATH;
+              continue;
+            } break;
+
+          case RELATIVE_SLASH:
+            if (url.isSpecial() && (chr == '/' || chr == '\\')) {
+              state = SPECIAL_AUTHORITY_IGNORE_SLASHES;
+            } else if (chr == '/') {
+              state = AUTHORITY;
+            } else {
+              url.username = base.username;
+              url.password = base.password;
+              url.host = base.host;
+              url.port = base.port;
+              state = PATH;
+              continue;
+            } break;
+
+          case SPECIAL_AUTHORITY_SLASHES:
+            state = SPECIAL_AUTHORITY_IGNORE_SLASHES;
+            if (chr != '/' || charAt$1(buffer, pointer + 1) != '/') continue;
+            pointer++;
+            break;
+
+          case SPECIAL_AUTHORITY_IGNORE_SLASHES:
+            if (chr != '/' && chr != '\\') {
+              state = AUTHORITY;
+              continue;
+            } break;
+
+          case AUTHORITY:
+            if (chr == '@') {
+              if (seenAt) buffer = '%40' + buffer;
+              seenAt = true;
+              bufferCodePoints = arrayFrom(buffer);
+              for (var i = 0; i < bufferCodePoints.length; i++) {
+                var codePoint = bufferCodePoints[i];
+                if (codePoint == ':' && !seenPasswordToken) {
+                  seenPasswordToken = true;
+                  continue;
+                }
+                var encodedCodePoints = percentEncode(codePoint, userinfoPercentEncodeSet);
+                if (seenPasswordToken) url.password += encodedCodePoints;
+                else url.username += encodedCodePoints;
+              }
+              buffer = '';
+            } else if (
+              chr == EOF || chr == '/' || chr == '?' || chr == '#' ||
+              (chr == '\\' && url.isSpecial())
+            ) {
+              if (seenAt && buffer == '') return INVALID_AUTHORITY;
+              pointer -= arrayFrom(buffer).length + 1;
+              buffer = '';
+              state = HOST;
+            } else buffer += chr;
+            break;
+
+          case HOST:
+          case HOSTNAME:
+            if (stateOverride && url.scheme == 'file') {
+              state = FILE_HOST;
+              continue;
+            } else if (chr == ':' && !seenBracket) {
+              if (buffer == '') return INVALID_HOST;
+              failure = url.parseHost(buffer);
+              if (failure) return failure;
+              buffer = '';
+              state = PORT;
+              if (stateOverride == HOSTNAME) return;
+            } else if (
+              chr == EOF || chr == '/' || chr == '?' || chr == '#' ||
+              (chr == '\\' && url.isSpecial())
+            ) {
+              if (url.isSpecial() && buffer == '') return INVALID_HOST;
+              if (stateOverride && buffer == '' && (url.includesCredentials() || url.port !== null)) return;
+              failure = url.parseHost(buffer);
+              if (failure) return failure;
+              buffer = '';
+              state = PATH_START;
+              if (stateOverride) return;
+              continue;
+            } else {
+              if (chr == '[') seenBracket = true;
+              else if (chr == ']') seenBracket = false;
+              buffer += chr;
+            } break;
+
+          case PORT:
+            if (exec(DIGIT, chr)) {
+              buffer += chr;
+            } else if (
+              chr == EOF || chr == '/' || chr == '?' || chr == '#' ||
+              (chr == '\\' && url.isSpecial()) ||
+              stateOverride
+            ) {
+              if (buffer != '') {
+                var port = parseInt$1(buffer, 10);
+                if (port > 0xFFFF) return INVALID_PORT;
+                url.port = (url.isSpecial() && port === specialSchemes[url.scheme]) ? null : port;
+                buffer = '';
+              }
+              if (stateOverride) return;
+              state = PATH_START;
+              continue;
+            } else return INVALID_PORT;
+            break;
+
+          case FILE:
+            url.scheme = 'file';
+            if (chr == '/' || chr == '\\') state = FILE_SLASH;
+            else if (base && base.scheme == 'file') {
+              if (chr == EOF) {
+                url.host = base.host;
+                url.path = arraySlice$2(base.path);
+                url.query = base.query;
+              } else if (chr == '?') {
+                url.host = base.host;
+                url.path = arraySlice$2(base.path);
+                url.query = '';
+                state = QUERY;
+              } else if (chr == '#') {
+                url.host = base.host;
+                url.path = arraySlice$2(base.path);
+                url.query = base.query;
+                url.fragment = '';
+                state = FRAGMENT;
+              } else {
+                if (!startsWithWindowsDriveLetter(join(arraySlice$2(codePoints, pointer), ''))) {
+                  url.host = base.host;
+                  url.path = arraySlice$2(base.path);
+                  url.shortenPath();
+                }
+                state = PATH;
+                continue;
+              }
+            } else {
+              state = PATH;
+              continue;
+            } break;
+
+          case FILE_SLASH:
+            if (chr == '/' || chr == '\\') {
+              state = FILE_HOST;
+              break;
+            }
+            if (base && base.scheme == 'file' && !startsWithWindowsDriveLetter(join(arraySlice$2(codePoints, pointer), ''))) {
+              if (isWindowsDriveLetter(base.path[0], true)) push$1(url.path, base.path[0]);
+              else url.host = base.host;
+            }
+            state = PATH;
+            continue;
+
+          case FILE_HOST:
+            if (chr == EOF || chr == '/' || chr == '\\' || chr == '?' || chr == '#') {
+              if (!stateOverride && isWindowsDriveLetter(buffer)) {
+                state = PATH;
+              } else if (buffer == '') {
+                url.host = '';
+                if (stateOverride) return;
+                state = PATH_START;
+              } else {
+                failure = url.parseHost(buffer);
+                if (failure) return failure;
+                if (url.host == 'localhost') url.host = '';
+                if (stateOverride) return;
+                buffer = '';
+                state = PATH_START;
+              } continue;
+            } else buffer += chr;
+            break;
+
+          case PATH_START:
+            if (url.isSpecial()) {
+              state = PATH;
+              if (chr != '/' && chr != '\\') continue;
+            } else if (!stateOverride && chr == '?') {
+              url.query = '';
+              state = QUERY;
+            } else if (!stateOverride && chr == '#') {
+              url.fragment = '';
+              state = FRAGMENT;
+            } else if (chr != EOF) {
+              state = PATH;
+              if (chr != '/') continue;
+            } break;
+
+          case PATH:
+            if (
+              chr == EOF || chr == '/' ||
+              (chr == '\\' && url.isSpecial()) ||
+              (!stateOverride && (chr == '?' || chr == '#'))
+            ) {
+              if (isDoubleDot(buffer)) {
+                url.shortenPath();
+                if (chr != '/' && !(chr == '\\' && url.isSpecial())) {
+                  push$1(url.path, '');
+                }
+              } else if (isSingleDot(buffer)) {
+                if (chr != '/' && !(chr == '\\' && url.isSpecial())) {
+                  push$1(url.path, '');
+                }
+              } else {
+                if (url.scheme == 'file' && !url.path.length && isWindowsDriveLetter(buffer)) {
+                  if (url.host) url.host = '';
+                  buffer = charAt$1(buffer, 0) + ':'; // normalize windows drive letter
+                }
+                push$1(url.path, buffer);
+              }
+              buffer = '';
+              if (url.scheme == 'file' && (chr == EOF || chr == '?' || chr == '#')) {
+                while (url.path.length > 1 && url.path[0] === '') {
+                  shift(url.path);
+                }
+              }
+              if (chr == '?') {
+                url.query = '';
+                state = QUERY;
+              } else if (chr == '#') {
+                url.fragment = '';
+                state = FRAGMENT;
+              }
+            } else {
+              buffer += percentEncode(chr, pathPercentEncodeSet);
+            } break;
+
+          case CANNOT_BE_A_BASE_URL_PATH:
+            if (chr == '?') {
+              url.query = '';
+              state = QUERY;
+            } else if (chr == '#') {
+              url.fragment = '';
+              state = FRAGMENT;
+            } else if (chr != EOF) {
+              url.path[0] += percentEncode(chr, C0ControlPercentEncodeSet);
+            } break;
+
+          case QUERY:
+            if (!stateOverride && chr == '#') {
+              url.fragment = '';
+              state = FRAGMENT;
+            } else if (chr != EOF) {
+              if (chr == "'" && url.isSpecial()) url.query += '%27';
+              else if (chr == '#') url.query += '%23';
+              else url.query += percentEncode(chr, C0ControlPercentEncodeSet);
+            } break;
+
+          case FRAGMENT:
+            if (chr != EOF) url.fragment += percentEncode(chr, fragmentPercentEncodeSet);
+            break;
+        }
+
+        pointer++;
+      }
+    },
+    // https://url.spec.whatwg.org/#host-parsing
+    parseHost: function (input) {
+      var result, codePoints, index;
+      if (charAt$1(input, 0) == '[') {
+        if (charAt$1(input, input.length - 1) != ']') return INVALID_HOST;
+        result = parseIPv6(stringSlice(input, 1, -1));
+        if (!result) return INVALID_HOST;
+        this.host = result;
+      // opaque host
+      } else if (!this.isSpecial()) {
+        if (exec(FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT, input)) return INVALID_HOST;
+        result = '';
+        codePoints = arrayFrom(input);
+        for (index = 0; index < codePoints.length; index++) {
+          result += percentEncode(codePoints[index], C0ControlPercentEncodeSet);
+        }
+        this.host = result;
+      } else {
+        input = toASCII(input);
+        if (exec(FORBIDDEN_HOST_CODE_POINT, input)) return INVALID_HOST;
+        result = parseIPv4(input);
+        if (result === null) return INVALID_HOST;
+        this.host = result;
+      }
+    },
+    // https://url.spec.whatwg.org/#cannot-have-a-username-password-port
+    cannotHaveUsernamePasswordPort: function () {
+      return !this.host || this.cannotBeABaseURL || this.scheme == 'file';
+    },
+    // https://url.spec.whatwg.org/#include-credentials
+    includesCredentials: function () {
+      return this.username != '' || this.password != '';
+    },
+    // https://url.spec.whatwg.org/#is-special
+    isSpecial: function () {
+      return hasOwn$2(specialSchemes, this.scheme);
+    },
+    // https://url.spec.whatwg.org/#shorten-a-urls-path
+    shortenPath: function () {
+      var path = this.path;
+      var pathSize = path.length;
+      if (pathSize && (this.scheme != 'file' || pathSize != 1 || !isWindowsDriveLetter(path[0], true))) {
+        path.length--;
+      }
+    },
+    // https://url.spec.whatwg.org/#concept-url-serializer
+    serialize: function () {
+      var url = this;
+      var scheme = url.scheme;
+      var username = url.username;
+      var password = url.password;
+      var host = url.host;
+      var port = url.port;
+      var path = url.path;
+      var query = url.query;
+      var fragment = url.fragment;
+      var output = scheme + ':';
+      if (host !== null) {
+        output += '//';
+        if (url.includesCredentials()) {
+          output += username + (password ? ':' + password : '') + '@';
+        }
+        output += serializeHost(host);
+        if (port !== null) output += ':' + port;
+      } else if (scheme == 'file') output += '//';
+      output += url.cannotBeABaseURL ? path[0] : path.length ? '/' + join(path, '/') : '';
+      if (query !== null) output += '?' + query;
+      if (fragment !== null) output += '#' + fragment;
+      return output;
+    },
+    // https://url.spec.whatwg.org/#dom-url-href
+    setHref: function (href) {
+      var failure = this.parse(href);
+      if (failure) throw TypeError$2(failure);
+      this.searchParams.update();
+    },
+    // https://url.spec.whatwg.org/#dom-url-origin
+    getOrigin: function () {
+      var scheme = this.scheme;
+      var port = this.port;
+      if (scheme == 'blob') try {
+        return new URLConstructor(scheme.path[0]).origin;
+      } catch (error) {
+        return 'null';
+      }
+      if (scheme == 'file' || !this.isSpecial()) return 'null';
+      return scheme + '://' + serializeHost(this.host) + (port !== null ? ':' + port : '');
+    },
+    // https://url.spec.whatwg.org/#dom-url-protocol
+    getProtocol: function () {
+      return this.scheme + ':';
+    },
+    setProtocol: function (protocol) {
+      this.parse($toString(protocol) + ':', SCHEME_START);
+    },
+    // https://url.spec.whatwg.org/#dom-url-username
+    getUsername: function () {
+      return this.username;
+    },
+    setUsername: function (username) {
+      var codePoints = arrayFrom($toString(username));
+      if (this.cannotHaveUsernamePasswordPort()) return;
+      this.username = '';
+      for (var i = 0; i < codePoints.length; i++) {
+        this.username += percentEncode(codePoints[i], userinfoPercentEncodeSet);
+      }
+    },
+    // https://url.spec.whatwg.org/#dom-url-password
+    getPassword: function () {
+      return this.password;
+    },
+    setPassword: function (password) {
+      var codePoints = arrayFrom($toString(password));
+      if (this.cannotHaveUsernamePasswordPort()) return;
+      this.password = '';
+      for (var i = 0; i < codePoints.length; i++) {
+        this.password += percentEncode(codePoints[i], userinfoPercentEncodeSet);
+      }
+    },
+    // https://url.spec.whatwg.org/#dom-url-host
+    getHost: function () {
+      var host = this.host;
+      var port = this.port;
+      return host === null ? ''
+        : port === null ? serializeHost(host)
+        : serializeHost(host) + ':' + port;
+    },
+    setHost: function (host) {
+      if (this.cannotBeABaseURL) return;
+      this.parse(host, HOST);
+    },
+    // https://url.spec.whatwg.org/#dom-url-hostname
+    getHostname: function () {
+      var host = this.host;
+      return host === null ? '' : serializeHost(host);
+    },
+    setHostname: function (hostname) {
+      if (this.cannotBeABaseURL) return;
+      this.parse(hostname, HOSTNAME);
+    },
+    // https://url.spec.whatwg.org/#dom-url-port
+    getPort: function () {
+      var port = this.port;
+      return port === null ? '' : $toString(port);
+    },
+    setPort: function (port) {
+      if (this.cannotHaveUsernamePasswordPort()) return;
+      port = $toString(port);
+      if (port == '') this.port = null;
+      else this.parse(port, PORT);
+    },
+    // https://url.spec.whatwg.org/#dom-url-pathname
+    getPathname: function () {
+      var path = this.path;
+      return this.cannotBeABaseURL ? path[0] : path.length ? '/' + join(path, '/') : '';
+    },
+    setPathname: function (pathname) {
+      if (this.cannotBeABaseURL) return;
+      this.path = [];
+      this.parse(pathname, PATH_START);
+    },
+    // https://url.spec.whatwg.org/#dom-url-search
+    getSearch: function () {
+      var query = this.query;
+      return query ? '?' + query : '';
+    },
+    setSearch: function (search) {
+      search = $toString(search);
+      if (search == '') {
+        this.query = null;
+      } else {
+        if ('?' == charAt$1(search, 0)) search = stringSlice(search, 1);
+        this.query = '';
+        this.parse(search, QUERY);
+      }
+      this.searchParams.update();
+    },
+    // https://url.spec.whatwg.org/#dom-url-searchparams
+    getSearchParams: function () {
+      return this.searchParams.facade;
+    },
+    // https://url.spec.whatwg.org/#dom-url-hash
+    getHash: function () {
+      var fragment = this.fragment;
+      return fragment ? '#' + fragment : '';
+    },
+    setHash: function (hash) {
+      hash = $toString(hash);
+      if (hash == '') {
+        this.fragment = null;
+        return;
+      }
+      if ('#' == charAt$1(hash, 0)) hash = stringSlice(hash, 1);
+      this.fragment = '';
+      this.parse(hash, FRAGMENT);
+    },
+    update: function () {
+      this.query = this.searchParams.serialize() || null;
+    }
+  };
+
+  // `URL` constructor
+  // https://url.spec.whatwg.org/#url-class
+  var URLConstructor = function URL(url /* , base */) {
+    var that = anInstance$1(this, URLPrototype);
+    var base = validateArgumentsLength$3(arguments.length, 1) > 1 ? arguments[1] : undefined;
+    var state = setInternalState$1(that, new URLState(url, false, base));
+    if (!DESCRIPTORS$3) {
+      that.href = state.serialize();
+      that.origin = state.getOrigin();
+      that.protocol = state.getProtocol();
+      that.username = state.getUsername();
+      that.password = state.getPassword();
+      that.host = state.getHost();
+      that.hostname = state.getHostname();
+      that.port = state.getPort();
+      that.pathname = state.getPathname();
+      that.search = state.getSearch();
+      that.searchParams = state.getSearchParams();
+      that.hash = state.getHash();
+    }
+  };
+
+  var URLPrototype = URLConstructor.prototype;
+
+  var accessorDescriptor = function (getter, setter) {
+    return {
+      get: function () {
+        return getInternalURLState(this)[getter]();
+      },
+      set: setter && function (value) {
+        return getInternalURLState(this)[setter](value);
+      },
+      configurable: true,
+      enumerable: true
+    };
+  };
+
+  if (DESCRIPTORS$3) {
+    // `URL.prototype.href` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-href
+    defineBuiltInAccessor(URLPrototype, 'href', accessorDescriptor('serialize', 'setHref'));
+    // `URL.prototype.origin` getter
+    // https://url.spec.whatwg.org/#dom-url-origin
+    defineBuiltInAccessor(URLPrototype, 'origin', accessorDescriptor('getOrigin'));
+    // `URL.prototype.protocol` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-protocol
+    defineBuiltInAccessor(URLPrototype, 'protocol', accessorDescriptor('getProtocol', 'setProtocol'));
+    // `URL.prototype.username` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-username
+    defineBuiltInAccessor(URLPrototype, 'username', accessorDescriptor('getUsername', 'setUsername'));
+    // `URL.prototype.password` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-password
+    defineBuiltInAccessor(URLPrototype, 'password', accessorDescriptor('getPassword', 'setPassword'));
+    // `URL.prototype.host` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-host
+    defineBuiltInAccessor(URLPrototype, 'host', accessorDescriptor('getHost', 'setHost'));
+    // `URL.prototype.hostname` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-hostname
+    defineBuiltInAccessor(URLPrototype, 'hostname', accessorDescriptor('getHostname', 'setHostname'));
+    // `URL.prototype.port` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-port
+    defineBuiltInAccessor(URLPrototype, 'port', accessorDescriptor('getPort', 'setPort'));
+    // `URL.prototype.pathname` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-pathname
+    defineBuiltInAccessor(URLPrototype, 'pathname', accessorDescriptor('getPathname', 'setPathname'));
+    // `URL.prototype.search` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-search
+    defineBuiltInAccessor(URLPrototype, 'search', accessorDescriptor('getSearch', 'setSearch'));
+    // `URL.prototype.searchParams` getter
+    // https://url.spec.whatwg.org/#dom-url-searchparams
+    defineBuiltInAccessor(URLPrototype, 'searchParams', accessorDescriptor('getSearchParams'));
+    // `URL.prototype.hash` accessors pair
+    // https://url.spec.whatwg.org/#dom-url-hash
+    defineBuiltInAccessor(URLPrototype, 'hash', accessorDescriptor('getHash', 'setHash'));
+  }
+
+  // `URL.prototype.toJSON` method
+  // https://url.spec.whatwg.org/#dom-url-tojson
+  defineBuiltIn$1(URLPrototype, 'toJSON', function toJSON() {
+    return getInternalURLState(this).serialize();
+  }, { enumerable: true });
+
+  // `URL.prototype.toString` method
+  // https://url.spec.whatwg.org/#URL-stringification-behavior
+  defineBuiltIn$1(URLPrototype, 'toString', function toString() {
+    return getInternalURLState(this).serialize();
+  }, { enumerable: true });
+
+  if (NativeURL) {
+    var nativeCreateObjectURL = NativeURL.createObjectURL;
+    var nativeRevokeObjectURL = NativeURL.revokeObjectURL;
+    // `URL.createObjectURL` method
+    // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
+    if (nativeCreateObjectURL) defineBuiltIn$1(URLConstructor, 'createObjectURL', bind$3(nativeCreateObjectURL, NativeURL));
+    // `URL.revokeObjectURL` method
+    // https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL
+    if (nativeRevokeObjectURL) defineBuiltIn$1(URLConstructor, 'revokeObjectURL', bind$3(nativeRevokeObjectURL, NativeURL));
+  }
+
+  setToStringTag$1(URLConstructor, 'URL');
+
+  $$n({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
+    URL: URLConstructor
+  });
+
+  var $$m = _export;
+  var getBuiltIn$4 = getBuiltIn$h;
+  var fails$7 = fails$x;
+  var validateArgumentsLength$2 = validateArgumentsLength$5;
+  var toString$3 = toString$b;
+  var USE_NATIVE_URL = urlConstructorDetection;
+
+  var URL$1 = getBuiltIn$4('URL');
+
+  // https://github.com/nodejs/node/issues/47505
+  // https://github.com/denoland/deno/issues/18893
+  var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$7(function () {
+    URL$1.canParse();
+  });
+
+  // `URL.canParse` method
+  // https://url.spec.whatwg.org/#dom-url-canparse
+  $$m({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
+    canParse: function canParse(url) {
+      var length = validateArgumentsLength$2(arguments.length, 1);
+      var urlString = toString$3(url);
+      var base = length < 2 || arguments[1] === undefined ? undefined : toString$3(arguments[1]);
+      try {
+        return !!new URL$1(urlString, base);
+      } catch (error) {
+        return false;
+      }
+    }
+  });
+
+  var path$7 = path$n;
+
+  var url$5 = path$7.URL;
+
+  var parent$z = url$5;
+
+  var url$4 = parent$z;
+
+  var parent$y = url$4;
+
+  var url$3 = parent$y;
+
+  var parent$x = url$3;
+
+  var url$2 = parent$x;
+
+  var url$1 = url$2;
+
+  var url = url$1;
+
+  var _URL = /*@__PURE__*/getDefaultExportFromCjs(url);
+
+  let nanoid = (size = 21) =>
+    crypto.getRandomValues(new Uint8Array(size)).reduce((id, byte) => {
+      byte &= 63;
+      if (byte < 36) {
+        id += byte.toString(36);
+      } else if (byte < 62) {
+        id += (byte - 26).toString(36).toUpperCase();
+      } else if (byte > 62) {
+        id += '-';
+      } else {
+        id += '_';
+      }
+      return id
+    }, '');
+
+  function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var ScreenShot = /*#__PURE__*/function (_Options) {
+    _inherits(ScreenShot, _Options);
+    var _super = _createSuper$5(ScreenShot);
+    function ScreenShot(player, container, desc, props, children) {
+      var _this;
+      _classCallCheck(this, ScreenShot);
+      _this = _super.call(this, player, container, 0, 0, desc, props, children);
+      _defineProperty(_assertThisInitialized(_this), "id", 'ScreenShot');
+      // el: div.video-screenshot.video-controller
+      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
+      _this.player = player;
+      _this.props = props || {};
+      _this.init();
+      return _this;
+    }
+    _createClass(ScreenShot, [{
+      key: "init",
+      value: function init() {
+        this.initTemplate();
+        this.initEvent();
+        storeControlComponent(this);
+      }
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {
+        addClass(this.el, ['video-screenshot', 'video-controller']);
+        this.icon = createSvgs([screenShot$1, screenShot$2], '0 0 1024 1024');
+        this.iconBox.appendChild(this.icon);
+        this.el.appendChild(this.iconBox);
+        this.hideBox.innerText = '截图';
+        this.hideBox.style.fontSize = '13px';
+      }
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        this.onClick = this.onClick.bind(this);
+        this.el.onclick = this.onClick;
+      }
+    }, {
+      key: "onClick",
+      value: function onClick(e) {
+        this.screenShot();
+      }
+    }, {
+      key: "screenShot",
+      value: function screenShot() {
+        var _context;
+        var canvas = document.createElement('canvas');
+        var video = this.player.video;
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        var fileName = _concatInstanceProperty(_context = "".concat(nanoid(), "_")).call(_context, video.currentTime, ".png");
+        canvas.toBlob(function (blob) {
+          var url = _URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = fileName;
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          _URL.revokeObjectURL(url);
+        }, 'image/png');
+      }
+    }]);
+    return ScreenShot;
   }(Options);
 
   function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -6363,7 +8244,7 @@
       _defineProperty(_assertThisInitialized(_this), "player", void 0);
       // 控件
       _defineProperty(_assertThisInitialized(_this), "leftControllers", [PlayButton]);
-      _defineProperty(_assertThisInitialized(_this), "rightController", [Playrate, SubSetting, Volume, PicInPic, FullPage, FullScreen]);
+      _defineProperty(_assertThisInitialized(_this), "rightController", [Playrate, SubSetting, Volume, ScreenShot, PicInPic, FullPage, FullScreen]);
       // fullscreen: FullScreen
       // playButton: PlayButton
       // playrate: Playrate
@@ -6444,6 +8325,7 @@
         // this.playButton = new PlayButton(this.player, this.subPlay, 'div')
         // this.volume = new Volume(this.player, this.settings, 'div')
         // this.playrate = new Playrate(this.player, this.settings, 'div')
+        // this.ScreenShot = new ScreenShot(this.player, this.settings, 'div')
         // this.FullPage = new FullPage(this.player, this.settings, 'div')
         // this.fullscreen = new FullScreen(this.player, this.settings, 'div')
         // this.PicInPic = new PicInPic(this.player, this.settings, 'div')
@@ -6692,22 +8574,22 @@
     return new FactoryMaker();
   }();
 
-  var getBuiltIn$4 = getBuiltIn$h;
-  var uncurryThis$8 = functionUncurryThis;
+  var getBuiltIn$3 = getBuiltIn$h;
+  var uncurryThis$5 = functionUncurryThis;
   var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
   var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
-  var anObject$3 = anObject$f;
+  var anObject$2 = anObject$f;
 
-  var concat = uncurryThis$8([].concat);
+  var concat = uncurryThis$5([].concat);
 
   // all object keys, includes non-enumerable and symbols
-  var ownKeys$3 = getBuiltIn$4('Reflect', 'ownKeys') || function ownKeys(it) {
-    var keys = getOwnPropertyNamesModule.f(anObject$3(it));
+  var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
+    var keys = getOwnPropertyNamesModule.f(anObject$2(it));
     var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
     return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
   };
 
-  var hasOwn$3 = hasOwnProperty_1;
+  var hasOwn$1 = hasOwnProperty_1;
   var ownKeys$2 = ownKeys$3;
   var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
   var definePropertyModule = objectDefineProperty;
@@ -6718,27 +8600,27 @@
     var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
-      if (!hasOwn$3(target, key) && !(exceptions && hasOwn$3(exceptions, key))) {
+      if (!hasOwn$1(target, key) && !(exceptions && hasOwn$1(exceptions, key))) {
         defineProperty(target, key, getOwnPropertyDescriptor(source, key));
       }
     }
   };
 
-  var isObject$4 = isObject$j;
+  var isObject$3 = isObject$j;
   var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
 
   // `InstallErrorCause` abstract operation
   // https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
   var installErrorCause$1 = function (O, options) {
-    if (isObject$4(options) && 'cause' in options) {
+    if (isObject$3(options) && 'cause' in options) {
       createNonEnumerableProperty$2(O, 'cause', options.cause);
     }
   };
 
-  var uncurryThis$7 = functionUncurryThis;
+  var uncurryThis$4 = functionUncurryThis;
 
   var $Error$1 = Error;
-  var replace$3 = uncurryThis$7(''.replace);
+  var replace = uncurryThis$4(''.replace);
 
   var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
   // eslint-disable-next-line redos/no-vulnerable -- safe
@@ -6747,18 +8629,18 @@
 
   var errorStackClear = function (stack, dropEntries) {
     if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error$1.prepareStackTrace) {
-      while (dropEntries--) stack = replace$3(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
+      while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
     } return stack;
   };
 
-  var fails$8 = fails$x;
-  var createPropertyDescriptor$2 = createPropertyDescriptor$8;
+  var fails$6 = fails$x;
+  var createPropertyDescriptor$1 = createPropertyDescriptor$8;
 
-  var errorStackInstallable = !fails$8(function () {
+  var errorStackInstallable = !fails$6(function () {
     var error = Error('a');
     if (!('stack' in error)) return true;
     // eslint-disable-next-line es/no-object-defineproperty -- safe
-    Object.defineProperty(error, 'stack', createPropertyDescriptor$2(1, 7));
+    Object.defineProperty(error, 'stack', createPropertyDescriptor$1(1, 7));
     return error.stack !== 7;
   });
 
@@ -6776,29 +8658,29 @@
     }
   };
 
-  var toString$3 = toString$b;
+  var toString$2 = toString$b;
 
   var normalizeStringArgument$1 = function (argument, $default) {
-    return argument === undefined ? arguments.length < 2 ? '' : $default : toString$3(argument);
+    return argument === undefined ? arguments.length < 2 ? '' : $default : toString$2(argument);
   };
 
-  var $$o = _export;
+  var $$l = _export;
   var isPrototypeOf$4 = objectIsPrototypeOf;
   var getPrototypeOf = objectGetPrototypeOf;
   var setPrototypeOf = objectSetPrototypeOf;
   var copyConstructorProperties = copyConstructorProperties$1;
-  var create$1 = objectCreate;
+  var create = objectCreate;
   var createNonEnumerableProperty = createNonEnumerableProperty$9;
-  var createPropertyDescriptor$1 = createPropertyDescriptor$8;
+  var createPropertyDescriptor = createPropertyDescriptor$8;
   var installErrorCause = installErrorCause$1;
   var installErrorStack = errorStackInstall;
   var iterate$4 = iterate$l;
   var normalizeStringArgument = normalizeStringArgument$1;
-  var wellKnownSymbol$6 = wellKnownSymbol$q;
+  var wellKnownSymbol$4 = wellKnownSymbol$q;
 
-  var TO_STRING_TAG = wellKnownSymbol$6('toStringTag');
+  var TO_STRING_TAG = wellKnownSymbol$4('toStringTag');
   var $Error = Error;
-  var push$3 = [].push;
+  var push = [].push;
 
   var $AggregateError = function AggregateError(errors, message /* , options */) {
     var isInstance = isPrototypeOf$4(AggregateErrorPrototype, this);
@@ -6806,14 +8688,14 @@
     if (setPrototypeOf) {
       that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
     } else {
-      that = isInstance ? this : create$1(AggregateErrorPrototype);
+      that = isInstance ? this : create(AggregateErrorPrototype);
       createNonEnumerableProperty(that, TO_STRING_TAG, 'Error');
     }
     if (message !== undefined) createNonEnumerableProperty(that, 'message', normalizeStringArgument(message));
     installErrorStack(that, $AggregateError, that.stack, 1);
     if (arguments.length > 2) installErrorCause(that, arguments[2]);
     var errorsArray = [];
-    iterate$4(errors, push$3, { that: errorsArray });
+    iterate$4(errors, push, { that: errorsArray });
     createNonEnumerableProperty(that, 'errors', errorsArray);
     return that;
   };
@@ -6821,42 +8703,35 @@
   if (setPrototypeOf) setPrototypeOf($AggregateError, $Error);
   else copyConstructorProperties($AggregateError, $Error, { name: true });
 
-  var AggregateErrorPrototype = $AggregateError.prototype = create$1($Error.prototype, {
-    constructor: createPropertyDescriptor$1(1, $AggregateError),
-    message: createPropertyDescriptor$1(1, ''),
-    name: createPropertyDescriptor$1(1, 'AggregateError')
+  var AggregateErrorPrototype = $AggregateError.prototype = create($Error.prototype, {
+    constructor: createPropertyDescriptor(1, $AggregateError),
+    message: createPropertyDescriptor(1, ''),
+    name: createPropertyDescriptor(1, 'AggregateError')
   });
 
   // `AggregateError` constructor
   // https://tc39.es/ecma262/#sec-aggregate-error-constructor
-  $$o({ global: true, constructor: true, arity: 2 }, {
+  $$l({ global: true, constructor: true, arity: 2 }, {
     AggregateError: $AggregateError
   });
 
-  var classof$2 = classofRaw$2;
+  var classof$1 = classofRaw$2;
 
-  var engineIsNode = typeof process != 'undefined' && classof$2(process) == 'process';
+  var engineIsNode = typeof process != 'undefined' && classof$1(process) == 'process';
 
-  var anObject$2 = anObject$f;
+  var anObject$1 = anObject$f;
   var aConstructor = aConstructor$3;
   var isNullOrUndefined = isNullOrUndefined$6;
-  var wellKnownSymbol$5 = wellKnownSymbol$q;
+  var wellKnownSymbol$3 = wellKnownSymbol$q;
 
-  var SPECIES$1 = wellKnownSymbol$5('species');
+  var SPECIES$1 = wellKnownSymbol$3('species');
 
   // `SpeciesConstructor` abstract operation
   // https://tc39.es/ecma262/#sec-speciesconstructor
   var speciesConstructor$2 = function (O, defaultConstructor) {
-    var C = anObject$2(O).constructor;
+    var C = anObject$1(O).constructor;
     var S;
-    return C === undefined || isNullOrUndefined(S = anObject$2(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
-  };
-
-  var $TypeError$4 = TypeError;
-
-  var validateArgumentsLength$5 = function (passed, required) {
-    if (passed < required) throw $TypeError$4('Not enough arguments');
-    return passed;
+    return C === undefined || isNullOrUndefined(S = anObject$1(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
   };
 
   var userAgent$2 = engineUserAgent;
@@ -6864,38 +8739,38 @@
   // eslint-disable-next-line redos/no-vulnerable -- safe
   var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
 
-  var global$b = global$r;
+  var global$9 = global$r;
   var apply$1 = functionApply;
-  var bind$4 = functionBindContext;
-  var isCallable$5 = isCallable$q;
-  var hasOwn$2 = hasOwnProperty_1;
-  var fails$7 = fails$x;
+  var bind$2 = functionBindContext;
+  var isCallable$4 = isCallable$q;
+  var hasOwn = hasOwnProperty_1;
+  var fails$5 = fails$x;
   var html = html$2;
-  var arraySlice$3 = arraySlice$7;
+  var arraySlice$1 = arraySlice$7;
   var createElement = documentCreateElement$1;
-  var validateArgumentsLength$4 = validateArgumentsLength$5;
+  var validateArgumentsLength$1 = validateArgumentsLength$5;
   var IS_IOS$1 = engineIsIos;
   var IS_NODE$3 = engineIsNode;
 
-  var set = global$b.setImmediate;
-  var clear = global$b.clearImmediate;
-  var process$3 = global$b.process;
-  var Dispatch = global$b.Dispatch;
-  var Function$2 = global$b.Function;
-  var MessageChannel = global$b.MessageChannel;
-  var String$1 = global$b.String;
+  var set = global$9.setImmediate;
+  var clear = global$9.clearImmediate;
+  var process$3 = global$9.process;
+  var Dispatch = global$9.Dispatch;
+  var Function$2 = global$9.Function;
+  var MessageChannel = global$9.MessageChannel;
+  var String$1 = global$9.String;
   var counter = 0;
   var queue$3 = {};
   var ONREADYSTATECHANGE = 'onreadystatechange';
   var $location, defer, channel, port;
 
-  fails$7(function () {
+  fails$5(function () {
     // Deno throws a ReferenceError on `location` access without `--location` flag
-    $location = global$b.location;
+    $location = global$9.location;
   });
 
   var run = function (id) {
-    if (hasOwn$2(queue$3, id)) {
+    if (hasOwn(queue$3, id)) {
       var fn = queue$3[id];
       delete queue$3[id];
       fn();
@@ -6914,15 +8789,15 @@
 
   var globalPostMessageDefer = function (id) {
     // old engines have not location.origin
-    global$b.postMessage(String$1(id), $location.protocol + '//' + $location.host);
+    global$9.postMessage(String$1(id), $location.protocol + '//' + $location.host);
   };
 
   // Node.js 0.9+ & IE10+ has setImmediate, otherwise:
   if (!set || !clear) {
     set = function setImmediate(handler) {
-      validateArgumentsLength$4(arguments.length, 1);
-      var fn = isCallable$5(handler) ? handler : Function$2(handler);
-      var args = arraySlice$3(arguments, 1);
+      validateArgumentsLength$1(arguments.length, 1);
+      var fn = isCallable$4(handler) ? handler : Function$2(handler);
+      var args = arraySlice$1(arguments, 1);
       queue$3[++counter] = function () {
         apply$1(fn, undefined, args);
       };
@@ -6948,18 +8823,18 @@
       channel = new MessageChannel();
       port = channel.port2;
       channel.port1.onmessage = eventListener;
-      defer = bind$4(port.postMessage, port);
+      defer = bind$2(port.postMessage, port);
     // Browsers with postMessage, skip WebWorkers
     // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
     } else if (
-      global$b.addEventListener &&
-      isCallable$5(global$b.postMessage) &&
-      !global$b.importScripts &&
+      global$9.addEventListener &&
+      isCallable$4(global$9.postMessage) &&
+      !global$9.importScripts &&
       $location && $location.protocol !== 'file:' &&
-      !fails$7(globalPostMessageDefer)
+      !fails$5(globalPostMessageDefer)
     ) {
       defer = globalPostMessageDefer;
-      global$b.addEventListener('message', eventListener, false);
+      global$9.addEventListener('message', eventListener, false);
     // IE8-
     } else if (ONREADYSTATECHANGE in createElement('script')) {
       defer = function (id) {
@@ -7014,9 +8889,9 @@
 
   var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
 
-  var global$a = global$r;
-  var bind$3 = functionBindContext;
-  var getOwnPropertyDescriptor$9 = objectGetOwnPropertyDescriptor.f;
+  var global$8 = global$r;
+  var bind$1 = functionBindContext;
+  var getOwnPropertyDescriptor$8 = objectGetOwnPropertyDescriptor.f;
   var macrotask = task$1.set;
   var Queue$1 = queue$2;
   var IS_IOS = engineIsIos;
@@ -7024,12 +8899,12 @@
   var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
   var IS_NODE$2 = engineIsNode;
 
-  var MutationObserver$1 = global$a.MutationObserver || global$a.WebKitMutationObserver;
-  var document$2 = global$a.document;
-  var process$2 = global$a.process;
-  var Promise$1 = global$a.Promise;
+  var MutationObserver$1 = global$8.MutationObserver || global$8.WebKitMutationObserver;
+  var document$2 = global$8.document;
+  var process$2 = global$8.process;
+  var Promise$1 = global$8.Promise;
   // Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
-  var queueMicrotaskDescriptor = getOwnPropertyDescriptor$9(global$a, 'queueMicrotask');
+  var queueMicrotaskDescriptor = getOwnPropertyDescriptor$8(global$8, 'queueMicrotask');
   var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
   var notify$1, toggle, node, promise$6, then;
 
@@ -7064,7 +8939,7 @@
       promise$6 = Promise$1.resolve(undefined);
       // workaround of WebKit ~ iOS Safari 10.1 bug
       promise$6.constructor = Promise$1;
-      then = bind$3(promise$6.then, promise$6);
+      then = bind$1(promise$6.then, promise$6);
       notify$1 = function () {
         then(flush);
       };
@@ -7081,7 +8956,7 @@
     // - setTimeout
     } else {
       // `webpack` dev server bug on IE global methods - use bind(fn, global)
-      macrotask = bind$3(macrotask, global$a);
+      macrotask = bind$1(macrotask, global$8);
       notify$1 = function () {
         macrotask(flush);
       };
@@ -7110,9 +8985,9 @@
     }
   };
 
-  var global$9 = global$r;
+  var global$7 = global$r;
 
-  var promiseNativeConstructor = global$9.Promise;
+  var promiseNativeConstructor = global$7.Promise;
 
   /* global Deno -- Deno case */
 
@@ -7125,20 +9000,20 @@
     && typeof window == 'object'
     && typeof document == 'object';
 
-  var global$8 = global$r;
+  var global$6 = global$r;
   var NativePromiseConstructor$5 = promiseNativeConstructor;
-  var isCallable$4 = isCallable$q;
+  var isCallable$3 = isCallable$q;
   var isForced = isForced_1;
   var inspectSource = inspectSource$2;
-  var wellKnownSymbol$4 = wellKnownSymbol$q;
+  var wellKnownSymbol$2 = wellKnownSymbol$q;
   var IS_BROWSER = engineIsBrowser;
   var IS_DENO = engineIsDeno;
   var V8_VERSION = engineV8Version;
 
   var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
-  var SPECIES = wellKnownSymbol$4('species');
+  var SPECIES = wellKnownSymbol$2('species');
   var SUBCLASSING = false;
-  var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$4(global$8.PromiseRejectionEvent);
+  var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$3(global$6.PromiseRejectionEvent);
 
   var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
     var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
@@ -7195,24 +9070,24 @@
     return new PromiseCapability(C);
   };
 
-  var $$n = _export;
+  var $$k = _export;
   var IS_NODE = engineIsNode;
-  var global$7 = global$r;
-  var call$6 = functionCall;
-  var defineBuiltIn$2 = defineBuiltIn$8;
-  var setToStringTag$2 = setToStringTag$9;
+  var global$5 = global$r;
+  var call$5 = functionCall;
+  var defineBuiltIn = defineBuiltIn$8;
+  var setToStringTag = setToStringTag$9;
   var setSpecies = setSpecies$2;
   var aCallable$4 = aCallable$h;
-  var isCallable$3 = isCallable$q;
-  var isObject$3 = isObject$j;
-  var anInstance$2 = anInstance$5;
+  var isCallable$2 = isCallable$q;
+  var isObject$2 = isObject$j;
+  var anInstance = anInstance$5;
   var speciesConstructor$1 = speciesConstructor$2;
   var task = task$1.set;
   var microtask = microtask_1;
   var hostReportErrors = hostReportErrors$1;
   var perform$5 = perform$6;
   var Queue = queue$2;
-  var InternalStateModule$2 = internalState;
+  var InternalStateModule = internalState;
   var NativePromiseConstructor$4 = promiseNativeConstructor;
   var PromiseConstructorDetection = promiseConstructorDetection;
   var newPromiseCapabilityModule$6 = newPromiseCapability$2;
@@ -7221,18 +9096,18 @@
   var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
   var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
   PromiseConstructorDetection.SUBCLASSING;
-  var getInternalPromiseState = InternalStateModule$2.getterFor(PROMISE);
-  var setInternalState$2 = InternalStateModule$2.set;
+  var getInternalPromiseState = InternalStateModule.getterFor(PROMISE);
+  var setInternalState = InternalStateModule.set;
   var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
   var PromiseConstructor = NativePromiseConstructor$4;
   var PromisePrototype = NativePromisePrototype$1;
-  var TypeError$3 = global$7.TypeError;
-  var document$1 = global$7.document;
-  var process$1 = global$7.process;
+  var TypeError$1 = global$5.TypeError;
+  var document$1 = global$5.document;
+  var process$1 = global$5.process;
   var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
   var newGenericPromiseCapability = newPromiseCapability$1;
 
-  var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$7.dispatchEvent);
+  var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$5.dispatchEvent);
   var UNHANDLED_REJECTION = 'unhandledrejection';
   var REJECTION_HANDLED = 'rejectionhandled';
   var PENDING = 0;
@@ -7246,7 +9121,7 @@
   // helpers
   var isThenable = function (it) {
     var then;
-    return isObject$3(it) && isCallable$3(then = it.then) ? then : false;
+    return isObject$2(it) && isCallable$2(then = it.then) ? then : false;
   };
 
   var callReaction = function (reaction, state) {
@@ -7273,9 +9148,9 @@
           }
         }
         if (result === reaction.promise) {
-          reject(TypeError$3('Promise-chain cycle'));
+          reject(TypeError$1('Promise-chain cycle'));
         } else if (then = isThenable(result)) {
-          call$6(then, result, resolve, reject);
+          call$5(then, result, resolve, reject);
         } else resolve(result);
       } else reject(value);
     } catch (error) {
@@ -7305,14 +9180,14 @@
       event.promise = promise;
       event.reason = reason;
       event.initEvent(name, false, true);
-      global$7.dispatchEvent(event);
+      global$5.dispatchEvent(event);
     } else event = { promise: promise, reason: reason };
-    if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$7['on' + name])) handler(event);
+    if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$5['on' + name])) handler(event);
     else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
   };
 
   var onUnhandled = function (state) {
-    call$6(task, global$7, function () {
+    call$5(task, global$5, function () {
       var promise = state.facade;
       var value = state.value;
       var IS_UNHANDLED = isUnhandled(state);
@@ -7335,7 +9210,7 @@
   };
 
   var onHandleUnhandled = function (state) {
-    call$6(task, global$7, function () {
+    call$5(task, global$5, function () {
       var promise = state.facade;
       if (IS_NODE) {
         process$1.emit('rejectionHandled', promise);
@@ -7343,7 +9218,7 @@
     });
   };
 
-  var bind$2 = function (fn, state, unwrap) {
+  var bind = function (fn, state, unwrap) {
     return function (value) {
       fn(state, value, unwrap);
     };
@@ -7363,15 +9238,15 @@
     state.done = true;
     if (unwrap) state = unwrap;
     try {
-      if (state.facade === value) throw TypeError$3("Promise can't be resolved itself");
+      if (state.facade === value) throw TypeError$1("Promise can't be resolved itself");
       var then = isThenable(value);
       if (then) {
         microtask(function () {
           var wrapper = { done: false };
           try {
-            call$6(then, value,
-              bind$2(internalResolve, wrapper, state),
-              bind$2(internalReject, wrapper, state)
+            call$5(then, value,
+              bind(internalResolve, wrapper, state),
+              bind(internalReject, wrapper, state)
             );
           } catch (error) {
             internalReject(wrapper, error, state);
@@ -7391,12 +9266,12 @@
   if (FORCED_PROMISE_CONSTRUCTOR$4) {
     // 25.4.3.1 Promise(executor)
     PromiseConstructor = function Promise(executor) {
-      anInstance$2(this, PromisePrototype);
+      anInstance(this, PromisePrototype);
       aCallable$4(executor);
-      call$6(Internal, this);
+      call$5(Internal, this);
       var state = getInternalPromiseState(this);
       try {
-        executor(bind$2(internalResolve, state), bind$2(internalReject, state));
+        executor(bind(internalResolve, state), bind(internalReject, state));
       } catch (error) {
         internalReject(state, error);
       }
@@ -7406,7 +9281,7 @@
 
     // eslint-disable-next-line no-unused-vars -- required for `.length`
     Internal = function Promise(executor) {
-      setInternalState$2(this, {
+      setInternalState(this, {
         type: PROMISE,
         done: false,
         notified: false,
@@ -7420,12 +9295,12 @@
 
     // `Promise.prototype.then` method
     // https://tc39.es/ecma262/#sec-promise.prototype.then
-    Internal.prototype = defineBuiltIn$2(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
+    Internal.prototype = defineBuiltIn(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
       var state = getInternalPromiseState(this);
       var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
       state.parent = true;
-      reaction.ok = isCallable$3(onFulfilled) ? onFulfilled : true;
-      reaction.fail = isCallable$3(onRejected) && onRejected;
+      reaction.ok = isCallable$2(onFulfilled) ? onFulfilled : true;
+      reaction.fail = isCallable$2(onRejected) && onRejected;
       reaction.domain = IS_NODE ? process$1.domain : undefined;
       if (state.state == PENDING) state.reactions.add(reaction);
       else microtask(function () {
@@ -7438,8 +9313,8 @@
       var promise = new Internal();
       var state = getInternalPromiseState(promise);
       this.promise = promise;
-      this.resolve = bind$2(internalResolve, state);
-      this.reject = bind$2(internalReject, state);
+      this.resolve = bind(internalResolve, state);
+      this.reject = bind(internalReject, state);
     };
 
     newPromiseCapabilityModule$6.f = newPromiseCapability$1 = function (C) {
@@ -7449,11 +9324,11 @@
     };
   }
 
-  $$n({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+  $$k({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
     Promise: PromiseConstructor
   });
 
-  setToStringTag$2(PromiseConstructor, PROMISE, false, true);
+  setToStringTag(PromiseConstructor, PROMISE, false, true);
   setSpecies(PROMISE);
 
   var NativePromiseConstructor$3 = promiseNativeConstructor;
@@ -7464,8 +9339,8 @@
     NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
   });
 
-  var $$m = _export;
-  var call$5 = functionCall;
+  var $$j = _export;
+  var call$4 = functionCall;
   var aCallable$3 = aCallable$h;
   var newPromiseCapabilityModule$5 = newPromiseCapability$2;
   var perform$4 = perform$6;
@@ -7474,7 +9349,7 @@
 
   // `Promise.all` method
   // https://tc39.es/ecma262/#sec-promise.all
-  $$m({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
+  $$j({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
     all: function all(iterable) {
       var C = this;
       var capability = newPromiseCapabilityModule$5.f(C);
@@ -7489,7 +9364,7 @@
           var index = counter++;
           var alreadyCalled = false;
           remaining++;
-          call$5($promiseResolve, C, promise).then(function (value) {
+          call$4($promiseResolve, C, promise).then(function (value) {
             if (alreadyCalled) return;
             alreadyCalled = true;
             values[index] = value;
@@ -7503,7 +9378,7 @@
     }
   });
 
-  var $$l = _export;
+  var $$i = _export;
   var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
   var NativePromiseConstructor$2 = promiseNativeConstructor;
 
@@ -7511,14 +9386,14 @@
 
   // `Promise.prototype.catch` method
   // https://tc39.es/ecma262/#sec-promise.prototype.catch
-  $$l({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+  $$i({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
     'catch': function (onRejected) {
       return this.then(undefined, onRejected);
     }
   });
 
-  var $$k = _export;
-  var call$4 = functionCall;
+  var $$h = _export;
+  var call$3 = functionCall;
   var aCallable$2 = aCallable$h;
   var newPromiseCapabilityModule$4 = newPromiseCapability$2;
   var perform$3 = perform$6;
@@ -7527,7 +9402,7 @@
 
   // `Promise.race` method
   // https://tc39.es/ecma262/#sec-promise.race
-  $$k({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
+  $$h({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
     race: function race(iterable) {
       var C = this;
       var capability = newPromiseCapabilityModule$4.f(C);
@@ -7535,7 +9410,7 @@
       var result = perform$3(function () {
         var $promiseResolve = aCallable$2(C.resolve);
         iterate$2(iterable, function (promise) {
-          call$4($promiseResolve, C, promise).then(capability.resolve, reject);
+          call$3($promiseResolve, C, promise).then(capability.resolve, reject);
         });
       });
       if (result.error) reject(result.value);
@@ -7543,54 +9418,54 @@
     }
   });
 
-  var $$j = _export;
-  var call$3 = functionCall;
+  var $$g = _export;
+  var call$2 = functionCall;
   var newPromiseCapabilityModule$3 = newPromiseCapability$2;
   var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
 
   // `Promise.reject` method
   // https://tc39.es/ecma262/#sec-promise.reject
-  $$j({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+  $$g({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
     reject: function reject(r) {
       var capability = newPromiseCapabilityModule$3.f(this);
-      call$3(capability.reject, undefined, r);
+      call$2(capability.reject, undefined, r);
       return capability.promise;
     }
   });
 
-  var anObject$1 = anObject$f;
-  var isObject$2 = isObject$j;
+  var anObject = anObject$f;
+  var isObject$1 = isObject$j;
   var newPromiseCapability = newPromiseCapability$2;
 
   var promiseResolve$2 = function (C, x) {
-    anObject$1(C);
-    if (isObject$2(x) && x.constructor === C) return x;
+    anObject(C);
+    if (isObject$1(x) && x.constructor === C) return x;
     var promiseCapability = newPromiseCapability.f(C);
     var resolve = promiseCapability.resolve;
     resolve(x);
     return promiseCapability.promise;
   };
 
-  var $$i = _export;
-  var getBuiltIn$3 = getBuiltIn$h;
-  var IS_PURE$1 = isPure;
+  var $$f = _export;
+  var getBuiltIn$2 = getBuiltIn$h;
+  var IS_PURE = isPure;
   var NativePromiseConstructor$1 = promiseNativeConstructor;
   var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
   var promiseResolve$1 = promiseResolve$2;
 
-  var PromiseConstructorWrapper = getBuiltIn$3('Promise');
+  var PromiseConstructorWrapper = getBuiltIn$2('Promise');
   var CHECK_WRAPPER = !FORCED_PROMISE_CONSTRUCTOR;
 
   // `Promise.resolve` method
   // https://tc39.es/ecma262/#sec-promise.resolve
-  $$i({ target: 'Promise', stat: true, forced: IS_PURE$1  }, {
+  $$f({ target: 'Promise', stat: true, forced: IS_PURE  }, {
     resolve: function resolve(x) {
       return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
     }
   });
 
-  var $$h = _export;
-  var call$2 = functionCall;
+  var $$e = _export;
+  var call$1 = functionCall;
   var aCallable$1 = aCallable$h;
   var newPromiseCapabilityModule$2 = newPromiseCapability$2;
   var perform$2 = perform$6;
@@ -7599,7 +9474,7 @@
 
   // `Promise.allSettled` method
   // https://tc39.es/ecma262/#sec-promise.allsettled
-  $$h({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+  $$e({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
     allSettled: function allSettled(iterable) {
       var C = this;
       var capability = newPromiseCapabilityModule$2.f(C);
@@ -7614,7 +9489,7 @@
           var index = counter++;
           var alreadyCalled = false;
           remaining++;
-          call$2(promiseResolve, C, promise).then(function (value) {
+          call$1(promiseResolve, C, promise).then(function (value) {
             if (alreadyCalled) return;
             alreadyCalled = true;
             values[index] = { status: 'fulfilled', value: value };
@@ -7633,10 +9508,10 @@
     }
   });
 
-  var $$g = _export;
-  var call$1 = functionCall;
+  var $$d = _export;
+  var call = functionCall;
   var aCallable = aCallable$h;
-  var getBuiltIn$2 = getBuiltIn$h;
+  var getBuiltIn$1 = getBuiltIn$h;
   var newPromiseCapabilityModule$1 = newPromiseCapability$2;
   var perform$1 = perform$6;
   var iterate = iterate$l;
@@ -7646,10 +9521,10 @@
 
   // `Promise.any` method
   // https://tc39.es/ecma262/#sec-promise.any
-  $$g({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+  $$d({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
     any: function any(iterable) {
       var C = this;
-      var AggregateError = getBuiltIn$2('AggregateError');
+      var AggregateError = getBuiltIn$1('AggregateError');
       var capability = newPromiseCapabilityModule$1.f(C);
       var resolve = capability.resolve;
       var reject = capability.reject;
@@ -7663,7 +9538,7 @@
           var index = counter++;
           var alreadyRejected = false;
           remaining++;
-          call$1(promiseResolve, C, promise).then(function (value) {
+          call(promiseResolve, C, promise).then(function (value) {
             if (alreadyRejected || alreadyResolved) return;
             alreadyResolved = true;
             resolve(value);
@@ -7681,28 +9556,28 @@
     }
   });
 
-  var $$f = _export;
+  var $$c = _export;
   var NativePromiseConstructor = promiseNativeConstructor;
-  var fails$6 = fails$x;
-  var getBuiltIn$1 = getBuiltIn$h;
-  var isCallable$2 = isCallable$q;
+  var fails$4 = fails$x;
+  var getBuiltIn = getBuiltIn$h;
+  var isCallable$1 = isCallable$q;
   var speciesConstructor = speciesConstructor$2;
   var promiseResolve = promiseResolve$2;
 
   var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
 
   // Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
-  var NON_GENERIC = !!NativePromiseConstructor && fails$6(function () {
+  var NON_GENERIC = !!NativePromiseConstructor && fails$4(function () {
     // eslint-disable-next-line unicorn/no-thenable -- required for testing
     NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
   });
 
   // `Promise.prototype.finally` method
   // https://tc39.es/ecma262/#sec-promise.prototype.finally
-  $$f({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+  $$c({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
     'finally': function (onFinally) {
-      var C = speciesConstructor(this, getBuiltIn$1('Promise'));
-      var isFunction = isCallable$2(onFinally);
+      var C = speciesConstructor(this, getBuiltIn('Promise'));
+      var isFunction = isCallable$1(onFinally);
       return this.then(
         isFunction ? function (x) {
           return promiseResolve(C, onFinally()).then(function () { return x; });
@@ -7714,27 +9589,27 @@
     }
   });
 
-  var path$7 = path$n;
+  var path$6 = path$n;
 
-  var promise$5 = path$7.Promise;
+  var promise$5 = path$6.Promise;
 
-  var parent$z = promise$5;
+  var parent$w = promise$5;
 
 
-  var promise$4 = parent$z;
+  var promise$4 = parent$w;
 
-  var parent$y = promise$4;
+  var parent$v = promise$4;
 
-  var promise$3 = parent$y;
+  var promise$3 = parent$v;
 
   // TODO: Remove from `core-js@4`
-  var $$e = _export;
+  var $$b = _export;
   var newPromiseCapabilityModule = newPromiseCapability$2;
   var perform = perform$6;
 
   // `Promise.try` method
   // https://github.com/tc39/proposal-promise-try
-  $$e({ target: 'Promise', stat: true, forced: true }, {
+  $$b({ target: 'Promise', stat: true, forced: true }, {
     'try': function (callbackfn) {
       var promiseCapability = newPromiseCapabilityModule.f(this);
       var result = perform(callbackfn);
@@ -7743,14 +9618,14 @@
     }
   });
 
-  var parent$x = promise$3;
+  var parent$u = promise$3;
 
   // TODO: Remove from `core-js@4`
 
 
 
 
-  var promise$2 = parent$x;
+  var promise$2 = parent$u;
 
   var promise$1 = promise$2;
 
@@ -7759,19 +9634,19 @@
   var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
 
   /* eslint-disable es/no-array-prototype-indexof -- required for testing */
-  var $$d = _export;
-  var uncurryThis$6 = functionUncurryThisClause;
+  var $$a = _export;
+  var uncurryThis$3 = functionUncurryThisClause;
   var $indexOf = arrayIncludes.indexOf;
   var arrayMethodIsStrict = arrayMethodIsStrict$2;
 
-  var nativeIndexOf = uncurryThis$6([].indexOf);
+  var nativeIndexOf = uncurryThis$3([].indexOf);
 
   var NEGATIVE_ZERO = !!nativeIndexOf && 1 / nativeIndexOf([1], 1, -0) < 0;
   var FORCED$2 = NEGATIVE_ZERO || !arrayMethodIsStrict('indexOf');
 
   // `Array.prototype.indexOf` method
   // https://tc39.es/ecma262/#sec-array.prototype.indexof
-  $$d({ target: 'Array', proto: true, forced: FORCED$2 }, {
+  $$a({ target: 'Array', proto: true, forced: FORCED$2 }, {
     indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
       var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
       return NEGATIVE_ZERO
@@ -7795,17 +9670,17 @@
     return it === ArrayPrototype$3 || (isPrototypeOf$3(ArrayPrototype$3, it) && own === ArrayPrototype$3.indexOf) ? method$2 : own;
   };
 
-  var parent$w = indexOf$5;
+  var parent$t = indexOf$5;
 
-  var indexOf$4 = parent$w;
+  var indexOf$4 = parent$t;
 
-  var parent$v = indexOf$4;
+  var parent$s = indexOf$4;
 
-  var indexOf$3 = parent$v;
+  var indexOf$3 = parent$s;
 
-  var parent$u = indexOf$3;
+  var parent$r = indexOf$3;
 
-  var indexOf$2 = parent$u;
+  var indexOf$2 = parent$r;
 
   var indexOf$1 = indexOf$2;
 
@@ -7813,15 +9688,15 @@
 
   var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
 
-  var DESCRIPTORS$5 = descriptors;
+  var DESCRIPTORS$2 = descriptors;
   var isArray$1 = isArray$d;
 
   var $TypeError$2 = TypeError;
   // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-  var getOwnPropertyDescriptor$8 = Object.getOwnPropertyDescriptor;
+  var getOwnPropertyDescriptor$7 = Object.getOwnPropertyDescriptor;
 
   // Safari < 13 does not throw an error in this case
-  var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS$5 && !function () {
+  var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS$2 && !function () {
     // makes no sense without proper strict mode support
     if (this !== undefined) return true;
     try {
@@ -7833,7 +9708,7 @@
   }();
 
   var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
-    if (isArray$1(O) && !getOwnPropertyDescriptor$8(O, 'length').writable) {
+    if (isArray$1(O) && !getOwnPropertyDescriptor$7(O, 'length').writable) {
       throw $TypeError$2('Cannot set read only .length');
     } return O.length = length;
   } : function (O, length) {
@@ -7848,7 +9723,7 @@
     if (!delete O[P]) throw $TypeError$1('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
   };
 
-  var $$c = _export;
+  var $$9 = _export;
   var toObject$1 = toObject$a;
   var toAbsoluteIndex = toAbsoluteIndex$4;
   var toIntegerOrInfinity = toIntegerOrInfinity$4;
@@ -7868,7 +9743,7 @@
   // `Array.prototype.splice` method
   // https://tc39.es/ecma262/#sec-array.prototype.splice
   // with adding support of @@species
-  $$c({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  $$9({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
     splice: function splice(start, deleteCount /* , ...items */) {
       var O = toObject$1(this);
       var len = lengthOfArrayLike(O);
@@ -7917,35 +9792,35 @@
 
   var entryVirtual$3 = entryVirtual$b;
 
-  var splice$7 = entryVirtual$3('Array').splice;
+  var splice$6 = entryVirtual$3('Array').splice;
 
   var isPrototypeOf$2 = objectIsPrototypeOf;
-  var method$1 = splice$7;
+  var method$1 = splice$6;
 
   var ArrayPrototype$2 = Array.prototype;
 
-  var splice$6 = function (it) {
+  var splice$5 = function (it) {
     var own = it.splice;
     return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.splice) ? method$1 : own;
   };
 
-  var parent$t = splice$6;
+  var parent$q = splice$5;
 
-  var splice$5 = parent$t;
+  var splice$4 = parent$q;
 
-  var parent$s = splice$5;
+  var parent$p = splice$4;
 
-  var splice$4 = parent$s;
+  var splice$3 = parent$p;
 
-  var parent$r = splice$4;
+  var parent$o = splice$3;
 
-  var splice$3 = parent$r;
-
-  var splice$2 = splice$3;
+  var splice$2 = parent$o;
 
   var splice$1 = splice$2;
 
-  var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice$1);
+  var splice = splice$1;
+
+  var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice);
 
   var EventBus = /*#__PURE__*/function () {
     function EventBus(ctx) {
@@ -8198,19 +10073,19 @@
     DOMNodeTypes[DOMNodeTypes["DOCUMENT_NODE"] = 9] = "DOCUMENT_NODE";
   })(DOMNodeTypes || (DOMNodeTypes = {}));
 
-  var $$b = _export;
+  var $$8 = _export;
   var $includes = arrayIncludes.includes;
-  var fails$5 = fails$x;
+  var fails$3 = fails$x;
 
   // FF99+ bug
-  var BROKEN_ON_SPARSE = fails$5(function () {
+  var BROKEN_ON_SPARSE = fails$3(function () {
     // eslint-disable-next-line es/no-array-prototype-includes -- detection
     return !Array(1).includes();
   });
 
   // `Array.prototype.includes` method
   // https://tc39.es/ecma262/#sec-array.prototype.includes
-  $$b({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+  $$8({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
     includes: function includes(el /* , fromIndex = 0 */) {
       return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
     }
@@ -8220,17 +10095,17 @@
 
   var includes$7 = entryVirtual$2('Array').includes;
 
-  var isObject$1 = isObject$j;
-  var classof$1 = classofRaw$2;
-  var wellKnownSymbol$3 = wellKnownSymbol$q;
+  var isObject = isObject$j;
+  var classof = classofRaw$2;
+  var wellKnownSymbol$1 = wellKnownSymbol$q;
 
-  var MATCH$1 = wellKnownSymbol$3('match');
+  var MATCH$1 = wellKnownSymbol$1('match');
 
   // `IsRegExp` abstract operation
   // https://tc39.es/ecma262/#sec-isregexp
   var isRegexp = function (it) {
     var isRegExp;
-    return isObject$1(it) && ((isRegExp = it[MATCH$1]) !== undefined ? !!isRegExp : classof$1(it) == 'RegExp');
+    return isObject(it) && ((isRegExp = it[MATCH$1]) !== undefined ? !!isRegExp : classof(it) == 'RegExp');
   };
 
   var isRegExp = isRegexp;
@@ -8243,9 +10118,9 @@
     } return it;
   };
 
-  var wellKnownSymbol$2 = wellKnownSymbol$q;
+  var wellKnownSymbol = wellKnownSymbol$q;
 
-  var MATCH = wellKnownSymbol$2('match');
+  var MATCH = wellKnownSymbol('match');
 
   var correctIsRegexpLogic = function (METHOD_NAME) {
     var regexp = /./;
@@ -8259,22 +10134,22 @@
     } return false;
   };
 
-  var $$a = _export;
-  var uncurryThis$5 = functionUncurryThis;
+  var $$7 = _export;
+  var uncurryThis$2 = functionUncurryThis;
   var notARegExp = notARegexp;
   var requireObjectCoercible = requireObjectCoercible$5;
-  var toString$2 = toString$b;
+  var toString$1 = toString$b;
   var correctIsRegExpLogic = correctIsRegexpLogic;
 
-  var stringIndexOf = uncurryThis$5(''.indexOf);
+  var stringIndexOf = uncurryThis$2(''.indexOf);
 
   // `String.prototype.includes` method
   // https://tc39.es/ecma262/#sec-string.prototype.includes
-  $$a({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+  $$7({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
     includes: function includes(searchString /* , position = 0 */) {
       return !!~stringIndexOf(
-        toString$2(requireObjectCoercible(this)),
-        toString$2(notARegExp(searchString)),
+        toString$1(requireObjectCoercible(this)),
+        toString$1(notARegExp(searchString)),
         arguments.length > 1 ? arguments[1] : undefined
       );
     }
@@ -8299,17 +10174,17 @@
     } return own;
   };
 
-  var parent$q = includes$5;
+  var parent$n = includes$5;
 
-  var includes$4 = parent$q;
+  var includes$4 = parent$n;
 
-  var parent$p = includes$4;
+  var parent$m = includes$4;
 
-  var includes$3 = parent$p;
+  var includes$3 = parent$m;
 
-  var parent$o = includes$3;
+  var parent$l = includes$3;
 
-  var includes$2 = parent$o;
+  var includes$2 = parent$l;
 
   var includes$1 = includes$2;
 
@@ -8887,18 +10762,18 @@
 
   var _typeofExports = _typeof.exports;
 
-  var $$9 = _export;
-  var uncurryThis$4 = functionUncurryThis;
+  var $$6 = _export;
+  var uncurryThis$1 = functionUncurryThis;
   var isArray = isArray$d;
 
-  var nativeReverse = uncurryThis$4([].reverse);
+  var nativeReverse = uncurryThis$1([].reverse);
   var test = [1, 2];
 
   // `Array.prototype.reverse` method
   // https://tc39.es/ecma262/#sec-array.prototype.reverse
   // fix for Safari 12.0 bug
   // https://bugs.webkit.org/show_bug.cgi?id=188794
-  $$9({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
+  $$6({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
     reverse: function reverse() {
       // eslint-disable-next-line no-self-assign -- dirty hack
       if (isArray(this)) this.length = this.length;
@@ -8920,17 +10795,17 @@
     return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.reverse) ? method : own;
   };
 
-  var parent$n = reverse$5;
+  var parent$k = reverse$5;
 
-  var reverse$4 = parent$n;
+  var reverse$4 = parent$k;
 
-  var parent$m = reverse$4;
+  var parent$j = reverse$4;
 
-  var reverse$3 = parent$m;
+  var reverse$3 = parent$j;
 
-  var parent$l = reverse$3;
+  var parent$i = reverse$3;
 
-  var reverse$2 = parent$l;
+  var reverse$2 = parent$i;
 
   var reverse$1 = reverse$2;
 
@@ -9824,1772 +11699,6 @@
     return MediaPlayerBuffer;
   }();
   var factory$2 = FactoryMaker.getSingleFactory(MediaPlayerBuffer);
-
-  var fails$4 = fails$x;
-  var wellKnownSymbol$1 = wellKnownSymbol$q;
-  var DESCRIPTORS$4 = descriptors;
-  var IS_PURE = isPure;
-
-  var ITERATOR$2 = wellKnownSymbol$1('iterator');
-
-  var urlConstructorDetection = !fails$4(function () {
-    // eslint-disable-next-line unicorn/relative-url-style -- required for testing
-    var url = new URL('b?a=1&b=2&c=3', 'http://a');
-    var searchParams = url.searchParams;
-    var result = '';
-    url.pathname = 'c%20d';
-    searchParams.forEach(function (value, key) {
-      searchParams['delete']('b');
-      result += key + value;
-    });
-    return (IS_PURE && !url.toJSON)
-      || (!searchParams.size && (IS_PURE || !DESCRIPTORS$4))
-      || !searchParams.sort
-      || url.href !== 'http://a/c%20d?a=1&c=3'
-      || searchParams.get('c') !== '3'
-      || String(new URLSearchParams('?a=1')) !== 'a=1'
-      || !searchParams[ITERATOR$2]
-      // throws in Edge
-      || new URL('https://a@b').username !== 'a'
-      || new URLSearchParams(new URLSearchParams('a=b')).get('a') !== 'b'
-      // not punycoded in Edge
-      || new URL('http://тест').host !== 'xn--e1aybc'
-      // not escaped in Chrome 62-
-      || new URL('http://a#б').hash !== '#%D0%B1'
-      // fails in Chrome 66-
-      || result !== 'a1c3'
-      // throws in Safari
-      || new URL('http://x', undefined).host !== 'x';
-  });
-
-  // based on https://github.com/bestiejs/punycode.js/blob/master/punycode.js
-  var uncurryThis$3 = functionUncurryThis;
-
-  var maxInt = 2147483647; // aka. 0x7FFFFFFF or 2^31-1
-  var base = 36;
-  var tMin = 1;
-  var tMax = 26;
-  var skew = 38;
-  var damp = 700;
-  var initialBias = 72;
-  var initialN = 128; // 0x80
-  var delimiter = '-'; // '\x2D'
-  var regexNonASCII = /[^\0-\u007E]/; // non-ASCII chars
-  var regexSeparators = /[.\u3002\uFF0E\uFF61]/g; // RFC 3490 separators
-  var OVERFLOW_ERROR = 'Overflow: input needs wider integers to process';
-  var baseMinusTMin = base - tMin;
-
-  var $RangeError = RangeError;
-  var exec$1 = uncurryThis$3(regexSeparators.exec);
-  var floor$2 = Math.floor;
-  var fromCharCode = String.fromCharCode;
-  var charCodeAt = uncurryThis$3(''.charCodeAt);
-  var join$2 = uncurryThis$3([].join);
-  var push$2 = uncurryThis$3([].push);
-  var replace$2 = uncurryThis$3(''.replace);
-  var split$2 = uncurryThis$3(''.split);
-  var toLowerCase$1 = uncurryThis$3(''.toLowerCase);
-
-  /**
-   * Creates an array containing the numeric code points of each Unicode
-   * character in the string. While JavaScript uses UCS-2 internally,
-   * this function will convert a pair of surrogate halves (each of which
-   * UCS-2 exposes as separate characters) into a single code point,
-   * matching UTF-16.
-   */
-  var ucs2decode = function (string) {
-    var output = [];
-    var counter = 0;
-    var length = string.length;
-    while (counter < length) {
-      var value = charCodeAt(string, counter++);
-      if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
-        // It's a high surrogate, and there is a next character.
-        var extra = charCodeAt(string, counter++);
-        if ((extra & 0xFC00) == 0xDC00) { // Low surrogate.
-          push$2(output, ((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
-        } else {
-          // It's an unmatched surrogate; only append this code unit, in case the
-          // next code unit is the high surrogate of a surrogate pair.
-          push$2(output, value);
-          counter--;
-        }
-      } else {
-        push$2(output, value);
-      }
-    }
-    return output;
-  };
-
-  /**
-   * Converts a digit/integer into a basic code point.
-   */
-  var digitToBasic = function (digit) {
-    //  0..25 map to ASCII a..z or A..Z
-    // 26..35 map to ASCII 0..9
-    return digit + 22 + 75 * (digit < 26);
-  };
-
-  /**
-   * Bias adaptation function as per section 3.4 of RFC 3492.
-   * https://tools.ietf.org/html/rfc3492#section-3.4
-   */
-  var adapt = function (delta, numPoints, firstTime) {
-    var k = 0;
-    delta = firstTime ? floor$2(delta / damp) : delta >> 1;
-    delta += floor$2(delta / numPoints);
-    while (delta > baseMinusTMin * tMax >> 1) {
-      delta = floor$2(delta / baseMinusTMin);
-      k += base;
-    }
-    return floor$2(k + (baseMinusTMin + 1) * delta / (delta + skew));
-  };
-
-  /**
-   * Converts a string of Unicode symbols (e.g. a domain name label) to a
-   * Punycode string of ASCII-only symbols.
-   */
-  var encode = function (input) {
-    var output = [];
-
-    // Convert the input in UCS-2 to an array of Unicode code points.
-    input = ucs2decode(input);
-
-    // Cache the length.
-    var inputLength = input.length;
-
-    // Initialize the state.
-    var n = initialN;
-    var delta = 0;
-    var bias = initialBias;
-    var i, currentValue;
-
-    // Handle the basic code points.
-    for (i = 0; i < input.length; i++) {
-      currentValue = input[i];
-      if (currentValue < 0x80) {
-        push$2(output, fromCharCode(currentValue));
-      }
-    }
-
-    var basicLength = output.length; // number of basic code points.
-    var handledCPCount = basicLength; // number of code points that have been handled;
-
-    // Finish the basic string with a delimiter unless it's empty.
-    if (basicLength) {
-      push$2(output, delimiter);
-    }
-
-    // Main encoding loop:
-    while (handledCPCount < inputLength) {
-      // All non-basic code points < n have been handled already. Find the next larger one:
-      var m = maxInt;
-      for (i = 0; i < input.length; i++) {
-        currentValue = input[i];
-        if (currentValue >= n && currentValue < m) {
-          m = currentValue;
-        }
-      }
-
-      // Increase `delta` enough to advance the decoder's <n,i> state to <m,0>, but guard against overflow.
-      var handledCPCountPlusOne = handledCPCount + 1;
-      if (m - n > floor$2((maxInt - delta) / handledCPCountPlusOne)) {
-        throw $RangeError(OVERFLOW_ERROR);
-      }
-
-      delta += (m - n) * handledCPCountPlusOne;
-      n = m;
-
-      for (i = 0; i < input.length; i++) {
-        currentValue = input[i];
-        if (currentValue < n && ++delta > maxInt) {
-          throw $RangeError(OVERFLOW_ERROR);
-        }
-        if (currentValue == n) {
-          // Represent delta as a generalized variable-length integer.
-          var q = delta;
-          var k = base;
-          while (true) {
-            var t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-            if (q < t) break;
-            var qMinusT = q - t;
-            var baseMinusT = base - t;
-            push$2(output, fromCharCode(digitToBasic(t + qMinusT % baseMinusT)));
-            q = floor$2(qMinusT / baseMinusT);
-            k += base;
-          }
-
-          push$2(output, fromCharCode(digitToBasic(q)));
-          bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
-          delta = 0;
-          handledCPCount++;
-        }
-      }
-
-      delta++;
-      n++;
-    }
-    return join$2(output, '');
-  };
-
-  var stringPunycodeToAscii = function (input) {
-    var encoded = [];
-    var labels = split$2(replace$2(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
-    var i, label;
-    for (i = 0; i < labels.length; i++) {
-      label = labels[i];
-      push$2(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode(label) : label);
-    }
-    return join$2(encoded, '.');
-  };
-
-  var arraySlice$2 = arraySliceSimple;
-
-  var floor$1 = Math.floor;
-
-  var mergeSort = function (array, comparefn) {
-    var length = array.length;
-    var middle = floor$1(length / 2);
-    return length < 8 ? insertionSort(array, comparefn) : merge(
-      array,
-      mergeSort(arraySlice$2(array, 0, middle), comparefn),
-      mergeSort(arraySlice$2(array, middle), comparefn),
-      comparefn
-    );
-  };
-
-  var insertionSort = function (array, comparefn) {
-    var length = array.length;
-    var i = 1;
-    var element, j;
-
-    while (i < length) {
-      j = i;
-      element = array[i];
-      while (j && comparefn(array[j - 1], element) > 0) {
-        array[j] = array[--j];
-      }
-      if (j !== i++) array[j] = element;
-    } return array;
-  };
-
-  var merge = function (array, left, right, comparefn) {
-    var llength = left.length;
-    var rlength = right.length;
-    var lindex = 0;
-    var rindex = 0;
-
-    while (lindex < llength || rindex < rlength) {
-      array[lindex + rindex] = (lindex < llength && rindex < rlength)
-        ? comparefn(left[lindex], right[rindex]) <= 0 ? left[lindex++] : right[rindex++]
-        : lindex < llength ? left[lindex++] : right[rindex++];
-    } return array;
-  };
-
-  var arraySort$1 = mergeSort;
-
-  // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
-
-  var $$8 = _export;
-  var global$6 = global$r;
-  var call = functionCall;
-  var uncurryThis$2 = functionUncurryThis;
-  var DESCRIPTORS$3 = descriptors;
-  var USE_NATIVE_URL$2 = urlConstructorDetection;
-  var defineBuiltIn$1 = defineBuiltIn$8;
-  var defineBuiltInAccessor$1 = defineBuiltInAccessor$5;
-  var defineBuiltIns = defineBuiltIns$2;
-  var setToStringTag$1 = setToStringTag$9;
-  var createIteratorConstructor = iteratorCreateConstructor;
-  var InternalStateModule$1 = internalState;
-  var anInstance$1 = anInstance$5;
-  var isCallable$1 = isCallable$q;
-  var hasOwn$1 = hasOwnProperty_1;
-  var bind$1 = functionBindContext;
-  var classof = classof$c;
-  var anObject = anObject$f;
-  var isObject = isObject$j;
-  var $toString$1 = toString$b;
-  var create = objectCreate;
-  var createPropertyDescriptor = createPropertyDescriptor$8;
-  var getIterator = getIterator$3;
-  var getIteratorMethod = getIteratorMethod$a;
-  var validateArgumentsLength$3 = validateArgumentsLength$5;
-  var wellKnownSymbol = wellKnownSymbol$q;
-  var arraySort = arraySort$1;
-
-  var ITERATOR$1 = wellKnownSymbol('iterator');
-  var URL_SEARCH_PARAMS = 'URLSearchParams';
-  var URL_SEARCH_PARAMS_ITERATOR = URL_SEARCH_PARAMS + 'Iterator';
-  var setInternalState$1 = InternalStateModule$1.set;
-  var getInternalParamsState = InternalStateModule$1.getterFor(URL_SEARCH_PARAMS);
-  var getInternalIteratorState = InternalStateModule$1.getterFor(URL_SEARCH_PARAMS_ITERATOR);
-  // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-  var getOwnPropertyDescriptor$7 = Object.getOwnPropertyDescriptor;
-
-  // Avoid NodeJS experimental warning
-  var safeGetBuiltIn = function (name) {
-    if (!DESCRIPTORS$3) return global$6[name];
-    var descriptor = getOwnPropertyDescriptor$7(global$6, name);
-    return descriptor && descriptor.value;
-  };
-
-  var nativeFetch = safeGetBuiltIn('fetch');
-  var NativeRequest = safeGetBuiltIn('Request');
-  var Headers = safeGetBuiltIn('Headers');
-  var RequestPrototype = NativeRequest && NativeRequest.prototype;
-  var HeadersPrototype = Headers && Headers.prototype;
-  var RegExp$1 = global$6.RegExp;
-  var TypeError$2 = global$6.TypeError;
-  var decodeURIComponent = global$6.decodeURIComponent;
-  var encodeURIComponent$1 = global$6.encodeURIComponent;
-  var charAt$2 = uncurryThis$2(''.charAt);
-  var join$1 = uncurryThis$2([].join);
-  var push$1 = uncurryThis$2([].push);
-  var replace$1 = uncurryThis$2(''.replace);
-  var shift$1 = uncurryThis$2([].shift);
-  var splice = uncurryThis$2([].splice);
-  var split$1 = uncurryThis$2(''.split);
-  var stringSlice$1 = uncurryThis$2(''.slice);
-
-  var plus = /\+/g;
-  var sequences = Array(4);
-
-  var percentSequence = function (bytes) {
-    return sequences[bytes - 1] || (sequences[bytes - 1] = RegExp$1('((?:%[\\da-f]{2}){' + bytes + '})', 'gi'));
-  };
-
-  var percentDecode = function (sequence) {
-    try {
-      return decodeURIComponent(sequence);
-    } catch (error) {
-      return sequence;
-    }
-  };
-
-  var deserialize = function (it) {
-    var result = replace$1(it, plus, ' ');
-    var bytes = 4;
-    try {
-      return decodeURIComponent(result);
-    } catch (error) {
-      while (bytes) {
-        result = replace$1(result, percentSequence(bytes--), percentDecode);
-      }
-      return result;
-    }
-  };
-
-  var find = /[!'()~]|%20/g;
-
-  var replacements = {
-    '!': '%21',
-    "'": '%27',
-    '(': '%28',
-    ')': '%29',
-    '~': '%7E',
-    '%20': '+'
-  };
-
-  var replacer = function (match) {
-    return replacements[match];
-  };
-
-  var serialize = function (it) {
-    return replace$1(encodeURIComponent$1(it), find, replacer);
-  };
-
-  var URLSearchParamsIterator = createIteratorConstructor(function Iterator(params, kind) {
-    setInternalState$1(this, {
-      type: URL_SEARCH_PARAMS_ITERATOR,
-      iterator: getIterator(getInternalParamsState(params).entries),
-      kind: kind
-    });
-  }, 'Iterator', function next() {
-    var state = getInternalIteratorState(this);
-    var kind = state.kind;
-    var step = state.iterator.next();
-    var entry = step.value;
-    if (!step.done) {
-      step.value = kind === 'keys' ? entry.key : kind === 'values' ? entry.value : [entry.key, entry.value];
-    } return step;
-  }, true);
-
-  var URLSearchParamsState = function (init) {
-    this.entries = [];
-    this.url = null;
-
-    if (init !== undefined) {
-      if (isObject(init)) this.parseObject(init);
-      else this.parseQuery(typeof init == 'string' ? charAt$2(init, 0) === '?' ? stringSlice$1(init, 1) : init : $toString$1(init));
-    }
-  };
-
-  URLSearchParamsState.prototype = {
-    type: URL_SEARCH_PARAMS,
-    bindURL: function (url) {
-      this.url = url;
-      this.update();
-    },
-    parseObject: function (object) {
-      var iteratorMethod = getIteratorMethod(object);
-      var iterator, next, step, entryIterator, entryNext, first, second;
-
-      if (iteratorMethod) {
-        iterator = getIterator(object, iteratorMethod);
-        next = iterator.next;
-        while (!(step = call(next, iterator)).done) {
-          entryIterator = getIterator(anObject(step.value));
-          entryNext = entryIterator.next;
-          if (
-            (first = call(entryNext, entryIterator)).done ||
-            (second = call(entryNext, entryIterator)).done ||
-            !call(entryNext, entryIterator).done
-          ) throw TypeError$2('Expected sequence with length 2');
-          push$1(this.entries, { key: $toString$1(first.value), value: $toString$1(second.value) });
-        }
-      } else for (var key in object) if (hasOwn$1(object, key)) {
-        push$1(this.entries, { key: key, value: $toString$1(object[key]) });
-      }
-    },
-    parseQuery: function (query) {
-      if (query) {
-        var attributes = split$1(query, '&');
-        var index = 0;
-        var attribute, entry;
-        while (index < attributes.length) {
-          attribute = attributes[index++];
-          if (attribute.length) {
-            entry = split$1(attribute, '=');
-            push$1(this.entries, {
-              key: deserialize(shift$1(entry)),
-              value: deserialize(join$1(entry, '='))
-            });
-          }
-        }
-      }
-    },
-    serialize: function () {
-      var entries = this.entries;
-      var result = [];
-      var index = 0;
-      var entry;
-      while (index < entries.length) {
-        entry = entries[index++];
-        push$1(result, serialize(entry.key) + '=' + serialize(entry.value));
-      } return join$1(result, '&');
-    },
-    update: function () {
-      this.entries.length = 0;
-      this.parseQuery(this.url.query);
-    },
-    updateURL: function () {
-      if (this.url) this.url.update();
-    }
-  };
-
-  // `URLSearchParams` constructor
-  // https://url.spec.whatwg.org/#interface-urlsearchparams
-  var URLSearchParamsConstructor = function URLSearchParams(/* init */) {
-    anInstance$1(this, URLSearchParamsPrototype);
-    var init = arguments.length > 0 ? arguments[0] : undefined;
-    var state = setInternalState$1(this, new URLSearchParamsState(init));
-    if (!DESCRIPTORS$3) this.length = state.entries.length;
-  };
-
-  var URLSearchParamsPrototype = URLSearchParamsConstructor.prototype;
-
-  defineBuiltIns(URLSearchParamsPrototype, {
-    // `URLSearchParams.prototype.append` method
-    // https://url.spec.whatwg.org/#dom-urlsearchparams-append
-    append: function append(name, value) {
-      validateArgumentsLength$3(arguments.length, 2);
-      var state = getInternalParamsState(this);
-      push$1(state.entries, { key: $toString$1(name), value: $toString$1(value) });
-      if (!DESCRIPTORS$3) this.length++;
-      state.updateURL();
-    },
-    // `URLSearchParams.prototype.delete` method
-    // https://url.spec.whatwg.org/#dom-urlsearchparams-delete
-    'delete': function (name) {
-      validateArgumentsLength$3(arguments.length, 1);
-      var state = getInternalParamsState(this);
-      var entries = state.entries;
-      var key = $toString$1(name);
-      var index = 0;
-      while (index < entries.length) {
-        if (entries[index].key === key) splice(entries, index, 1);
-        else index++;
-      }
-      if (!DESCRIPTORS$3) this.length = entries.length;
-      state.updateURL();
-    },
-    // `URLSearchParams.prototype.get` method
-    // https://url.spec.whatwg.org/#dom-urlsearchparams-get
-    get: function get(name) {
-      validateArgumentsLength$3(arguments.length, 1);
-      var entries = getInternalParamsState(this).entries;
-      var key = $toString$1(name);
-      var index = 0;
-      for (; index < entries.length; index++) {
-        if (entries[index].key === key) return entries[index].value;
-      }
-      return null;
-    },
-    // `URLSearchParams.prototype.getAll` method
-    // https://url.spec.whatwg.org/#dom-urlsearchparams-getall
-    getAll: function getAll(name) {
-      validateArgumentsLength$3(arguments.length, 1);
-      var entries = getInternalParamsState(this).entries;
-      var key = $toString$1(name);
-      var result = [];
-      var index = 0;
-      for (; index < entries.length; index++) {
-        if (entries[index].key === key) push$1(result, entries[index].value);
-      }
-      return result;
-    },
-    // `URLSearchParams.prototype.has` method
-    // https://url.spec.whatwg.org/#dom-urlsearchparams-has
-    has: function has(name) {
-      validateArgumentsLength$3(arguments.length, 1);
-      var entries = getInternalParamsState(this).entries;
-      var key = $toString$1(name);
-      var index = 0;
-      while (index < entries.length) {
-        if (entries[index++].key === key) return true;
-      }
-      return false;
-    },
-    // `URLSearchParams.prototype.set` method
-    // https://url.spec.whatwg.org/#dom-urlsearchparams-set
-    set: function set(name, value) {
-      validateArgumentsLength$3(arguments.length, 1);
-      var state = getInternalParamsState(this);
-      var entries = state.entries;
-      var found = false;
-      var key = $toString$1(name);
-      var val = $toString$1(value);
-      var index = 0;
-      var entry;
-      for (; index < entries.length; index++) {
-        entry = entries[index];
-        if (entry.key === key) {
-          if (found) splice(entries, index--, 1);
-          else {
-            found = true;
-            entry.value = val;
-          }
-        }
-      }
-      if (!found) push$1(entries, { key: key, value: val });
-      if (!DESCRIPTORS$3) this.length = entries.length;
-      state.updateURL();
-    },
-    // `URLSearchParams.prototype.sort` method
-    // https://url.spec.whatwg.org/#dom-urlsearchparams-sort
-    sort: function sort() {
-      var state = getInternalParamsState(this);
-      arraySort(state.entries, function (a, b) {
-        return a.key > b.key ? 1 : -1;
-      });
-      state.updateURL();
-    },
-    // `URLSearchParams.prototype.forEach` method
-    forEach: function forEach(callback /* , thisArg */) {
-      var entries = getInternalParamsState(this).entries;
-      var boundFunction = bind$1(callback, arguments.length > 1 ? arguments[1] : undefined);
-      var index = 0;
-      var entry;
-      while (index < entries.length) {
-        entry = entries[index++];
-        boundFunction(entry.value, entry.key, this);
-      }
-    },
-    // `URLSearchParams.prototype.keys` method
-    keys: function keys() {
-      return new URLSearchParamsIterator(this, 'keys');
-    },
-    // `URLSearchParams.prototype.values` method
-    values: function values() {
-      return new URLSearchParamsIterator(this, 'values');
-    },
-    // `URLSearchParams.prototype.entries` method
-    entries: function entries() {
-      return new URLSearchParamsIterator(this, 'entries');
-    }
-  }, { enumerable: true });
-
-  // `URLSearchParams.prototype[@@iterator]` method
-  defineBuiltIn$1(URLSearchParamsPrototype, ITERATOR$1, URLSearchParamsPrototype.entries, { name: 'entries' });
-
-  // `URLSearchParams.prototype.toString` method
-  // https://url.spec.whatwg.org/#urlsearchparams-stringification-behavior
-  defineBuiltIn$1(URLSearchParamsPrototype, 'toString', function toString() {
-    return getInternalParamsState(this).serialize();
-  }, { enumerable: true });
-
-  // `URLSearchParams.prototype.size` getter
-  // https://github.com/whatwg/url/pull/734
-  if (DESCRIPTORS$3) defineBuiltInAccessor$1(URLSearchParamsPrototype, 'size', {
-    get: function size() {
-      return getInternalParamsState(this).entries.length;
-    },
-    configurable: true,
-    enumerable: true
-  });
-
-  setToStringTag$1(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
-
-  $$8({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
-    URLSearchParams: URLSearchParamsConstructor
-  });
-
-  // Wrap `fetch` and `Request` for correct work with polyfilled `URLSearchParams`
-  if (!USE_NATIVE_URL$2 && isCallable$1(Headers)) {
-    var headersHas = uncurryThis$2(HeadersPrototype.has);
-    var headersSet = uncurryThis$2(HeadersPrototype.set);
-
-    var wrapRequestOptions = function (init) {
-      if (isObject(init)) {
-        var body = init.body;
-        var headers;
-        if (classof(body) === URL_SEARCH_PARAMS) {
-          headers = init.headers ? new Headers(init.headers) : new Headers();
-          if (!headersHas(headers, 'content-type')) {
-            headersSet(headers, 'content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-          }
-          return create(init, {
-            body: createPropertyDescriptor(0, $toString$1(body)),
-            headers: createPropertyDescriptor(0, headers)
-          });
-        }
-      } return init;
-    };
-
-    if (isCallable$1(nativeFetch)) {
-      $$8({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
-        fetch: function fetch(input /* , init */) {
-          return nativeFetch(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
-        }
-      });
-    }
-
-    if (isCallable$1(NativeRequest)) {
-      var RequestConstructor = function Request(input /* , init */) {
-        anInstance$1(this, RequestPrototype);
-        return new NativeRequest(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
-      };
-
-      RequestPrototype.constructor = RequestConstructor;
-      RequestConstructor.prototype = RequestPrototype;
-
-      $$8({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
-        Request: RequestConstructor
-      });
-    }
-  }
-
-  var web_urlSearchParams_constructor = {
-    URLSearchParams: URLSearchParamsConstructor,
-    getState: getInternalParamsState
-  };
-
-  // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
-
-  var $$7 = _export;
-  var DESCRIPTORS$2 = descriptors;
-  var USE_NATIVE_URL$1 = urlConstructorDetection;
-  var global$5 = global$r;
-  var bind = functionBindContext;
-  var uncurryThis$1 = functionUncurryThis;
-  var defineBuiltIn = defineBuiltIn$8;
-  var defineBuiltInAccessor = defineBuiltInAccessor$5;
-  var anInstance = anInstance$5;
-  var hasOwn = hasOwnProperty_1;
-  var assign = objectAssign;
-  var arrayFrom = arrayFrom$1;
-  var arraySlice$1 = arraySliceSimple;
-  var codeAt = stringMultibyte.codeAt;
-  var toASCII = stringPunycodeToAscii;
-  var $toString = toString$b;
-  var setToStringTag = setToStringTag$9;
-  var validateArgumentsLength$2 = validateArgumentsLength$5;
-  var URLSearchParamsModule = web_urlSearchParams_constructor;
-  var InternalStateModule = internalState;
-
-  var setInternalState = InternalStateModule.set;
-  var getInternalURLState = InternalStateModule.getterFor('URL');
-  var URLSearchParams$1 = URLSearchParamsModule.URLSearchParams;
-  var getInternalSearchParamsState = URLSearchParamsModule.getState;
-
-  var NativeURL = global$5.URL;
-  var TypeError$1 = global$5.TypeError;
-  var parseInt$1 = global$5.parseInt;
-  var floor = Math.floor;
-  var pow = Math.pow;
-  var charAt$1 = uncurryThis$1(''.charAt);
-  var exec = uncurryThis$1(/./.exec);
-  var join = uncurryThis$1([].join);
-  var numberToString = uncurryThis$1(1.0.toString);
-  var pop = uncurryThis$1([].pop);
-  var push = uncurryThis$1([].push);
-  var replace = uncurryThis$1(''.replace);
-  var shift = uncurryThis$1([].shift);
-  var split = uncurryThis$1(''.split);
-  var stringSlice = uncurryThis$1(''.slice);
-  var toLowerCase = uncurryThis$1(''.toLowerCase);
-  var unshift = uncurryThis$1([].unshift);
-
-  var INVALID_AUTHORITY = 'Invalid authority';
-  var INVALID_SCHEME = 'Invalid scheme';
-  var INVALID_HOST = 'Invalid host';
-  var INVALID_PORT = 'Invalid port';
-
-  var ALPHA = /[a-z]/i;
-  // eslint-disable-next-line regexp/no-obscure-range -- safe
-  var ALPHANUMERIC = /[\d+-.a-z]/i;
-  var DIGIT = /\d/;
-  var HEX_START = /^0x/i;
-  var OCT = /^[0-7]+$/;
-  var DEC = /^\d+$/;
-  var HEX = /^[\da-f]+$/i;
-  /* eslint-disable regexp/no-control-character -- safe */
-  var FORBIDDEN_HOST_CODE_POINT = /[\0\t\n\r #%/:<>?@[\\\]^|]/;
-  var FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT = /[\0\t\n\r #/:<>?@[\\\]^|]/;
-  var LEADING_C0_CONTROL_OR_SPACE = /^[\u0000-\u0020]+/;
-  var TRAILING_C0_CONTROL_OR_SPACE = /(^|[^\u0000-\u0020])[\u0000-\u0020]+$/;
-  var TAB_AND_NEW_LINE = /[\t\n\r]/g;
-  /* eslint-enable regexp/no-control-character -- safe */
-  var EOF;
-
-  // https://url.spec.whatwg.org/#ipv4-number-parser
-  var parseIPv4 = function (input) {
-    var parts = split(input, '.');
-    var partsLength, numbers, index, part, radix, number, ipv4;
-    if (parts.length && parts[parts.length - 1] == '') {
-      parts.length--;
-    }
-    partsLength = parts.length;
-    if (partsLength > 4) return input;
-    numbers = [];
-    for (index = 0; index < partsLength; index++) {
-      part = parts[index];
-      if (part == '') return input;
-      radix = 10;
-      if (part.length > 1 && charAt$1(part, 0) == '0') {
-        radix = exec(HEX_START, part) ? 16 : 8;
-        part = stringSlice(part, radix == 8 ? 1 : 2);
-      }
-      if (part === '') {
-        number = 0;
-      } else {
-        if (!exec(radix == 10 ? DEC : radix == 8 ? OCT : HEX, part)) return input;
-        number = parseInt$1(part, radix);
-      }
-      push(numbers, number);
-    }
-    for (index = 0; index < partsLength; index++) {
-      number = numbers[index];
-      if (index == partsLength - 1) {
-        if (number >= pow(256, 5 - partsLength)) return null;
-      } else if (number > 255) return null;
-    }
-    ipv4 = pop(numbers);
-    for (index = 0; index < numbers.length; index++) {
-      ipv4 += numbers[index] * pow(256, 3 - index);
-    }
-    return ipv4;
-  };
-
-  // https://url.spec.whatwg.org/#concept-ipv6-parser
-  // eslint-disable-next-line max-statements -- TODO
-  var parseIPv6 = function (input) {
-    var address = [0, 0, 0, 0, 0, 0, 0, 0];
-    var pieceIndex = 0;
-    var compress = null;
-    var pointer = 0;
-    var value, length, numbersSeen, ipv4Piece, number, swaps, swap;
-
-    var chr = function () {
-      return charAt$1(input, pointer);
-    };
-
-    if (chr() == ':') {
-      if (charAt$1(input, 1) != ':') return;
-      pointer += 2;
-      pieceIndex++;
-      compress = pieceIndex;
-    }
-    while (chr()) {
-      if (pieceIndex == 8) return;
-      if (chr() == ':') {
-        if (compress !== null) return;
-        pointer++;
-        pieceIndex++;
-        compress = pieceIndex;
-        continue;
-      }
-      value = length = 0;
-      while (length < 4 && exec(HEX, chr())) {
-        value = value * 16 + parseInt$1(chr(), 16);
-        pointer++;
-        length++;
-      }
-      if (chr() == '.') {
-        if (length == 0) return;
-        pointer -= length;
-        if (pieceIndex > 6) return;
-        numbersSeen = 0;
-        while (chr()) {
-          ipv4Piece = null;
-          if (numbersSeen > 0) {
-            if (chr() == '.' && numbersSeen < 4) pointer++;
-            else return;
-          }
-          if (!exec(DIGIT, chr())) return;
-          while (exec(DIGIT, chr())) {
-            number = parseInt$1(chr(), 10);
-            if (ipv4Piece === null) ipv4Piece = number;
-            else if (ipv4Piece == 0) return;
-            else ipv4Piece = ipv4Piece * 10 + number;
-            if (ipv4Piece > 255) return;
-            pointer++;
-          }
-          address[pieceIndex] = address[pieceIndex] * 256 + ipv4Piece;
-          numbersSeen++;
-          if (numbersSeen == 2 || numbersSeen == 4) pieceIndex++;
-        }
-        if (numbersSeen != 4) return;
-        break;
-      } else if (chr() == ':') {
-        pointer++;
-        if (!chr()) return;
-      } else if (chr()) return;
-      address[pieceIndex++] = value;
-    }
-    if (compress !== null) {
-      swaps = pieceIndex - compress;
-      pieceIndex = 7;
-      while (pieceIndex != 0 && swaps > 0) {
-        swap = address[pieceIndex];
-        address[pieceIndex--] = address[compress + swaps - 1];
-        address[compress + --swaps] = swap;
-      }
-    } else if (pieceIndex != 8) return;
-    return address;
-  };
-
-  var findLongestZeroSequence = function (ipv6) {
-    var maxIndex = null;
-    var maxLength = 1;
-    var currStart = null;
-    var currLength = 0;
-    var index = 0;
-    for (; index < 8; index++) {
-      if (ipv6[index] !== 0) {
-        if (currLength > maxLength) {
-          maxIndex = currStart;
-          maxLength = currLength;
-        }
-        currStart = null;
-        currLength = 0;
-      } else {
-        if (currStart === null) currStart = index;
-        ++currLength;
-      }
-    }
-    if (currLength > maxLength) {
-      maxIndex = currStart;
-      maxLength = currLength;
-    }
-    return maxIndex;
-  };
-
-  // https://url.spec.whatwg.org/#host-serializing
-  var serializeHost = function (host) {
-    var result, index, compress, ignore0;
-    // ipv4
-    if (typeof host == 'number') {
-      result = [];
-      for (index = 0; index < 4; index++) {
-        unshift(result, host % 256);
-        host = floor(host / 256);
-      } return join(result, '.');
-    // ipv6
-    } else if (typeof host == 'object') {
-      result = '';
-      compress = findLongestZeroSequence(host);
-      for (index = 0; index < 8; index++) {
-        if (ignore0 && host[index] === 0) continue;
-        if (ignore0) ignore0 = false;
-        if (compress === index) {
-          result += index ? ':' : '::';
-          ignore0 = true;
-        } else {
-          result += numberToString(host[index], 16);
-          if (index < 7) result += ':';
-        }
-      }
-      return '[' + result + ']';
-    } return host;
-  };
-
-  var C0ControlPercentEncodeSet = {};
-  var fragmentPercentEncodeSet = assign({}, C0ControlPercentEncodeSet, {
-    ' ': 1, '"': 1, '<': 1, '>': 1, '`': 1
-  });
-  var pathPercentEncodeSet = assign({}, fragmentPercentEncodeSet, {
-    '#': 1, '?': 1, '{': 1, '}': 1
-  });
-  var userinfoPercentEncodeSet = assign({}, pathPercentEncodeSet, {
-    '/': 1, ':': 1, ';': 1, '=': 1, '@': 1, '[': 1, '\\': 1, ']': 1, '^': 1, '|': 1
-  });
-
-  var percentEncode = function (chr, set) {
-    var code = codeAt(chr, 0);
-    return code > 0x20 && code < 0x7F && !hasOwn(set, chr) ? chr : encodeURIComponent(chr);
-  };
-
-  // https://url.spec.whatwg.org/#special-scheme
-  var specialSchemes = {
-    ftp: 21,
-    file: null,
-    http: 80,
-    https: 443,
-    ws: 80,
-    wss: 443
-  };
-
-  // https://url.spec.whatwg.org/#windows-drive-letter
-  var isWindowsDriveLetter = function (string, normalized) {
-    var second;
-    return string.length == 2 && exec(ALPHA, charAt$1(string, 0))
-      && ((second = charAt$1(string, 1)) == ':' || (!normalized && second == '|'));
-  };
-
-  // https://url.spec.whatwg.org/#start-with-a-windows-drive-letter
-  var startsWithWindowsDriveLetter = function (string) {
-    var third;
-    return string.length > 1 && isWindowsDriveLetter(stringSlice(string, 0, 2)) && (
-      string.length == 2 ||
-      ((third = charAt$1(string, 2)) === '/' || third === '\\' || third === '?' || third === '#')
-    );
-  };
-
-  // https://url.spec.whatwg.org/#single-dot-path-segment
-  var isSingleDot = function (segment) {
-    return segment === '.' || toLowerCase(segment) === '%2e';
-  };
-
-  // https://url.spec.whatwg.org/#double-dot-path-segment
-  var isDoubleDot = function (segment) {
-    segment = toLowerCase(segment);
-    return segment === '..' || segment === '%2e.' || segment === '.%2e' || segment === '%2e%2e';
-  };
-
-  // States:
-  var SCHEME_START = {};
-  var SCHEME = {};
-  var NO_SCHEME = {};
-  var SPECIAL_RELATIVE_OR_AUTHORITY = {};
-  var PATH_OR_AUTHORITY = {};
-  var RELATIVE = {};
-  var RELATIVE_SLASH = {};
-  var SPECIAL_AUTHORITY_SLASHES = {};
-  var SPECIAL_AUTHORITY_IGNORE_SLASHES = {};
-  var AUTHORITY = {};
-  var HOST = {};
-  var HOSTNAME = {};
-  var PORT = {};
-  var FILE = {};
-  var FILE_SLASH = {};
-  var FILE_HOST = {};
-  var PATH_START = {};
-  var PATH = {};
-  var CANNOT_BE_A_BASE_URL_PATH = {};
-  var QUERY = {};
-  var FRAGMENT = {};
-
-  var URLState = function (url, isBase, base) {
-    var urlString = $toString(url);
-    var baseState, failure, searchParams;
-    if (isBase) {
-      failure = this.parse(urlString);
-      if (failure) throw TypeError$1(failure);
-      this.searchParams = null;
-    } else {
-      if (base !== undefined) baseState = new URLState(base, true);
-      failure = this.parse(urlString, null, baseState);
-      if (failure) throw TypeError$1(failure);
-      searchParams = getInternalSearchParamsState(new URLSearchParams$1());
-      searchParams.bindURL(this);
-      this.searchParams = searchParams;
-    }
-  };
-
-  URLState.prototype = {
-    type: 'URL',
-    // https://url.spec.whatwg.org/#url-parsing
-    // eslint-disable-next-line max-statements -- TODO
-    parse: function (input, stateOverride, base) {
-      var url = this;
-      var state = stateOverride || SCHEME_START;
-      var pointer = 0;
-      var buffer = '';
-      var seenAt = false;
-      var seenBracket = false;
-      var seenPasswordToken = false;
-      var codePoints, chr, bufferCodePoints, failure;
-
-      input = $toString(input);
-
-      if (!stateOverride) {
-        url.scheme = '';
-        url.username = '';
-        url.password = '';
-        url.host = null;
-        url.port = null;
-        url.path = [];
-        url.query = null;
-        url.fragment = null;
-        url.cannotBeABaseURL = false;
-        input = replace(input, LEADING_C0_CONTROL_OR_SPACE, '');
-        input = replace(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
-      }
-
-      input = replace(input, TAB_AND_NEW_LINE, '');
-
-      codePoints = arrayFrom(input);
-
-      while (pointer <= codePoints.length) {
-        chr = codePoints[pointer];
-        switch (state) {
-          case SCHEME_START:
-            if (chr && exec(ALPHA, chr)) {
-              buffer += toLowerCase(chr);
-              state = SCHEME;
-            } else if (!stateOverride) {
-              state = NO_SCHEME;
-              continue;
-            } else return INVALID_SCHEME;
-            break;
-
-          case SCHEME:
-            if (chr && (exec(ALPHANUMERIC, chr) || chr == '+' || chr == '-' || chr == '.')) {
-              buffer += toLowerCase(chr);
-            } else if (chr == ':') {
-              if (stateOverride && (
-                (url.isSpecial() != hasOwn(specialSchemes, buffer)) ||
-                (buffer == 'file' && (url.includesCredentials() || url.port !== null)) ||
-                (url.scheme == 'file' && !url.host)
-              )) return;
-              url.scheme = buffer;
-              if (stateOverride) {
-                if (url.isSpecial() && specialSchemes[url.scheme] == url.port) url.port = null;
-                return;
-              }
-              buffer = '';
-              if (url.scheme == 'file') {
-                state = FILE;
-              } else if (url.isSpecial() && base && base.scheme == url.scheme) {
-                state = SPECIAL_RELATIVE_OR_AUTHORITY;
-              } else if (url.isSpecial()) {
-                state = SPECIAL_AUTHORITY_SLASHES;
-              } else if (codePoints[pointer + 1] == '/') {
-                state = PATH_OR_AUTHORITY;
-                pointer++;
-              } else {
-                url.cannotBeABaseURL = true;
-                push(url.path, '');
-                state = CANNOT_BE_A_BASE_URL_PATH;
-              }
-            } else if (!stateOverride) {
-              buffer = '';
-              state = NO_SCHEME;
-              pointer = 0;
-              continue;
-            } else return INVALID_SCHEME;
-            break;
-
-          case NO_SCHEME:
-            if (!base || (base.cannotBeABaseURL && chr != '#')) return INVALID_SCHEME;
-            if (base.cannotBeABaseURL && chr == '#') {
-              url.scheme = base.scheme;
-              url.path = arraySlice$1(base.path);
-              url.query = base.query;
-              url.fragment = '';
-              url.cannotBeABaseURL = true;
-              state = FRAGMENT;
-              break;
-            }
-            state = base.scheme == 'file' ? FILE : RELATIVE;
-            continue;
-
-          case SPECIAL_RELATIVE_OR_AUTHORITY:
-            if (chr == '/' && codePoints[pointer + 1] == '/') {
-              state = SPECIAL_AUTHORITY_IGNORE_SLASHES;
-              pointer++;
-            } else {
-              state = RELATIVE;
-              continue;
-            } break;
-
-          case PATH_OR_AUTHORITY:
-            if (chr == '/') {
-              state = AUTHORITY;
-              break;
-            } else {
-              state = PATH;
-              continue;
-            }
-
-          case RELATIVE:
-            url.scheme = base.scheme;
-            if (chr == EOF) {
-              url.username = base.username;
-              url.password = base.password;
-              url.host = base.host;
-              url.port = base.port;
-              url.path = arraySlice$1(base.path);
-              url.query = base.query;
-            } else if (chr == '/' || (chr == '\\' && url.isSpecial())) {
-              state = RELATIVE_SLASH;
-            } else if (chr == '?') {
-              url.username = base.username;
-              url.password = base.password;
-              url.host = base.host;
-              url.port = base.port;
-              url.path = arraySlice$1(base.path);
-              url.query = '';
-              state = QUERY;
-            } else if (chr == '#') {
-              url.username = base.username;
-              url.password = base.password;
-              url.host = base.host;
-              url.port = base.port;
-              url.path = arraySlice$1(base.path);
-              url.query = base.query;
-              url.fragment = '';
-              state = FRAGMENT;
-            } else {
-              url.username = base.username;
-              url.password = base.password;
-              url.host = base.host;
-              url.port = base.port;
-              url.path = arraySlice$1(base.path);
-              url.path.length--;
-              state = PATH;
-              continue;
-            } break;
-
-          case RELATIVE_SLASH:
-            if (url.isSpecial() && (chr == '/' || chr == '\\')) {
-              state = SPECIAL_AUTHORITY_IGNORE_SLASHES;
-            } else if (chr == '/') {
-              state = AUTHORITY;
-            } else {
-              url.username = base.username;
-              url.password = base.password;
-              url.host = base.host;
-              url.port = base.port;
-              state = PATH;
-              continue;
-            } break;
-
-          case SPECIAL_AUTHORITY_SLASHES:
-            state = SPECIAL_AUTHORITY_IGNORE_SLASHES;
-            if (chr != '/' || charAt$1(buffer, pointer + 1) != '/') continue;
-            pointer++;
-            break;
-
-          case SPECIAL_AUTHORITY_IGNORE_SLASHES:
-            if (chr != '/' && chr != '\\') {
-              state = AUTHORITY;
-              continue;
-            } break;
-
-          case AUTHORITY:
-            if (chr == '@') {
-              if (seenAt) buffer = '%40' + buffer;
-              seenAt = true;
-              bufferCodePoints = arrayFrom(buffer);
-              for (var i = 0; i < bufferCodePoints.length; i++) {
-                var codePoint = bufferCodePoints[i];
-                if (codePoint == ':' && !seenPasswordToken) {
-                  seenPasswordToken = true;
-                  continue;
-                }
-                var encodedCodePoints = percentEncode(codePoint, userinfoPercentEncodeSet);
-                if (seenPasswordToken) url.password += encodedCodePoints;
-                else url.username += encodedCodePoints;
-              }
-              buffer = '';
-            } else if (
-              chr == EOF || chr == '/' || chr == '?' || chr == '#' ||
-              (chr == '\\' && url.isSpecial())
-            ) {
-              if (seenAt && buffer == '') return INVALID_AUTHORITY;
-              pointer -= arrayFrom(buffer).length + 1;
-              buffer = '';
-              state = HOST;
-            } else buffer += chr;
-            break;
-
-          case HOST:
-          case HOSTNAME:
-            if (stateOverride && url.scheme == 'file') {
-              state = FILE_HOST;
-              continue;
-            } else if (chr == ':' && !seenBracket) {
-              if (buffer == '') return INVALID_HOST;
-              failure = url.parseHost(buffer);
-              if (failure) return failure;
-              buffer = '';
-              state = PORT;
-              if (stateOverride == HOSTNAME) return;
-            } else if (
-              chr == EOF || chr == '/' || chr == '?' || chr == '#' ||
-              (chr == '\\' && url.isSpecial())
-            ) {
-              if (url.isSpecial() && buffer == '') return INVALID_HOST;
-              if (stateOverride && buffer == '' && (url.includesCredentials() || url.port !== null)) return;
-              failure = url.parseHost(buffer);
-              if (failure) return failure;
-              buffer = '';
-              state = PATH_START;
-              if (stateOverride) return;
-              continue;
-            } else {
-              if (chr == '[') seenBracket = true;
-              else if (chr == ']') seenBracket = false;
-              buffer += chr;
-            } break;
-
-          case PORT:
-            if (exec(DIGIT, chr)) {
-              buffer += chr;
-            } else if (
-              chr == EOF || chr == '/' || chr == '?' || chr == '#' ||
-              (chr == '\\' && url.isSpecial()) ||
-              stateOverride
-            ) {
-              if (buffer != '') {
-                var port = parseInt$1(buffer, 10);
-                if (port > 0xFFFF) return INVALID_PORT;
-                url.port = (url.isSpecial() && port === specialSchemes[url.scheme]) ? null : port;
-                buffer = '';
-              }
-              if (stateOverride) return;
-              state = PATH_START;
-              continue;
-            } else return INVALID_PORT;
-            break;
-
-          case FILE:
-            url.scheme = 'file';
-            if (chr == '/' || chr == '\\') state = FILE_SLASH;
-            else if (base && base.scheme == 'file') {
-              if (chr == EOF) {
-                url.host = base.host;
-                url.path = arraySlice$1(base.path);
-                url.query = base.query;
-              } else if (chr == '?') {
-                url.host = base.host;
-                url.path = arraySlice$1(base.path);
-                url.query = '';
-                state = QUERY;
-              } else if (chr == '#') {
-                url.host = base.host;
-                url.path = arraySlice$1(base.path);
-                url.query = base.query;
-                url.fragment = '';
-                state = FRAGMENT;
-              } else {
-                if (!startsWithWindowsDriveLetter(join(arraySlice$1(codePoints, pointer), ''))) {
-                  url.host = base.host;
-                  url.path = arraySlice$1(base.path);
-                  url.shortenPath();
-                }
-                state = PATH;
-                continue;
-              }
-            } else {
-              state = PATH;
-              continue;
-            } break;
-
-          case FILE_SLASH:
-            if (chr == '/' || chr == '\\') {
-              state = FILE_HOST;
-              break;
-            }
-            if (base && base.scheme == 'file' && !startsWithWindowsDriveLetter(join(arraySlice$1(codePoints, pointer), ''))) {
-              if (isWindowsDriveLetter(base.path[0], true)) push(url.path, base.path[0]);
-              else url.host = base.host;
-            }
-            state = PATH;
-            continue;
-
-          case FILE_HOST:
-            if (chr == EOF || chr == '/' || chr == '\\' || chr == '?' || chr == '#') {
-              if (!stateOverride && isWindowsDriveLetter(buffer)) {
-                state = PATH;
-              } else if (buffer == '') {
-                url.host = '';
-                if (stateOverride) return;
-                state = PATH_START;
-              } else {
-                failure = url.parseHost(buffer);
-                if (failure) return failure;
-                if (url.host == 'localhost') url.host = '';
-                if (stateOverride) return;
-                buffer = '';
-                state = PATH_START;
-              } continue;
-            } else buffer += chr;
-            break;
-
-          case PATH_START:
-            if (url.isSpecial()) {
-              state = PATH;
-              if (chr != '/' && chr != '\\') continue;
-            } else if (!stateOverride && chr == '?') {
-              url.query = '';
-              state = QUERY;
-            } else if (!stateOverride && chr == '#') {
-              url.fragment = '';
-              state = FRAGMENT;
-            } else if (chr != EOF) {
-              state = PATH;
-              if (chr != '/') continue;
-            } break;
-
-          case PATH:
-            if (
-              chr == EOF || chr == '/' ||
-              (chr == '\\' && url.isSpecial()) ||
-              (!stateOverride && (chr == '?' || chr == '#'))
-            ) {
-              if (isDoubleDot(buffer)) {
-                url.shortenPath();
-                if (chr != '/' && !(chr == '\\' && url.isSpecial())) {
-                  push(url.path, '');
-                }
-              } else if (isSingleDot(buffer)) {
-                if (chr != '/' && !(chr == '\\' && url.isSpecial())) {
-                  push(url.path, '');
-                }
-              } else {
-                if (url.scheme == 'file' && !url.path.length && isWindowsDriveLetter(buffer)) {
-                  if (url.host) url.host = '';
-                  buffer = charAt$1(buffer, 0) + ':'; // normalize windows drive letter
-                }
-                push(url.path, buffer);
-              }
-              buffer = '';
-              if (url.scheme == 'file' && (chr == EOF || chr == '?' || chr == '#')) {
-                while (url.path.length > 1 && url.path[0] === '') {
-                  shift(url.path);
-                }
-              }
-              if (chr == '?') {
-                url.query = '';
-                state = QUERY;
-              } else if (chr == '#') {
-                url.fragment = '';
-                state = FRAGMENT;
-              }
-            } else {
-              buffer += percentEncode(chr, pathPercentEncodeSet);
-            } break;
-
-          case CANNOT_BE_A_BASE_URL_PATH:
-            if (chr == '?') {
-              url.query = '';
-              state = QUERY;
-            } else if (chr == '#') {
-              url.fragment = '';
-              state = FRAGMENT;
-            } else if (chr != EOF) {
-              url.path[0] += percentEncode(chr, C0ControlPercentEncodeSet);
-            } break;
-
-          case QUERY:
-            if (!stateOverride && chr == '#') {
-              url.fragment = '';
-              state = FRAGMENT;
-            } else if (chr != EOF) {
-              if (chr == "'" && url.isSpecial()) url.query += '%27';
-              else if (chr == '#') url.query += '%23';
-              else url.query += percentEncode(chr, C0ControlPercentEncodeSet);
-            } break;
-
-          case FRAGMENT:
-            if (chr != EOF) url.fragment += percentEncode(chr, fragmentPercentEncodeSet);
-            break;
-        }
-
-        pointer++;
-      }
-    },
-    // https://url.spec.whatwg.org/#host-parsing
-    parseHost: function (input) {
-      var result, codePoints, index;
-      if (charAt$1(input, 0) == '[') {
-        if (charAt$1(input, input.length - 1) != ']') return INVALID_HOST;
-        result = parseIPv6(stringSlice(input, 1, -1));
-        if (!result) return INVALID_HOST;
-        this.host = result;
-      // opaque host
-      } else if (!this.isSpecial()) {
-        if (exec(FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT, input)) return INVALID_HOST;
-        result = '';
-        codePoints = arrayFrom(input);
-        for (index = 0; index < codePoints.length; index++) {
-          result += percentEncode(codePoints[index], C0ControlPercentEncodeSet);
-        }
-        this.host = result;
-      } else {
-        input = toASCII(input);
-        if (exec(FORBIDDEN_HOST_CODE_POINT, input)) return INVALID_HOST;
-        result = parseIPv4(input);
-        if (result === null) return INVALID_HOST;
-        this.host = result;
-      }
-    },
-    // https://url.spec.whatwg.org/#cannot-have-a-username-password-port
-    cannotHaveUsernamePasswordPort: function () {
-      return !this.host || this.cannotBeABaseURL || this.scheme == 'file';
-    },
-    // https://url.spec.whatwg.org/#include-credentials
-    includesCredentials: function () {
-      return this.username != '' || this.password != '';
-    },
-    // https://url.spec.whatwg.org/#is-special
-    isSpecial: function () {
-      return hasOwn(specialSchemes, this.scheme);
-    },
-    // https://url.spec.whatwg.org/#shorten-a-urls-path
-    shortenPath: function () {
-      var path = this.path;
-      var pathSize = path.length;
-      if (pathSize && (this.scheme != 'file' || pathSize != 1 || !isWindowsDriveLetter(path[0], true))) {
-        path.length--;
-      }
-    },
-    // https://url.spec.whatwg.org/#concept-url-serializer
-    serialize: function () {
-      var url = this;
-      var scheme = url.scheme;
-      var username = url.username;
-      var password = url.password;
-      var host = url.host;
-      var port = url.port;
-      var path = url.path;
-      var query = url.query;
-      var fragment = url.fragment;
-      var output = scheme + ':';
-      if (host !== null) {
-        output += '//';
-        if (url.includesCredentials()) {
-          output += username + (password ? ':' + password : '') + '@';
-        }
-        output += serializeHost(host);
-        if (port !== null) output += ':' + port;
-      } else if (scheme == 'file') output += '//';
-      output += url.cannotBeABaseURL ? path[0] : path.length ? '/' + join(path, '/') : '';
-      if (query !== null) output += '?' + query;
-      if (fragment !== null) output += '#' + fragment;
-      return output;
-    },
-    // https://url.spec.whatwg.org/#dom-url-href
-    setHref: function (href) {
-      var failure = this.parse(href);
-      if (failure) throw TypeError$1(failure);
-      this.searchParams.update();
-    },
-    // https://url.spec.whatwg.org/#dom-url-origin
-    getOrigin: function () {
-      var scheme = this.scheme;
-      var port = this.port;
-      if (scheme == 'blob') try {
-        return new URLConstructor(scheme.path[0]).origin;
-      } catch (error) {
-        return 'null';
-      }
-      if (scheme == 'file' || !this.isSpecial()) return 'null';
-      return scheme + '://' + serializeHost(this.host) + (port !== null ? ':' + port : '');
-    },
-    // https://url.spec.whatwg.org/#dom-url-protocol
-    getProtocol: function () {
-      return this.scheme + ':';
-    },
-    setProtocol: function (protocol) {
-      this.parse($toString(protocol) + ':', SCHEME_START);
-    },
-    // https://url.spec.whatwg.org/#dom-url-username
-    getUsername: function () {
-      return this.username;
-    },
-    setUsername: function (username) {
-      var codePoints = arrayFrom($toString(username));
-      if (this.cannotHaveUsernamePasswordPort()) return;
-      this.username = '';
-      for (var i = 0; i < codePoints.length; i++) {
-        this.username += percentEncode(codePoints[i], userinfoPercentEncodeSet);
-      }
-    },
-    // https://url.spec.whatwg.org/#dom-url-password
-    getPassword: function () {
-      return this.password;
-    },
-    setPassword: function (password) {
-      var codePoints = arrayFrom($toString(password));
-      if (this.cannotHaveUsernamePasswordPort()) return;
-      this.password = '';
-      for (var i = 0; i < codePoints.length; i++) {
-        this.password += percentEncode(codePoints[i], userinfoPercentEncodeSet);
-      }
-    },
-    // https://url.spec.whatwg.org/#dom-url-host
-    getHost: function () {
-      var host = this.host;
-      var port = this.port;
-      return host === null ? ''
-        : port === null ? serializeHost(host)
-        : serializeHost(host) + ':' + port;
-    },
-    setHost: function (host) {
-      if (this.cannotBeABaseURL) return;
-      this.parse(host, HOST);
-    },
-    // https://url.spec.whatwg.org/#dom-url-hostname
-    getHostname: function () {
-      var host = this.host;
-      return host === null ? '' : serializeHost(host);
-    },
-    setHostname: function (hostname) {
-      if (this.cannotBeABaseURL) return;
-      this.parse(hostname, HOSTNAME);
-    },
-    // https://url.spec.whatwg.org/#dom-url-port
-    getPort: function () {
-      var port = this.port;
-      return port === null ? '' : $toString(port);
-    },
-    setPort: function (port) {
-      if (this.cannotHaveUsernamePasswordPort()) return;
-      port = $toString(port);
-      if (port == '') this.port = null;
-      else this.parse(port, PORT);
-    },
-    // https://url.spec.whatwg.org/#dom-url-pathname
-    getPathname: function () {
-      var path = this.path;
-      return this.cannotBeABaseURL ? path[0] : path.length ? '/' + join(path, '/') : '';
-    },
-    setPathname: function (pathname) {
-      if (this.cannotBeABaseURL) return;
-      this.path = [];
-      this.parse(pathname, PATH_START);
-    },
-    // https://url.spec.whatwg.org/#dom-url-search
-    getSearch: function () {
-      var query = this.query;
-      return query ? '?' + query : '';
-    },
-    setSearch: function (search) {
-      search = $toString(search);
-      if (search == '') {
-        this.query = null;
-      } else {
-        if ('?' == charAt$1(search, 0)) search = stringSlice(search, 1);
-        this.query = '';
-        this.parse(search, QUERY);
-      }
-      this.searchParams.update();
-    },
-    // https://url.spec.whatwg.org/#dom-url-searchparams
-    getSearchParams: function () {
-      return this.searchParams.facade;
-    },
-    // https://url.spec.whatwg.org/#dom-url-hash
-    getHash: function () {
-      var fragment = this.fragment;
-      return fragment ? '#' + fragment : '';
-    },
-    setHash: function (hash) {
-      hash = $toString(hash);
-      if (hash == '') {
-        this.fragment = null;
-        return;
-      }
-      if ('#' == charAt$1(hash, 0)) hash = stringSlice(hash, 1);
-      this.fragment = '';
-      this.parse(hash, FRAGMENT);
-    },
-    update: function () {
-      this.query = this.searchParams.serialize() || null;
-    }
-  };
-
-  // `URL` constructor
-  // https://url.spec.whatwg.org/#url-class
-  var URLConstructor = function URL(url /* , base */) {
-    var that = anInstance(this, URLPrototype);
-    var base = validateArgumentsLength$2(arguments.length, 1) > 1 ? arguments[1] : undefined;
-    var state = setInternalState(that, new URLState(url, false, base));
-    if (!DESCRIPTORS$2) {
-      that.href = state.serialize();
-      that.origin = state.getOrigin();
-      that.protocol = state.getProtocol();
-      that.username = state.getUsername();
-      that.password = state.getPassword();
-      that.host = state.getHost();
-      that.hostname = state.getHostname();
-      that.port = state.getPort();
-      that.pathname = state.getPathname();
-      that.search = state.getSearch();
-      that.searchParams = state.getSearchParams();
-      that.hash = state.getHash();
-    }
-  };
-
-  var URLPrototype = URLConstructor.prototype;
-
-  var accessorDescriptor = function (getter, setter) {
-    return {
-      get: function () {
-        return getInternalURLState(this)[getter]();
-      },
-      set: setter && function (value) {
-        return getInternalURLState(this)[setter](value);
-      },
-      configurable: true,
-      enumerable: true
-    };
-  };
-
-  if (DESCRIPTORS$2) {
-    // `URL.prototype.href` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-href
-    defineBuiltInAccessor(URLPrototype, 'href', accessorDescriptor('serialize', 'setHref'));
-    // `URL.prototype.origin` getter
-    // https://url.spec.whatwg.org/#dom-url-origin
-    defineBuiltInAccessor(URLPrototype, 'origin', accessorDescriptor('getOrigin'));
-    // `URL.prototype.protocol` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-protocol
-    defineBuiltInAccessor(URLPrototype, 'protocol', accessorDescriptor('getProtocol', 'setProtocol'));
-    // `URL.prototype.username` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-username
-    defineBuiltInAccessor(URLPrototype, 'username', accessorDescriptor('getUsername', 'setUsername'));
-    // `URL.prototype.password` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-password
-    defineBuiltInAccessor(URLPrototype, 'password', accessorDescriptor('getPassword', 'setPassword'));
-    // `URL.prototype.host` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-host
-    defineBuiltInAccessor(URLPrototype, 'host', accessorDescriptor('getHost', 'setHost'));
-    // `URL.prototype.hostname` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-hostname
-    defineBuiltInAccessor(URLPrototype, 'hostname', accessorDescriptor('getHostname', 'setHostname'));
-    // `URL.prototype.port` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-port
-    defineBuiltInAccessor(URLPrototype, 'port', accessorDescriptor('getPort', 'setPort'));
-    // `URL.prototype.pathname` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-pathname
-    defineBuiltInAccessor(URLPrototype, 'pathname', accessorDescriptor('getPathname', 'setPathname'));
-    // `URL.prototype.search` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-search
-    defineBuiltInAccessor(URLPrototype, 'search', accessorDescriptor('getSearch', 'setSearch'));
-    // `URL.prototype.searchParams` getter
-    // https://url.spec.whatwg.org/#dom-url-searchparams
-    defineBuiltInAccessor(URLPrototype, 'searchParams', accessorDescriptor('getSearchParams'));
-    // `URL.prototype.hash` accessors pair
-    // https://url.spec.whatwg.org/#dom-url-hash
-    defineBuiltInAccessor(URLPrototype, 'hash', accessorDescriptor('getHash', 'setHash'));
-  }
-
-  // `URL.prototype.toJSON` method
-  // https://url.spec.whatwg.org/#dom-url-tojson
-  defineBuiltIn(URLPrototype, 'toJSON', function toJSON() {
-    return getInternalURLState(this).serialize();
-  }, { enumerable: true });
-
-  // `URL.prototype.toString` method
-  // https://url.spec.whatwg.org/#URL-stringification-behavior
-  defineBuiltIn(URLPrototype, 'toString', function toString() {
-    return getInternalURLState(this).serialize();
-  }, { enumerable: true });
-
-  if (NativeURL) {
-    var nativeCreateObjectURL = NativeURL.createObjectURL;
-    var nativeRevokeObjectURL = NativeURL.revokeObjectURL;
-    // `URL.createObjectURL` method
-    // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
-    if (nativeCreateObjectURL) defineBuiltIn(URLConstructor, 'createObjectURL', bind(nativeCreateObjectURL, NativeURL));
-    // `URL.revokeObjectURL` method
-    // https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL
-    if (nativeRevokeObjectURL) defineBuiltIn(URLConstructor, 'revokeObjectURL', bind(nativeRevokeObjectURL, NativeURL));
-  }
-
-  setToStringTag(URLConstructor, 'URL');
-
-  $$7({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$2 }, {
-    URL: URLConstructor
-  });
-
-  var $$6 = _export;
-  var getBuiltIn = getBuiltIn$h;
-  var fails$3 = fails$x;
-  var validateArgumentsLength$1 = validateArgumentsLength$5;
-  var toString$1 = toString$b;
-  var USE_NATIVE_URL = urlConstructorDetection;
-
-  var URL$1 = getBuiltIn('URL');
-
-  // https://github.com/nodejs/node/issues/47505
-  // https://github.com/denoland/deno/issues/18893
-  var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$3(function () {
-    URL$1.canParse();
-  });
-
-  // `URL.canParse` method
-  // https://url.spec.whatwg.org/#dom-url-canparse
-  $$6({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
-    canParse: function canParse(url) {
-      var length = validateArgumentsLength$1(arguments.length, 1);
-      var urlString = toString$1(url);
-      var base = length < 2 || arguments[1] === undefined ? undefined : toString$1(arguments[1]);
-      try {
-        return !!new URL$1(urlString, base);
-      } catch (error) {
-        return false;
-      }
-    }
-  });
-
-  var path$6 = path$n;
-
-  var url$5 = path$6.URL;
-
-  var parent$k = url$5;
-
-  var url$4 = parent$k;
-
-  var parent$j = url$4;
-
-  var url$3 = parent$j;
-
-  var parent$i = url$3;
-
-  var url$2 = parent$i;
-
-  var url$1 = url$2;
-
-  var url = url$1;
-
-  var _URL = /*@__PURE__*/getDefaultExportFromCjs(url);
 
   var MediaPlayerController = /*#__PURE__*/function () {
     function MediaPlayerController(ctx) {
@@ -21385,6 +21494,7 @@
       key: "init",
       value: function init() {
         this.video = $$M('video');
+        this.video.crossOrigin = 'anonymous';
         this.attachSource(this.playerOptions.url);
         this.el.appendChild(this.video);
         this.toolBar = new ToolBar(this, this.el, 'div');
