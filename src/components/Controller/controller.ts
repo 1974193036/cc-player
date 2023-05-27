@@ -4,6 +4,7 @@ import { ComponentConstructor, ComponentItem, DOMProps, Node, PlayerOptions } fr
 import { $ } from '@/utils/domUtils'
 import { FullPage } from './parts/FullPage'
 import { FullScreen } from './parts/FullScreen'
+import { PicInPic } from './parts/PicInPic'
 import { PlayButton } from './parts/PlayButton'
 import { Playrate } from './parts/Playrate'
 import { SubSetting } from './parts/SubSetting'
@@ -18,7 +19,7 @@ export class Controller extends Component implements ComponentItem {
   player: Player
   // 控件
   leftControllers: ComponentConstructor[] = [PlayButton]
-  rightController: ComponentConstructor[] = [Playrate, SubSetting, Volume, FullPage, FullScreen]
+  rightController: ComponentConstructor[] = [Playrate, SubSetting, Volume, PicInPic, FullPage, FullScreen]
   // fullscreen: FullScreen
   // playButton: PlayButton
   // playrate: Playrate
@@ -102,8 +103,9 @@ export class Controller extends Component implements ComponentItem {
     // this.playButton = new PlayButton(this.player, this.subPlay, 'div')
     // this.volume = new Volume(this.player, this.settings, 'div')
     // this.playrate = new Playrate(this.player, this.settings, 'div')
-    // this.fullscreen = new FullPage(this.player, this.settings, 'div')
+    // this.FullPage = new FullPage(this.player, this.settings, 'div')
     // this.fullscreen = new FullScreen(this.player, this.settings, 'div')
+    // this.PicInPic = new PicInPic(this.player, this.settings, 'div')
     // this.SubSetting = new SubSetting(this.player, this.settings, 'div')
   }
 
