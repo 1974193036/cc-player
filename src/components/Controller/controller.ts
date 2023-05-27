@@ -5,7 +5,7 @@ import { $ } from '@/utils/domUtils'
 import { FullScreen } from './parts/FullScreen'
 import { PlayButton } from './parts/PlayButton'
 import { Playrate } from './parts/Playrate'
-import { SubSetting } from "./parts/SubSetting"
+import { SubSetting } from './parts/SubSetting'
 import { Volume } from './parts/Volume'
 import { controllersMapping, storeControlComponent } from '@/utils/store'
 import './controller.less'
@@ -22,8 +22,11 @@ export class Controller extends Component implements ComponentItem {
   // playButton: PlayButton
   // playrate: Playrate
   // volume: Volume
-  subPlay: HTMLElement
-  settings: HTMLElement
+  // subPlay: HTMLElement
+  // settings: HTMLElement
+  leftArea: HTMLElement //代表着最左侧的区域
+  mediumArea: HTMLElement
+  rightArea: HTMLElement //代表最右侧的区域
 
   constructor(
     player: Player,
@@ -49,7 +52,7 @@ export class Controller extends Component implements ComponentItem {
   initControllers() {
     let leftControllers = (this.player.playerOptions as PlayerOptions).leftControllers
     let rightControllers = (this.player.playerOptions as PlayerOptions).rightControllers
-   
+
     if (leftControllers) {
       this.leftControllers = leftControllers.map((item) => {
         if (typeof item === 'string') {
@@ -74,24 +77,25 @@ export class Controller extends Component implements ComponentItem {
         }
       })
     }
-
   }
 
   initTemplate() {
-    this.subPlay = $('div.video-subplay')
-    this.settings = $('div.video-settings')
-    this.el.appendChild(this.subPlay)
-    this.el.appendChild(this.settings)
+    this.leftArea = $('div.video-subplay')
+    this.mediumArea = $('div.video-medium')
+    this.rightArea = $('div.video-settings')
+    this.el.appendChild(this.leftArea)
+    this.el.appendChild(this.mediumArea)
+    this.el.appendChild(this.rightArea)
   }
 
   initComponent() {
     this.leftControllers.forEach((ControlConstructor) => {
-      let instance = new ControlConstructor(this.player, this.subPlay, 'div')
+      let instance = new ControlConstructor(this.player, this.leftArea, 'div')
       this[instance.id] = instance
     })
 
     this.rightController.forEach((ControlConstructor) => {
-      let instance = new ControlConstructor(this.player, this.settings, 'div')
+      let instance = new ControlConstructor(this.player, this.rightArea, 'div')
       this[instance.id] = instance
     })
     // this.playButton = new PlayButton(this.player, this.subPlay, 'div')
@@ -99,6 +103,10 @@ export class Controller extends Component implements ComponentItem {
     // this.playrate = new Playrate(this.player, this.settings, 'div')
     // this.fullscreen = new FullScreen(this.player, this.settings, 'div')
     // this.SubSetting = new SubSetting(this.player, this.settings, 'div')
+  }
+
+  initEvent() {
+    this.player.on('danmaku-plugin-add', () => {})
   }
   // private template_: HTMLElement | string;
   // private container: HTMLElement;

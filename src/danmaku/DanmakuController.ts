@@ -1,27 +1,37 @@
-import { Danmaku } from '@/danmaku'
+import { Danmaku, DanmakuInput } from '@/danmaku'
 import { queue } from '@/mock/queue'
+import { Player } from '../page/player'
 
 export class DanmakuController {
+  private player: Player
   private video: HTMLVideoElement
   private container: HTMLElement
   private danmaku: Danmaku
+  private danmakuInput: DanmakuInput
   private index: number = 0
   private timer: number | null = null
 
-  constructor(video: HTMLVideoElement, container: HTMLElement) {
-    this.video = video
-    this.container = container
-    console.log(this.video, this.container)
+  constructor(player: Player) {
+    this.player = player
+    this.video = player.video
+    this.container = player.container
     this.init()
   }
 
   init() {
     this.danmaku = new Danmaku([], this.container)
+    this.initTemplate()
     this.initializeEvent()
   }
 
-  attachVideo(video: HTMLVideoElement) {
-    this.video = video
+  initTemplate() {
+    let ctx = this
+    this.danmakuInput = new DanmakuInput(this.player, null, 'div')
+    this.player.use({
+      install(player) {
+        player.registerControls(ctx.danmakuInput.id, ctx.danmakuInput, 'medium')
+      }
+    })
   }
 
   initializeEvent() {
@@ -44,6 +54,10 @@ export class DanmakuController {
     })
 
     this.video.addEventListener('loadedmetadata', (e) => {})
+
+    this.danmakuInput.on('sendData', function (data) {
+      console.log(data)
+    })
   }
 
   onTimeupdate(e: Event) {
@@ -51,7 +65,10 @@ export class DanmakuController {
     let currentTime = video.currentTime
   }
 
-  onSeeking(e: Event) {}
+  // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+  onSeeking(e: Event) {
+    this.danmaku.flush()
+  }
 
   start() {
     this.timer = window.setInterval(() => {

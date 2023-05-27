@@ -47,7 +47,7 @@ class Player extends Component implements ComponentItem {
     this.initEvent()
     this.initPlugin()
 
-    new DanmakuController(this.video, this.container)
+    new DanmakuController(this)
   }
 
   initEvent() {
@@ -126,7 +126,12 @@ class Player extends Component implements ComponentItem {
     }
   }
 
-  registerControls(id: string, component: Partial<ComponentItem> & registerOptions) {
+  // 注册最右侧的控制栏上的组件
+  registerControls(
+    id: string,
+    component: Partial<ComponentItem> & registerOptions,
+    pos: 'left' | 'right' | 'medium'
+  ) {
     let store = CONTROL_COMPONENT_STORE
     if (store.has(id)) {
       // patchComponent(store.get(id), component)
@@ -140,7 +145,14 @@ class Player extends Component implements ComponentItem {
     } else {
       // 如果该组件实例是用户自创的话
       if (!component.el) throw new Error(`传入的原创组件${id}没有对应的DOM元素`)
-      this.toolBar.controller.settings.appendChild(component.el)
+      if (pos === 'left') {
+        this.toolBar.controller.leftArea.appendChild(component.el)
+      } else if (pos === 'right') {
+        let settings = this.toolBar.controller.rightArea
+        settings.insertBefore(component.el, settings.firstChild)
+      } else if (pos === 'medium') {
+        this.toolBar.controller.mediumArea.appendChild(component.el)
+      }
     }
   }
 
