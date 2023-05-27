@@ -51,6 +51,30 @@ export class Danmaku {
     }
   }
 
+  // 暂停所有的弹幕
+  pause() {
+    window.clearTimeout(this.timer)
+    this.moovingQueue.forEach((data) => {
+      let currentRollDistance = ((Date.now() - data.startTime) * data.rollSpeed) / 1000
+      data.rollDistance = currentRollDistance + (data.rollDistance ? data.rollDistance : 0)
+      data.dom.style.transition = ''
+      data.dom.style.transform = `translateX(${-data.rollDistance}px)`
+    })
+  }
+
+  // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
+  resume() {
+    this.timer = window.setTimeout(() => {
+      this.render()
+    }, this.renderInterval)
+    this.moovingQueue.forEach((data) => {
+      data.dom.style.transform = `translateX(-${data.totalDistance}px)`
+      data.startTime = Date.now()
+      data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed
+      data.dom.style.transition = `transform ${data.rollTime}s linear`
+    })
+  }
+
   startDanmaku() {
     this.render()
   }
@@ -59,12 +83,12 @@ export class Danmaku {
   addData(data: any) {
     this.queue.push(this.parseData(data))
 
-    if (flag) return
+    // if (flag) return
     if (this.timer === null) {
       nextTick(() => {
         this.render()
       })
-      flag = true
+      // flag = true
     }
   }
 

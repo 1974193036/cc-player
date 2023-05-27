@@ -20679,11 +20679,7 @@
   }
 
   function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context12, _context13; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context12 = ownKeys(Object(source), !0)).call(_context12, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context13 = ownKeys(Object(source))).call(_context13, function (key) { Object.defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-  /**
-   * @description 弹幕类
-   */
-  var flag = false;
+  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context14, _context15; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context14 = ownKeys(Object(source), !0)).call(_context14, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context15 = ownKeys(Object(source))).call(_context15, function (key) { Object.defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
   var Danmaku = /*#__PURE__*/function () {
     function Danmaku(queue, container) {
       _classCallCheck(this, Danmaku);
@@ -20726,6 +20722,35 @@
           };
         }
       }
+      // 暂停所有的弹幕
+    }, {
+      key: "pause",
+      value: function pause() {
+        var _context;
+        window.clearTimeout(this.timer);
+        _forEachInstanceProperty(_context = this.moovingQueue).call(_context, function (data) {
+          var currentRollDistance = (Date.now() - data.startTime) * data.rollSpeed / 1000;
+          data.rollDistance = currentRollDistance + (data.rollDistance ? data.rollDistance : 0);
+          data.dom.style.transition = '';
+          data.dom.style.transform = "translateX(".concat(-data.rollDistance, "px)");
+        });
+      }
+      // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
+    }, {
+      key: "resume",
+      value: function resume() {
+        var _this = this,
+          _context2;
+        this.timer = window.setTimeout(function () {
+          _this.render();
+        }, this.renderInterval);
+        _forEachInstanceProperty(_context2 = this.moovingQueue).call(_context2, function (data) {
+          data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
+          data.startTime = Date.now();
+          data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
+          data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
+        });
+      }
     }, {
       key: "startDanmaku",
       value: function startDanmaku() {
@@ -20735,14 +20760,14 @@
     }, {
       key: "addData",
       value: function addData(data) {
-        var _this = this;
+        var _this2 = this;
         this.queue.push(this.parseData(data));
-        if (flag) return;
+        // if (flag) return
         if (this.timer === null) {
           nextTick(function () {
-            _this.render();
+            _this2.render();
           });
-          flag = true;
+          // flag = true
         }
       }
     }, {
@@ -20777,13 +20802,13 @@
     }, {
       key: "renderEnd",
       value: function renderEnd() {
-        var _this2 = this;
+        var _this3 = this;
         if (this.queue.length === 0) {
           window.clearTimeout(this.timer);
           this.timer = null;
         } else {
           this.timer = window.setTimeout(function () {
-            _this2.render();
+            _this3.render();
           }, this.renderInterval);
         }
       }
@@ -20822,11 +20847,11 @@
         };
         this.addDataToTrack(data);
         if (data.y.length === 0) {
-          var _context, _context2;
-          if (_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, data.dom)) {
+          var _context3, _context4;
+          if (_includesInstanceProperty(_context3 = _toConsumableArray(this.container.childNodes)).call(_context3, data.dom)) {
             this.container.removeChild(data.dom);
           }
-          _spliceInstanceProperty(_context2 = this.queue).call(_context2, 0, 1).push(data);
+          _spliceInstanceProperty(_context4 = this.queue).call(_context4, 0, 1).push(data);
         } else {
           data.dom.style.top = data.y[0] * this.trackHeight + 3 + 'px';
           this.startAnimate(data);
@@ -20837,7 +20862,7 @@
     }, {
       key: "addDataToTrack",
       value: function addDataToTrack(data) {
-        var _this3 = this;
+        var _this4 = this;
         // console.log(this.tracks)
         // [
         //   {track: {id:0, priority: 15}, datas: DanmakuData[]},
@@ -20862,10 +20887,10 @@
             }
           }
           if (y.length >= data.useTracks) {
-            var _context3;
+            var _context5;
             data.y = y;
-            _forEachInstanceProperty(_context3 = data.y).call(_context3, function (id) {
-              _this3.tracks[id].datas.push(data);
+            _forEachInstanceProperty(_context5 = data.y).call(_context5, function (id) {
+              _this4.tracks[id].datas.push(data);
             });
             break;
           }
@@ -20874,10 +20899,10 @@
     }, {
       key: "removeDataFromTrack",
       value: function removeDataFromTrack(data) {
-        var _context4,
-          _this4 = this;
-        _forEachInstanceProperty(_context4 = data.y).call(_context4, function (id) {
-          var datas = _this4.tracks[id].datas;
+        var _context6,
+          _this5 = this;
+        _forEachInstanceProperty(_context6 = data.y).call(_context6, function (id) {
+          var datas = _this5.tracks[id].datas;
           var index = _indexOfInstanceProperty(datas).call(datas, data);
           if (index === -1) return;
           _spliceInstanceProperty(datas).call(datas, index, 1);
@@ -20886,18 +20911,18 @@
     }, {
       key: "startAnimate",
       value: function startAnimate(data) {
-        var _this5 = this;
+        var _this6 = this;
         this.moovingQueue.push(data);
         data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
         data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
         data.dom.ontransitionend = function (e) {
-          var _context5;
-          _this5.container.removeChild(data.dom);
-          _this5.removeDataFromTrack(data);
-          var index = _indexOfInstanceProperty(_context5 = _this5.moovingQueue).call(_context5, data);
+          var _context7;
+          _this6.container.removeChild(data.dom);
+          _this6.removeDataFromTrack(data);
+          var index = _indexOfInstanceProperty(_context7 = _this6.moovingQueue).call(_context7, data);
           if (index > -1) {
-            var _context6;
-            _spliceInstanceProperty(_context6 = _this5.moovingQueue).call(_context6, index, 1);
+            var _context8;
+            _spliceInstanceProperty(_context8 = _this6.moovingQueue).call(_context8, index, 1);
           }
         };
       }
@@ -20905,18 +20930,18 @@
     }, {
       key: "flush",
       value: function flush() {
-        var _context7,
-          _this6 = this,
-          _context8;
-        _forEachInstanceProperty(_context7 = this.moovingQueue).call(_context7, function (data) {
-          _this6.container.removeChild(data.dom);
+        var _context9,
+          _this7 = this,
+          _context10;
+        _forEachInstanceProperty(_context9 = this.moovingQueue).call(_context9, function (data) {
+          _this7.container.removeChild(data.dom);
           data.dom.ontransitionstart = null;
           data.dom.ontransitionend = null;
         });
-        _forEachInstanceProperty(_context8 = this.queue).call(_context8, function (data) {
-          var _context9;
-          if (_includesInstanceProperty(_context9 = _toConsumableArray(_this6.container.children)).call(_context9, data.dom)) {
-            _this6.container.removeChild(data.dom);
+        _forEachInstanceProperty(_context10 = this.queue).call(_context10, function (data) {
+          var _context11;
+          if (_includesInstanceProperty(_context11 = _toConsumableArray(_this7.container.children)).call(_context11, data.dom)) {
+            _this7.container.removeChild(data.dom);
             data.dom.ontransitionstart = null;
             data.dom.ontransitionend = null;
           }
@@ -20928,14 +20953,14 @@
     }, {
       key: "disCard",
       value: function disCard(start, end) {
-        var _context10;
-        _spliceInstanceProperty(_context10 = this.queue).call(_context10, start, end - start + 1);
+        var _context12;
+        _spliceInstanceProperty(_context12 = this.queue).call(_context12, start, end - start + 1);
       }
     }, {
       key: "clearOutdatedDanmaku",
       value: function clearOutdatedDanmaku(currentTime, interval) {
-        var _context11;
-        this.queue = _filterInstanceProperty(_context11 = this.queue).call(_context11, function (item) {
+        var _context13;
+        this.queue = _filterInstanceProperty(_context13 = this.queue).call(_context13, function (item) {
           if (currentTime - item.timestamp > interval) {
             return false;
           }
@@ -20945,43 +20970,6 @@
     }]);
     return Danmaku;
   }();
-
-  var DanmakuController = /*#__PURE__*/function () {
-    function DanmakuController(video) {
-      _classCallCheck(this, DanmakuController);
-      _defineProperty(this, "video", void 0);
-      this.video = video;
-    }
-    _createClass(DanmakuController, [{
-      key: "attachVideo",
-      value: function attachVideo(video) {
-        this.video = video;
-      }
-    }, {
-      key: "initializeEvent",
-      value: function initializeEvent() {
-        var _this = this;
-        this.video.ontimeupdate = function (e) {
-          _this.onTimeupdate(e);
-        };
-      }
-    }, {
-      key: "onTimeupdate",
-      value: function onTimeupdate(e) {
-        var video = e.target;
-        video.currentTime;
-      }
-    }]);
-    return DanmakuController;
-  }();
-
-  var DanmakuInput = /*#__PURE__*/_createClass(function DanmakuInput() {
-    _classCallCheck(this, DanmakuInput);
-  });
-
-  var DanmakuSettings = /*#__PURE__*/_createClass(function DanmakuSettings() {
-    _classCallCheck(this, DanmakuSettings);
-  });
 
   var queue = [{
     message: '秋招实在是寒气逼人',
@@ -21005,6 +20993,96 @@
     message: '经纬恒润内推',
     fontColor: 'red'
   }, '111111111111而非武功果然'];
+
+  var DanmakuController = /*#__PURE__*/function () {
+    function DanmakuController(video, container) {
+      _classCallCheck(this, DanmakuController);
+      _defineProperty(this, "video", void 0);
+      _defineProperty(this, "container", void 0);
+      _defineProperty(this, "danmaku", void 0);
+      _defineProperty(this, "index", 0);
+      _defineProperty(this, "timer", null);
+      this.video = video;
+      this.container = container;
+      console.log(this.video, this.container);
+      this.init();
+    }
+    _createClass(DanmakuController, [{
+      key: "init",
+      value: function init() {
+        this.danmaku = new Danmaku([], this.container);
+        this.initializeEvent();
+      }
+    }, {
+      key: "attachVideo",
+      value: function attachVideo(video) {
+        this.video = video;
+      }
+    }, {
+      key: "initializeEvent",
+      value: function initializeEvent() {
+        var _this = this;
+        this.video.addEventListener('timeupdate', function (e) {
+          _this.onTimeupdate(e);
+        });
+        this.video.addEventListener('seeking', function (e) {
+          _this.onSeeking(e);
+        });
+        this.video.addEventListener('play', function (e) {
+          _this.start();
+          _this.danmaku.resume();
+        });
+        this.video.addEventListener('pause', function (e) {
+          _this.pause();
+          _this.danmaku.pause();
+        });
+        this.video.addEventListener('loadedmetadata', function (e) {});
+      }
+    }, {
+      key: "onTimeupdate",
+      value: function onTimeupdate(e) {
+        var video = e.target;
+        video.currentTime;
+      }
+    }, {
+      key: "onSeeking",
+      value: function onSeeking(e) {}
+    }, {
+      key: "start",
+      value: function start() {
+        var _this2 = this;
+        this.timer = window.setInterval(function () {
+          _this2.danmaku.addData(queue[_this2.index++ % queue.length]);
+          // if (this.index >= 250) {
+          //   window.clearInterval(this.timer)
+          //   this.timer = null
+          // }
+        }, 50);
+        // const send = () => {
+        //   if (this.index >= 30) return
+        //   let data = queue[(this.index++) % queue.length]
+        //   this.danmaku.addData(data)
+        //   send()
+        // }
+        // send()
+      }
+    }, {
+      key: "pause",
+      value: function pause() {
+        window.clearInterval(this.timer);
+        this.timer = null;
+      }
+    }]);
+    return DanmakuController;
+  }();
+
+  var DanmakuInput = /*#__PURE__*/_createClass(function DanmakuInput() {
+    _classCallCheck(this, DanmakuInput);
+  });
+
+  var DanmakuSettings = /*#__PURE__*/_createClass(function DanmakuSettings() {
+    _classCallCheck(this, DanmakuSettings);
+  });
 
   var css_248z$1 = ".video-container {\n  position: relative;\n  overflow: hidden;\n  background-color: #000;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n";
   styleInject(css_248z$1);
@@ -21052,24 +21130,7 @@
         this.toolBar = new ToolBar(this, this.el, 'div');
         this.initEvent();
         this.initPlugin();
-        var danmaku = new Danmaku([], this.el);
-        var i = 0;
-        // let timer = setInterval(() => {
-        //   let data = queue[(i++) % queue.length]
-        //   danmaku.addData(data)
-        //   // 测试弹幕，先放30条数据
-        //   if (i >= 30) {
-        //     clearTimeout(timer)
-        //     timer = null
-        //   }
-        // }, 150)
-        var sendDanmaku = function sendDanmaku() {
-          if (i >= 30) return;
-          var data = queue[i++ % queue.length];
-          danmaku.addData(data);
-          sendDanmaku();
-        };
-        sendDanmaku();
+        new DanmakuController(this.video, this.container);
       }
     }, {
       key: "initEvent",
@@ -21138,7 +21199,8 @@
         switch (getFileExtension(url)) {
           case 'mp4':
           case 'mp3':
-            this.initMp4Player(url);
+            // this.initMp4Player(url)
+            this.video.src = url;
             break;
           case 'mpd':
             this.initMpdPlayer(url);
