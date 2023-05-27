@@ -20716,6 +20716,7 @@
       _defineProperty(this, "renderInterval", 100);
       // 每一条弹幕轨道的高度默认为20px
       _defineProperty(this, "trackHeight", 20);
+      _defineProperty(this, "isStopped", true);
       _defineProperty(this, "tracks", new Array(15));
       _defineProperty(this, "defaultDanma", {
         message: 'default message',
@@ -20751,30 +20752,43 @@
     }, {
       key: "pause",
       value: function pause() {
-        var _context;
+        var _context,
+          _this = this;
+        this.isStopped = true;
         window.clearTimeout(this.timer);
         _forEachInstanceProperty(_context = this.moovingQueue).call(_context, function (data) {
-          var currentRollDistance = (Date.now() - data.startTime) * data.rollSpeed / 1000;
-          data.rollDistance = currentRollDistance + (data.rollDistance ? data.rollDistance : 0);
-          data.dom.style.transition = '';
-          data.dom.style.transform = "translateX(".concat(-data.rollDistance, "px)");
+          _this.pauseOneData(data);
         });
       }
       // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
     }, {
       key: "resume",
       value: function resume() {
-        var _this = this,
+        var _this2 = this,
           _context2;
+        this.isStopped = false;
         this.timer = window.setTimeout(function () {
-          _this.render();
+          _this2.render();
         }, this.renderInterval);
         _forEachInstanceProperty(_context2 = this.moovingQueue).call(_context2, function (data) {
-          data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
-          data.startTime = Date.now();
-          data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
-          data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
+          _this2.resumeOneData(data);
         });
+      }
+    }, {
+      key: "resumeOneData",
+      value: function resumeOneData(data) {
+        data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
+        data.startTime = Date.now();
+        data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
+        data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
+      }
+    }, {
+      key: "pauseOneData",
+      value: function pauseOneData(data) {
+        var currentRollDistance = (Date.now() - data.startTime) * data.rollSpeed / 1000;
+        data.rollDistance = currentRollDistance + (data.rollDistance ? data.rollDistance : 0);
+        data.dom.style.transition = '';
+        data.dom.style.transform = "translateX(".concat(-data.rollDistance, "px)");
       }
     }, {
       key: "startDanmaku",
@@ -20785,12 +20799,12 @@
     }, {
       key: "addData",
       value: function addData(data) {
-        var _this2 = this;
+        var _this3 = this;
         this.queue.push(this.parseData(data));
         // if (flag) return
         if (this.timer === null) {
           nextTick(function () {
-            _this2.render();
+            _this3.render();
           });
           // flag = true
         }
@@ -20827,13 +20841,13 @@
     }, {
       key: "renderEnd",
       value: function renderEnd() {
-        var _this3 = this;
+        var _this4 = this;
         if (this.queue.length === 0) {
           window.clearTimeout(this.timer);
           this.timer = null;
         } else {
           this.timer = window.setTimeout(function () {
-            _this3.render();
+            _this4.render();
           }, this.renderInterval);
         }
       }
@@ -20841,11 +20855,13 @@
     }, {
       key: "renderToDOM",
       value: function renderToDOM() {
+        var _this5 = this;
         if (this.queue.length === 0) return;
         var data = this.queue[0];
         if (!data.dom) {
           var dom = document.createElement('div');
           dom.innerText = data.message;
+          dom.className = 'danmaku-box';
           if (data.fontFamily !== '') {
             dom.style.fontFamily = data.fontFamily;
           }
@@ -20856,6 +20872,7 @@
           dom.style.left = '100%';
           dom.style.whiteSpace = 'nowrap';
           dom.style.willChange = 'transform';
+          dom.style.cursor = 'pointer';
           data.dom = dom;
           this.container.appendChild(dom);
         }
@@ -20869,6 +20886,14 @@
         data.y = [];
         data.dom.ontransitionstart = function (e) {
           data.startTime = Date.now();
+        };
+        data.dom.onmouseenter = function () {
+          if (_this5.isStopped) return;
+          _this5.pauseOneData(data);
+        };
+        data.dom.onmouseleave = function () {
+          if (_this5.isStopped) return;
+          _this5.resumeOneData(data);
         };
         this.addDataToTrack(data);
         if (data.y.length === 0) {
@@ -20887,7 +20912,7 @@
     }, {
       key: "addDataToTrack",
       value: function addDataToTrack(data) {
-        var _this4 = this;
+        var _this6 = this;
         // console.log(this.tracks)
         // [
         //   {track: {id:0, priority: 15}, datas: DanmakuData[]},
@@ -20915,7 +20940,7 @@
             var _context5;
             data.y = y;
             _forEachInstanceProperty(_context5 = data.y).call(_context5, function (id) {
-              _this4.tracks[id].datas.push(data);
+              _this6.tracks[id].datas.push(data);
             });
             break;
           }
@@ -20925,9 +20950,9 @@
       key: "removeDataFromTrack",
       value: function removeDataFromTrack(data) {
         var _context6,
-          _this5 = this;
+          _this7 = this;
         _forEachInstanceProperty(_context6 = data.y).call(_context6, function (id) {
-          var datas = _this5.tracks[id].datas;
+          var datas = _this7.tracks[id].datas;
           var index = _indexOfInstanceProperty(datas).call(datas, data);
           if (index === -1) return;
           _spliceInstanceProperty(datas).call(datas, index, 1);
@@ -20936,18 +20961,18 @@
     }, {
       key: "startAnimate",
       value: function startAnimate(data) {
-        var _this6 = this;
+        var _this8 = this;
         this.moovingQueue.push(data);
         data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
         data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
         data.dom.ontransitionend = function (e) {
           var _context7;
-          _this6.container.removeChild(data.dom);
-          _this6.removeDataFromTrack(data);
-          var index = _indexOfInstanceProperty(_context7 = _this6.moovingQueue).call(_context7, data);
+          _this8.container.removeChild(data.dom);
+          _this8.removeDataFromTrack(data);
+          var index = _indexOfInstanceProperty(_context7 = _this8.moovingQueue).call(_context7, data);
           if (index > -1) {
             var _context8;
-            _spliceInstanceProperty(_context8 = _this6.moovingQueue).call(_context8, index, 1);
+            _spliceInstanceProperty(_context8 = _this8.moovingQueue).call(_context8, index, 1);
           }
         };
       }
@@ -20956,17 +20981,17 @@
       key: "flush",
       value: function flush() {
         var _context9,
-          _this7 = this,
+          _this9 = this,
           _context10;
         _forEachInstanceProperty(_context9 = this.moovingQueue).call(_context9, function (data) {
-          _this7.container.removeChild(data.dom);
+          _this9.container.removeChild(data.dom);
           data.dom.ontransitionstart = null;
           data.dom.ontransitionend = null;
         });
         _forEachInstanceProperty(_context10 = this.queue).call(_context10, function (data) {
           var _context11;
-          if (_includesInstanceProperty(_context11 = _toConsumableArray(_this7.container.children)).call(_context11, data.dom)) {
-            _this7.container.removeChild(data.dom);
+          if (_includesInstanceProperty(_context11 = _toConsumableArray(_this9.container.children)).call(_context11, data.dom)) {
+            _this9.container.removeChild(data.dom);
             data.dom.ontransitionstart = null;
             data.dom.ontransitionend = null;
           }
@@ -21117,7 +21142,7 @@
     return DanmakuController;
   }();
 
-  var css_248z$2 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  width: 100%;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: 85%;\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 15%;\n  text-align: center;\n  line-height: 35px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n";
+  var css_248z$2 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  width: 100%;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: 85%;\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 15%;\n  text-align: center;\n  line-height: 35px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n";
   styleInject(css_248z$2);
 
   function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
