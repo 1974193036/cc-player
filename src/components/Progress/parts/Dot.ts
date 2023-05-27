@@ -11,6 +11,8 @@ export class Dot extends Component implements ComponentItem {
   props: DOMProps
   player: Player
   container: HTMLElement
+  mouseX: number
+  left = 0
 
   constructor(
     player: Player,
@@ -49,6 +51,33 @@ export class Dot extends Component implements ComponentItem {
     this.player.on('timeupdate', (e) => {
       this.updatePos(e)
     })
+
+    this.el.addEventListener('mousedown', (e) => {
+      e.preventDefault()
+      this.onMouseMove = this.onMouseMove.bind(this)
+      this.mouseX = e.pageX
+      this.left = parseInt(this.el.style.left)
+
+      document.body.addEventListener('mousemove', this.onMouseMove)
+
+      document.body.addEventListener('mouseup', (e) => {
+        console.log('mouseup')
+        document.body.removeEventListener('mousemove', this.onMouseMove)
+      })
+    })
+  }
+
+  onMouseMove(e) {
+    let scale = (e.pageX - this.mouseX + this.left) / this.container.offsetWidth
+    if (scale < 0) {
+      scale = 0
+    } else if (scale > 1) {
+      scale = 1
+    }
+    this.el.style.left = this.container.offsetWidth * scale - 5 + 'px'
+    this.player.video.currentTime = Math.floor(scale * this.player.video.duration)
+    if (this.player.video.paused) this.player.video.play()
+    this.player.emit('dotdrag', this.container.offsetWidth * scale)
   }
 
   onShowDot(e: MouseEvent) {

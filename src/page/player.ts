@@ -51,6 +51,14 @@ class Player extends Component implements ComponentItem {
   }
 
   initEvent() {
+    this.video.onclick = (e) => {
+      if (this.video.paused) {
+        this.video.play()
+      } else if (this.video.played) {
+        this.video.pause()
+      }
+    }
+
     this.el.onmouseenter = (e) => {
       this.emit('showtoolbar', e)
     }
@@ -67,9 +75,9 @@ class Player extends Component implements ComponentItem {
       this.emit('loadedmetadata', e)
     }
 
-    this.video.ontimeupdate = (e) => {
+    this.video.addEventListener('timeupdate', (e) => {
       this.emit('timeupdate', e)
-    }
+    })
 
     this.video.onplay = (e) => {
       this.emit('play', e)
@@ -78,6 +86,11 @@ class Player extends Component implements ComponentItem {
     this.video.onpause = (e) => {
       this.emit('pause', e)
     }
+
+    // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
+    this.video.addEventListener('ratechange', (e) => {
+      this.emit('ratechange')
+    })
 
     this.on('progress-click', (e, ctx) => {
       let scale = e.offsetX / ctx.el.offsetWidth

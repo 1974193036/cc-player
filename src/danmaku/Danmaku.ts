@@ -278,6 +278,10 @@ export class Danmaku {
         data.dom.ontransitionend = null
       }
     })
+    // 清空轨道上的所有数据
+    this.tracks.forEach((obj) => {
+      obj.datas = []
+    })
     this.moovingQueue = []
     this.queue = []
   }

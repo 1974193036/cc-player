@@ -1,7 +1,7 @@
 import { Options } from './Options'
 import { Player } from '../../../page/player'
 import { DOMProps, Node } from '../../../types/Player'
-import { $, addClass, createSvg, createSvgs, getDOMPoint } from '../../../utils/domUtils'
+import { $, addClass, createSvg, getDOMPoint } from '../../../utils/domUtils'
 import { volumePath$1 } from '../path/defaultPath'
 import { storeControlComponent } from '@/utils/store'
 import { VolumeCompletedProgress } from './VolumeCompletedProgress'
@@ -13,6 +13,7 @@ export class Volume extends Options {
   volumeShow: HTMLElement
   volumeCompleted: VolumeCompletedProgress
   icon: SVGSVGElement
+  volume: number = 0.5
 
   constructor(
     player: Player,
@@ -38,7 +39,7 @@ export class Volume extends Options {
     addClass(this.hideBox, ['video-volume-set'])
     this.volumeProgress = $('div.video-volume-progress', { style: { height: '70px' } })
     this.volumeShow = $('div.video-volume-show')
-    this.volumeShow.innerText = '50'
+    this.volumeShow.innerText = (this.volume * 100).toFixed(0)
     this.volumeCompleted = new VolumeCompletedProgress(
       this.player,
       this.volumeProgress,
@@ -47,8 +48,9 @@ export class Volume extends Options {
     this.hideBox.appendChild(this.volumeShow)
     this.hideBox.appendChild(this.volumeProgress)
 
-    this.icon = createSvg(volumePath$1);
+    this.icon = createSvg(volumePath$1)
     this.iconBox.appendChild(this.icon)
+    this.player.video.volume = this.volume
   }
 
   initEvent() {
@@ -62,6 +64,9 @@ export class Volume extends Options {
         scale = 1
       }
       this.volumeCompleted.el.style.height = scale * 100 + '%'
+      this.volume = scale
+      this.volumeShow.innerText = (this.volume * 100).toFixed(0)
+      this.player.video.volume = this.volume
     })
 
     this.volumeProgress.onclick = (e) => {

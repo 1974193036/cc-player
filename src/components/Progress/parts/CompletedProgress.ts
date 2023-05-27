@@ -6,6 +6,7 @@ import { storeControlComponent } from '@/utils/store'
 
 export class CompletedProgress extends Component implements ComponentItem {
   readonly id = 'CompletedProgress'
+  // el: div.video-completed
   props: DOMProps
   player: Player
 
@@ -24,7 +25,6 @@ export class CompletedProgress extends Component implements ComponentItem {
 
   init() {
     this.initEvent()
-
     storeControlComponent(this)
   }
 
@@ -35,6 +35,10 @@ export class CompletedProgress extends Component implements ComponentItem {
 
     this.player.on('timeupdate', (e) => {
       this.updatePos(e)
+    })
+
+    this.player.on('dotdrag', (len: number) => {
+      this.el.style.width = len + 'px'
     })
   }
 

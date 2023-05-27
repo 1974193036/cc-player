@@ -60,6 +60,10 @@ export class DanmakuController {
       // console.log(data)
       queue.push(data)
     })
+
+    this.player.on('dotdrag', (e) => {
+      this.danmaku.flush()
+    })
   }
 
   onTimeupdate(e: Event) {

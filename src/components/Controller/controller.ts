@@ -9,6 +9,8 @@ import { PlayButton } from './parts/PlayButton'
 import { ScreenShot } from './parts/ScreenShot'
 import { Playrate } from './parts/Playrate'
 import { SubSetting } from './parts/SubSetting'
+import { DutaionShow } from './parts/DurationShow'
+import { VideoShot } from './parts/VideoShot'
 import { Volume } from './parts/Volume'
 import { controllersMapping, storeControlComponent } from '@/utils/store'
 import './controller.less'
@@ -19,11 +21,11 @@ export class Controller extends Component implements ComponentItem {
   props: DOMProps = {}
   player: Player
   // 控件
-  leftControllers: ComponentConstructor[] = [PlayButton]
+  leftControllers: ComponentConstructor[] = [PlayButton, Volume, DutaionShow]
   rightController: ComponentConstructor[] = [
     Playrate,
     SubSetting,
-    Volume,
+    VideoShot,
     ScreenShot,
     PicInPic,
     FullPage,
@@ -110,6 +112,7 @@ export class Controller extends Component implements ComponentItem {
       this[instance.id] = instance
     })
     // this.playButton = new PlayButton(this.player, this.subPlay, 'div')
+    // this.DutaionShow = new DutaionShow(this.player, this.subPlay, 'div')
     // this.volume = new Volume(this.player, this.settings, 'div')
     // this.playrate = new Playrate(this.player, this.settings, 'div')
     // this.ScreenShot = new ScreenShot(this.player, this.settings, 'div')
@@ -117,6 +120,7 @@ export class Controller extends Component implements ComponentItem {
     // this.fullscreen = new FullScreen(this.player, this.settings, 'div')
     // this.PicInPic = new PicInPic(this.player, this.settings, 'div')
     // this.SubSetting = new SubSetting(this.player, this.settings, 'div')
+    // this.VideoShot = new VideoShot(this.player, this.settings, 'div')
   }
 
   initEvent() {
