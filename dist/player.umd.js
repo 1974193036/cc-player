@@ -5796,6 +5796,7 @@
       _defineProperty(_assertThisInitialized(_this), "container", void 0);
       _defineProperty(_assertThisInitialized(_this), "mouseX", void 0);
       _defineProperty(_assertThisInitialized(_this), "left", 0);
+      _defineProperty(_assertThisInitialized(_this), "playScale", 0);
       _this.props = props || {};
       _this.player = player;
       _this.container = container;
@@ -5823,16 +5824,21 @@
           _this2.onChangePos(e, ctx);
         });
         this.player.on('timeupdate', function (e) {
-          _this2.updatePos(e);
+          // 防抖效果：针对Dot按下拖动时不触发timeupdate，拖完鼠标抬起时再触发timeupdate
+          if (_this2.player.enableSeek) {
+            _this2.updatePos(e);
+          }
         });
         this.el.addEventListener('mousedown', function (e) {
           e.preventDefault();
           _this2.onMouseMove = _this2.onMouseMove.bind(_this2);
+          _this2.player.emit('dotdown');
           _this2.mouseX = e.pageX;
           _this2.left = _parseInt$1(_this2.el.style.left);
           document.body.addEventListener('mousemove', _this2.onMouseMove);
           document.body.addEventListener('mouseup', function (e) {
-            console.log('mouseup');
+            _this2.player.emit('dotup');
+            _this2.player.video.currentTime = Math.floor(_this2.playScale * _this2.player.video.duration);
             document.body.removeEventListener('mousemove', _this2.onMouseMove);
           });
         });
@@ -5846,8 +5852,8 @@
         } else if (scale > 1) {
           scale = 1;
         }
+        this.playScale = scale;
         this.el.style.left = this.container.offsetWidth * scale - 5 + 'px';
-        this.player.video.currentTime = Math.floor(scale * this.player.video.duration);
         if (this.player.video.paused) this.player.video.play();
         this.player.emit('dotdrag', this.container.offsetWidth * scale);
       }
@@ -5919,7 +5925,9 @@
           _this2.onChangeSize(e, ctx);
         });
         this.player.on('timeupdate', function (e) {
-          _this2.updatePos(e);
+          if (_this2.player.enableSeek) {
+            _this2.updatePos(e);
+          }
         });
         this.player.on('dotdrag', function (len) {
           _this2.el.style.width = len + 'px';
@@ -20455,17 +20463,17 @@
   }();
 
   var MediaPlayer = /*#__PURE__*/function () {
-    function MediaPlayer(url, video) {
+    function MediaPlayer(url, player) {
       _classCallCheck(this, MediaPlayer);
       _defineProperty(this, "url", void 0);
-      _defineProperty(this, "video", void 0);
+      _defineProperty(this, "player", void 0);
       _defineProperty(this, "mp4boxfile", void 0);
       _defineProperty(this, "mediaSource", void 0);
       _defineProperty(this, "mediaInfo", void 0);
       _defineProperty(this, "downloader", void 0);
       _defineProperty(this, "lastSeekTime", 0);
       this.url = url;
-      this.video = video;
+      this.player = player;
       this.init();
     }
     _createClass(MediaPlayer, [{
@@ -20474,7 +20482,7 @@
         this.mp4boxfile = MP4Box.createFile();
         this.downloader = new DownLoader(this.url);
         this.mediaSource = new MediaSource();
-        this.video.src = _URL.createObjectURL(this.mediaSource);
+        this.player.video.src = _URL.createObjectURL(this.mediaSource);
         this.initEvent();
       }
     }, {
@@ -20525,24 +20533,25 @@
           ctx.onUpdateEnd.call(sb, true, false, ctx);
         };
         // 当用户开始移动/跳跃到新的视频播放位置时触发
-        this.video.onseeking = function () {
+        this.player.on('seeking', function (e) {
           var i, start, end;
           var seek_info;
-          if (_this.lastSeekTime !== _this.video.currentTime) {
-            for (i = 0; i < _this.video.buffered.length; i++) {
-              start = _this.video.buffered.start(i);
-              end = _this.video.buffered.end(i);
-              if (_this.video.currentTime >= start && _this.video.currentTime <= end) {
+          var video = _this.player.video;
+          if (_this.lastSeekTime !== video.currentTime) {
+            for (i = 0; i < video.buffered.length; i++) {
+              start = video.buffered.start(i);
+              end = video.buffered.end(i);
+              if (video.currentTime >= start && video.currentTime <= end) {
                 return;
               }
             }
             _this.downloader.stop();
-            seek_info = _this.mp4boxfile.seek(_this.video.currentTime, true);
+            seek_info = _this.mp4boxfile.seek(video.currentTime, true);
             _this.downloader.setChunkStart(seek_info.offset);
             _this.downloader.resume();
-            _this.lastSeekTime = _this.video.currentTime;
+            _this.lastSeekTime = video.currentTime;
           }
-        };
+        });
       }
     }, {
       key: "start",
@@ -20638,7 +20647,7 @@
           }
         });
         this.downloader.start();
-        // this.video.play()
+        // this.player.video.play()
       }
     }, {
       key: "initializeAllSourceBuffers",
@@ -20878,6 +20887,7 @@
       _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
       _defineProperty(_assertThisInitialized(_this), "loading", void 0);
       _defineProperty(_assertThisInitialized(_this), "error", void 0);
+      _defineProperty(_assertThisInitialized(_this), "enableSeek", true);
       _this.playerOptions = _Object$assign(_this.playerOptions, options);
       options.container.className = 'video-container';
       options.container.style.width = _this.playerOptions.width;
@@ -20937,6 +20947,13 @@
         this.video.onpause = function (e) {
           _this2.emit('pause', e);
         };
+        // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+        this.video.addEventListener('seeking', function (e) {
+          // 防抖效果：针对Dot按下拖动时不触发seeking，拖完鼠标抬起时再触发seeking
+          if (_this2.enableSeek) {
+            _this2.emit('seeking', e);
+          }
+        });
         // waiting 事件在视频由于需要缓冲下一帧而停止时触发
         this.video.addEventListener('waiting', function (e) {
           _this2.emit('waiting', e);
@@ -20975,6 +20992,14 @@
             _this2.emit('hidetoolbar', e);
           };
         });
+        this.on('dotdown', function () {
+          console.log('dotdown');
+          _this2.enableSeek = false;
+        });
+        this.on('dotup', function () {
+          console.log('dotup');
+          _this2.enableSeek = true;
+        });
       }
     }, {
       key: "initPlugin",
@@ -20990,7 +21015,7 @@
     }, {
       key: "initMp4Player",
       value: function initMp4Player(url) {
-        new MediaPlayer(this.playerOptions.url, this.video);
+        new MediaPlayer(this.playerOptions.url, this);
       }
     }, {
       key: "initMpdPlayer",

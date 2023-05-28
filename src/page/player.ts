@@ -31,6 +31,7 @@ class Player extends Component implements ComponentItem {
   toolBar: ToolBar
   loading: TimeLoading
   error: ErrorLoading
+  enableSeek = true
 
   constructor(options: PlayerOptions) {
     super(options.container, 'div.video-wrapper')
@@ -97,6 +98,14 @@ class Player extends Component implements ComponentItem {
       this.emit('pause', e)
     }
 
+    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+    this.video.addEventListener('seeking', (e) => {
+      // 防抖效果：针对Dot按下拖动时不触发seeking，拖完鼠标抬起时再触发seeking
+      if (this.enableSeek) {
+        this.emit('seeking', e)
+      }
+    })
+
     // waiting 事件在视频由于需要缓冲下一帧而停止时触发
     this.video.addEventListener('waiting', (e) => {
       this.emit('waiting', e)
@@ -142,6 +151,15 @@ class Player extends Component implements ComponentItem {
         this.emit('hidetoolbar', e)
       }
     })
+
+    this.on('dotdown', () => {
+      console.log('dotdown')
+      this.enableSeek = false
+    })
+    this.on('dotup', () => {
+      console.log('dotup')
+      this.enableSeek = true
+    })
   }
 
   initPlugin() {
@@ -153,7 +171,7 @@ class Player extends Component implements ComponentItem {
   }
 
   initMp4Player(url: string) {
-    let player = new Mp4MediaPlayer(this.playerOptions.url, this.video)
+    new Mp4MediaPlayer(this.playerOptions.url, this)
   }
 
   initMpdPlayer(url: string) {
