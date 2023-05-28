@@ -8,6 +8,8 @@ import { getFileExtension } from '@/utils/play'
 import MpdMediaPlayerFactory from '@/dash/MediaPlayer'
 import Mp4MediaPlayer from '../mp4/MediaPlayer'
 import { DanmakuController } from '@/danmaku'
+import { TimeLoading } from '@/components/Loading/parts/TimeLoading'
+import { ErrorLoading } from '@/components/Loading/parts/ErrorLoading'
 
 import './player.less'
 
@@ -27,6 +29,8 @@ class Player extends Component implements ComponentItem {
   video: HTMLVideoElement
   container: HTMLElement
   toolBar: ToolBar
+  loading: TimeLoading
+  error: ErrorLoading
 
   constructor(options: PlayerOptions) {
     super(options.container, 'div.video-wrapper')
@@ -44,10 +48,16 @@ class Player extends Component implements ComponentItem {
     this.attachSource(this.playerOptions.url)
     this.el.appendChild(this.video)
     this.toolBar = new ToolBar(this, this.el, 'div')
+    this.initComponent()
     this.initEvent()
     this.initPlugin()
+  }
 
-    new DanmakuController(this)
+  initComponent(): void {
+    // new DanmakuController(this)
+
+    this.loading = new TimeLoading(this, '视频加载中，请稍等....', this.el)
+    this.error = new ErrorLoading(this, '视频加载发送错误', this.el)
   }
 
   initEvent() {
@@ -86,6 +96,26 @@ class Player extends Component implements ComponentItem {
     this.video.onpause = (e) => {
       this.emit('pause', e)
     }
+
+    // waiting 事件在视频由于需要缓冲下一帧而停止时触发
+    this.video.addEventListener('waiting', (e) => {
+      this.emit('waiting', e)
+    })
+
+    // canplay 该视频已准备好开始播放
+    this.video.addEventListener('canplay', (e) => {
+      this.emit('canplay', e)
+    })
+
+    // error 视频加载发生错误时
+    this.video.addEventListener('error', (e) => {
+      this.emit('videoError')
+    })
+
+    // abort 视频终止加载时
+    this.video.addEventListener('abort', (e) => {
+      this.emit('videoError')
+    })
 
     // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
     this.video.addEventListener('ratechange', (e) => {

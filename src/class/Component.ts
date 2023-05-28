@@ -7,6 +7,9 @@ export class Component extends BaseEvent {
   
   constructor(container?: HTMLElement, desc?: string, props?: DOMProps, children?: string | Node[]) {
     super()
+    if (!desc) {
+      desc = 'div'
+    }
     let dom = $(desc, props, children)
     this.el = dom
     // 安装组件成功

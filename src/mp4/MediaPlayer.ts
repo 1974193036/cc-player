@@ -31,12 +31,15 @@ class MediaPlayer {
     this.mediaSource = new MediaSource()
     this.video.src = window.URL.createObjectURL(this.mediaSource)
     this.initEvent()
-
-    this.loadFile()
   }
 
   initEvent() {
     let ctx = this
+
+    this.mediaSource.addEventListener('sourceopen', (e) => {
+      this.loadFile()
+    })
+
     // 在'moov box'开始被解析时被调用，根据下载速度，下载整个“moov box”可能需要一段时间，解析结束的信号是onReady回调函数
     // 在解析 MP4 文件时，通常需要先解析 moov box（moov box 是 MP4 文件中的一个重要 box，包含了 MP4 文件的元数据信息），以获取 MP4 文件的元数据信息。
     this.mp4boxfile.onMoovStart = function () {
@@ -67,16 +70,10 @@ class MediaPlayer {
     // user是片段的调用者，对于这个轨道，buffer是一个ArrayBuffer，包含这个片段的Movie Fragments。
     // mp4boxfile.start()时、mp4boxfile.appendBuffer()足够多 时被触发
     this.mp4boxfile.onSegment = function (id, user, buffer, sampleNum, is_last) {
-      //sb = sourcebuffer
       var sb = user
-      // saveBuffer(buffer, 'track-'+id+'-segment-'+sb.segmentIndex+'.m4s');
       sb.segmentIndex++
       sb.pendingAppends.push({ id: id, buffer: buffer, sampleNum: sampleNum, is_last: is_last })
       ctx.onUpdateEnd.call(sb, true, false, ctx)
-    }
-
-    this.mp4boxfile.onItem = function (item) {
-      debugger
     }
 
     // 当用户开始移动/跳跃到新的视频播放位置时触发
@@ -104,6 +101,8 @@ class MediaPlayer {
     // seek(): 指示下一个要处理的样本(用于提取或分割)在给定时间(数字，以秒为单位)或在前一个随机接入点的时间(如果useRap为true，默认为false)开始
     // 返回将通过appendBuffer提供的下一个字节在文件中的偏移量
     this.downloader.setChunkStart(this.mp4boxfile.seek(0, true).offset)
+    this.downloader.setChunkSize(1000000)
+    this.downloader.setInterval(1000)
     // start()：表示可以开始样本处理(分割或提取)。已经收到的样本数据将被处理，新的缓冲区追加操作也将触发样本处理。
     // start()时触发 mp4boxfile.onSegment 的回调
     this.mp4boxfile.start()
@@ -125,12 +124,10 @@ class MediaPlayer {
     var track_id = mp4track.id
     var codec = mp4track.codec
     var mime = 'video/mp4; codecs="' + codec + '"'
-    // var kind = mp4track.kind;
     var sb: MP4SourceBuffer
     if (MediaSource.isTypeSupported(mime)) {
       try {
         console.log('MSE - SourceBuffer #' + track_id, "Creation with type '" + mime + "'")
-        Log.info('MSE - SourceBuffer #' + track_id, "Creation with type '" + mime + "'")
         // 根据moov box中解析出来的track去一一创建对应的sourcebuffer
         sb = this.mediaSource.addSourceBuffer(mime)
         sb.addEventListener('error', function (e) {
@@ -141,7 +138,7 @@ class MediaPlayer {
         // 设置分段选项，指示应该使用给定的选项对具有给定track_id的轨道进行分段。
         // 当段准备好后，回调函数onSegment将使用user参数调用。
         // nbSamples：每个分段中包含的样本数（帧数）。默认值为1000。
-        this.mp4boxfile.setSegmentOptions(track_id, sb, { nbSamples: 1000 })
+        this.mp4boxfile.setSegmentOptions(track_id, sb)
         sb.pendingAppends = []
       } catch (e) {
         Log.error(
@@ -158,7 +155,6 @@ class MediaPlayer {
   loadFile() {
     let ctx = this
     if (this.mediaSource.readyState !== 'open') {
-      this.mediaSource.onsourceopen = this.loadFile.bind(ctx)
       return
     }
     // 先写死，之后在修改
@@ -219,11 +215,12 @@ class MediaPlayer {
         sb.ms.pendingInits = 0
       }
       this.onInitAppended = this.onInitAppended.bind(this)
-     
+
       // 在 SourceBuffer.appendBuffer() 或 SourceBuffer.remove() 结束后触发。这个事件在 update 后触发。
       // 缓冲区状态已更新，可以继续追加更多数据
-      sb.addEventListener('updateend', this.onInitAppended)
-      
+      // sb.addEventListener('updateend', this.onInitAppended)
+      sb.onupdateend = this.onInitAppended
+
       Log.info('MSE - SourceBuffer #' + sb.id, 'Appending initialization data')
       sb.appendBuffer(initSegs[i].buffer)
       sb.segmentIndex = 0
@@ -232,11 +229,13 @@ class MediaPlayer {
   }
 
   onInitAppended(e: Event) {
+    console.log('@@@@', this)
     let ctx = this
     var sb = e.target as MP4SourceBuffer
     if (sb.ms.readyState === 'open') {
       sb.sampleNum = 0
-      sb.removeEventListener('updateend', this.onInitAppended)
+      // sb.removeEventListener('updateend', this.onInitAppended)
+      sb.onupdateend = null
       sb.addEventListener('updateend', this.onUpdateEnd.bind(sb, true, true, ctx))
       /* 如果已经有挂起的缓冲区，我们调用onUpdateEnd来开始附加它们 */
       this.onUpdateEnd.call(sb, false, true, ctx)
@@ -250,9 +249,6 @@ class MediaPlayer {
   onUpdateEnd(isNotInit: boolean, isEndOfAppend: boolean, ctx: MediaPlayer) {
     // console.log(isNotInit, isEndOfAppend)
     if (isEndOfAppend === true) {
-      if (isNotInit === true) {
-        // updateBufferedString(this, "Update ended");
-      }
       if ((this as unknown as MP4SourceBuffer).sampleNum) {
         ctx.mp4boxfile.releaseUsedSamples(
           (this as unknown as MP4SourceBuffer).id,
