@@ -8,7 +8,6 @@ export class Loading extends Component implements ComponentItem {
   id = 'Loading'
   props: DOMProps
   player: Player
-  container: HTMLElement
   loadingBox: HTMLElement
   msgBox: HTMLElement
   message: string

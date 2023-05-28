@@ -11,6 +11,7 @@ import {
   Mpd,
   Period
 } from '../types/dash/MpdFile'
+import { BuiltInComponentID } from '../types/Player'
 
 /**
  * @description 类型守卫函数
@@ -81,4 +82,19 @@ export function checkSegmentURL(s: any): s is SegmentURL {
 
 export function checkSegmentBase(s: any): s is SegmentBase {
   return s.tag === 'SegmentBase'
+}
+
+export function checkBuiltInComponentID(s: any): s is BuiltInComponentID {
+  return [
+    'PlayButton',
+    'Playrate',
+    'Volume',
+    'DutaionShow',
+    'SubSetting',
+    'VideoShot',
+    'ScreenShot',
+    'PicInPic',
+    'FullPage',
+    'FullScreen'
+  ].includes(s)
 }

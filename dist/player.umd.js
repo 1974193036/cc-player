@@ -3228,6 +3228,125 @@
     };
   }
 
+  var $$U = _export;
+  var $includes = arrayIncludes.includes;
+  var fails$f = fails$x;
+
+  // FF99+ bug
+  var BROKEN_ON_SPARSE = fails$f(function () {
+    // eslint-disable-next-line es/no-array-prototype-includes -- detection
+    return !Array(1).includes();
+  });
+
+  // `Array.prototype.includes` method
+  // https://tc39.es/ecma262/#sec-array.prototype.includes
+  $$U({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+    includes: function includes(el /* , fromIndex = 0 */) {
+      return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+    }
+  });
+
+  var entryVirtual$6 = entryVirtual$b;
+
+  var includes$7 = entryVirtual$6('Array').includes;
+
+  var isObject$9 = isObject$j;
+  var classof$4 = classofRaw$2;
+  var wellKnownSymbol$a = wellKnownSymbol$q;
+
+  var MATCH$1 = wellKnownSymbol$a('match');
+
+  // `IsRegExp` abstract operation
+  // https://tc39.es/ecma262/#sec-isregexp
+  var isRegexp = function (it) {
+    var isRegExp;
+    return isObject$9(it) && ((isRegExp = it[MATCH$1]) !== undefined ? !!isRegExp : classof$4(it) == 'RegExp');
+  };
+
+  var isRegExp = isRegexp;
+
+  var $TypeError$b = TypeError;
+
+  var notARegexp = function (it) {
+    if (isRegExp(it)) {
+      throw $TypeError$b("The method doesn't accept regular expressions");
+    } return it;
+  };
+
+  var wellKnownSymbol$9 = wellKnownSymbol$q;
+
+  var MATCH = wellKnownSymbol$9('match');
+
+  var correctIsRegexpLogic = function (METHOD_NAME) {
+    var regexp = /./;
+    try {
+      '/./'[METHOD_NAME](regexp);
+    } catch (error1) {
+      try {
+        regexp[MATCH] = false;
+        return '/./'[METHOD_NAME](regexp);
+      } catch (error2) { /* empty */ }
+    } return false;
+  };
+
+  var $$T = _export;
+  var uncurryThis$c = functionUncurryThis;
+  var notARegExp = notARegexp;
+  var requireObjectCoercible = requireObjectCoercible$5;
+  var toString$3 = toString$b;
+  var correctIsRegExpLogic = correctIsRegexpLogic;
+
+  var stringIndexOf = uncurryThis$c(''.indexOf);
+
+  // `String.prototype.includes` method
+  // https://tc39.es/ecma262/#sec-string.prototype.includes
+  $$T({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+    includes: function includes(searchString /* , position = 0 */) {
+      return !!~stringIndexOf(
+        toString$3(requireObjectCoercible(this)),
+        toString$3(notARegExp(searchString)),
+        arguments.length > 1 ? arguments[1] : undefined
+      );
+    }
+  });
+
+  var entryVirtual$5 = entryVirtual$b;
+
+  var includes$6 = entryVirtual$5('String').includes;
+
+  var isPrototypeOf$8 = objectIsPrototypeOf;
+  var arrayMethod = includes$7;
+  var stringMethod = includes$6;
+
+  var ArrayPrototype$5 = Array.prototype;
+  var StringPrototype = String.prototype;
+
+  var includes$5 = function (it) {
+    var own = it.includes;
+    if (it === ArrayPrototype$5 || (isPrototypeOf$8(ArrayPrototype$5, it) && own === ArrayPrototype$5.includes)) return arrayMethod;
+    if (typeof it == 'string' || it === StringPrototype || (isPrototypeOf$8(StringPrototype, it) && own === StringPrototype.includes)) {
+      return stringMethod;
+    } return own;
+  };
+
+  var parent$14 = includes$5;
+
+  var includes$4 = parent$14;
+
+  var parent$13 = includes$4;
+
+  var includes$3 = parent$13;
+
+  var parent$12 = includes$3;
+
+  var includes$2 = parent$12;
+
+  var includes$1 = includes$2;
+
+  var includes = includes$1;
+
+  var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes);
+
   /**
    * @description 类型守卫函数
    */
@@ -3283,6 +3402,10 @@
   function checkSegmentBase(s) {
     return s.tag === 'SegmentBase';
   }
+  function checkBuiltInComponentID(s) {
+    var _context;
+    return _includesInstanceProperty(_context = ['PlayButton', 'Playrate', 'Volume', 'DutaionShow', 'SubSetting', 'VideoShot', 'ScreenShot', 'PicInPic', 'FullPage', 'FullScreen']).call(_context, s);
+  }
 
   function string2booolean(s) {
     if (s === 'true') {
@@ -3298,16 +3421,16 @@
     if (!isNaN(n)) return n;else return null;
   }
 
-  var uncurryThis$c = functionUncurryThis;
+  var uncurryThis$b = functionUncurryThis;
   var aCallable$d = aCallable$h;
-  var isObject$9 = isObject$j;
+  var isObject$8 = isObject$j;
   var hasOwn$5 = hasOwnProperty_1;
   var arraySlice$5 = arraySlice$7;
   var NATIVE_BIND = functionBindNative;
 
   var $Function = Function;
-  var concat$2 = uncurryThis$c([].concat);
-  var join$3 = uncurryThis$c([].join);
+  var concat$2 = uncurryThis$b([].concat);
+  var join$3 = uncurryThis$b([].join);
   var factories = {};
 
   var construct$6 = function (C, argsLength, args) {
@@ -3328,30 +3451,30 @@
       var args = concat$2(partArgs, arraySlice$5(arguments));
       return this instanceof boundFunction ? construct$6(F, args.length, args) : F.apply(that, args);
     };
-    if (isObject$9(Prototype)) boundFunction.prototype = Prototype;
+    if (isObject$8(Prototype)) boundFunction.prototype = Prototype;
     return boundFunction;
   };
 
   var isConstructor$1 = isConstructor$4;
   var tryToString$4 = tryToString$7;
 
-  var $TypeError$b = TypeError;
+  var $TypeError$a = TypeError;
 
   // `Assert: IsConstructor(argument) is true`
   var aConstructor$3 = function (argument) {
     if (isConstructor$1(argument)) return argument;
-    throw $TypeError$b(tryToString$4(argument) + ' is not a constructor');
+    throw $TypeError$a(tryToString$4(argument) + ' is not a constructor');
   };
 
-  var $$U = _export;
+  var $$S = _export;
   var getBuiltIn$7 = getBuiltIn$h;
   var apply$2 = functionApply;
   var bind$o = functionBind;
   var aConstructor$2 = aConstructor$3;
   var anObject$9 = anObject$f;
-  var isObject$8 = isObject$j;
+  var isObject$7 = isObject$j;
   var create$a = objectCreate;
-  var fails$f = fails$x;
+  var fails$e = fails$x;
 
   var nativeConstruct = getBuiltIn$7('Reflect', 'construct');
   var ObjectPrototype = Object.prototype;
@@ -3361,18 +3484,18 @@
   // https://tc39.es/ecma262/#sec-reflect.construct
   // MS Edge supports only 2 arguments and argumentsList argument is optional
   // FF Nightly sets third argument as `new.target`, but does not create `this` from it
-  var NEW_TARGET_BUG = fails$f(function () {
+  var NEW_TARGET_BUG = fails$e(function () {
     function F() { /* empty */ }
     return !(nativeConstruct(function () { /* empty */ }, [], F) instanceof F);
   });
 
-  var ARGS_BUG = !fails$f(function () {
+  var ARGS_BUG = !fails$e(function () {
     nativeConstruct(function () { /* empty */ });
   });
 
   var FORCED$3 = NEW_TARGET_BUG || ARGS_BUG;
 
-  $$U({ target: 'Reflect', stat: true, forced: FORCED$3, sham: FORCED$3 }, {
+  $$S({ target: 'Reflect', stat: true, forced: FORCED$3, sham: FORCED$3 }, {
     construct: function construct(Target, args /* , newTarget */) {
       aConstructor$2(Target);
       anObject$9(args);
@@ -3394,9 +3517,9 @@
       }
       // with altered newTarget, not support built-in constructors
       var proto = newTarget.prototype;
-      var instance = create$a(isObject$8(proto) ? proto : ObjectPrototype);
+      var instance = create$a(isObject$7(proto) ? proto : ObjectPrototype);
       var result = apply$2(Target, instance, args);
-      return isObject$8(result) ? result : instance;
+      return isObject$7(result) ? result : instance;
     }
   });
 
@@ -3404,17 +3527,17 @@
 
   var construct$5 = path$f.Reflect.construct;
 
-  var parent$14 = construct$5;
+  var parent$11 = construct$5;
 
-  var construct$4 = parent$14;
+  var construct$4 = parent$11;
 
-  var parent$13 = construct$4;
+  var parent$10 = construct$4;
 
-  var construct$3 = parent$13;
+  var construct$3 = parent$10;
 
-  var parent$12 = construct$3;
+  var parent$$ = construct$3;
 
-  var construct$2 = parent$12;
+  var construct$2 = parent$$;
 
   var construct$1 = construct$2;
 
@@ -3430,13 +3553,13 @@
   }
 
   // TODO: Remove from `core-js@4`
-  var $$T = _export;
+  var $$R = _export;
   var DESCRIPTORS$a = descriptors;
   var create$9 = objectCreate;
 
   // `Object.create` method
   // https://tc39.es/ecma262/#sec-object.create
-  $$T({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
+  $$R({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
     create: create$9
   });
 
@@ -3448,17 +3571,17 @@
     return Object$2.create(P, D);
   };
 
-  var parent$11 = create$8;
+  var parent$_ = create$8;
 
-  var create$7 = parent$11;
+  var create$7 = parent$_;
 
-  var parent$10 = create$7;
+  var parent$Z = create$7;
 
-  var create$6 = parent$10;
+  var create$6 = parent$Z;
 
-  var parent$$ = create$6;
+  var parent$Y = create$6;
 
-  var create$5 = parent$$;
+  var create$5 = parent$Y;
 
   var create$4 = create$5;
 
@@ -3466,12 +3589,12 @@
 
   var _Object$create = /*@__PURE__*/getDefaultExportFromCjs(create$3);
 
-  var $$S = _export;
+  var $$Q = _export;
   var setPrototypeOf$7 = objectSetPrototypeOf;
 
   // `Object.setPrototypeOf` method
   // https://tc39.es/ecma262/#sec-object.setprototypeof
-  $$S({ target: 'Object', stat: true }, {
+  $$Q({ target: 'Object', stat: true }, {
     setPrototypeOf: setPrototypeOf$7
   });
 
@@ -3479,17 +3602,17 @@
 
   var setPrototypeOf$6 = path$d.Object.setPrototypeOf;
 
-  var parent$_ = setPrototypeOf$6;
+  var parent$X = setPrototypeOf$6;
 
-  var setPrototypeOf$5 = parent$_;
+  var setPrototypeOf$5 = parent$X;
 
-  var parent$Z = setPrototypeOf$5;
+  var parent$W = setPrototypeOf$5;
 
-  var setPrototypeOf$4 = parent$Z;
+  var setPrototypeOf$4 = parent$W;
 
-  var parent$Y = setPrototypeOf$4;
+  var parent$V = setPrototypeOf$4;
 
-  var setPrototypeOf$3 = parent$Y;
+  var setPrototypeOf$3 = parent$V;
 
   var setPrototypeOf$2 = setPrototypeOf$3;
 
@@ -3498,41 +3621,41 @@
   var _Object$setPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(setPrototypeOf$1);
 
   // TODO: Remove from `core-js@4`
-  var $$R = _export;
+  var $$P = _export;
   var bind$n = functionBind;
 
   // `Function.prototype.bind` method
   // https://tc39.es/ecma262/#sec-function.prototype.bind
   // eslint-disable-next-line es/no-function-prototype-bind -- detection
-  $$R({ target: 'Function', proto: true, forced: Function.bind !== bind$n }, {
+  $$P({ target: 'Function', proto: true, forced: Function.bind !== bind$n }, {
     bind: bind$n
   });
 
-  var entryVirtual$6 = entryVirtual$b;
+  var entryVirtual$4 = entryVirtual$b;
 
-  var bind$m = entryVirtual$6('Function').bind;
+  var bind$m = entryVirtual$4('Function').bind;
 
-  var isPrototypeOf$8 = objectIsPrototypeOf;
+  var isPrototypeOf$7 = objectIsPrototypeOf;
   var method$4 = bind$m;
 
   var FunctionPrototype = Function.prototype;
 
   var bind$l = function (it) {
     var own = it.bind;
-    return it === FunctionPrototype || (isPrototypeOf$8(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$4 : own;
+    return it === FunctionPrototype || (isPrototypeOf$7(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$4 : own;
   };
 
-  var parent$X = bind$l;
+  var parent$U = bind$l;
 
-  var bind$k = parent$X;
+  var bind$k = parent$U;
 
-  var parent$W = bind$k;
+  var parent$T = bind$k;
 
-  var bind$j = parent$W;
+  var bind$j = parent$T;
 
-  var parent$V = bind$j;
+  var parent$S = bind$j;
 
-  var bind$i = parent$V;
+  var bind$i = parent$S;
 
   var bind$h = bind$i;
 
@@ -3575,17 +3698,17 @@
     return _assertThisInitialized(self);
   }
 
-  var $$Q = _export;
-  var fails$e = fails$x;
+  var $$O = _export;
+  var fails$d = fails$x;
   var toObject$4 = toObject$a;
   var nativeGetPrototypeOf = objectGetPrototypeOf;
   var CORRECT_PROTOTYPE_GETTER = correctPrototypeGetter;
 
-  var FAILS_ON_PRIMITIVES$2 = fails$e(function () { nativeGetPrototypeOf(1); });
+  var FAILS_ON_PRIMITIVES$2 = fails$d(function () { nativeGetPrototypeOf(1); });
 
   // `Object.getPrototypeOf` method
   // https://tc39.es/ecma262/#sec-object.getprototypeof
-  $$Q({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
+  $$O({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
     getPrototypeOf: function getPrototypeOf(it) {
       return nativeGetPrototypeOf(toObject$4(it));
     }
@@ -3595,17 +3718,17 @@
 
   var getPrototypeOf$6 = path$c.Object.getPrototypeOf;
 
-  var parent$U = getPrototypeOf$6;
+  var parent$R = getPrototypeOf$6;
 
-  var getPrototypeOf$5 = parent$U;
+  var getPrototypeOf$5 = parent$R;
 
-  var parent$T = getPrototypeOf$5;
+  var parent$Q = getPrototypeOf$5;
 
-  var getPrototypeOf$4 = parent$T;
+  var getPrototypeOf$4 = parent$Q;
 
-  var parent$S = getPrototypeOf$4;
+  var parent$P = getPrototypeOf$4;
 
-  var getPrototypeOf$3 = parent$S;
+  var getPrototypeOf$3 = parent$P;
 
   var getPrototypeOf$2 = getPrototypeOf$3;
 
@@ -3622,9 +3745,9 @@
   }
 
   var DESCRIPTORS$9 = descriptors;
-  var uncurryThis$b = functionUncurryThis;
+  var uncurryThis$a = functionUncurryThis;
   var call$g = functionCall;
-  var fails$d = fails$x;
+  var fails$c = fails$x;
   var objectKeys = objectKeys$3;
   var getOwnPropertySymbolsModule$1 = objectGetOwnPropertySymbols;
   var propertyIsEnumerableModule = objectPropertyIsEnumerable;
@@ -3635,11 +3758,11 @@
   var $assign = Object.assign;
   // eslint-disable-next-line es/no-object-defineproperty -- required for testing
   var defineProperty$2 = Object.defineProperty;
-  var concat$1 = uncurryThis$b([].concat);
+  var concat$1 = uncurryThis$a([].concat);
 
   // `Object.assign` method
   // https://tc39.es/ecma262/#sec-object.assign
-  var objectAssign = !$assign || fails$d(function () {
+  var objectAssign = !$assign || fails$c(function () {
     // should have correct order of operations (Edge bug)
     if (DESCRIPTORS$9 && $assign({ b: 1 }, $assign(defineProperty$2({}, 'a', {
       enumerable: true,
@@ -3678,13 +3801,13 @@
     } return T;
   } : $assign;
 
-  var $$P = _export;
+  var $$N = _export;
   var assign$7 = objectAssign;
 
   // `Object.assign` method
   // https://tc39.es/ecma262/#sec-object.assign
   // eslint-disable-next-line es/no-object-assign -- required for testing
-  $$P({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$7 }, {
+  $$N({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$7 }, {
     assign: assign$7
   });
 
@@ -3692,17 +3815,17 @@
 
   var assign$6 = path$b.Object.assign;
 
-  var parent$R = assign$6;
+  var parent$O = assign$6;
 
-  var assign$5 = parent$R;
+  var assign$5 = parent$O;
 
-  var parent$Q = assign$5;
+  var parent$N = assign$5;
 
-  var assign$4 = parent$Q;
+  var assign$4 = parent$N;
 
-  var parent$P = assign$4;
+  var parent$M = assign$4;
 
-  var assign$3 = parent$P;
+  var assign$3 = parent$M;
 
   var assign$2 = assign$3;
 
@@ -3710,12 +3833,12 @@
 
   var _Object$assign = /*@__PURE__*/getDefaultExportFromCjs(assign$1);
 
-  var $$O = _export;
+  var $$M = _export;
   var isArray$8 = isArray$d;
 
   // `Array.isArray` method
   // https://tc39.es/ecma262/#sec-array.isarray
-  $$O({ target: 'Array', stat: true }, {
+  $$M({ target: 'Array', stat: true }, {
     isArray: isArray$8
   });
 
@@ -3723,17 +3846,17 @@
 
   var isArray$7 = path$a.Array.isArray;
 
-  var parent$O = isArray$7;
+  var parent$L = isArray$7;
 
-  var isArray$6 = parent$O;
+  var isArray$6 = parent$L;
 
-  var parent$N = isArray$6;
+  var parent$K = isArray$6;
 
-  var isArray$5 = parent$N;
+  var isArray$5 = parent$K;
 
-  var parent$M = isArray$5;
+  var parent$J = isArray$5;
 
-  var isArray$4 = parent$M;
+  var isArray$4 = parent$J;
 
   var isArray$3 = isArray$4;
 
@@ -3751,36 +3874,36 @@
     if (_Array$isArray(arr)) return _arrayLikeToArray$3(arr);
   }
 
-  var classof$4 = classof$c;
+  var classof$3 = classof$c;
   var getMethod$1 = getMethod$3;
   var isNullOrUndefined$3 = isNullOrUndefined$6;
   var Iterators$1 = iterators;
-  var wellKnownSymbol$a = wellKnownSymbol$q;
+  var wellKnownSymbol$8 = wellKnownSymbol$q;
 
-  var ITERATOR$5 = wellKnownSymbol$a('iterator');
+  var ITERATOR$5 = wellKnownSymbol$8('iterator');
 
   var getIteratorMethod$a = function (it) {
     if (!isNullOrUndefined$3(it)) return getMethod$1(it, ITERATOR$5)
       || getMethod$1(it, '@@iterator')
-      || Iterators$1[classof$4(it)];
+      || Iterators$1[classof$3(it)];
   };
 
   var getIteratorMethod$9 = getIteratorMethod$a;
 
   var getIteratorMethod_1 = getIteratorMethod$9;
 
-  var parent$L = getIteratorMethod_1;
+  var parent$I = getIteratorMethod_1;
 
 
-  var getIteratorMethod$8 = parent$L;
+  var getIteratorMethod$8 = parent$I;
 
-  var parent$K = getIteratorMethod$8;
+  var parent$H = getIteratorMethod$8;
 
-  var getIteratorMethod$7 = parent$K;
+  var getIteratorMethod$7 = parent$H;
 
-  var parent$J = getIteratorMethod$7;
+  var parent$G = getIteratorMethod$7;
 
-  var getIteratorMethod$6 = parent$J;
+  var getIteratorMethod$6 = parent$G;
 
   var getIteratorMethod$5 = getIteratorMethod$6;
 
@@ -3824,15 +3947,15 @@
     }
   };
 
-  var wellKnownSymbol$9 = wellKnownSymbol$q;
+  var wellKnownSymbol$7 = wellKnownSymbol$q;
   var Iterators = iterators;
 
-  var ITERATOR$4 = wellKnownSymbol$9('iterator');
-  var ArrayPrototype$5 = Array.prototype;
+  var ITERATOR$4 = wellKnownSymbol$7('iterator');
+  var ArrayPrototype$4 = Array.prototype;
 
   // check on default Array iterator
   var isArrayIteratorMethod$2 = function (it) {
-    return it !== undefined && (Iterators.Array === it || ArrayPrototype$5[ITERATOR$4] === it);
+    return it !== undefined && (Iterators.Array === it || ArrayPrototype$4[ITERATOR$4] === it);
   };
 
   var call$e = functionCall;
@@ -3841,12 +3964,12 @@
   var tryToString$3 = tryToString$7;
   var getIteratorMethod$3 = getIteratorMethod$a;
 
-  var $TypeError$a = TypeError;
+  var $TypeError$9 = TypeError;
 
   var getIterator$3 = function (argument, usingIterator) {
     var iteratorMethod = arguments.length < 2 ? getIteratorMethod$3(argument) : usingIterator;
     if (aCallable$c(iteratorMethod)) return anObject$6(call$e(iteratorMethod, argument));
-    throw $TypeError$a(tryToString$3(argument) + ' is not iterable');
+    throw $TypeError$9(tryToString$3(argument) + ' is not iterable');
   };
 
   var bind$f = functionBindContext;
@@ -3895,9 +4018,9 @@
     return result;
   };
 
-  var wellKnownSymbol$8 = wellKnownSymbol$q;
+  var wellKnownSymbol$6 = wellKnownSymbol$q;
 
-  var ITERATOR$3 = wellKnownSymbol$8('iterator');
+  var ITERATOR$3 = wellKnownSymbol$6('iterator');
   var SAFE_CLOSING = false;
 
   try {
@@ -3934,7 +4057,7 @@
     return ITERATION_SUPPORT;
   };
 
-  var $$N = _export;
+  var $$L = _export;
   var from$7 = arrayFrom$1;
   var checkCorrectnessOfIteration$1 = checkCorrectnessOfIteration$2;
 
@@ -3945,7 +4068,7 @@
 
   // `Array.from` method
   // https://tc39.es/ecma262/#sec-array.from
-  $$N({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+  $$L({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
     from: from$7
   });
 
@@ -3953,17 +4076,17 @@
 
   var from$6 = path$9.Array.from;
 
-  var parent$I = from$6;
+  var parent$F = from$6;
 
-  var from$5 = parent$I;
+  var from$5 = parent$F;
 
-  var parent$H = from$5;
+  var parent$E = from$5;
 
-  var from$4 = parent$H;
+  var from$4 = parent$E;
 
-  var parent$G = from$4;
+  var parent$D = from$4;
 
-  var from$3 = parent$G;
+  var from$3 = parent$D;
 
   var from$2 = from$3;
 
@@ -4042,7 +4165,7 @@
    * @param {Node[]} children
    * @returns
    */
-  function $$M(desc, props, children) {
+  function $$K(desc, props, children) {
     var match = [];
     var regArray = SELECTOR_REG.exec(desc);
     // /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/.exec('div#app.a.b')
@@ -4164,17 +4287,15 @@
    * @param target
    * @param another
    */
-  function patchComponent(target, another) {
-    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
-      replaceElementType: 'replaceOuterHTMLOfComponent'
-    };
+  function patchComponent(target, another, options) {
     if (target.id !== another.id) throw new Error('需要合并的两个组件的id不相同');
+    var replaceElementType = (options === null || options === void 0 ? void 0 : options.replaceElType) || 'replaceOuterHTMLOfComponent';
     for (var key in another) {
       if (key in target) {
         if (key === 'props') {
           patchDOMProps(target[key], another[key], target.el);
         } else if (key === 'el') {
-          if (options.replaceElementType === 'replaceOuterHTMLOfComponent') {
+          if (replaceElementType === 'replaceOuterHTMLOfComponent') {
             target.el = another.el;
           } else {
             var _iterator4 = _createForOfIteratorHelper$2(target.el.childNodes),
@@ -4261,22 +4382,24 @@
     return fn.bind(context);
   }
 
-  function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Component = /*#__PURE__*/function (_BaseEvent) {
     _inherits(Component, _BaseEvent);
-    var _super = _createSuper$n(Component);
-    //el代表着该组件对应的整个HTML元素
+    var _super = _createSuper$o(Component);
     function Component(container, desc, props, children) {
       var _this;
       _classCallCheck(this, Component);
       _this = _super.call(this);
       _defineProperty(_assertThisInitialized(_this), "el", void 0);
+      //el代表着该组件对应的整个HTML元素
+      _defineProperty(_assertThisInitialized(_this), "container", void 0);
       if (!desc) {
         desc = 'div';
       }
-      var dom = $$M(desc, props, children);
+      var dom = $$K(desc, props, children);
       _this.el = dom;
+      _this.container = container;
       // 安装组件成功
       if (container) {
         container.append(dom);
@@ -4289,9 +4412,9 @@
   var internalMetadata = {exports: {}};
 
   // FF26- bug: ArrayBuffers are non-extensible, but Object.isExtensible does not report it
-  var fails$c = fails$x;
+  var fails$b = fails$x;
 
-  var arrayBufferNonExtensible = fails$c(function () {
+  var arrayBufferNonExtensible = fails$b(function () {
     if (typeof ArrayBuffer == 'function') {
       var buffer = new ArrayBuffer(8);
       // eslint-disable-next-line es/no-object-isextensible, es/no-object-defineproperty -- safe
@@ -4299,34 +4422,34 @@
     }
   });
 
-  var fails$b = fails$x;
-  var isObject$7 = isObject$j;
-  var classof$3 = classofRaw$2;
+  var fails$a = fails$x;
+  var isObject$6 = isObject$j;
+  var classof$2 = classofRaw$2;
   var ARRAY_BUFFER_NON_EXTENSIBLE = arrayBufferNonExtensible;
 
   // eslint-disable-next-line es/no-object-isextensible -- safe
   var $isExtensible = Object.isExtensible;
-  var FAILS_ON_PRIMITIVES$1 = fails$b(function () { $isExtensible(1); });
+  var FAILS_ON_PRIMITIVES$1 = fails$a(function () { $isExtensible(1); });
 
   // `Object.isExtensible` method
   // https://tc39.es/ecma262/#sec-object.isextensible
   var objectIsExtensible = (FAILS_ON_PRIMITIVES$1 || ARRAY_BUFFER_NON_EXTENSIBLE) ? function isExtensible(it) {
-    if (!isObject$7(it)) return false;
-    if (ARRAY_BUFFER_NON_EXTENSIBLE && classof$3(it) == 'ArrayBuffer') return false;
+    if (!isObject$6(it)) return false;
+    if (ARRAY_BUFFER_NON_EXTENSIBLE && classof$2(it) == 'ArrayBuffer') return false;
     return $isExtensible ? $isExtensible(it) : true;
   } : $isExtensible;
 
-  var fails$a = fails$x;
+  var fails$9 = fails$x;
 
-  var freezing = !fails$a(function () {
+  var freezing = !fails$9(function () {
     // eslint-disable-next-line es/no-object-isextensible, es/no-object-preventextensions -- required for testing
     return Object.isExtensible(Object.preventExtensions({}));
   });
 
-  var $$L = _export;
-  var uncurryThis$a = functionUncurryThis;
+  var $$J = _export;
+  var uncurryThis$9 = functionUncurryThis;
   var hiddenKeys = hiddenKeys$6;
-  var isObject$6 = isObject$j;
+  var isObject$5 = isObject$j;
   var hasOwn$4 = hasOwnProperty_1;
   var defineProperty$1 = objectDefineProperty.f;
   var getOwnPropertyNamesModule$1 = objectGetOwnPropertyNames;
@@ -4348,7 +4471,7 @@
 
   var fastKey$1 = function (it, create) {
     // return a primitive with prefix
-    if (!isObject$6(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+    if (!isObject$5(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
     if (!hasOwn$4(it, METADATA)) {
       // can't set metadata to uncaught frozen object
       if (!isExtensible(it)) return 'F';
@@ -4382,7 +4505,7 @@
     meta.enable = function () { /* empty */ };
     REQUIRED = true;
     var getOwnPropertyNames = getOwnPropertyNamesModule$1.f;
-    var splice = uncurryThis$a([].splice);
+    var splice = uncurryThis$9([].splice);
     var test = {};
     test[METADATA] = 1;
 
@@ -4398,7 +4521,7 @@
         } return result;
       };
 
-      $$L({ target: 'Object', stat: true, forced: true }, {
+      $$J({ target: 'Object', stat: true, forced: true }, {
         getOwnPropertyNames: getOwnPropertyNamesExternalModule.f
       });
     }
@@ -4421,12 +4544,12 @@
   var tryToString$2 = tryToString$7;
   var isArrayIteratorMethod = isArrayIteratorMethod$2;
   var lengthOfArrayLike$1 = lengthOfArrayLike$8;
-  var isPrototypeOf$7 = objectIsPrototypeOf;
+  var isPrototypeOf$6 = objectIsPrototypeOf;
   var getIterator$1 = getIterator$3;
   var getIteratorMethod$1 = getIteratorMethod$a;
   var iteratorClose = iteratorClose$2;
 
-  var $TypeError$9 = TypeError;
+  var $TypeError$8 = TypeError;
 
   var Result = function (stopped, result) {
     this.stopped = stopped;
@@ -4462,12 +4585,12 @@
       iterator = iterable;
     } else {
       iterFn = getIteratorMethod$1(iterable);
-      if (!iterFn) throw $TypeError$9(tryToString$2(iterable) + ' is not iterable');
+      if (!iterFn) throw $TypeError$8(tryToString$2(iterable) + ' is not iterable');
       // optimisation for array iterators
       if (isArrayIteratorMethod(iterFn)) {
         for (index = 0, length = lengthOfArrayLike$1(iterable); length > index; index++) {
           result = callFn(iterable[index]);
-          if (result && isPrototypeOf$7(ResultPrototype, result)) return result;
+          if (result && isPrototypeOf$6(ResultPrototype, result)) return result;
         } return new Result(false);
       }
       iterator = getIterator$1(iterable, iterFn);
@@ -4480,28 +4603,28 @@
       } catch (error) {
         iteratorClose(iterator, 'throw', error);
       }
-      if (typeof result == 'object' && result && isPrototypeOf$7(ResultPrototype, result)) return result;
+      if (typeof result == 'object' && result && isPrototypeOf$6(ResultPrototype, result)) return result;
     } return new Result(false);
   };
 
-  var isPrototypeOf$6 = objectIsPrototypeOf;
+  var isPrototypeOf$5 = objectIsPrototypeOf;
 
-  var $TypeError$8 = TypeError;
+  var $TypeError$7 = TypeError;
 
   var anInstance$5 = function (it, Prototype) {
-    if (isPrototypeOf$6(Prototype, it)) return it;
-    throw $TypeError$8('Incorrect invocation');
+    if (isPrototypeOf$5(Prototype, it)) return it;
+    throw $TypeError$7('Incorrect invocation');
   };
 
-  var $$K = _export;
+  var $$I = _export;
   var global$c = global$r;
   var InternalMetadataModule = internalMetadataExports;
-  var fails$9 = fails$x;
+  var fails$8 = fails$x;
   var createNonEnumerableProperty$3 = createNonEnumerableProperty$9;
   var iterate$k = iterate$l;
   var anInstance$4 = anInstance$5;
   var isCallable$9 = isCallable$q;
-  var isObject$5 = isObject$j;
+  var isObject$4 = isObject$j;
   var setToStringTag$3 = setToStringTag$9;
   var defineProperty = objectDefineProperty.f;
   var forEach = arrayIteration.forEach;
@@ -4521,7 +4644,7 @@
     var Constructor;
 
     if (!DESCRIPTORS$8 || !isCallable$9(NativeConstructor)
-      || !(IS_WEAK || NativePrototype.forEach && !fails$9(function () { new NativeConstructor().entries().next(); }))
+      || !(IS_WEAK || NativePrototype.forEach && !fails$8(function () { new NativeConstructor().entries().next(); }))
     ) {
       // create collection constructor
       Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
@@ -4544,7 +4667,7 @@
         if (KEY in NativePrototype && !(IS_WEAK && KEY == 'clear')) {
           createNonEnumerableProperty$3(Prototype, KEY, function (a, b) {
             var collection = getInternalState(this).collection;
-            if (!IS_ADDER && IS_WEAK && !isObject$5(a)) return KEY == 'get' ? undefined : false;
+            if (!IS_ADDER && IS_WEAK && !isObject$4(a)) return KEY == 'get' ? undefined : false;
             var result = collection[KEY](a === 0 ? 0 : a, b);
             return IS_ADDER ? this : result;
           });
@@ -4562,7 +4685,7 @@
     setToStringTag$3(Constructor, CONSTRUCTOR_NAME, false, true);
 
     exported[CONSTRUCTOR_NAME] = Constructor;
-    $$K({ global: true, forced: true }, exported);
+    $$I({ global: true, forced: true }, exported);
 
     if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
 
@@ -4580,10 +4703,10 @@
 
   var getBuiltIn$6 = getBuiltIn$h;
   var defineBuiltInAccessor$3 = defineBuiltInAccessor$5;
-  var wellKnownSymbol$7 = wellKnownSymbol$q;
+  var wellKnownSymbol$5 = wellKnownSymbol$q;
   var DESCRIPTORS$7 = descriptors;
 
-  var SPECIES$2 = wellKnownSymbol$7('species');
+  var SPECIES$2 = wellKnownSymbol$5('species');
 
   var setSpecies$2 = function (CONSTRUCTOR_NAME) {
     var Constructor = getBuiltIn$6(CONSTRUCTOR_NAME);
@@ -4816,14 +4939,14 @@
 
   var map$c = path$8.Map;
 
-  var parent$F = map$c;
+  var parent$C = map$c;
 
 
-  var map$b = parent$F;
+  var map$b = parent$C;
 
-  var parent$E = map$b;
+  var parent$B = map$b;
 
-  var map$a = parent$E;
+  var map$a = parent$B;
 
   // https://tc39.github.io/proposal-setmap-offrom/
   var bind$c = functionBindContext;
@@ -4856,12 +4979,12 @@
     return new this(array);
   };
 
-  var $$J = _export;
+  var $$H = _export;
   var from = collectionFrom;
 
   // `Map.from` method
   // https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
-  $$J({ target: 'Map', stat: true, forced: true }, {
+  $$H({ target: 'Map', stat: true, forced: true }, {
     from: from
   });
 
@@ -4872,12 +4995,12 @@
     return new this(arraySlice$4(arguments));
   };
 
-  var $$I = _export;
+  var $$G = _export;
   var of = collectionOf;
 
   // `Map.of` method
   // https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
-  $$I({ target: 'Map', stat: true, forced: true }, {
+  $$G({ target: 'Map', stat: true, forced: true }, {
     of: of
   });
 
@@ -4911,13 +5034,13 @@
     proto: Map$5.prototype
   };
 
-  var $$H = _export;
+  var $$F = _export;
   var aMap$d = aMap$e;
   var remove = mapHelpers.remove;
 
   // `Map.prototype.deleteAll` method
   // https://github.com/tc39/proposal-collection-methods
-  $$H({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$F({ target: 'Map', proto: true, real: true, forced: true }, {
     deleteAll: function deleteAll(/* ...elements */) {
       var collection = aMap$d(this);
       var allDeleted = true;
@@ -4929,7 +5052,7 @@
     }
   });
 
-  var $$G = _export;
+  var $$E = _export;
   var aMap$c = aMap$e;
   var MapHelpers$4 = mapHelpers;
 
@@ -4939,7 +5062,7 @@
 
   // `Map.prototype.emplace` method
   // https://github.com/tc39/proposal-upsert
-  $$G({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$E({ target: 'Map', proto: true, real: true, forced: true }, {
     emplace: function emplace(key, handler) {
       var map = aMap$c(this);
       var value, inserted;
@@ -4975,14 +5098,14 @@
     }) : map.forEach(fn);
   };
 
-  var $$F = _export;
+  var $$D = _export;
   var bind$b = functionBindContext;
   var aMap$b = aMap$e;
   var iterate$h = mapIterate;
 
   // `Map.prototype.every` method
   // https://github.com/tc39/proposal-collection-methods
-  $$F({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$D({ target: 'Map', proto: true, real: true, forced: true }, {
     every: function every(callbackfn /* , thisArg */) {
       var map = aMap$b(this);
       var boundFunction = bind$b(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4992,7 +5115,7 @@
     }
   });
 
-  var $$E = _export;
+  var $$C = _export;
   var bind$a = functionBindContext;
   var aMap$a = aMap$e;
   var MapHelpers$3 = mapHelpers;
@@ -5003,7 +5126,7 @@
 
   // `Map.prototype.filter` method
   // https://github.com/tc39/proposal-collection-methods
-  $$E({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$C({ target: 'Map', proto: true, real: true, forced: true }, {
     filter: function filter(callbackfn /* , thisArg */) {
       var map = aMap$a(this);
       var boundFunction = bind$a(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5015,14 +5138,14 @@
     }
   });
 
-  var $$D = _export;
+  var $$B = _export;
   var bind$9 = functionBindContext;
   var aMap$9 = aMap$e;
   var iterate$f = mapIterate;
 
   // `Map.prototype.find` method
   // https://github.com/tc39/proposal-collection-methods
-  $$D({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$B({ target: 'Map', proto: true, real: true, forced: true }, {
     find: function find(callbackfn /* , thisArg */) {
       var map = aMap$9(this);
       var boundFunction = bind$9(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5033,14 +5156,14 @@
     }
   });
 
-  var $$C = _export;
+  var $$A = _export;
   var bind$8 = functionBindContext;
   var aMap$8 = aMap$e;
   var iterate$e = mapIterate;
 
   // `Map.prototype.findKey` method
   // https://github.com/tc39/proposal-collection-methods
-  $$C({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$A({ target: 'Map', proto: true, real: true, forced: true }, {
     findKey: function findKey(callbackfn /* , thisArg */) {
       var map = aMap$8(this);
       var boundFunction = bind$8(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5051,19 +5174,19 @@
     }
   });
 
-  var $$B = _export;
+  var $$z = _export;
   var call$9 = functionCall;
-  var uncurryThis$9 = functionUncurryThis;
+  var uncurryThis$8 = functionUncurryThis;
   var isCallable$8 = isCallable$q;
   var aCallable$a = aCallable$h;
   var iterate$d = iterate$l;
   var Map$3 = mapHelpers.Map;
 
-  var push$4 = uncurryThis$9([].push);
+  var push$4 = uncurryThis$8([].push);
 
   // `Map.groupBy` method
   // https://github.com/tc39/proposal-collection-methods
-  $$B({ target: 'Map', stat: true, forced: true }, {
+  $$z({ target: 'Map', stat: true, forced: true }, {
     groupBy: function groupBy(iterable, keyDerivative) {
       var C = isCallable$8(this) ? this : Map$3;
       var newMap = new C();
@@ -5087,14 +5210,14 @@
     return x === y || x != x && y != y;
   };
 
-  var $$A = _export;
+  var $$y = _export;
   var sameValueZero = sameValueZero$1;
   var aMap$7 = aMap$e;
   var iterate$c = mapIterate;
 
   // `Map.prototype.includes` method
   // https://github.com/tc39/proposal-collection-methods
-  $$A({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$y({ target: 'Map', proto: true, real: true, forced: true }, {
     includes: function includes(searchElement) {
       return iterate$c(aMap$7(this), function (value) {
         if (sameValueZero(value, searchElement)) return true;
@@ -5102,7 +5225,7 @@
     }
   });
 
-  var $$z = _export;
+  var $$x = _export;
   var call$8 = functionCall;
   var iterate$b = iterate$l;
   var isCallable$7 = isCallable$q;
@@ -5111,7 +5234,7 @@
 
   // `Map.keyBy` method
   // https://github.com/tc39/proposal-collection-methods
-  $$z({ target: 'Map', stat: true, forced: true }, {
+  $$x({ target: 'Map', stat: true, forced: true }, {
     keyBy: function keyBy(iterable, keyDerivative) {
       var C = isCallable$7(this) ? this : Map$2;
       var newMap = new C();
@@ -5124,13 +5247,13 @@
     }
   });
 
-  var $$y = _export;
+  var $$w = _export;
   var aMap$6 = aMap$e;
   var iterate$a = mapIterate;
 
   // `Map.prototype.keyOf` method
   // https://github.com/tc39/proposal-collection-methods
-  $$y({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$w({ target: 'Map', proto: true, real: true, forced: true }, {
     keyOf: function keyOf(searchElement) {
       var result = iterate$a(aMap$6(this), function (value, key) {
         if (value === searchElement) return { key: key };
@@ -5139,7 +5262,7 @@
     }
   });
 
-  var $$x = _export;
+  var $$v = _export;
   var bind$7 = functionBindContext;
   var aMap$5 = aMap$e;
   var MapHelpers$2 = mapHelpers;
@@ -5150,7 +5273,7 @@
 
   // `Map.prototype.mapKeys` method
   // https://github.com/tc39/proposal-collection-methods
-  $$x({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$v({ target: 'Map', proto: true, real: true, forced: true }, {
     mapKeys: function mapKeys(callbackfn /* , thisArg */) {
       var map = aMap$5(this);
       var boundFunction = bind$7(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5162,7 +5285,7 @@
     }
   });
 
-  var $$w = _export;
+  var $$u = _export;
   var bind$6 = functionBindContext;
   var aMap$4 = aMap$e;
   var MapHelpers$1 = mapHelpers;
@@ -5173,7 +5296,7 @@
 
   // `Map.prototype.mapValues` method
   // https://github.com/tc39/proposal-collection-methods
-  $$w({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$u({ target: 'Map', proto: true, real: true, forced: true }, {
     mapValues: function mapValues(callbackfn /* , thisArg */) {
       var map = aMap$4(this);
       var boundFunction = bind$6(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5185,14 +5308,14 @@
     }
   });
 
-  var $$v = _export;
+  var $$t = _export;
   var aMap$3 = aMap$e;
   var iterate$7 = iterate$l;
   var set$2 = mapHelpers.set;
 
   // `Map.prototype.merge` method
   // https://github.com/tc39/proposal-collection-methods
-  $$v({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
+  $$t({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
     // eslint-disable-next-line no-unused-vars -- required for `.length`
     merge: function merge(iterable /* ...iterables */) {
       var map = aMap$3(this);
@@ -5207,16 +5330,16 @@
     }
   });
 
-  var $$u = _export;
+  var $$s = _export;
   var aCallable$8 = aCallable$h;
   var aMap$2 = aMap$e;
   var iterate$6 = mapIterate;
 
-  var $TypeError$7 = TypeError;
+  var $TypeError$6 = TypeError;
 
   // `Map.prototype.reduce` method
   // https://github.com/tc39/proposal-collection-methods
-  $$u({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$s({ target: 'Map', proto: true, real: true, forced: true }, {
     reduce: function reduce(callbackfn /* , initialValue */) {
       var map = aMap$2(this);
       var noInitial = arguments.length < 2;
@@ -5230,19 +5353,19 @@
           accumulator = callbackfn(accumulator, value, key, map);
         }
       });
-      if (noInitial) throw $TypeError$7('Reduce of empty map with no initial value');
+      if (noInitial) throw $TypeError$6('Reduce of empty map with no initial value');
       return accumulator;
     }
   });
 
-  var $$t = _export;
+  var $$r = _export;
   var bind$5 = functionBindContext;
   var aMap$1 = aMap$e;
   var iterate$5 = mapIterate;
 
   // `Map.prototype.some` method
   // https://github.com/tc39/proposal-collection-methods
-  $$t({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$r({ target: 'Map', proto: true, real: true, forced: true }, {
     some: function some(callbackfn /* , thisArg */) {
       var map = aMap$1(this);
       var boundFunction = bind$5(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -5252,26 +5375,26 @@
     }
   });
 
-  var $$s = _export;
+  var $$q = _export;
   var aCallable$7 = aCallable$h;
   var aMap = aMap$e;
   var MapHelpers = mapHelpers;
 
-  var $TypeError$6 = TypeError;
+  var $TypeError$5 = TypeError;
   var get = MapHelpers.get;
   var has = MapHelpers.has;
   var set$1 = MapHelpers.set;
 
   // `Map.prototype.update` method
   // https://github.com/tc39/proposal-collection-methods
-  $$s({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$q({ target: 'Map', proto: true, real: true, forced: true }, {
     update: function update(key, callback /* , thunk */) {
       var map = aMap(this);
       var length = arguments.length;
       aCallable$7(callback);
       var isPresentInMap = has(map, key);
       if (!isPresentInMap && length < 3) {
-        throw $TypeError$6('Updating absent value');
+        throw $TypeError$5('Updating absent value');
       }
       var value = isPresentInMap ? get(map, key) : aCallable$7(length > 2 ? arguments[2] : undefined)(key, map);
       set$1(map, key, callback(value, key, map));
@@ -5284,7 +5407,7 @@
   var isCallable$6 = isCallable$q;
   var anObject$4 = anObject$f;
 
-  var $TypeError$5 = TypeError;
+  var $TypeError$4 = TypeError;
 
   // `Map.prototype.upsert` method
   // https://github.com/tc39/proposal-upsert
@@ -5296,7 +5419,7 @@
     var insertFn = arguments.length > 2 ? arguments[2] : undefined;
     var value;
     if (!isCallable$6(updateFn) && !isCallable$6(insertFn)) {
-      throw $TypeError$5('At least one callback required');
+      throw $TypeError$4('At least one callback required');
     }
     if (call$7(has, map, key)) {
       value = call$7(get, map, key);
@@ -5311,26 +5434,26 @@
   };
 
   // TODO: remove from `core-js@4`
-  var $$r = _export;
+  var $$p = _export;
   var upsert$1 = mapUpsert;
 
   // `Map.prototype.upsert` method (replaced by `Map.prototype.emplace`)
   // https://github.com/thumbsupep/proposal-upsert
-  $$r({ target: 'Map', proto: true, real: true, forced: true }, {
+  $$p({ target: 'Map', proto: true, real: true, forced: true }, {
     upsert: upsert$1
   });
 
   // TODO: remove from `core-js@4`
-  var $$q = _export;
+  var $$o = _export;
   var upsert = mapUpsert;
 
   // `Map.prototype.updateOrInsert` method (replaced by `Map.prototype.emplace`)
   // https://github.com/thumbsupep/proposal-upsert
-  $$q({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
+  $$o({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
     updateOrInsert: upsert
   });
 
-  var parent$D = map$a;
+  var parent$A = map$a;
 
 
 
@@ -5354,7 +5477,7 @@
   // TODO: remove from `core-js@4`
 
 
-  var map$9 = parent$D;
+  var map$9 = parent$A;
 
   var map$8 = map$9;
 
@@ -5376,11 +5499,11 @@
   var screenShot$2 = "M384 482.133333c51.2 0 93.866667-42.666667 93.866667-93.866666s-42.666667-93.866667-93.866667-93.866667-93.866667 38.4-93.866667 89.6 42.666667 98.133333 93.866667 98.133333z m0-128c17.066667 0 34.133333 12.8 34.133333 34.133334s-17.066667 29.866667-34.133333 29.866666-34.133333-17.066667-34.133333-34.133333 17.066667-29.866667 34.133333-29.866667z";
   var videoShotPath = "M659.925333 128a74.666667 74.666667 0 0 1 71.338667 52.618667L754.56 256H821.333333c64.8 0 117.333333 52.533333 117.333334 117.333333v426.666667c0 64.8-52.533333 117.333333-117.333334 117.333333H202.666667c-64.8 0-117.333333-52.533333-117.333334-117.333333V373.333333c0-64.8 52.533333-117.333333 117.333334-117.333333h66.773333l23.296-75.381333A74.666667 74.666667 0 0 1 364.074667 128h295.850666zM512 405.333333c-88.362667 0-160 71.637333-160 160 0 88.362667 71.637333 160 160 160 88.362667 0 160-71.637333 160-160 0-88.362667-71.637333-160-160-160z m0 256a96 96 0 1 0 0-192 96 96 0 0 0 0 192z";
 
-  function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Options = /*#__PURE__*/function (_Component) {
     _inherits(Options, _Component);
-    var _super = _createSuper$m(Options);
+    var _super = _createSuper$n(Options);
     function Options(player, container, hideWidth, hideHeight, desc, props, children) {
       var _this;
       _classCallCheck(this, Options);
@@ -5408,7 +5531,7 @@
     }, {
       key: "initBaseTemplate",
       value: function initBaseTemplate() {
-        this.hideBox = $$M('div', {
+        this.hideBox = $$K('div', {
           style: {
             display: 'none',
             bottom: '48px'
@@ -5422,7 +5545,7 @@
           this.hideBox.style.width = this.hideWidth + 'px';
         }
         this.el.appendChild(this.hideBox);
-        this.iconBox = $$M('div');
+        this.iconBox = $$K('div');
         addClass(this.iconBox, ['video-icon']);
         this.el.appendChild(this.iconBox);
       }
@@ -5461,11 +5584,11 @@
     return Options;
   }(Component);
 
-  function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var FullScreen = /*#__PURE__*/function (_Options) {
     _inherits(FullScreen, _Options);
-    var _super = _createSuper$l(FullScreen);
+    var _super = _createSuper$m(FullScreen);
     function FullScreen(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, FullScreen);
@@ -5519,11 +5642,11 @@
     return FullScreen;
   }(Options);
 
-  function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var PlayButton = /*#__PURE__*/function (_Component) {
     _inherits(PlayButton, _Component);
-    var _super = _createSuper$k(PlayButton);
+    var _super = _createSuper$l(PlayButton);
     function PlayButton(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, PlayButton);
@@ -5552,7 +5675,7 @@
       key: "initTemplate",
       value: function initTemplate() {
         addClass(this.el, ['video-start-pause', 'video-controller']);
-        this.iconBox = $$M('div.video-icon');
+        this.iconBox = $$K('div.video-icon');
         this.el.appendChild(this.iconBox);
         this.pauseIcon = createSvg(pausePath);
         this.playIcon = createSvg(playPath);
@@ -5596,14 +5719,14 @@
     return PlayButton;
   }(Component);
 
-  function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   /**
    * @description 播放速率的类
    */
   var Playrate = /*#__PURE__*/function (_Options) {
     _inherits(Playrate, _Options);
-    var _super = _createSuper$j(Playrate);
+    var _super = _createSuper$k(Playrate);
     function Playrate(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Playrate);
@@ -5627,14 +5750,14 @@
         this.el['aria-label'] = '播放倍速';
         addClass(this.el, ['video-playrate', 'video-controller']);
         this.el.removeChild(this.iconBox);
-        this.iconBox = $$M('span', null, '倍速');
+        this.iconBox = $$K('span', null, '倍速');
         this.el.appendChild(this.iconBox);
         this.el.removeChild(this.hideBox);
         // this.hideBox = $('ul', { style: { display: 'none' }, 'aria-label': '播放速度调节' })
         addClass(this.hideBox, ['video-playrate-set']);
         this.el.appendChild(this.hideBox);
         for (var i = this.playrateArray.length - 1; i >= 0; i--) {
-          var li = $$M('li');
+          var li = $$K('li');
           li.innerText = this.playrateArray[i];
           if (this.playrateArray[i] === '1.0') {
             li.style.color = '#007aff';
@@ -5666,11 +5789,11 @@
     return Playrate;
   }(Options);
 
-  function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var VolumeCompletedProgress = /*#__PURE__*/function (_Component) {
     _inherits(VolumeCompletedProgress, _Component);
-    var _super = _createSuper$i(VolumeCompletedProgress);
+    var _super = _createSuper$j(VolumeCompletedProgress);
     function VolumeCompletedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, VolumeCompletedProgress);
@@ -5697,11 +5820,11 @@
     return VolumeCompletedProgress;
   }(Component);
 
-  function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Volume = /*#__PURE__*/function (_Options) {
     _inherits(Volume, _Options);
-    var _super = _createSuper$h(Volume);
+    var _super = _createSuper$i(Volume);
     function Volume(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Volume);
@@ -5729,12 +5852,12 @@
         addClass(this.el, ['video-volume', 'video-controller']);
         this.el['aria-label'] = '音量';
         addClass(this.hideBox, ['video-volume-set']);
-        this.volumeProgress = $$M('div.video-volume-progress', {
+        this.volumeProgress = $$K('div.video-volume-progress', {
           style: {
             height: '70px'
           }
         });
-        this.volumeShow = $$M('div.video-volume-show');
+        this.volumeShow = $$K('div.video-volume-show');
         this.volumeShow.innerText = (this.volume * 100).toFixed(0);
         this.volumeCompleted = new VolumeCompletedProgress(this.player, this.volumeProgress, 'div.video-volume-completed');
         this.hideBox.appendChild(this.volumeShow);
@@ -5769,9 +5892,13 @@
     return Volume;
   }(Options);
 
-  var CONTROL_COMPONENT_STORE = new _Map();
+  // COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件
+  var COMPONENT_STORE = new _Map();
+  // ONCE_COMPONENT_STORE存储的是只要曾经在视图上展示过哪怕已经卸载，都会一直保留在此处，除非通过delete进行彻底删除
+  var ONCE_COMPONENT_STORE = new _Map();
   function storeControlComponent(item) {
-    CONTROL_COMPONENT_STORE.set(item.id, item);
+    COMPONENT_STORE.set(item.id, item);
+    ONCE_COMPONENT_STORE.set(item.id, item);
   }
   var controllersMapping = {
     PlayButton: PlayButton,
@@ -5780,11 +5907,11 @@
     FullScreen: FullScreen
   };
 
-  function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Dot = /*#__PURE__*/function (_Component) {
     _inherits(Dot, _Component);
-    var _super = _createSuper$g(Dot);
+    var _super = _createSuper$h(Dot);
     function Dot(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Dot);
@@ -5793,7 +5920,6 @@
       // el: div.video-dot.video-dot-hidden
       _defineProperty(_assertThisInitialized(_this), "props", void 0);
       _defineProperty(_assertThisInitialized(_this), "player", void 0);
-      _defineProperty(_assertThisInitialized(_this), "container", void 0);
       _defineProperty(_assertThisInitialized(_this), "mouseX", void 0);
       _defineProperty(_assertThisInitialized(_this), "left", 0);
       _defineProperty(_assertThisInitialized(_this), "playScale", 0);
@@ -5899,11 +6025,11 @@
     return Dot;
   }(Component);
 
-  function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var CompletedProgress = /*#__PURE__*/function (_Component) {
     _inherits(CompletedProgress, _Component);
-    var _super = _createSuper$f(CompletedProgress);
+    var _super = _createSuper$g(CompletedProgress);
     function CompletedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, CompletedProgress);
@@ -5966,11 +6092,11 @@
     return CompletedProgress;
   }(Component);
 
-  function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var BufferedProgress = /*#__PURE__*/function (_Component) {
     _inherits(BufferedProgress, _Component);
-    var _super = _createSuper$e(BufferedProgress);
+    var _super = _createSuper$f(BufferedProgress);
     function BufferedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, BufferedProgress);
@@ -6040,14 +6166,14 @@
     }
   }
 
-  var css_248z$5 = ".video-progress {\n  width: 100%;\n  height: 5px;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #00a1d6;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 10px;\n  width: 10px;\n  border-radius: 100%;\n  background-color: black;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
-  styleInject(css_248z$5);
+  var css_248z$6 = ".video-progress {\n  width: 100%;\n  height: 5px;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #00a1d6;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 10px;\n  width: 10px;\n  border-radius: 100%;\n  background-color: black;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
+  styleInject(css_248z$6);
 
-  function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Progress = /*#__PURE__*/function (_Component) {
     _inherits(Progress, _Component);
-    var _super = _createSuper$d(Progress);
+    var _super = _createSuper$e(Progress);
     function Progress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Progress);
@@ -6111,7 +6237,7 @@
     return Progress;
   }(Component);
 
-  var $$p = _export;
+  var $$n = _export;
   var $map = arrayIteration.map;
   var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
 
@@ -6120,37 +6246,37 @@
   // `Array.prototype.map` method
   // https://tc39.es/ecma262/#sec-array.prototype.map
   // with adding support of @@species
-  $$p({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
+  $$n({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
     map: function map(callbackfn /* , thisArg */) {
       return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
     }
   });
 
-  var entryVirtual$5 = entryVirtual$b;
+  var entryVirtual$3 = entryVirtual$b;
 
-  var map$6 = entryVirtual$5('Array').map;
+  var map$6 = entryVirtual$3('Array').map;
 
-  var isPrototypeOf$5 = objectIsPrototypeOf;
+  var isPrototypeOf$4 = objectIsPrototypeOf;
   var method$3 = map$6;
 
-  var ArrayPrototype$4 = Array.prototype;
+  var ArrayPrototype$3 = Array.prototype;
 
   var map$5 = function (it) {
     var own = it.map;
-    return it === ArrayPrototype$4 || (isPrototypeOf$5(ArrayPrototype$4, it) && own === ArrayPrototype$4.map) ? method$3 : own;
+    return it === ArrayPrototype$3 || (isPrototypeOf$4(ArrayPrototype$3, it) && own === ArrayPrototype$3.map) ? method$3 : own;
   };
 
-  var parent$C = map$5;
+  var parent$z = map$5;
 
-  var map$4 = parent$C;
+  var map$4 = parent$z;
 
-  var parent$B = map$4;
+  var parent$y = map$4;
 
-  var map$3 = parent$B;
+  var map$3 = parent$y;
 
-  var parent$A = map$3;
+  var parent$x = map$3;
 
-  var map$2 = parent$A;
+  var map$2 = parent$x;
 
   var map$1 = map$2;
 
@@ -6158,11 +6284,11 @@
 
   var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map);
 
-  function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var FullPage = /*#__PURE__*/function (_Options) {
     _inherits(FullPage, _Options);
-    var _super = _createSuper$c(FullPage);
+    var _super = _createSuper$d(FullPage);
     function FullPage(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, FullPage);
@@ -6225,11 +6351,11 @@
     return FullPage;
   }(Options);
 
-  function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var PicInPic = /*#__PURE__*/function (_Options) {
     _inherits(PicInPic, _Options);
-    var _super = _createSuper$b(PicInPic);
+    var _super = _createSuper$c(PicInPic);
     function PicInPic(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, PicInPic);
@@ -6281,14 +6407,14 @@
     return PicInPic;
   }(Options);
 
-  var fails$8 = fails$x;
-  var wellKnownSymbol$6 = wellKnownSymbol$q;
+  var fails$7 = fails$x;
+  var wellKnownSymbol$4 = wellKnownSymbol$q;
   var DESCRIPTORS$5 = descriptors;
   var IS_PURE$1 = isPure;
 
-  var ITERATOR$2 = wellKnownSymbol$6('iterator');
+  var ITERATOR$2 = wellKnownSymbol$4('iterator');
 
-  var urlConstructorDetection = !fails$8(function () {
+  var urlConstructorDetection = !fails$7(function () {
     // eslint-disable-next-line unicorn/relative-url-style -- required for testing
     var url = new URL('b?a=1&b=2&c=3', 'http://a');
     var searchParams = url.searchParams;
@@ -6319,7 +6445,7 @@
   });
 
   // based on https://github.com/bestiejs/punycode.js/blob/master/punycode.js
-  var uncurryThis$8 = functionUncurryThis;
+  var uncurryThis$7 = functionUncurryThis;
 
   var maxInt = 2147483647; // aka. 0x7FFFFFFF or 2^31-1
   var base = 36;
@@ -6336,15 +6462,15 @@
   var baseMinusTMin = base - tMin;
 
   var $RangeError = RangeError;
-  var exec$1 = uncurryThis$8(regexSeparators.exec);
+  var exec$1 = uncurryThis$7(regexSeparators.exec);
   var floor$2 = Math.floor;
   var fromCharCode = String.fromCharCode;
-  var charCodeAt = uncurryThis$8(''.charCodeAt);
-  var join$2 = uncurryThis$8([].join);
-  var push$3 = uncurryThis$8([].push);
-  var replace$3 = uncurryThis$8(''.replace);
-  var split$2 = uncurryThis$8(''.split);
-  var toLowerCase$1 = uncurryThis$8(''.toLowerCase);
+  var charCodeAt = uncurryThis$7(''.charCodeAt);
+  var join$2 = uncurryThis$7([].join);
+  var push$3 = uncurryThis$7([].push);
+  var replace$3 = uncurryThis$7(''.replace);
+  var split$2 = uncurryThis$7(''.split);
+  var toLowerCase$1 = uncurryThis$7(''.toLowerCase);
 
   /**
    * Creates an array containing the numeric code points of each Unicode
@@ -6499,10 +6625,10 @@
     return join$2(encoded, '.');
   };
 
-  var $TypeError$4 = TypeError;
+  var $TypeError$3 = TypeError;
 
   var validateArgumentsLength$5 = function (passed, required) {
-    if (passed < required) throw $TypeError$4('Not enough arguments');
+    if (passed < required) throw $TypeError$3('Not enough arguments');
     return passed;
   };
 
@@ -6553,10 +6679,10 @@
 
   // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-  var $$o = _export;
+  var $$m = _export;
   var global$b = global$r;
   var call$6 = functionCall;
-  var uncurryThis$7 = functionUncurryThis;
+  var uncurryThis$6 = functionUncurryThis;
   var DESCRIPTORS$4 = descriptors;
   var USE_NATIVE_URL$2 = urlConstructorDetection;
   var defineBuiltIn$2 = defineBuiltIn$8;
@@ -6569,19 +6695,19 @@
   var isCallable$5 = isCallable$q;
   var hasOwn$3 = hasOwnProperty_1;
   var bind$4 = functionBindContext;
-  var classof$2 = classof$c;
+  var classof$1 = classof$c;
   var anObject$3 = anObject$f;
-  var isObject$4 = isObject$j;
+  var isObject$3 = isObject$j;
   var $toString$1 = toString$b;
   var create$1 = objectCreate;
   var createPropertyDescriptor$2 = createPropertyDescriptor$8;
   var getIterator = getIterator$3;
   var getIteratorMethod = getIteratorMethod$a;
   var validateArgumentsLength$4 = validateArgumentsLength$5;
-  var wellKnownSymbol$5 = wellKnownSymbol$q;
+  var wellKnownSymbol$3 = wellKnownSymbol$q;
   var arraySort = arraySort$1;
 
-  var ITERATOR$1 = wellKnownSymbol$5('iterator');
+  var ITERATOR$1 = wellKnownSymbol$3('iterator');
   var URL_SEARCH_PARAMS = 'URLSearchParams';
   var URL_SEARCH_PARAMS_ITERATOR = URL_SEARCH_PARAMS + 'Iterator';
   var setInternalState$2 = InternalStateModule$2.set;
@@ -6606,14 +6732,14 @@
   var TypeError$3 = global$b.TypeError;
   var decodeURIComponent = global$b.decodeURIComponent;
   var encodeURIComponent$1 = global$b.encodeURIComponent;
-  var charAt$2 = uncurryThis$7(''.charAt);
-  var join$1 = uncurryThis$7([].join);
-  var push$2 = uncurryThis$7([].push);
-  var replace$2 = uncurryThis$7(''.replace);
-  var shift$1 = uncurryThis$7([].shift);
-  var splice$7 = uncurryThis$7([].splice);
-  var split$1 = uncurryThis$7(''.split);
-  var stringSlice$1 = uncurryThis$7(''.slice);
+  var charAt$2 = uncurryThis$6(''.charAt);
+  var join$1 = uncurryThis$6([].join);
+  var push$2 = uncurryThis$6([].push);
+  var replace$2 = uncurryThis$6(''.replace);
+  var shift$1 = uncurryThis$6([].shift);
+  var splice$7 = uncurryThis$6([].splice);
+  var split$1 = uncurryThis$6(''.split);
+  var stringSlice$1 = uncurryThis$6(''.slice);
 
   var plus = /\+/g;
   var sequences = Array(4);
@@ -6683,7 +6809,7 @@
     this.url = null;
 
     if (init !== undefined) {
-      if (isObject$4(init)) this.parseObject(init);
+      if (isObject$3(init)) this.parseObject(init);
       else this.parseQuery(typeof init == 'string' ? charAt$2(init, 0) === '?' ? stringSlice$1(init, 1) : init : $toString$1(init));
     }
   };
@@ -6904,20 +7030,20 @@
 
   setToStringTag$2(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
 
-  $$o({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
+  $$m({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
     URLSearchParams: URLSearchParamsConstructor
   });
 
   // Wrap `fetch` and `Request` for correct work with polyfilled `URLSearchParams`
   if (!USE_NATIVE_URL$2 && isCallable$5(Headers)) {
-    var headersHas = uncurryThis$7(HeadersPrototype.has);
-    var headersSet = uncurryThis$7(HeadersPrototype.set);
+    var headersHas = uncurryThis$6(HeadersPrototype.has);
+    var headersSet = uncurryThis$6(HeadersPrototype.set);
 
     var wrapRequestOptions = function (init) {
-      if (isObject$4(init)) {
+      if (isObject$3(init)) {
         var body = init.body;
         var headers;
-        if (classof$2(body) === URL_SEARCH_PARAMS) {
+        if (classof$1(body) === URL_SEARCH_PARAMS) {
           headers = init.headers ? new Headers(init.headers) : new Headers();
           if (!headersHas(headers, 'content-type')) {
             headersSet(headers, 'content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
@@ -6931,7 +7057,7 @@
     };
 
     if (isCallable$5(nativeFetch)) {
-      $$o({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
+      $$m({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
         fetch: function fetch(input /* , init */) {
           return nativeFetch(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
         }
@@ -6947,7 +7073,7 @@
       RequestPrototype.constructor = RequestConstructor;
       RequestConstructor.prototype = RequestPrototype;
 
-      $$o({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
+      $$m({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
         Request: RequestConstructor
       });
     }
@@ -6960,12 +7086,12 @@
 
   // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-  var $$n = _export;
+  var $$l = _export;
   var DESCRIPTORS$3 = descriptors;
   var USE_NATIVE_URL$1 = urlConstructorDetection;
   var global$a = global$r;
   var bind$3 = functionBindContext;
-  var uncurryThis$6 = functionUncurryThis;
+  var uncurryThis$5 = functionUncurryThis;
   var defineBuiltIn$1 = defineBuiltIn$8;
   var defineBuiltInAccessor = defineBuiltInAccessor$5;
   var anInstance$1 = anInstance$5;
@@ -6991,18 +7117,18 @@
   var parseInt$1 = global$a.parseInt;
   var floor = Math.floor;
   var pow = Math.pow;
-  var charAt$1 = uncurryThis$6(''.charAt);
-  var exec = uncurryThis$6(/./.exec);
-  var join = uncurryThis$6([].join);
-  var numberToString = uncurryThis$6(1.0.toString);
-  var pop = uncurryThis$6([].pop);
-  var push$1 = uncurryThis$6([].push);
-  var replace$1 = uncurryThis$6(''.replace);
-  var shift = uncurryThis$6([].shift);
-  var split = uncurryThis$6(''.split);
-  var stringSlice = uncurryThis$6(''.slice);
-  var toLowerCase = uncurryThis$6(''.toLowerCase);
-  var unshift = uncurryThis$6([].unshift);
+  var charAt$1 = uncurryThis$5(''.charAt);
+  var exec = uncurryThis$5(/./.exec);
+  var join = uncurryThis$5([].join);
+  var numberToString = uncurryThis$5(1.0.toString);
+  var pop = uncurryThis$5([].pop);
+  var push$1 = uncurryThis$5([].push);
+  var replace$1 = uncurryThis$5(''.replace);
+  var shift = uncurryThis$5([].shift);
+  var split = uncurryThis$5(''.split);
+  var stringSlice = uncurryThis$5(''.slice);
+  var toLowerCase = uncurryThis$5(''.toLowerCase);
+  var unshift = uncurryThis$5([].unshift);
 
   var INVALID_AUTHORITY = 'Invalid authority';
   var INVALID_SCHEME = 'Invalid scheme';
@@ -7998,32 +8124,32 @@
 
   setToStringTag$1(URLConstructor, 'URL');
 
-  $$n({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
+  $$l({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
     URL: URLConstructor
   });
 
-  var $$m = _export;
+  var $$k = _export;
   var getBuiltIn$4 = getBuiltIn$h;
-  var fails$7 = fails$x;
+  var fails$6 = fails$x;
   var validateArgumentsLength$2 = validateArgumentsLength$5;
-  var toString$3 = toString$b;
+  var toString$2 = toString$b;
   var USE_NATIVE_URL = urlConstructorDetection;
 
   var URL$1 = getBuiltIn$4('URL');
 
   // https://github.com/nodejs/node/issues/47505
   // https://github.com/denoland/deno/issues/18893
-  var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$7(function () {
+  var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$6(function () {
     URL$1.canParse();
   });
 
   // `URL.canParse` method
   // https://url.spec.whatwg.org/#dom-url-canparse
-  $$m({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
+  $$k({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
     canParse: function canParse(url) {
       var length = validateArgumentsLength$2(arguments.length, 1);
-      var urlString = toString$3(url);
-      var base = length < 2 || arguments[1] === undefined ? undefined : toString$3(arguments[1]);
+      var urlString = toString$2(url);
+      var base = length < 2 || arguments[1] === undefined ? undefined : toString$2(arguments[1]);
       try {
         return !!new URL$1(urlString, base);
       } catch (error) {
@@ -8036,17 +8162,17 @@
 
   var url$5 = path$7.URL;
 
-  var parent$z = url$5;
+  var parent$w = url$5;
 
-  var url$4 = parent$z;
+  var url$4 = parent$w;
 
-  var parent$y = url$4;
+  var parent$v = url$4;
 
-  var url$3 = parent$y;
+  var url$3 = parent$v;
 
-  var parent$x = url$3;
+  var parent$u = url$3;
 
-  var url$2 = parent$x;
+  var url$2 = parent$u;
 
   var url$1 = url$2;
 
@@ -8054,11 +8180,11 @@
 
   var _URL = /*@__PURE__*/getDefaultExportFromCjs(url);
 
-  function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var ScreenShot = /*#__PURE__*/function (_Options) {
     _inherits(ScreenShot, _Options);
-    var _super = _createSuper$a(ScreenShot);
+    var _super = _createSuper$b(ScreenShot);
     function ScreenShot(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, ScreenShot);
@@ -8125,11 +8251,11 @@
     return ScreenShot;
   }(Options);
 
-  function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var SubSetting = /*#__PURE__*/function (_Options) {
     _inherits(SubSetting, _Options);
-    var _super = _createSuper$9(SubSetting);
+    var _super = _createSuper$a(SubSetting);
     function SubSetting(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, SubSetting);
@@ -8161,11 +8287,11 @@
     return SubSetting;
   }(Options);
 
-  function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var DutaionShow = /*#__PURE__*/function (_Component) {
     _inherits(DutaionShow, _Component);
-    var _super = _createSuper$8(DutaionShow);
+    var _super = _createSuper$9(DutaionShow);
     function DutaionShow(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, DutaionShow);
@@ -8218,11 +8344,11 @@
     return DutaionShow;
   }(Component);
 
-  function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var VideoShot = /*#__PURE__*/function (_Options) {
     _inherits(VideoShot, _Options);
-    var _super = _createSuper$7(VideoShot);
+    var _super = _createSuper$8(VideoShot);
     function VideoShot(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, VideoShot);
@@ -8323,14 +8449,14 @@
     return VideoShot;
   }(Options);
 
-  var css_248z$4 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  height: 140px;\n  padding-bottom: 8px;\n}\n.video-subsettings svg {\n  -webkit-transition: fill 0.15s ease-in-out;\n  transition: fill 0.15s ease-in-out;\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 5px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 3px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
-  styleInject(css_248z$4);
+  var css_248z$5 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  height: 140px;\n  padding-bottom: 8px;\n}\n.video-subsettings svg {\n  -webkit-transition: fill 0.15s ease-in-out;\n  transition: fill 0.15s ease-in-out;\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 5px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 3px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
+  styleInject(css_248z$5);
 
-  function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Controller = /*#__PURE__*/function (_Component) {
     _inherits(Controller, _Component);
-    var _super = _createSuper$6(Controller);
+    var _super = _createSuper$7(Controller);
     //代表最右侧的区域
     function Controller(player, container, desc, props, children) {
       var _this;
@@ -8399,9 +8525,9 @@
     }, {
       key: "initTemplate",
       value: function initTemplate() {
-        this.leftArea = $$M('div.video-subplay');
-        this.mediumArea = $$M('div.video-medium');
-        this.rightArea = $$M('div.video-settings');
+        this.leftArea = $$K('div.video-subplay');
+        this.mediumArea = $$K('div.video-medium');
+        this.rightArea = $$K('div.video-settings');
         this.el.appendChild(this.leftArea);
         this.el.appendChild(this.mediumArea);
         this.el.appendChild(this.rightArea);
@@ -8440,14 +8566,14 @@
     return Controller;
   }(Component);
 
-  var css_248z$3 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.2);\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n}\n";
-  styleInject(css_248z$3);
+  var css_248z$4 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.2);\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n}\n";
+  styleInject(css_248z$4);
 
-  function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var ToolBar = /*#__PURE__*/function (_Component) {
     _inherits(ToolBar, _Component);
-    var _super = _createSuper$5(ToolBar);
+    var _super = _createSuper$6(ToolBar);
     function ToolBar(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, ToolBar);
@@ -8541,7 +8667,7 @@
     throw new Error('传入的文件没有扩展名');
   }
 
-  function _isNativeReflectConstruct$5() {
+  function _isNativeReflectConstruct$6() {
     if (typeof Reflect === "undefined" || !_Reflect$construct) return false;
     if (_Reflect$construct.sham) return false;
     if (typeof Proxy === "function") return true;
@@ -8554,7 +8680,7 @@
   }
 
   function _construct(Parent, args, Class) {
-    if (_isNativeReflectConstruct$5()) {
+    if (_isNativeReflectConstruct$6()) {
       var _context;
       _construct = _bindInstanceProperty(_context = _Reflect$construct).call(_context);
     } else {
@@ -8675,12 +8801,12 @@
   }();
 
   var getBuiltIn$3 = getBuiltIn$h;
-  var uncurryThis$5 = functionUncurryThis;
+  var uncurryThis$4 = functionUncurryThis;
   var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
   var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
   var anObject$2 = anObject$f;
 
-  var concat = uncurryThis$5([].concat);
+  var concat = uncurryThis$4([].concat);
 
   // all object keys, includes non-enumerable and symbols
   var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
@@ -8706,21 +8832,21 @@
     }
   };
 
-  var isObject$3 = isObject$j;
+  var isObject$2 = isObject$j;
   var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
 
   // `InstallErrorCause` abstract operation
   // https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
   var installErrorCause$1 = function (O, options) {
-    if (isObject$3(options) && 'cause' in options) {
+    if (isObject$2(options) && 'cause' in options) {
       createNonEnumerableProperty$2(O, 'cause', options.cause);
     }
   };
 
-  var uncurryThis$4 = functionUncurryThis;
+  var uncurryThis$3 = functionUncurryThis;
 
   var $Error$1 = Error;
-  var replace = uncurryThis$4(''.replace);
+  var replace = uncurryThis$3(''.replace);
 
   var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
   // eslint-disable-next-line redos/no-vulnerable -- safe
@@ -8733,10 +8859,10 @@
     } return stack;
   };
 
-  var fails$6 = fails$x;
+  var fails$5 = fails$x;
   var createPropertyDescriptor$1 = createPropertyDescriptor$8;
 
-  var errorStackInstallable = !fails$6(function () {
+  var errorStackInstallable = !fails$5(function () {
     var error = Error('a');
     if (!('stack' in error)) return true;
     // eslint-disable-next-line es/no-object-defineproperty -- safe
@@ -8758,14 +8884,14 @@
     }
   };
 
-  var toString$2 = toString$b;
+  var toString$1 = toString$b;
 
   var normalizeStringArgument$1 = function (argument, $default) {
-    return argument === undefined ? arguments.length < 2 ? '' : $default : toString$2(argument);
+    return argument === undefined ? arguments.length < 2 ? '' : $default : toString$1(argument);
   };
 
-  var $$l = _export;
-  var isPrototypeOf$4 = objectIsPrototypeOf;
+  var $$j = _export;
+  var isPrototypeOf$3 = objectIsPrototypeOf;
   var getPrototypeOf = objectGetPrototypeOf;
   var setPrototypeOf = objectSetPrototypeOf;
   var copyConstructorProperties = copyConstructorProperties$1;
@@ -8776,14 +8902,14 @@
   var installErrorStack = errorStackInstall;
   var iterate$4 = iterate$l;
   var normalizeStringArgument = normalizeStringArgument$1;
-  var wellKnownSymbol$4 = wellKnownSymbol$q;
+  var wellKnownSymbol$2 = wellKnownSymbol$q;
 
-  var TO_STRING_TAG = wellKnownSymbol$4('toStringTag');
+  var TO_STRING_TAG = wellKnownSymbol$2('toStringTag');
   var $Error = Error;
   var push = [].push;
 
   var $AggregateError = function AggregateError(errors, message /* , options */) {
-    var isInstance = isPrototypeOf$4(AggregateErrorPrototype, this);
+    var isInstance = isPrototypeOf$3(AggregateErrorPrototype, this);
     var that;
     if (setPrototypeOf) {
       that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
@@ -8811,20 +8937,20 @@
 
   // `AggregateError` constructor
   // https://tc39.es/ecma262/#sec-aggregate-error-constructor
-  $$l({ global: true, constructor: true, arity: 2 }, {
+  $$j({ global: true, constructor: true, arity: 2 }, {
     AggregateError: $AggregateError
   });
 
-  var classof$1 = classofRaw$2;
+  var classof = classofRaw$2;
 
-  var engineIsNode = typeof process != 'undefined' && classof$1(process) == 'process';
+  var engineIsNode = typeof process != 'undefined' && classof(process) == 'process';
 
   var anObject$1 = anObject$f;
   var aConstructor = aConstructor$3;
   var isNullOrUndefined = isNullOrUndefined$6;
-  var wellKnownSymbol$3 = wellKnownSymbol$q;
+  var wellKnownSymbol$1 = wellKnownSymbol$q;
 
-  var SPECIES$1 = wellKnownSymbol$3('species');
+  var SPECIES$1 = wellKnownSymbol$1('species');
 
   // `SpeciesConstructor` abstract operation
   // https://tc39.es/ecma262/#sec-speciesconstructor
@@ -8844,7 +8970,7 @@
   var bind$2 = functionBindContext;
   var isCallable$4 = isCallable$q;
   var hasOwn = hasOwnProperty_1;
-  var fails$5 = fails$x;
+  var fails$4 = fails$x;
   var html = html$2;
   var arraySlice$1 = arraySlice$7;
   var createElement = documentCreateElement$1;
@@ -8864,7 +8990,7 @@
   var ONREADYSTATECHANGE = 'onreadystatechange';
   var $location, defer, channel, port;
 
-  fails$5(function () {
+  fails$4(function () {
     // Deno throws a ReferenceError on `location` access without `--location` flag
     $location = global$9.location;
   });
@@ -8931,7 +9057,7 @@
       isCallable$4(global$9.postMessage) &&
       !global$9.importScripts &&
       $location && $location.protocol !== 'file:' &&
-      !fails$5(globalPostMessageDefer)
+      !fails$4(globalPostMessageDefer)
     ) {
       defer = globalPostMessageDefer;
       global$9.addEventListener('message', eventListener, false);
@@ -9105,13 +9231,13 @@
   var isCallable$3 = isCallable$q;
   var isForced = isForced_1;
   var inspectSource = inspectSource$2;
-  var wellKnownSymbol$2 = wellKnownSymbol$q;
+  var wellKnownSymbol = wellKnownSymbol$q;
   var IS_BROWSER = engineIsBrowser;
   var IS_DENO = engineIsDeno;
   var V8_VERSION = engineV8Version;
 
   var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
-  var SPECIES = wellKnownSymbol$2('species');
+  var SPECIES = wellKnownSymbol('species');
   var SUBCLASSING = false;
   var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$3(global$6.PromiseRejectionEvent);
 
@@ -9151,12 +9277,12 @@
 
   var aCallable$5 = aCallable$h;
 
-  var $TypeError$3 = TypeError;
+  var $TypeError$2 = TypeError;
 
   var PromiseCapability = function (C) {
     var resolve, reject;
     this.promise = new C(function ($$resolve, $$reject) {
-      if (resolve !== undefined || reject !== undefined) throw $TypeError$3('Bad Promise constructor');
+      if (resolve !== undefined || reject !== undefined) throw $TypeError$2('Bad Promise constructor');
       resolve = $$resolve;
       reject = $$reject;
     });
@@ -9170,7 +9296,7 @@
     return new PromiseCapability(C);
   };
 
-  var $$k = _export;
+  var $$i = _export;
   var IS_NODE = engineIsNode;
   var global$5 = global$r;
   var call$5 = functionCall;
@@ -9179,7 +9305,7 @@
   var setSpecies = setSpecies$2;
   var aCallable$4 = aCallable$h;
   var isCallable$2 = isCallable$q;
-  var isObject$2 = isObject$j;
+  var isObject$1 = isObject$j;
   var anInstance = anInstance$5;
   var speciesConstructor$1 = speciesConstructor$2;
   var task = task$1.set;
@@ -9221,7 +9347,7 @@
   // helpers
   var isThenable = function (it) {
     var then;
-    return isObject$2(it) && isCallable$2(then = it.then) ? then : false;
+    return isObject$1(it) && isCallable$2(then = it.then) ? then : false;
   };
 
   var callReaction = function (reaction, state) {
@@ -9424,7 +9550,7 @@
     };
   }
 
-  $$k({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+  $$i({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
     Promise: PromiseConstructor
   });
 
@@ -9439,7 +9565,7 @@
     NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
   });
 
-  var $$j = _export;
+  var $$h = _export;
   var call$4 = functionCall;
   var aCallable$3 = aCallable$h;
   var newPromiseCapabilityModule$5 = newPromiseCapability$2;
@@ -9449,7 +9575,7 @@
 
   // `Promise.all` method
   // https://tc39.es/ecma262/#sec-promise.all
-  $$j({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
+  $$h({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
     all: function all(iterable) {
       var C = this;
       var capability = newPromiseCapabilityModule$5.f(C);
@@ -9478,7 +9604,7 @@
     }
   });
 
-  var $$i = _export;
+  var $$g = _export;
   var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
   var NativePromiseConstructor$2 = promiseNativeConstructor;
 
@@ -9486,13 +9612,13 @@
 
   // `Promise.prototype.catch` method
   // https://tc39.es/ecma262/#sec-promise.prototype.catch
-  $$i({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+  $$g({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
     'catch': function (onRejected) {
       return this.then(undefined, onRejected);
     }
   });
 
-  var $$h = _export;
+  var $$f = _export;
   var call$3 = functionCall;
   var aCallable$2 = aCallable$h;
   var newPromiseCapabilityModule$4 = newPromiseCapability$2;
@@ -9502,7 +9628,7 @@
 
   // `Promise.race` method
   // https://tc39.es/ecma262/#sec-promise.race
-  $$h({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
+  $$f({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
     race: function race(iterable) {
       var C = this;
       var capability = newPromiseCapabilityModule$4.f(C);
@@ -9518,14 +9644,14 @@
     }
   });
 
-  var $$g = _export;
+  var $$e = _export;
   var call$2 = functionCall;
   var newPromiseCapabilityModule$3 = newPromiseCapability$2;
   var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
 
   // `Promise.reject` method
   // https://tc39.es/ecma262/#sec-promise.reject
-  $$g({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+  $$e({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
     reject: function reject(r) {
       var capability = newPromiseCapabilityModule$3.f(this);
       call$2(capability.reject, undefined, r);
@@ -9534,19 +9660,19 @@
   });
 
   var anObject = anObject$f;
-  var isObject$1 = isObject$j;
+  var isObject = isObject$j;
   var newPromiseCapability = newPromiseCapability$2;
 
   var promiseResolve$2 = function (C, x) {
     anObject(C);
-    if (isObject$1(x) && x.constructor === C) return x;
+    if (isObject(x) && x.constructor === C) return x;
     var promiseCapability = newPromiseCapability.f(C);
     var resolve = promiseCapability.resolve;
     resolve(x);
     return promiseCapability.promise;
   };
 
-  var $$f = _export;
+  var $$d = _export;
   var getBuiltIn$2 = getBuiltIn$h;
   var IS_PURE = isPure;
   var NativePromiseConstructor$1 = promiseNativeConstructor;
@@ -9558,13 +9684,13 @@
 
   // `Promise.resolve` method
   // https://tc39.es/ecma262/#sec-promise.resolve
-  $$f({ target: 'Promise', stat: true, forced: IS_PURE  }, {
+  $$d({ target: 'Promise', stat: true, forced: IS_PURE  }, {
     resolve: function resolve(x) {
       return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
     }
   });
 
-  var $$e = _export;
+  var $$c = _export;
   var call$1 = functionCall;
   var aCallable$1 = aCallable$h;
   var newPromiseCapabilityModule$2 = newPromiseCapability$2;
@@ -9574,7 +9700,7 @@
 
   // `Promise.allSettled` method
   // https://tc39.es/ecma262/#sec-promise.allsettled
-  $$e({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+  $$c({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
     allSettled: function allSettled(iterable) {
       var C = this;
       var capability = newPromiseCapabilityModule$2.f(C);
@@ -9608,7 +9734,7 @@
     }
   });
 
-  var $$d = _export;
+  var $$b = _export;
   var call = functionCall;
   var aCallable = aCallable$h;
   var getBuiltIn$1 = getBuiltIn$h;
@@ -9621,7 +9747,7 @@
 
   // `Promise.any` method
   // https://tc39.es/ecma262/#sec-promise.any
-  $$d({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+  $$b({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
     any: function any(iterable) {
       var C = this;
       var AggregateError = getBuiltIn$1('AggregateError');
@@ -9656,9 +9782,9 @@
     }
   });
 
-  var $$c = _export;
+  var $$a = _export;
   var NativePromiseConstructor = promiseNativeConstructor;
-  var fails$4 = fails$x;
+  var fails$3 = fails$x;
   var getBuiltIn = getBuiltIn$h;
   var isCallable$1 = isCallable$q;
   var speciesConstructor = speciesConstructor$2;
@@ -9667,14 +9793,14 @@
   var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
 
   // Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
-  var NON_GENERIC = !!NativePromiseConstructor && fails$4(function () {
+  var NON_GENERIC = !!NativePromiseConstructor && fails$3(function () {
     // eslint-disable-next-line unicorn/no-thenable -- required for testing
     NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
   });
 
   // `Promise.prototype.finally` method
   // https://tc39.es/ecma262/#sec-promise.prototype.finally
-  $$c({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+  $$a({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
     'finally': function (onFinally) {
       var C = speciesConstructor(this, getBuiltIn('Promise'));
       var isFunction = isCallable$1(onFinally);
@@ -9693,23 +9819,23 @@
 
   var promise$5 = path$6.Promise;
 
-  var parent$w = promise$5;
+  var parent$t = promise$5;
 
 
-  var promise$4 = parent$w;
+  var promise$4 = parent$t;
 
-  var parent$v = promise$4;
+  var parent$s = promise$4;
 
-  var promise$3 = parent$v;
+  var promise$3 = parent$s;
 
   // TODO: Remove from `core-js@4`
-  var $$b = _export;
+  var $$9 = _export;
   var newPromiseCapabilityModule = newPromiseCapability$2;
   var perform = perform$6;
 
   // `Promise.try` method
   // https://github.com/tc39/proposal-promise-try
-  $$b({ target: 'Promise', stat: true, forced: true }, {
+  $$9({ target: 'Promise', stat: true, forced: true }, {
     'try': function (callbackfn) {
       var promiseCapability = newPromiseCapabilityModule.f(this);
       var result = perform(callbackfn);
@@ -9718,14 +9844,14 @@
     }
   });
 
-  var parent$u = promise$3;
+  var parent$r = promise$3;
 
   // TODO: Remove from `core-js@4`
 
 
 
 
-  var promise$2 = parent$u;
+  var promise$2 = parent$r;
 
   var promise$1 = promise$2;
 
@@ -9734,19 +9860,19 @@
   var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
 
   /* eslint-disable es/no-array-prototype-indexof -- required for testing */
-  var $$a = _export;
-  var uncurryThis$3 = functionUncurryThisClause;
+  var $$8 = _export;
+  var uncurryThis$2 = functionUncurryThisClause;
   var $indexOf = arrayIncludes.indexOf;
   var arrayMethodIsStrict = arrayMethodIsStrict$2;
 
-  var nativeIndexOf = uncurryThis$3([].indexOf);
+  var nativeIndexOf = uncurryThis$2([].indexOf);
 
   var NEGATIVE_ZERO = !!nativeIndexOf && 1 / nativeIndexOf([1], 1, -0) < 0;
   var FORCED$2 = NEGATIVE_ZERO || !arrayMethodIsStrict('indexOf');
 
   // `Array.prototype.indexOf` method
   // https://tc39.es/ecma262/#sec-array.prototype.indexof
-  $$a({ target: 'Array', proto: true, forced: FORCED$2 }, {
+  $$8({ target: 'Array', proto: true, forced: FORCED$2 }, {
     indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
       var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
       return NEGATIVE_ZERO
@@ -9756,31 +9882,31 @@
     }
   });
 
-  var entryVirtual$4 = entryVirtual$b;
+  var entryVirtual$2 = entryVirtual$b;
 
-  var indexOf$6 = entryVirtual$4('Array').indexOf;
+  var indexOf$6 = entryVirtual$2('Array').indexOf;
 
-  var isPrototypeOf$3 = objectIsPrototypeOf;
+  var isPrototypeOf$2 = objectIsPrototypeOf;
   var method$2 = indexOf$6;
 
-  var ArrayPrototype$3 = Array.prototype;
+  var ArrayPrototype$2 = Array.prototype;
 
   var indexOf$5 = function (it) {
     var own = it.indexOf;
-    return it === ArrayPrototype$3 || (isPrototypeOf$3(ArrayPrototype$3, it) && own === ArrayPrototype$3.indexOf) ? method$2 : own;
+    return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.indexOf) ? method$2 : own;
   };
 
-  var parent$t = indexOf$5;
+  var parent$q = indexOf$5;
 
-  var indexOf$4 = parent$t;
+  var indexOf$4 = parent$q;
 
-  var parent$s = indexOf$4;
+  var parent$p = indexOf$4;
 
-  var indexOf$3 = parent$s;
+  var indexOf$3 = parent$p;
 
-  var parent$r = indexOf$3;
+  var parent$o = indexOf$3;
 
-  var indexOf$2 = parent$r;
+  var indexOf$2 = parent$o;
 
   var indexOf$1 = indexOf$2;
 
@@ -9791,7 +9917,7 @@
   var DESCRIPTORS$2 = descriptors;
   var isArray$1 = isArray$d;
 
-  var $TypeError$2 = TypeError;
+  var $TypeError$1 = TypeError;
   // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
   var getOwnPropertyDescriptor$7 = Object.getOwnPropertyDescriptor;
 
@@ -9809,7 +9935,7 @@
 
   var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
     if (isArray$1(O) && !getOwnPropertyDescriptor$7(O, 'length').writable) {
-      throw $TypeError$2('Cannot set read only .length');
+      throw $TypeError$1('Cannot set read only .length');
     } return O.length = length;
   } : function (O, length) {
     return O.length = length;
@@ -9817,13 +9943,13 @@
 
   var tryToString = tryToString$7;
 
-  var $TypeError$1 = TypeError;
+  var $TypeError = TypeError;
 
   var deletePropertyOrThrow$1 = function (O, P) {
-    if (!delete O[P]) throw $TypeError$1('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
+    if (!delete O[P]) throw $TypeError('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
   };
 
-  var $$9 = _export;
+  var $$7 = _export;
   var toObject$1 = toObject$a;
   var toAbsoluteIndex = toAbsoluteIndex$4;
   var toIntegerOrInfinity = toIntegerOrInfinity$4;
@@ -9843,7 +9969,7 @@
   // `Array.prototype.splice` method
   // https://tc39.es/ecma262/#sec-array.prototype.splice
   // with adding support of @@species
-  $$9({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  $$7({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
     splice: function splice(start, deleteCount /* , ...items */) {
       var O = toObject$1(this);
       var len = lengthOfArrayLike(O);
@@ -9890,31 +10016,31 @@
     }
   });
 
-  var entryVirtual$3 = entryVirtual$b;
+  var entryVirtual$1 = entryVirtual$b;
 
-  var splice$6 = entryVirtual$3('Array').splice;
+  var splice$6 = entryVirtual$1('Array').splice;
 
-  var isPrototypeOf$2 = objectIsPrototypeOf;
+  var isPrototypeOf$1 = objectIsPrototypeOf;
   var method$1 = splice$6;
 
-  var ArrayPrototype$2 = Array.prototype;
+  var ArrayPrototype$1 = Array.prototype;
 
   var splice$5 = function (it) {
     var own = it.splice;
-    return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.splice) ? method$1 : own;
+    return it === ArrayPrototype$1 || (isPrototypeOf$1(ArrayPrototype$1, it) && own === ArrayPrototype$1.splice) ? method$1 : own;
   };
 
-  var parent$q = splice$5;
+  var parent$n = splice$5;
 
-  var splice$4 = parent$q;
+  var splice$4 = parent$n;
 
-  var parent$p = splice$4;
+  var parent$m = splice$4;
 
-  var splice$3 = parent$p;
+  var splice$3 = parent$m;
 
-  var parent$o = splice$3;
+  var parent$l = splice$3;
 
-  var splice$2 = parent$o;
+  var splice$2 = parent$l;
 
   var splice$1 = splice$2;
 
@@ -10172,125 +10298,6 @@
     DOMNodeTypes[DOMNodeTypes["COMMENT_NODE"] = 8] = "COMMENT_NODE";
     DOMNodeTypes[DOMNodeTypes["DOCUMENT_NODE"] = 9] = "DOCUMENT_NODE";
   })(DOMNodeTypes || (DOMNodeTypes = {}));
-
-  var $$8 = _export;
-  var $includes = arrayIncludes.includes;
-  var fails$3 = fails$x;
-
-  // FF99+ bug
-  var BROKEN_ON_SPARSE = fails$3(function () {
-    // eslint-disable-next-line es/no-array-prototype-includes -- detection
-    return !Array(1).includes();
-  });
-
-  // `Array.prototype.includes` method
-  // https://tc39.es/ecma262/#sec-array.prototype.includes
-  $$8({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
-    includes: function includes(el /* , fromIndex = 0 */) {
-      return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
-    }
-  });
-
-  var entryVirtual$2 = entryVirtual$b;
-
-  var includes$7 = entryVirtual$2('Array').includes;
-
-  var isObject = isObject$j;
-  var classof = classofRaw$2;
-  var wellKnownSymbol$1 = wellKnownSymbol$q;
-
-  var MATCH$1 = wellKnownSymbol$1('match');
-
-  // `IsRegExp` abstract operation
-  // https://tc39.es/ecma262/#sec-isregexp
-  var isRegexp = function (it) {
-    var isRegExp;
-    return isObject(it) && ((isRegExp = it[MATCH$1]) !== undefined ? !!isRegExp : classof(it) == 'RegExp');
-  };
-
-  var isRegExp = isRegexp;
-
-  var $TypeError = TypeError;
-
-  var notARegexp = function (it) {
-    if (isRegExp(it)) {
-      throw $TypeError("The method doesn't accept regular expressions");
-    } return it;
-  };
-
-  var wellKnownSymbol = wellKnownSymbol$q;
-
-  var MATCH = wellKnownSymbol('match');
-
-  var correctIsRegexpLogic = function (METHOD_NAME) {
-    var regexp = /./;
-    try {
-      '/./'[METHOD_NAME](regexp);
-    } catch (error1) {
-      try {
-        regexp[MATCH] = false;
-        return '/./'[METHOD_NAME](regexp);
-      } catch (error2) { /* empty */ }
-    } return false;
-  };
-
-  var $$7 = _export;
-  var uncurryThis$2 = functionUncurryThis;
-  var notARegExp = notARegexp;
-  var requireObjectCoercible = requireObjectCoercible$5;
-  var toString$1 = toString$b;
-  var correctIsRegExpLogic = correctIsRegexpLogic;
-
-  var stringIndexOf = uncurryThis$2(''.indexOf);
-
-  // `String.prototype.includes` method
-  // https://tc39.es/ecma262/#sec-string.prototype.includes
-  $$7({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
-    includes: function includes(searchString /* , position = 0 */) {
-      return !!~stringIndexOf(
-        toString$1(requireObjectCoercible(this)),
-        toString$1(notARegExp(searchString)),
-        arguments.length > 1 ? arguments[1] : undefined
-      );
-    }
-  });
-
-  var entryVirtual$1 = entryVirtual$b;
-
-  var includes$6 = entryVirtual$1('String').includes;
-
-  var isPrototypeOf$1 = objectIsPrototypeOf;
-  var arrayMethod = includes$7;
-  var stringMethod = includes$6;
-
-  var ArrayPrototype$1 = Array.prototype;
-  var StringPrototype = String.prototype;
-
-  var includes$5 = function (it) {
-    var own = it.includes;
-    if (it === ArrayPrototype$1 || (isPrototypeOf$1(ArrayPrototype$1, it) && own === ArrayPrototype$1.includes)) return arrayMethod;
-    if (typeof it == 'string' || it === StringPrototype || (isPrototypeOf$1(StringPrototype, it) && own === StringPrototype.includes)) {
-      return stringMethod;
-    } return own;
-  };
-
-  var parent$n = includes$5;
-
-  var includes$4 = parent$n;
-
-  var parent$m = includes$4;
-
-  var includes$3 = parent$m;
-
-  var parent$l = includes$3;
-
-  var includes$2 = parent$l;
-
-  var includes$1 = includes$2;
-
-  var includes = includes$1;
-
-  var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes);
 
   /**
    * @description 该类仅用于处理MPD文件中具有SegmentTemplate此种情况
@@ -20736,357 +20743,6 @@
     return MediaPlayer;
   }();
 
-  var css_248z$2 = ".video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: #000;\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-loading .video-loading-loadingbox {\n  height: 50px;\n  width: 50px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.video-loading .video-loading-errorbox {\n  height: 50px;\n  width: 50px;\n  background-color: red;\n}\n.video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 16px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n";
-  styleInject(css_248z$2);
-
-  function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var Loading = /*#__PURE__*/function (_Component) {
-    _inherits(Loading, _Component);
-    var _super = _createSuper$4(Loading);
-    function Loading(player, msg, container, desc, props, children) {
-      var _this;
-      _classCallCheck(this, Loading);
-      _this = _super.call(this, null, desc, props, children);
-      _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
-      _defineProperty(_assertThisInitialized(_this), "props", void 0);
-      _defineProperty(_assertThisInitialized(_this), "player", void 0);
-      _defineProperty(_assertThisInitialized(_this), "container", void 0);
-      _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
-      _defineProperty(_assertThisInitialized(_this), "msgBox", void 0);
-      _defineProperty(_assertThisInitialized(_this), "message", void 0);
-      _this.props = props || {};
-      _this.player = player;
-      _this.container = container;
-      _this.message = msg;
-      _this.init();
-      return _this;
-    }
-    _createClass(Loading, [{
-      key: "init",
-      value: function init() {
-        this.initTemplate();
-        this.initEvent();
-      }
-    }, {
-      key: "initTemplate",
-      value: function initTemplate() {
-        addClass(this.el, ['video-loading']);
-        this.loadingBox = $$M('div');
-        this.msgBox = $$M('div.video-loading-msgbox');
-        this.msgBox.innerText = this.message;
-        this.el.appendChild(this.loadingBox);
-        this.el.appendChild(this.msgBox);
-      }
-    }, {
-      key: "initEvent",
-      value: function initEvent() {}
-    }, {
-      key: "addLoading",
-      value: function addLoading() {
-        var _context;
-        if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
-          this.container.appendChild(this.el);
-        }
-      }
-    }, {
-      key: "removeLoading",
-      value: function removeLoading() {
-        var _context2;
-        if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
-          this.container.removeChild(this.el);
-        }
-      }
-    }]);
-    return Loading;
-  }(Component);
-
-  function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var TimeLoading = /*#__PURE__*/function (_Loading) {
-    _inherits(TimeLoading, _Loading);
-    var _super = _createSuper$3(TimeLoading);
-    // el: div.video-loading
-    function TimeLoading(player, msg, container) {
-      var _this;
-      _classCallCheck(this, TimeLoading);
-      _this = _super.call(this, player, msg, container);
-      _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
-      addClass(_this.loadingBox, ['video-loading-loadingbox']);
-      _this.initEvent();
-      return _this;
-    }
-    _createClass(TimeLoading, [{
-      key: "initEvent",
-      value: function initEvent() {
-        var _this2 = this;
-        // 在视频由于需要缓冲下一帧而停止时触发
-        this.player.on('waiting', function (e) {
-          _this2.addLoading();
-        });
-        // 该视频已准备好开始播放
-        this.player.on('canplay', function (e) {
-          _this2.removeLoading();
-        });
-      }
-    }]);
-    return TimeLoading;
-  }(Loading);
-
-  function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var ErrorLoading = /*#__PURE__*/function (_Loading) {
-    _inherits(ErrorLoading, _Loading);
-    var _super = _createSuper$2(ErrorLoading);
-    // el: div.video-loading
-    function ErrorLoading(player, msg, container) {
-      var _this;
-      _classCallCheck(this, ErrorLoading);
-      _this = _super.call(this, player, msg, container);
-      _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
-      addClass(_this.loadingBox, ['video-loading-errorloading']);
-      _this.initEvent();
-      return _this;
-    }
-    _createClass(ErrorLoading, [{
-      key: "initEvent",
-      value: function initEvent() {
-        var _this2 = this;
-        // 视频加载发生错误时
-        this.player.on('videoError', function (e) {
-          _this2.addLoading();
-        });
-        // 该视频已准备好开始播放
-        this.player.on('canplay', function (e) {
-          _this2.removeLoading();
-        });
-      }
-    }]);
-    return ErrorLoading;
-  }(Loading);
-
-  var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-container {\n  position: relative;\n  overflow: hidden;\n  background-color: #000;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n";
-  styleInject(css_248z$1);
-
-  function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-  var Player = /*#__PURE__*/function (_Component) {
-    _inherits(Player, _Component);
-    var _super = _createSuper$1(Player);
-    function Player(options) {
-      var _this;
-      _classCallCheck(this, Player);
-      _this = _super.call(this, options.container, 'div.video-wrapper');
-      _defineProperty(_assertThisInitialized(_this), "id", 'Player');
-      // el: div.video-wrapper
-      // 播放器的默认配置
-      _defineProperty(_assertThisInitialized(_this), "playerOptions", {
-        url: '',
-        container: document.body,
-        autoplay: false,
-        width: '100%',
-        height: '100%'
-      });
-      _defineProperty(_assertThisInitialized(_this), "props", void 0);
-      _defineProperty(_assertThisInitialized(_this), "video", void 0);
-      _defineProperty(_assertThisInitialized(_this), "container", void 0);
-      _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
-      _defineProperty(_assertThisInitialized(_this), "loading", void 0);
-      _defineProperty(_assertThisInitialized(_this), "error", void 0);
-      _defineProperty(_assertThisInitialized(_this), "enableSeek", true);
-      _this.playerOptions = _Object$assign(_this.playerOptions, options);
-      options.container.className = 'video-container';
-      options.container.style.width = _this.playerOptions.width;
-      options.container.style.height = _this.playerOptions.height;
-      _this.container = options.container;
-      _this.init();
-      return _this;
-    }
-    _createClass(Player, [{
-      key: "init",
-      value: function init() {
-        this.video = $$M('video');
-        this.video.crossOrigin = 'anonymous';
-        this.attachSource(this.playerOptions.url);
-        this.el.appendChild(this.video);
-        this.initComponent();
-        this.initEvent();
-        this.initPlugin();
-      }
-    }, {
-      key: "initComponent",
-      value: function initComponent() {
-        // new DanmakuController(this)
-        this.loading = new TimeLoading(this, '视频加载中，请稍等....', this.el);
-        this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
-        this.toolBar = new ToolBar(this, this.el, 'div');
-      }
-    }, {
-      key: "initEvent",
-      value: function initEvent() {
-        var _this2 = this;
-        this.video.onclick = function (e) {
-          if (_this2.video.paused) {
-            _this2.video.play();
-          } else if (_this2.video.played) {
-            _this2.video.pause();
-          }
-        };
-        this.el.onmouseenter = function (e) {
-          _this2.emit('showtoolbar', e);
-        };
-        this.el.onmousemove = function (e) {
-          _this2.emit('showtoolbar', e);
-        };
-        this.el.onmouseleave = function (e) {
-          _this2.emit('hidetoolbar', e);
-        };
-        this.video.onloadedmetadata = function (e) {
-          _this2.emit('loadedmetadata', e);
-        };
-        this.video.addEventListener('timeupdate', function (e) {
-          _this2.emit('timeupdate', e);
-        });
-        this.video.onplay = function (e) {
-          _this2.emit('play', e);
-        };
-        this.video.onpause = function (e) {
-          _this2.emit('pause', e);
-        };
-        // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
-        this.video.addEventListener('seeking', function (e) {
-          // 防抖效果：针对Dot按下拖动时不触发seeking，拖完鼠标抬起时再触发seeking
-          if (_this2.enableSeek) {
-            _this2.emit('seeking', e);
-          }
-        });
-        // waiting 事件在视频由于需要缓冲下一帧而停止时触发
-        this.video.addEventListener('waiting', function (e) {
-          _this2.emit('waiting', e);
-        });
-        // canplay 该视频已准备好开始播放
-        this.video.addEventListener('canplay', function (e) {
-          _this2.emit('canplay', e);
-        });
-        // error 视频加载发生错误时
-        this.video.addEventListener('error', function (e) {
-          _this2.emit('videoError');
-        });
-        // abort 视频终止加载时
-        this.video.addEventListener('abort', function (e) {
-          _this2.emit('videoError');
-        });
-        // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
-        this.video.addEventListener('ratechange', function (e) {
-          _this2.emit('ratechange');
-        });
-        this.on('progress-click', function (e, ctx) {
-          var scale = e.offsetX / ctx.el.offsetWidth;
-          if (scale < 0) {
-            scale = 0;
-          } else if (scale > 1) {
-            scale = 1;
-          }
-          _this2.video.currentTime = Math.floor(scale * _this2.video.duration);
-          _this2.video.paused && _this2.video.play();
-        });
-        this.on('inputFocus', function () {
-          _this2.el.onmouseleave = null;
-        });
-        this.on('inputBlur', function () {
-          _this2.el.onmouseleave = function (e) {
-            _this2.emit('hidetoolbar', e);
-          };
-        });
-        this.on('dotdown', function () {
-          console.log('dotdown');
-          _this2.enableSeek = false;
-        });
-        this.on('dotup', function () {
-          console.log('dotup');
-          _this2.enableSeek = true;
-        });
-      }
-    }, {
-      key: "initPlugin",
-      value: function initPlugin() {
-        var _this3 = this;
-        if (this.playerOptions.plugins) {
-          var _context;
-          _forEachInstanceProperty(_context = this.playerOptions.plugins).call(_context, function (plugin) {
-            _this3.use(plugin);
-          });
-        }
-      }
-    }, {
-      key: "initMp4Player",
-      value: function initMp4Player(url) {
-        new MediaPlayer(this.playerOptions.url, this);
-      }
-    }, {
-      key: "initMpdPlayer",
-      value: function initMpdPlayer(url) {
-        // 工厂模式
-        // let player = new MediaPlayer({context: {}}, ...args)
-        var player = factory().create();
-        player.attachVideo(this.video);
-        player.attachSource(url);
-      }
-    }, {
-      key: "attachSource",
-      value: function attachSource(url) {
-        switch (getFileExtension(url)) {
-          case 'mp4':
-          case 'mp3':
-            // this.initMp4Player(url)
-            this.video.src = url;
-            break;
-          case 'mpd':
-            this.initMpdPlayer(url);
-            break;
-          // ToDo
-        }
-      }
-      // 注册最右侧的控制栏上的组件
-    }, {
-      key: "registerControls",
-      value: function registerControls(id, component, pos) {
-        var store = CONTROL_COMPONENT_STORE;
-        if (store.has(id)) {
-          // patchComponent(store.get(id), component)
-          if (component.replaceElementType) {
-            patchComponent(store.get(id), component, {
-              replaceElementType: component.replaceElementType
-            });
-          } else {
-            patchComponent(store.get(id), component);
-          }
-        } else {
-          // 如果该组件实例是用户自创的话
-          if (!component.el) throw new Error("\u4F20\u5165\u7684\u539F\u521B\u7EC4\u4EF6".concat(id, "\u6CA1\u6709\u5BF9\u5E94\u7684DOM\u5143\u7D20"));
-          if (pos === 'left') {
-            this.toolBar.controller.leftArea.appendChild(component.el);
-          } else if (pos === 'right') {
-            var settings = this.toolBar.controller.rightArea;
-            settings.insertBefore(component.el, settings.firstChild);
-          } else if (pos === 'medium') {
-            this.toolBar.controller.mediumArea.appendChild(component.el);
-          }
-        }
-      }
-      /**
-       * @description 注册对应的组件
-       * @param plugin
-       */
-    }, {
-      key: "use",
-      value: function use(plugin) {
-        plugin.install(this);
-      }
-    }]);
-    return Player;
-  }(Component);
-
   var $$5 = _export;
   var toObject = toObject$a;
   var nativeKeys = objectKeys$3;
@@ -21775,7 +21431,13 @@
         this.danmakuInput = new DanmakuInput(this.player, null, 'div');
         this.player.use({
           install: function install(player) {
-            player.registerControls(ctx.danmakuInput.id, ctx.danmakuInput, 'medium');
+            // player.registerControls(ctx.danmakuInput.id, ctx.danmakuInput, 'medium')
+            player.mountComponent(ctx.danmakuInput.id, ctx.danmakuInput, {
+              mode: {
+                type: 'BottomToolBar',
+                pos: 'medium'
+              }
+            });
           }
         });
       }
@@ -21848,14 +21510,14 @@
     return DanmakuController;
   }();
 
-  var css_248z = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  width: 100%;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 50px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 35px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n";
-  styleInject(css_248z);
+  var css_248z$3 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  width: 100%;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 50px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 35px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n";
+  styleInject(css_248z$3);
 
-  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var DanmakuInput = /*#__PURE__*/function (_Component) {
     _inherits(DanmakuInput, _Component);
-    var _super = _createSuper(DanmakuInput);
+    var _super = _createSuper$5(DanmakuInput);
     function DanmakuInput(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, DanmakuInput);
@@ -21881,10 +21543,10 @@
       key: "initTemplate",
       value: function initTemplate() {
         addClass(this.el, ['danmaku-input-wrapper']);
-        this.inputBox = $$M('input.danmaku-input', {
+        this.inputBox = $$K('input.danmaku-input', {
           type: 'text'
         });
-        this.sendBox = $$M('span.danmaku-send');
+        this.sendBox = $$K('span.danmaku-send');
         this.sendBox.innerText = '发送';
         this.el.appendChild(this.inputBox);
         this.el.appendChild(this.sendBox);
@@ -21914,6 +21576,517 @@
     _classCallCheck(this, DanmakuSettings);
   });
 
+  var css_248z$2 = ".video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: #000;\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-loading .video-loading-loadingbox {\n  height: 50px;\n  width: 50px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.video-loading .video-loading-errorbox {\n  height: 50px;\n  width: 50px;\n  background-color: red;\n}\n.video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 16px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n";
+  styleInject(css_248z$2);
+
+  function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var Loading = /*#__PURE__*/function (_Component) {
+    _inherits(Loading, _Component);
+    var _super = _createSuper$4(Loading);
+    function Loading(player, msg, container, desc, props, children) {
+      var _this;
+      _classCallCheck(this, Loading);
+      _this = _super.call(this, null, desc, props, children);
+      _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "player", void 0);
+      _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
+      _defineProperty(_assertThisInitialized(_this), "msgBox", void 0);
+      _defineProperty(_assertThisInitialized(_this), "message", void 0);
+      _this.props = props || {};
+      _this.player = player;
+      _this.container = container;
+      _this.message = msg;
+      _this.init();
+      return _this;
+    }
+    _createClass(Loading, [{
+      key: "init",
+      value: function init() {
+        this.initTemplate();
+        this.initEvent();
+      }
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {
+        addClass(this.el, ['video-loading']);
+        this.loadingBox = $$K('div');
+        this.msgBox = $$K('div.video-loading-msgbox');
+        this.msgBox.innerText = this.message;
+        this.el.appendChild(this.loadingBox);
+        this.el.appendChild(this.msgBox);
+      }
+    }, {
+      key: "initEvent",
+      value: function initEvent() {}
+    }, {
+      key: "addLoading",
+      value: function addLoading() {
+        var _context;
+        if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
+          this.container.appendChild(this.el);
+        }
+      }
+    }, {
+      key: "removeLoading",
+      value: function removeLoading() {
+        var _context2;
+        if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
+          this.container.removeChild(this.el);
+        }
+      }
+    }]);
+    return Loading;
+  }(Component);
+
+  function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var TimeLoading = /*#__PURE__*/function (_Loading) {
+    _inherits(TimeLoading, _Loading);
+    var _super = _createSuper$3(TimeLoading);
+    // el: div.video-loading
+    function TimeLoading(player, msg, container) {
+      var _this;
+      _classCallCheck(this, TimeLoading);
+      _this = _super.call(this, player, msg, container);
+      _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
+      addClass(_this.loadingBox, ['video-loading-loadingbox']);
+      _this.initEvent();
+      return _this;
+    }
+    _createClass(TimeLoading, [{
+      key: "initEvent",
+      value: function initEvent() {
+        var _this2 = this;
+        // 在视频由于需要缓冲下一帧而停止时触发
+        this.player.on('waiting', function (e) {
+          _this2.addLoading();
+        });
+        // 该视频已准备好开始播放
+        this.player.on('canplay', function (e) {
+          _this2.removeLoading();
+        });
+      }
+    }]);
+    return TimeLoading;
+  }(Loading);
+
+  function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var ErrorLoading = /*#__PURE__*/function (_Loading) {
+    _inherits(ErrorLoading, _Loading);
+    var _super = _createSuper$2(ErrorLoading);
+    // el: div.video-loading
+    function ErrorLoading(player, msg, container) {
+      var _this;
+      _classCallCheck(this, ErrorLoading);
+      _this = _super.call(this, player, msg, container);
+      _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
+      addClass(_this.loadingBox, ['video-loading-errorloading']);
+      _this.initEvent();
+      return _this;
+    }
+    _createClass(ErrorLoading, [{
+      key: "initEvent",
+      value: function initEvent() {
+        var _this2 = this;
+        // 视频加载发生错误时
+        this.player.on('videoError', function (e) {
+          _this2.addLoading();
+        });
+        // 该视频已准备好开始播放
+        this.player.on('canplay', function (e) {
+          _this2.removeLoading();
+        });
+      }
+    }]);
+    return ErrorLoading;
+  }(Loading);
+
+  var css_248z$1 = ".video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.2);\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  overflow: hidden;\n  padding: 0px 5px 10px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n";
+  styleInject(css_248z$1);
+
+  function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var TopBar = /*#__PURE__*/function (_Component) {
+    _inherits(TopBar, _Component);
+    var _super = _createSuper$1(TopBar);
+    // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
+    function TopBar(player, container, desc, props, children) {
+      var _this;
+      _classCallCheck(this, TopBar);
+      _this = _super.call(this, container, desc, props, children);
+      _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
+      // el: div.video-topbar.video-topbar-hidden
+      _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
+      _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "player", void 0);
+      _defineProperty(_assertThisInitialized(_this), "timer", null);
+      _this.player = player;
+      _this.props = props || {};
+      _this.init();
+      return _this;
+    }
+    _createClass(TopBar, [{
+      key: "init",
+      value: function init() {
+        this.initTemplate();
+        this.initComponent();
+        this.initEvent();
+        storeControlComponent(this);
+      }
+      /**
+       * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
+       */
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {
+        addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
+        this.leftArea = $$K('div.video-topbar-left');
+        this.rightArea = $$K('div.video-topbar-right');
+        this.el.appendChild(this.leftArea);
+        this.el.appendChild(this.rightArea);
+      }
+    }, {
+      key: "initComponent",
+      value: function initComponent() {}
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        var _this2 = this;
+        this.player.on('showtoolbar', function (e) {
+          _this2.onShowToolBar(e);
+        });
+        this.player.on('hidetoolbar', function (e) {
+          _this2.onHideToolBar(e);
+        });
+      }
+    }, {
+      key: "hideToolBar",
+      value: function hideToolBar() {
+        if (!includeClass(this.el, 'video-topbar-hidden')) {
+          addClass(this.el, ['video-topbar-hidden']);
+        }
+      }
+    }, {
+      key: "showToolBar",
+      value: function showToolBar(e) {
+        var _this3 = this;
+        if (includeClass(this.el, 'video-topbar-hidden')) {
+          removeClass(this.el, ['video-topbar-hidden']);
+        }
+        if (e.target === this.player.video) {
+          this.timer = window.setTimeout(function () {
+            _this3.hideToolBar();
+          }, 3000);
+        }
+      }
+    }, {
+      key: "onShowToolBar",
+      value: function onShowToolBar(e) {
+        if (this.timer) {
+          window.clearTimeout(this.timer);
+          this.timer = null;
+        }
+        this.showToolBar(e);
+      }
+    }, {
+      key: "onHideToolBar",
+      value: function onHideToolBar(e) {
+        this.hideToolBar();
+      }
+    }]);
+    return TopBar;
+  }(Component);
+
+  var css_248z = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-container {\n  position: relative;\n  overflow: hidden;\n  background-color: #000;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n";
+  styleInject(css_248z);
+
+  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var Player = /*#__PURE__*/function (_Component) {
+    _inherits(Player, _Component);
+    var _super = _createSuper(Player);
+    function Player(options) {
+      var _this;
+      _classCallCheck(this, Player);
+      _this = _super.call(this, options.container, 'div.video-wrapper');
+      _defineProperty(_assertThisInitialized(_this), "id", 'Player');
+      // el: div.video-wrapper
+      // 播放器的默认配置
+      _defineProperty(_assertThisInitialized(_this), "playerOptions", {
+        url: '',
+        container: document.body,
+        autoplay: false,
+        width: '100%',
+        height: '100%'
+      });
+      _defineProperty(_assertThisInitialized(_this), "video", void 0);
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
+      _defineProperty(_assertThisInitialized(_this), "topbar", void 0);
+      _defineProperty(_assertThisInitialized(_this), "loading", void 0);
+      _defineProperty(_assertThisInitialized(_this), "error", void 0);
+      _defineProperty(_assertThisInitialized(_this), "enableSeek", true);
+      _this.playerOptions = _Object$assign(_this.playerOptions, options);
+      options.container.className = 'video-container';
+      options.container.style.width = _this.playerOptions.width;
+      options.container.style.height = _this.playerOptions.height;
+      _this.container = options.container;
+      _this.init();
+      return _this;
+    }
+    _createClass(Player, [{
+      key: "init",
+      value: function init() {
+        this.video = $$K('video');
+        this.video.crossOrigin = 'anonymous';
+        this.attachSource(this.playerOptions.url);
+        this.el.appendChild(this.video);
+        this.initComponent();
+        this.initEvent();
+        this.initPlugin();
+        this.initResizeObserver();
+      }
+    }, {
+      key: "initComponent",
+      value: function initComponent() {
+        this.loading = new TimeLoading(this, '视频加载中，请稍等....', this.el);
+        this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
+        this.toolBar = new ToolBar(this, this.el, 'div');
+        this.topbar = new TopBar(this, this.el, 'div');
+        new DanmakuController(this);
+      }
+    }, {
+      key: "initResizeObserver",
+      value: function initResizeObserver() {}
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        var _this2 = this;
+        this.video.onclick = function (e) {
+          if (_this2.video.paused) {
+            _this2.video.play();
+          } else if (_this2.video.played) {
+            _this2.video.pause();
+          }
+        };
+        this.el.onmouseenter = function (e) {
+          _this2.emit('showtoolbar', e);
+        };
+        this.el.onmousemove = function (e) {
+          _this2.emit('showtoolbar', e);
+        };
+        this.el.onmouseleave = function (e) {
+          _this2.emit('hidetoolbar', e);
+        };
+        this.video.onloadedmetadata = function (e) {
+          _this2.emit('loadedmetadata', e);
+        };
+        this.video.addEventListener('timeupdate', function (e) {
+          _this2.emit('timeupdate', e);
+        });
+        this.video.onplay = function (e) {
+          _this2.emit('play', e);
+        };
+        this.video.onpause = function (e) {
+          _this2.emit('pause', e);
+        };
+        // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+        this.video.addEventListener('seeking', function (e) {
+          // 防抖效果：针对Dot按下拖动时不触发seeking，拖完鼠标抬起时再触发seeking
+          if (_this2.enableSeek) {
+            _this2.emit('seeking', e);
+          }
+        });
+        // waiting 事件在视频由于需要缓冲下一帧而停止时触发
+        this.video.addEventListener('waiting', function (e) {
+          _this2.emit('waiting', e);
+        });
+        // canplay 该视频已准备好开始播放
+        this.video.addEventListener('canplay', function (e) {
+          _this2.emit('canplay', e);
+        });
+        // error 视频加载发生错误时
+        this.video.addEventListener('error', function (e) {
+          _this2.emit('videoError');
+        });
+        // abort 视频终止加载时
+        this.video.addEventListener('abort', function (e) {
+          _this2.emit('videoError');
+        });
+        // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
+        this.video.addEventListener('ratechange', function (e) {
+          _this2.emit('ratechange');
+        });
+        this.on('progress-click', function (e, ctx) {
+          var scale = e.offsetX / ctx.el.offsetWidth;
+          if (scale < 0) {
+            scale = 0;
+          } else if (scale > 1) {
+            scale = 1;
+          }
+          _this2.video.currentTime = Math.floor(scale * _this2.video.duration);
+          _this2.video.paused && _this2.video.play();
+        });
+        this.on('inputFocus', function () {
+          _this2.el.onmouseleave = null;
+        });
+        this.on('inputBlur', function () {
+          _this2.el.onmouseleave = function (e) {
+            _this2.emit('hidetoolbar', e);
+          };
+        });
+        this.on('dotdown', function () {
+          console.log('dotdown');
+          _this2.enableSeek = false;
+        });
+        this.on('dotup', function () {
+          console.log('dotup');
+          _this2.enableSeek = true;
+        });
+      }
+    }, {
+      key: "initPlugin",
+      value: function initPlugin() {
+        var _this3 = this;
+        if (this.playerOptions.plugins) {
+          var _context;
+          _forEachInstanceProperty(_context = this.playerOptions.plugins).call(_context, function (plugin) {
+            _this3.use(plugin);
+          });
+        }
+      }
+    }, {
+      key: "initMp4Player",
+      value: function initMp4Player(url) {
+        new MediaPlayer(this.playerOptions.url, this);
+      }
+    }, {
+      key: "initMpdPlayer",
+      value: function initMpdPlayer(url) {
+        // 工厂模式
+        // let player = new MediaPlayer({context: {}}, ...args)
+        var player = factory().create();
+        player.attachVideo(this.video);
+        player.attachSource(url);
+      }
+    }, {
+      key: "attachSource",
+      value: function attachSource(url) {
+        switch (getFileExtension(url)) {
+          case 'mp4':
+          case 'mp3':
+            // this.initMp4Player(url)
+            this.video.src = url;
+            break;
+          case 'mpd':
+            this.initMpdPlayer(url);
+            break;
+          // ToDo
+        }
+      }
+      // 注册/挂载自己的组件,其中的id为组件实例的名称，分为内置和用户自定义这两种情况；注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
+    }, {
+      key: "mountComponent",
+      value: function mountComponent(id, component, options) {
+        if (COMPONENT_STORE.has(id)) {
+          throw new Error('无法挂载一个已经存在于视图上的组件，请先将其卸载或者删除');
+        }
+        COMPONENT_STORE.set(id, component);
+        ONCE_COMPONENT_STORE.set(id, component);
+        if (!options) {
+          if (!component.container) throw new Error('必须传入Options选项或者传入的组件实例中需要有container选项');
+          component.container.appendChild(component.el);
+        } else {
+          var mode = options.mode;
+          if (mode.type === 'BottomToolBar') {
+            if (mode.pos === 'left') {
+              this.toolBar.controller.leftArea.appendChild(component.el);
+            } else if (mode.pos === 'right') {
+              this.toolBar.controller.rightArea.appendChild(component.el);
+            } else if (mode.pos === 'medium') {
+              this.toolBar.controller.mediumArea.appendChild(component.el);
+            }
+          } else if (mode.type === 'TopToolBar') ;
+          if (component.container) {
+            component.container = component.container.parentElement;
+          }
+        }
+      }
+      // 更新一个已经挂载到视图层上的组件
+    }, {
+      key: "updateComponent",
+      value: function updateComponent(id, component, options) {
+        if (!COMPONENT_STORE.get(id)) {
+          throw new Error('该组件不存在或者已经被卸载');
+        }
+        patchComponent(COMPONENT_STORE.get(id), component, options);
+      }
+      // 卸载某一个component组件，所谓卸载一个组件指的是仅仅将其DOM元素从视图上移除，但是不会删除其实例对象，还可以继续挂载
+    }, {
+      key: "unmountComponent",
+      value: function unmountComponent(id) {
+        if (!COMPONENT_STORE.has(id)) {
+          throw new Error('该组件不存在或者已经被卸载');
+        }
+        var instance = COMPONENT_STORE.get(id);
+        instance.container.removeChild(instance.el);
+        COMPONENT_STORE.delete(id);
+      }
+      // 彻底删除一个组件，也就是直接销毁组件实例，卸载组件仅仅是将其el元素从视图上移除，但任然保留组建的实例对象
+    }, {
+      key: "deleteComponent",
+      value: function deleteComponent(id) {
+        if (COMPONENT_STORE.has(id)) {
+          this.unmountComponent(id);
+        }
+        ONCE_COMPONENT_STORE.delete(id);
+      }
+      // // 注册最右侧的控制栏上的组件
+      // registerControls(
+      //   id: string,
+      //   component: Partial<ComponentItem> & registerOptions,
+      //   pos: 'left' | 'right' | 'medium'
+      // ) {
+      //   let store = CONTROL_COMPONENT_STORE
+      //   if (store.has(id)) {
+      //     // patchComponent(store.get(id), component)
+      //     if (component.replaceElementType) {
+      //       patchComponent(store.get(id), component, {
+      //         replaceElementType: component.replaceElementType
+      //       })
+      //     } else {
+      //       patchComponent(store.get(id), component)
+      //     }
+      //   } else {
+      //     // 如果该组件实例是用户自创的话
+      //     if (!component.el) throw new Error(`传入的原创组件${id}没有对应的DOM元素`)
+      //     if (pos === 'left') {
+      //       this.toolBar.controller.leftArea.appendChild(component.el)
+      //     } else if (pos === 'right') {
+      //       let settings = this.toolBar.controller.rightArea
+      //       settings.insertBefore(component.el, settings.firstChild)
+      //     } else if (pos === 'medium') {
+      //       this.toolBar.controller.mediumArea.appendChild(component.el)
+      //     }
+      //   }
+      // }
+      /**
+       * @description 注册对应的组件
+       * @param plugin
+       */
+    }, {
+      key: "use",
+      value: function use(plugin) {
+        plugin.install(this);
+      }
+    }]);
+    return Player;
+  }(Component);
+
   exports.$warn = $warn;
   exports.BaseEvent = BaseEvent;
   exports.BufferedProgress = BufferedProgress;
@@ -21935,6 +22108,7 @@
   exports.addZero = addZero;
   exports.checkAdaptationSet = checkAdaptationSet;
   exports.checkBaseURL = checkBaseURL;
+  exports.checkBuiltInComponentID = checkBuiltInComponentID;
   exports.checkInitialization = checkInitialization;
   exports.checkMediaType = checkMediaType;
   exports.checkMpd = checkMpd;

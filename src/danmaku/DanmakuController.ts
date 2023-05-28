@@ -29,7 +29,13 @@ export class DanmakuController {
     this.danmakuInput = new DanmakuInput(this.player, null, 'div')
     this.player.use({
       install(player) {
-        player.registerControls(ctx.danmakuInput.id, ctx.danmakuInput, 'medium')
+        // player.registerControls(ctx.danmakuInput.id, ctx.danmakuInput, 'medium')
+        player.mountComponent(ctx.danmakuInput.id, ctx.danmakuInput, {
+          mode: {
+            type: 'BottomToolBar',
+            pos: 'medium'
+          }
+        })
       }
     })
   }

@@ -3,7 +3,8 @@ import {
   DOMProps,
   Node,
   registerOptions,
-  getFunctionParametersType
+  getFunctionParametersType,
+  UpdateComponentOptions
 } from '../types/Player'
 
 export function getDOMPoint(dom: HTMLElement): { x: number; y: number } {
@@ -42,8 +43,7 @@ export function checkIsMouseInRange(
   let parentLeft = x
   let parentRight = x + parent.clientWidth
   if (pageX >= allLeft && pageX <= allRight && pageY <= y && pageY >= allTop) return true
-  if (pageX >= parentLeft && pageX <= parentRight && pageY >= y && pageY <= allBottom)
-    return true
+  if (pageX >= parentLeft && pageX <= parentRight && pageY >= y && pageY <= allBottom) return true
   return false
 }
 
@@ -191,15 +191,16 @@ export function createSvgs(d: string[], viewBox = '0 0 24 24'): SVGSVGElement {
 export function patchComponent(
   target: ComponentItem,
   another: Partial<ComponentItem>,
-  options: registerOptions = { replaceElementType: 'replaceOuterHTMLOfComponent' }
+  options: UpdateComponentOptions
 ) {
   if (target.id !== another.id) throw new Error('需要合并的两个组件的id不相同')
+  let replaceElementType = options?.replaceElType || 'replaceOuterHTMLOfComponent'
   for (let key in another) {
     if (key in target) {
       if (key === 'props') {
         patchDOMProps(target[key], another[key], target.el)
       } else if (key === 'el') {
-        if (options.replaceElementType === 'replaceOuterHTMLOfComponent') {
+        if (replaceElementType === 'replaceOuterHTMLOfComponent') {
           target.el = another.el
         } else {
           for (let child of target.el.childNodes) {

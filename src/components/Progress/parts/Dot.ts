@@ -10,7 +10,6 @@ export class Dot extends Component implements ComponentItem {
   // el: div.video-dot.video-dot-hidden
   props: DOMProps
   player: Player
-  container: HTMLElement
   mouseX: number
   left = 0
   playScale = 0
