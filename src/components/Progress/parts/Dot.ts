@@ -38,11 +38,17 @@ export class Dot extends Component implements ComponentItem {
 
   initEvent() {
     this.player.on('progress-mouseenter', (e) => {
-      this.onShowDot(e)
+      // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
+      if (this.player.enableSeek) {
+        this.onShowDot(e)
+      }
     })
 
     this.player.on('progress-mouseleave', (e) => {
-      this.onHideDot(e)
+      // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
+      if (this.player.enableSeek) {
+        this.onHideDot(e)
+      }
     })
 
     this.player.on('progress-click', (e: MouseEvent, ctx: Progress) => {

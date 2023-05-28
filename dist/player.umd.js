@@ -5815,10 +5815,16 @@
       value: function initEvent() {
         var _this2 = this;
         this.player.on('progress-mouseenter', function (e) {
-          _this2.onShowDot(e);
+          // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
+          if (_this2.player.enableSeek) {
+            _this2.onShowDot(e);
+          }
         });
         this.player.on('progress-mouseleave', function (e) {
-          _this2.onHideDot(e);
+          // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
+          if (_this2.player.enableSeek) {
+            _this2.onHideDot(e);
+          }
         });
         this.player.on('progress-click', function (e, ctx) {
           _this2.onChangePos(e, ctx);
@@ -20903,7 +20909,6 @@
         this.video.crossOrigin = 'anonymous';
         this.attachSource(this.playerOptions.url);
         this.el.appendChild(this.video);
-        this.toolBar = new ToolBar(this, this.el, 'div');
         this.initComponent();
         this.initEvent();
         this.initPlugin();
@@ -20914,6 +20919,7 @@
         // new DanmakuController(this)
         this.loading = new TimeLoading(this, '视频加载中，请稍等....', this.el);
         this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
+        this.toolBar = new ToolBar(this, this.el, 'div');
       }
     }, {
       key: "initEvent",

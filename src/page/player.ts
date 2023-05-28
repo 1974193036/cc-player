@@ -48,7 +48,6 @@ class Player extends Component implements ComponentItem {
     this.video.crossOrigin = 'anonymous'
     this.attachSource(this.playerOptions.url)
     this.el.appendChild(this.video)
-    this.toolBar = new ToolBar(this, this.el, 'div')
     this.initComponent()
     this.initEvent()
     this.initPlugin()
@@ -56,9 +55,10 @@ class Player extends Component implements ComponentItem {
 
   initComponent(): void {
     // new DanmakuController(this)
-
+    
     this.loading = new TimeLoading(this, '视频加载中，请稍等....', this.el)
     this.error = new ErrorLoading(this, '视频加载发送错误', this.el)
+    this.toolBar = new ToolBar(this, this.el, 'div')
   }
 
   initEvent() {
