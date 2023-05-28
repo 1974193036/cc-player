@@ -6,11 +6,16 @@
 /script/
 /dist/index.html
 index.html
+index2.html
+test.html
 /assets/
 babel.config.js
+.babelrc
 .gitignore
 .npmignore
 .npmrc
 vitest.config.ts
 tsconfig.json
-
+.prettierignore
+.prettierrc.js
+server.js
