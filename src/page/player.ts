@@ -13,7 +13,7 @@ import { COMPONENT_STORE, ONCE_COMPONENT_STORE } from '@/utils/store'
 import { getFileExtension } from '@/utils/play'
 import MpdMediaPlayerFactory from '@/dash/MediaPlayer'
 import Mp4MediaPlayer from '../mp4/MediaPlayer'
-import { DanmakuController } from '@/danmaku'
+// import { DanmakuController } from '@/danmaku'
 import { TimeLoading } from '@/components/Loading/parts/TimeLoading'
 import { ErrorLoading } from '@/components/Loading/parts/ErrorLoading'
 import { TopBar } from '@/components/TopBar/TopBar'
@@ -67,10 +67,42 @@ class Player extends Component implements ComponentItem {
     this.toolBar = new ToolBar(this, this.el, 'div')
     this.topbar = new TopBar(this, this.el, 'div')
 
-    new DanmakuController(this)
+    // new DanmakuController(this)
   }
 
-  initResizeObserver() {}
+  initResizeObserver() {
+    /**
+      window.resize弊端
+        reize事件会在一秒内触发将近60次，所以很容易在改变窗口大小时导致性能问题
+        它会监听每个元素的大小变化，而不是具体到某个元素的变化
+        只有window对象才有resize事件，而不是具体某个元素有resize事件
+      ResizeObserver
+        可以监听到 Element 的内容区域或SVGElement的边界框改变
+     */
+
+    // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
+    let _STORE = new Map(COMPONENT_STORE)
+      
+    const resizeObserver = new ResizeObserver((entries) => {
+      console.log('监听到了尺寸变化了...')
+      let width = entries[0].contentRect.width
+      if (width <= 600) {
+        _STORE.forEach((value, key) => {
+          if (['Playrate'].includes(key)) {
+            this.unmountComponent(key)
+            this.mountComponent(key, ONCE_COMPONENT_STORE.get(key), {
+              mode: {
+                type: 'TopToolBar',
+                pos: 'right'
+              }
+            })
+          }
+        })
+      }
+    })
+    // 开始观察
+    resizeObserver.observe(this.el)
+  }
 
   initEvent() {
     this.video.onclick = (e) => {
@@ -218,8 +250,9 @@ class Player extends Component implements ComponentItem {
     ONCE_COMPONENT_STORE.set(id, component)
 
     if (!options) {
-      if (!component.container)
+      if (!component.container) {
         throw new Error('必须传入Options选项或者传入的组件实例中需要有container选项')
+      }
       component.container.appendChild(component.el)
     } else {
       let mode = options.mode
@@ -238,9 +271,7 @@ class Player extends Component implements ComponentItem {
           this.topbar.rightArea.appendChild(component.el)
         }
       }
-      if (component.container) {
-        component.container = component.container.parentElement
-      }
+      component.container = component.el.parentElement
     }
   }
 
@@ -258,7 +289,7 @@ class Player extends Component implements ComponentItem {
       throw new Error('该组件不存在或者已经被卸载')
     }
     let instance = COMPONENT_STORE.get(id)
-    instance.container.removeChild(instance.el)
+    instance.el.parentElement.removeChild(instance.el)
     COMPONENT_STORE.delete(id)
   }
 
