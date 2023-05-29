@@ -1,13 +1,15 @@
 import { Player } from '../../../page/player'
 import { DOMProps, Node } from '../../../types/Player'
-import { addClass, createSvg } from '../../../utils/domUtils'
+import { addClass, createSvg, removeClass } from '../../../utils/domUtils'
 import { fullscreenExitPath, fullscreenPath } from '../path/defaultPath'
 import { storeControlComponent } from '@/utils/store'
 import { Options } from './Options'
+import screenfull from 'screenfull'
 
 export class FullScreen extends Options {
   readonly id = 'FullScreen'
   icon: SVGSVGElement
+  enterFullScreen: boolean = false
 
   constructor(
     player: Player,
@@ -40,23 +42,68 @@ export class FullScreen extends Options {
   }
 
   initEvent() {
+    if (this.player.env === 'PC') {
+      this.initPCEvent()
+    } else {
+      this.initMobileEvent()
+    }
+  }
+
+  initPCEvent() {
     this.onClick = this.onClick.bind(this)
     this.el.onclick = this.onClick
   }
 
-  onClick(e: MouseEvent) {
-    if (this.player.container.requestFullscreen && !document.fullscreenElement) {
-      this.player.container.requestFullscreen() //该函数请求全屏
-      this.iconBox.removeChild(this.icon)
-      this.icon = createSvg(fullscreenExitPath)
-      this.iconBox.appendChild(this.icon)
-      this.player.emit('enterFullscreen')
-    } else if (document.fullscreenElement) {
-      document.exitFullscreen() //退出全屏函数仅仅绑定在document对象上，该点需要切记！！！
-      this.iconBox.removeChild(this.icon)
-      this.icon = createSvg(fullscreenPath)
-      this.iconBox.appendChild(this.icon)
-      this.player.emit('leaveFullscreen')
+  initMobileEvent(): void {
+    // 单击
+    this.el.addEventListener('singleTap', async (e) => {
+      // console.log(e, 'singleTap')
+      this.onClick(e)
+    })
+  }
+
+  onClick(e: Event) {
+    // 横屏全屏
+    if (this.player.fullScreenMode === 'Horizontal') {
+      if (screenfull.isEnabled && !screenfull.isFullscreen) {
+        // 调用浏览器提供的全屏API接口去请求元素的全屏，原生全屏分为  竖屏全屏 + 横屏全屏
+        screenfull.request(this.player.container)
+        this.iconBox.removeChild(this.icon)
+        this.icon = createSvg(fullscreenExitPath)
+        this.iconBox.appendChild(this.icon)
+        this.player.container.addEventListener('fullscreenchange', (e) => {
+          this.player.emit('enterFullscreen')
+        })
+      } else if (screenfull.isFullscreen) {
+        screenfull.exit()
+        this.iconBox.removeChild(this.icon)
+        this.icon = createSvg(fullscreenPath)
+        this.iconBox.appendChild(this.icon)
+        this.player.container.addEventListener('fullscreenchange', (e) => {
+          this.player.emit('leaveFullscreen')
+        })
+      }
+    } else {
+      // 竖屏全屏
+      if (this.enterFullScreen === false) {
+        this.iconBox.removeChild(this.icon)
+        this.icon = createSvg(fullscreenExitPath)
+        this.iconBox.appendChild(this.icon)
+        addClass(this.player.container, ['video-cross-screen'])
+        this.container.style.width = window.innerHeight + 'px'
+        this.container.style.height = window.innerWidth + 'px'
+
+        this.player.emit('enterFullscreen')
+      } else {
+        this.iconBox.removeChild(this.icon)
+        this.icon = createSvg(fullscreenPath)
+        this.iconBox.appendChild(this.icon)
+        removeClass(this.player.container, ['video-cross-screen'])
+        this.container.style.width = this.player.playerOptions.width
+        this.container.style.height = this.player.playerOptions.height
+
+        this.player.emit('leaveFullscreen')
+      }
     }
   }
 }

@@ -17,5 +17,8 @@ export const Env = {
   },
   isInPc() {
     return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin())
+  },
+  get env(): 'PC' | 'Mobile' {
+    return this.isInPc() ? 'PC' : 'Mobile'
   }
 }

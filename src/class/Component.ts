@@ -24,4 +24,12 @@ export class Component extends BaseEvent {
       container.append(dom)
     }
   }
+
+  init() {}
+  initEvent() {}
+  initPCEvent(){}
+  initMobileEvent(){}
+  initTemplate() {}
+  initComponent() {}
+  resetEvent() {}
 }

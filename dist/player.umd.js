@@ -2965,21 +2965,6 @@
           });
         }
       }
-    }, {
-      key: "init",
-      value: function init() {}
-    }, {
-      key: "initEvent",
-      value: function initEvent() {}
-    }, {
-      key: "initTemplate",
-      value: function initTemplate() {}
-    }, {
-      key: "initComponent",
-      value: function initComponent() {}
-    }, {
-      key: "resetEvent",
-      value: function resetEvent() {}
     }]);
     return BaseEvent;
   }();
@@ -5192,6 +5177,171 @@
 
   var _Map = /*@__PURE__*/getDefaultExportFromCjs(map$7);
 
+  /* eslint-disable es/no-array-prototype-indexof -- required for testing */
+  var $$o = _export;
+  var uncurryThis$7 = functionUncurryThisClause;
+  var $indexOf = arrayIncludes.indexOf;
+  var arrayMethodIsStrict = arrayMethodIsStrict$2;
+
+  var nativeIndexOf = uncurryThis$7([].indexOf);
+
+  var NEGATIVE_ZERO = !!nativeIndexOf && 1 / nativeIndexOf([1], 1, -0) < 0;
+  var FORCED$2 = NEGATIVE_ZERO || !arrayMethodIsStrict('indexOf');
+
+  // `Array.prototype.indexOf` method
+  // https://tc39.es/ecma262/#sec-array.prototype.indexof
+  $$o({ target: 'Array', proto: true, forced: FORCED$2 }, {
+    indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
+      var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
+      return NEGATIVE_ZERO
+        // convert -0 to +0
+        ? nativeIndexOf(this, searchElement, fromIndex) || 0
+        : $indexOf(this, searchElement, fromIndex);
+    }
+  });
+
+  var entryVirtual$3 = entryVirtual$b;
+
+  var indexOf$6 = entryVirtual$3('Array').indexOf;
+
+  var isPrototypeOf$4 = objectIsPrototypeOf;
+  var method$3 = indexOf$6;
+
+  var ArrayPrototype$3 = Array.prototype;
+
+  var indexOf$5 = function (it) {
+    var own = it.indexOf;
+    return it === ArrayPrototype$3 || (isPrototypeOf$4(ArrayPrototype$3, it) && own === ArrayPrototype$3.indexOf) ? method$3 : own;
+  };
+
+  var parent$z = indexOf$5;
+
+  var indexOf$4 = parent$z;
+
+  var parent$y = indexOf$4;
+
+  var indexOf$3 = parent$y;
+
+  var parent$x = indexOf$3;
+
+  var indexOf$2 = parent$x;
+
+  var indexOf$1 = indexOf$2;
+
+  var indexOf = indexOf$1;
+
+  var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
+
+  var prototype = HTMLElement.prototype;
+  var proto = {
+    addEventListener: function addEventListener(event, listener) {
+      var ctx = this;
+      var tapTimer = null;
+      var lastTapEndTime = -1;
+      function singleOrDoubleTap() {
+        var startTime = 0;
+        var isMove = false;
+        var isDoubleTap = false;
+        ctx.addEventListener('touchstart', function (e) {
+          startTime = Date.now();
+          // 如果lastTapEndTime不小于0的话则表明上一次也发生过点击事件且上一次的单击事件的监听器还未触发，说明两次点击间隔很短，
+          // 但是为了区别是双击还是单击，在第二次点击发生时判断开始点击的时间和上一次点击结束的时间，
+          // 如果间隔很短，说明是双击，此时不应该触发单击事件;如果距离上一次点击间隔很长，表明此次点击是单击
+          if (lastTapEndTime > 0 && startTime - lastTapEndTime < 150) {
+            window.clearTimeout(tapTimer);
+            tapTimer = null;
+            lastTapEndTime = -1;
+            isDoubleTap = true;
+          }
+        });
+        ctx.addEventListener('touchmove', function (e) {
+          isMove = true;
+        });
+        ctx.addEventListener('touchend', function (e) {
+          var interval = Date.now() - startTime;
+          if (interval < 150 && !isMove) {
+            if (event === 'singleTap' && isDoubleTap === false) {
+              // 单机事件
+              tapTimer = setTimeout(function () {
+                listener.call(ctx, e);
+              }, 150);
+            } else if (event === 'doubleTap' && isDoubleTap === true) {
+              // 双击事件
+              tapTimer = setTimeout(function () {
+                listener.call(ctx, e);
+              }, 150);
+            }
+            lastTapEndTime = Date.now();
+          }
+          isMove = false;
+          isDoubleTap = false;
+        });
+      }
+      function moveOrSlide() {
+        var _this = this;
+        var isMove = false;
+        var pos = {
+          x: 0,
+          y: 0
+        };
+        var dx = 0,
+          dy = 0;
+        ctx.addEventListener('touchstart', function (e) {
+          pos.x = e.touches[0].clientX;
+          pos.y = e.touches[0].clientY;
+        });
+        ctx.addEventListener('touchmove', function (e) {
+          isMove = true;
+          var x = e.touches[0].clientX;
+          var y = e.touches[0].clientY;
+          dx = x - pos.x;
+          dy = y - pos.y;
+          if (event === 'moveLeft' && dx < 0 || event === 'moveRight' && dx > 0 || event === 'moveTop' && dy < 0 || event === 'moveDown' && dy > 0) {
+            listener.call(_this, {
+              event: e,
+              dx: dx,
+              dy: dy
+            });
+          }
+        });
+        ctx.addEventListener('touchend', function (e) {
+          if (isMove) {
+            if (event === 'slideLeft' && dx < 0 || event === 'slideRight' && dx > 0 || event === 'slideTop' && dy < 0 || event === 'slideDown' && dy > 0) {
+              listener.call(_this, {
+                event: e,
+                dx: dx,
+                dy: dy,
+                start: pos,
+                end: {
+                  x: dx + pos.x,
+                  y: dy + pos.y
+                }
+              });
+            }
+          }
+        });
+      }
+      switch (event) {
+        case 'singleTap':
+        case 'doubleTap':
+          singleOrDoubleTap();
+          break;
+        case 'moveLeft':
+        case 'moveRight':
+        case 'moveTop':
+        case 'moveDown':
+        case 'slideLeft':
+        case 'slideRight':
+        case 'slideTop':
+        case 'slideDown':
+          moveOrSlide();
+          break;
+        default:
+          prototype.addEventListener.call(ctx, event, listener);
+      }
+    }
+  };
+
   function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
   function _unsupportedIterableToArray$2(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
   function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -5241,7 +5391,7 @@
    * @param {Node[]} children
    * @returns
    */
-  function $$o(desc, props, children) {
+  function $$n(desc, props, children) {
     var match = [];
     var regArray = SELECTOR_REG.exec(desc);
     // /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/.exec('div#app.a.b')
@@ -5250,6 +5400,9 @@
     match[1] = regArray ? regArray[2] : undefined; // app
     match[2] = regArray ? regArray[3] : undefined; // a
     var el = match[0] ? document.createElement(match[0]) : document.createElement('div');
+    var prototype = el.__proto__;
+    // 坑点！！！
+    el = _Object$setPrototypeOf(el, _Object$setPrototypeOf(_Object$assign({}, proto), prototype));
     if (match[1]) {
       el.id = match[1];
     }
@@ -5458,11 +5611,11 @@
     return fn.bind(context);
   }
 
-  function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Component = /*#__PURE__*/function (_BaseEvent) {
     _inherits(Component, _BaseEvent);
-    var _super = _createSuper$o(Component);
+    var _super = _createSuper$p(Component);
     function Component(container, desc, props, children) {
       var _this;
       _classCallCheck(this, Component);
@@ -5473,7 +5626,7 @@
       if (!desc) {
         desc = 'div';
       }
-      var dom = $$o(desc, props, children);
+      var dom = $$n(desc, props, children);
       _this.el = dom;
       _this.container = container;
       // 安装组件成功
@@ -5482,8 +5635,1534 @@
       }
       return _this;
     }
-    return _createClass(Component);
+    _createClass(Component, [{
+      key: "init",
+      value: function init() {}
+    }, {
+      key: "initEvent",
+      value: function initEvent() {}
+    }, {
+      key: "initPCEvent",
+      value: function initPCEvent() {}
+    }, {
+      key: "initMobileEvent",
+      value: function initMobileEvent() {}
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {}
+    }, {
+      key: "initComponent",
+      value: function initComponent() {}
+    }, {
+      key: "resetEvent",
+      value: function resetEvent() {}
+    }]);
+    return Component;
   }(BaseEvent);
+
+  var getBuiltIn$4 = getBuiltIn$h;
+  var uncurryThis$6 = functionUncurryThis;
+  var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
+  var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
+  var anObject$3 = anObject$f;
+
+  var concat = uncurryThis$6([].concat);
+
+  // all object keys, includes non-enumerable and symbols
+  var ownKeys$3 = getBuiltIn$4('Reflect', 'ownKeys') || function ownKeys(it) {
+    var keys = getOwnPropertyNamesModule.f(anObject$3(it));
+    var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+    return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
+  };
+
+  var hasOwn$3 = hasOwnProperty_1;
+  var ownKeys$2 = ownKeys$3;
+  var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
+  var definePropertyModule = objectDefineProperty;
+
+  var copyConstructorProperties$1 = function (target, source, exceptions) {
+    var keys = ownKeys$2(source);
+    var defineProperty = definePropertyModule.f;
+    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      if (!hasOwn$3(target, key) && !(exceptions && hasOwn$3(exceptions, key))) {
+        defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+      }
+    }
+  };
+
+  var isObject$3 = isObject$j;
+  var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
+
+  // `InstallErrorCause` abstract operation
+  // https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
+  var installErrorCause$1 = function (O, options) {
+    if (isObject$3(options) && 'cause' in options) {
+      createNonEnumerableProperty$2(O, 'cause', options.cause);
+    }
+  };
+
+  var uncurryThis$5 = functionUncurryThis;
+
+  var $Error$1 = Error;
+  var replace$3 = uncurryThis$5(''.replace);
+
+  var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
+  // eslint-disable-next-line redos/no-vulnerable -- safe
+  var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
+  var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
+
+  var errorStackClear = function (stack, dropEntries) {
+    if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error$1.prepareStackTrace) {
+      while (dropEntries--) stack = replace$3(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
+    } return stack;
+  };
+
+  var fails$7 = fails$x;
+  var createPropertyDescriptor$2 = createPropertyDescriptor$8;
+
+  var errorStackInstallable = !fails$7(function () {
+    var error = Error('a');
+    if (!('stack' in error)) return true;
+    // eslint-disable-next-line es/no-object-defineproperty -- safe
+    Object.defineProperty(error, 'stack', createPropertyDescriptor$2(1, 7));
+    return error.stack !== 7;
+  });
+
+  var createNonEnumerableProperty$1 = createNonEnumerableProperty$9;
+  var clearErrorStack = errorStackClear;
+  var ERROR_STACK_INSTALLABLE = errorStackInstallable;
+
+  // non-standard V8
+  var captureStackTrace = Error.captureStackTrace;
+
+  var errorStackInstall = function (error, C, stack, dropEntries) {
+    if (ERROR_STACK_INSTALLABLE) {
+      if (captureStackTrace) captureStackTrace(error, C);
+      else createNonEnumerableProperty$1(error, 'stack', clearErrorStack(stack, dropEntries));
+    }
+  };
+
+  var toString$2 = toString$b;
+
+  var normalizeStringArgument$1 = function (argument, $default) {
+    return argument === undefined ? arguments.length < 2 ? '' : $default : toString$2(argument);
+  };
+
+  var $$m = _export;
+  var isPrototypeOf$3 = objectIsPrototypeOf;
+  var getPrototypeOf = objectGetPrototypeOf;
+  var setPrototypeOf = objectSetPrototypeOf;
+  var copyConstructorProperties = copyConstructorProperties$1;
+  var create$1 = objectCreate;
+  var createNonEnumerableProperty = createNonEnumerableProperty$9;
+  var createPropertyDescriptor$1 = createPropertyDescriptor$8;
+  var installErrorCause = installErrorCause$1;
+  var installErrorStack = errorStackInstall;
+  var iterate$4 = iterate$l;
+  var normalizeStringArgument = normalizeStringArgument$1;
+  var wellKnownSymbol$4 = wellKnownSymbol$q;
+
+  var TO_STRING_TAG = wellKnownSymbol$4('toStringTag');
+  var $Error = Error;
+  var push$3 = [].push;
+
+  var $AggregateError = function AggregateError(errors, message /* , options */) {
+    var isInstance = isPrototypeOf$3(AggregateErrorPrototype, this);
+    var that;
+    if (setPrototypeOf) {
+      that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
+    } else {
+      that = isInstance ? this : create$1(AggregateErrorPrototype);
+      createNonEnumerableProperty(that, TO_STRING_TAG, 'Error');
+    }
+    if (message !== undefined) createNonEnumerableProperty(that, 'message', normalizeStringArgument(message));
+    installErrorStack(that, $AggregateError, that.stack, 1);
+    if (arguments.length > 2) installErrorCause(that, arguments[2]);
+    var errorsArray = [];
+    iterate$4(errors, push$3, { that: errorsArray });
+    createNonEnumerableProperty(that, 'errors', errorsArray);
+    return that;
+  };
+
+  if (setPrototypeOf) setPrototypeOf($AggregateError, $Error);
+  else copyConstructorProperties($AggregateError, $Error, { name: true });
+
+  var AggregateErrorPrototype = $AggregateError.prototype = create$1($Error.prototype, {
+    constructor: createPropertyDescriptor$1(1, $AggregateError),
+    message: createPropertyDescriptor$1(1, ''),
+    name: createPropertyDescriptor$1(1, 'AggregateError')
+  });
+
+  // `AggregateError` constructor
+  // https://tc39.es/ecma262/#sec-aggregate-error-constructor
+  $$m({ global: true, constructor: true, arity: 2 }, {
+    AggregateError: $AggregateError
+  });
+
+  var classof$1 = classofRaw$2;
+
+  var engineIsNode = typeof process != 'undefined' && classof$1(process) == 'process';
+
+  var anObject$2 = anObject$f;
+  var aConstructor = aConstructor$3;
+  var isNullOrUndefined = isNullOrUndefined$6;
+  var wellKnownSymbol$3 = wellKnownSymbol$q;
+
+  var SPECIES$1 = wellKnownSymbol$3('species');
+
+  // `SpeciesConstructor` abstract operation
+  // https://tc39.es/ecma262/#sec-speciesconstructor
+  var speciesConstructor$2 = function (O, defaultConstructor) {
+    var C = anObject$2(O).constructor;
+    var S;
+    return C === undefined || isNullOrUndefined(S = anObject$2(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
+  };
+
+  var $TypeError$3 = TypeError;
+
+  var validateArgumentsLength$5 = function (passed, required) {
+    if (passed < required) throw $TypeError$3('Not enough arguments');
+    return passed;
+  };
+
+  var userAgent$2 = engineUserAgent;
+
+  // eslint-disable-next-line redos/no-vulnerable -- safe
+  var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
+
+  var global$b = global$r;
+  var apply$1 = functionApply;
+  var bind$4 = functionBindContext;
+  var isCallable$5 = isCallable$q;
+  var hasOwn$2 = hasOwnProperty_1;
+  var fails$6 = fails$x;
+  var html = html$2;
+  var arraySlice$3 = arraySlice$7;
+  var createElement = documentCreateElement$1;
+  var validateArgumentsLength$4 = validateArgumentsLength$5;
+  var IS_IOS$1 = engineIsIos;
+  var IS_NODE$3 = engineIsNode;
+
+  var set = global$b.setImmediate;
+  var clear = global$b.clearImmediate;
+  var process$3 = global$b.process;
+  var Dispatch = global$b.Dispatch;
+  var Function$2 = global$b.Function;
+  var MessageChannel = global$b.MessageChannel;
+  var String$1 = global$b.String;
+  var counter = 0;
+  var queue$3 = {};
+  var ONREADYSTATECHANGE = 'onreadystatechange';
+  var $location, defer, channel, port;
+
+  fails$6(function () {
+    // Deno throws a ReferenceError on `location` access without `--location` flag
+    $location = global$b.location;
+  });
+
+  var run = function (id) {
+    if (hasOwn$2(queue$3, id)) {
+      var fn = queue$3[id];
+      delete queue$3[id];
+      fn();
+    }
+  };
+
+  var runner = function (id) {
+    return function () {
+      run(id);
+    };
+  };
+
+  var eventListener = function (event) {
+    run(event.data);
+  };
+
+  var globalPostMessageDefer = function (id) {
+    // old engines have not location.origin
+    global$b.postMessage(String$1(id), $location.protocol + '//' + $location.host);
+  };
+
+  // Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+  if (!set || !clear) {
+    set = function setImmediate(handler) {
+      validateArgumentsLength$4(arguments.length, 1);
+      var fn = isCallable$5(handler) ? handler : Function$2(handler);
+      var args = arraySlice$3(arguments, 1);
+      queue$3[++counter] = function () {
+        apply$1(fn, undefined, args);
+      };
+      defer(counter);
+      return counter;
+    };
+    clear = function clearImmediate(id) {
+      delete queue$3[id];
+    };
+    // Node.js 0.8-
+    if (IS_NODE$3) {
+      defer = function (id) {
+        process$3.nextTick(runner(id));
+      };
+    // Sphere (JS game engine) Dispatch API
+    } else if (Dispatch && Dispatch.now) {
+      defer = function (id) {
+        Dispatch.now(runner(id));
+      };
+    // Browsers with MessageChannel, includes WebWorkers
+    // except iOS - https://github.com/zloirock/core-js/issues/624
+    } else if (MessageChannel && !IS_IOS$1) {
+      channel = new MessageChannel();
+      port = channel.port2;
+      channel.port1.onmessage = eventListener;
+      defer = bind$4(port.postMessage, port);
+    // Browsers with postMessage, skip WebWorkers
+    // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
+    } else if (
+      global$b.addEventListener &&
+      isCallable$5(global$b.postMessage) &&
+      !global$b.importScripts &&
+      $location && $location.protocol !== 'file:' &&
+      !fails$6(globalPostMessageDefer)
+    ) {
+      defer = globalPostMessageDefer;
+      global$b.addEventListener('message', eventListener, false);
+    // IE8-
+    } else if (ONREADYSTATECHANGE in createElement('script')) {
+      defer = function (id) {
+        html.appendChild(createElement('script'))[ONREADYSTATECHANGE] = function () {
+          html.removeChild(this);
+          run(id);
+        };
+      };
+    // Rest old browsers
+    } else {
+      defer = function (id) {
+        setTimeout(runner(id), 0);
+      };
+    }
+  }
+
+  var task$1 = {
+    set: set,
+    clear: clear
+  };
+
+  var Queue$2 = function () {
+    this.head = null;
+    this.tail = null;
+  };
+
+  Queue$2.prototype = {
+    add: function (item) {
+      var entry = { item: item, next: null };
+      var tail = this.tail;
+      if (tail) tail.next = entry;
+      else this.head = entry;
+      this.tail = entry;
+    },
+    get: function () {
+      var entry = this.head;
+      if (entry) {
+        var next = this.head = entry.next;
+        if (next === null) this.tail = null;
+        return entry.item;
+      }
+    }
+  };
+
+  var queue$2 = Queue$2;
+
+  var userAgent$1 = engineUserAgent;
+
+  var engineIsIosPebble = /ipad|iphone|ipod/i.test(userAgent$1) && typeof Pebble != 'undefined';
+
+  var userAgent = engineUserAgent;
+
+  var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
+
+  var global$a = global$r;
+  var bind$3 = functionBindContext;
+  var getOwnPropertyDescriptor$9 = objectGetOwnPropertyDescriptor.f;
+  var macrotask = task$1.set;
+  var Queue$1 = queue$2;
+  var IS_IOS = engineIsIos;
+  var IS_IOS_PEBBLE = engineIsIosPebble;
+  var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
+  var IS_NODE$2 = engineIsNode;
+
+  var MutationObserver$1 = global$a.MutationObserver || global$a.WebKitMutationObserver;
+  var document$2 = global$a.document;
+  var process$2 = global$a.process;
+  var Promise$1 = global$a.Promise;
+  // Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
+  var queueMicrotaskDescriptor = getOwnPropertyDescriptor$9(global$a, 'queueMicrotask');
+  var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
+  var notify$1, toggle, node, promise$6, then;
+
+  // modern engines have queueMicrotask method
+  if (!microtask$1) {
+    var queue$1 = new Queue$1();
+
+    var flush = function () {
+      var parent, fn;
+      if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
+      while (fn = queue$1.get()) try {
+        fn();
+      } catch (error) {
+        if (queue$1.head) notify$1();
+        throw error;
+      }
+      if (parent) parent.enter();
+    };
+
+    // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
+    // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
+    if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$2) {
+      toggle = true;
+      node = document$2.createTextNode('');
+      new MutationObserver$1(flush).observe(node, { characterData: true });
+      notify$1 = function () {
+        node.data = toggle = !toggle;
+      };
+    // environments with maybe non-completely correct, but existent Promise
+    } else if (!IS_IOS_PEBBLE && Promise$1 && Promise$1.resolve) {
+      // Promise.resolve without an argument throws an error in LG WebOS 2
+      promise$6 = Promise$1.resolve(undefined);
+      // workaround of WebKit ~ iOS Safari 10.1 bug
+      promise$6.constructor = Promise$1;
+      then = bind$3(promise$6.then, promise$6);
+      notify$1 = function () {
+        then(flush);
+      };
+    // Node.js without promises
+    } else if (IS_NODE$2) {
+      notify$1 = function () {
+        process$2.nextTick(flush);
+      };
+    // for other environments - macrotask based on:
+    // - setImmediate
+    // - MessageChannel
+    // - window.postMessage
+    // - onreadystatechange
+    // - setTimeout
+    } else {
+      // `webpack` dev server bug on IE global methods - use bind(fn, global)
+      macrotask = bind$3(macrotask, global$a);
+      notify$1 = function () {
+        macrotask(flush);
+      };
+    }
+
+    microtask$1 = function (fn) {
+      if (!queue$1.head) notify$1();
+      queue$1.add(fn);
+    };
+  }
+
+  var microtask_1 = microtask$1;
+
+  var hostReportErrors$1 = function (a, b) {
+    try {
+      // eslint-disable-next-line no-console -- safe
+      arguments.length == 1 ? console.error(a) : console.error(a, b);
+    } catch (error) { /* empty */ }
+  };
+
+  var perform$6 = function (exec) {
+    try {
+      return { error: false, value: exec() };
+    } catch (error) {
+      return { error: true, value: error };
+    }
+  };
+
+  var global$9 = global$r;
+
+  var promiseNativeConstructor = global$9.Promise;
+
+  /* global Deno -- Deno case */
+
+  var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
+
+  var IS_DENO$1 = engineIsDeno;
+  var IS_NODE$1 = engineIsNode;
+
+  var engineIsBrowser = !IS_DENO$1 && !IS_NODE$1
+    && typeof window == 'object'
+    && typeof document == 'object';
+
+  var global$8 = global$r;
+  var NativePromiseConstructor$5 = promiseNativeConstructor;
+  var isCallable$4 = isCallable$q;
+  var isForced = isForced_1;
+  var inspectSource = inspectSource$2;
+  var wellKnownSymbol$2 = wellKnownSymbol$q;
+  var IS_BROWSER = engineIsBrowser;
+  var IS_DENO = engineIsDeno;
+  var V8_VERSION = engineV8Version;
+
+  var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
+  var SPECIES = wellKnownSymbol$2('species');
+  var SUBCLASSING = false;
+  var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$4(global$8.PromiseRejectionEvent);
+
+  var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
+    var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
+    var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(NativePromiseConstructor$5);
+    // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
+    // We can't detect it synchronously, so just check versions
+    if (!GLOBAL_CORE_JS_PROMISE && V8_VERSION === 66) return true;
+    // We need Promise#{ catch, finally } in the pure version for preventing prototype pollution
+    if (!(NativePromisePrototype$2['catch'] && NativePromisePrototype$2['finally'])) return true;
+    // We can't use @@species feature detection in V8 since it causes
+    // deoptimization and performance degradation
+    // https://github.com/zloirock/core-js/issues/679
+    if (!V8_VERSION || V8_VERSION < 51 || !/native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) {
+      // Detect correctness of subclassing with @@species support
+      var promise = new NativePromiseConstructor$5(function (resolve) { resolve(1); });
+      var FakePromise = function (exec) {
+        exec(function () { /* empty */ }, function () { /* empty */ });
+      };
+      var constructor = promise.constructor = {};
+      constructor[SPECIES] = FakePromise;
+      SUBCLASSING = promise.then(function () { /* empty */ }) instanceof FakePromise;
+      if (!SUBCLASSING) return true;
+    // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
+    } return !GLOBAL_CORE_JS_PROMISE && (IS_BROWSER || IS_DENO) && !NATIVE_PROMISE_REJECTION_EVENT$1;
+  });
+
+  var promiseConstructorDetection = {
+    CONSTRUCTOR: FORCED_PROMISE_CONSTRUCTOR$5,
+    REJECTION_EVENT: NATIVE_PROMISE_REJECTION_EVENT$1,
+    SUBCLASSING: SUBCLASSING
+  };
+
+  var newPromiseCapability$2 = {};
+
+  var aCallable$5 = aCallable$h;
+
+  var $TypeError$2 = TypeError;
+
+  var PromiseCapability = function (C) {
+    var resolve, reject;
+    this.promise = new C(function ($$resolve, $$reject) {
+      if (resolve !== undefined || reject !== undefined) throw $TypeError$2('Bad Promise constructor');
+      resolve = $$resolve;
+      reject = $$reject;
+    });
+    this.resolve = aCallable$5(resolve);
+    this.reject = aCallable$5(reject);
+  };
+
+  // `NewPromiseCapability` abstract operation
+  // https://tc39.es/ecma262/#sec-newpromisecapability
+  newPromiseCapability$2.f = function (C) {
+    return new PromiseCapability(C);
+  };
+
+  var $$l = _export;
+  var IS_NODE = engineIsNode;
+  var global$7 = global$r;
+  var call$6 = functionCall;
+  var defineBuiltIn$2 = defineBuiltIn$8;
+  var setToStringTag$2 = setToStringTag$9;
+  var setSpecies = setSpecies$2;
+  var aCallable$4 = aCallable$h;
+  var isCallable$3 = isCallable$q;
+  var isObject$2 = isObject$j;
+  var anInstance$2 = anInstance$5;
+  var speciesConstructor$1 = speciesConstructor$2;
+  var task = task$1.set;
+  var microtask = microtask_1;
+  var hostReportErrors = hostReportErrors$1;
+  var perform$5 = perform$6;
+  var Queue = queue$2;
+  var InternalStateModule$2 = internalState;
+  var NativePromiseConstructor$4 = promiseNativeConstructor;
+  var PromiseConstructorDetection = promiseConstructorDetection;
+  var newPromiseCapabilityModule$6 = newPromiseCapability$2;
+
+  var PROMISE = 'Promise';
+  var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
+  var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
+  PromiseConstructorDetection.SUBCLASSING;
+  var getInternalPromiseState = InternalStateModule$2.getterFor(PROMISE);
+  var setInternalState$2 = InternalStateModule$2.set;
+  var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
+  var PromiseConstructor = NativePromiseConstructor$4;
+  var PromisePrototype = NativePromisePrototype$1;
+  var TypeError$3 = global$7.TypeError;
+  var document$1 = global$7.document;
+  var process$1 = global$7.process;
+  var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
+  var newGenericPromiseCapability = newPromiseCapability$1;
+
+  var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$7.dispatchEvent);
+  var UNHANDLED_REJECTION = 'unhandledrejection';
+  var REJECTION_HANDLED = 'rejectionhandled';
+  var PENDING = 0;
+  var FULFILLED = 1;
+  var REJECTED = 2;
+  var HANDLED = 1;
+  var UNHANDLED = 2;
+
+  var Internal, OwnPromiseCapability, PromiseWrapper;
+
+  // helpers
+  var isThenable = function (it) {
+    var then;
+    return isObject$2(it) && isCallable$3(then = it.then) ? then : false;
+  };
+
+  var callReaction = function (reaction, state) {
+    var value = state.value;
+    var ok = state.state == FULFILLED;
+    var handler = ok ? reaction.ok : reaction.fail;
+    var resolve = reaction.resolve;
+    var reject = reaction.reject;
+    var domain = reaction.domain;
+    var result, then, exited;
+    try {
+      if (handler) {
+        if (!ok) {
+          if (state.rejection === UNHANDLED) onHandleUnhandled(state);
+          state.rejection = HANDLED;
+        }
+        if (handler === true) result = value;
+        else {
+          if (domain) domain.enter();
+          result = handler(value); // can throw
+          if (domain) {
+            domain.exit();
+            exited = true;
+          }
+        }
+        if (result === reaction.promise) {
+          reject(TypeError$3('Promise-chain cycle'));
+        } else if (then = isThenable(result)) {
+          call$6(then, result, resolve, reject);
+        } else resolve(result);
+      } else reject(value);
+    } catch (error) {
+      if (domain && !exited) domain.exit();
+      reject(error);
+    }
+  };
+
+  var notify = function (state, isReject) {
+    if (state.notified) return;
+    state.notified = true;
+    microtask(function () {
+      var reactions = state.reactions;
+      var reaction;
+      while (reaction = reactions.get()) {
+        callReaction(reaction, state);
+      }
+      state.notified = false;
+      if (isReject && !state.rejection) onUnhandled(state);
+    });
+  };
+
+  var dispatchEvent = function (name, promise, reason) {
+    var event, handler;
+    if (DISPATCH_EVENT) {
+      event = document$1.createEvent('Event');
+      event.promise = promise;
+      event.reason = reason;
+      event.initEvent(name, false, true);
+      global$7.dispatchEvent(event);
+    } else event = { promise: promise, reason: reason };
+    if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$7['on' + name])) handler(event);
+    else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
+  };
+
+  var onUnhandled = function (state) {
+    call$6(task, global$7, function () {
+      var promise = state.facade;
+      var value = state.value;
+      var IS_UNHANDLED = isUnhandled(state);
+      var result;
+      if (IS_UNHANDLED) {
+        result = perform$5(function () {
+          if (IS_NODE) {
+            process$1.emit('unhandledRejection', value, promise);
+          } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
+        });
+        // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
+        state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
+        if (result.error) throw result.value;
+      }
+    });
+  };
+
+  var isUnhandled = function (state) {
+    return state.rejection !== HANDLED && !state.parent;
+  };
+
+  var onHandleUnhandled = function (state) {
+    call$6(task, global$7, function () {
+      var promise = state.facade;
+      if (IS_NODE) {
+        process$1.emit('rejectionHandled', promise);
+      } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
+    });
+  };
+
+  var bind$2 = function (fn, state, unwrap) {
+    return function (value) {
+      fn(state, value, unwrap);
+    };
+  };
+
+  var internalReject = function (state, value, unwrap) {
+    if (state.done) return;
+    state.done = true;
+    if (unwrap) state = unwrap;
+    state.value = value;
+    state.state = REJECTED;
+    notify(state, true);
+  };
+
+  var internalResolve = function (state, value, unwrap) {
+    if (state.done) return;
+    state.done = true;
+    if (unwrap) state = unwrap;
+    try {
+      if (state.facade === value) throw TypeError$3("Promise can't be resolved itself");
+      var then = isThenable(value);
+      if (then) {
+        microtask(function () {
+          var wrapper = { done: false };
+          try {
+            call$6(then, value,
+              bind$2(internalResolve, wrapper, state),
+              bind$2(internalReject, wrapper, state)
+            );
+          } catch (error) {
+            internalReject(wrapper, error, state);
+          }
+        });
+      } else {
+        state.value = value;
+        state.state = FULFILLED;
+        notify(state, false);
+      }
+    } catch (error) {
+      internalReject({ done: false }, error, state);
+    }
+  };
+
+  // constructor polyfill
+  if (FORCED_PROMISE_CONSTRUCTOR$4) {
+    // 25.4.3.1 Promise(executor)
+    PromiseConstructor = function Promise(executor) {
+      anInstance$2(this, PromisePrototype);
+      aCallable$4(executor);
+      call$6(Internal, this);
+      var state = getInternalPromiseState(this);
+      try {
+        executor(bind$2(internalResolve, state), bind$2(internalReject, state));
+      } catch (error) {
+        internalReject(state, error);
+      }
+    };
+
+    PromisePrototype = PromiseConstructor.prototype;
+
+    // eslint-disable-next-line no-unused-vars -- required for `.length`
+    Internal = function Promise(executor) {
+      setInternalState$2(this, {
+        type: PROMISE,
+        done: false,
+        notified: false,
+        parent: false,
+        reactions: new Queue(),
+        rejection: false,
+        state: PENDING,
+        value: undefined
+      });
+    };
+
+    // `Promise.prototype.then` method
+    // https://tc39.es/ecma262/#sec-promise.prototype.then
+    Internal.prototype = defineBuiltIn$2(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
+      var state = getInternalPromiseState(this);
+      var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
+      state.parent = true;
+      reaction.ok = isCallable$3(onFulfilled) ? onFulfilled : true;
+      reaction.fail = isCallable$3(onRejected) && onRejected;
+      reaction.domain = IS_NODE ? process$1.domain : undefined;
+      if (state.state == PENDING) state.reactions.add(reaction);
+      else microtask(function () {
+        callReaction(reaction, state);
+      });
+      return reaction.promise;
+    });
+
+    OwnPromiseCapability = function () {
+      var promise = new Internal();
+      var state = getInternalPromiseState(promise);
+      this.promise = promise;
+      this.resolve = bind$2(internalResolve, state);
+      this.reject = bind$2(internalReject, state);
+    };
+
+    newPromiseCapabilityModule$6.f = newPromiseCapability$1 = function (C) {
+      return C === PromiseConstructor || C === PromiseWrapper
+        ? new OwnPromiseCapability(C)
+        : newGenericPromiseCapability(C);
+    };
+  }
+
+  $$l({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+    Promise: PromiseConstructor
+  });
+
+  setToStringTag$2(PromiseConstructor, PROMISE, false, true);
+  setSpecies(PROMISE);
+
+  var NativePromiseConstructor$3 = promiseNativeConstructor;
+  var checkCorrectnessOfIteration = checkCorrectnessOfIteration$2;
+  var FORCED_PROMISE_CONSTRUCTOR$3 = promiseConstructorDetection.CONSTRUCTOR;
+
+  var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCorrectnessOfIteration(function (iterable) {
+    NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
+  });
+
+  var $$k = _export;
+  var call$5 = functionCall;
+  var aCallable$3 = aCallable$h;
+  var newPromiseCapabilityModule$5 = newPromiseCapability$2;
+  var perform$4 = perform$6;
+  var iterate$3 = iterate$l;
+  var PROMISE_STATICS_INCORRECT_ITERATION$3 = promiseStaticsIncorrectIteration;
+
+  // `Promise.all` method
+  // https://tc39.es/ecma262/#sec-promise.all
+  $$k({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
+    all: function all(iterable) {
+      var C = this;
+      var capability = newPromiseCapabilityModule$5.f(C);
+      var resolve = capability.resolve;
+      var reject = capability.reject;
+      var result = perform$4(function () {
+        var $promiseResolve = aCallable$3(C.resolve);
+        var values = [];
+        var counter = 0;
+        var remaining = 1;
+        iterate$3(iterable, function (promise) {
+          var index = counter++;
+          var alreadyCalled = false;
+          remaining++;
+          call$5($promiseResolve, C, promise).then(function (value) {
+            if (alreadyCalled) return;
+            alreadyCalled = true;
+            values[index] = value;
+            --remaining || resolve(values);
+          }, reject);
+        });
+        --remaining || resolve(values);
+      });
+      if (result.error) reject(result.value);
+      return capability.promise;
+    }
+  });
+
+  var $$j = _export;
+  var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
+  var NativePromiseConstructor$2 = promiseNativeConstructor;
+
+  NativePromiseConstructor$2 && NativePromiseConstructor$2.prototype;
+
+  // `Promise.prototype.catch` method
+  // https://tc39.es/ecma262/#sec-promise.prototype.catch
+  $$j({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+    'catch': function (onRejected) {
+      return this.then(undefined, onRejected);
+    }
+  });
+
+  var $$i = _export;
+  var call$4 = functionCall;
+  var aCallable$2 = aCallable$h;
+  var newPromiseCapabilityModule$4 = newPromiseCapability$2;
+  var perform$3 = perform$6;
+  var iterate$2 = iterate$l;
+  var PROMISE_STATICS_INCORRECT_ITERATION$2 = promiseStaticsIncorrectIteration;
+
+  // `Promise.race` method
+  // https://tc39.es/ecma262/#sec-promise.race
+  $$i({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
+    race: function race(iterable) {
+      var C = this;
+      var capability = newPromiseCapabilityModule$4.f(C);
+      var reject = capability.reject;
+      var result = perform$3(function () {
+        var $promiseResolve = aCallable$2(C.resolve);
+        iterate$2(iterable, function (promise) {
+          call$4($promiseResolve, C, promise).then(capability.resolve, reject);
+        });
+      });
+      if (result.error) reject(result.value);
+      return capability.promise;
+    }
+  });
+
+  var $$h = _export;
+  var call$3 = functionCall;
+  var newPromiseCapabilityModule$3 = newPromiseCapability$2;
+  var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
+
+  // `Promise.reject` method
+  // https://tc39.es/ecma262/#sec-promise.reject
+  $$h({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+    reject: function reject(r) {
+      var capability = newPromiseCapabilityModule$3.f(this);
+      call$3(capability.reject, undefined, r);
+      return capability.promise;
+    }
+  });
+
+  var anObject$1 = anObject$f;
+  var isObject$1 = isObject$j;
+  var newPromiseCapability = newPromiseCapability$2;
+
+  var promiseResolve$2 = function (C, x) {
+    anObject$1(C);
+    if (isObject$1(x) && x.constructor === C) return x;
+    var promiseCapability = newPromiseCapability.f(C);
+    var resolve = promiseCapability.resolve;
+    resolve(x);
+    return promiseCapability.promise;
+  };
+
+  var $$g = _export;
+  var getBuiltIn$3 = getBuiltIn$h;
+  var IS_PURE$1 = isPure;
+  var NativePromiseConstructor$1 = promiseNativeConstructor;
+  var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
+  var promiseResolve$1 = promiseResolve$2;
+
+  var PromiseConstructorWrapper = getBuiltIn$3('Promise');
+  var CHECK_WRAPPER = !FORCED_PROMISE_CONSTRUCTOR;
+
+  // `Promise.resolve` method
+  // https://tc39.es/ecma262/#sec-promise.resolve
+  $$g({ target: 'Promise', stat: true, forced: IS_PURE$1  }, {
+    resolve: function resolve(x) {
+      return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
+    }
+  });
+
+  var $$f = _export;
+  var call$2 = functionCall;
+  var aCallable$1 = aCallable$h;
+  var newPromiseCapabilityModule$2 = newPromiseCapability$2;
+  var perform$2 = perform$6;
+  var iterate$1 = iterate$l;
+  var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
+
+  // `Promise.allSettled` method
+  // https://tc39.es/ecma262/#sec-promise.allsettled
+  $$f({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+    allSettled: function allSettled(iterable) {
+      var C = this;
+      var capability = newPromiseCapabilityModule$2.f(C);
+      var resolve = capability.resolve;
+      var reject = capability.reject;
+      var result = perform$2(function () {
+        var promiseResolve = aCallable$1(C.resolve);
+        var values = [];
+        var counter = 0;
+        var remaining = 1;
+        iterate$1(iterable, function (promise) {
+          var index = counter++;
+          var alreadyCalled = false;
+          remaining++;
+          call$2(promiseResolve, C, promise).then(function (value) {
+            if (alreadyCalled) return;
+            alreadyCalled = true;
+            values[index] = { status: 'fulfilled', value: value };
+            --remaining || resolve(values);
+          }, function (error) {
+            if (alreadyCalled) return;
+            alreadyCalled = true;
+            values[index] = { status: 'rejected', reason: error };
+            --remaining || resolve(values);
+          });
+        });
+        --remaining || resolve(values);
+      });
+      if (result.error) reject(result.value);
+      return capability.promise;
+    }
+  });
+
+  var $$e = _export;
+  var call$1 = functionCall;
+  var aCallable = aCallable$h;
+  var getBuiltIn$2 = getBuiltIn$h;
+  var newPromiseCapabilityModule$1 = newPromiseCapability$2;
+  var perform$1 = perform$6;
+  var iterate = iterate$l;
+  var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
+
+  var PROMISE_ANY_ERROR = 'No one promise resolved';
+
+  // `Promise.any` method
+  // https://tc39.es/ecma262/#sec-promise.any
+  $$e({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+    any: function any(iterable) {
+      var C = this;
+      var AggregateError = getBuiltIn$2('AggregateError');
+      var capability = newPromiseCapabilityModule$1.f(C);
+      var resolve = capability.resolve;
+      var reject = capability.reject;
+      var result = perform$1(function () {
+        var promiseResolve = aCallable(C.resolve);
+        var errors = [];
+        var counter = 0;
+        var remaining = 1;
+        var alreadyResolved = false;
+        iterate(iterable, function (promise) {
+          var index = counter++;
+          var alreadyRejected = false;
+          remaining++;
+          call$1(promiseResolve, C, promise).then(function (value) {
+            if (alreadyRejected || alreadyResolved) return;
+            alreadyResolved = true;
+            resolve(value);
+          }, function (error) {
+            if (alreadyRejected || alreadyResolved) return;
+            alreadyRejected = true;
+            errors[index] = error;
+            --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
+          });
+        });
+        --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
+      });
+      if (result.error) reject(result.value);
+      return capability.promise;
+    }
+  });
+
+  var $$d = _export;
+  var NativePromiseConstructor = promiseNativeConstructor;
+  var fails$5 = fails$x;
+  var getBuiltIn$1 = getBuiltIn$h;
+  var isCallable$2 = isCallable$q;
+  var speciesConstructor = speciesConstructor$2;
+  var promiseResolve = promiseResolve$2;
+
+  var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
+
+  // Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
+  var NON_GENERIC = !!NativePromiseConstructor && fails$5(function () {
+    // eslint-disable-next-line unicorn/no-thenable -- required for testing
+    NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
+  });
+
+  // `Promise.prototype.finally` method
+  // https://tc39.es/ecma262/#sec-promise.prototype.finally
+  $$d({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+    'finally': function (onFinally) {
+      var C = speciesConstructor(this, getBuiltIn$1('Promise'));
+      var isFunction = isCallable$2(onFinally);
+      return this.then(
+        isFunction ? function (x) {
+          return promiseResolve(C, onFinally()).then(function () { return x; });
+        } : onFinally,
+        isFunction ? function (e) {
+          return promiseResolve(C, onFinally()).then(function () { throw e; });
+        } : onFinally
+      );
+    }
+  });
+
+  var path$7 = path$n;
+
+  var promise$5 = path$7.Promise;
+
+  var parent$w = promise$5;
+
+
+  var promise$4 = parent$w;
+
+  var parent$v = promise$4;
+
+  var promise$3 = parent$v;
+
+  // TODO: Remove from `core-js@4`
+  var $$c = _export;
+  var newPromiseCapabilityModule = newPromiseCapability$2;
+  var perform = perform$6;
+
+  // `Promise.try` method
+  // https://github.com/tc39/proposal-promise-try
+  $$c({ target: 'Promise', stat: true, forced: true }, {
+    'try': function (callbackfn) {
+      var promiseCapability = newPromiseCapabilityModule.f(this);
+      var result = perform(callbackfn);
+      (result.error ? promiseCapability.reject : promiseCapability.resolve)(result.value);
+      return promiseCapability.promise;
+    }
+  });
+
+  var parent$u = promise$3;
+
+  // TODO: Remove from `core-js@4`
+
+
+
+
+  var promise$2 = parent$u;
+
+  var promise$1 = promise$2;
+
+  var promise = promise$1;
+
+  var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+    try {
+      var info = gen[key](arg);
+      var value = info.value;
+    } catch (error) {
+      reject(error);
+      return;
+    }
+    if (info.done) {
+      resolve(value);
+    } else {
+      _Promise.resolve(value).then(_next, _throw);
+    }
+  }
+  function _asyncToGenerator(fn) {
+    return function () {
+      var self = this,
+        args = arguments;
+      return new _Promise(function (resolve, reject) {
+        var gen = fn.apply(self, args);
+        function _next(value) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+        }
+        function _throw(err) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+        }
+        _next(undefined);
+      });
+    };
+  }
+
+  var regeneratorRuntime$1 = {exports: {}};
+
+  var _typeof = {exports: {}};
+
+  (function (module) {
+  	var _Symbol = symbol;
+  	var _Symbol$iterator = iterator;
+  	function _typeof(obj) {
+  	  "@babel/helpers - typeof";
+
+  	  return (module.exports = _typeof = "function" == typeof _Symbol && "symbol" == typeof _Symbol$iterator ? function (obj) {
+  	    return typeof obj;
+  	  } : function (obj) {
+  	    return obj && "function" == typeof _Symbol && obj.constructor === _Symbol && obj !== _Symbol.prototype ? "symbol" : typeof obj;
+  	  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
+  	}
+  	module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports; 
+  } (_typeof));
+
+  var _typeofExports = _typeof.exports;
+
+  var $$b = _export;
+  var uncurryThis$4 = functionUncurryThis;
+  var isArray$1 = isArray$d;
+
+  var nativeReverse = uncurryThis$4([].reverse);
+  var test = [1, 2];
+
+  // `Array.prototype.reverse` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reverse
+  // fix for Safari 12.0 bug
+  // https://bugs.webkit.org/show_bug.cgi?id=188794
+  $$b({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
+    reverse: function reverse() {
+      // eslint-disable-next-line no-self-assign -- dirty hack
+      if (isArray$1(this)) this.length = this.length;
+      return nativeReverse(this);
+    }
+  });
+
+  var entryVirtual$2 = entryVirtual$b;
+
+  var reverse$6 = entryVirtual$2('Array').reverse;
+
+  var isPrototypeOf$2 = objectIsPrototypeOf;
+  var method$2 = reverse$6;
+
+  var ArrayPrototype$2 = Array.prototype;
+
+  var reverse$5 = function (it) {
+    var own = it.reverse;
+    return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.reverse) ? method$2 : own;
+  };
+
+  var parent$t = reverse$5;
+
+  var reverse$4 = parent$t;
+
+  var parent$s = reverse$4;
+
+  var reverse$3 = parent$s;
+
+  var parent$r = reverse$3;
+
+  var reverse$2 = parent$r;
+
+  var reverse$1 = reverse$2;
+
+  var reverse = reverse$1;
+
+  (function (module) {
+  	var _typeof = _typeofExports["default"];
+  	var _Object$defineProperty = defineProperty$6;
+  	var _Symbol = symbol;
+  	var _Object$create = create$3;
+  	var _Object$getPrototypeOf = getPrototypeOf$1;
+  	var _forEachInstanceProperty = forEach$1;
+  	var _Object$setPrototypeOf = setPrototypeOf$1;
+  	var _Promise = promise;
+  	var _reverseInstanceProperty = reverse;
+  	var _sliceInstanceProperty = slice;
+  	function _regeneratorRuntime() {
+  	  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
+  	    return exports;
+  	  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
+  	  var exports = {},
+  	    Op = Object.prototype,
+  	    hasOwn = Op.hasOwnProperty,
+  	    defineProperty = _Object$defineProperty || function (obj, key, desc) {
+  	      obj[key] = desc.value;
+  	    },
+  	    $Symbol = "function" == typeof _Symbol ? _Symbol : {},
+  	    iteratorSymbol = $Symbol.iterator || "@@iterator",
+  	    asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
+  	    toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+  	  function define(obj, key, value) {
+  	    return _Object$defineProperty(obj, key, {
+  	      value: value,
+  	      enumerable: !0,
+  	      configurable: !0,
+  	      writable: !0
+  	    }), obj[key];
+  	  }
+  	  try {
+  	    define({}, "");
+  	  } catch (err) {
+  	    define = function define(obj, key, value) {
+  	      return obj[key] = value;
+  	    };
+  	  }
+  	  function wrap(innerFn, outerFn, self, tryLocsList) {
+  	    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
+  	      generator = _Object$create(protoGenerator.prototype),
+  	      context = new Context(tryLocsList || []);
+  	    return defineProperty(generator, "_invoke", {
+  	      value: makeInvokeMethod(innerFn, self, context)
+  	    }), generator;
+  	  }
+  	  function tryCatch(fn, obj, arg) {
+  	    try {
+  	      return {
+  	        type: "normal",
+  	        arg: fn.call(obj, arg)
+  	      };
+  	    } catch (err) {
+  	      return {
+  	        type: "throw",
+  	        arg: err
+  	      };
+  	    }
+  	  }
+  	  exports.wrap = wrap;
+  	  var ContinueSentinel = {};
+  	  function Generator() {}
+  	  function GeneratorFunction() {}
+  	  function GeneratorFunctionPrototype() {}
+  	  var IteratorPrototype = {};
+  	  define(IteratorPrototype, iteratorSymbol, function () {
+  	    return this;
+  	  });
+  	  var getProto = _Object$getPrototypeOf,
+  	    NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  	  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
+  	  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = _Object$create(IteratorPrototype);
+  	  function defineIteratorMethods(prototype) {
+  	    var _context;
+  	    _forEachInstanceProperty(_context = ["next", "throw", "return"]).call(_context, function (method) {
+  	      define(prototype, method, function (arg) {
+  	        return this._invoke(method, arg);
+  	      });
+  	    });
+  	  }
+  	  function AsyncIterator(generator, PromiseImpl) {
+  	    function invoke(method, arg, resolve, reject) {
+  	      var record = tryCatch(generator[method], generator, arg);
+  	      if ("throw" !== record.type) {
+  	        var result = record.arg,
+  	          value = result.value;
+  	        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
+  	          invoke("next", value, resolve, reject);
+  	        }, function (err) {
+  	          invoke("throw", err, resolve, reject);
+  	        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
+  	          result.value = unwrapped, resolve(result);
+  	        }, function (error) {
+  	          return invoke("throw", error, resolve, reject);
+  	        });
+  	      }
+  	      reject(record.arg);
+  	    }
+  	    var previousPromise;
+  	    defineProperty(this, "_invoke", {
+  	      value: function value(method, arg) {
+  	        function callInvokeWithMethodAndArg() {
+  	          return new PromiseImpl(function (resolve, reject) {
+  	            invoke(method, arg, resolve, reject);
+  	          });
+  	        }
+  	        return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+  	      }
+  	    });
+  	  }
+  	  function makeInvokeMethod(innerFn, self, context) {
+  	    var state = "suspendedStart";
+  	    return function (method, arg) {
+  	      if ("executing" === state) throw new Error("Generator is already running");
+  	      if ("completed" === state) {
+  	        if ("throw" === method) throw arg;
+  	        return doneResult();
+  	      }
+  	      for (context.method = method, context.arg = arg;;) {
+  	        var delegate = context.delegate;
+  	        if (delegate) {
+  	          var delegateResult = maybeInvokeDelegate(delegate, context);
+  	          if (delegateResult) {
+  	            if (delegateResult === ContinueSentinel) continue;
+  	            return delegateResult;
+  	          }
+  	        }
+  	        if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
+  	          if ("suspendedStart" === state) throw state = "completed", context.arg;
+  	          context.dispatchException(context.arg);
+  	        } else "return" === context.method && context.abrupt("return", context.arg);
+  	        state = "executing";
+  	        var record = tryCatch(innerFn, self, context);
+  	        if ("normal" === record.type) {
+  	          if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
+  	          return {
+  	            value: record.arg,
+  	            done: context.done
+  	          };
+  	        }
+  	        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
+  	      }
+  	    };
+  	  }
+  	  function maybeInvokeDelegate(delegate, context) {
+  	    var methodName = context.method,
+  	      method = delegate.iterator[methodName];
+  	    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
+  	    var record = tryCatch(method, delegate.iterator, context.arg);
+  	    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
+  	    var info = record.arg;
+  	    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
+  	  }
+  	  function pushTryEntry(locs) {
+  	    var entry = {
+  	      tryLoc: locs[0]
+  	    };
+  	    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
+  	  }
+  	  function resetTryEntry(entry) {
+  	    var record = entry.completion || {};
+  	    record.type = "normal", delete record.arg, entry.completion = record;
+  	  }
+  	  function Context(tryLocsList) {
+  	    this.tryEntries = [{
+  	      tryLoc: "root"
+  	    }], _forEachInstanceProperty(tryLocsList).call(tryLocsList, pushTryEntry, this), this.reset(!0);
+  	  }
+  	  function values(iterable) {
+  	    if (iterable) {
+  	      var iteratorMethod = iterable[iteratorSymbol];
+  	      if (iteratorMethod) return iteratorMethod.call(iterable);
+  	      if ("function" == typeof iterable.next) return iterable;
+  	      if (!isNaN(iterable.length)) {
+  	        var i = -1,
+  	          next = function next() {
+  	            for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
+  	            return next.value = undefined, next.done = !0, next;
+  	          };
+  	        return next.next = next;
+  	      }
+  	    }
+  	    return {
+  	      next: doneResult
+  	    };
+  	  }
+  	  function doneResult() {
+  	    return {
+  	      value: undefined,
+  	      done: !0
+  	    };
+  	  }
+  	  return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
+  	    value: GeneratorFunctionPrototype,
+  	    configurable: !0
+  	  }), defineProperty(GeneratorFunctionPrototype, "constructor", {
+  	    value: GeneratorFunction,
+  	    configurable: !0
+  	  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
+  	    var ctor = "function" == typeof genFun && genFun.constructor;
+  	    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
+  	  }, exports.mark = function (genFun) {
+  	    return _Object$setPrototypeOf ? _Object$setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = _Object$create(Gp), genFun;
+  	  }, exports.awrap = function (arg) {
+  	    return {
+  	      __await: arg
+  	    };
+  	  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
+  	    return this;
+  	  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+  	    void 0 === PromiseImpl && (PromiseImpl = _Promise);
+  	    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
+  	    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
+  	      return result.done ? result.value : iter.next();
+  	    });
+  	  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
+  	    return this;
+  	  }), define(Gp, "toString", function () {
+  	    return "[object Generator]";
+  	  }), exports.keys = function (val) {
+  	    var object = Object(val),
+  	      keys = [];
+  	    for (var key in object) keys.push(key);
+  	    return _reverseInstanceProperty(keys).call(keys), function next() {
+  	      for (; keys.length;) {
+  	        var key = keys.pop();
+  	        if (key in object) return next.value = key, next.done = !1, next;
+  	      }
+  	      return next.done = !0, next;
+  	    };
+  	  }, exports.values = values, Context.prototype = {
+  	    constructor: Context,
+  	    reset: function reset(skipTempReset) {
+  	      var _context2;
+  	      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, _forEachInstanceProperty(_context2 = this.tryEntries).call(_context2, resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+_sliceInstanceProperty(name).call(name, 1)) && (this[name] = undefined);
+  	    },
+  	    stop: function stop() {
+  	      this.done = !0;
+  	      var rootRecord = this.tryEntries[0].completion;
+  	      if ("throw" === rootRecord.type) throw rootRecord.arg;
+  	      return this.rval;
+  	    },
+  	    dispatchException: function dispatchException(exception) {
+  	      if (this.done) throw exception;
+  	      var context = this;
+  	      function handle(loc, caught) {
+  	        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
+  	      }
+  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+  	        var entry = this.tryEntries[i],
+  	          record = entry.completion;
+  	        if ("root" === entry.tryLoc) return handle("end");
+  	        if (entry.tryLoc <= this.prev) {
+  	          var hasCatch = hasOwn.call(entry, "catchLoc"),
+  	            hasFinally = hasOwn.call(entry, "finallyLoc");
+  	          if (hasCatch && hasFinally) {
+  	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+  	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+  	          } else if (hasCatch) {
+  	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+  	          } else {
+  	            if (!hasFinally) throw new Error("try statement without catch or finally");
+  	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+  	          }
+  	        }
+  	      }
+  	    },
+  	    abrupt: function abrupt(type, arg) {
+  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+  	        var entry = this.tryEntries[i];
+  	        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
+  	          var finallyEntry = entry;
+  	          break;
+  	        }
+  	      }
+  	      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
+  	      var record = finallyEntry ? finallyEntry.completion : {};
+  	      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
+  	    },
+  	    complete: function complete(record, afterLoc) {
+  	      if ("throw" === record.type) throw record.arg;
+  	      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
+  	    },
+  	    finish: function finish(finallyLoc) {
+  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+  	        var entry = this.tryEntries[i];
+  	        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
+  	      }
+  	    },
+  	    "catch": function _catch(tryLoc) {
+  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+  	        var entry = this.tryEntries[i];
+  	        if (entry.tryLoc === tryLoc) {
+  	          var record = entry.completion;
+  	          if ("throw" === record.type) {
+  	            var thrown = record.arg;
+  	            resetTryEntry(entry);
+  	          }
+  	          return thrown;
+  	        }
+  	      }
+  	      throw new Error("illegal catch attempt");
+  	    },
+  	    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
+  	      return this.delegate = {
+  	        iterator: values(iterable),
+  	        resultName: resultName,
+  	        nextLoc: nextLoc
+  	      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
+  	    }
+  	  }, exports;
+  	}
+  	module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports; 
+  } (regeneratorRuntime$1));
+
+  var regeneratorRuntimeExports = regeneratorRuntime$1.exports;
+
+  // TODO(Babel 8): Remove this file.
+
+  var runtime = regeneratorRuntimeExports();
+  var regenerator = runtime;
+
+  // Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
+  try {
+    regeneratorRuntime = runtime;
+  } catch (accidentalStrictMode) {
+    if (typeof globalThis === "object") {
+      globalThis.regeneratorRuntime = runtime;
+    } else {
+      Function("r", "regeneratorRuntime = r")(runtime);
+    }
+  }
+
+  var _regeneratorRuntime = /*@__PURE__*/getDefaultExportFromCjs(regenerator);
 
   var playPath = "M6 2.914v18.172L20.279 12 6 2.914z";
   var pausePath = "M14.333 20.133H19V3.8h-4.667M5 20.133h4.667V3.8H5v16.333z";
@@ -5499,11 +7178,11 @@
   var screenShot$2 = "M384 482.133333c51.2 0 93.866667-42.666667 93.866667-93.866666s-42.666667-93.866667-93.866667-93.866667-93.866667 38.4-93.866667 89.6 42.666667 98.133333 93.866667 98.133333z m0-128c17.066667 0 34.133333 12.8 34.133333 34.133334s-17.066667 29.866667-34.133333 29.866666-34.133333-17.066667-34.133333-34.133333 17.066667-29.866667 34.133333-29.866667z";
   var videoShotPath = "M659.925333 128a74.666667 74.666667 0 0 1 71.338667 52.618667L754.56 256H821.333333c64.8 0 117.333333 52.533333 117.333334 117.333333v426.666667c0 64.8-52.533333 117.333333-117.333334 117.333333H202.666667c-64.8 0-117.333333-52.533333-117.333334-117.333333V373.333333c0-64.8 52.533333-117.333333 117.333334-117.333333h66.773333l23.296-75.381333A74.666667 74.666667 0 0 1 364.074667 128h295.850666zM512 405.333333c-88.362667 0-160 71.637333-160 160 0 88.362667 71.637333 160 160 160 88.362667 0 160-71.637333 160-160 0-88.362667-71.637333-160-160-160z m0 256a96 96 0 1 0 0-192 96 96 0 0 0 0 192z";
 
-  function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Options = /*#__PURE__*/function (_Component) {
     _inherits(Options, _Component);
-    var _super = _createSuper$n(Options);
+    var _super = _createSuper$o(Options);
     function Options(player, container, hideWidth, hideHeight, desc, props, children) {
       var _this;
       _classCallCheck(this, Options);
@@ -5531,7 +7210,7 @@
     }, {
       key: "initBaseTemplate",
       value: function initBaseTemplate() {
-        this.hideBox = $$o('div', {
+        this.hideBox = $$n('div', {
           style: {
             display: 'none',
             bottom: '48px'
@@ -5545,7 +7224,7 @@
           this.hideBox.style.width = this.hideWidth + 'px';
         }
         this.el.appendChild(this.hideBox);
-        this.iconBox = $$o('div');
+        this.iconBox = $$n('div');
         addClass(this.iconBox, ['video-icon']);
         this.el.appendChild(this.iconBox);
       }
@@ -5584,17 +7263,179 @@
     return Options;
   }(Component);
 
-  function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  /* eslint-disable promise/prefer-await-to-then */
+
+  const methodMap = [
+  	[
+  		'requestFullscreen',
+  		'exitFullscreen',
+  		'fullscreenElement',
+  		'fullscreenEnabled',
+  		'fullscreenchange',
+  		'fullscreenerror',
+  	],
+  	// New WebKit
+  	[
+  		'webkitRequestFullscreen',
+  		'webkitExitFullscreen',
+  		'webkitFullscreenElement',
+  		'webkitFullscreenEnabled',
+  		'webkitfullscreenchange',
+  		'webkitfullscreenerror',
+
+  	],
+  	// Old WebKit
+  	[
+  		'webkitRequestFullScreen',
+  		'webkitCancelFullScreen',
+  		'webkitCurrentFullScreenElement',
+  		'webkitCancelFullScreen',
+  		'webkitfullscreenchange',
+  		'webkitfullscreenerror',
+
+  	],
+  	[
+  		'mozRequestFullScreen',
+  		'mozCancelFullScreen',
+  		'mozFullScreenElement',
+  		'mozFullScreenEnabled',
+  		'mozfullscreenchange',
+  		'mozfullscreenerror',
+  	],
+  	[
+  		'msRequestFullscreen',
+  		'msExitFullscreen',
+  		'msFullscreenElement',
+  		'msFullscreenEnabled',
+  		'MSFullscreenChange',
+  		'MSFullscreenError',
+  	],
+  ];
+
+  const nativeAPI = (() => {
+  	if (typeof document === 'undefined') {
+  		return false;
+  	}
+
+  	const unprefixedMethods = methodMap[0];
+  	const returnValue = {};
+
+  	for (const methodList of methodMap) {
+  		const exitFullscreenMethod = methodList?.[1];
+  		if (exitFullscreenMethod in document) {
+  			for (const [index, method] of methodList.entries()) {
+  				returnValue[unprefixedMethods[index]] = method;
+  			}
+
+  			return returnValue;
+  		}
+  	}
+
+  	return false;
+  })();
+
+  const eventNameMap = {
+  	change: nativeAPI.fullscreenchange,
+  	error: nativeAPI.fullscreenerror,
+  };
+
+  // eslint-disable-next-line import/no-mutable-exports
+  let screenfull = {
+  	// eslint-disable-next-line default-param-last
+  	request(element = document.documentElement, options) {
+  		return new Promise((resolve, reject) => {
+  			const onFullScreenEntered = () => {
+  				screenfull.off('change', onFullScreenEntered);
+  				resolve();
+  			};
+
+  			screenfull.on('change', onFullScreenEntered);
+
+  			const returnPromise = element[nativeAPI.requestFullscreen](options);
+
+  			if (returnPromise instanceof Promise) {
+  				returnPromise.then(onFullScreenEntered).catch(reject);
+  			}
+  		});
+  	},
+  	exit() {
+  		return new Promise((resolve, reject) => {
+  			if (!screenfull.isFullscreen) {
+  				resolve();
+  				return;
+  			}
+
+  			const onFullScreenExit = () => {
+  				screenfull.off('change', onFullScreenExit);
+  				resolve();
+  			};
+
+  			screenfull.on('change', onFullScreenExit);
+
+  			const returnPromise = document[nativeAPI.exitFullscreen]();
+
+  			if (returnPromise instanceof Promise) {
+  				returnPromise.then(onFullScreenExit).catch(reject);
+  			}
+  		});
+  	},
+  	toggle(element, options) {
+  		return screenfull.isFullscreen ? screenfull.exit() : screenfull.request(element, options);
+  	},
+  	onchange(callback) {
+  		screenfull.on('change', callback);
+  	},
+  	onerror(callback) {
+  		screenfull.on('error', callback);
+  	},
+  	on(event, callback) {
+  		const eventName = eventNameMap[event];
+  		if (eventName) {
+  			document.addEventListener(eventName, callback, false);
+  		}
+  	},
+  	off(event, callback) {
+  		const eventName = eventNameMap[event];
+  		if (eventName) {
+  			document.removeEventListener(eventName, callback, false);
+  		}
+  	},
+  	raw: nativeAPI,
+  };
+
+  Object.defineProperties(screenfull, {
+  	isFullscreen: {
+  		get: () => Boolean(document[nativeAPI.fullscreenElement]),
+  	},
+  	element: {
+  		enumerable: true,
+  		get: () => document[nativeAPI.fullscreenElement] ?? undefined,
+  	},
+  	isEnabled: {
+  		enumerable: true,
+  		// Coerce to boolean in case of old WebKit.
+  		get: () => Boolean(document[nativeAPI.fullscreenEnabled]),
+  	},
+  });
+
+  if (!nativeAPI) {
+  	screenfull = {isEnabled: false};
+  }
+
+  var screenfull$1 = screenfull;
+
+  function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var FullScreen = /*#__PURE__*/function (_Options) {
     _inherits(FullScreen, _Options);
-    var _super = _createSuper$m(FullScreen);
+    var _super = _createSuper$n(FullScreen);
     function FullScreen(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, FullScreen);
       _this = _super.call(this, player, container, 0, 0, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'FullScreen');
       _defineProperty(_assertThisInitialized(_this), "icon", void 0);
+      _defineProperty(_assertThisInitialized(_this), "enterFullScreen", false);
       _this.player = player;
       _this.props = props || {};
       _this.init();
@@ -5620,35 +7461,100 @@
     }, {
       key: "initEvent",
       value: function initEvent() {
+        if (this.player.env === 'PC') {
+          this.initPCEvent();
+        } else {
+          this.initMobileEvent();
+        }
+      }
+    }, {
+      key: "initPCEvent",
+      value: function initPCEvent() {
         this.onClick = this.onClick.bind(this);
         this.el.onclick = this.onClick;
       }
     }, {
+      key: "initMobileEvent",
+      value: function initMobileEvent() {
+        var _this2 = this;
+        // 单击
+        this.el.addEventListener('singleTap', /*#__PURE__*/function () {
+          var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(e) {
+            return _regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) switch (_context.prev = _context.next) {
+                case 0:
+                  // console.log(e, 'singleTap')
+                  _this2.onClick(e);
+                case 1:
+                case "end":
+                  return _context.stop();
+              }
+            }, _callee);
+          }));
+          return function (_x) {
+            return _ref.apply(this, arguments);
+          };
+        }());
+      }
+    }, {
       key: "onClick",
       value: function onClick(e) {
-        if (this.player.container.requestFullscreen && !document.fullscreenElement) {
-          this.player.container.requestFullscreen(); //该函数请求全屏
-          this.iconBox.removeChild(this.icon);
-          this.icon = createSvg(fullscreenExitPath);
-          this.iconBox.appendChild(this.icon);
-          this.player.emit('enterFullscreen');
-        } else if (document.fullscreenElement) {
-          document.exitFullscreen(); //退出全屏函数仅仅绑定在document对象上，该点需要切记！！！
-          this.iconBox.removeChild(this.icon);
-          this.icon = createSvg(fullscreenPath);
-          this.iconBox.appendChild(this.icon);
-          this.player.emit('leaveFullscreen');
+        var _this3 = this;
+        // 横屏全屏
+        if (this.player.fullScreenMode === 'Horizontal') {
+          if (screenfull$1.isEnabled && !screenfull$1.isFullscreen) {
+            // 调用浏览器提供的全屏API接口去请求元素的全屏，原生全屏分为  竖屏全屏 + 横屏全屏
+            screenfull$1.request(this.player.container);
+            this.iconBox.removeChild(this.icon);
+            this.icon = createSvg(fullscreenExitPath);
+            this.iconBox.appendChild(this.icon);
+            this.player.container.addEventListener('fullscreenchange', function (e) {
+              _this3.player.emit('enterFullscreen');
+            });
+          } else if (screenfull$1.isFullscreen) {
+            screenfull$1.exit();
+            this.iconBox.removeChild(this.icon);
+            this.icon = createSvg(fullscreenPath);
+            this.iconBox.appendChild(this.icon);
+            this.player.container.addEventListener('fullscreenchange', function (e) {
+              _this3.player.emit('leaveFullscreen');
+            });
+          }
+        } else {
+          // 竖屏全屏
+          if (this.enterFullScreen === false) {
+            this.iconBox.removeChild(this.icon);
+            this.icon = createSvg(fullscreenExitPath);
+            this.iconBox.appendChild(this.icon);
+            addClass(this.player.container, ['video-cross-screen']);
+            this.container.style.width = window.innerHeight + 'px';
+            this.container.style.height = window.innerWidth + 'px';
+            this.player.emit('enterFullscreen');
+          }
         }
+        // if (this.player.container.requestFullscreen && !document.fullscreenElement) {
+        //   this.player.container.requestFullscreen() //该函数请求全屏
+        //   this.iconBox.removeChild(this.icon)
+        //   this.icon = createSvg(fullscreenExitPath)
+        //   this.iconBox.appendChild(this.icon)
+        //   this.player.emit('enterFullscreen')
+        // } else if (document.fullscreenElement) {
+        //   document.exitFullscreen() //退出全屏函数仅仅绑定在document对象上，该点需要切记！！！
+        //   this.iconBox.removeChild(this.icon)
+        //   this.icon = createSvg(fullscreenPath)
+        //   this.iconBox.appendChild(this.icon)
+        //   this.player.emit('leaveFullscreen')
+        // }
       }
     }]);
     return FullScreen;
   }(Options);
 
-  function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var PlayButton = /*#__PURE__*/function (_Component) {
     _inherits(PlayButton, _Component);
-    var _super = _createSuper$l(PlayButton);
+    var _super = _createSuper$m(PlayButton);
     function PlayButton(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, PlayButton);
@@ -5677,7 +7583,7 @@
       key: "initTemplate",
       value: function initTemplate() {
         addClass(this.el, ['video-start-pause', 'video-controller']);
-        this.iconBox = $$o('div.video-icon');
+        this.iconBox = $$n('div.video-icon');
         this.el.appendChild(this.iconBox);
         this.pauseIcon = createSvg(pausePath);
         this.playIcon = createSvg(playPath);
@@ -5721,14 +7627,14 @@
     return PlayButton;
   }(Component);
 
-  function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   /**
    * @description 播放速率的类
    */
   var Playrate = /*#__PURE__*/function (_Options) {
     _inherits(Playrate, _Options);
-    var _super = _createSuper$k(Playrate);
+    var _super = _createSuper$l(Playrate);
     function Playrate(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Playrate);
@@ -5752,14 +7658,14 @@
         this.el['aria-label'] = '播放倍速';
         addClass(this.el, ['video-playrate', 'video-controller']);
         this.el.removeChild(this.iconBox);
-        this.iconBox = $$o('span', null, '倍速');
+        this.iconBox = $$n('span', null, '倍速');
         this.el.appendChild(this.iconBox);
         this.el.removeChild(this.hideBox);
         // this.hideBox = $('ul', { style: { display: 'none' }, 'aria-label': '播放速度调节' })
         addClass(this.hideBox, ['video-playrate-set']);
         this.el.appendChild(this.hideBox);
         for (var i = this.playrateArray.length - 1; i >= 0; i--) {
-          var li = $$o('li');
+          var li = $$n('li');
           li.innerText = this.playrateArray[i];
           if (this.playrateArray[i] === '1.0') {
             li.style.color = '#007aff';
@@ -5791,11 +7697,11 @@
     return Playrate;
   }(Options);
 
-  function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var VolumeCompletedProgress = /*#__PURE__*/function (_Component) {
     _inherits(VolumeCompletedProgress, _Component);
-    var _super = _createSuper$j(VolumeCompletedProgress);
+    var _super = _createSuper$k(VolumeCompletedProgress);
     function VolumeCompletedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, VolumeCompletedProgress);
@@ -5822,11 +7728,11 @@
     return VolumeCompletedProgress;
   }(Component);
 
-  function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Volume = /*#__PURE__*/function (_Options) {
     _inherits(Volume, _Options);
-    var _super = _createSuper$i(Volume);
+    var _super = _createSuper$j(Volume);
     function Volume(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Volume);
@@ -5854,12 +7760,12 @@
         addClass(this.el, ['video-volume', 'video-controller']);
         this.el['aria-label'] = '音量';
         addClass(this.hideBox, ['video-volume-set']);
-        this.volumeProgress = $$o('div.video-volume-progress', {
+        this.volumeProgress = $$n('div.video-volume-progress', {
           style: {
             height: '70px'
           }
         });
-        this.volumeShow = $$o('div.video-volume-show');
+        this.volumeShow = $$n('div.video-volume-show');
         this.volumeShow.innerText = (this.volume * 100).toFixed(0);
         this.volumeCompleted = new VolumeCompletedProgress(this.player, this.volumeProgress, 'div.video-volume-completed');
         this.hideBox.appendChild(this.volumeShow);
@@ -5911,11 +7817,11 @@
     FullScreen: FullScreen
   };
 
-  function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Dot = /*#__PURE__*/function (_Component) {
     _inherits(Dot, _Component);
-    var _super = _createSuper$h(Dot);
+    var _super = _createSuper$i(Dot);
     function Dot(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Dot);
@@ -6029,11 +7935,11 @@
     return Dot;
   }(Component);
 
-  function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var CompletedProgress = /*#__PURE__*/function (_Component) {
     _inherits(CompletedProgress, _Component);
-    var _super = _createSuper$g(CompletedProgress);
+    var _super = _createSuper$h(CompletedProgress);
     function CompletedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, CompletedProgress);
@@ -6096,11 +8002,11 @@
     return CompletedProgress;
   }(Component);
 
-  function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var BufferedProgress = /*#__PURE__*/function (_Component) {
     _inherits(BufferedProgress, _Component);
-    var _super = _createSuper$f(BufferedProgress);
+    var _super = _createSuper$g(BufferedProgress);
     function BufferedProgress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, BufferedProgress);
@@ -6170,14 +8076,14 @@
     }
   }
 
-  var css_248z$6 = ".video-progress {\n  width: 100%;\n  height: 3px;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #007aff;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
-  styleInject(css_248z$6);
+  var css_248z$7 = ".video-progress {\n  width: 100%;\n  height: 3px;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #007aff;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
+  styleInject(css_248z$7);
 
-  function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Progress = /*#__PURE__*/function (_Component) {
     _inherits(Progress, _Component);
-    var _super = _createSuper$e(Progress);
+    var _super = _createSuper$f(Progress);
     function Progress(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Progress);
@@ -6241,7 +8147,7 @@
     return Progress;
   }(Component);
 
-  var $$n = _export;
+  var $$a = _export;
   var $map = arrayIteration.map;
   var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
 
@@ -6250,37 +8156,37 @@
   // `Array.prototype.map` method
   // https://tc39.es/ecma262/#sec-array.prototype.map
   // with adding support of @@species
-  $$n({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
+  $$a({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
     map: function map(callbackfn /* , thisArg */) {
       return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
     }
   });
 
-  var entryVirtual$3 = entryVirtual$b;
+  var entryVirtual$1 = entryVirtual$b;
 
-  var map$6 = entryVirtual$3('Array').map;
+  var map$6 = entryVirtual$1('Array').map;
 
-  var isPrototypeOf$4 = objectIsPrototypeOf;
-  var method$3 = map$6;
+  var isPrototypeOf$1 = objectIsPrototypeOf;
+  var method$1 = map$6;
 
-  var ArrayPrototype$3 = Array.prototype;
+  var ArrayPrototype$1 = Array.prototype;
 
   var map$5 = function (it) {
     var own = it.map;
-    return it === ArrayPrototype$3 || (isPrototypeOf$4(ArrayPrototype$3, it) && own === ArrayPrototype$3.map) ? method$3 : own;
+    return it === ArrayPrototype$1 || (isPrototypeOf$1(ArrayPrototype$1, it) && own === ArrayPrototype$1.map) ? method$1 : own;
   };
 
-  var parent$z = map$5;
+  var parent$q = map$5;
 
-  var map$4 = parent$z;
+  var map$4 = parent$q;
 
-  var parent$y = map$4;
+  var parent$p = map$4;
 
-  var map$3 = parent$y;
+  var map$3 = parent$p;
 
-  var parent$x = map$3;
+  var parent$o = map$3;
 
-  var map$2 = parent$x;
+  var map$2 = parent$o;
 
   var map$1 = map$2;
 
@@ -6288,11 +8194,11 @@
 
   var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map);
 
-  function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var FullPage = /*#__PURE__*/function (_Options) {
     _inherits(FullPage, _Options);
-    var _super = _createSuper$d(FullPage);
+    var _super = _createSuper$e(FullPage);
     function FullPage(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, FullPage);
@@ -6355,11 +8261,11 @@
     return FullPage;
   }(Options);
 
-  function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var PicInPic = /*#__PURE__*/function (_Options) {
     _inherits(PicInPic, _Options);
-    var _super = _createSuper$c(PicInPic);
+    var _super = _createSuper$d(PicInPic);
     function PicInPic(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, PicInPic);
@@ -6411,14 +8317,14 @@
     return PicInPic;
   }(Options);
 
-  var fails$7 = fails$x;
-  var wellKnownSymbol$4 = wellKnownSymbol$q;
+  var fails$4 = fails$x;
+  var wellKnownSymbol$1 = wellKnownSymbol$q;
   var DESCRIPTORS$5 = descriptors;
-  var IS_PURE$1 = isPure;
+  var IS_PURE = isPure;
 
-  var ITERATOR$2 = wellKnownSymbol$4('iterator');
+  var ITERATOR$2 = wellKnownSymbol$1('iterator');
 
-  var urlConstructorDetection = !fails$7(function () {
+  var urlConstructorDetection = !fails$4(function () {
     // eslint-disable-next-line unicorn/relative-url-style -- required for testing
     var url = new URL('b?a=1&b=2&c=3', 'http://a');
     var searchParams = url.searchParams;
@@ -6428,8 +8334,8 @@
       searchParams['delete']('b');
       result += key + value;
     });
-    return (IS_PURE$1 && !url.toJSON)
-      || (!searchParams.size && (IS_PURE$1 || !DESCRIPTORS$5))
+    return (IS_PURE && !url.toJSON)
+      || (!searchParams.size && (IS_PURE || !DESCRIPTORS$5))
       || !searchParams.sort
       || url.href !== 'http://a/c%20d?a=1&c=3'
       || searchParams.get('c') !== '3'
@@ -6449,7 +8355,7 @@
   });
 
   // based on https://github.com/bestiejs/punycode.js/blob/master/punycode.js
-  var uncurryThis$7 = functionUncurryThis;
+  var uncurryThis$3 = functionUncurryThis;
 
   var maxInt = 2147483647; // aka. 0x7FFFFFFF or 2^31-1
   var base = 36;
@@ -6466,15 +8372,15 @@
   var baseMinusTMin = base - tMin;
 
   var $RangeError = RangeError;
-  var exec$1 = uncurryThis$7(regexSeparators.exec);
+  var exec$1 = uncurryThis$3(regexSeparators.exec);
   var floor$2 = Math.floor;
   var fromCharCode = String.fromCharCode;
-  var charCodeAt = uncurryThis$7(''.charCodeAt);
-  var join$2 = uncurryThis$7([].join);
-  var push$3 = uncurryThis$7([].push);
-  var replace$3 = uncurryThis$7(''.replace);
-  var split$2 = uncurryThis$7(''.split);
-  var toLowerCase$1 = uncurryThis$7(''.toLowerCase);
+  var charCodeAt = uncurryThis$3(''.charCodeAt);
+  var join$2 = uncurryThis$3([].join);
+  var push$2 = uncurryThis$3([].push);
+  var replace$2 = uncurryThis$3(''.replace);
+  var split$2 = uncurryThis$3(''.split);
+  var toLowerCase$1 = uncurryThis$3(''.toLowerCase);
 
   /**
    * Creates an array containing the numeric code points of each Unicode
@@ -6493,15 +8399,15 @@
         // It's a high surrogate, and there is a next character.
         var extra = charCodeAt(string, counter++);
         if ((extra & 0xFC00) == 0xDC00) { // Low surrogate.
-          push$3(output, ((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+          push$2(output, ((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
         } else {
           // It's an unmatched surrogate; only append this code unit, in case the
           // next code unit is the high surrogate of a surrogate pair.
-          push$3(output, value);
+          push$2(output, value);
           counter--;
         }
       } else {
-        push$3(output, value);
+        push$2(output, value);
       }
     }
     return output;
@@ -6554,7 +8460,7 @@
     for (i = 0; i < input.length; i++) {
       currentValue = input[i];
       if (currentValue < 0x80) {
-        push$3(output, fromCharCode(currentValue));
+        push$2(output, fromCharCode(currentValue));
       }
     }
 
@@ -6563,7 +8469,7 @@
 
     // Finish the basic string with a delimiter unless it's empty.
     if (basicLength) {
-      push$3(output, delimiter);
+      push$2(output, delimiter);
     }
 
     // Main encoding loop:
@@ -6600,12 +8506,12 @@
             if (q < t) break;
             var qMinusT = q - t;
             var baseMinusT = base - t;
-            push$3(output, fromCharCode(digitToBasic(t + qMinusT % baseMinusT)));
+            push$2(output, fromCharCode(digitToBasic(t + qMinusT % baseMinusT)));
             q = floor$2(qMinusT / baseMinusT);
             k += base;
           }
 
-          push$3(output, fromCharCode(digitToBasic(q)));
+          push$2(output, fromCharCode(digitToBasic(q)));
           bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
           delta = 0;
           handledCPCount++;
@@ -6620,23 +8526,16 @@
 
   var stringPunycodeToAscii = function (input) {
     var encoded = [];
-    var labels = split$2(replace$3(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
+    var labels = split$2(replace$2(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
     var i, label;
     for (i = 0; i < labels.length; i++) {
       label = labels[i];
-      push$3(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode(label) : label);
+      push$2(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode(label) : label);
     }
     return join$2(encoded, '.');
   };
 
-  var $TypeError$3 = TypeError;
-
-  var validateArgumentsLength$5 = function (passed, required) {
-    if (passed < required) throw $TypeError$3('Not enough arguments');
-    return passed;
-  };
-
-  var arraySlice$3 = arraySliceSimple;
+  var arraySlice$2 = arraySliceSimple;
 
   var floor$1 = Math.floor;
 
@@ -6645,8 +8544,8 @@
     var middle = floor$1(length / 2);
     return length < 8 ? insertionSort(array, comparefn) : merge(
       array,
-      mergeSort(arraySlice$3(array, 0, middle), comparefn),
-      mergeSort(arraySlice$3(array, middle), comparefn),
+      mergeSort(arraySlice$2(array, 0, middle), comparefn),
+      mergeSort(arraySlice$2(array, middle), comparefn),
       comparefn
     );
   };
@@ -6683,47 +8582,47 @@
 
   // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-  var $$m = _export;
-  var global$b = global$r;
-  var call$6 = functionCall;
-  var uncurryThis$6 = functionUncurryThis;
+  var $$9 = _export;
+  var global$6 = global$r;
+  var call = functionCall;
+  var uncurryThis$2 = functionUncurryThis;
   var DESCRIPTORS$4 = descriptors;
   var USE_NATIVE_URL$2 = urlConstructorDetection;
-  var defineBuiltIn$2 = defineBuiltIn$8;
+  var defineBuiltIn$1 = defineBuiltIn$8;
   var defineBuiltInAccessor$1 = defineBuiltInAccessor$5;
   var defineBuiltIns = defineBuiltIns$2;
-  var setToStringTag$2 = setToStringTag$9;
+  var setToStringTag$1 = setToStringTag$9;
   var createIteratorConstructor = iteratorCreateConstructor;
-  var InternalStateModule$2 = internalState;
-  var anInstance$2 = anInstance$5;
-  var isCallable$5 = isCallable$q;
-  var hasOwn$3 = hasOwnProperty_1;
-  var bind$4 = functionBindContext;
-  var classof$1 = classof$c;
-  var anObject$3 = anObject$f;
-  var isObject$3 = isObject$j;
+  var InternalStateModule$1 = internalState;
+  var anInstance$1 = anInstance$5;
+  var isCallable$1 = isCallable$q;
+  var hasOwn$1 = hasOwnProperty_1;
+  var bind$1 = functionBindContext;
+  var classof = classof$c;
+  var anObject = anObject$f;
+  var isObject = isObject$j;
   var $toString$1 = toString$b;
-  var create$1 = objectCreate;
-  var createPropertyDescriptor$2 = createPropertyDescriptor$8;
+  var create = objectCreate;
+  var createPropertyDescriptor = createPropertyDescriptor$8;
   var getIterator = getIterator$3;
   var getIteratorMethod = getIteratorMethod$a;
-  var validateArgumentsLength$4 = validateArgumentsLength$5;
-  var wellKnownSymbol$3 = wellKnownSymbol$q;
+  var validateArgumentsLength$3 = validateArgumentsLength$5;
+  var wellKnownSymbol = wellKnownSymbol$q;
   var arraySort = arraySort$1;
 
-  var ITERATOR$1 = wellKnownSymbol$3('iterator');
+  var ITERATOR$1 = wellKnownSymbol('iterator');
   var URL_SEARCH_PARAMS = 'URLSearchParams';
   var URL_SEARCH_PARAMS_ITERATOR = URL_SEARCH_PARAMS + 'Iterator';
-  var setInternalState$2 = InternalStateModule$2.set;
-  var getInternalParamsState = InternalStateModule$2.getterFor(URL_SEARCH_PARAMS);
-  var getInternalIteratorState = InternalStateModule$2.getterFor(URL_SEARCH_PARAMS_ITERATOR);
+  var setInternalState$1 = InternalStateModule$1.set;
+  var getInternalParamsState = InternalStateModule$1.getterFor(URL_SEARCH_PARAMS);
+  var getInternalIteratorState = InternalStateModule$1.getterFor(URL_SEARCH_PARAMS_ITERATOR);
   // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-  var getOwnPropertyDescriptor$9 = Object.getOwnPropertyDescriptor;
+  var getOwnPropertyDescriptor$8 = Object.getOwnPropertyDescriptor;
 
   // Avoid NodeJS experimental warning
   var safeGetBuiltIn = function (name) {
-    if (!DESCRIPTORS$4) return global$b[name];
-    var descriptor = getOwnPropertyDescriptor$9(global$b, name);
+    if (!DESCRIPTORS$4) return global$6[name];
+    var descriptor = getOwnPropertyDescriptor$8(global$6, name);
     return descriptor && descriptor.value;
   };
 
@@ -6732,18 +8631,18 @@
   var Headers = safeGetBuiltIn('Headers');
   var RequestPrototype = NativeRequest && NativeRequest.prototype;
   var HeadersPrototype = Headers && Headers.prototype;
-  var RegExp$1 = global$b.RegExp;
-  var TypeError$3 = global$b.TypeError;
-  var decodeURIComponent = global$b.decodeURIComponent;
-  var encodeURIComponent$1 = global$b.encodeURIComponent;
-  var charAt$2 = uncurryThis$6(''.charAt);
-  var join$1 = uncurryThis$6([].join);
-  var push$2 = uncurryThis$6([].push);
-  var replace$2 = uncurryThis$6(''.replace);
-  var shift$1 = uncurryThis$6([].shift);
-  var splice$7 = uncurryThis$6([].splice);
-  var split$1 = uncurryThis$6(''.split);
-  var stringSlice$1 = uncurryThis$6(''.slice);
+  var RegExp$1 = global$6.RegExp;
+  var TypeError$2 = global$6.TypeError;
+  var decodeURIComponent = global$6.decodeURIComponent;
+  var encodeURIComponent$1 = global$6.encodeURIComponent;
+  var charAt$2 = uncurryThis$2(''.charAt);
+  var join$1 = uncurryThis$2([].join);
+  var push$1 = uncurryThis$2([].push);
+  var replace$1 = uncurryThis$2(''.replace);
+  var shift$1 = uncurryThis$2([].shift);
+  var splice$7 = uncurryThis$2([].splice);
+  var split$1 = uncurryThis$2(''.split);
+  var stringSlice$1 = uncurryThis$2(''.slice);
 
   var plus = /\+/g;
   var sequences = Array(4);
@@ -6761,13 +8660,13 @@
   };
 
   var deserialize = function (it) {
-    var result = replace$2(it, plus, ' ');
+    var result = replace$1(it, plus, ' ');
     var bytes = 4;
     try {
       return decodeURIComponent(result);
     } catch (error) {
       while (bytes) {
-        result = replace$2(result, percentSequence(bytes--), percentDecode);
+        result = replace$1(result, percentSequence(bytes--), percentDecode);
       }
       return result;
     }
@@ -6789,11 +8688,11 @@
   };
 
   var serialize = function (it) {
-    return replace$2(encodeURIComponent$1(it), find, replacer);
+    return replace$1(encodeURIComponent$1(it), find, replacer);
   };
 
   var URLSearchParamsIterator = createIteratorConstructor(function Iterator(params, kind) {
-    setInternalState$2(this, {
+    setInternalState$1(this, {
       type: URL_SEARCH_PARAMS_ITERATOR,
       iterator: getIterator(getInternalParamsState(params).entries),
       kind: kind
@@ -6813,7 +8712,7 @@
     this.url = null;
 
     if (init !== undefined) {
-      if (isObject$3(init)) this.parseObject(init);
+      if (isObject(init)) this.parseObject(init);
       else this.parseQuery(typeof init == 'string' ? charAt$2(init, 0) === '?' ? stringSlice$1(init, 1) : init : $toString$1(init));
     }
   };
@@ -6831,18 +8730,18 @@
       if (iteratorMethod) {
         iterator = getIterator(object, iteratorMethod);
         next = iterator.next;
-        while (!(step = call$6(next, iterator)).done) {
-          entryIterator = getIterator(anObject$3(step.value));
+        while (!(step = call(next, iterator)).done) {
+          entryIterator = getIterator(anObject(step.value));
           entryNext = entryIterator.next;
           if (
-            (first = call$6(entryNext, entryIterator)).done ||
-            (second = call$6(entryNext, entryIterator)).done ||
-            !call$6(entryNext, entryIterator).done
-          ) throw TypeError$3('Expected sequence with length 2');
-          push$2(this.entries, { key: $toString$1(first.value), value: $toString$1(second.value) });
+            (first = call(entryNext, entryIterator)).done ||
+            (second = call(entryNext, entryIterator)).done ||
+            !call(entryNext, entryIterator).done
+          ) throw TypeError$2('Expected sequence with length 2');
+          push$1(this.entries, { key: $toString$1(first.value), value: $toString$1(second.value) });
         }
-      } else for (var key in object) if (hasOwn$3(object, key)) {
-        push$2(this.entries, { key: key, value: $toString$1(object[key]) });
+      } else for (var key in object) if (hasOwn$1(object, key)) {
+        push$1(this.entries, { key: key, value: $toString$1(object[key]) });
       }
     },
     parseQuery: function (query) {
@@ -6854,7 +8753,7 @@
           attribute = attributes[index++];
           if (attribute.length) {
             entry = split$1(attribute, '=');
-            push$2(this.entries, {
+            push$1(this.entries, {
               key: deserialize(shift$1(entry)),
               value: deserialize(join$1(entry, '='))
             });
@@ -6869,7 +8768,7 @@
       var entry;
       while (index < entries.length) {
         entry = entries[index++];
-        push$2(result, serialize(entry.key) + '=' + serialize(entry.value));
+        push$1(result, serialize(entry.key) + '=' + serialize(entry.value));
       } return join$1(result, '&');
     },
     update: function () {
@@ -6884,9 +8783,9 @@
   // `URLSearchParams` constructor
   // https://url.spec.whatwg.org/#interface-urlsearchparams
   var URLSearchParamsConstructor = function URLSearchParams(/* init */) {
-    anInstance$2(this, URLSearchParamsPrototype);
+    anInstance$1(this, URLSearchParamsPrototype);
     var init = arguments.length > 0 ? arguments[0] : undefined;
-    var state = setInternalState$2(this, new URLSearchParamsState(init));
+    var state = setInternalState$1(this, new URLSearchParamsState(init));
     if (!DESCRIPTORS$4) this.length = state.entries.length;
   };
 
@@ -6896,16 +8795,16 @@
     // `URLSearchParams.prototype.append` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-append
     append: function append(name, value) {
-      validateArgumentsLength$4(arguments.length, 2);
+      validateArgumentsLength$3(arguments.length, 2);
       var state = getInternalParamsState(this);
-      push$2(state.entries, { key: $toString$1(name), value: $toString$1(value) });
+      push$1(state.entries, { key: $toString$1(name), value: $toString$1(value) });
       if (!DESCRIPTORS$4) this.length++;
       state.updateURL();
     },
     // `URLSearchParams.prototype.delete` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-delete
     'delete': function (name) {
-      validateArgumentsLength$4(arguments.length, 1);
+      validateArgumentsLength$3(arguments.length, 1);
       var state = getInternalParamsState(this);
       var entries = state.entries;
       var key = $toString$1(name);
@@ -6920,7 +8819,7 @@
     // `URLSearchParams.prototype.get` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-get
     get: function get(name) {
-      validateArgumentsLength$4(arguments.length, 1);
+      validateArgumentsLength$3(arguments.length, 1);
       var entries = getInternalParamsState(this).entries;
       var key = $toString$1(name);
       var index = 0;
@@ -6932,20 +8831,20 @@
     // `URLSearchParams.prototype.getAll` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-getall
     getAll: function getAll(name) {
-      validateArgumentsLength$4(arguments.length, 1);
+      validateArgumentsLength$3(arguments.length, 1);
       var entries = getInternalParamsState(this).entries;
       var key = $toString$1(name);
       var result = [];
       var index = 0;
       for (; index < entries.length; index++) {
-        if (entries[index].key === key) push$2(result, entries[index].value);
+        if (entries[index].key === key) push$1(result, entries[index].value);
       }
       return result;
     },
     // `URLSearchParams.prototype.has` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-has
     has: function has(name) {
-      validateArgumentsLength$4(arguments.length, 1);
+      validateArgumentsLength$3(arguments.length, 1);
       var entries = getInternalParamsState(this).entries;
       var key = $toString$1(name);
       var index = 0;
@@ -6957,7 +8856,7 @@
     // `URLSearchParams.prototype.set` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-set
     set: function set(name, value) {
-      validateArgumentsLength$4(arguments.length, 1);
+      validateArgumentsLength$3(arguments.length, 1);
       var state = getInternalParamsState(this);
       var entries = state.entries;
       var found = false;
@@ -6975,7 +8874,7 @@
           }
         }
       }
-      if (!found) push$2(entries, { key: key, value: val });
+      if (!found) push$1(entries, { key: key, value: val });
       if (!DESCRIPTORS$4) this.length = entries.length;
       state.updateURL();
     },
@@ -6991,7 +8890,7 @@
     // `URLSearchParams.prototype.forEach` method
     forEach: function forEach(callback /* , thisArg */) {
       var entries = getInternalParamsState(this).entries;
-      var boundFunction = bind$4(callback, arguments.length > 1 ? arguments[1] : undefined);
+      var boundFunction = bind$1(callback, arguments.length > 1 ? arguments[1] : undefined);
       var index = 0;
       var entry;
       while (index < entries.length) {
@@ -7014,11 +8913,11 @@
   }, { enumerable: true });
 
   // `URLSearchParams.prototype[@@iterator]` method
-  defineBuiltIn$2(URLSearchParamsPrototype, ITERATOR$1, URLSearchParamsPrototype.entries, { name: 'entries' });
+  defineBuiltIn$1(URLSearchParamsPrototype, ITERATOR$1, URLSearchParamsPrototype.entries, { name: 'entries' });
 
   // `URLSearchParams.prototype.toString` method
   // https://url.spec.whatwg.org/#urlsearchparams-stringification-behavior
-  defineBuiltIn$2(URLSearchParamsPrototype, 'toString', function toString() {
+  defineBuiltIn$1(URLSearchParamsPrototype, 'toString', function toString() {
     return getInternalParamsState(this).serialize();
   }, { enumerable: true });
 
@@ -7032,52 +8931,52 @@
     enumerable: true
   });
 
-  setToStringTag$2(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
+  setToStringTag$1(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
 
-  $$m({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
+  $$9({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
     URLSearchParams: URLSearchParamsConstructor
   });
 
   // Wrap `fetch` and `Request` for correct work with polyfilled `URLSearchParams`
-  if (!USE_NATIVE_URL$2 && isCallable$5(Headers)) {
-    var headersHas = uncurryThis$6(HeadersPrototype.has);
-    var headersSet = uncurryThis$6(HeadersPrototype.set);
+  if (!USE_NATIVE_URL$2 && isCallable$1(Headers)) {
+    var headersHas = uncurryThis$2(HeadersPrototype.has);
+    var headersSet = uncurryThis$2(HeadersPrototype.set);
 
     var wrapRequestOptions = function (init) {
-      if (isObject$3(init)) {
+      if (isObject(init)) {
         var body = init.body;
         var headers;
-        if (classof$1(body) === URL_SEARCH_PARAMS) {
+        if (classof(body) === URL_SEARCH_PARAMS) {
           headers = init.headers ? new Headers(init.headers) : new Headers();
           if (!headersHas(headers, 'content-type')) {
             headersSet(headers, 'content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
           }
-          return create$1(init, {
-            body: createPropertyDescriptor$2(0, $toString$1(body)),
-            headers: createPropertyDescriptor$2(0, headers)
+          return create(init, {
+            body: createPropertyDescriptor(0, $toString$1(body)),
+            headers: createPropertyDescriptor(0, headers)
           });
         }
       } return init;
     };
 
-    if (isCallable$5(nativeFetch)) {
-      $$m({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
+    if (isCallable$1(nativeFetch)) {
+      $$9({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
         fetch: function fetch(input /* , init */) {
           return nativeFetch(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
         }
       });
     }
 
-    if (isCallable$5(NativeRequest)) {
+    if (isCallable$1(NativeRequest)) {
       var RequestConstructor = function Request(input /* , init */) {
-        anInstance$2(this, RequestPrototype);
+        anInstance$1(this, RequestPrototype);
         return new NativeRequest(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
       };
 
       RequestPrototype.constructor = RequestConstructor;
       RequestConstructor.prototype = RequestPrototype;
 
-      $$m({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
+      $$9({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
         Request: RequestConstructor
       });
     }
@@ -7090,49 +8989,49 @@
 
   // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-  var $$l = _export;
+  var $$8 = _export;
   var DESCRIPTORS$3 = descriptors;
   var USE_NATIVE_URL$1 = urlConstructorDetection;
-  var global$a = global$r;
-  var bind$3 = functionBindContext;
-  var uncurryThis$5 = functionUncurryThis;
-  var defineBuiltIn$1 = defineBuiltIn$8;
+  var global$5 = global$r;
+  var bind = functionBindContext;
+  var uncurryThis$1 = functionUncurryThis;
+  var defineBuiltIn = defineBuiltIn$8;
   var defineBuiltInAccessor = defineBuiltInAccessor$5;
-  var anInstance$1 = anInstance$5;
-  var hasOwn$2 = hasOwnProperty_1;
+  var anInstance = anInstance$5;
+  var hasOwn = hasOwnProperty_1;
   var assign = objectAssign;
   var arrayFrom = arrayFrom$1;
-  var arraySlice$2 = arraySliceSimple;
+  var arraySlice$1 = arraySliceSimple;
   var codeAt = stringMultibyte.codeAt;
   var toASCII = stringPunycodeToAscii;
   var $toString = toString$b;
-  var setToStringTag$1 = setToStringTag$9;
-  var validateArgumentsLength$3 = validateArgumentsLength$5;
+  var setToStringTag = setToStringTag$9;
+  var validateArgumentsLength$2 = validateArgumentsLength$5;
   var URLSearchParamsModule = web_urlSearchParams_constructor;
-  var InternalStateModule$1 = internalState;
+  var InternalStateModule = internalState;
 
-  var setInternalState$1 = InternalStateModule$1.set;
-  var getInternalURLState = InternalStateModule$1.getterFor('URL');
+  var setInternalState = InternalStateModule.set;
+  var getInternalURLState = InternalStateModule.getterFor('URL');
   var URLSearchParams$1 = URLSearchParamsModule.URLSearchParams;
   var getInternalSearchParamsState = URLSearchParamsModule.getState;
 
-  var NativeURL = global$a.URL;
-  var TypeError$2 = global$a.TypeError;
-  var parseInt$1 = global$a.parseInt;
+  var NativeURL = global$5.URL;
+  var TypeError$1 = global$5.TypeError;
+  var parseInt$1 = global$5.parseInt;
   var floor = Math.floor;
   var pow = Math.pow;
-  var charAt$1 = uncurryThis$5(''.charAt);
-  var exec = uncurryThis$5(/./.exec);
-  var join = uncurryThis$5([].join);
-  var numberToString = uncurryThis$5(1.0.toString);
-  var pop = uncurryThis$5([].pop);
-  var push$1 = uncurryThis$5([].push);
-  var replace$1 = uncurryThis$5(''.replace);
-  var shift = uncurryThis$5([].shift);
-  var split = uncurryThis$5(''.split);
-  var stringSlice = uncurryThis$5(''.slice);
-  var toLowerCase = uncurryThis$5(''.toLowerCase);
-  var unshift = uncurryThis$5([].unshift);
+  var charAt$1 = uncurryThis$1(''.charAt);
+  var exec = uncurryThis$1(/./.exec);
+  var join = uncurryThis$1([].join);
+  var numberToString = uncurryThis$1(1.0.toString);
+  var pop = uncurryThis$1([].pop);
+  var push = uncurryThis$1([].push);
+  var replace = uncurryThis$1(''.replace);
+  var shift = uncurryThis$1([].shift);
+  var split = uncurryThis$1(''.split);
+  var stringSlice = uncurryThis$1(''.slice);
+  var toLowerCase = uncurryThis$1(''.toLowerCase);
+  var unshift = uncurryThis$1([].unshift);
 
   var INVALID_AUTHORITY = 'Invalid authority';
   var INVALID_SCHEME = 'Invalid scheme';
@@ -7180,7 +9079,7 @@
         if (!exec(radix == 10 ? DEC : radix == 8 ? OCT : HEX, part)) return input;
         number = parseInt$1(part, radix);
       }
-      push$1(numbers, number);
+      push(numbers, number);
     }
     for (index = 0; index < partsLength; index++) {
       number = numbers[index];
@@ -7341,7 +9240,7 @@
 
   var percentEncode = function (chr, set) {
     var code = codeAt(chr, 0);
-    return code > 0x20 && code < 0x7F && !hasOwn$2(set, chr) ? chr : encodeURIComponent(chr);
+    return code > 0x20 && code < 0x7F && !hasOwn(set, chr) ? chr : encodeURIComponent(chr);
   };
 
   // https://url.spec.whatwg.org/#special-scheme
@@ -7409,12 +9308,12 @@
     var baseState, failure, searchParams;
     if (isBase) {
       failure = this.parse(urlString);
-      if (failure) throw TypeError$2(failure);
+      if (failure) throw TypeError$1(failure);
       this.searchParams = null;
     } else {
       if (base !== undefined) baseState = new URLState(base, true);
       failure = this.parse(urlString, null, baseState);
-      if (failure) throw TypeError$2(failure);
+      if (failure) throw TypeError$1(failure);
       searchParams = getInternalSearchParamsState(new URLSearchParams$1());
       searchParams.bindURL(this);
       this.searchParams = searchParams;
@@ -7447,11 +9346,11 @@
         url.query = null;
         url.fragment = null;
         url.cannotBeABaseURL = false;
-        input = replace$1(input, LEADING_C0_CONTROL_OR_SPACE, '');
-        input = replace$1(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
+        input = replace(input, LEADING_C0_CONTROL_OR_SPACE, '');
+        input = replace(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
       }
 
-      input = replace$1(input, TAB_AND_NEW_LINE, '');
+      input = replace(input, TAB_AND_NEW_LINE, '');
 
       codePoints = arrayFrom(input);
 
@@ -7473,7 +9372,7 @@
               buffer += toLowerCase(chr);
             } else if (chr == ':') {
               if (stateOverride && (
-                (url.isSpecial() != hasOwn$2(specialSchemes, buffer)) ||
+                (url.isSpecial() != hasOwn(specialSchemes, buffer)) ||
                 (buffer == 'file' && (url.includesCredentials() || url.port !== null)) ||
                 (url.scheme == 'file' && !url.host)
               )) return;
@@ -7494,7 +9393,7 @@
                 pointer++;
               } else {
                 url.cannotBeABaseURL = true;
-                push$1(url.path, '');
+                push(url.path, '');
                 state = CANNOT_BE_A_BASE_URL_PATH;
               }
             } else if (!stateOverride) {
@@ -7509,7 +9408,7 @@
             if (!base || (base.cannotBeABaseURL && chr != '#')) return INVALID_SCHEME;
             if (base.cannotBeABaseURL && chr == '#') {
               url.scheme = base.scheme;
-              url.path = arraySlice$2(base.path);
+              url.path = arraySlice$1(base.path);
               url.query = base.query;
               url.fragment = '';
               url.cannotBeABaseURL = true;
@@ -7544,7 +9443,7 @@
               url.password = base.password;
               url.host = base.host;
               url.port = base.port;
-              url.path = arraySlice$2(base.path);
+              url.path = arraySlice$1(base.path);
               url.query = base.query;
             } else if (chr == '/' || (chr == '\\' && url.isSpecial())) {
               state = RELATIVE_SLASH;
@@ -7553,7 +9452,7 @@
               url.password = base.password;
               url.host = base.host;
               url.port = base.port;
-              url.path = arraySlice$2(base.path);
+              url.path = arraySlice$1(base.path);
               url.query = '';
               state = QUERY;
             } else if (chr == '#') {
@@ -7561,7 +9460,7 @@
               url.password = base.password;
               url.host = base.host;
               url.port = base.port;
-              url.path = arraySlice$2(base.path);
+              url.path = arraySlice$1(base.path);
               url.query = base.query;
               url.fragment = '';
               state = FRAGMENT;
@@ -7570,7 +9469,7 @@
               url.password = base.password;
               url.host = base.host;
               url.port = base.port;
-              url.path = arraySlice$2(base.path);
+              url.path = arraySlice$1(base.path);
               url.path.length--;
               state = PATH;
               continue;
@@ -7685,23 +9584,23 @@
             else if (base && base.scheme == 'file') {
               if (chr == EOF) {
                 url.host = base.host;
-                url.path = arraySlice$2(base.path);
+                url.path = arraySlice$1(base.path);
                 url.query = base.query;
               } else if (chr == '?') {
                 url.host = base.host;
-                url.path = arraySlice$2(base.path);
+                url.path = arraySlice$1(base.path);
                 url.query = '';
                 state = QUERY;
               } else if (chr == '#') {
                 url.host = base.host;
-                url.path = arraySlice$2(base.path);
+                url.path = arraySlice$1(base.path);
                 url.query = base.query;
                 url.fragment = '';
                 state = FRAGMENT;
               } else {
-                if (!startsWithWindowsDriveLetter(join(arraySlice$2(codePoints, pointer), ''))) {
+                if (!startsWithWindowsDriveLetter(join(arraySlice$1(codePoints, pointer), ''))) {
                   url.host = base.host;
-                  url.path = arraySlice$2(base.path);
+                  url.path = arraySlice$1(base.path);
                   url.shortenPath();
                 }
                 state = PATH;
@@ -7717,8 +9616,8 @@
               state = FILE_HOST;
               break;
             }
-            if (base && base.scheme == 'file' && !startsWithWindowsDriveLetter(join(arraySlice$2(codePoints, pointer), ''))) {
-              if (isWindowsDriveLetter(base.path[0], true)) push$1(url.path, base.path[0]);
+            if (base && base.scheme == 'file' && !startsWithWindowsDriveLetter(join(arraySlice$1(codePoints, pointer), ''))) {
+              if (isWindowsDriveLetter(base.path[0], true)) push(url.path, base.path[0]);
               else url.host = base.host;
             }
             state = PATH;
@@ -7767,18 +9666,18 @@
               if (isDoubleDot(buffer)) {
                 url.shortenPath();
                 if (chr != '/' && !(chr == '\\' && url.isSpecial())) {
-                  push$1(url.path, '');
+                  push(url.path, '');
                 }
               } else if (isSingleDot(buffer)) {
                 if (chr != '/' && !(chr == '\\' && url.isSpecial())) {
-                  push$1(url.path, '');
+                  push(url.path, '');
                 }
               } else {
                 if (url.scheme == 'file' && !url.path.length && isWindowsDriveLetter(buffer)) {
                   if (url.host) url.host = '';
                   buffer = charAt$1(buffer, 0) + ':'; // normalize windows drive letter
                 }
-                push$1(url.path, buffer);
+                push(url.path, buffer);
               }
               buffer = '';
               if (url.scheme == 'file' && (chr == EOF || chr == '?' || chr == '#')) {
@@ -7861,7 +9760,7 @@
     },
     // https://url.spec.whatwg.org/#is-special
     isSpecial: function () {
-      return hasOwn$2(specialSchemes, this.scheme);
+      return hasOwn(specialSchemes, this.scheme);
     },
     // https://url.spec.whatwg.org/#shorten-a-urls-path
     shortenPath: function () {
@@ -7899,7 +9798,7 @@
     // https://url.spec.whatwg.org/#dom-url-href
     setHref: function (href) {
       var failure = this.parse(href);
-      if (failure) throw TypeError$2(failure);
+      if (failure) throw TypeError$1(failure);
       this.searchParams.update();
     },
     // https://url.spec.whatwg.org/#dom-url-origin
@@ -8030,9 +9929,9 @@
   // `URL` constructor
   // https://url.spec.whatwg.org/#url-class
   var URLConstructor = function URL(url /* , base */) {
-    var that = anInstance$1(this, URLPrototype);
-    var base = validateArgumentsLength$3(arguments.length, 1) > 1 ? arguments[1] : undefined;
-    var state = setInternalState$1(that, new URLState(url, false, base));
+    var that = anInstance(this, URLPrototype);
+    var base = validateArgumentsLength$2(arguments.length, 1) > 1 ? arguments[1] : undefined;
+    var state = setInternalState(that, new URLState(url, false, base));
     if (!DESCRIPTORS$3) {
       that.href = state.serialize();
       that.origin = state.getOrigin();
@@ -8105,13 +10004,13 @@
 
   // `URL.prototype.toJSON` method
   // https://url.spec.whatwg.org/#dom-url-tojson
-  defineBuiltIn$1(URLPrototype, 'toJSON', function toJSON() {
+  defineBuiltIn(URLPrototype, 'toJSON', function toJSON() {
     return getInternalURLState(this).serialize();
   }, { enumerable: true });
 
   // `URL.prototype.toString` method
   // https://url.spec.whatwg.org/#URL-stringification-behavior
-  defineBuiltIn$1(URLPrototype, 'toString', function toString() {
+  defineBuiltIn(URLPrototype, 'toString', function toString() {
     return getInternalURLState(this).serialize();
   }, { enumerable: true });
 
@@ -8120,40 +10019,40 @@
     var nativeRevokeObjectURL = NativeURL.revokeObjectURL;
     // `URL.createObjectURL` method
     // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
-    if (nativeCreateObjectURL) defineBuiltIn$1(URLConstructor, 'createObjectURL', bind$3(nativeCreateObjectURL, NativeURL));
+    if (nativeCreateObjectURL) defineBuiltIn(URLConstructor, 'createObjectURL', bind(nativeCreateObjectURL, NativeURL));
     // `URL.revokeObjectURL` method
     // https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL
-    if (nativeRevokeObjectURL) defineBuiltIn$1(URLConstructor, 'revokeObjectURL', bind$3(nativeRevokeObjectURL, NativeURL));
+    if (nativeRevokeObjectURL) defineBuiltIn(URLConstructor, 'revokeObjectURL', bind(nativeRevokeObjectURL, NativeURL));
   }
 
-  setToStringTag$1(URLConstructor, 'URL');
+  setToStringTag(URLConstructor, 'URL');
 
-  $$l({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
+  $$8({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
     URL: URLConstructor
   });
 
-  var $$k = _export;
-  var getBuiltIn$4 = getBuiltIn$h;
-  var fails$6 = fails$x;
-  var validateArgumentsLength$2 = validateArgumentsLength$5;
-  var toString$2 = toString$b;
+  var $$7 = _export;
+  var getBuiltIn = getBuiltIn$h;
+  var fails$3 = fails$x;
+  var validateArgumentsLength$1 = validateArgumentsLength$5;
+  var toString$1 = toString$b;
   var USE_NATIVE_URL = urlConstructorDetection;
 
-  var URL$1 = getBuiltIn$4('URL');
+  var URL$1 = getBuiltIn('URL');
 
   // https://github.com/nodejs/node/issues/47505
   // https://github.com/denoland/deno/issues/18893
-  var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$6(function () {
+  var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$3(function () {
     URL$1.canParse();
   });
 
   // `URL.canParse` method
   // https://url.spec.whatwg.org/#dom-url-canparse
-  $$k({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
+  $$7({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
     canParse: function canParse(url) {
-      var length = validateArgumentsLength$2(arguments.length, 1);
-      var urlString = toString$2(url);
-      var base = length < 2 || arguments[1] === undefined ? undefined : toString$2(arguments[1]);
+      var length = validateArgumentsLength$1(arguments.length, 1);
+      var urlString = toString$1(url);
+      var base = length < 2 || arguments[1] === undefined ? undefined : toString$1(arguments[1]);
       try {
         return !!new URL$1(urlString, base);
       } catch (error) {
@@ -8162,21 +10061,21 @@
     }
   });
 
-  var path$7 = path$n;
+  var path$6 = path$n;
 
-  var url$5 = path$7.URL;
+  var url$5 = path$6.URL;
 
-  var parent$w = url$5;
+  var parent$n = url$5;
 
-  var url$4 = parent$w;
+  var url$4 = parent$n;
 
-  var parent$v = url$4;
+  var parent$m = url$4;
 
-  var url$3 = parent$v;
+  var url$3 = parent$m;
 
-  var parent$u = url$3;
+  var parent$l = url$3;
 
-  var url$2 = parent$u;
+  var url$2 = parent$l;
 
   var url$1 = url$2;
 
@@ -8184,11 +10083,11 @@
 
   var _URL = /*@__PURE__*/getDefaultExportFromCjs(url);
 
-  function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var ScreenShot = /*#__PURE__*/function (_Options) {
     _inherits(ScreenShot, _Options);
-    var _super = _createSuper$b(ScreenShot);
+    var _super = _createSuper$c(ScreenShot);
     function ScreenShot(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, ScreenShot);
@@ -8255,11 +10154,11 @@
     return ScreenShot;
   }(Options);
 
-  function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var SubSetting = /*#__PURE__*/function (_Options) {
     _inherits(SubSetting, _Options);
-    var _super = _createSuper$a(SubSetting);
+    var _super = _createSuper$b(SubSetting);
     function SubSetting(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, SubSetting);
@@ -8291,11 +10190,11 @@
     return SubSetting;
   }(Options);
 
-  function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var DutaionShow = /*#__PURE__*/function (_Component) {
     _inherits(DutaionShow, _Component);
-    var _super = _createSuper$9(DutaionShow);
+    var _super = _createSuper$a(DutaionShow);
     function DutaionShow(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, DutaionShow);
@@ -8348,11 +10247,11 @@
     return DutaionShow;
   }(Component);
 
-  function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var VideoShot = /*#__PURE__*/function (_Options) {
     _inherits(VideoShot, _Options);
-    var _super = _createSuper$8(VideoShot);
+    var _super = _createSuper$9(VideoShot);
     function VideoShot(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, VideoShot);
@@ -8453,14 +10352,14 @@
     return VideoShot;
   }(Options);
 
-  var css_248z$5 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  height: 140px;\n  padding-bottom: 8px;\n}\n.video-subsettings svg {\n  -webkit-transition: fill 0.15s ease-in-out;\n  transition: fill 0.15s ease-in-out;\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 5px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 3px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
-  styleInject(css_248z$5);
+  var css_248z$6 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  height: 140px;\n  padding-bottom: 8px;\n}\n.video-subsettings svg {\n  -webkit-transition: fill 0.15s ease-in-out;\n  transition: fill 0.15s ease-in-out;\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 5px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 3px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
+  styleInject(css_248z$6);
 
-  function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Controller = /*#__PURE__*/function (_Component) {
     _inherits(Controller, _Component);
-    var _super = _createSuper$7(Controller);
+    var _super = _createSuper$8(Controller);
     //代表最右侧的区域
     function Controller(player, container, desc, props, children) {
       var _this;
@@ -8529,9 +10428,9 @@
     }, {
       key: "initTemplate",
       value: function initTemplate() {
-        this.leftArea = $$o('div.video-subplay');
-        this.mediumArea = $$o('div.video-medium');
-        this.rightArea = $$o('div.video-settings');
+        this.leftArea = $$n('div.video-subplay');
+        this.mediumArea = $$n('div.video-medium');
+        this.rightArea = $$n('div.video-settings');
         this.el.appendChild(this.leftArea);
         this.el.appendChild(this.mediumArea);
         this.el.appendChild(this.rightArea);
@@ -8570,24 +10469,25 @@
     return Controller;
   }(Component);
 
-  var css_248z$4 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.2);\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n}\n";
-  styleInject(css_248z$4);
+  var css_248z$5 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.2);\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n}\n";
+  styleInject(css_248z$5);
 
-  function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var ToolBar = /*#__PURE__*/function (_Component) {
     _inherits(ToolBar, _Component);
-    var _super = _createSuper$6(ToolBar);
+    var _super = _createSuper$7(ToolBar);
     function ToolBar(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, ToolBar);
       _this = _super.call(this, container, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'ToolBar');
       // el: div.video-controls.video-controls-hidden
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
       _defineProperty(_assertThisInitialized(_this), "player", void 0);
       _defineProperty(_assertThisInitialized(_this), "progress", void 0);
       _defineProperty(_assertThisInitialized(_this), "controller", void 0);
-      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "status", 'hidden');
       _defineProperty(_assertThisInitialized(_this), "timer", 0);
       _this.player = player;
       _this.props = props || {};
@@ -8644,6 +10544,7 @@
         var _this3 = this;
         if (includeClass(this.el, 'video-controls-hidden')) {
           removeClass(this.el, ['video-controls-hidden']);
+          this.status = 'show';
         }
         if (e.target === this.player.video) {
           this.timer = window.setTimeout(function () {
@@ -8656,6 +10557,7 @@
       value: function hideToolBar() {
         if (!includeClass(this.el, 'video-controls-hidden')) {
           addClass(this.el, ['video-controls-hidden']);
+          this.status = 'hidden';
         }
       }
     }]);
@@ -8671,7 +10573,7 @@
     throw new Error('传入的文件没有扩展名');
   }
 
-  function _isNativeReflectConstruct$6() {
+  function _isNativeReflectConstruct$7() {
     if (typeof Reflect === "undefined" || !_Reflect$construct) return false;
     if (_Reflect$construct.sham) return false;
     if (typeof Proxy === "function") return true;
@@ -8684,7 +10586,7 @@
   }
 
   function _construct(Parent, args, Class) {
-    if (_isNativeReflectConstruct$6()) {
+    if (_isNativeReflectConstruct$7()) {
       var _context;
       _construct = _bindInstanceProperty(_context = _Reflect$construct).call(_context);
     } else {
@@ -8804,1122 +10706,8 @@
     return new FactoryMaker();
   }();
 
-  var getBuiltIn$3 = getBuiltIn$h;
-  var uncurryThis$4 = functionUncurryThis;
-  var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
-  var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
-  var anObject$2 = anObject$f;
-
-  var concat = uncurryThis$4([].concat);
-
-  // all object keys, includes non-enumerable and symbols
-  var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
-    var keys = getOwnPropertyNamesModule.f(anObject$2(it));
-    var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-    return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
-  };
-
-  var hasOwn$1 = hasOwnProperty_1;
-  var ownKeys$2 = ownKeys$3;
-  var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
-  var definePropertyModule = objectDefineProperty;
-
-  var copyConstructorProperties$1 = function (target, source, exceptions) {
-    var keys = ownKeys$2(source);
-    var defineProperty = definePropertyModule.f;
-    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
-    for (var i = 0; i < keys.length; i++) {
-      var key = keys[i];
-      if (!hasOwn$1(target, key) && !(exceptions && hasOwn$1(exceptions, key))) {
-        defineProperty(target, key, getOwnPropertyDescriptor(source, key));
-      }
-    }
-  };
-
-  var isObject$2 = isObject$j;
-  var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
-
-  // `InstallErrorCause` abstract operation
-  // https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
-  var installErrorCause$1 = function (O, options) {
-    if (isObject$2(options) && 'cause' in options) {
-      createNonEnumerableProperty$2(O, 'cause', options.cause);
-    }
-  };
-
-  var uncurryThis$3 = functionUncurryThis;
-
-  var $Error$1 = Error;
-  var replace = uncurryThis$3(''.replace);
-
-  var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
-  // eslint-disable-next-line redos/no-vulnerable -- safe
-  var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
-  var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
-
-  var errorStackClear = function (stack, dropEntries) {
-    if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error$1.prepareStackTrace) {
-      while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
-    } return stack;
-  };
-
-  var fails$5 = fails$x;
-  var createPropertyDescriptor$1 = createPropertyDescriptor$8;
-
-  var errorStackInstallable = !fails$5(function () {
-    var error = Error('a');
-    if (!('stack' in error)) return true;
-    // eslint-disable-next-line es/no-object-defineproperty -- safe
-    Object.defineProperty(error, 'stack', createPropertyDescriptor$1(1, 7));
-    return error.stack !== 7;
-  });
-
-  var createNonEnumerableProperty$1 = createNonEnumerableProperty$9;
-  var clearErrorStack = errorStackClear;
-  var ERROR_STACK_INSTALLABLE = errorStackInstallable;
-
-  // non-standard V8
-  var captureStackTrace = Error.captureStackTrace;
-
-  var errorStackInstall = function (error, C, stack, dropEntries) {
-    if (ERROR_STACK_INSTALLABLE) {
-      if (captureStackTrace) captureStackTrace(error, C);
-      else createNonEnumerableProperty$1(error, 'stack', clearErrorStack(stack, dropEntries));
-    }
-  };
-
-  var toString$1 = toString$b;
-
-  var normalizeStringArgument$1 = function (argument, $default) {
-    return argument === undefined ? arguments.length < 2 ? '' : $default : toString$1(argument);
-  };
-
-  var $$j = _export;
-  var isPrototypeOf$3 = objectIsPrototypeOf;
-  var getPrototypeOf = objectGetPrototypeOf;
-  var setPrototypeOf = objectSetPrototypeOf;
-  var copyConstructorProperties = copyConstructorProperties$1;
-  var create = objectCreate;
-  var createNonEnumerableProperty = createNonEnumerableProperty$9;
-  var createPropertyDescriptor = createPropertyDescriptor$8;
-  var installErrorCause = installErrorCause$1;
-  var installErrorStack = errorStackInstall;
-  var iterate$4 = iterate$l;
-  var normalizeStringArgument = normalizeStringArgument$1;
-  var wellKnownSymbol$2 = wellKnownSymbol$q;
-
-  var TO_STRING_TAG = wellKnownSymbol$2('toStringTag');
-  var $Error = Error;
-  var push = [].push;
-
-  var $AggregateError = function AggregateError(errors, message /* , options */) {
-    var isInstance = isPrototypeOf$3(AggregateErrorPrototype, this);
-    var that;
-    if (setPrototypeOf) {
-      that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
-    } else {
-      that = isInstance ? this : create(AggregateErrorPrototype);
-      createNonEnumerableProperty(that, TO_STRING_TAG, 'Error');
-    }
-    if (message !== undefined) createNonEnumerableProperty(that, 'message', normalizeStringArgument(message));
-    installErrorStack(that, $AggregateError, that.stack, 1);
-    if (arguments.length > 2) installErrorCause(that, arguments[2]);
-    var errorsArray = [];
-    iterate$4(errors, push, { that: errorsArray });
-    createNonEnumerableProperty(that, 'errors', errorsArray);
-    return that;
-  };
-
-  if (setPrototypeOf) setPrototypeOf($AggregateError, $Error);
-  else copyConstructorProperties($AggregateError, $Error, { name: true });
-
-  var AggregateErrorPrototype = $AggregateError.prototype = create($Error.prototype, {
-    constructor: createPropertyDescriptor(1, $AggregateError),
-    message: createPropertyDescriptor(1, ''),
-    name: createPropertyDescriptor(1, 'AggregateError')
-  });
-
-  // `AggregateError` constructor
-  // https://tc39.es/ecma262/#sec-aggregate-error-constructor
-  $$j({ global: true, constructor: true, arity: 2 }, {
-    AggregateError: $AggregateError
-  });
-
-  var classof = classofRaw$2;
-
-  var engineIsNode = typeof process != 'undefined' && classof(process) == 'process';
-
-  var anObject$1 = anObject$f;
-  var aConstructor = aConstructor$3;
-  var isNullOrUndefined = isNullOrUndefined$6;
-  var wellKnownSymbol$1 = wellKnownSymbol$q;
-
-  var SPECIES$1 = wellKnownSymbol$1('species');
-
-  // `SpeciesConstructor` abstract operation
-  // https://tc39.es/ecma262/#sec-speciesconstructor
-  var speciesConstructor$2 = function (O, defaultConstructor) {
-    var C = anObject$1(O).constructor;
-    var S;
-    return C === undefined || isNullOrUndefined(S = anObject$1(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
-  };
-
-  var userAgent$2 = engineUserAgent;
-
-  // eslint-disable-next-line redos/no-vulnerable -- safe
-  var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
-
-  var global$9 = global$r;
-  var apply$1 = functionApply;
-  var bind$2 = functionBindContext;
-  var isCallable$4 = isCallable$q;
-  var hasOwn = hasOwnProperty_1;
-  var fails$4 = fails$x;
-  var html = html$2;
-  var arraySlice$1 = arraySlice$7;
-  var createElement = documentCreateElement$1;
-  var validateArgumentsLength$1 = validateArgumentsLength$5;
-  var IS_IOS$1 = engineIsIos;
-  var IS_NODE$3 = engineIsNode;
-
-  var set = global$9.setImmediate;
-  var clear = global$9.clearImmediate;
-  var process$3 = global$9.process;
-  var Dispatch = global$9.Dispatch;
-  var Function$2 = global$9.Function;
-  var MessageChannel = global$9.MessageChannel;
-  var String$1 = global$9.String;
-  var counter = 0;
-  var queue$3 = {};
-  var ONREADYSTATECHANGE = 'onreadystatechange';
-  var $location, defer, channel, port;
-
-  fails$4(function () {
-    // Deno throws a ReferenceError on `location` access without `--location` flag
-    $location = global$9.location;
-  });
-
-  var run = function (id) {
-    if (hasOwn(queue$3, id)) {
-      var fn = queue$3[id];
-      delete queue$3[id];
-      fn();
-    }
-  };
-
-  var runner = function (id) {
-    return function () {
-      run(id);
-    };
-  };
-
-  var eventListener = function (event) {
-    run(event.data);
-  };
-
-  var globalPostMessageDefer = function (id) {
-    // old engines have not location.origin
-    global$9.postMessage(String$1(id), $location.protocol + '//' + $location.host);
-  };
-
-  // Node.js 0.9+ & IE10+ has setImmediate, otherwise:
-  if (!set || !clear) {
-    set = function setImmediate(handler) {
-      validateArgumentsLength$1(arguments.length, 1);
-      var fn = isCallable$4(handler) ? handler : Function$2(handler);
-      var args = arraySlice$1(arguments, 1);
-      queue$3[++counter] = function () {
-        apply$1(fn, undefined, args);
-      };
-      defer(counter);
-      return counter;
-    };
-    clear = function clearImmediate(id) {
-      delete queue$3[id];
-    };
-    // Node.js 0.8-
-    if (IS_NODE$3) {
-      defer = function (id) {
-        process$3.nextTick(runner(id));
-      };
-    // Sphere (JS game engine) Dispatch API
-    } else if (Dispatch && Dispatch.now) {
-      defer = function (id) {
-        Dispatch.now(runner(id));
-      };
-    // Browsers with MessageChannel, includes WebWorkers
-    // except iOS - https://github.com/zloirock/core-js/issues/624
-    } else if (MessageChannel && !IS_IOS$1) {
-      channel = new MessageChannel();
-      port = channel.port2;
-      channel.port1.onmessage = eventListener;
-      defer = bind$2(port.postMessage, port);
-    // Browsers with postMessage, skip WebWorkers
-    // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
-    } else if (
-      global$9.addEventListener &&
-      isCallable$4(global$9.postMessage) &&
-      !global$9.importScripts &&
-      $location && $location.protocol !== 'file:' &&
-      !fails$4(globalPostMessageDefer)
-    ) {
-      defer = globalPostMessageDefer;
-      global$9.addEventListener('message', eventListener, false);
-    // IE8-
-    } else if (ONREADYSTATECHANGE in createElement('script')) {
-      defer = function (id) {
-        html.appendChild(createElement('script'))[ONREADYSTATECHANGE] = function () {
-          html.removeChild(this);
-          run(id);
-        };
-      };
-    // Rest old browsers
-    } else {
-      defer = function (id) {
-        setTimeout(runner(id), 0);
-      };
-    }
-  }
-
-  var task$1 = {
-    set: set,
-    clear: clear
-  };
-
-  var Queue$2 = function () {
-    this.head = null;
-    this.tail = null;
-  };
-
-  Queue$2.prototype = {
-    add: function (item) {
-      var entry = { item: item, next: null };
-      var tail = this.tail;
-      if (tail) tail.next = entry;
-      else this.head = entry;
-      this.tail = entry;
-    },
-    get: function () {
-      var entry = this.head;
-      if (entry) {
-        var next = this.head = entry.next;
-        if (next === null) this.tail = null;
-        return entry.item;
-      }
-    }
-  };
-
-  var queue$2 = Queue$2;
-
-  var userAgent$1 = engineUserAgent;
-
-  var engineIsIosPebble = /ipad|iphone|ipod/i.test(userAgent$1) && typeof Pebble != 'undefined';
-
-  var userAgent = engineUserAgent;
-
-  var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
-
-  var global$8 = global$r;
-  var bind$1 = functionBindContext;
-  var getOwnPropertyDescriptor$8 = objectGetOwnPropertyDescriptor.f;
-  var macrotask = task$1.set;
-  var Queue$1 = queue$2;
-  var IS_IOS = engineIsIos;
-  var IS_IOS_PEBBLE = engineIsIosPebble;
-  var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
-  var IS_NODE$2 = engineIsNode;
-
-  var MutationObserver$1 = global$8.MutationObserver || global$8.WebKitMutationObserver;
-  var document$2 = global$8.document;
-  var process$2 = global$8.process;
-  var Promise$1 = global$8.Promise;
-  // Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
-  var queueMicrotaskDescriptor = getOwnPropertyDescriptor$8(global$8, 'queueMicrotask');
-  var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
-  var notify$1, toggle, node, promise$6, then;
-
-  // modern engines have queueMicrotask method
-  if (!microtask$1) {
-    var queue$1 = new Queue$1();
-
-    var flush = function () {
-      var parent, fn;
-      if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
-      while (fn = queue$1.get()) try {
-        fn();
-      } catch (error) {
-        if (queue$1.head) notify$1();
-        throw error;
-      }
-      if (parent) parent.enter();
-    };
-
-    // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
-    // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
-    if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$2) {
-      toggle = true;
-      node = document$2.createTextNode('');
-      new MutationObserver$1(flush).observe(node, { characterData: true });
-      notify$1 = function () {
-        node.data = toggle = !toggle;
-      };
-    // environments with maybe non-completely correct, but existent Promise
-    } else if (!IS_IOS_PEBBLE && Promise$1 && Promise$1.resolve) {
-      // Promise.resolve without an argument throws an error in LG WebOS 2
-      promise$6 = Promise$1.resolve(undefined);
-      // workaround of WebKit ~ iOS Safari 10.1 bug
-      promise$6.constructor = Promise$1;
-      then = bind$1(promise$6.then, promise$6);
-      notify$1 = function () {
-        then(flush);
-      };
-    // Node.js without promises
-    } else if (IS_NODE$2) {
-      notify$1 = function () {
-        process$2.nextTick(flush);
-      };
-    // for other environments - macrotask based on:
-    // - setImmediate
-    // - MessageChannel
-    // - window.postMessage
-    // - onreadystatechange
-    // - setTimeout
-    } else {
-      // `webpack` dev server bug on IE global methods - use bind(fn, global)
-      macrotask = bind$1(macrotask, global$8);
-      notify$1 = function () {
-        macrotask(flush);
-      };
-    }
-
-    microtask$1 = function (fn) {
-      if (!queue$1.head) notify$1();
-      queue$1.add(fn);
-    };
-  }
-
-  var microtask_1 = microtask$1;
-
-  var hostReportErrors$1 = function (a, b) {
-    try {
-      // eslint-disable-next-line no-console -- safe
-      arguments.length == 1 ? console.error(a) : console.error(a, b);
-    } catch (error) { /* empty */ }
-  };
-
-  var perform$6 = function (exec) {
-    try {
-      return { error: false, value: exec() };
-    } catch (error) {
-      return { error: true, value: error };
-    }
-  };
-
-  var global$7 = global$r;
-
-  var promiseNativeConstructor = global$7.Promise;
-
-  /* global Deno -- Deno case */
-
-  var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
-
-  var IS_DENO$1 = engineIsDeno;
-  var IS_NODE$1 = engineIsNode;
-
-  var engineIsBrowser = !IS_DENO$1 && !IS_NODE$1
-    && typeof window == 'object'
-    && typeof document == 'object';
-
-  var global$6 = global$r;
-  var NativePromiseConstructor$5 = promiseNativeConstructor;
-  var isCallable$3 = isCallable$q;
-  var isForced = isForced_1;
-  var inspectSource = inspectSource$2;
-  var wellKnownSymbol = wellKnownSymbol$q;
-  var IS_BROWSER = engineIsBrowser;
-  var IS_DENO = engineIsDeno;
-  var V8_VERSION = engineV8Version;
-
-  var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
-  var SPECIES = wellKnownSymbol('species');
-  var SUBCLASSING = false;
-  var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$3(global$6.PromiseRejectionEvent);
-
-  var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
-    var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
-    var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(NativePromiseConstructor$5);
-    // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
-    // We can't detect it synchronously, so just check versions
-    if (!GLOBAL_CORE_JS_PROMISE && V8_VERSION === 66) return true;
-    // We need Promise#{ catch, finally } in the pure version for preventing prototype pollution
-    if (!(NativePromisePrototype$2['catch'] && NativePromisePrototype$2['finally'])) return true;
-    // We can't use @@species feature detection in V8 since it causes
-    // deoptimization and performance degradation
-    // https://github.com/zloirock/core-js/issues/679
-    if (!V8_VERSION || V8_VERSION < 51 || !/native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) {
-      // Detect correctness of subclassing with @@species support
-      var promise = new NativePromiseConstructor$5(function (resolve) { resolve(1); });
-      var FakePromise = function (exec) {
-        exec(function () { /* empty */ }, function () { /* empty */ });
-      };
-      var constructor = promise.constructor = {};
-      constructor[SPECIES] = FakePromise;
-      SUBCLASSING = promise.then(function () { /* empty */ }) instanceof FakePromise;
-      if (!SUBCLASSING) return true;
-    // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
-    } return !GLOBAL_CORE_JS_PROMISE && (IS_BROWSER || IS_DENO) && !NATIVE_PROMISE_REJECTION_EVENT$1;
-  });
-
-  var promiseConstructorDetection = {
-    CONSTRUCTOR: FORCED_PROMISE_CONSTRUCTOR$5,
-    REJECTION_EVENT: NATIVE_PROMISE_REJECTION_EVENT$1,
-    SUBCLASSING: SUBCLASSING
-  };
-
-  var newPromiseCapability$2 = {};
-
-  var aCallable$5 = aCallable$h;
-
-  var $TypeError$2 = TypeError;
-
-  var PromiseCapability = function (C) {
-    var resolve, reject;
-    this.promise = new C(function ($$resolve, $$reject) {
-      if (resolve !== undefined || reject !== undefined) throw $TypeError$2('Bad Promise constructor');
-      resolve = $$resolve;
-      reject = $$reject;
-    });
-    this.resolve = aCallable$5(resolve);
-    this.reject = aCallable$5(reject);
-  };
-
-  // `NewPromiseCapability` abstract operation
-  // https://tc39.es/ecma262/#sec-newpromisecapability
-  newPromiseCapability$2.f = function (C) {
-    return new PromiseCapability(C);
-  };
-
-  var $$i = _export;
-  var IS_NODE = engineIsNode;
-  var global$5 = global$r;
-  var call$5 = functionCall;
-  var defineBuiltIn = defineBuiltIn$8;
-  var setToStringTag = setToStringTag$9;
-  var setSpecies = setSpecies$2;
-  var aCallable$4 = aCallable$h;
-  var isCallable$2 = isCallable$q;
-  var isObject$1 = isObject$j;
-  var anInstance = anInstance$5;
-  var speciesConstructor$1 = speciesConstructor$2;
-  var task = task$1.set;
-  var microtask = microtask_1;
-  var hostReportErrors = hostReportErrors$1;
-  var perform$5 = perform$6;
-  var Queue = queue$2;
-  var InternalStateModule = internalState;
-  var NativePromiseConstructor$4 = promiseNativeConstructor;
-  var PromiseConstructorDetection = promiseConstructorDetection;
-  var newPromiseCapabilityModule$6 = newPromiseCapability$2;
-
-  var PROMISE = 'Promise';
-  var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
-  var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
-  PromiseConstructorDetection.SUBCLASSING;
-  var getInternalPromiseState = InternalStateModule.getterFor(PROMISE);
-  var setInternalState = InternalStateModule.set;
-  var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
-  var PromiseConstructor = NativePromiseConstructor$4;
-  var PromisePrototype = NativePromisePrototype$1;
-  var TypeError$1 = global$5.TypeError;
-  var document$1 = global$5.document;
-  var process$1 = global$5.process;
-  var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
-  var newGenericPromiseCapability = newPromiseCapability$1;
-
-  var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$5.dispatchEvent);
-  var UNHANDLED_REJECTION = 'unhandledrejection';
-  var REJECTION_HANDLED = 'rejectionhandled';
-  var PENDING = 0;
-  var FULFILLED = 1;
-  var REJECTED = 2;
-  var HANDLED = 1;
-  var UNHANDLED = 2;
-
-  var Internal, OwnPromiseCapability, PromiseWrapper;
-
-  // helpers
-  var isThenable = function (it) {
-    var then;
-    return isObject$1(it) && isCallable$2(then = it.then) ? then : false;
-  };
-
-  var callReaction = function (reaction, state) {
-    var value = state.value;
-    var ok = state.state == FULFILLED;
-    var handler = ok ? reaction.ok : reaction.fail;
-    var resolve = reaction.resolve;
-    var reject = reaction.reject;
-    var domain = reaction.domain;
-    var result, then, exited;
-    try {
-      if (handler) {
-        if (!ok) {
-          if (state.rejection === UNHANDLED) onHandleUnhandled(state);
-          state.rejection = HANDLED;
-        }
-        if (handler === true) result = value;
-        else {
-          if (domain) domain.enter();
-          result = handler(value); // can throw
-          if (domain) {
-            domain.exit();
-            exited = true;
-          }
-        }
-        if (result === reaction.promise) {
-          reject(TypeError$1('Promise-chain cycle'));
-        } else if (then = isThenable(result)) {
-          call$5(then, result, resolve, reject);
-        } else resolve(result);
-      } else reject(value);
-    } catch (error) {
-      if (domain && !exited) domain.exit();
-      reject(error);
-    }
-  };
-
-  var notify = function (state, isReject) {
-    if (state.notified) return;
-    state.notified = true;
-    microtask(function () {
-      var reactions = state.reactions;
-      var reaction;
-      while (reaction = reactions.get()) {
-        callReaction(reaction, state);
-      }
-      state.notified = false;
-      if (isReject && !state.rejection) onUnhandled(state);
-    });
-  };
-
-  var dispatchEvent = function (name, promise, reason) {
-    var event, handler;
-    if (DISPATCH_EVENT) {
-      event = document$1.createEvent('Event');
-      event.promise = promise;
-      event.reason = reason;
-      event.initEvent(name, false, true);
-      global$5.dispatchEvent(event);
-    } else event = { promise: promise, reason: reason };
-    if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$5['on' + name])) handler(event);
-    else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
-  };
-
-  var onUnhandled = function (state) {
-    call$5(task, global$5, function () {
-      var promise = state.facade;
-      var value = state.value;
-      var IS_UNHANDLED = isUnhandled(state);
-      var result;
-      if (IS_UNHANDLED) {
-        result = perform$5(function () {
-          if (IS_NODE) {
-            process$1.emit('unhandledRejection', value, promise);
-          } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
-        });
-        // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
-        state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
-        if (result.error) throw result.value;
-      }
-    });
-  };
-
-  var isUnhandled = function (state) {
-    return state.rejection !== HANDLED && !state.parent;
-  };
-
-  var onHandleUnhandled = function (state) {
-    call$5(task, global$5, function () {
-      var promise = state.facade;
-      if (IS_NODE) {
-        process$1.emit('rejectionHandled', promise);
-      } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
-    });
-  };
-
-  var bind = function (fn, state, unwrap) {
-    return function (value) {
-      fn(state, value, unwrap);
-    };
-  };
-
-  var internalReject = function (state, value, unwrap) {
-    if (state.done) return;
-    state.done = true;
-    if (unwrap) state = unwrap;
-    state.value = value;
-    state.state = REJECTED;
-    notify(state, true);
-  };
-
-  var internalResolve = function (state, value, unwrap) {
-    if (state.done) return;
-    state.done = true;
-    if (unwrap) state = unwrap;
-    try {
-      if (state.facade === value) throw TypeError$1("Promise can't be resolved itself");
-      var then = isThenable(value);
-      if (then) {
-        microtask(function () {
-          var wrapper = { done: false };
-          try {
-            call$5(then, value,
-              bind(internalResolve, wrapper, state),
-              bind(internalReject, wrapper, state)
-            );
-          } catch (error) {
-            internalReject(wrapper, error, state);
-          }
-        });
-      } else {
-        state.value = value;
-        state.state = FULFILLED;
-        notify(state, false);
-      }
-    } catch (error) {
-      internalReject({ done: false }, error, state);
-    }
-  };
-
-  // constructor polyfill
-  if (FORCED_PROMISE_CONSTRUCTOR$4) {
-    // 25.4.3.1 Promise(executor)
-    PromiseConstructor = function Promise(executor) {
-      anInstance(this, PromisePrototype);
-      aCallable$4(executor);
-      call$5(Internal, this);
-      var state = getInternalPromiseState(this);
-      try {
-        executor(bind(internalResolve, state), bind(internalReject, state));
-      } catch (error) {
-        internalReject(state, error);
-      }
-    };
-
-    PromisePrototype = PromiseConstructor.prototype;
-
-    // eslint-disable-next-line no-unused-vars -- required for `.length`
-    Internal = function Promise(executor) {
-      setInternalState(this, {
-        type: PROMISE,
-        done: false,
-        notified: false,
-        parent: false,
-        reactions: new Queue(),
-        rejection: false,
-        state: PENDING,
-        value: undefined
-      });
-    };
-
-    // `Promise.prototype.then` method
-    // https://tc39.es/ecma262/#sec-promise.prototype.then
-    Internal.prototype = defineBuiltIn(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
-      var state = getInternalPromiseState(this);
-      var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
-      state.parent = true;
-      reaction.ok = isCallable$2(onFulfilled) ? onFulfilled : true;
-      reaction.fail = isCallable$2(onRejected) && onRejected;
-      reaction.domain = IS_NODE ? process$1.domain : undefined;
-      if (state.state == PENDING) state.reactions.add(reaction);
-      else microtask(function () {
-        callReaction(reaction, state);
-      });
-      return reaction.promise;
-    });
-
-    OwnPromiseCapability = function () {
-      var promise = new Internal();
-      var state = getInternalPromiseState(promise);
-      this.promise = promise;
-      this.resolve = bind(internalResolve, state);
-      this.reject = bind(internalReject, state);
-    };
-
-    newPromiseCapabilityModule$6.f = newPromiseCapability$1 = function (C) {
-      return C === PromiseConstructor || C === PromiseWrapper
-        ? new OwnPromiseCapability(C)
-        : newGenericPromiseCapability(C);
-    };
-  }
-
-  $$i({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
-    Promise: PromiseConstructor
-  });
-
-  setToStringTag(PromiseConstructor, PROMISE, false, true);
-  setSpecies(PROMISE);
-
-  var NativePromiseConstructor$3 = promiseNativeConstructor;
-  var checkCorrectnessOfIteration = checkCorrectnessOfIteration$2;
-  var FORCED_PROMISE_CONSTRUCTOR$3 = promiseConstructorDetection.CONSTRUCTOR;
-
-  var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCorrectnessOfIteration(function (iterable) {
-    NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
-  });
-
-  var $$h = _export;
-  var call$4 = functionCall;
-  var aCallable$3 = aCallable$h;
-  var newPromiseCapabilityModule$5 = newPromiseCapability$2;
-  var perform$4 = perform$6;
-  var iterate$3 = iterate$l;
-  var PROMISE_STATICS_INCORRECT_ITERATION$3 = promiseStaticsIncorrectIteration;
-
-  // `Promise.all` method
-  // https://tc39.es/ecma262/#sec-promise.all
-  $$h({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
-    all: function all(iterable) {
-      var C = this;
-      var capability = newPromiseCapabilityModule$5.f(C);
-      var resolve = capability.resolve;
-      var reject = capability.reject;
-      var result = perform$4(function () {
-        var $promiseResolve = aCallable$3(C.resolve);
-        var values = [];
-        var counter = 0;
-        var remaining = 1;
-        iterate$3(iterable, function (promise) {
-          var index = counter++;
-          var alreadyCalled = false;
-          remaining++;
-          call$4($promiseResolve, C, promise).then(function (value) {
-            if (alreadyCalled) return;
-            alreadyCalled = true;
-            values[index] = value;
-            --remaining || resolve(values);
-          }, reject);
-        });
-        --remaining || resolve(values);
-      });
-      if (result.error) reject(result.value);
-      return capability.promise;
-    }
-  });
-
-  var $$g = _export;
-  var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
-  var NativePromiseConstructor$2 = promiseNativeConstructor;
-
-  NativePromiseConstructor$2 && NativePromiseConstructor$2.prototype;
-
-  // `Promise.prototype.catch` method
-  // https://tc39.es/ecma262/#sec-promise.prototype.catch
-  $$g({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
-    'catch': function (onRejected) {
-      return this.then(undefined, onRejected);
-    }
-  });
-
-  var $$f = _export;
-  var call$3 = functionCall;
-  var aCallable$2 = aCallable$h;
-  var newPromiseCapabilityModule$4 = newPromiseCapability$2;
-  var perform$3 = perform$6;
-  var iterate$2 = iterate$l;
-  var PROMISE_STATICS_INCORRECT_ITERATION$2 = promiseStaticsIncorrectIteration;
-
-  // `Promise.race` method
-  // https://tc39.es/ecma262/#sec-promise.race
-  $$f({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
-    race: function race(iterable) {
-      var C = this;
-      var capability = newPromiseCapabilityModule$4.f(C);
-      var reject = capability.reject;
-      var result = perform$3(function () {
-        var $promiseResolve = aCallable$2(C.resolve);
-        iterate$2(iterable, function (promise) {
-          call$3($promiseResolve, C, promise).then(capability.resolve, reject);
-        });
-      });
-      if (result.error) reject(result.value);
-      return capability.promise;
-    }
-  });
-
-  var $$e = _export;
-  var call$2 = functionCall;
-  var newPromiseCapabilityModule$3 = newPromiseCapability$2;
-  var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
-
-  // `Promise.reject` method
-  // https://tc39.es/ecma262/#sec-promise.reject
-  $$e({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
-    reject: function reject(r) {
-      var capability = newPromiseCapabilityModule$3.f(this);
-      call$2(capability.reject, undefined, r);
-      return capability.promise;
-    }
-  });
-
-  var anObject = anObject$f;
-  var isObject = isObject$j;
-  var newPromiseCapability = newPromiseCapability$2;
-
-  var promiseResolve$2 = function (C, x) {
-    anObject(C);
-    if (isObject(x) && x.constructor === C) return x;
-    var promiseCapability = newPromiseCapability.f(C);
-    var resolve = promiseCapability.resolve;
-    resolve(x);
-    return promiseCapability.promise;
-  };
-
-  var $$d = _export;
-  var getBuiltIn$2 = getBuiltIn$h;
-  var IS_PURE = isPure;
-  var NativePromiseConstructor$1 = promiseNativeConstructor;
-  var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
-  var promiseResolve$1 = promiseResolve$2;
-
-  var PromiseConstructorWrapper = getBuiltIn$2('Promise');
-  var CHECK_WRAPPER = !FORCED_PROMISE_CONSTRUCTOR;
-
-  // `Promise.resolve` method
-  // https://tc39.es/ecma262/#sec-promise.resolve
-  $$d({ target: 'Promise', stat: true, forced: IS_PURE  }, {
-    resolve: function resolve(x) {
-      return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
-    }
-  });
-
-  var $$c = _export;
-  var call$1 = functionCall;
-  var aCallable$1 = aCallable$h;
-  var newPromiseCapabilityModule$2 = newPromiseCapability$2;
-  var perform$2 = perform$6;
-  var iterate$1 = iterate$l;
-  var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
-
-  // `Promise.allSettled` method
-  // https://tc39.es/ecma262/#sec-promise.allsettled
-  $$c({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
-    allSettled: function allSettled(iterable) {
-      var C = this;
-      var capability = newPromiseCapabilityModule$2.f(C);
-      var resolve = capability.resolve;
-      var reject = capability.reject;
-      var result = perform$2(function () {
-        var promiseResolve = aCallable$1(C.resolve);
-        var values = [];
-        var counter = 0;
-        var remaining = 1;
-        iterate$1(iterable, function (promise) {
-          var index = counter++;
-          var alreadyCalled = false;
-          remaining++;
-          call$1(promiseResolve, C, promise).then(function (value) {
-            if (alreadyCalled) return;
-            alreadyCalled = true;
-            values[index] = { status: 'fulfilled', value: value };
-            --remaining || resolve(values);
-          }, function (error) {
-            if (alreadyCalled) return;
-            alreadyCalled = true;
-            values[index] = { status: 'rejected', reason: error };
-            --remaining || resolve(values);
-          });
-        });
-        --remaining || resolve(values);
-      });
-      if (result.error) reject(result.value);
-      return capability.promise;
-    }
-  });
-
-  var $$b = _export;
-  var call = functionCall;
-  var aCallable = aCallable$h;
-  var getBuiltIn$1 = getBuiltIn$h;
-  var newPromiseCapabilityModule$1 = newPromiseCapability$2;
-  var perform$1 = perform$6;
-  var iterate = iterate$l;
-  var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
-
-  var PROMISE_ANY_ERROR = 'No one promise resolved';
-
-  // `Promise.any` method
-  // https://tc39.es/ecma262/#sec-promise.any
-  $$b({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
-    any: function any(iterable) {
-      var C = this;
-      var AggregateError = getBuiltIn$1('AggregateError');
-      var capability = newPromiseCapabilityModule$1.f(C);
-      var resolve = capability.resolve;
-      var reject = capability.reject;
-      var result = perform$1(function () {
-        var promiseResolve = aCallable(C.resolve);
-        var errors = [];
-        var counter = 0;
-        var remaining = 1;
-        var alreadyResolved = false;
-        iterate(iterable, function (promise) {
-          var index = counter++;
-          var alreadyRejected = false;
-          remaining++;
-          call(promiseResolve, C, promise).then(function (value) {
-            if (alreadyRejected || alreadyResolved) return;
-            alreadyResolved = true;
-            resolve(value);
-          }, function (error) {
-            if (alreadyRejected || alreadyResolved) return;
-            alreadyRejected = true;
-            errors[index] = error;
-            --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
-          });
-        });
-        --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
-      });
-      if (result.error) reject(result.value);
-      return capability.promise;
-    }
-  });
-
-  var $$a = _export;
-  var NativePromiseConstructor = promiseNativeConstructor;
-  var fails$3 = fails$x;
-  var getBuiltIn = getBuiltIn$h;
-  var isCallable$1 = isCallable$q;
-  var speciesConstructor = speciesConstructor$2;
-  var promiseResolve = promiseResolve$2;
-
-  var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
-
-  // Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
-  var NON_GENERIC = !!NativePromiseConstructor && fails$3(function () {
-    // eslint-disable-next-line unicorn/no-thenable -- required for testing
-    NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
-  });
-
-  // `Promise.prototype.finally` method
-  // https://tc39.es/ecma262/#sec-promise.prototype.finally
-  $$a({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
-    'finally': function (onFinally) {
-      var C = speciesConstructor(this, getBuiltIn('Promise'));
-      var isFunction = isCallable$1(onFinally);
-      return this.then(
-        isFunction ? function (x) {
-          return promiseResolve(C, onFinally()).then(function () { return x; });
-        } : onFinally,
-        isFunction ? function (e) {
-          return promiseResolve(C, onFinally()).then(function () { throw e; });
-        } : onFinally
-      );
-    }
-  });
-
-  var path$6 = path$n;
-
-  var promise$5 = path$6.Promise;
-
-  var parent$t = promise$5;
-
-
-  var promise$4 = parent$t;
-
-  var parent$s = promise$4;
-
-  var promise$3 = parent$s;
-
-  // TODO: Remove from `core-js@4`
-  var $$9 = _export;
-  var newPromiseCapabilityModule = newPromiseCapability$2;
-  var perform = perform$6;
-
-  // `Promise.try` method
-  // https://github.com/tc39/proposal-promise-try
-  $$9({ target: 'Promise', stat: true, forced: true }, {
-    'try': function (callbackfn) {
-      var promiseCapability = newPromiseCapabilityModule.f(this);
-      var result = perform(callbackfn);
-      (result.error ? promiseCapability.reject : promiseCapability.resolve)(result.value);
-      return promiseCapability.promise;
-    }
-  });
-
-  var parent$r = promise$3;
-
-  // TODO: Remove from `core-js@4`
-
-
-
-
-  var promise$2 = parent$r;
-
-  var promise$1 = promise$2;
-
-  var promise = promise$1;
-
-  var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
-
-  /* eslint-disable es/no-array-prototype-indexof -- required for testing */
-  var $$8 = _export;
-  var uncurryThis$2 = functionUncurryThisClause;
-  var $indexOf = arrayIncludes.indexOf;
-  var arrayMethodIsStrict = arrayMethodIsStrict$2;
-
-  var nativeIndexOf = uncurryThis$2([].indexOf);
-
-  var NEGATIVE_ZERO = !!nativeIndexOf && 1 / nativeIndexOf([1], 1, -0) < 0;
-  var FORCED$2 = NEGATIVE_ZERO || !arrayMethodIsStrict('indexOf');
-
-  // `Array.prototype.indexOf` method
-  // https://tc39.es/ecma262/#sec-array.prototype.indexof
-  $$8({ target: 'Array', proto: true, forced: FORCED$2 }, {
-    indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
-      var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
-      return NEGATIVE_ZERO
-        // convert -0 to +0
-        ? nativeIndexOf(this, searchElement, fromIndex) || 0
-        : $indexOf(this, searchElement, fromIndex);
-    }
-  });
-
-  var entryVirtual$2 = entryVirtual$b;
-
-  var indexOf$6 = entryVirtual$2('Array').indexOf;
-
-  var isPrototypeOf$2 = objectIsPrototypeOf;
-  var method$2 = indexOf$6;
-
-  var ArrayPrototype$2 = Array.prototype;
-
-  var indexOf$5 = function (it) {
-    var own = it.indexOf;
-    return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.indexOf) ? method$2 : own;
-  };
-
-  var parent$q = indexOf$5;
-
-  var indexOf$4 = parent$q;
-
-  var parent$p = indexOf$4;
-
-  var indexOf$3 = parent$p;
-
-  var parent$o = indexOf$3;
-
-  var indexOf$2 = parent$o;
-
-  var indexOf$1 = indexOf$2;
-
-  var indexOf = indexOf$1;
-
-  var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
-
   var DESCRIPTORS$2 = descriptors;
-  var isArray$1 = isArray$d;
+  var isArray = isArray$d;
 
   var $TypeError$1 = TypeError;
   // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
@@ -9938,7 +10726,7 @@
   }();
 
   var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
-    if (isArray$1(O) && !getOwnPropertyDescriptor$7(O, 'length').writable) {
+    if (isArray(O) && !getOwnPropertyDescriptor$7(O, 'length').writable) {
       throw $TypeError$1('Cannot set read only .length');
     } return O.length = length;
   } : function (O, length) {
@@ -9953,7 +10741,7 @@
     if (!delete O[P]) throw $TypeError('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
   };
 
-  var $$7 = _export;
+  var $$6 = _export;
   var toObject$1 = toObject$a;
   var toAbsoluteIndex = toAbsoluteIndex$4;
   var toIntegerOrInfinity = toIntegerOrInfinity$4;
@@ -9973,7 +10761,7 @@
   // `Array.prototype.splice` method
   // https://tc39.es/ecma262/#sec-array.prototype.splice
   // with adding support of @@species
-  $$7({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  $$6({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
     splice: function splice(start, deleteCount /* , ...items */) {
       var O = toObject$1(this);
       var len = lengthOfArrayLike(O);
@@ -10020,31 +10808,31 @@
     }
   });
 
-  var entryVirtual$1 = entryVirtual$b;
+  var entryVirtual = entryVirtual$b;
 
-  var splice$6 = entryVirtual$1('Array').splice;
+  var splice$6 = entryVirtual('Array').splice;
 
-  var isPrototypeOf$1 = objectIsPrototypeOf;
-  var method$1 = splice$6;
+  var isPrototypeOf = objectIsPrototypeOf;
+  var method = splice$6;
 
-  var ArrayPrototype$1 = Array.prototype;
+  var ArrayPrototype = Array.prototype;
 
   var splice$5 = function (it) {
     var own = it.splice;
-    return it === ArrayPrototype$1 || (isPrototypeOf$1(ArrayPrototype$1, it) && own === ArrayPrototype$1.splice) ? method$1 : own;
+    return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.splice) ? method : own;
   };
 
-  var parent$n = splice$5;
+  var parent$k = splice$5;
 
-  var splice$4 = parent$n;
+  var splice$4 = parent$k;
 
-  var parent$m = splice$4;
+  var parent$j = splice$4;
 
-  var splice$3 = parent$m;
+  var splice$3 = parent$j;
 
-  var parent$l = splice$3;
+  var parent$i = splice$3;
 
-  var splice$2 = parent$l;
+  var splice$2 = parent$i;
 
   var splice$1 = splice$2;
 
@@ -10820,444 +11608,6 @@
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$3(arr, i) || _nonIterableRest();
   }
-
-  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-    try {
-      var info = gen[key](arg);
-      var value = info.value;
-    } catch (error) {
-      reject(error);
-      return;
-    }
-    if (info.done) {
-      resolve(value);
-    } else {
-      _Promise.resolve(value).then(_next, _throw);
-    }
-  }
-  function _asyncToGenerator(fn) {
-    return function () {
-      var self = this,
-        args = arguments;
-      return new _Promise(function (resolve, reject) {
-        var gen = fn.apply(self, args);
-        function _next(value) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-        }
-        function _throw(err) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-        }
-        _next(undefined);
-      });
-    };
-  }
-
-  var regeneratorRuntime$1 = {exports: {}};
-
-  var _typeof = {exports: {}};
-
-  (function (module) {
-  	var _Symbol = symbol;
-  	var _Symbol$iterator = iterator;
-  	function _typeof(obj) {
-  	  "@babel/helpers - typeof";
-
-  	  return (module.exports = _typeof = "function" == typeof _Symbol && "symbol" == typeof _Symbol$iterator ? function (obj) {
-  	    return typeof obj;
-  	  } : function (obj) {
-  	    return obj && "function" == typeof _Symbol && obj.constructor === _Symbol && obj !== _Symbol.prototype ? "symbol" : typeof obj;
-  	  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
-  	}
-  	module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports; 
-  } (_typeof));
-
-  var _typeofExports = _typeof.exports;
-
-  var $$6 = _export;
-  var uncurryThis$1 = functionUncurryThis;
-  var isArray = isArray$d;
-
-  var nativeReverse = uncurryThis$1([].reverse);
-  var test = [1, 2];
-
-  // `Array.prototype.reverse` method
-  // https://tc39.es/ecma262/#sec-array.prototype.reverse
-  // fix for Safari 12.0 bug
-  // https://bugs.webkit.org/show_bug.cgi?id=188794
-  $$6({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
-    reverse: function reverse() {
-      // eslint-disable-next-line no-self-assign -- dirty hack
-      if (isArray(this)) this.length = this.length;
-      return nativeReverse(this);
-    }
-  });
-
-  var entryVirtual = entryVirtual$b;
-
-  var reverse$6 = entryVirtual('Array').reverse;
-
-  var isPrototypeOf = objectIsPrototypeOf;
-  var method = reverse$6;
-
-  var ArrayPrototype = Array.prototype;
-
-  var reverse$5 = function (it) {
-    var own = it.reverse;
-    return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.reverse) ? method : own;
-  };
-
-  var parent$k = reverse$5;
-
-  var reverse$4 = parent$k;
-
-  var parent$j = reverse$4;
-
-  var reverse$3 = parent$j;
-
-  var parent$i = reverse$3;
-
-  var reverse$2 = parent$i;
-
-  var reverse$1 = reverse$2;
-
-  var reverse = reverse$1;
-
-  (function (module) {
-  	var _typeof = _typeofExports["default"];
-  	var _Object$defineProperty = defineProperty$6;
-  	var _Symbol = symbol;
-  	var _Object$create = create$3;
-  	var _Object$getPrototypeOf = getPrototypeOf$1;
-  	var _forEachInstanceProperty = forEach$1;
-  	var _Object$setPrototypeOf = setPrototypeOf$1;
-  	var _Promise = promise;
-  	var _reverseInstanceProperty = reverse;
-  	var _sliceInstanceProperty = slice;
-  	function _regeneratorRuntime() {
-  	  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
-  	    return exports;
-  	  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
-  	  var exports = {},
-  	    Op = Object.prototype,
-  	    hasOwn = Op.hasOwnProperty,
-  	    defineProperty = _Object$defineProperty || function (obj, key, desc) {
-  	      obj[key] = desc.value;
-  	    },
-  	    $Symbol = "function" == typeof _Symbol ? _Symbol : {},
-  	    iteratorSymbol = $Symbol.iterator || "@@iterator",
-  	    asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
-  	    toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-  	  function define(obj, key, value) {
-  	    return _Object$defineProperty(obj, key, {
-  	      value: value,
-  	      enumerable: !0,
-  	      configurable: !0,
-  	      writable: !0
-  	    }), obj[key];
-  	  }
-  	  try {
-  	    define({}, "");
-  	  } catch (err) {
-  	    define = function define(obj, key, value) {
-  	      return obj[key] = value;
-  	    };
-  	  }
-  	  function wrap(innerFn, outerFn, self, tryLocsList) {
-  	    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
-  	      generator = _Object$create(protoGenerator.prototype),
-  	      context = new Context(tryLocsList || []);
-  	    return defineProperty(generator, "_invoke", {
-  	      value: makeInvokeMethod(innerFn, self, context)
-  	    }), generator;
-  	  }
-  	  function tryCatch(fn, obj, arg) {
-  	    try {
-  	      return {
-  	        type: "normal",
-  	        arg: fn.call(obj, arg)
-  	      };
-  	    } catch (err) {
-  	      return {
-  	        type: "throw",
-  	        arg: err
-  	      };
-  	    }
-  	  }
-  	  exports.wrap = wrap;
-  	  var ContinueSentinel = {};
-  	  function Generator() {}
-  	  function GeneratorFunction() {}
-  	  function GeneratorFunctionPrototype() {}
-  	  var IteratorPrototype = {};
-  	  define(IteratorPrototype, iteratorSymbol, function () {
-  	    return this;
-  	  });
-  	  var getProto = _Object$getPrototypeOf,
-  	    NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  	  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
-  	  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = _Object$create(IteratorPrototype);
-  	  function defineIteratorMethods(prototype) {
-  	    var _context;
-  	    _forEachInstanceProperty(_context = ["next", "throw", "return"]).call(_context, function (method) {
-  	      define(prototype, method, function (arg) {
-  	        return this._invoke(method, arg);
-  	      });
-  	    });
-  	  }
-  	  function AsyncIterator(generator, PromiseImpl) {
-  	    function invoke(method, arg, resolve, reject) {
-  	      var record = tryCatch(generator[method], generator, arg);
-  	      if ("throw" !== record.type) {
-  	        var result = record.arg,
-  	          value = result.value;
-  	        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
-  	          invoke("next", value, resolve, reject);
-  	        }, function (err) {
-  	          invoke("throw", err, resolve, reject);
-  	        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
-  	          result.value = unwrapped, resolve(result);
-  	        }, function (error) {
-  	          return invoke("throw", error, resolve, reject);
-  	        });
-  	      }
-  	      reject(record.arg);
-  	    }
-  	    var previousPromise;
-  	    defineProperty(this, "_invoke", {
-  	      value: function value(method, arg) {
-  	        function callInvokeWithMethodAndArg() {
-  	          return new PromiseImpl(function (resolve, reject) {
-  	            invoke(method, arg, resolve, reject);
-  	          });
-  	        }
-  	        return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
-  	      }
-  	    });
-  	  }
-  	  function makeInvokeMethod(innerFn, self, context) {
-  	    var state = "suspendedStart";
-  	    return function (method, arg) {
-  	      if ("executing" === state) throw new Error("Generator is already running");
-  	      if ("completed" === state) {
-  	        if ("throw" === method) throw arg;
-  	        return doneResult();
-  	      }
-  	      for (context.method = method, context.arg = arg;;) {
-  	        var delegate = context.delegate;
-  	        if (delegate) {
-  	          var delegateResult = maybeInvokeDelegate(delegate, context);
-  	          if (delegateResult) {
-  	            if (delegateResult === ContinueSentinel) continue;
-  	            return delegateResult;
-  	          }
-  	        }
-  	        if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
-  	          if ("suspendedStart" === state) throw state = "completed", context.arg;
-  	          context.dispatchException(context.arg);
-  	        } else "return" === context.method && context.abrupt("return", context.arg);
-  	        state = "executing";
-  	        var record = tryCatch(innerFn, self, context);
-  	        if ("normal" === record.type) {
-  	          if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
-  	          return {
-  	            value: record.arg,
-  	            done: context.done
-  	          };
-  	        }
-  	        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
-  	      }
-  	    };
-  	  }
-  	  function maybeInvokeDelegate(delegate, context) {
-  	    var methodName = context.method,
-  	      method = delegate.iterator[methodName];
-  	    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
-  	    var record = tryCatch(method, delegate.iterator, context.arg);
-  	    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
-  	    var info = record.arg;
-  	    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
-  	  }
-  	  function pushTryEntry(locs) {
-  	    var entry = {
-  	      tryLoc: locs[0]
-  	    };
-  	    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
-  	  }
-  	  function resetTryEntry(entry) {
-  	    var record = entry.completion || {};
-  	    record.type = "normal", delete record.arg, entry.completion = record;
-  	  }
-  	  function Context(tryLocsList) {
-  	    this.tryEntries = [{
-  	      tryLoc: "root"
-  	    }], _forEachInstanceProperty(tryLocsList).call(tryLocsList, pushTryEntry, this), this.reset(!0);
-  	  }
-  	  function values(iterable) {
-  	    if (iterable) {
-  	      var iteratorMethod = iterable[iteratorSymbol];
-  	      if (iteratorMethod) return iteratorMethod.call(iterable);
-  	      if ("function" == typeof iterable.next) return iterable;
-  	      if (!isNaN(iterable.length)) {
-  	        var i = -1,
-  	          next = function next() {
-  	            for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
-  	            return next.value = undefined, next.done = !0, next;
-  	          };
-  	        return next.next = next;
-  	      }
-  	    }
-  	    return {
-  	      next: doneResult
-  	    };
-  	  }
-  	  function doneResult() {
-  	    return {
-  	      value: undefined,
-  	      done: !0
-  	    };
-  	  }
-  	  return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
-  	    value: GeneratorFunctionPrototype,
-  	    configurable: !0
-  	  }), defineProperty(GeneratorFunctionPrototype, "constructor", {
-  	    value: GeneratorFunction,
-  	    configurable: !0
-  	  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
-  	    var ctor = "function" == typeof genFun && genFun.constructor;
-  	    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
-  	  }, exports.mark = function (genFun) {
-  	    return _Object$setPrototypeOf ? _Object$setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = _Object$create(Gp), genFun;
-  	  }, exports.awrap = function (arg) {
-  	    return {
-  	      __await: arg
-  	    };
-  	  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
-  	    return this;
-  	  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-  	    void 0 === PromiseImpl && (PromiseImpl = _Promise);
-  	    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
-  	    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
-  	      return result.done ? result.value : iter.next();
-  	    });
-  	  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
-  	    return this;
-  	  }), define(Gp, "toString", function () {
-  	    return "[object Generator]";
-  	  }), exports.keys = function (val) {
-  	    var object = Object(val),
-  	      keys = [];
-  	    for (var key in object) keys.push(key);
-  	    return _reverseInstanceProperty(keys).call(keys), function next() {
-  	      for (; keys.length;) {
-  	        var key = keys.pop();
-  	        if (key in object) return next.value = key, next.done = !1, next;
-  	      }
-  	      return next.done = !0, next;
-  	    };
-  	  }, exports.values = values, Context.prototype = {
-  	    constructor: Context,
-  	    reset: function reset(skipTempReset) {
-  	      var _context2;
-  	      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, _forEachInstanceProperty(_context2 = this.tryEntries).call(_context2, resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+_sliceInstanceProperty(name).call(name, 1)) && (this[name] = undefined);
-  	    },
-  	    stop: function stop() {
-  	      this.done = !0;
-  	      var rootRecord = this.tryEntries[0].completion;
-  	      if ("throw" === rootRecord.type) throw rootRecord.arg;
-  	      return this.rval;
-  	    },
-  	    dispatchException: function dispatchException(exception) {
-  	      if (this.done) throw exception;
-  	      var context = this;
-  	      function handle(loc, caught) {
-  	        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
-  	      }
-  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-  	        var entry = this.tryEntries[i],
-  	          record = entry.completion;
-  	        if ("root" === entry.tryLoc) return handle("end");
-  	        if (entry.tryLoc <= this.prev) {
-  	          var hasCatch = hasOwn.call(entry, "catchLoc"),
-  	            hasFinally = hasOwn.call(entry, "finallyLoc");
-  	          if (hasCatch && hasFinally) {
-  	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
-  	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
-  	          } else if (hasCatch) {
-  	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
-  	          } else {
-  	            if (!hasFinally) throw new Error("try statement without catch or finally");
-  	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
-  	          }
-  	        }
-  	      }
-  	    },
-  	    abrupt: function abrupt(type, arg) {
-  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-  	        var entry = this.tryEntries[i];
-  	        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
-  	          var finallyEntry = entry;
-  	          break;
-  	        }
-  	      }
-  	      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
-  	      var record = finallyEntry ? finallyEntry.completion : {};
-  	      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
-  	    },
-  	    complete: function complete(record, afterLoc) {
-  	      if ("throw" === record.type) throw record.arg;
-  	      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
-  	    },
-  	    finish: function finish(finallyLoc) {
-  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-  	        var entry = this.tryEntries[i];
-  	        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
-  	      }
-  	    },
-  	    "catch": function _catch(tryLoc) {
-  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-  	        var entry = this.tryEntries[i];
-  	        if (entry.tryLoc === tryLoc) {
-  	          var record = entry.completion;
-  	          if ("throw" === record.type) {
-  	            var thrown = record.arg;
-  	            resetTryEntry(entry);
-  	          }
-  	          return thrown;
-  	        }
-  	      }
-  	      throw new Error("illegal catch attempt");
-  	    },
-  	    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
-  	      return this.delegate = {
-  	        iterator: values(iterable),
-  	        resultName: resultName,
-  	        nextLoc: nextLoc
-  	      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
-  	    }
-  	  }, exports;
-  	}
-  	module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports; 
-  } (regeneratorRuntime$1));
-
-  var regeneratorRuntimeExports = regeneratorRuntime$1.exports;
-
-  // TODO(Babel 8): Remove this file.
-
-  var runtime = regeneratorRuntimeExports();
-  var regenerator = runtime;
-
-  // Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
-  try {
-    regeneratorRuntime = runtime;
-  } catch (accidentalStrictMode) {
-    if (typeof globalThis === "object") {
-      globalThis.regeneratorRuntime = runtime;
-    } else {
-      Function("r", "regeneratorRuntime = r")(runtime);
-    }
-  }
-
-  var _regeneratorRuntime = /*@__PURE__*/getDefaultExportFromCjs(regenerator);
 
   var URLNode = /*#__PURE__*/function () {
     function URLNode(url) {
@@ -20434,7 +20784,7 @@
         var request = this.initHttpRequest();
         // 单例 let loader = new XHRLoader({context: {}}, ...args)
         var loader = factory$a({}).getInstance();
-        console.log('当前发送请求的范围为: ', request.header.Range);
+        // console.log('当前发送请求的范围为: ', request.header.Range)
         loader.load({
           request: request,
           error: error,
@@ -20747,14 +21097,14 @@
     return MediaPlayer;
   }();
 
-  var css_248z$3 = ".video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: #000;\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-loading .video-loading-loadingbox {\n  height: 50px;\n  width: 50px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.video-loading .video-loading-errorbox {\n  height: 50px;\n  width: 50px;\n  background-color: red;\n}\n.video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 16px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n";
-  styleInject(css_248z$3);
+  var css_248z$4 = ".video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: #000;\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-loading .video-loading-loadingbox {\n  height: 50px;\n  width: 50px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.video-loading .video-loading-errorbox {\n  height: 50px;\n  width: 50px;\n  background-color: red;\n}\n.video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 16px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n";
+  styleInject(css_248z$4);
 
-  function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var Loading = /*#__PURE__*/function (_Component) {
     _inherits(Loading, _Component);
-    var _super = _createSuper$5(Loading);
+    var _super = _createSuper$6(Loading);
     function Loading(player, msg, container, desc, props, children) {
       var _this;
       _classCallCheck(this, Loading);
@@ -20782,8 +21132,8 @@
       key: "initTemplate",
       value: function initTemplate() {
         addClass(this.el, ['video-loading']);
-        this.loadingBox = $$o('div');
-        this.msgBox = $$o('div.video-loading-msgbox');
+        this.loadingBox = $$n('div');
+        this.msgBox = $$n('div.video-loading-msgbox');
         this.msgBox.innerText = this.message;
         this.el.appendChild(this.loadingBox);
         this.el.appendChild(this.msgBox);
@@ -20811,11 +21161,11 @@
     return Loading;
   }(Component);
 
-  function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var TimeLoading = /*#__PURE__*/function (_Loading) {
     _inherits(TimeLoading, _Loading);
-    var _super = _createSuper$4(TimeLoading);
+    var _super = _createSuper$5(TimeLoading);
     // el: div.video-loading
     function TimeLoading(player, msg, container) {
       var _this;
@@ -20843,11 +21193,11 @@
     return TimeLoading;
   }(Loading);
 
-  function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var ErrorLoading = /*#__PURE__*/function (_Loading) {
     _inherits(ErrorLoading, _Loading);
-    var _super = _createSuper$3(ErrorLoading);
+    var _super = _createSuper$4(ErrorLoading);
     // el: div.video-loading
     function ErrorLoading(player, msg, container) {
       var _this;
@@ -20875,14 +21225,14 @@
     return ErrorLoading;
   }(Loading);
 
-  var css_248z$2 = ".video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.2);\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  overflow: hidden;\n  padding: 5px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n}\n.video-topbar-controller {\n  padding: 3px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 30px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
-  styleInject(css_248z$2);
+  var css_248z$3 = ".video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.2);\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  overflow: hidden;\n  padding: 5px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n}\n.video-topbar-controller {\n  padding: 3px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 30px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
+  styleInject(css_248z$3);
 
-  function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-  function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var TopBar = /*#__PURE__*/function (_Component) {
     _inherits(TopBar, _Component);
-    var _super = _createSuper$2(TopBar);
+    var _super = _createSuper$3(TopBar);
     // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
     function TopBar(player, container, desc, props, children) {
       var _this;
@@ -20915,8 +21265,8 @@
       key: "initTemplate",
       value: function initTemplate() {
         addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
-        this.leftArea = $$o('div.video-topbar-left');
-        this.rightArea = $$o('div.video-topbar-right');
+        this.leftArea = $$n('div.video-topbar-left');
+        this.rightArea = $$n('div.video-topbar-right');
         this.el.appendChild(this.leftArea);
         this.el.appendChild(this.rightArea);
       }
@@ -20972,7 +21322,113 @@
     return TopBar;
   }(Component);
 
-  var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-container {\n  position: relative;\n  overflow: hidden;\n  background-color: #000;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n";
+  var env = window.navigator.userAgent.toLowerCase();
+  // 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
+  var Env = {
+    isInWeixin: function isInWeixin() {
+      return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
+    },
+    isInApp: function isInApp() {
+      return /(^|;\s)app\//.test(env);
+    },
+    isInIOS: function isInIOS() {
+      return env.match(/(iphone|ipod|ipad);?/i);
+    },
+    isInAndroid: function isInAndroid() {
+      return env.match(/android|adr/i);
+    },
+    isInPc: function isInPc() {
+      return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin());
+    },
+    get env() {
+      return this.isInPc() ? 'PC' : 'Mobile';
+    }
+  };
+
+  var css_248z$2 = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
+  styleInject(css_248z$2);
+
+  function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+  var MobileVolume = /*#__PURE__*/function (_Component) {
+    _inherits(MobileVolume, _Component);
+    var _super = _createSuper$2(MobileVolume);
+    function MobileVolume(player, container, desc, props, children) {
+      var _this;
+      _classCallCheck(this, MobileVolume);
+      _this = _super.call(this, container, desc, props, children);
+      _defineProperty(_assertThisInitialized(_this), "id", 'MobileVolume');
+      // el: div.video-mobile-medium-wrapper
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "player", void 0);
+      _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
+      _defineProperty(_assertThisInitialized(_this), "progressBox", void 0);
+      _defineProperty(_assertThisInitialized(_this), "completedBox", void 0);
+      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
+      _defineProperty(_assertThisInitialized(_this), "timer", 0);
+      _this.player = player;
+      _this.props = props || {};
+      _this.init();
+      return _this;
+    }
+    _createClass(MobileVolume, [{
+      key: "init",
+      value: function init() {
+        this.initTemplate();
+        this.initEvent();
+      }
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {
+        addClass(this.el, ['video-mobile-medium-wrapper']);
+        this.el.style.display = 'none';
+        this.iconBox = $$n('div.video-mobile-medium-iconbox');
+        this.progressBox = $$n('div.video-mobile-medium-progressbox');
+        this.completedBox = $$n('div.video-mobile-medium-completed', {
+          style: {
+            width: '0px'
+          }
+        });
+        this.icon = createSvg(volumePath$1);
+        this.iconBox.appendChild(this.icon);
+        this.progressBox.appendChild(this.completedBox);
+        this.el.appendChild(this.iconBox);
+        this.el.appendChild(this.progressBox);
+      }
+    }, {
+      key: "initEvent",
+      value: function initEvent() {
+        var _this2 = this;
+        this.player.on('moveVertical', function (val) {
+          console.log('正在滑动');
+          if (_this2.timer) {
+            window.clearInterval(_this2.timer);
+          }
+          _this2.timer = null;
+          _this2.el.style.display = '';
+          var dy = val.dy;
+          var scale = (_this2.completedBox.clientWidth + -dy / 50) / _this2.progressBox.clientWidth;
+          if (scale < 0) {
+            scale = 0;
+          } else if (scale > 1) {
+            scale = 1;
+          }
+          // console.log(scale)
+          _this2.completedBox.style.width = scale * 100 + '%';
+          _this2.player.video.volume = scale;
+        });
+        this.player.on('slideVertical', function (val) {
+          console.log('滑动结束');
+          _this2.timer = window.setTimeout(function () {
+            _this2.el.style.display = 'none';
+          }, 600);
+        });
+      }
+    }]);
+    return MobileVolume;
+  }(Component);
+
+  var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-container {\n  position: relative;\n  overflow: hidden;\n  background-color: #000;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
   styleInject(css_248z$1);
 
   function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -20994,6 +21450,8 @@
         width: '100%',
         height: '100%'
       });
+      _defineProperty(_assertThisInitialized(_this), "env", Env.env);
+      _defineProperty(_assertThisInitialized(_this), "fullScreenMode", 'Vertical');
       _defineProperty(_assertThisInitialized(_this), "video", void 0);
       _defineProperty(_assertThisInitialized(_this), "props", void 0);
       _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
@@ -21012,14 +21470,27 @@
     _createClass(Player, [{
       key: "init",
       value: function init() {
-        this.video = $$o('video');
+        this.video = $$n('video');
+        this.video['playsinline'] = true; // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
+        this.video['x5-video-player-type'] = 'h5'; // 启用H5播放器,是wechat安卓版特性
         this.video.crossOrigin = 'anonymous';
         this.attachSource(this.playerOptions.url);
         this.el.appendChild(this.video);
         this.initComponent();
+        this.initTemplate();
         this.initEvent();
         this.initPlugin();
         this.initResizeObserver();
+        this.checkFullScreenMode();
+      }
+    }, {
+      key: "initTemplate",
+      value: function initTemplate() {
+        if (this.env === 'Mobile') {
+          // 如果是在移动端，则音量的调节使用手势决定的
+          this.unmountComponent('Volume');
+          new MobileVolume(this, this.el, 'div');
+        }
       }
     }, {
       key: "initComponent",
@@ -21045,7 +21516,7 @@
         // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
         var _STORE = new _Map(COMPONENT_STORE);
         var resizeObserver = new ResizeObserver(function (entries) {
-          console.log('监听到了尺寸变化了...');
+          // console.log('监听到了尺寸变化了...')
           // 触发尺寸变化事件
           _this2.emit('resize', entries);
           var width = entries[0].contentRect.width;
@@ -21054,10 +21525,10 @@
             // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
             _forEachInstanceProperty(_STORE).call(_STORE, function (value, key) {
               var _context, _context2;
-              if (_includesInstanceProperty(_context = ['SubSetting']).call(_context, key)) {
+              if (_indexOfInstanceProperty(_context = ['SubSetting']).call(_context, key) !== -1) {
                 subsetting = ONCE_COMPONENT_STORE.get(key);
                 _this2.unmountComponent(key);
-              } else if (_includesInstanceProperty(_context2 = ['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot']).call(_context2, key)) {
+              } else if (_indexOfInstanceProperty(_context2 = ['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot']).call(_context2, key) !== -1) {
                 if (!HIDEEN_COMPONENT_STORE.get(key)) {
                   _this2.hideComponent(key);
                 }
@@ -21099,22 +21570,11 @@
       key: "initEvent",
       value: function initEvent() {
         var _this3 = this;
-        this.video.onclick = function (e) {
-          if (_this3.video.paused) {
-            _this3.video.play();
-          } else if (_this3.video.played) {
-            _this3.video.pause();
-          }
-        };
-        this.el.onmouseenter = function (e) {
-          _this3.emit('showtoolbar', e);
-        };
-        this.el.onmousemove = function (e) {
-          _this3.emit('showtoolbar', e);
-        };
-        this.el.onmouseleave = function (e) {
-          _this3.emit('hidetoolbar', e);
-        };
+        if (this.env === 'Mobile') {
+          this.initMobileEvent();
+        } else {
+          this.initPCEvent();
+        }
         this.video.onloadedmetadata = function (e) {
           _this3.emit('loadedmetadata', e);
         };
@@ -21182,12 +21642,10 @@
         });
         this.on('enterFullscreen', function () {
           var _context3, _context4;
-          console.log('==enterFullscreen==');
           _forEachInstanceProperty(_context3 = document.querySelectorAll('.video-controller')).call(_context3, function (el) {
             el.style.marginRight = '10px';
           });
           _forEachInstanceProperty(_context4 = document.querySelectorAll('.video-topbar-controller')).call(_context4, function (el) {
-            console.log(el);
             el.style.marginRight = '10px';
           });
         });
@@ -21197,18 +21655,100 @@
             el.style.marginRight = '';
           });
           _forEachInstanceProperty(_context6 = document.querySelectorAll('.video-topbar-controller')).call(_context6, function (el) {
-            el.style.marginRight = '10px';
+            el.style.marginRight = '';
           });
+        });
+      }
+    }, {
+      key: "initPCEvent",
+      value: function initPCEvent() {
+        var _this4 = this;
+        this.video.onclick = function (e) {
+          if (_this4.video.paused) {
+            _this4.video.play();
+          } else if (_this4.video.played) {
+            _this4.video.pause();
+          }
+        };
+        this.el.onmouseenter = function (e) {
+          _this4.emit('showtoolbar', e);
+        };
+        this.el.onmousemove = function (e) {
+          _this4.emit('showtoolbar', e);
+        };
+        this.el.onmouseleave = function (e) {
+          _this4.emit('hidetoolbar', e);
+        };
+      }
+    }, {
+      key: "initMobileEvent",
+      value: function initMobileEvent() {
+        var _this5 = this;
+        // 单击
+        this.video.addEventListener('singleTap', function (e) {
+          // console.log(e, 'singleTap')
+          if (_this5.toolBar.status === 'hidden') {
+            _this5.emit('showtoolbar', e);
+          } else {
+            _this5.emit('hidetoolbar', e);
+          }
+        });
+        // 双击
+        this.video.addEventListener('doubleTap', function (e) {
+          // console.log(e, 'doubleTap')
+          if (_this5.video.paused) {
+            _this5.video.play();
+          } else if (_this5.video.played) {
+            _this5.video.pause();
+          }
+        });
+        // 当手势具有向上或者向下、向左、向右的位移，且处在滑动状态
+        this.video.addEventListener('moveLeft', function (val) {});
+        this.video.addEventListener('moveRight', function (val) {});
+        this.video.addEventListener('moveTop', function (val) {
+          // console.log(val, 'moveTop')
+          _this5.emit('moveTop', val);
+          if (Math.abs(val.dx) <= Math.abs(val.dy)) {
+            _this5.emit('moveVertical', val);
+          } else {
+            _this5.emit('moveHorizontal', val);
+          }
+        });
+        this.video.addEventListener('moveDown', function (val) {
+          // console.log(val, 'moveDown')
+          _this5.emit('moveDown', val);
+          if (Math.abs(val.dx) <= Math.abs(val.dy)) {
+            _this5.emit('moveVertical', val);
+          } else {
+            _this5.emit('moveHorizontal', val);
+          }
+        });
+        // 当手势具有向上或者向下的位移且滑动结束后触发该事件
+        this.video.addEventListener('slideTop', function (val) {
+          // console.log(val, 'slideTop')
+          if (Math.abs(val.dx) <= Math.abs(val.dy)) {
+            _this5.emit('slideVertical');
+          } else {
+            _this5.emit('slideHorizontal');
+          }
+        });
+        this.video.addEventListener('slideDown', function (val) {
+          // console.log(val, 'slideDown')
+          if (Math.abs(val.dx) <= Math.abs(val.dy)) {
+            _this5.emit('slideVertical');
+          } else {
+            _this5.emit('slideHorizontal');
+          }
         });
       }
     }, {
       key: "initPlugin",
       value: function initPlugin() {
-        var _this4 = this;
+        var _this6 = this;
         if (this.playerOptions.plugins) {
           var _context7;
           _forEachInstanceProperty(_context7 = this.playerOptions.plugins).call(_context7, function (plugin) {
-            _this4.use(plugin);
+            _this6.use(plugin);
           });
         }
       }
@@ -21241,6 +21781,9 @@
           // ToDo
         }
       }
+    }, {
+      key: "checkFullScreenMode",
+      value: function checkFullScreenMode() {}
       // 注册/挂载自己的组件,其中的id为组件实例的名称，分为内置和用户自定义这两种情况；注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
     }, {
       key: "mountComponent",
@@ -21289,7 +21832,10 @@
               if (options.index < 0) throw new Error('index不能传入负值');
               _area.insertBefore(component.el, _children[options.index] || null);
             }
+          } else if (mode.type === 'AnyPosition') {
+            this.el.appendChild(component.el);
           }
+          // 给组件中的container赋予新的值
           component.container = component.el.parentElement;
         }
       }
@@ -22193,10 +22739,10 @@
       key: "initTemplate",
       value: function initTemplate() {
         addClass(this.el, ['danmaku-input-wrapper']);
-        this.inputBox = $$o('input.danmaku-input', {
+        this.inputBox = $$n('input.danmaku-input', {
           type: 'text'
         });
-        this.sendBox = $$o('span.danmaku-send');
+        this.sendBox = $$n('span.danmaku-send');
         this.sendBox.innerText = '发送';
         this.el.appendChild(this.inputBox);
         this.el.appendChild(this.sendBox);

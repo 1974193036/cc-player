@@ -10,10 +10,11 @@ import './toolbar.less'
 export class ToolBar extends Component implements ComponentItem {
   readonly id = 'ToolBar'
   // el: div.video-controls.video-controls-hidden
+  props: DOMProps
   player: Player
   progress: Progress
   controller: Controller
-  props: DOMProps
+  status: 'show' | 'hidden' = 'hidden'
   private timer: number = 0
 
   constructor(
@@ -25,7 +26,7 @@ export class ToolBar extends Component implements ComponentItem {
   ) {
     super(container, desc, props, children)
     this.player = player
-    this.props =  props || {}
+    this.props = props || {}
     this.init()
   }
 
@@ -70,6 +71,7 @@ export class ToolBar extends Component implements ComponentItem {
   private showToolBar(e: MouseEvent) {
     if (includeClass(this.el, 'video-controls-hidden')) {
       removeClass(this.el, ['video-controls-hidden'])
+      this.status = 'show'
     }
 
     if (e.target === this.player.video) {
@@ -82,6 +84,7 @@ export class ToolBar extends Component implements ComponentItem {
   private hideToolBar() {
     if (!includeClass(this.el, 'video-controls-hidden')) {
       addClass(this.el, ['video-controls-hidden'])
+      this.status = 'hidden'
     }
   }
 }

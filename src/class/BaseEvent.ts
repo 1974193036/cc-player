@@ -24,10 +24,4 @@ export class BaseEvent {
       })
     }
   }
-
-  init() {}
-  initEvent() {}
-  initTemplate() {}
-  initComponent() {}
-  resetEvent() {}
 }
