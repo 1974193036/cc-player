@@ -7,9 +7,9 @@ import {
 } from '@/types/Player'
 import { Component } from '@/class/Component'
 import { ToolBar } from '@/components/ToolBar/toolbar'
-import { $, patchComponent } from '@/utils/domUtils'
+import { $, addClass, patchComponent, removeClass } from '@/utils/domUtils'
 import { Plugin } from '@/types/Player'
-import { COMPONENT_STORE, ONCE_COMPONENT_STORE } from '@/utils/store'
+import { COMPONENT_STORE, HIDEEN_COMPONENT_STORE, ONCE_COMPONENT_STORE } from '@/utils/store'
 import { getFileExtension } from '@/utils/play'
 import MpdMediaPlayerFactory from '@/dash/MediaPlayer'
 import Mp4MediaPlayer from '../mp4/MediaPlayer'
@@ -82,22 +82,52 @@ class Player extends Component implements ComponentItem {
 
     // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
     let _STORE = new Map(COMPONENT_STORE)
-      
+
     const resizeObserver = new ResizeObserver((entries) => {
       console.log('监听到了尺寸变化了...')
+      // 触发尺寸变化事件
+      this.emit('resize', entries)
       let width = entries[0].contentRect.width
+      let subsetting
       if (width <= 600) {
+        // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
         _STORE.forEach((value, key) => {
-          if (['Playrate'].includes(key)) {
+          if (['SubSetting'].includes(key)) {
+            subsetting = ONCE_COMPONENT_STORE.get(key)
             this.unmountComponent(key)
-            this.mountComponent(key, ONCE_COMPONENT_STORE.get(key), {
-              mode: {
-                type: 'TopToolBar',
-                pos: 'right'
-              }
-            })
+          } else if (['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot'].includes(key)) {
+            if (!HIDEEN_COMPONENT_STORE.get(key)) {
+              this.hideComponent(key)
+            }
           }
         })
+        this.mountComponent(subsetting.id, subsetting, {
+          mode: {
+            type: 'TopToolBar',
+            pos: 'right'
+          }
+        })
+        addClass(subsetting.el, ['video-subsettings', 'video-topbar-controller'])
+      } else {
+        // 展示之前隐藏的组件
+        let _HIDDEN_STORE = new Map(HIDEEN_COMPONENT_STORE)
+        _HIDDEN_STORE.forEach((value, key) => {
+          this.showComponent(key)
+        })
+        if (COMPONENT_STORE.has('SubSetting')) {
+          let key = 'SubSetting'
+          let component = ONCE_COMPONENT_STORE.get(key)
+          // 如果SubSetting已经挂载到视图上，需要先卸载
+          this.unmountComponent(key)
+          this.mountComponent(key, component, {
+            mode: {
+              type: 'BottomToolBar',
+              pos: 'right'
+            },
+            index: 1
+          })
+          addClass(component.el, ['video-subsettings', 'video-controller'])
+        }
       }
     })
     // 开始观察
@@ -203,6 +233,26 @@ class Player extends Component implements ComponentItem {
       console.log('dotup')
       this.enableSeek = true
     })
+
+    this.on('enterFullscreen', () => {
+      console.log('==enterFullscreen==')
+      document.querySelectorAll('.video-controller').forEach((el) => {
+        ;(el as HTMLElement).style.marginRight = '10px'
+      })
+      document.querySelectorAll('.video-topbar-controller').forEach((el) => {
+        console.log(el)
+        ;(el as HTMLElement).style.marginRight = '10px'
+      })
+    })
+
+    this.on('leaveFullscreen', () => {
+      document.querySelectorAll('.video-controller').forEach((el) => {
+        ;(el as HTMLElement).style.marginRight = ''
+      })
+      document.querySelectorAll('.video-topbar-controller').forEach((el) => {
+        ;(el as HTMLElement).style.marginRight = '10px'
+      })
+    })
   }
 
   initPlugin() {
@@ -247,7 +297,9 @@ class Player extends Component implements ComponentItem {
     }
 
     COMPONENT_STORE.set(id, component)
-    ONCE_COMPONENT_STORE.set(id, component)
+    if (!ONCE_COMPONENT_STORE.has(id)) {
+      ONCE_COMPONENT_STORE.set(id, component)
+    }
 
     if (!options) {
       if (!component.container) {
@@ -257,18 +309,34 @@ class Player extends Component implements ComponentItem {
     } else {
       let mode = options.mode
       if (mode.type === 'BottomToolBar') {
+        let area: HTMLElement
         if (mode.pos === 'left') {
-          this.toolBar.controller.leftArea.appendChild(component.el)
+          area = this.toolBar.controller.leftArea
         } else if (mode.pos === 'right') {
-          this.toolBar.controller.rightArea.appendChild(component.el)
+          area = this.toolBar.controller.rightArea
         } else if (mode.pos === 'medium') {
-          this.toolBar.controller.mediumArea.appendChild(component.el)
+          area = this.toolBar.controller.mediumArea
+        }
+        let children = [...area.children]
+        if (!options.index) {
+          area.appendChild(component.el)
+        } else {
+          if (options.index < 0) throw new Error('index不能传入负值')
+          area.insertBefore(component.el, children[options.index] || null)
         }
       } else if (mode.type === 'TopToolBar') {
+        let area: HTMLElement
         if (mode.pos === 'left') {
-          this.topbar.leftArea.appendChild(component.el)
+          area = this.topbar.leftArea
         } else {
-          this.topbar.rightArea.appendChild(component.el)
+          area = this.topbar.rightArea
+        }
+        let children = [...area.children]
+        if (!options.index) {
+          area.appendChild(component.el)
+        } else {
+          if (options.index < 0) throw new Error('index不能传入负值')
+          area.insertBefore(component.el, children[options.index] || null)
         }
       }
       component.container = component.el.parentElement
@@ -283,6 +351,33 @@ class Player extends Component implements ComponentItem {
     patchComponent(COMPONENT_STORE.get(id), component, options)
   }
 
+  // 隐藏某一个已经挂载到视图上的组件
+  hideComponent(id: string) {
+    if (!COMPONENT_STORE.get(id)) {
+      throw new Error('无法隐藏一个未挂载在视图上的组件')
+    }
+    if (HIDEEN_COMPONENT_STORE.get(id)) {
+      throw new Error('该元素已经隐藏')
+    }
+    let instance = COMPONENT_STORE.get(id)
+    instance.el.style.display = 'none'
+    HIDEEN_COMPONENT_STORE.set(id, instance)
+  }
+
+  // 展示一个隐藏的组件
+  showComponent(id: string) {
+    if (!HIDEEN_COMPONENT_STORE.get(id)) {
+      throw new Error('该元素已经显示出来了')
+    }
+    if (!COMPONENT_STORE.get(id)) {
+      throw new Error('该元素不存在或者被卸载')
+    }
+
+    let instance = COMPONENT_STORE.get(id)
+    instance.el.style.display = ''
+    HIDEEN_COMPONENT_STORE.delete(id)
+  }
+
   // 卸载某一个component组件，所谓卸载一个组件指的是仅仅将其DOM元素从视图上移除，但是不会删除其实例对象，还可以继续挂载
   unmountComponent(id: string) {
     if (!COMPONENT_STORE.has(id)) {
@@ -290,6 +385,7 @@ class Player extends Component implements ComponentItem {
     }
     let instance = COMPONENT_STORE.get(id)
     instance.el.parentElement.removeChild(instance.el)
+    removeClass(instance.el, [...instance.el.classList])
     COMPONENT_STORE.delete(id)
   }
 
