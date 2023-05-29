@@ -7530,21 +7530,16 @@
             this.container.style.width = window.innerHeight + 'px';
             this.container.style.height = window.innerWidth + 'px';
             this.player.emit('enterFullscreen');
+          } else {
+            this.iconBox.removeChild(this.icon);
+            this.icon = createSvg(fullscreenPath);
+            this.iconBox.appendChild(this.icon);
+            removeClass(this.player.container, ['video-cross-screen']);
+            this.container.style.width = this.player.playerOptions.width;
+            this.container.style.height = this.player.playerOptions.height;
+            this.player.emit('leaveFullscreen');
           }
         }
-        // if (this.player.container.requestFullscreen && !document.fullscreenElement) {
-        //   this.player.container.requestFullscreen() //该函数请求全屏
-        //   this.iconBox.removeChild(this.icon)
-        //   this.icon = createSvg(fullscreenExitPath)
-        //   this.iconBox.appendChild(this.icon)
-        //   this.player.emit('enterFullscreen')
-        // } else if (document.fullscreenElement) {
-        //   document.exitFullscreen() //退出全屏函数仅仅绑定在document对象上，该点需要切记！！！
-        //   this.iconBox.removeChild(this.icon)
-        //   this.icon = createSvg(fullscreenPath)
-        //   this.iconBox.appendChild(this.icon)
-        //   this.player.emit('leaveFullscreen')
-        // }
       }
     }]);
     return FullScreen;
@@ -21399,6 +21394,7 @@
       key: "initEvent",
       value: function initEvent() {
         var _this2 = this;
+        var width = this.completedBox.clientWidth;
         this.player.on('moveVertical', function (val) {
           console.log('正在滑动');
           if (_this2.timer) {
@@ -21407,7 +21403,7 @@
           _this2.timer = null;
           _this2.el.style.display = '';
           var dy = val.dy;
-          var scale = (_this2.completedBox.clientWidth + -dy / 50) / _this2.progressBox.clientWidth;
+          var scale = (width + -dy) / _this2.progressBox.clientWidth;
           if (scale < 0) {
             scale = 0;
           } else if (scale > 1) {
@@ -21419,6 +21415,7 @@
         });
         this.player.on('slideVertical', function (val) {
           console.log('滑动结束');
+          width = _this2.completedBox.clientWidth;
           _this2.timer = window.setTimeout(function () {
             _this2.el.style.display = 'none';
           }, 600);

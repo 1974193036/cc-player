@@ -1,7 +1,7 @@
 import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
-import { $, addClass, createSvg, getElementSize } from '@/utils/domUtils'
+import { $, addClass, createSvg } from '@/utils/domUtils'
 import { volumePath$1 } from '../Controller/path/defaultPath'
 import './index.less'
 
@@ -48,6 +48,7 @@ export class MobileVolume extends Component implements ComponentItem {
   }
 
   initEvent() {
+    let width = this.completedBox.clientWidth
     this.player.on('moveVertical', (val) => {
       console.log('正在滑动')
       if (this.timer) {
@@ -56,7 +57,7 @@ export class MobileVolume extends Component implements ComponentItem {
       this.timer = null
       this.el.style.display = ''
       let dy = val.dy
-      let scale = (this.completedBox.clientWidth + -dy / 50) / this.progressBox.clientWidth
+      let scale = (width + (-dy)) / this.progressBox.clientWidth;
       if (scale < 0) {
         scale = 0
       } else if (scale > 1) {
@@ -69,6 +70,7 @@ export class MobileVolume extends Component implements ComponentItem {
 
     this.player.on('slideVertical', (val: any) => {
       console.log('滑动结束')
+      width = this.completedBox.clientWidth
       this.timer = window.setTimeout(() => {
         this.el.style.display = 'none'
       }, 600)
