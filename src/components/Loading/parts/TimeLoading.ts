@@ -14,12 +14,12 @@ export class TimeLoading extends Loading {
 
   initEvent(): void {
     // 在视频由于需要缓冲下一帧而停止时触发
-    this.player.on('waiting', (e) => {
+    this.player.on('waiting', () => {
       this.addLoading()
     })
 
     // 该视频已准备好开始播放
-    this.player.on('canplay', (e) => {
+    this.player.on('canplay', () => {
       this.removeLoading()
     })
   }

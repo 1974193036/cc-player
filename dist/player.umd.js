@@ -21511,7 +21511,7 @@
     return MediaPlayer;
   }();
 
-  var css_248z$4 = ".video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: #000;\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-loading .video-loading-loadingbox {\n  height: 50px;\n  width: 50px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.video-loading .video-loading-errorbox {\n  height: 50px;\n  width: 50px;\n  background-color: red;\n}\n.video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 16px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n";
+  var css_248z$4 = ".video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n";
   styleInject(css_248z$4);
 
   function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -21527,7 +21527,7 @@
       _defineProperty(_assertThisInitialized(_this), "props", void 0);
       _defineProperty(_assertThisInitialized(_this), "player", void 0);
       _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
-      _defineProperty(_assertThisInitialized(_this), "msgBox", void 0);
+      _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
       _defineProperty(_assertThisInitialized(_this), "message", void 0);
       _this.props = props || {};
       _this.player = player;
@@ -21547,10 +21547,10 @@
       value: function initTemplate() {
         addClass(this.el, ['video-loading']);
         this.loadingBox = $$n('div');
-        this.msgBox = $$n('div.video-loading-msgbox');
-        this.msgBox.innerText = this.message;
+        this.messageBox = $$n('div.video-loading-msgbox');
+        this.messageBox.innerText = this.message;
         this.el.appendChild(this.loadingBox);
-        this.el.appendChild(this.msgBox);
+        this.el.appendChild(this.messageBox);
       }
     }, {
       key: "initEvent",
@@ -21595,11 +21595,11 @@
       value: function initEvent() {
         var _this2 = this;
         // 在视频由于需要缓冲下一帧而停止时触发
-        this.player.on('waiting', function (e) {
+        this.player.on('waiting', function () {
           _this2.addLoading();
         });
         // 该视频已准备好开始播放
-        this.player.on('canplay', function (e) {
+        this.player.on('canplay', function () {
           _this2.removeLoading();
         });
       }
@@ -21916,7 +21916,7 @@
     }, {
       key: "initComponent",
       value: function initComponent() {
-        this.loading = new TimeLoading(this, '视频加载中，请稍等....', this.el);
+        this.loading = new TimeLoading(this, '视频姬正在努力加载中(⑅˃◡˂⑅)', this.el);
         this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
         this.toolBar = new ToolBar(this, this.el, 'div');
         this.topbar = new TopBar(this, this.el, 'div');
