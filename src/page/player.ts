@@ -19,7 +19,7 @@ import { ErrorLoading } from '@/components/Loading/parts/ErrorLoading'
 import { TopBar } from '@/components/TopBar/TopBar'
 import { Env } from '@/utils/env'
 import { MobileVolume } from '@/components/Mobile/MobileVolume'
-import { wrap } from 'ntouch.js'
+import { MoveEvent, wrap } from 'ntouch.js'
 
 import './player.less'
 
@@ -234,12 +234,15 @@ class Player extends Component implements ComponentItem {
     })
 
     this.on('dotdown', () => {
-      console.log('dotdown')
+      // console.log('dotdown')
       this.enableSeek = false
     })
     this.on('dotup', () => {
-      console.log('dotup')
+      // console.log('dotup')
       this.enableSeek = true
+    })
+    this.on('dotdrag', (val: number, e: Event | MoveEvent) => {
+      this.emit('showtoolbar', e)
     })
 
     this.on('enterFullscreen', () => {
@@ -310,18 +313,25 @@ class Player extends Component implements ComponentItem {
       // console.log(e, 'move')
       let dx = e.deltaX
       let dy = e.deltaY
-      if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+      if (Math.abs(dx) <= 5 && Math.abs(dx) < Math.abs(dy) && Math.abs(dy) >= 20) {
         this.emit('moveVertical', e)
+      } else if (Math.abs(dy) <= 5 && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) >= 20) {
+        this.emit('moveHorizontal', e)
       }
     })
 
     // 手势上下滑动结束
     wrap(this.video).addEventListener('swipe', (e) => {
-      console.log(e, 'swipe')
+      // console.log(e, 'swipe')
       let dx = e.endPos.x - e.startPos.x
       let dy = e.endPos.y - e.startPos.y
-      if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
-        this.emit('slideVertical', e)
+      // if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+      //   this.emit('slideVertical', e)
+      // }
+      if(Math.abs(dx) <= 5 && Math.abs(dx) < Math.abs(dy) && Math.abs(dy) >= 20) {
+        this.emit("slideVertical", e);
+      } else if(Math.abs(dy) <= 5 && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) >= 20) {
+        this.emit("slideHorizontal",e);
       }
     })
   }

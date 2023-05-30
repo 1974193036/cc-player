@@ -6725,18 +6725,57 @@
             _this2.updatePos(e);
           }
         });
+        if (this.player.env === 'PC') {
+          this.initPCEvent();
+        } else {
+          this.initMobileEvent();
+        }
+      }
+    }, {
+      key: "initPCEvent",
+      value: function initPCEvent() {
+        var _this3 = this;
         this.el.addEventListener('mousedown', function (e) {
           e.preventDefault();
-          _this2.onMouseMove = _this2.onMouseMove.bind(_this2);
-          _this2.player.emit('dotdown');
-          _this2.mouseX = e.pageX;
-          _this2.left = _parseInt$1(_this2.el.style.left);
-          document.body.addEventListener('mousemove', _this2.onMouseMove);
+          _this3.onMouseMove = _this3.onMouseMove.bind(_this3);
+          _this3.player.emit('dotdown');
+          _this3.mouseX = e.pageX;
+          _this3.left = _parseInt$1(_this3.el.style.left);
+          document.body.addEventListener('mousemove', _this3.onMouseMove);
           document.body.addEventListener('mouseup', function (e) {
-            _this2.player.emit('dotup');
-            _this2.player.video.currentTime = Math.floor(_this2.playScale * _this2.player.video.duration);
-            document.body.removeEventListener('mousemove', _this2.onMouseMove);
+            _this3.player.emit('dotup');
+            _this3.player.video.currentTime = Math.floor(_this3.playScale * _this3.player.video.duration);
+            document.body.removeEventListener('mousemove', _this3.onMouseMove);
           });
+        });
+      }
+    }, {
+      key: "initMobileEvent",
+      value: function initMobileEvent() {
+        var _this4 = this;
+        this.player.video.addEventListener('touchstart', function (e) {
+          e.preventDefault();
+          _this4.player.emit('dotdown');
+          _this4.left = _this4.el.style.left ? _parseInt$1(_this4.el.style.left) : 0;
+        });
+        this.player.video.addEventListener('touchend', function (e) {
+          _this4.player.emit('dotup');
+        });
+        this.player.on('moveHorizontal', function (e) {
+          var scale = (_this4.left + e.deltaX) / _this4.container.clientWidth;
+          if (scale < 0) {
+            scale = 0;
+          } else if (scale > 1) {
+            scale = 1;
+          }
+          _this4.playScale = scale;
+          _this4.el.style.left = _this4.container.clientWidth * scale - getElementSize(_this4.el).width / 2 + 'px';
+          if (_this4.player.video.paused) _this4.player.video.play();
+          _this4.player.emit('dotdrag', scale, e);
+        });
+        this.player.on('slideHorizontal', function (e) {
+          _this4.player.emit('dotup');
+          _this4.player.video.currentTime = Math.floor(_this4.playScale * _this4.player.video.duration);
         });
       }
     }, {
@@ -6751,7 +6790,7 @@
         this.playScale = scale;
         this.el.style.left = this.container.offsetWidth * scale - getElementSize(this.el).width / 2 + 'px';
         if (this.player.video.paused) this.player.video.play();
-        this.player.emit('dotdrag', this.container.offsetWidth * scale);
+        this.player.emit('dotdrag', scale, e);
       }
     }, {
       key: "onShowDot",
@@ -6825,8 +6864,8 @@
             _this2.updatePos(e);
           }
         });
-        this.player.on('dotdrag', function (len) {
-          _this2.el.style.width = len + 'px';
+        this.player.on('dotdrag', function (scale) {
+          _this2.el.style.width = scale * 100 + '%';
         });
       }
     }, {
@@ -9340,7 +9379,7 @@
     return Controller;
   }(Component);
 
-  var css_248z$5 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.2);\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n}\n";
+  var css_248z$5 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: transparent;\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n}\n";
   styleInject(css_248z$5);
 
   function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -22011,12 +22050,15 @@
           };
         });
         this.on('dotdown', function () {
-          console.log('dotdown');
+          // console.log('dotdown')
           _this3.enableSeek = false;
         });
         this.on('dotup', function () {
-          console.log('dotup');
+          // console.log('dotup')
           _this3.enableSeek = true;
+        });
+        this.on('dotdrag', function (val, e) {
+          _this3.emit('showtoolbar', e);
         });
         this.on('enterFullscreen', function () {
           var _context3, _context4;
@@ -22086,17 +22128,24 @@
           // console.log(e, 'move')
           var dx = e.deltaX;
           var dy = e.deltaY;
-          if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+          if (Math.abs(dx) <= 5 && Math.abs(dx) < Math.abs(dy) && Math.abs(dy) >= 20) {
             _this5.emit('moveVertical', e);
+          } else if (Math.abs(dy) <= 5 && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) >= 20) {
+            _this5.emit('moveHorizontal', e);
           }
         });
         // 手势上下滑动结束
         wrap(this.video).addEventListener('swipe', function (e) {
-          console.log(e, 'swipe');
+          // console.log(e, 'swipe')
           var dx = e.endPos.x - e.startPos.x;
           var dy = e.endPos.y - e.startPos.y;
-          if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
-            _this5.emit('slideVertical', e);
+          // if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+          //   this.emit('slideVertical', e)
+          // }
+          if (Math.abs(dx) <= 5 && Math.abs(dx) < Math.abs(dy) && Math.abs(dy) >= 20) {
+            _this5.emit("slideVertical", e);
+          } else if (Math.abs(dy) <= 5 && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) >= 20) {
+            _this5.emit("slideHorizontal", e);
           }
         });
       }

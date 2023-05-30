@@ -39,8 +39,8 @@ export class CompletedProgress extends Component implements ComponentItem {
       }
     })
 
-    this.player.on('dotdrag', (len: number) => {
-      this.el.style.width = len + 'px'
+    this.player.on('dotdrag', (scale: number) => {
+      this.el.style.width = scale * 100 + '%'
     })
   }
 
