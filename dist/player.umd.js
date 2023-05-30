@@ -5882,7 +5882,7 @@
       return Math.sqrt(v.x * v.x + v.y * v.y);
   }
   // 计算两个向量之间的角度
-  function computeAngle(v1, v2) {
+  function computeAngle$1(v1, v2) {
       let lv1 = computeVectorLen(v1);
       let lv2 = computeVectorLen(v2);
       let angle = 0;
@@ -6187,7 +6187,7 @@
                   }
               }
               // 计算出拖动时旋转的角度
-              let angle = computeAngle(prevV, V);
+              let angle = computeAngle$1(prevV, V);
               if (event === "rotate") {
                   let ev = Object.assign(Object.assign({}, e), { angle, e });
                   if (listener instanceof Function) {
@@ -9483,6 +9483,11 @@
       }
     }
     throw new Error('传入的文件没有扩展名');
+  }
+  function computeAngle(dx, dy) {
+    if (dx === 0) return 90;
+    if (dy === 0) return 0;
+    return Math.round(Math.atan(Math.abs(dy) / Math.abs(dx)) * 180 / Math.PI);
   }
 
   function _isNativeReflectConstruct$7() {
@@ -21836,6 +21841,9 @@
             _this2.el.style.display = 'none';
           }, 600);
         });
+        this.player.on('videoClick', function () {
+          _this2.el.style.display = 'none';
+        });
       }
     }]);
     return MobileVolume;
@@ -21864,7 +21872,7 @@
         height: '100%'
       });
       _defineProperty(_assertThisInitialized(_this), "env", Env.env);
-      _defineProperty(_assertThisInitialized(_this), "fullScreenMode", 'Vertical');
+      _defineProperty(_assertThisInitialized(_this), "fullScreenMode", 'Horizontal');
       _defineProperty(_assertThisInitialized(_this), "video", void 0);
       _defineProperty(_assertThisInitialized(_this), "props", void 0);
       _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
@@ -22128,9 +22136,9 @@
           // console.log(e, 'move')
           var dx = e.deltaX;
           var dy = e.deltaY;
-          if (Math.abs(dx) <= 5 && Math.abs(dx) < Math.abs(dy) && Math.abs(dy) >= 20) {
+          if (computeAngle(dx, dy) >= 75) {
             _this5.emit('moveVertical', e);
-          } else if (Math.abs(dy) <= 5 && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) >= 20) {
+          } else if (computeAngle(dx, dy) <= 15) {
             _this5.emit('moveHorizontal', e);
           }
         });
@@ -22142,10 +22150,10 @@
           // if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
           //   this.emit('slideVertical', e)
           // }
-          if (Math.abs(dx) <= 5 && Math.abs(dx) < Math.abs(dy) && Math.abs(dy) >= 20) {
-            _this5.emit("slideVertical", e);
-          } else if (Math.abs(dy) <= 5 && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) >= 20) {
-            _this5.emit("slideHorizontal", e);
+          if (computeAngle(dx, dy) >= 75) {
+            _this5.emit('slideVertical', e);
+          } else if (computeAngle(dx, dy) <= 15) {
+            _this5.emit('slideHorizontal', e);
           }
         });
       }
@@ -22180,7 +22188,9 @@
         switch (getFileExtension(url)) {
           case 'mp4':
           case 'mp3':
+            // mp4流式播放
             // this.initMp4Player(url)
+            // 非流式播放
             this.video.src = url;
             break;
           case 'mpd':
