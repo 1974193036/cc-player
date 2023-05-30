@@ -11,6 +11,7 @@ export class Options extends Component implements ComponentItem {
   hideHeight: number
   hideBox: HTMLElement
   iconBox: HTMLElement
+  icon: Element
 
   constructor(
     player: Player,
@@ -68,6 +69,10 @@ export class Options extends Component implements ComponentItem {
         }
       }
     })
+
+    this.player.on('videoClick', () => {
+      this.hideBox.style.display = 'none'
+    })
   }
 
   handleMouseMove(e: MouseEvent) {
@@ -78,5 +83,11 @@ export class Options extends Component implements ComponentItem {
       ctx.hideBox.style.display = 'none'
       document.body.onmousemove = null
     }
+  }
+
+  replaceIcon(icon: Element) {
+    this.iconBox.removeChild(this.icon)
+    this.iconBox.appendChild(icon)
+    this.icon = icon
   }
 }

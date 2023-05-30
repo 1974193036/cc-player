@@ -4,11 +4,11 @@ import { addClass, createSvg } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
 import { videoShotPath } from '../path/defaultPath'
 import { Options } from './Options'
+import { wrap } from 'ntouch.js'
 
 export class VideoShot extends Options {
   readonly id = 'VideoShot'
   // el: div.video-videoshot.video-controller
-  icon: SVGSVGElement
   countDown = 30
   timer: number | null = null
 
@@ -20,8 +20,6 @@ export class VideoShot extends Options {
     children?: Node[]
   ) {
     super(player, container, 0, 0, desc, props, children)
-    this.player = player
-    this.props = props || {}
     this.init()
   }
 
@@ -42,11 +40,15 @@ export class VideoShot extends Options {
   }
 
   initEvent() {
-    this.onMouseDown = this.onMouseDown.bind(this)
-    this.el.onmousedown = this.onMouseDown
+    this.onDown = this.onDown.bind(this)
+    if (this.player.env === 'PC') {
+      this.el.onmousedown = this.onDown
+    } else {
+      this.el.ontouchstart = this.onDown
+    }
   }
 
-  onMouseDown(e: MouseEvent) {
+  onDown() {
     if (this.player.video.played) {
       this.videoShot()
     }
@@ -95,9 +97,15 @@ export class VideoShot extends Options {
       this.countDown--
     }, 1000)
 
-    this.el.onmouseup = (e) => {
+    if (this.player.env === 'Mobile') {
+      this.el.ontouchend = (e) => {
+        this.stop(recorder)
+      }
+    } else {
       // 结束录制视频，手动抬起鼠标结束录制
-      this.stop(recorder)
+      this.el.onmouseup = (e) => {
+        this.stop(recorder)
+      }
     }
   }
 
@@ -107,6 +115,7 @@ export class VideoShot extends Options {
     window.clearInterval(this.timer)
     this.timer = null
     this.el.onmouseup = null
+    this.el.ontouchend = null
     this.countDown = 30
   }
 }

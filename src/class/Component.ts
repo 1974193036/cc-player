@@ -30,6 +30,8 @@ export class Component extends BaseEvent {
   initPCEvent(){}
   initMobileEvent(){}
   initTemplate() {}
+  initPCTemplate(){}
+  initMobileTemplate(){}
   initComponent() {}
   resetEvent() {}
 }

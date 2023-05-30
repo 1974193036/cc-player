@@ -4,11 +4,11 @@ import { addClass, createSvg, removeClass } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
 import { fullPagePath, fullPageExitPath } from '../path/defaultPath'
 import { Options } from './Options'
+import { wrap } from 'ntouch.js'
 
 export class FullPage extends Options {
   readonly id = 'FullPage'
   // el: div.video-fullpage.video-controller
-  icon: SVGSVGElement
   isFullPage = false
 
   constructor(
@@ -19,8 +19,6 @@ export class FullPage extends Options {
     children?: Node[]
   ) {
     super(player, container, 0, 0, desc, props, children)
-    this.player = player
-    this.props = props || {}
     this.init()
   }
 
@@ -42,10 +40,14 @@ export class FullPage extends Options {
 
   initEvent() {
     this.onClick = this.onClick.bind(this)
-    this.el.onclick = this.onClick
+    if (this.player.env === 'Mobile') {
+      wrap(this.el).addEventListener('singleTap', this.onClick)
+    } else {
+      this.el.onclick = this.onClick
+    }
   }
 
-  onClick(e: MouseEvent) {
+  onClick(e: Event) {
     if (!this.isFullPage) {
       addClass(this.player.container, ['video-fullpage'])
       this.player.container.style.position = 'fixed'

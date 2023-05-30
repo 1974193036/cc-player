@@ -292,6 +292,7 @@ class Player extends Component implements ComponentItem {
       } else {
         this.emit('hidetoolbar', e)
       }
+      this.emit('videoClick')
     })
 
     // 双击

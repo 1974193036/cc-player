@@ -12,7 +12,6 @@ export class Volume extends Options {
   volumeProgress: HTMLElement
   volumeShow: HTMLElement
   volumeCompleted: VolumeCompletedProgress
-  icon: SVGSVGElement
   volume: number = 0.5
 
   constructor(

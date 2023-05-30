@@ -4,12 +4,11 @@ import { addClass, createSvgs } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
 import { screenShot$1, screenShot$2 } from '../path/defaultPath'
 import { Options } from './Options'
-import { nanoid } from 'nanoid'
+import { wrap } from 'ntouch.js'
 
 export class ScreenShot extends Options {
   readonly id = 'ScreenShot'
   // el: div.video-screenshot.video-controller
-  icon: SVGSVGElement
 
   constructor(
     player: Player,
@@ -19,8 +18,6 @@ export class ScreenShot extends Options {
     children?: Node[]
   ) {
     super(player, container, 0, 0, desc, props, children)
-    this.player = player
-    this.props = props || {}
     this.init()
   }
 
@@ -42,10 +39,14 @@ export class ScreenShot extends Options {
 
   initEvent() {
     this.onClick = this.onClick.bind(this)
-    this.el.onclick = this.onClick
+    if (this.player.env === 'PC') {
+      this.el.addEventListener('click', this.onClick)
+    } else {
+      wrap(this.el).addEventListener('singleTap', this.onClick)
+    }
   }
 
-  onClick(e: MouseEvent) {
+  onClick(e: Event) {
     this.screenShot()
   }
 

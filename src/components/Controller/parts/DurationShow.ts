@@ -8,10 +8,10 @@ import { storeControlComponent } from '../../../utils/store'
 export class DutaionShow extends Component implements ComponentItem {
   readonly id = 'DurationShow'
   // el: div.video-duration-time.video-controller
-  player: Player
-  props: DOMProps
   currentTime: string = '00:00'
   totalTime: string = '00:00'
+  props: DOMProps
+  player: Player
 
   constructor(
     player: Player,
@@ -22,7 +22,7 @@ export class DutaionShow extends Component implements ComponentItem {
   ) {
     super(container, desc, props, children)
     this.player = player
-    this.props = props || {}
+    this.props = props;
     this.init()
   }
 

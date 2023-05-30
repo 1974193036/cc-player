@@ -3,6 +3,7 @@ import { Player } from '@/page/player'
 import { DOMProps, Node } from '@/types/Player'
 import { $, addClass } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
+import { SingleTapEvent, wrap } from 'ntouch.js'
 
 /**
  * @description 播放速率的类
@@ -52,19 +53,36 @@ export class Playrate extends Options {
   }
 
   initEvent(): void {
-    this.hideBox.addEventListener('click', (e) => {
-      let text = (e.target as HTMLElement).innerText
-      let rate = Number(text.slice(0, text.length - 1))
-      console.log(rate)
-      // playbackRate：设置视频播放速度，会触发 ratechange 事件
-      this.player.video.playbackRate = rate
-      ;[...this.hideBox.childNodes].forEach((node: HTMLElement) => {
-        if (node === e.target) {
-          node.style.color = '#007aff'
-        } else {
-          node.style.color = '#fff'
+    this.onClick = this.onClick.bind(this)
+    if (this.player.env === 'PC') {
+      this.hideBox.addEventListener('click', this.onClick)
+    } else {
+      wrap(this.hideBox).addEventListener('singleTap', this.onClick)
+      wrap(this.el).addEventListener('singleTap', (e) => {
+        if (this.hideBox.style.display === 'none') {
+          this.hideBox.style.display = ''
         }
       })
+    }
+  }
+
+  onClick(e: Event | SingleTapEvent) {
+    let target
+    if (e instanceof Event) {
+      target = e.target
+    } else {
+      target = (e as SingleTapEvent).e.target
+    }
+    let text = (target as HTMLElement).innerText
+    let rate = Number(text.slice(0, text.length - 1))
+    // playbackRate：设置视频播放速度，会触发 ratechange 事件
+    this.player.video.playbackRate = rate
+    ;[...this.hideBox.childNodes].forEach((node: HTMLElement) => {
+      if (node === target) {
+        node.style.color = '#007aff'
+      } else {
+        node.style.color = '#fff'
+      }
     })
   }
 }

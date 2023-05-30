@@ -7,8 +7,7 @@ import { addClass, createSvg } from '@/utils/domUtils'
 
 export class SubSetting extends Options {
   readonly id = 'SubSetting'
-  // el: div.video-subsettings.video-controller
-  icon: SVGSVGElement
+  // el: div.video-subsettings.video-controllert
 
   constructor(
     player: Player,

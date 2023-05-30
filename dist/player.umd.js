@@ -5538,6 +5538,12 @@
       key: "initTemplate",
       value: function initTemplate() {}
     }, {
+      key: "initPCTemplate",
+      value: function initPCTemplate() {}
+    }, {
+      key: "initMobileTemplate",
+      value: function initMobileTemplate() {}
+    }, {
       key: "initComponent",
       value: function initComponent() {}
     }, {
@@ -5546,1510 +5552,6 @@
     }]);
     return Component;
   }(BaseEvent);
-
-  var getBuiltIn$4 = getBuiltIn$h;
-  var uncurryThis$6 = functionUncurryThis;
-  var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
-  var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
-  var anObject$3 = anObject$f;
-
-  var concat = uncurryThis$6([].concat);
-
-  // all object keys, includes non-enumerable and symbols
-  var ownKeys$3 = getBuiltIn$4('Reflect', 'ownKeys') || function ownKeys(it) {
-    var keys = getOwnPropertyNamesModule.f(anObject$3(it));
-    var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-    return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
-  };
-
-  var hasOwn$3 = hasOwnProperty_1;
-  var ownKeys$2 = ownKeys$3;
-  var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
-  var definePropertyModule = objectDefineProperty;
-
-  var copyConstructorProperties$1 = function (target, source, exceptions) {
-    var keys = ownKeys$2(source);
-    var defineProperty = definePropertyModule.f;
-    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
-    for (var i = 0; i < keys.length; i++) {
-      var key = keys[i];
-      if (!hasOwn$3(target, key) && !(exceptions && hasOwn$3(exceptions, key))) {
-        defineProperty(target, key, getOwnPropertyDescriptor(source, key));
-      }
-    }
-  };
-
-  var isObject$3 = isObject$j;
-  var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
-
-  // `InstallErrorCause` abstract operation
-  // https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
-  var installErrorCause$1 = function (O, options) {
-    if (isObject$3(options) && 'cause' in options) {
-      createNonEnumerableProperty$2(O, 'cause', options.cause);
-    }
-  };
-
-  var uncurryThis$5 = functionUncurryThis;
-
-  var $Error$1 = Error;
-  var replace$3 = uncurryThis$5(''.replace);
-
-  var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
-  // eslint-disable-next-line redos/no-vulnerable -- safe
-  var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
-  var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
-
-  var errorStackClear = function (stack, dropEntries) {
-    if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error$1.prepareStackTrace) {
-      while (dropEntries--) stack = replace$3(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
-    } return stack;
-  };
-
-  var fails$7 = fails$x;
-  var createPropertyDescriptor$2 = createPropertyDescriptor$8;
-
-  var errorStackInstallable = !fails$7(function () {
-    var error = Error('a');
-    if (!('stack' in error)) return true;
-    // eslint-disable-next-line es/no-object-defineproperty -- safe
-    Object.defineProperty(error, 'stack', createPropertyDescriptor$2(1, 7));
-    return error.stack !== 7;
-  });
-
-  var createNonEnumerableProperty$1 = createNonEnumerableProperty$9;
-  var clearErrorStack = errorStackClear;
-  var ERROR_STACK_INSTALLABLE = errorStackInstallable;
-
-  // non-standard V8
-  var captureStackTrace = Error.captureStackTrace;
-
-  var errorStackInstall = function (error, C, stack, dropEntries) {
-    if (ERROR_STACK_INSTALLABLE) {
-      if (captureStackTrace) captureStackTrace(error, C);
-      else createNonEnumerableProperty$1(error, 'stack', clearErrorStack(stack, dropEntries));
-    }
-  };
-
-  var toString$2 = toString$b;
-
-  var normalizeStringArgument$1 = function (argument, $default) {
-    return argument === undefined ? arguments.length < 2 ? '' : $default : toString$2(argument);
-  };
-
-  var $$m = _export;
-  var isPrototypeOf$3 = objectIsPrototypeOf;
-  var getPrototypeOf = objectGetPrototypeOf;
-  var setPrototypeOf = objectSetPrototypeOf;
-  var copyConstructorProperties = copyConstructorProperties$1;
-  var create$1 = objectCreate;
-  var createNonEnumerableProperty = createNonEnumerableProperty$9;
-  var createPropertyDescriptor$1 = createPropertyDescriptor$8;
-  var installErrorCause = installErrorCause$1;
-  var installErrorStack = errorStackInstall;
-  var iterate$4 = iterate$l;
-  var normalizeStringArgument = normalizeStringArgument$1;
-  var wellKnownSymbol$4 = wellKnownSymbol$q;
-
-  var TO_STRING_TAG = wellKnownSymbol$4('toStringTag');
-  var $Error = Error;
-  var push$3 = [].push;
-
-  var $AggregateError = function AggregateError(errors, message /* , options */) {
-    var isInstance = isPrototypeOf$3(AggregateErrorPrototype, this);
-    var that;
-    if (setPrototypeOf) {
-      that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
-    } else {
-      that = isInstance ? this : create$1(AggregateErrorPrototype);
-      createNonEnumerableProperty(that, TO_STRING_TAG, 'Error');
-    }
-    if (message !== undefined) createNonEnumerableProperty(that, 'message', normalizeStringArgument(message));
-    installErrorStack(that, $AggregateError, that.stack, 1);
-    if (arguments.length > 2) installErrorCause(that, arguments[2]);
-    var errorsArray = [];
-    iterate$4(errors, push$3, { that: errorsArray });
-    createNonEnumerableProperty(that, 'errors', errorsArray);
-    return that;
-  };
-
-  if (setPrototypeOf) setPrototypeOf($AggregateError, $Error);
-  else copyConstructorProperties($AggregateError, $Error, { name: true });
-
-  var AggregateErrorPrototype = $AggregateError.prototype = create$1($Error.prototype, {
-    constructor: createPropertyDescriptor$1(1, $AggregateError),
-    message: createPropertyDescriptor$1(1, ''),
-    name: createPropertyDescriptor$1(1, 'AggregateError')
-  });
-
-  // `AggregateError` constructor
-  // https://tc39.es/ecma262/#sec-aggregate-error-constructor
-  $$m({ global: true, constructor: true, arity: 2 }, {
-    AggregateError: $AggregateError
-  });
-
-  var classof$1 = classofRaw$2;
-
-  var engineIsNode = typeof process != 'undefined' && classof$1(process) == 'process';
-
-  var anObject$2 = anObject$f;
-  var aConstructor = aConstructor$3;
-  var isNullOrUndefined = isNullOrUndefined$6;
-  var wellKnownSymbol$3 = wellKnownSymbol$q;
-
-  var SPECIES$1 = wellKnownSymbol$3('species');
-
-  // `SpeciesConstructor` abstract operation
-  // https://tc39.es/ecma262/#sec-speciesconstructor
-  var speciesConstructor$2 = function (O, defaultConstructor) {
-    var C = anObject$2(O).constructor;
-    var S;
-    return C === undefined || isNullOrUndefined(S = anObject$2(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
-  };
-
-  var $TypeError$3 = TypeError;
-
-  var validateArgumentsLength$5 = function (passed, required) {
-    if (passed < required) throw $TypeError$3('Not enough arguments');
-    return passed;
-  };
-
-  var userAgent$2 = engineUserAgent;
-
-  // eslint-disable-next-line redos/no-vulnerable -- safe
-  var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
-
-  var global$b = global$r;
-  var apply$1 = functionApply;
-  var bind$4 = functionBindContext;
-  var isCallable$5 = isCallable$q;
-  var hasOwn$2 = hasOwnProperty_1;
-  var fails$6 = fails$x;
-  var html = html$2;
-  var arraySlice$3 = arraySlice$7;
-  var createElement$1 = documentCreateElement$1;
-  var validateArgumentsLength$4 = validateArgumentsLength$5;
-  var IS_IOS$1 = engineIsIos;
-  var IS_NODE$3 = engineIsNode;
-
-  var set = global$b.setImmediate;
-  var clear = global$b.clearImmediate;
-  var process$3 = global$b.process;
-  var Dispatch = global$b.Dispatch;
-  var Function$2 = global$b.Function;
-  var MessageChannel = global$b.MessageChannel;
-  var String$1 = global$b.String;
-  var counter = 0;
-  var queue$3 = {};
-  var ONREADYSTATECHANGE = 'onreadystatechange';
-  var $location, defer, channel, port;
-
-  fails$6(function () {
-    // Deno throws a ReferenceError on `location` access without `--location` flag
-    $location = global$b.location;
-  });
-
-  var run = function (id) {
-    if (hasOwn$2(queue$3, id)) {
-      var fn = queue$3[id];
-      delete queue$3[id];
-      fn();
-    }
-  };
-
-  var runner = function (id) {
-    return function () {
-      run(id);
-    };
-  };
-
-  var eventListener = function (event) {
-    run(event.data);
-  };
-
-  var globalPostMessageDefer = function (id) {
-    // old engines have not location.origin
-    global$b.postMessage(String$1(id), $location.protocol + '//' + $location.host);
-  };
-
-  // Node.js 0.9+ & IE10+ has setImmediate, otherwise:
-  if (!set || !clear) {
-    set = function setImmediate(handler) {
-      validateArgumentsLength$4(arguments.length, 1);
-      var fn = isCallable$5(handler) ? handler : Function$2(handler);
-      var args = arraySlice$3(arguments, 1);
-      queue$3[++counter] = function () {
-        apply$1(fn, undefined, args);
-      };
-      defer(counter);
-      return counter;
-    };
-    clear = function clearImmediate(id) {
-      delete queue$3[id];
-    };
-    // Node.js 0.8-
-    if (IS_NODE$3) {
-      defer = function (id) {
-        process$3.nextTick(runner(id));
-      };
-    // Sphere (JS game engine) Dispatch API
-    } else if (Dispatch && Dispatch.now) {
-      defer = function (id) {
-        Dispatch.now(runner(id));
-      };
-    // Browsers with MessageChannel, includes WebWorkers
-    // except iOS - https://github.com/zloirock/core-js/issues/624
-    } else if (MessageChannel && !IS_IOS$1) {
-      channel = new MessageChannel();
-      port = channel.port2;
-      channel.port1.onmessage = eventListener;
-      defer = bind$4(port.postMessage, port);
-    // Browsers with postMessage, skip WebWorkers
-    // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
-    } else if (
-      global$b.addEventListener &&
-      isCallable$5(global$b.postMessage) &&
-      !global$b.importScripts &&
-      $location && $location.protocol !== 'file:' &&
-      !fails$6(globalPostMessageDefer)
-    ) {
-      defer = globalPostMessageDefer;
-      global$b.addEventListener('message', eventListener, false);
-    // IE8-
-    } else if (ONREADYSTATECHANGE in createElement$1('script')) {
-      defer = function (id) {
-        html.appendChild(createElement$1('script'))[ONREADYSTATECHANGE] = function () {
-          html.removeChild(this);
-          run(id);
-        };
-      };
-    // Rest old browsers
-    } else {
-      defer = function (id) {
-        setTimeout(runner(id), 0);
-      };
-    }
-  }
-
-  var task$1 = {
-    set: set,
-    clear: clear
-  };
-
-  var Queue$2 = function () {
-    this.head = null;
-    this.tail = null;
-  };
-
-  Queue$2.prototype = {
-    add: function (item) {
-      var entry = { item: item, next: null };
-      var tail = this.tail;
-      if (tail) tail.next = entry;
-      else this.head = entry;
-      this.tail = entry;
-    },
-    get: function () {
-      var entry = this.head;
-      if (entry) {
-        var next = this.head = entry.next;
-        if (next === null) this.tail = null;
-        return entry.item;
-      }
-    }
-  };
-
-  var queue$2 = Queue$2;
-
-  var userAgent$1 = engineUserAgent;
-
-  var engineIsIosPebble = /ipad|iphone|ipod/i.test(userAgent$1) && typeof Pebble != 'undefined';
-
-  var userAgent = engineUserAgent;
-
-  var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
-
-  var global$a = global$r;
-  var bind$3 = functionBindContext;
-  var getOwnPropertyDescriptor$9 = objectGetOwnPropertyDescriptor.f;
-  var macrotask = task$1.set;
-  var Queue$1 = queue$2;
-  var IS_IOS = engineIsIos;
-  var IS_IOS_PEBBLE = engineIsIosPebble;
-  var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
-  var IS_NODE$2 = engineIsNode;
-
-  var MutationObserver$1 = global$a.MutationObserver || global$a.WebKitMutationObserver;
-  var document$3 = global$a.document;
-  var process$2 = global$a.process;
-  var Promise$1 = global$a.Promise;
-  // Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
-  var queueMicrotaskDescriptor = getOwnPropertyDescriptor$9(global$a, 'queueMicrotask');
-  var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
-  var notify$1, toggle, node, promise$6, then;
-
-  // modern engines have queueMicrotask method
-  if (!microtask$1) {
-    var queue$1 = new Queue$1();
-
-    var flush = function () {
-      var parent, fn;
-      if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
-      while (fn = queue$1.get()) try {
-        fn();
-      } catch (error) {
-        if (queue$1.head) notify$1();
-        throw error;
-      }
-      if (parent) parent.enter();
-    };
-
-    // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
-    // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
-    if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$3) {
-      toggle = true;
-      node = document$3.createTextNode('');
-      new MutationObserver$1(flush).observe(node, { characterData: true });
-      notify$1 = function () {
-        node.data = toggle = !toggle;
-      };
-    // environments with maybe non-completely correct, but existent Promise
-    } else if (!IS_IOS_PEBBLE && Promise$1 && Promise$1.resolve) {
-      // Promise.resolve without an argument throws an error in LG WebOS 2
-      promise$6 = Promise$1.resolve(undefined);
-      // workaround of WebKit ~ iOS Safari 10.1 bug
-      promise$6.constructor = Promise$1;
-      then = bind$3(promise$6.then, promise$6);
-      notify$1 = function () {
-        then(flush);
-      };
-    // Node.js without promises
-    } else if (IS_NODE$2) {
-      notify$1 = function () {
-        process$2.nextTick(flush);
-      };
-    // for other environments - macrotask based on:
-    // - setImmediate
-    // - MessageChannel
-    // - window.postMessage
-    // - onreadystatechange
-    // - setTimeout
-    } else {
-      // `webpack` dev server bug on IE global methods - use bind(fn, global)
-      macrotask = bind$3(macrotask, global$a);
-      notify$1 = function () {
-        macrotask(flush);
-      };
-    }
-
-    microtask$1 = function (fn) {
-      if (!queue$1.head) notify$1();
-      queue$1.add(fn);
-    };
-  }
-
-  var microtask_1 = microtask$1;
-
-  var hostReportErrors$1 = function (a, b) {
-    try {
-      // eslint-disable-next-line no-console -- safe
-      arguments.length == 1 ? console.error(a) : console.error(a, b);
-    } catch (error) { /* empty */ }
-  };
-
-  var perform$6 = function (exec) {
-    try {
-      return { error: false, value: exec() };
-    } catch (error) {
-      return { error: true, value: error };
-    }
-  };
-
-  var global$9 = global$r;
-
-  var promiseNativeConstructor = global$9.Promise;
-
-  /* global Deno -- Deno case */
-
-  var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
-
-  var IS_DENO$1 = engineIsDeno;
-  var IS_NODE$1 = engineIsNode;
-
-  var engineIsBrowser = !IS_DENO$1 && !IS_NODE$1
-    && typeof window == 'object'
-    && typeof document == 'object';
-
-  var global$8 = global$r;
-  var NativePromiseConstructor$5 = promiseNativeConstructor;
-  var isCallable$4 = isCallable$q;
-  var isForced = isForced_1;
-  var inspectSource = inspectSource$2;
-  var wellKnownSymbol$2 = wellKnownSymbol$q;
-  var IS_BROWSER = engineIsBrowser;
-  var IS_DENO = engineIsDeno;
-  var V8_VERSION = engineV8Version;
-
-  var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
-  var SPECIES = wellKnownSymbol$2('species');
-  var SUBCLASSING = false;
-  var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$4(global$8.PromiseRejectionEvent);
-
-  var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
-    var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
-    var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(NativePromiseConstructor$5);
-    // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
-    // We can't detect it synchronously, so just check versions
-    if (!GLOBAL_CORE_JS_PROMISE && V8_VERSION === 66) return true;
-    // We need Promise#{ catch, finally } in the pure version for preventing prototype pollution
-    if (!(NativePromisePrototype$2['catch'] && NativePromisePrototype$2['finally'])) return true;
-    // We can't use @@species feature detection in V8 since it causes
-    // deoptimization and performance degradation
-    // https://github.com/zloirock/core-js/issues/679
-    if (!V8_VERSION || V8_VERSION < 51 || !/native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) {
-      // Detect correctness of subclassing with @@species support
-      var promise = new NativePromiseConstructor$5(function (resolve) { resolve(1); });
-      var FakePromise = function (exec) {
-        exec(function () { /* empty */ }, function () { /* empty */ });
-      };
-      var constructor = promise.constructor = {};
-      constructor[SPECIES] = FakePromise;
-      SUBCLASSING = promise.then(function () { /* empty */ }) instanceof FakePromise;
-      if (!SUBCLASSING) return true;
-    // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
-    } return !GLOBAL_CORE_JS_PROMISE && (IS_BROWSER || IS_DENO) && !NATIVE_PROMISE_REJECTION_EVENT$1;
-  });
-
-  var promiseConstructorDetection = {
-    CONSTRUCTOR: FORCED_PROMISE_CONSTRUCTOR$5,
-    REJECTION_EVENT: NATIVE_PROMISE_REJECTION_EVENT$1,
-    SUBCLASSING: SUBCLASSING
-  };
-
-  var newPromiseCapability$2 = {};
-
-  var aCallable$5 = aCallable$h;
-
-  var $TypeError$2 = TypeError;
-
-  var PromiseCapability = function (C) {
-    var resolve, reject;
-    this.promise = new C(function ($$resolve, $$reject) {
-      if (resolve !== undefined || reject !== undefined) throw $TypeError$2('Bad Promise constructor');
-      resolve = $$resolve;
-      reject = $$reject;
-    });
-    this.resolve = aCallable$5(resolve);
-    this.reject = aCallable$5(reject);
-  };
-
-  // `NewPromiseCapability` abstract operation
-  // https://tc39.es/ecma262/#sec-newpromisecapability
-  newPromiseCapability$2.f = function (C) {
-    return new PromiseCapability(C);
-  };
-
-  var $$l = _export;
-  var IS_NODE = engineIsNode;
-  var global$7 = global$r;
-  var call$6 = functionCall;
-  var defineBuiltIn$2 = defineBuiltIn$8;
-  var setToStringTag$2 = setToStringTag$9;
-  var setSpecies = setSpecies$2;
-  var aCallable$4 = aCallable$h;
-  var isCallable$3 = isCallable$q;
-  var isObject$2 = isObject$j;
-  var anInstance$2 = anInstance$5;
-  var speciesConstructor$1 = speciesConstructor$2;
-  var task = task$1.set;
-  var microtask = microtask_1;
-  var hostReportErrors = hostReportErrors$1;
-  var perform$5 = perform$6;
-  var Queue = queue$2;
-  var InternalStateModule$2 = internalState;
-  var NativePromiseConstructor$4 = promiseNativeConstructor;
-  var PromiseConstructorDetection = promiseConstructorDetection;
-  var newPromiseCapabilityModule$6 = newPromiseCapability$2;
-
-  var PROMISE = 'Promise';
-  var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
-  var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
-  PromiseConstructorDetection.SUBCLASSING;
-  var getInternalPromiseState = InternalStateModule$2.getterFor(PROMISE);
-  var setInternalState$2 = InternalStateModule$2.set;
-  var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
-  var PromiseConstructor = NativePromiseConstructor$4;
-  var PromisePrototype = NativePromisePrototype$1;
-  var TypeError$3 = global$7.TypeError;
-  var document$2 = global$7.document;
-  var process$1 = global$7.process;
-  var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
-  var newGenericPromiseCapability = newPromiseCapability$1;
-
-  var DISPATCH_EVENT = !!(document$2 && document$2.createEvent && global$7.dispatchEvent);
-  var UNHANDLED_REJECTION = 'unhandledrejection';
-  var REJECTION_HANDLED = 'rejectionhandled';
-  var PENDING = 0;
-  var FULFILLED = 1;
-  var REJECTED = 2;
-  var HANDLED = 1;
-  var UNHANDLED = 2;
-
-  var Internal, OwnPromiseCapability, PromiseWrapper;
-
-  // helpers
-  var isThenable = function (it) {
-    var then;
-    return isObject$2(it) && isCallable$3(then = it.then) ? then : false;
-  };
-
-  var callReaction = function (reaction, state) {
-    var value = state.value;
-    var ok = state.state == FULFILLED;
-    var handler = ok ? reaction.ok : reaction.fail;
-    var resolve = reaction.resolve;
-    var reject = reaction.reject;
-    var domain = reaction.domain;
-    var result, then, exited;
-    try {
-      if (handler) {
-        if (!ok) {
-          if (state.rejection === UNHANDLED) onHandleUnhandled(state);
-          state.rejection = HANDLED;
-        }
-        if (handler === true) result = value;
-        else {
-          if (domain) domain.enter();
-          result = handler(value); // can throw
-          if (domain) {
-            domain.exit();
-            exited = true;
-          }
-        }
-        if (result === reaction.promise) {
-          reject(TypeError$3('Promise-chain cycle'));
-        } else if (then = isThenable(result)) {
-          call$6(then, result, resolve, reject);
-        } else resolve(result);
-      } else reject(value);
-    } catch (error) {
-      if (domain && !exited) domain.exit();
-      reject(error);
-    }
-  };
-
-  var notify = function (state, isReject) {
-    if (state.notified) return;
-    state.notified = true;
-    microtask(function () {
-      var reactions = state.reactions;
-      var reaction;
-      while (reaction = reactions.get()) {
-        callReaction(reaction, state);
-      }
-      state.notified = false;
-      if (isReject && !state.rejection) onUnhandled(state);
-    });
-  };
-
-  var dispatchEvent = function (name, promise, reason) {
-    var event, handler;
-    if (DISPATCH_EVENT) {
-      event = document$2.createEvent('Event');
-      event.promise = promise;
-      event.reason = reason;
-      event.initEvent(name, false, true);
-      global$7.dispatchEvent(event);
-    } else event = { promise: promise, reason: reason };
-    if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$7['on' + name])) handler(event);
-    else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
-  };
-
-  var onUnhandled = function (state) {
-    call$6(task, global$7, function () {
-      var promise = state.facade;
-      var value = state.value;
-      var IS_UNHANDLED = isUnhandled(state);
-      var result;
-      if (IS_UNHANDLED) {
-        result = perform$5(function () {
-          if (IS_NODE) {
-            process$1.emit('unhandledRejection', value, promise);
-          } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
-        });
-        // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
-        state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
-        if (result.error) throw result.value;
-      }
-    });
-  };
-
-  var isUnhandled = function (state) {
-    return state.rejection !== HANDLED && !state.parent;
-  };
-
-  var onHandleUnhandled = function (state) {
-    call$6(task, global$7, function () {
-      var promise = state.facade;
-      if (IS_NODE) {
-        process$1.emit('rejectionHandled', promise);
-      } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
-    });
-  };
-
-  var bind$2 = function (fn, state, unwrap) {
-    return function (value) {
-      fn(state, value, unwrap);
-    };
-  };
-
-  var internalReject = function (state, value, unwrap) {
-    if (state.done) return;
-    state.done = true;
-    if (unwrap) state = unwrap;
-    state.value = value;
-    state.state = REJECTED;
-    notify(state, true);
-  };
-
-  var internalResolve = function (state, value, unwrap) {
-    if (state.done) return;
-    state.done = true;
-    if (unwrap) state = unwrap;
-    try {
-      if (state.facade === value) throw TypeError$3("Promise can't be resolved itself");
-      var then = isThenable(value);
-      if (then) {
-        microtask(function () {
-          var wrapper = { done: false };
-          try {
-            call$6(then, value,
-              bind$2(internalResolve, wrapper, state),
-              bind$2(internalReject, wrapper, state)
-            );
-          } catch (error) {
-            internalReject(wrapper, error, state);
-          }
-        });
-      } else {
-        state.value = value;
-        state.state = FULFILLED;
-        notify(state, false);
-      }
-    } catch (error) {
-      internalReject({ done: false }, error, state);
-    }
-  };
-
-  // constructor polyfill
-  if (FORCED_PROMISE_CONSTRUCTOR$4) {
-    // 25.4.3.1 Promise(executor)
-    PromiseConstructor = function Promise(executor) {
-      anInstance$2(this, PromisePrototype);
-      aCallable$4(executor);
-      call$6(Internal, this);
-      var state = getInternalPromiseState(this);
-      try {
-        executor(bind$2(internalResolve, state), bind$2(internalReject, state));
-      } catch (error) {
-        internalReject(state, error);
-      }
-    };
-
-    PromisePrototype = PromiseConstructor.prototype;
-
-    // eslint-disable-next-line no-unused-vars -- required for `.length`
-    Internal = function Promise(executor) {
-      setInternalState$2(this, {
-        type: PROMISE,
-        done: false,
-        notified: false,
-        parent: false,
-        reactions: new Queue(),
-        rejection: false,
-        state: PENDING,
-        value: undefined
-      });
-    };
-
-    // `Promise.prototype.then` method
-    // https://tc39.es/ecma262/#sec-promise.prototype.then
-    Internal.prototype = defineBuiltIn$2(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
-      var state = getInternalPromiseState(this);
-      var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
-      state.parent = true;
-      reaction.ok = isCallable$3(onFulfilled) ? onFulfilled : true;
-      reaction.fail = isCallable$3(onRejected) && onRejected;
-      reaction.domain = IS_NODE ? process$1.domain : undefined;
-      if (state.state == PENDING) state.reactions.add(reaction);
-      else microtask(function () {
-        callReaction(reaction, state);
-      });
-      return reaction.promise;
-    });
-
-    OwnPromiseCapability = function () {
-      var promise = new Internal();
-      var state = getInternalPromiseState(promise);
-      this.promise = promise;
-      this.resolve = bind$2(internalResolve, state);
-      this.reject = bind$2(internalReject, state);
-    };
-
-    newPromiseCapabilityModule$6.f = newPromiseCapability$1 = function (C) {
-      return C === PromiseConstructor || C === PromiseWrapper
-        ? new OwnPromiseCapability(C)
-        : newGenericPromiseCapability(C);
-    };
-  }
-
-  $$l({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
-    Promise: PromiseConstructor
-  });
-
-  setToStringTag$2(PromiseConstructor, PROMISE, false, true);
-  setSpecies(PROMISE);
-
-  var NativePromiseConstructor$3 = promiseNativeConstructor;
-  var checkCorrectnessOfIteration = checkCorrectnessOfIteration$2;
-  var FORCED_PROMISE_CONSTRUCTOR$3 = promiseConstructorDetection.CONSTRUCTOR;
-
-  var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCorrectnessOfIteration(function (iterable) {
-    NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
-  });
-
-  var $$k = _export;
-  var call$5 = functionCall;
-  var aCallable$3 = aCallable$h;
-  var newPromiseCapabilityModule$5 = newPromiseCapability$2;
-  var perform$4 = perform$6;
-  var iterate$3 = iterate$l;
-  var PROMISE_STATICS_INCORRECT_ITERATION$3 = promiseStaticsIncorrectIteration;
-
-  // `Promise.all` method
-  // https://tc39.es/ecma262/#sec-promise.all
-  $$k({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
-    all: function all(iterable) {
-      var C = this;
-      var capability = newPromiseCapabilityModule$5.f(C);
-      var resolve = capability.resolve;
-      var reject = capability.reject;
-      var result = perform$4(function () {
-        var $promiseResolve = aCallable$3(C.resolve);
-        var values = [];
-        var counter = 0;
-        var remaining = 1;
-        iterate$3(iterable, function (promise) {
-          var index = counter++;
-          var alreadyCalled = false;
-          remaining++;
-          call$5($promiseResolve, C, promise).then(function (value) {
-            if (alreadyCalled) return;
-            alreadyCalled = true;
-            values[index] = value;
-            --remaining || resolve(values);
-          }, reject);
-        });
-        --remaining || resolve(values);
-      });
-      if (result.error) reject(result.value);
-      return capability.promise;
-    }
-  });
-
-  var $$j = _export;
-  var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
-  var NativePromiseConstructor$2 = promiseNativeConstructor;
-
-  NativePromiseConstructor$2 && NativePromiseConstructor$2.prototype;
-
-  // `Promise.prototype.catch` method
-  // https://tc39.es/ecma262/#sec-promise.prototype.catch
-  $$j({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
-    'catch': function (onRejected) {
-      return this.then(undefined, onRejected);
-    }
-  });
-
-  var $$i = _export;
-  var call$4 = functionCall;
-  var aCallable$2 = aCallable$h;
-  var newPromiseCapabilityModule$4 = newPromiseCapability$2;
-  var perform$3 = perform$6;
-  var iterate$2 = iterate$l;
-  var PROMISE_STATICS_INCORRECT_ITERATION$2 = promiseStaticsIncorrectIteration;
-
-  // `Promise.race` method
-  // https://tc39.es/ecma262/#sec-promise.race
-  $$i({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
-    race: function race(iterable) {
-      var C = this;
-      var capability = newPromiseCapabilityModule$4.f(C);
-      var reject = capability.reject;
-      var result = perform$3(function () {
-        var $promiseResolve = aCallable$2(C.resolve);
-        iterate$2(iterable, function (promise) {
-          call$4($promiseResolve, C, promise).then(capability.resolve, reject);
-        });
-      });
-      if (result.error) reject(result.value);
-      return capability.promise;
-    }
-  });
-
-  var $$h = _export;
-  var call$3 = functionCall;
-  var newPromiseCapabilityModule$3 = newPromiseCapability$2;
-  var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
-
-  // `Promise.reject` method
-  // https://tc39.es/ecma262/#sec-promise.reject
-  $$h({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
-    reject: function reject(r) {
-      var capability = newPromiseCapabilityModule$3.f(this);
-      call$3(capability.reject, undefined, r);
-      return capability.promise;
-    }
-  });
-
-  var anObject$1 = anObject$f;
-  var isObject$1 = isObject$j;
-  var newPromiseCapability = newPromiseCapability$2;
-
-  var promiseResolve$2 = function (C, x) {
-    anObject$1(C);
-    if (isObject$1(x) && x.constructor === C) return x;
-    var promiseCapability = newPromiseCapability.f(C);
-    var resolve = promiseCapability.resolve;
-    resolve(x);
-    return promiseCapability.promise;
-  };
-
-  var $$g = _export;
-  var getBuiltIn$3 = getBuiltIn$h;
-  var IS_PURE$1 = isPure;
-  var NativePromiseConstructor$1 = promiseNativeConstructor;
-  var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
-  var promiseResolve$1 = promiseResolve$2;
-
-  var PromiseConstructorWrapper = getBuiltIn$3('Promise');
-  var CHECK_WRAPPER = !FORCED_PROMISE_CONSTRUCTOR;
-
-  // `Promise.resolve` method
-  // https://tc39.es/ecma262/#sec-promise.resolve
-  $$g({ target: 'Promise', stat: true, forced: IS_PURE$1  }, {
-    resolve: function resolve(x) {
-      return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
-    }
-  });
-
-  var $$f = _export;
-  var call$2 = functionCall;
-  var aCallable$1 = aCallable$h;
-  var newPromiseCapabilityModule$2 = newPromiseCapability$2;
-  var perform$2 = perform$6;
-  var iterate$1 = iterate$l;
-  var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
-
-  // `Promise.allSettled` method
-  // https://tc39.es/ecma262/#sec-promise.allsettled
-  $$f({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
-    allSettled: function allSettled(iterable) {
-      var C = this;
-      var capability = newPromiseCapabilityModule$2.f(C);
-      var resolve = capability.resolve;
-      var reject = capability.reject;
-      var result = perform$2(function () {
-        var promiseResolve = aCallable$1(C.resolve);
-        var values = [];
-        var counter = 0;
-        var remaining = 1;
-        iterate$1(iterable, function (promise) {
-          var index = counter++;
-          var alreadyCalled = false;
-          remaining++;
-          call$2(promiseResolve, C, promise).then(function (value) {
-            if (alreadyCalled) return;
-            alreadyCalled = true;
-            values[index] = { status: 'fulfilled', value: value };
-            --remaining || resolve(values);
-          }, function (error) {
-            if (alreadyCalled) return;
-            alreadyCalled = true;
-            values[index] = { status: 'rejected', reason: error };
-            --remaining || resolve(values);
-          });
-        });
-        --remaining || resolve(values);
-      });
-      if (result.error) reject(result.value);
-      return capability.promise;
-    }
-  });
-
-  var $$e = _export;
-  var call$1 = functionCall;
-  var aCallable = aCallable$h;
-  var getBuiltIn$2 = getBuiltIn$h;
-  var newPromiseCapabilityModule$1 = newPromiseCapability$2;
-  var perform$1 = perform$6;
-  var iterate = iterate$l;
-  var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
-
-  var PROMISE_ANY_ERROR = 'No one promise resolved';
-
-  // `Promise.any` method
-  // https://tc39.es/ecma262/#sec-promise.any
-  $$e({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
-    any: function any(iterable) {
-      var C = this;
-      var AggregateError = getBuiltIn$2('AggregateError');
-      var capability = newPromiseCapabilityModule$1.f(C);
-      var resolve = capability.resolve;
-      var reject = capability.reject;
-      var result = perform$1(function () {
-        var promiseResolve = aCallable(C.resolve);
-        var errors = [];
-        var counter = 0;
-        var remaining = 1;
-        var alreadyResolved = false;
-        iterate(iterable, function (promise) {
-          var index = counter++;
-          var alreadyRejected = false;
-          remaining++;
-          call$1(promiseResolve, C, promise).then(function (value) {
-            if (alreadyRejected || alreadyResolved) return;
-            alreadyResolved = true;
-            resolve(value);
-          }, function (error) {
-            if (alreadyRejected || alreadyResolved) return;
-            alreadyRejected = true;
-            errors[index] = error;
-            --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
-          });
-        });
-        --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
-      });
-      if (result.error) reject(result.value);
-      return capability.promise;
-    }
-  });
-
-  var $$d = _export;
-  var NativePromiseConstructor = promiseNativeConstructor;
-  var fails$5 = fails$x;
-  var getBuiltIn$1 = getBuiltIn$h;
-  var isCallable$2 = isCallable$q;
-  var speciesConstructor = speciesConstructor$2;
-  var promiseResolve = promiseResolve$2;
-
-  var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
-
-  // Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
-  var NON_GENERIC = !!NativePromiseConstructor && fails$5(function () {
-    // eslint-disable-next-line unicorn/no-thenable -- required for testing
-    NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
-  });
-
-  // `Promise.prototype.finally` method
-  // https://tc39.es/ecma262/#sec-promise.prototype.finally
-  $$d({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
-    'finally': function (onFinally) {
-      var C = speciesConstructor(this, getBuiltIn$1('Promise'));
-      var isFunction = isCallable$2(onFinally);
-      return this.then(
-        isFunction ? function (x) {
-          return promiseResolve(C, onFinally()).then(function () { return x; });
-        } : onFinally,
-        isFunction ? function (e) {
-          return promiseResolve(C, onFinally()).then(function () { throw e; });
-        } : onFinally
-      );
-    }
-  });
-
-  var path$7 = path$n;
-
-  var promise$5 = path$7.Promise;
-
-  var parent$w = promise$5;
-
-
-  var promise$4 = parent$w;
-
-  var parent$v = promise$4;
-
-  var promise$3 = parent$v;
-
-  // TODO: Remove from `core-js@4`
-  var $$c = _export;
-  var newPromiseCapabilityModule = newPromiseCapability$2;
-  var perform = perform$6;
-
-  // `Promise.try` method
-  // https://github.com/tc39/proposal-promise-try
-  $$c({ target: 'Promise', stat: true, forced: true }, {
-    'try': function (callbackfn) {
-      var promiseCapability = newPromiseCapabilityModule.f(this);
-      var result = perform(callbackfn);
-      (result.error ? promiseCapability.reject : promiseCapability.resolve)(result.value);
-      return promiseCapability.promise;
-    }
-  });
-
-  var parent$u = promise$3;
-
-  // TODO: Remove from `core-js@4`
-
-
-
-
-  var promise$2 = parent$u;
-
-  var promise$1 = promise$2;
-
-  var promise = promise$1;
-
-  var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
-
-  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-    try {
-      var info = gen[key](arg);
-      var value = info.value;
-    } catch (error) {
-      reject(error);
-      return;
-    }
-    if (info.done) {
-      resolve(value);
-    } else {
-      _Promise.resolve(value).then(_next, _throw);
-    }
-  }
-  function _asyncToGenerator(fn) {
-    return function () {
-      var self = this,
-        args = arguments;
-      return new _Promise(function (resolve, reject) {
-        var gen = fn.apply(self, args);
-        function _next(value) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-        }
-        function _throw(err) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-        }
-        _next(undefined);
-      });
-    };
-  }
-
-  var regeneratorRuntime$1 = {exports: {}};
-
-  var _typeof = {exports: {}};
-
-  (function (module) {
-  	var _Symbol = symbol;
-  	var _Symbol$iterator = iterator;
-  	function _typeof(obj) {
-  	  "@babel/helpers - typeof";
-
-  	  return (module.exports = _typeof = "function" == typeof _Symbol && "symbol" == typeof _Symbol$iterator ? function (obj) {
-  	    return typeof obj;
-  	  } : function (obj) {
-  	    return obj && "function" == typeof _Symbol && obj.constructor === _Symbol && obj !== _Symbol.prototype ? "symbol" : typeof obj;
-  	  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
-  	}
-  	module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports; 
-  } (_typeof));
-
-  var _typeofExports = _typeof.exports;
-
-  var $$b = _export;
-  var uncurryThis$4 = functionUncurryThis;
-  var isArray$1 = isArray$d;
-
-  var nativeReverse = uncurryThis$4([].reverse);
-  var test = [1, 2];
-
-  // `Array.prototype.reverse` method
-  // https://tc39.es/ecma262/#sec-array.prototype.reverse
-  // fix for Safari 12.0 bug
-  // https://bugs.webkit.org/show_bug.cgi?id=188794
-  $$b({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
-    reverse: function reverse() {
-      // eslint-disable-next-line no-self-assign -- dirty hack
-      if (isArray$1(this)) this.length = this.length;
-      return nativeReverse(this);
-    }
-  });
-
-  var entryVirtual$2 = entryVirtual$b;
-
-  var reverse$6 = entryVirtual$2('Array').reverse;
-
-  var isPrototypeOf$2 = objectIsPrototypeOf;
-  var method$2 = reverse$6;
-
-  var ArrayPrototype$2 = Array.prototype;
-
-  var reverse$5 = function (it) {
-    var own = it.reverse;
-    return it === ArrayPrototype$2 || (isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.reverse) ? method$2 : own;
-  };
-
-  var parent$t = reverse$5;
-
-  var reverse$4 = parent$t;
-
-  var parent$s = reverse$4;
-
-  var reverse$3 = parent$s;
-
-  var parent$r = reverse$3;
-
-  var reverse$2 = parent$r;
-
-  var reverse$1 = reverse$2;
-
-  var reverse = reverse$1;
-
-  (function (module) {
-  	var _typeof = _typeofExports["default"];
-  	var _Object$defineProperty = defineProperty$6;
-  	var _Symbol = symbol;
-  	var _Object$create = create$3;
-  	var _Object$getPrototypeOf = getPrototypeOf$1;
-  	var _forEachInstanceProperty = forEach$1;
-  	var _Object$setPrototypeOf = setPrototypeOf$1;
-  	var _Promise = promise;
-  	var _reverseInstanceProperty = reverse;
-  	var _sliceInstanceProperty = slice;
-  	function _regeneratorRuntime() {
-  	  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
-  	    return exports;
-  	  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
-  	  var exports = {},
-  	    Op = Object.prototype,
-  	    hasOwn = Op.hasOwnProperty,
-  	    defineProperty = _Object$defineProperty || function (obj, key, desc) {
-  	      obj[key] = desc.value;
-  	    },
-  	    $Symbol = "function" == typeof _Symbol ? _Symbol : {},
-  	    iteratorSymbol = $Symbol.iterator || "@@iterator",
-  	    asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
-  	    toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-  	  function define(obj, key, value) {
-  	    return _Object$defineProperty(obj, key, {
-  	      value: value,
-  	      enumerable: !0,
-  	      configurable: !0,
-  	      writable: !0
-  	    }), obj[key];
-  	  }
-  	  try {
-  	    define({}, "");
-  	  } catch (err) {
-  	    define = function define(obj, key, value) {
-  	      return obj[key] = value;
-  	    };
-  	  }
-  	  function wrap(innerFn, outerFn, self, tryLocsList) {
-  	    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
-  	      generator = _Object$create(protoGenerator.prototype),
-  	      context = new Context(tryLocsList || []);
-  	    return defineProperty(generator, "_invoke", {
-  	      value: makeInvokeMethod(innerFn, self, context)
-  	    }), generator;
-  	  }
-  	  function tryCatch(fn, obj, arg) {
-  	    try {
-  	      return {
-  	        type: "normal",
-  	        arg: fn.call(obj, arg)
-  	      };
-  	    } catch (err) {
-  	      return {
-  	        type: "throw",
-  	        arg: err
-  	      };
-  	    }
-  	  }
-  	  exports.wrap = wrap;
-  	  var ContinueSentinel = {};
-  	  function Generator() {}
-  	  function GeneratorFunction() {}
-  	  function GeneratorFunctionPrototype() {}
-  	  var IteratorPrototype = {};
-  	  define(IteratorPrototype, iteratorSymbol, function () {
-  	    return this;
-  	  });
-  	  var getProto = _Object$getPrototypeOf,
-  	    NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  	  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
-  	  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = _Object$create(IteratorPrototype);
-  	  function defineIteratorMethods(prototype) {
-  	    var _context;
-  	    _forEachInstanceProperty(_context = ["next", "throw", "return"]).call(_context, function (method) {
-  	      define(prototype, method, function (arg) {
-  	        return this._invoke(method, arg);
-  	      });
-  	    });
-  	  }
-  	  function AsyncIterator(generator, PromiseImpl) {
-  	    function invoke(method, arg, resolve, reject) {
-  	      var record = tryCatch(generator[method], generator, arg);
-  	      if ("throw" !== record.type) {
-  	        var result = record.arg,
-  	          value = result.value;
-  	        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
-  	          invoke("next", value, resolve, reject);
-  	        }, function (err) {
-  	          invoke("throw", err, resolve, reject);
-  	        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
-  	          result.value = unwrapped, resolve(result);
-  	        }, function (error) {
-  	          return invoke("throw", error, resolve, reject);
-  	        });
-  	      }
-  	      reject(record.arg);
-  	    }
-  	    var previousPromise;
-  	    defineProperty(this, "_invoke", {
-  	      value: function value(method, arg) {
-  	        function callInvokeWithMethodAndArg() {
-  	          return new PromiseImpl(function (resolve, reject) {
-  	            invoke(method, arg, resolve, reject);
-  	          });
-  	        }
-  	        return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
-  	      }
-  	    });
-  	  }
-  	  function makeInvokeMethod(innerFn, self, context) {
-  	    var state = "suspendedStart";
-  	    return function (method, arg) {
-  	      if ("executing" === state) throw new Error("Generator is already running");
-  	      if ("completed" === state) {
-  	        if ("throw" === method) throw arg;
-  	        return doneResult();
-  	      }
-  	      for (context.method = method, context.arg = arg;;) {
-  	        var delegate = context.delegate;
-  	        if (delegate) {
-  	          var delegateResult = maybeInvokeDelegate(delegate, context);
-  	          if (delegateResult) {
-  	            if (delegateResult === ContinueSentinel) continue;
-  	            return delegateResult;
-  	          }
-  	        }
-  	        if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
-  	          if ("suspendedStart" === state) throw state = "completed", context.arg;
-  	          context.dispatchException(context.arg);
-  	        } else "return" === context.method && context.abrupt("return", context.arg);
-  	        state = "executing";
-  	        var record = tryCatch(innerFn, self, context);
-  	        if ("normal" === record.type) {
-  	          if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
-  	          return {
-  	            value: record.arg,
-  	            done: context.done
-  	          };
-  	        }
-  	        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
-  	      }
-  	    };
-  	  }
-  	  function maybeInvokeDelegate(delegate, context) {
-  	    var methodName = context.method,
-  	      method = delegate.iterator[methodName];
-  	    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
-  	    var record = tryCatch(method, delegate.iterator, context.arg);
-  	    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
-  	    var info = record.arg;
-  	    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
-  	  }
-  	  function pushTryEntry(locs) {
-  	    var entry = {
-  	      tryLoc: locs[0]
-  	    };
-  	    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
-  	  }
-  	  function resetTryEntry(entry) {
-  	    var record = entry.completion || {};
-  	    record.type = "normal", delete record.arg, entry.completion = record;
-  	  }
-  	  function Context(tryLocsList) {
-  	    this.tryEntries = [{
-  	      tryLoc: "root"
-  	    }], _forEachInstanceProperty(tryLocsList).call(tryLocsList, pushTryEntry, this), this.reset(!0);
-  	  }
-  	  function values(iterable) {
-  	    if (iterable) {
-  	      var iteratorMethod = iterable[iteratorSymbol];
-  	      if (iteratorMethod) return iteratorMethod.call(iterable);
-  	      if ("function" == typeof iterable.next) return iterable;
-  	      if (!isNaN(iterable.length)) {
-  	        var i = -1,
-  	          next = function next() {
-  	            for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
-  	            return next.value = undefined, next.done = !0, next;
-  	          };
-  	        return next.next = next;
-  	      }
-  	    }
-  	    return {
-  	      next: doneResult
-  	    };
-  	  }
-  	  function doneResult() {
-  	    return {
-  	      value: undefined,
-  	      done: !0
-  	    };
-  	  }
-  	  return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
-  	    value: GeneratorFunctionPrototype,
-  	    configurable: !0
-  	  }), defineProperty(GeneratorFunctionPrototype, "constructor", {
-  	    value: GeneratorFunction,
-  	    configurable: !0
-  	  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
-  	    var ctor = "function" == typeof genFun && genFun.constructor;
-  	    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
-  	  }, exports.mark = function (genFun) {
-  	    return _Object$setPrototypeOf ? _Object$setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = _Object$create(Gp), genFun;
-  	  }, exports.awrap = function (arg) {
-  	    return {
-  	      __await: arg
-  	    };
-  	  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
-  	    return this;
-  	  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-  	    void 0 === PromiseImpl && (PromiseImpl = _Promise);
-  	    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
-  	    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
-  	      return result.done ? result.value : iter.next();
-  	    });
-  	  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
-  	    return this;
-  	  }), define(Gp, "toString", function () {
-  	    return "[object Generator]";
-  	  }), exports.keys = function (val) {
-  	    var object = Object(val),
-  	      keys = [];
-  	    for (var key in object) keys.push(key);
-  	    return _reverseInstanceProperty(keys).call(keys), function next() {
-  	      for (; keys.length;) {
-  	        var key = keys.pop();
-  	        if (key in object) return next.value = key, next.done = !1, next;
-  	      }
-  	      return next.done = !0, next;
-  	    };
-  	  }, exports.values = values, Context.prototype = {
-  	    constructor: Context,
-  	    reset: function reset(skipTempReset) {
-  	      var _context2;
-  	      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, _forEachInstanceProperty(_context2 = this.tryEntries).call(_context2, resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+_sliceInstanceProperty(name).call(name, 1)) && (this[name] = undefined);
-  	    },
-  	    stop: function stop() {
-  	      this.done = !0;
-  	      var rootRecord = this.tryEntries[0].completion;
-  	      if ("throw" === rootRecord.type) throw rootRecord.arg;
-  	      return this.rval;
-  	    },
-  	    dispatchException: function dispatchException(exception) {
-  	      if (this.done) throw exception;
-  	      var context = this;
-  	      function handle(loc, caught) {
-  	        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
-  	      }
-  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-  	        var entry = this.tryEntries[i],
-  	          record = entry.completion;
-  	        if ("root" === entry.tryLoc) return handle("end");
-  	        if (entry.tryLoc <= this.prev) {
-  	          var hasCatch = hasOwn.call(entry, "catchLoc"),
-  	            hasFinally = hasOwn.call(entry, "finallyLoc");
-  	          if (hasCatch && hasFinally) {
-  	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
-  	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
-  	          } else if (hasCatch) {
-  	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
-  	          } else {
-  	            if (!hasFinally) throw new Error("try statement without catch or finally");
-  	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
-  	          }
-  	        }
-  	      }
-  	    },
-  	    abrupt: function abrupt(type, arg) {
-  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-  	        var entry = this.tryEntries[i];
-  	        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
-  	          var finallyEntry = entry;
-  	          break;
-  	        }
-  	      }
-  	      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
-  	      var record = finallyEntry ? finallyEntry.completion : {};
-  	      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
-  	    },
-  	    complete: function complete(record, afterLoc) {
-  	      if ("throw" === record.type) throw record.arg;
-  	      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
-  	    },
-  	    finish: function finish(finallyLoc) {
-  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-  	        var entry = this.tryEntries[i];
-  	        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
-  	      }
-  	    },
-  	    "catch": function _catch(tryLoc) {
-  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-  	        var entry = this.tryEntries[i];
-  	        if (entry.tryLoc === tryLoc) {
-  	          var record = entry.completion;
-  	          if ("throw" === record.type) {
-  	            var thrown = record.arg;
-  	            resetTryEntry(entry);
-  	          }
-  	          return thrown;
-  	        }
-  	      }
-  	      throw new Error("illegal catch attempt");
-  	    },
-  	    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
-  	      return this.delegate = {
-  	        iterator: values(iterable),
-  	        resultName: resultName,
-  	        nextLoc: nextLoc
-  	      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
-  	    }
-  	  }, exports;
-  	}
-  	module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports; 
-  } (regeneratorRuntime$1));
-
-  var regeneratorRuntimeExports = regeneratorRuntime$1.exports;
-
-  // TODO(Babel 8): Remove this file.
-
-  var runtime = regeneratorRuntimeExports();
-  var regenerator = runtime;
-
-  // Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
-  try {
-    regeneratorRuntime = runtime;
-  } catch (accidentalStrictMode) {
-    if (typeof globalThis === "object") {
-      globalThis.regeneratorRuntime = runtime;
-    } else {
-      Function("r", "regeneratorRuntime = r")(runtime);
-    }
-  }
-
-  var _regeneratorRuntime = /*@__PURE__*/getDefaultExportFromCjs(regenerator);
 
   var playPath = "M6 2.914v18.172L20.279 12 6 2.914z";
   var pausePath = "M14.333 20.133H19V3.8h-4.667M5 20.133h4.667V3.8H5v16.333z";
@@ -7081,6 +5583,7 @@
       _defineProperty(_assertThisInitialized(_this), "hideHeight", void 0);
       _defineProperty(_assertThisInitialized(_this), "hideBox", void 0);
       _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
+      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
       _this.player = player;
       props ? _this.props = props : _this.props = {};
       _this.hideHeight = hideHeight;
@@ -7134,6 +5637,9 @@
             }
           }
         });
+        this.player.on('videoClick', function () {
+          _this2.hideBox.style.display = 'none';
+        });
       }
     }, {
       key: "handleMouseMove",
@@ -7145,6 +5651,13 @@
           ctx.hideBox.style.display = 'none';
           document.body.onmousemove = null;
         }
+      }
+    }, {
+      key: "replaceIcon",
+      value: function replaceIcon(icon) {
+        this.iconBox.removeChild(this.icon);
+        this.iconBox.appendChild(icon);
+        this.icon = icon;
       }
     }]);
     return Options;
@@ -7311,6 +5824,465 @@
 
   var screenfull$1 = screenfull;
 
+  let fn1 = Document.prototype.createElement;
+  // 此函数为重载实现
+  function createElement$1(tagName, options) {
+      let dom = fn1.call(window.document, tagName, options);
+      let prototype = dom.__proto__;
+      let proto = Object.create(prototype);
+      proto.addEventListener = addEventListener;
+      Object.setPrototypeOf(dom, proto);
+      Object.setPrototypeOf(proto, prototype);
+      return dom;
+  }
+
+  let fn3$1 = Document.prototype.getElementsByClassName;
+  function getElementsByClassName(classNames) {
+      let doms = fn3$1.call(window.document, classNames);
+      doms.forEach(dom => {
+          if (dom.__proto__ instanceof HTMLElement) {
+              let proto = Object.create(dom.__proto__);
+              proto.addEventListener = addEventListener;
+              Object.setPrototypeOf(dom, proto);
+          }
+      });
+      return doms;
+  }
+
+  let fn2 = Document.prototype.getElementById;
+  function getElementById(elementId) {
+      let dom = fn2.call(window.document, elementId) || null;
+      if (dom === null)
+          return null;
+      if (dom.__proto__ instanceof HTMLElement) {
+          let proto = Object.create(dom.__proto__);
+          proto.addEventListener = addEventListener;
+          Object.setPrototypeOf(dom, proto);
+      }
+      return dom;
+  }
+
+  let fn3 = Document.prototype.getElementsByTagName;
+  function getElementsByTagName(qualifiedName) {
+      let doms = fn3.call(window.document, qualifiedName);
+      doms.forEach(dom => {
+          if (dom.__proto__ instanceof HTMLElement) {
+              let proto = Object.create(dom.__proto__);
+              proto.addEventListener = addEventListener;
+              Object.setPrototypeOf(dom, proto);
+          }
+      });
+      return doms;
+  }
+
+  function computeDistance(x1, y1, x2, y2) {
+      return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+  }
+  function computeVectorLen(v) {
+      return Math.sqrt(v.x * v.x + v.y * v.y);
+  }
+  // 计算两个向量之间的角度
+  function computeAngle(v1, v2) {
+      let lv1 = computeVectorLen(v1);
+      let lv2 = computeVectorLen(v2);
+      let angle = 0;
+      let l = (lv1 * lv2);
+      if (l) {
+          let cosVal = (v1.x * v2.x + v1.y * v2.y) / l;
+          angle = Math.acos(Math.min(cosVal, 1)); //得到两个向量的夹角
+          angle = v1.x * v2.y - v2.x * v1.y > 0 ? -angle : angle; //得到夹角的方向（顺时针逆时针）
+          return angle * 180 / Math.PI;
+      }
+      return 0;
+  }
+  function isListenerConfig(value) {
+      return typeof value === "object" && value.stopPropagation !== null;
+  }
+
+  function singleOrDoubleOrLongTap(ctx, event, listener, options) {
+      let tapTimer = null;
+      let longTapTimer = null;
+      let lastTapEndTime = -1;
+      let isMove = false;
+      let startTime = 0;
+      let isDoubleTap = false;
+      let betweenTime = 0;
+      let ifStop = false;
+      if (isListenerConfig(options)) {
+          ifStop = options.stopPropagation;
+      }
+      ctx.addEventListener("touchstart", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          startTime = Date.now();
+          if (event === "longTap") {
+              longTapTimer = window.setTimeout(() => {
+                  // ToDo,触发长按事件
+              }, 800);
+          }
+          // 如果lastTapEndTime不小于0的话则表明上一次也发生过点击事件且上一次的单击事件的监听器还未触发，说明两次点击间隔很短，
+          // 但是为了区别是双击还是单击，在第二次点击发生时判断开始点击的时间和上一次点击结束的时间，
+          // 如果间隔很短，说明是双击，此时不应该触发单击事件;如果距离上一次点击间隔很长，表明此次点击是单击
+          if (lastTapEndTime > 0 && startTime - lastTapEndTime < 150) {
+              window.clearTimeout(tapTimer);
+              betweenTime = startTime - lastTapEndTime;
+              tapTimer = null;
+              lastTapEndTime = -1;
+              isDoubleTap = true;
+          }
+      });
+      ctx.addEventListener("touchmove", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          isMove = true;
+          e.preventDefault();
+          if (longTapTimer) {
+              window.clearTimeout(longTapTimer);
+              longTapTimer = null;
+          }
+      });
+      ctx.addEventListener("touchend", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          let interval = Date.now() - startTime;
+          if (longTapTimer) {
+              window.clearTimeout(longTapTimer);
+              longTapTimer = null;
+          }
+          if (interval < 150 && !isMove) {
+              if (event === "singleTap" && isDoubleTap === false) {
+                  tapTimer = window.setTimeout(() => {
+                      let ev = Object.assign(Object.assign({}, e), { interval, e });
+                      if (listener instanceof Function) {
+                          listener(ev);
+                      }
+                      else {
+                          listener.handleEvent(ev);
+                      }
+                  }, 150);
+              }
+              else if (event === "doubleTap" && isDoubleTap === true) {
+                  tapTimer = window.setTimeout(() => {
+                      let ev = Object.assign(Object.assign({}, e), { interval: betweenTime, e });
+                      if (listener instanceof Function) {
+                          listener(ev);
+                      }
+                      else {
+                          listener.handleEvent(ev);
+                      }
+                  });
+              }
+              lastTapEndTime = Date.now();
+          }
+          isMove = false;
+          isDoubleTap = false;
+      });
+  }
+
+  function moveOrSwipe(ctx, event, listener, options) {
+      let isMove = false;
+      let pos = {
+          x: 0,
+          y: 0,
+      };
+      let dx = 0, dy = 0;
+      let ifStop = false;
+      if (isListenerConfig(options)) {
+          ifStop = options.stopPropagation;
+      }
+      ctx.addEventListener("touchstart", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          pos.x = e.touches[0].clientX;
+          pos.y = e.touches[0].clientY;
+      });
+      ctx.addEventListener("touchmove", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          isMove = true;
+          e.preventDefault();
+          let x = e.touches[0].clientX;
+          let y = e.touches[0].clientY;
+          dx = x - pos.x;
+          dy = y - pos.y;
+          if ((event === "moveLeft" && dx < 0) ||
+              (event === "moveRight" && dx > 0) ||
+              (event === "moveTop" && dy < 0) ||
+              (event === "moveDown" && dy > 0) ||
+              event === "move") {
+              let ev = Object.assign(Object.assign({}, e), { startPos: pos, deltaX: dx, deltaY: dy, e });
+              if (listener instanceof Function) {
+                  listener(ev);
+              }
+              else {
+                  listener.handleEvent(ev);
+              }
+          }
+      });
+      ctx.addEventListener("touchend", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          let end = {
+              x: pos.x + dx,
+              y: pos.y + dy,
+          };
+          if (isMove &&
+              ((event === "swipeLeft" && dx < 0) ||
+                  (event === "swipeRight" && dx > 0) ||
+                  (event === "swipeTop" && dy < 0) ||
+                  (event === "swipeDown" && dy > 0) ||
+                  event === "swipe")) {
+              let ev = Object.assign(Object.assign({}, e), { startPos: pos, endPos: end, e });
+              if (listener instanceof Function) {
+                  listener(ev);
+              }
+              else {
+                  listener.handleEvent(ev);
+              }
+          }
+          isMove = false;
+      });
+  }
+
+  function fastSlide(ctx, event, listener, options) {
+      let lastTime = 0;
+      let startTime = 0;
+      // 初始的x,y坐标
+      let x = 0, y = 0;
+      let lastPos = { x: 0, y: 0 };
+      let startPos = { x: 0, y: 0 };
+      let speed = [];
+      let ifStop = false;
+      if (isListenerConfig(options)) {
+          ifStop = options.stopPropagation;
+      }
+      ctx.addEventListener("touchstart", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          lastTime = Date.now();
+          startTime = Date.now();
+          startPos = {
+              x: e.touches[0].clientX,
+              y: e.touches[0].clientY,
+          };
+          lastPos = {
+              x: e.touches[0].clientX,
+              y: e.touches[0].clientY,
+          };
+          (x = lastPos.x), (y = lastPos.y);
+      });
+      ctx.addEventListener("touchmove", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          e.preventDefault();
+          let now = Date.now();
+          if (now - lastTime >= 10) {
+              let distance = computeDistance(e.touches[0].clientX, lastPos.x, e.touches[0].clientY, lastPos.y);
+              speed.push(distance / (now - lastTime));
+              lastPos = {
+                  x: e.touches[0].clientX,
+                  y: e.touches[0].clientY,
+              };
+              lastTime = now;
+          }
+      });
+      ctx.addEventListener("touchend", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          let sum = 0;
+          let index = 1;
+          lastTime = Date.now();
+          console.log(speed);
+          for (let i = speed.length - 1; i >= 0; i--) {
+              if (speed[i] > speed[i - 1]) {
+                  sum += speed[i] - speed[i - 1];
+                  index++;
+              }
+              else
+                  break;
+          }
+          let dx = lastPos.x - x;
+          let dy = lastPos.y - y;
+          if ((sum / index) * 100 >= 10 && speed[speed.length - 1] >= 20) {
+              if ((dx <= 0 && event === "fastSlideLeft") ||
+                  (dx >= 0 && event === "fastSlideRight") ||
+                  (dy >= 0 && event === "fastSlideDown") ||
+                  (dy <= 0 && event === "fastSlideTop") ||
+                  event === "fastSlide") {
+                  let ev = Object.assign(Object.assign({}, e), { startPos: startPos, endPos: lastPos, interval: lastTime - startTime, lastSpeed: speed[speed.length - 1], e });
+                  if (listener instanceof Function) {
+                      listener(ev);
+                  }
+                  else {
+                      listener.handleEvent(ev);
+                  }
+              }
+          }
+          speed = [];
+          lastPos = { x: 0, y: 0 };
+          startPos = { x: 0, y: 0 };
+          lastTime = 0;
+          startTime = 0;
+      });
+  }
+
+  function pintchOrRotate(ctx, event, listener, options) {
+      let prevV = { x: 0, y: 0 };
+      let v1, v2;
+      let scale = 1;
+      let ifStop = false;
+      if (isListenerConfig(options)) {
+          ifStop = options.stopPropagation;
+      }
+      ctx.addEventListener("touchstart", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1) {
+              v1 = e.touches[0];
+              v2 = e.touches[1];
+              prevV = {
+                  x: v2.clientX - v1.clientX,
+                  y: v2.clientY - v1.clientY,
+              };
+          }
+      });
+      ctx.addEventListener("touchmove", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          e.preventDefault();
+          if (e.touches.length > 1) {
+              let v1 = e.touches[0];
+              let v2 = e.touches[1];
+              let V = {
+                  x: v2.clientX - v1.clientX,
+                  y: v2.clientY - v1.clientY,
+              };
+              //利用前后的向量模比计算放大或缩小的倍数
+              scale = computeVectorLen(V) / computeVectorLen(prevV);
+              if (event === "pintch") {
+                  let ev = Object.assign(Object.assign({}, e), { scale, e });
+                  if (listener instanceof Function) {
+                      listener(ev);
+                  }
+                  else {
+                      listener.handleEvent(ev);
+                  }
+              }
+              // 计算出拖动时旋转的角度
+              let angle = computeAngle(prevV, V);
+              if (event === "rotate") {
+                  let ev = Object.assign(Object.assign({}, e), { angle, e });
+                  if (listener instanceof Function) {
+                      listener(ev);
+                  }
+                  else {
+                      listener.handleEvent(ev);
+                  }
+              }
+          }
+      });
+      ctx.addEventListener("touchend", (e) => {
+          //ToDo
+          if (ifStop)
+              e.stopPropagation();
+          // 只要最初的两个手指离开一个就行
+          if ([...e.touches].indexOf(v1) === -1 ||
+              [...e.touches].indexOf(v2) === -1) {
+              if (event === "pintchOver") {
+                  let ev = Object.assign(Object.assign({}, e), { scale, e });
+                  if (listener instanceof Function) {
+                      listener(ev);
+                  }
+                  else {
+                      listener.handleEvent(ev);
+                  }
+              }
+          }
+          prevV = { x: 0, y: 0 };
+      });
+  }
+
+  function wrap(dom) {
+      if (dom.__proto__.addEventListener === addEventListener) {
+          return dom;
+      }
+      let prototype = dom.__proto__;
+      let proto = Object.create(prototype);
+      proto.addEventListener = addEventListener;
+      Object.setPrototypeOf(dom, proto);
+      Object.setPrototypeOf(proto, prototype);
+      return dom;
+  }
+
+  const fn = HTMLElement.prototype.addEventListener;
+  function addEventListener(event, listener, options) {
+      let ctx = this;
+      switch (event) {
+          case "singleTap":
+          case "doubleTap":
+          case "longTap":
+              singleOrDoubleOrLongTap(ctx, event, listener, options);
+              break;
+          case "swipe":
+          case "swipeLeft":
+          case "swipeRight":
+          case "swipeTop":
+          case "swipeDown":
+          case "move":
+          case "moveLeft":
+          case "moveRight":
+          case "moveTop":
+          case "moveDown":
+              moveOrSwipe(ctx, event, listener, options);
+              break;
+          case "fastSlide":
+          case "fastSlideLeft":
+          case "fastSlideRight":
+          case "fastSlideTop":
+          case "fastSlideDown":
+              fastSlide(ctx, event, listener, options);
+              break;
+          case "pintch":
+          case "pintchOver":
+          case "rotate":
+              pintchOrRotate(ctx, event, listener, options);
+              break;
+          default:
+              if (ctx === document$3.body) {
+                  fn.call(window.document.body, event, listener, options);
+              }
+              else {
+                  fn.call(ctx, event, listener, options);
+              }
+      }
+  }
+  let body = Object.create(window.document.body);
+  body.addEventListener = addEventListener;
+  let document$3 = { body: body };
+  document$3.createElement = createElement$1;
+  document$3.getElementById = getElementById;
+  document$3.getElementsByClassName = getElementsByClassName;
+  document$3.getElementsByTagName = getElementsByTagName;
+  Object.setPrototypeOf(document$3, Document.prototype);
+
   function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
   function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
   var FullScreen = /*#__PURE__*/function (_Options) {
@@ -7321,10 +6293,7 @@
       _classCallCheck(this, FullScreen);
       _this = _super.call(this, player, container, 0, 0, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'FullScreen');
-      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
       _defineProperty(_assertThisInitialized(_this), "enterFullScreen", false);
-      _this.player = player;
-      _this.props = props || {};
       _this.init();
       return _this;
     }
@@ -7348,45 +6317,17 @@
     }, {
       key: "initEvent",
       value: function initEvent() {
-        if (this.player.env === 'PC') {
-          this.initPCEvent();
-        } else {
-          this.initMobileEvent();
-        }
-      }
-    }, {
-      key: "initPCEvent",
-      value: function initPCEvent() {
         this.onClick = this.onClick.bind(this);
-        this.el.onclick = this.onClick;
-      }
-    }, {
-      key: "initMobileEvent",
-      value: function initMobileEvent() {
-        var _this2 = this;
-        // 单击
-        this.el.addEventListener('singleTap', /*#__PURE__*/function () {
-          var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(e) {
-            return _regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) switch (_context.prev = _context.next) {
-                case 0:
-                  // console.log(e, 'singleTap')
-                  _this2.onClick(e);
-                case 1:
-                case "end":
-                  return _context.stop();
-              }
-            }, _callee);
-          }));
-          return function (_x) {
-            return _ref.apply(this, arguments);
-          };
-        }());
+        if (this.player.env === 'PC') {
+          this.el.onclick = this.onClick;
+        } else {
+          wrap(this.el).addEventListener('singleTap', this.onClick);
+        }
       }
     }, {
       key: "onClick",
       value: function onClick(e) {
-        var _this3 = this;
+        var _this2 = this;
         // 横屏全屏
         if (this.player.fullScreenMode === 'Horizontal') {
           if (screenfull$1.isEnabled && !screenfull$1.isFullscreen) {
@@ -7396,7 +6337,7 @@
             this.icon = createSvg(fullscreenExitPath);
             this.iconBox.appendChild(this.icon);
             this.player.container.addEventListener('fullscreenchange', function (e) {
-              _this3.player.emit('enterFullscreen');
+              _this2.player.emit('enterFullscreen');
             });
           } else if (screenfull$1.isFullscreen) {
             screenfull$1.exit();
@@ -7404,7 +6345,7 @@
             this.icon = createSvg(fullscreenPath);
             this.iconBox.appendChild(this.icon);
             this.player.container.addEventListener('fullscreenchange', function (e) {
-              _this3.player.emit('leaveFullscreen');
+              _this2.player.emit('leaveFullscreen');
             });
           }
         } else {
@@ -7476,7 +6417,6 @@
       key: "initEvent",
       value: function initEvent() {
         var _this2 = this;
-        this.onClick = this.onClick.bind(this);
         this.player.on('play', function (e) {
           _this2.iconBox.removeChild(_this2.button);
           _this2.button = _this2.pauseIcon;
@@ -7487,14 +6427,22 @@
           _this2.button = _this2.playIcon;
           _this2.iconBox.appendChild(_this2.button);
         });
+        this.onClick = this.onClick.bind(this);
+        if (this.player.env === 'Mobile') {
+          this.initMobileEvent();
+        } else {
+          this.initPCEvent();
+        }
+      }
+    }, {
+      key: "initPCEvent",
+      value: function initPCEvent() {
         this.el.onclick = this.onClick;
       }
     }, {
-      key: "resetEvent",
-      value: function resetEvent() {
-        this.onClick = this.onClick.bind(this);
-        this.el.onclick = null;
-        this.el.onclick = this.onClick;
+      key: "initMobileEvent",
+      value: function initMobileEvent() {
+        wrap(this.el).addEventListener('singleTap', this.onClick);
       }
     }, {
       key: "onClick",
@@ -7504,6 +6452,13 @@
         } else {
           this.player.video.pause();
         }
+      }
+    }, {
+      key: "resetEvent",
+      value: function resetEvent() {
+        this.onClick = this.onClick.bind(this);
+        this.el.onclick = null;
+        this.el.onclick = this.onClick;
       }
     }]);
     return PlayButton;
@@ -7559,20 +6514,38 @@
       key: "initEvent",
       value: function initEvent() {
         var _this2 = this;
-        this.hideBox.addEventListener('click', function (e) {
-          var _context;
-          var text = e.target.innerText;
-          var rate = Number(_sliceInstanceProperty(text).call(text, 0, text.length - 1));
-          console.log(rate);
-          // playbackRate：设置视频播放速度，会触发 ratechange 事件
-          _this2.player.video.playbackRate = rate;
-          _forEachInstanceProperty(_context = _toConsumableArray(_this2.hideBox.childNodes)).call(_context, function (node) {
-            if (node === e.target) {
-              node.style.color = '#007aff';
-            } else {
-              node.style.color = '#fff';
+        this.onClick = this.onClick.bind(this);
+        if (this.player.env === 'PC') {
+          this.hideBox.addEventListener('click', this.onClick);
+        } else {
+          wrap(this.hideBox).addEventListener('singleTap', this.onClick);
+          wrap(this.el).addEventListener('singleTap', function (e) {
+            if (_this2.hideBox.style.display === 'none') {
+              _this2.hideBox.style.display = '';
             }
           });
+        }
+      }
+    }, {
+      key: "onClick",
+      value: function onClick(e) {
+        var _context;
+        var target;
+        if (e instanceof Event) {
+          target = e.target;
+        } else {
+          target = e.e.target;
+        }
+        var text = target.innerText;
+        var rate = Number(_sliceInstanceProperty(text).call(text, 0, text.length - 1));
+        // playbackRate：设置视频播放速度，会触发 ratechange 事件
+        this.player.video.playbackRate = rate;
+        _forEachInstanceProperty(_context = _toConsumableArray(this.hideBox.childNodes)).call(_context, function (node) {
+          if (node === target) {
+            node.style.color = '#007aff';
+          } else {
+            node.style.color = '#fff';
+          }
         });
       }
     }]);
@@ -7624,7 +6597,6 @@
       _defineProperty(_assertThisInitialized(_this), "volumeProgress", void 0);
       _defineProperty(_assertThisInitialized(_this), "volumeShow", void 0);
       _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
-      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
       _defineProperty(_assertThisInitialized(_this), "volume", 0.5);
       _this.init();
       return _this;
@@ -8029,7 +7001,7 @@
     return Progress;
   }(Component);
 
-  var $$a = _export;
+  var $$m = _export;
   var $map = arrayIteration.map;
   var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
 
@@ -8038,37 +7010,37 @@
   // `Array.prototype.map` method
   // https://tc39.es/ecma262/#sec-array.prototype.map
   // with adding support of @@species
-  $$a({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
+  $$m({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
     map: function map(callbackfn /* , thisArg */) {
       return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
     }
   });
 
-  var entryVirtual$1 = entryVirtual$b;
+  var entryVirtual$2 = entryVirtual$b;
 
-  var map$6 = entryVirtual$1('Array').map;
+  var map$6 = entryVirtual$2('Array').map;
 
-  var isPrototypeOf$1 = objectIsPrototypeOf;
-  var method$1 = map$6;
+  var isPrototypeOf$3 = objectIsPrototypeOf;
+  var method$2 = map$6;
 
-  var ArrayPrototype$1 = Array.prototype;
+  var ArrayPrototype$2 = Array.prototype;
 
   var map$5 = function (it) {
     var own = it.map;
-    return it === ArrayPrototype$1 || (isPrototypeOf$1(ArrayPrototype$1, it) && own === ArrayPrototype$1.map) ? method$1 : own;
+    return it === ArrayPrototype$2 || (isPrototypeOf$3(ArrayPrototype$2, it) && own === ArrayPrototype$2.map) ? method$2 : own;
   };
 
-  var parent$q = map$5;
+  var parent$w = map$5;
 
-  var map$4 = parent$q;
+  var map$4 = parent$w;
 
-  var parent$p = map$4;
+  var parent$v = map$4;
 
-  var map$3 = parent$p;
+  var map$3 = parent$v;
 
-  var parent$o = map$3;
+  var parent$u = map$3;
 
-  var map$2 = parent$o;
+  var map$2 = parent$u;
 
   var map$1 = map$2;
 
@@ -8087,10 +7059,7 @@
       _this = _super.call(this, player, container, 0, 0, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'FullPage');
       // el: div.video-fullpage.video-controller
-      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
       _defineProperty(_assertThisInitialized(_this), "isFullPage", false);
-      _this.player = player;
-      _this.props = props || {};
       _this.init();
       return _this;
     }
@@ -8115,7 +7084,11 @@
       key: "initEvent",
       value: function initEvent() {
         this.onClick = this.onClick.bind(this);
-        this.el.onclick = this.onClick;
+        if (this.player.env === 'Mobile') {
+          wrap(this.el).addEventListener('singleTap', this.onClick);
+        } else {
+          this.el.onclick = this.onClick;
+        }
       }
     }, {
       key: "onClick",
@@ -8148,15 +7121,12 @@
   var PicInPic = /*#__PURE__*/function (_Options) {
     _inherits(PicInPic, _Options);
     var _super = _createSuper$d(PicInPic);
+    // el: div.video-picInpic.video-controller
     function PicInPic(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, PicInPic);
       _this = _super.call(this, player, container, 0, 0, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'PicInPic');
-      // el: div.video-picInpic.video-controller
-      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
-      _this.player = player;
-      _this.props = props || {};
       _this.init();
       return _this;
     }
@@ -8181,7 +7151,11 @@
       key: "initEvent",
       value: function initEvent() {
         this.onClick = this.onClick.bind(this);
-        this.el.onclick = this.onClick;
+        if (this.player.env === 'Mobile') {
+          wrap(this.el).addEventListener('singleTap', this.onClick);
+        } else {
+          this.el.onclick = this.onClick;
+        }
       }
     }, {
       key: "onClick",
@@ -8199,14 +7173,14 @@
     return PicInPic;
   }(Options);
 
-  var fails$4 = fails$x;
-  var wellKnownSymbol$1 = wellKnownSymbol$q;
+  var fails$7 = fails$x;
+  var wellKnownSymbol$4 = wellKnownSymbol$q;
   var DESCRIPTORS$5 = descriptors;
-  var IS_PURE = isPure;
+  var IS_PURE$1 = isPure;
 
-  var ITERATOR$2 = wellKnownSymbol$1('iterator');
+  var ITERATOR$2 = wellKnownSymbol$4('iterator');
 
-  var urlConstructorDetection = !fails$4(function () {
+  var urlConstructorDetection = !fails$7(function () {
     // eslint-disable-next-line unicorn/relative-url-style -- required for testing
     var url = new URL('b?a=1&b=2&c=3', 'http://a');
     var searchParams = url.searchParams;
@@ -8216,8 +7190,8 @@
       searchParams['delete']('b');
       result += key + value;
     });
-    return (IS_PURE && !url.toJSON)
-      || (!searchParams.size && (IS_PURE || !DESCRIPTORS$5))
+    return (IS_PURE$1 && !url.toJSON)
+      || (!searchParams.size && (IS_PURE$1 || !DESCRIPTORS$5))
       || !searchParams.sort
       || url.href !== 'http://a/c%20d?a=1&c=3'
       || searchParams.get('c') !== '3'
@@ -8237,7 +7211,7 @@
   });
 
   // based on https://github.com/bestiejs/punycode.js/blob/master/punycode.js
-  var uncurryThis$3 = functionUncurryThis;
+  var uncurryThis$6 = functionUncurryThis;
 
   var maxInt = 2147483647; // aka. 0x7FFFFFFF or 2^31-1
   var base = 36;
@@ -8254,15 +7228,15 @@
   var baseMinusTMin = base - tMin;
 
   var $RangeError = RangeError;
-  var exec$1 = uncurryThis$3(regexSeparators.exec);
+  var exec$1 = uncurryThis$6(regexSeparators.exec);
   var floor$2 = Math.floor;
   var fromCharCode = String.fromCharCode;
-  var charCodeAt = uncurryThis$3(''.charCodeAt);
-  var join$2 = uncurryThis$3([].join);
-  var push$2 = uncurryThis$3([].push);
-  var replace$2 = uncurryThis$3(''.replace);
-  var split$2 = uncurryThis$3(''.split);
-  var toLowerCase$1 = uncurryThis$3(''.toLowerCase);
+  var charCodeAt = uncurryThis$6(''.charCodeAt);
+  var join$2 = uncurryThis$6([].join);
+  var push$3 = uncurryThis$6([].push);
+  var replace$3 = uncurryThis$6(''.replace);
+  var split$2 = uncurryThis$6(''.split);
+  var toLowerCase$1 = uncurryThis$6(''.toLowerCase);
 
   /**
    * Creates an array containing the numeric code points of each Unicode
@@ -8281,15 +7255,15 @@
         // It's a high surrogate, and there is a next character.
         var extra = charCodeAt(string, counter++);
         if ((extra & 0xFC00) == 0xDC00) { // Low surrogate.
-          push$2(output, ((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+          push$3(output, ((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
         } else {
           // It's an unmatched surrogate; only append this code unit, in case the
           // next code unit is the high surrogate of a surrogate pair.
-          push$2(output, value);
+          push$3(output, value);
           counter--;
         }
       } else {
-        push$2(output, value);
+        push$3(output, value);
       }
     }
     return output;
@@ -8342,7 +7316,7 @@
     for (i = 0; i < input.length; i++) {
       currentValue = input[i];
       if (currentValue < 0x80) {
-        push$2(output, fromCharCode(currentValue));
+        push$3(output, fromCharCode(currentValue));
       }
     }
 
@@ -8351,7 +7325,7 @@
 
     // Finish the basic string with a delimiter unless it's empty.
     if (basicLength) {
-      push$2(output, delimiter);
+      push$3(output, delimiter);
     }
 
     // Main encoding loop:
@@ -8388,12 +7362,12 @@
             if (q < t) break;
             var qMinusT = q - t;
             var baseMinusT = base - t;
-            push$2(output, fromCharCode(digitToBasic(t + qMinusT % baseMinusT)));
+            push$3(output, fromCharCode(digitToBasic(t + qMinusT % baseMinusT)));
             q = floor$2(qMinusT / baseMinusT);
             k += base;
           }
 
-          push$2(output, fromCharCode(digitToBasic(q)));
+          push$3(output, fromCharCode(digitToBasic(q)));
           bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
           delta = 0;
           handledCPCount++;
@@ -8408,16 +7382,23 @@
 
   var stringPunycodeToAscii = function (input) {
     var encoded = [];
-    var labels = split$2(replace$2(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
+    var labels = split$2(replace$3(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
     var i, label;
     for (i = 0; i < labels.length; i++) {
       label = labels[i];
-      push$2(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode(label) : label);
+      push$3(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode(label) : label);
     }
     return join$2(encoded, '.');
   };
 
-  var arraySlice$2 = arraySliceSimple;
+  var $TypeError$3 = TypeError;
+
+  var validateArgumentsLength$5 = function (passed, required) {
+    if (passed < required) throw $TypeError$3('Not enough arguments');
+    return passed;
+  };
+
+  var arraySlice$3 = arraySliceSimple;
 
   var floor$1 = Math.floor;
 
@@ -8426,8 +7407,8 @@
     var middle = floor$1(length / 2);
     return length < 8 ? insertionSort(array, comparefn) : merge(
       array,
-      mergeSort(arraySlice$2(array, 0, middle), comparefn),
-      mergeSort(arraySlice$2(array, middle), comparefn),
+      mergeSort(arraySlice$3(array, 0, middle), comparefn),
+      mergeSort(arraySlice$3(array, middle), comparefn),
       comparefn
     );
   };
@@ -8464,47 +7445,47 @@
 
   // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-  var $$9 = _export;
-  var global$6 = global$r;
-  var call = functionCall;
-  var uncurryThis$2 = functionUncurryThis;
+  var $$l = _export;
+  var global$b = global$r;
+  var call$6 = functionCall;
+  var uncurryThis$5 = functionUncurryThis;
   var DESCRIPTORS$4 = descriptors;
   var USE_NATIVE_URL$2 = urlConstructorDetection;
-  var defineBuiltIn$1 = defineBuiltIn$8;
+  var defineBuiltIn$2 = defineBuiltIn$8;
   var defineBuiltInAccessor$1 = defineBuiltInAccessor$5;
   var defineBuiltIns = defineBuiltIns$2;
-  var setToStringTag$1 = setToStringTag$9;
+  var setToStringTag$2 = setToStringTag$9;
   var createIteratorConstructor = iteratorCreateConstructor;
-  var InternalStateModule$1 = internalState;
-  var anInstance$1 = anInstance$5;
-  var isCallable$1 = isCallable$q;
-  var hasOwn$1 = hasOwnProperty_1;
-  var bind$1 = functionBindContext;
-  var classof = classof$c;
-  var anObject = anObject$f;
-  var isObject = isObject$j;
+  var InternalStateModule$2 = internalState;
+  var anInstance$2 = anInstance$5;
+  var isCallable$5 = isCallable$q;
+  var hasOwn$3 = hasOwnProperty_1;
+  var bind$4 = functionBindContext;
+  var classof$1 = classof$c;
+  var anObject$3 = anObject$f;
+  var isObject$3 = isObject$j;
   var $toString$1 = toString$b;
-  var create = objectCreate;
-  var createPropertyDescriptor = createPropertyDescriptor$8;
+  var create$1 = objectCreate;
+  var createPropertyDescriptor$2 = createPropertyDescriptor$8;
   var getIterator = getIterator$3;
   var getIteratorMethod = getIteratorMethod$a;
-  var validateArgumentsLength$3 = validateArgumentsLength$5;
-  var wellKnownSymbol = wellKnownSymbol$q;
+  var validateArgumentsLength$4 = validateArgumentsLength$5;
+  var wellKnownSymbol$3 = wellKnownSymbol$q;
   var arraySort = arraySort$1;
 
-  var ITERATOR$1 = wellKnownSymbol('iterator');
+  var ITERATOR$1 = wellKnownSymbol$3('iterator');
   var URL_SEARCH_PARAMS = 'URLSearchParams';
   var URL_SEARCH_PARAMS_ITERATOR = URL_SEARCH_PARAMS + 'Iterator';
-  var setInternalState$1 = InternalStateModule$1.set;
-  var getInternalParamsState = InternalStateModule$1.getterFor(URL_SEARCH_PARAMS);
-  var getInternalIteratorState = InternalStateModule$1.getterFor(URL_SEARCH_PARAMS_ITERATOR);
+  var setInternalState$2 = InternalStateModule$2.set;
+  var getInternalParamsState = InternalStateModule$2.getterFor(URL_SEARCH_PARAMS);
+  var getInternalIteratorState = InternalStateModule$2.getterFor(URL_SEARCH_PARAMS_ITERATOR);
   // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-  var getOwnPropertyDescriptor$8 = Object.getOwnPropertyDescriptor;
+  var getOwnPropertyDescriptor$9 = Object.getOwnPropertyDescriptor;
 
   // Avoid NodeJS experimental warning
   var safeGetBuiltIn = function (name) {
-    if (!DESCRIPTORS$4) return global$6[name];
-    var descriptor = getOwnPropertyDescriptor$8(global$6, name);
+    if (!DESCRIPTORS$4) return global$b[name];
+    var descriptor = getOwnPropertyDescriptor$9(global$b, name);
     return descriptor && descriptor.value;
   };
 
@@ -8513,18 +7494,18 @@
   var Headers = safeGetBuiltIn('Headers');
   var RequestPrototype = NativeRequest && NativeRequest.prototype;
   var HeadersPrototype = Headers && Headers.prototype;
-  var RegExp$1 = global$6.RegExp;
-  var TypeError$2 = global$6.TypeError;
-  var decodeURIComponent = global$6.decodeURIComponent;
-  var encodeURIComponent$1 = global$6.encodeURIComponent;
-  var charAt$2 = uncurryThis$2(''.charAt);
-  var join$1 = uncurryThis$2([].join);
-  var push$1 = uncurryThis$2([].push);
-  var replace$1 = uncurryThis$2(''.replace);
-  var shift$1 = uncurryThis$2([].shift);
-  var splice$7 = uncurryThis$2([].splice);
-  var split$1 = uncurryThis$2(''.split);
-  var stringSlice$1 = uncurryThis$2(''.slice);
+  var RegExp$1 = global$b.RegExp;
+  var TypeError$3 = global$b.TypeError;
+  var decodeURIComponent = global$b.decodeURIComponent;
+  var encodeURIComponent$1 = global$b.encodeURIComponent;
+  var charAt$2 = uncurryThis$5(''.charAt);
+  var join$1 = uncurryThis$5([].join);
+  var push$2 = uncurryThis$5([].push);
+  var replace$2 = uncurryThis$5(''.replace);
+  var shift$1 = uncurryThis$5([].shift);
+  var splice$7 = uncurryThis$5([].splice);
+  var split$1 = uncurryThis$5(''.split);
+  var stringSlice$1 = uncurryThis$5(''.slice);
 
   var plus = /\+/g;
   var sequences = Array(4);
@@ -8542,13 +7523,13 @@
   };
 
   var deserialize = function (it) {
-    var result = replace$1(it, plus, ' ');
+    var result = replace$2(it, plus, ' ');
     var bytes = 4;
     try {
       return decodeURIComponent(result);
     } catch (error) {
       while (bytes) {
-        result = replace$1(result, percentSequence(bytes--), percentDecode);
+        result = replace$2(result, percentSequence(bytes--), percentDecode);
       }
       return result;
     }
@@ -8570,11 +7551,11 @@
   };
 
   var serialize = function (it) {
-    return replace$1(encodeURIComponent$1(it), find, replacer);
+    return replace$2(encodeURIComponent$1(it), find, replacer);
   };
 
   var URLSearchParamsIterator = createIteratorConstructor(function Iterator(params, kind) {
-    setInternalState$1(this, {
+    setInternalState$2(this, {
       type: URL_SEARCH_PARAMS_ITERATOR,
       iterator: getIterator(getInternalParamsState(params).entries),
       kind: kind
@@ -8594,7 +7575,7 @@
     this.url = null;
 
     if (init !== undefined) {
-      if (isObject(init)) this.parseObject(init);
+      if (isObject$3(init)) this.parseObject(init);
       else this.parseQuery(typeof init == 'string' ? charAt$2(init, 0) === '?' ? stringSlice$1(init, 1) : init : $toString$1(init));
     }
   };
@@ -8612,18 +7593,18 @@
       if (iteratorMethod) {
         iterator = getIterator(object, iteratorMethod);
         next = iterator.next;
-        while (!(step = call(next, iterator)).done) {
-          entryIterator = getIterator(anObject(step.value));
+        while (!(step = call$6(next, iterator)).done) {
+          entryIterator = getIterator(anObject$3(step.value));
           entryNext = entryIterator.next;
           if (
-            (first = call(entryNext, entryIterator)).done ||
-            (second = call(entryNext, entryIterator)).done ||
-            !call(entryNext, entryIterator).done
-          ) throw TypeError$2('Expected sequence with length 2');
-          push$1(this.entries, { key: $toString$1(first.value), value: $toString$1(second.value) });
+            (first = call$6(entryNext, entryIterator)).done ||
+            (second = call$6(entryNext, entryIterator)).done ||
+            !call$6(entryNext, entryIterator).done
+          ) throw TypeError$3('Expected sequence with length 2');
+          push$2(this.entries, { key: $toString$1(first.value), value: $toString$1(second.value) });
         }
-      } else for (var key in object) if (hasOwn$1(object, key)) {
-        push$1(this.entries, { key: key, value: $toString$1(object[key]) });
+      } else for (var key in object) if (hasOwn$3(object, key)) {
+        push$2(this.entries, { key: key, value: $toString$1(object[key]) });
       }
     },
     parseQuery: function (query) {
@@ -8635,7 +7616,7 @@
           attribute = attributes[index++];
           if (attribute.length) {
             entry = split$1(attribute, '=');
-            push$1(this.entries, {
+            push$2(this.entries, {
               key: deserialize(shift$1(entry)),
               value: deserialize(join$1(entry, '='))
             });
@@ -8650,7 +7631,7 @@
       var entry;
       while (index < entries.length) {
         entry = entries[index++];
-        push$1(result, serialize(entry.key) + '=' + serialize(entry.value));
+        push$2(result, serialize(entry.key) + '=' + serialize(entry.value));
       } return join$1(result, '&');
     },
     update: function () {
@@ -8665,9 +7646,9 @@
   // `URLSearchParams` constructor
   // https://url.spec.whatwg.org/#interface-urlsearchparams
   var URLSearchParamsConstructor = function URLSearchParams(/* init */) {
-    anInstance$1(this, URLSearchParamsPrototype);
+    anInstance$2(this, URLSearchParamsPrototype);
     var init = arguments.length > 0 ? arguments[0] : undefined;
-    var state = setInternalState$1(this, new URLSearchParamsState(init));
+    var state = setInternalState$2(this, new URLSearchParamsState(init));
     if (!DESCRIPTORS$4) this.length = state.entries.length;
   };
 
@@ -8677,16 +7658,16 @@
     // `URLSearchParams.prototype.append` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-append
     append: function append(name, value) {
-      validateArgumentsLength$3(arguments.length, 2);
+      validateArgumentsLength$4(arguments.length, 2);
       var state = getInternalParamsState(this);
-      push$1(state.entries, { key: $toString$1(name), value: $toString$1(value) });
+      push$2(state.entries, { key: $toString$1(name), value: $toString$1(value) });
       if (!DESCRIPTORS$4) this.length++;
       state.updateURL();
     },
     // `URLSearchParams.prototype.delete` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-delete
     'delete': function (name) {
-      validateArgumentsLength$3(arguments.length, 1);
+      validateArgumentsLength$4(arguments.length, 1);
       var state = getInternalParamsState(this);
       var entries = state.entries;
       var key = $toString$1(name);
@@ -8701,7 +7682,7 @@
     // `URLSearchParams.prototype.get` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-get
     get: function get(name) {
-      validateArgumentsLength$3(arguments.length, 1);
+      validateArgumentsLength$4(arguments.length, 1);
       var entries = getInternalParamsState(this).entries;
       var key = $toString$1(name);
       var index = 0;
@@ -8713,20 +7694,20 @@
     // `URLSearchParams.prototype.getAll` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-getall
     getAll: function getAll(name) {
-      validateArgumentsLength$3(arguments.length, 1);
+      validateArgumentsLength$4(arguments.length, 1);
       var entries = getInternalParamsState(this).entries;
       var key = $toString$1(name);
       var result = [];
       var index = 0;
       for (; index < entries.length; index++) {
-        if (entries[index].key === key) push$1(result, entries[index].value);
+        if (entries[index].key === key) push$2(result, entries[index].value);
       }
       return result;
     },
     // `URLSearchParams.prototype.has` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-has
     has: function has(name) {
-      validateArgumentsLength$3(arguments.length, 1);
+      validateArgumentsLength$4(arguments.length, 1);
       var entries = getInternalParamsState(this).entries;
       var key = $toString$1(name);
       var index = 0;
@@ -8738,7 +7719,7 @@
     // `URLSearchParams.prototype.set` method
     // https://url.spec.whatwg.org/#dom-urlsearchparams-set
     set: function set(name, value) {
-      validateArgumentsLength$3(arguments.length, 1);
+      validateArgumentsLength$4(arguments.length, 1);
       var state = getInternalParamsState(this);
       var entries = state.entries;
       var found = false;
@@ -8756,7 +7737,7 @@
           }
         }
       }
-      if (!found) push$1(entries, { key: key, value: val });
+      if (!found) push$2(entries, { key: key, value: val });
       if (!DESCRIPTORS$4) this.length = entries.length;
       state.updateURL();
     },
@@ -8772,7 +7753,7 @@
     // `URLSearchParams.prototype.forEach` method
     forEach: function forEach(callback /* , thisArg */) {
       var entries = getInternalParamsState(this).entries;
-      var boundFunction = bind$1(callback, arguments.length > 1 ? arguments[1] : undefined);
+      var boundFunction = bind$4(callback, arguments.length > 1 ? arguments[1] : undefined);
       var index = 0;
       var entry;
       while (index < entries.length) {
@@ -8795,11 +7776,11 @@
   }, { enumerable: true });
 
   // `URLSearchParams.prototype[@@iterator]` method
-  defineBuiltIn$1(URLSearchParamsPrototype, ITERATOR$1, URLSearchParamsPrototype.entries, { name: 'entries' });
+  defineBuiltIn$2(URLSearchParamsPrototype, ITERATOR$1, URLSearchParamsPrototype.entries, { name: 'entries' });
 
   // `URLSearchParams.prototype.toString` method
   // https://url.spec.whatwg.org/#urlsearchparams-stringification-behavior
-  defineBuiltIn$1(URLSearchParamsPrototype, 'toString', function toString() {
+  defineBuiltIn$2(URLSearchParamsPrototype, 'toString', function toString() {
     return getInternalParamsState(this).serialize();
   }, { enumerable: true });
 
@@ -8813,52 +7794,52 @@
     enumerable: true
   });
 
-  setToStringTag$1(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
+  setToStringTag$2(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
 
-  $$9({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
+  $$l({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
     URLSearchParams: URLSearchParamsConstructor
   });
 
   // Wrap `fetch` and `Request` for correct work with polyfilled `URLSearchParams`
-  if (!USE_NATIVE_URL$2 && isCallable$1(Headers)) {
-    var headersHas = uncurryThis$2(HeadersPrototype.has);
-    var headersSet = uncurryThis$2(HeadersPrototype.set);
+  if (!USE_NATIVE_URL$2 && isCallable$5(Headers)) {
+    var headersHas = uncurryThis$5(HeadersPrototype.has);
+    var headersSet = uncurryThis$5(HeadersPrototype.set);
 
     var wrapRequestOptions = function (init) {
-      if (isObject(init)) {
+      if (isObject$3(init)) {
         var body = init.body;
         var headers;
-        if (classof(body) === URL_SEARCH_PARAMS) {
+        if (classof$1(body) === URL_SEARCH_PARAMS) {
           headers = init.headers ? new Headers(init.headers) : new Headers();
           if (!headersHas(headers, 'content-type')) {
             headersSet(headers, 'content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
           }
-          return create(init, {
-            body: createPropertyDescriptor(0, $toString$1(body)),
-            headers: createPropertyDescriptor(0, headers)
+          return create$1(init, {
+            body: createPropertyDescriptor$2(0, $toString$1(body)),
+            headers: createPropertyDescriptor$2(0, headers)
           });
         }
       } return init;
     };
 
-    if (isCallable$1(nativeFetch)) {
-      $$9({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
+    if (isCallable$5(nativeFetch)) {
+      $$l({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
         fetch: function fetch(input /* , init */) {
           return nativeFetch(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
         }
       });
     }
 
-    if (isCallable$1(NativeRequest)) {
+    if (isCallable$5(NativeRequest)) {
       var RequestConstructor = function Request(input /* , init */) {
-        anInstance$1(this, RequestPrototype);
+        anInstance$2(this, RequestPrototype);
         return new NativeRequest(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
       };
 
       RequestPrototype.constructor = RequestConstructor;
       RequestConstructor.prototype = RequestPrototype;
 
-      $$9({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
+      $$l({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
         Request: RequestConstructor
       });
     }
@@ -8871,49 +7852,49 @@
 
   // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-  var $$8 = _export;
+  var $$k = _export;
   var DESCRIPTORS$3 = descriptors;
   var USE_NATIVE_URL$1 = urlConstructorDetection;
-  var global$5 = global$r;
-  var bind = functionBindContext;
-  var uncurryThis$1 = functionUncurryThis;
-  var defineBuiltIn = defineBuiltIn$8;
+  var global$a = global$r;
+  var bind$3 = functionBindContext;
+  var uncurryThis$4 = functionUncurryThis;
+  var defineBuiltIn$1 = defineBuiltIn$8;
   var defineBuiltInAccessor = defineBuiltInAccessor$5;
-  var anInstance = anInstance$5;
-  var hasOwn = hasOwnProperty_1;
+  var anInstance$1 = anInstance$5;
+  var hasOwn$2 = hasOwnProperty_1;
   var assign = objectAssign;
   var arrayFrom = arrayFrom$1;
-  var arraySlice$1 = arraySliceSimple;
+  var arraySlice$2 = arraySliceSimple;
   var codeAt = stringMultibyte.codeAt;
   var toASCII = stringPunycodeToAscii;
   var $toString = toString$b;
-  var setToStringTag = setToStringTag$9;
-  var validateArgumentsLength$2 = validateArgumentsLength$5;
+  var setToStringTag$1 = setToStringTag$9;
+  var validateArgumentsLength$3 = validateArgumentsLength$5;
   var URLSearchParamsModule = web_urlSearchParams_constructor;
-  var InternalStateModule = internalState;
+  var InternalStateModule$1 = internalState;
 
-  var setInternalState = InternalStateModule.set;
-  var getInternalURLState = InternalStateModule.getterFor('URL');
+  var setInternalState$1 = InternalStateModule$1.set;
+  var getInternalURLState = InternalStateModule$1.getterFor('URL');
   var URLSearchParams$1 = URLSearchParamsModule.URLSearchParams;
   var getInternalSearchParamsState = URLSearchParamsModule.getState;
 
-  var NativeURL = global$5.URL;
-  var TypeError$1 = global$5.TypeError;
-  var parseInt$1 = global$5.parseInt;
+  var NativeURL = global$a.URL;
+  var TypeError$2 = global$a.TypeError;
+  var parseInt$1 = global$a.parseInt;
   var floor = Math.floor;
   var pow = Math.pow;
-  var charAt$1 = uncurryThis$1(''.charAt);
-  var exec = uncurryThis$1(/./.exec);
-  var join = uncurryThis$1([].join);
-  var numberToString = uncurryThis$1(1.0.toString);
-  var pop = uncurryThis$1([].pop);
-  var push = uncurryThis$1([].push);
-  var replace = uncurryThis$1(''.replace);
-  var shift = uncurryThis$1([].shift);
-  var split = uncurryThis$1(''.split);
-  var stringSlice = uncurryThis$1(''.slice);
-  var toLowerCase = uncurryThis$1(''.toLowerCase);
-  var unshift = uncurryThis$1([].unshift);
+  var charAt$1 = uncurryThis$4(''.charAt);
+  var exec = uncurryThis$4(/./.exec);
+  var join = uncurryThis$4([].join);
+  var numberToString = uncurryThis$4(1.0.toString);
+  var pop = uncurryThis$4([].pop);
+  var push$1 = uncurryThis$4([].push);
+  var replace$1 = uncurryThis$4(''.replace);
+  var shift = uncurryThis$4([].shift);
+  var split = uncurryThis$4(''.split);
+  var stringSlice = uncurryThis$4(''.slice);
+  var toLowerCase = uncurryThis$4(''.toLowerCase);
+  var unshift = uncurryThis$4([].unshift);
 
   var INVALID_AUTHORITY = 'Invalid authority';
   var INVALID_SCHEME = 'Invalid scheme';
@@ -8961,7 +7942,7 @@
         if (!exec(radix == 10 ? DEC : radix == 8 ? OCT : HEX, part)) return input;
         number = parseInt$1(part, radix);
       }
-      push(numbers, number);
+      push$1(numbers, number);
     }
     for (index = 0; index < partsLength; index++) {
       number = numbers[index];
@@ -9122,7 +8103,7 @@
 
   var percentEncode = function (chr, set) {
     var code = codeAt(chr, 0);
-    return code > 0x20 && code < 0x7F && !hasOwn(set, chr) ? chr : encodeURIComponent(chr);
+    return code > 0x20 && code < 0x7F && !hasOwn$2(set, chr) ? chr : encodeURIComponent(chr);
   };
 
   // https://url.spec.whatwg.org/#special-scheme
@@ -9190,12 +8171,12 @@
     var baseState, failure, searchParams;
     if (isBase) {
       failure = this.parse(urlString);
-      if (failure) throw TypeError$1(failure);
+      if (failure) throw TypeError$2(failure);
       this.searchParams = null;
     } else {
       if (base !== undefined) baseState = new URLState(base, true);
       failure = this.parse(urlString, null, baseState);
-      if (failure) throw TypeError$1(failure);
+      if (failure) throw TypeError$2(failure);
       searchParams = getInternalSearchParamsState(new URLSearchParams$1());
       searchParams.bindURL(this);
       this.searchParams = searchParams;
@@ -9228,11 +8209,11 @@
         url.query = null;
         url.fragment = null;
         url.cannotBeABaseURL = false;
-        input = replace(input, LEADING_C0_CONTROL_OR_SPACE, '');
-        input = replace(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
+        input = replace$1(input, LEADING_C0_CONTROL_OR_SPACE, '');
+        input = replace$1(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
       }
 
-      input = replace(input, TAB_AND_NEW_LINE, '');
+      input = replace$1(input, TAB_AND_NEW_LINE, '');
 
       codePoints = arrayFrom(input);
 
@@ -9254,7 +8235,7 @@
               buffer += toLowerCase(chr);
             } else if (chr == ':') {
               if (stateOverride && (
-                (url.isSpecial() != hasOwn(specialSchemes, buffer)) ||
+                (url.isSpecial() != hasOwn$2(specialSchemes, buffer)) ||
                 (buffer == 'file' && (url.includesCredentials() || url.port !== null)) ||
                 (url.scheme == 'file' && !url.host)
               )) return;
@@ -9275,7 +8256,7 @@
                 pointer++;
               } else {
                 url.cannotBeABaseURL = true;
-                push(url.path, '');
+                push$1(url.path, '');
                 state = CANNOT_BE_A_BASE_URL_PATH;
               }
             } else if (!stateOverride) {
@@ -9290,7 +8271,7 @@
             if (!base || (base.cannotBeABaseURL && chr != '#')) return INVALID_SCHEME;
             if (base.cannotBeABaseURL && chr == '#') {
               url.scheme = base.scheme;
-              url.path = arraySlice$1(base.path);
+              url.path = arraySlice$2(base.path);
               url.query = base.query;
               url.fragment = '';
               url.cannotBeABaseURL = true;
@@ -9325,7 +8306,7 @@
               url.password = base.password;
               url.host = base.host;
               url.port = base.port;
-              url.path = arraySlice$1(base.path);
+              url.path = arraySlice$2(base.path);
               url.query = base.query;
             } else if (chr == '/' || (chr == '\\' && url.isSpecial())) {
               state = RELATIVE_SLASH;
@@ -9334,7 +8315,7 @@
               url.password = base.password;
               url.host = base.host;
               url.port = base.port;
-              url.path = arraySlice$1(base.path);
+              url.path = arraySlice$2(base.path);
               url.query = '';
               state = QUERY;
             } else if (chr == '#') {
@@ -9342,7 +8323,7 @@
               url.password = base.password;
               url.host = base.host;
               url.port = base.port;
-              url.path = arraySlice$1(base.path);
+              url.path = arraySlice$2(base.path);
               url.query = base.query;
               url.fragment = '';
               state = FRAGMENT;
@@ -9351,7 +8332,7 @@
               url.password = base.password;
               url.host = base.host;
               url.port = base.port;
-              url.path = arraySlice$1(base.path);
+              url.path = arraySlice$2(base.path);
               url.path.length--;
               state = PATH;
               continue;
@@ -9466,23 +8447,23 @@
             else if (base && base.scheme == 'file') {
               if (chr == EOF) {
                 url.host = base.host;
-                url.path = arraySlice$1(base.path);
+                url.path = arraySlice$2(base.path);
                 url.query = base.query;
               } else if (chr == '?') {
                 url.host = base.host;
-                url.path = arraySlice$1(base.path);
+                url.path = arraySlice$2(base.path);
                 url.query = '';
                 state = QUERY;
               } else if (chr == '#') {
                 url.host = base.host;
-                url.path = arraySlice$1(base.path);
+                url.path = arraySlice$2(base.path);
                 url.query = base.query;
                 url.fragment = '';
                 state = FRAGMENT;
               } else {
-                if (!startsWithWindowsDriveLetter(join(arraySlice$1(codePoints, pointer), ''))) {
+                if (!startsWithWindowsDriveLetter(join(arraySlice$2(codePoints, pointer), ''))) {
                   url.host = base.host;
-                  url.path = arraySlice$1(base.path);
+                  url.path = arraySlice$2(base.path);
                   url.shortenPath();
                 }
                 state = PATH;
@@ -9498,8 +8479,8 @@
               state = FILE_HOST;
               break;
             }
-            if (base && base.scheme == 'file' && !startsWithWindowsDriveLetter(join(arraySlice$1(codePoints, pointer), ''))) {
-              if (isWindowsDriveLetter(base.path[0], true)) push(url.path, base.path[0]);
+            if (base && base.scheme == 'file' && !startsWithWindowsDriveLetter(join(arraySlice$2(codePoints, pointer), ''))) {
+              if (isWindowsDriveLetter(base.path[0], true)) push$1(url.path, base.path[0]);
               else url.host = base.host;
             }
             state = PATH;
@@ -9548,18 +8529,18 @@
               if (isDoubleDot(buffer)) {
                 url.shortenPath();
                 if (chr != '/' && !(chr == '\\' && url.isSpecial())) {
-                  push(url.path, '');
+                  push$1(url.path, '');
                 }
               } else if (isSingleDot(buffer)) {
                 if (chr != '/' && !(chr == '\\' && url.isSpecial())) {
-                  push(url.path, '');
+                  push$1(url.path, '');
                 }
               } else {
                 if (url.scheme == 'file' && !url.path.length && isWindowsDriveLetter(buffer)) {
                   if (url.host) url.host = '';
                   buffer = charAt$1(buffer, 0) + ':'; // normalize windows drive letter
                 }
-                push(url.path, buffer);
+                push$1(url.path, buffer);
               }
               buffer = '';
               if (url.scheme == 'file' && (chr == EOF || chr == '?' || chr == '#')) {
@@ -9642,7 +8623,7 @@
     },
     // https://url.spec.whatwg.org/#is-special
     isSpecial: function () {
-      return hasOwn(specialSchemes, this.scheme);
+      return hasOwn$2(specialSchemes, this.scheme);
     },
     // https://url.spec.whatwg.org/#shorten-a-urls-path
     shortenPath: function () {
@@ -9680,7 +8661,7 @@
     // https://url.spec.whatwg.org/#dom-url-href
     setHref: function (href) {
       var failure = this.parse(href);
-      if (failure) throw TypeError$1(failure);
+      if (failure) throw TypeError$2(failure);
       this.searchParams.update();
     },
     // https://url.spec.whatwg.org/#dom-url-origin
@@ -9811,9 +8792,9 @@
   // `URL` constructor
   // https://url.spec.whatwg.org/#url-class
   var URLConstructor = function URL(url /* , base */) {
-    var that = anInstance(this, URLPrototype);
-    var base = validateArgumentsLength$2(arguments.length, 1) > 1 ? arguments[1] : undefined;
-    var state = setInternalState(that, new URLState(url, false, base));
+    var that = anInstance$1(this, URLPrototype);
+    var base = validateArgumentsLength$3(arguments.length, 1) > 1 ? arguments[1] : undefined;
+    var state = setInternalState$1(that, new URLState(url, false, base));
     if (!DESCRIPTORS$3) {
       that.href = state.serialize();
       that.origin = state.getOrigin();
@@ -9886,13 +8867,13 @@
 
   // `URL.prototype.toJSON` method
   // https://url.spec.whatwg.org/#dom-url-tojson
-  defineBuiltIn(URLPrototype, 'toJSON', function toJSON() {
+  defineBuiltIn$1(URLPrototype, 'toJSON', function toJSON() {
     return getInternalURLState(this).serialize();
   }, { enumerable: true });
 
   // `URL.prototype.toString` method
   // https://url.spec.whatwg.org/#URL-stringification-behavior
-  defineBuiltIn(URLPrototype, 'toString', function toString() {
+  defineBuiltIn$1(URLPrototype, 'toString', function toString() {
     return getInternalURLState(this).serialize();
   }, { enumerable: true });
 
@@ -9901,40 +8882,40 @@
     var nativeRevokeObjectURL = NativeURL.revokeObjectURL;
     // `URL.createObjectURL` method
     // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
-    if (nativeCreateObjectURL) defineBuiltIn(URLConstructor, 'createObjectURL', bind(nativeCreateObjectURL, NativeURL));
+    if (nativeCreateObjectURL) defineBuiltIn$1(URLConstructor, 'createObjectURL', bind$3(nativeCreateObjectURL, NativeURL));
     // `URL.revokeObjectURL` method
     // https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL
-    if (nativeRevokeObjectURL) defineBuiltIn(URLConstructor, 'revokeObjectURL', bind(nativeRevokeObjectURL, NativeURL));
+    if (nativeRevokeObjectURL) defineBuiltIn$1(URLConstructor, 'revokeObjectURL', bind$3(nativeRevokeObjectURL, NativeURL));
   }
 
-  setToStringTag(URLConstructor, 'URL');
+  setToStringTag$1(URLConstructor, 'URL');
 
-  $$8({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
+  $$k({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
     URL: URLConstructor
   });
 
-  var $$7 = _export;
-  var getBuiltIn = getBuiltIn$h;
-  var fails$3 = fails$x;
-  var validateArgumentsLength$1 = validateArgumentsLength$5;
-  var toString$1 = toString$b;
+  var $$j = _export;
+  var getBuiltIn$4 = getBuiltIn$h;
+  var fails$6 = fails$x;
+  var validateArgumentsLength$2 = validateArgumentsLength$5;
+  var toString$2 = toString$b;
   var USE_NATIVE_URL = urlConstructorDetection;
 
-  var URL$1 = getBuiltIn('URL');
+  var URL$1 = getBuiltIn$4('URL');
 
   // https://github.com/nodejs/node/issues/47505
   // https://github.com/denoland/deno/issues/18893
-  var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$3(function () {
+  var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$6(function () {
     URL$1.canParse();
   });
 
   // `URL.canParse` method
   // https://url.spec.whatwg.org/#dom-url-canparse
-  $$7({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
+  $$j({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
     canParse: function canParse(url) {
-      var length = validateArgumentsLength$1(arguments.length, 1);
-      var urlString = toString$1(url);
-      var base = length < 2 || arguments[1] === undefined ? undefined : toString$1(arguments[1]);
+      var length = validateArgumentsLength$2(arguments.length, 1);
+      var urlString = toString$2(url);
+      var base = length < 2 || arguments[1] === undefined ? undefined : toString$2(arguments[1]);
       try {
         return !!new URL$1(urlString, base);
       } catch (error) {
@@ -9943,21 +8924,21 @@
     }
   });
 
-  var path$6 = path$n;
+  var path$7 = path$n;
 
-  var url$5 = path$6.URL;
+  var url$5 = path$7.URL;
 
-  var parent$n = url$5;
+  var parent$t = url$5;
 
-  var url$4 = parent$n;
+  var url$4 = parent$t;
 
-  var parent$m = url$4;
+  var parent$s = url$4;
 
-  var url$3 = parent$m;
+  var url$3 = parent$s;
 
-  var parent$l = url$3;
+  var parent$r = url$3;
 
-  var url$2 = parent$l;
+  var url$2 = parent$r;
 
   var url$1 = url$2;
 
@@ -9970,15 +8951,12 @@
   var ScreenShot = /*#__PURE__*/function (_Options) {
     _inherits(ScreenShot, _Options);
     var _super = _createSuper$c(ScreenShot);
+    // el: div.video-screenshot.video-controller
     function ScreenShot(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, ScreenShot);
       _this = _super.call(this, player, container, 0, 0, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'ScreenShot');
-      // el: div.video-screenshot.video-controller
-      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
-      _this.player = player;
-      _this.props = props || {};
       _this.init();
       return _this;
     }
@@ -10003,7 +8981,11 @@
       key: "initEvent",
       value: function initEvent() {
         this.onClick = this.onClick.bind(this);
-        this.el.onclick = this.onClick;
+        if (this.player.env === 'PC') {
+          this.el.addEventListener('click', this.onClick);
+        } else {
+          wrap(this.el).addEventListener('singleTap', this.onClick);
+        }
       }
     }, {
       key: "onClick",
@@ -10041,13 +9023,12 @@
   var SubSetting = /*#__PURE__*/function (_Options) {
     _inherits(SubSetting, _Options);
     var _super = _createSuper$b(SubSetting);
+    // el: div.video-subsettings.video-controllert
     function SubSetting(player, container, desc, props, children) {
       var _this;
       _classCallCheck(this, SubSetting);
       _this = _super.call(this, player, container, 0, 0, desc);
       _defineProperty(_assertThisInitialized(_this), "id", 'SubSetting');
-      // el: div.video-subsettings.video-controller
-      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
       _this.init();
       return _this;
     }
@@ -10083,12 +9064,12 @@
       _this = _super.call(this, container, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'DurationShow');
       // el: div.video-duration-time.video-controller
-      _defineProperty(_assertThisInitialized(_this), "player", void 0);
-      _defineProperty(_assertThisInitialized(_this), "props", void 0);
       _defineProperty(_assertThisInitialized(_this), "currentTime", '00:00');
       _defineProperty(_assertThisInitialized(_this), "totalTime", '00:00');
+      _defineProperty(_assertThisInitialized(_this), "props", void 0);
+      _defineProperty(_assertThisInitialized(_this), "player", void 0);
       _this.player = player;
-      _this.props = props || {};
+      _this.props = props;
       _this.init();
       return _this;
     }
@@ -10140,11 +9121,8 @@
       _this = _super.call(this, player, container, 0, 0, desc, props, children);
       _defineProperty(_assertThisInitialized(_this), "id", 'VideoShot');
       // el: div.video-videoshot.video-controller
-      _defineProperty(_assertThisInitialized(_this), "icon", void 0);
       _defineProperty(_assertThisInitialized(_this), "countDown", 30);
       _defineProperty(_assertThisInitialized(_this), "timer", null);
-      _this.player = player;
-      _this.props = props || {};
       _this.init();
       return _this;
     }
@@ -10168,12 +9146,16 @@
     }, {
       key: "initEvent",
       value: function initEvent() {
-        this.onMouseDown = this.onMouseDown.bind(this);
-        this.el.onmousedown = this.onMouseDown;
+        this.onDown = this.onDown.bind(this);
+        if (this.player.env === 'PC') {
+          this.el.onmousedown = this.onDown;
+        } else {
+          this.el.ontouchstart = this.onDown;
+        }
       }
     }, {
-      key: "onMouseDown",
-      value: function onMouseDown(e) {
+      key: "onDown",
+      value: function onDown() {
         if (this.player.video.played) {
           this.videoShot();
         }
@@ -10215,10 +9197,16 @@
           }
           _this2.countDown--;
         }, 1000);
-        this.el.onmouseup = function (e) {
+        if (this.player.env === 'Mobile') {
+          this.el.ontouchend = function (e) {
+            _this2.stop(recorder);
+          };
+        } else {
           // 结束录制视频，手动抬起鼠标结束录制
-          _this2.stop(recorder);
-        };
+          this.el.onmouseup = function (e) {
+            _this2.stop(recorder);
+          };
+        }
       }
     }, {
       key: "stop",
@@ -10228,6 +9216,7 @@
         window.clearInterval(this.timer);
         this.timer = null;
         this.el.onmouseup = null;
+        this.el.ontouchend = null;
         this.countDown = 30;
       }
     }]);
@@ -10430,7 +9419,7 @@
         }
         var target;
         if (e instanceof Event) target = e.target;else target = e.e.target;
-        if (target === this.player.video) {
+        if (target === this.player.video && this.player.env === 'PC') {
           this.timer = window.setTimeout(function () {
             _this3.hideToolBar();
           }, 3000);
@@ -10590,8 +9579,1067 @@
     return new FactoryMaker();
   }();
 
+  var getBuiltIn$3 = getBuiltIn$h;
+  var uncurryThis$3 = functionUncurryThis;
+  var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
+  var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
+  var anObject$2 = anObject$f;
+
+  var concat = uncurryThis$3([].concat);
+
+  // all object keys, includes non-enumerable and symbols
+  var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
+    var keys = getOwnPropertyNamesModule.f(anObject$2(it));
+    var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+    return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
+  };
+
+  var hasOwn$1 = hasOwnProperty_1;
+  var ownKeys$2 = ownKeys$3;
+  var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
+  var definePropertyModule = objectDefineProperty;
+
+  var copyConstructorProperties$1 = function (target, source, exceptions) {
+    var keys = ownKeys$2(source);
+    var defineProperty = definePropertyModule.f;
+    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      if (!hasOwn$1(target, key) && !(exceptions && hasOwn$1(exceptions, key))) {
+        defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+      }
+    }
+  };
+
+  var isObject$2 = isObject$j;
+  var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
+
+  // `InstallErrorCause` abstract operation
+  // https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
+  var installErrorCause$1 = function (O, options) {
+    if (isObject$2(options) && 'cause' in options) {
+      createNonEnumerableProperty$2(O, 'cause', options.cause);
+    }
+  };
+
+  var uncurryThis$2 = functionUncurryThis;
+
+  var $Error$1 = Error;
+  var replace = uncurryThis$2(''.replace);
+
+  var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
+  // eslint-disable-next-line redos/no-vulnerable -- safe
+  var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
+  var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
+
+  var errorStackClear = function (stack, dropEntries) {
+    if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error$1.prepareStackTrace) {
+      while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
+    } return stack;
+  };
+
+  var fails$5 = fails$x;
+  var createPropertyDescriptor$1 = createPropertyDescriptor$8;
+
+  var errorStackInstallable = !fails$5(function () {
+    var error = Error('a');
+    if (!('stack' in error)) return true;
+    // eslint-disable-next-line es/no-object-defineproperty -- safe
+    Object.defineProperty(error, 'stack', createPropertyDescriptor$1(1, 7));
+    return error.stack !== 7;
+  });
+
+  var createNonEnumerableProperty$1 = createNonEnumerableProperty$9;
+  var clearErrorStack = errorStackClear;
+  var ERROR_STACK_INSTALLABLE = errorStackInstallable;
+
+  // non-standard V8
+  var captureStackTrace = Error.captureStackTrace;
+
+  var errorStackInstall = function (error, C, stack, dropEntries) {
+    if (ERROR_STACK_INSTALLABLE) {
+      if (captureStackTrace) captureStackTrace(error, C);
+      else createNonEnumerableProperty$1(error, 'stack', clearErrorStack(stack, dropEntries));
+    }
+  };
+
+  var toString$1 = toString$b;
+
+  var normalizeStringArgument$1 = function (argument, $default) {
+    return argument === undefined ? arguments.length < 2 ? '' : $default : toString$1(argument);
+  };
+
+  var $$i = _export;
+  var isPrototypeOf$2 = objectIsPrototypeOf;
+  var getPrototypeOf = objectGetPrototypeOf;
+  var setPrototypeOf = objectSetPrototypeOf;
+  var copyConstructorProperties = copyConstructorProperties$1;
+  var create = objectCreate;
+  var createNonEnumerableProperty = createNonEnumerableProperty$9;
+  var createPropertyDescriptor = createPropertyDescriptor$8;
+  var installErrorCause = installErrorCause$1;
+  var installErrorStack = errorStackInstall;
+  var iterate$4 = iterate$l;
+  var normalizeStringArgument = normalizeStringArgument$1;
+  var wellKnownSymbol$2 = wellKnownSymbol$q;
+
+  var TO_STRING_TAG = wellKnownSymbol$2('toStringTag');
+  var $Error = Error;
+  var push = [].push;
+
+  var $AggregateError = function AggregateError(errors, message /* , options */) {
+    var isInstance = isPrototypeOf$2(AggregateErrorPrototype, this);
+    var that;
+    if (setPrototypeOf) {
+      that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
+    } else {
+      that = isInstance ? this : create(AggregateErrorPrototype);
+      createNonEnumerableProperty(that, TO_STRING_TAG, 'Error');
+    }
+    if (message !== undefined) createNonEnumerableProperty(that, 'message', normalizeStringArgument(message));
+    installErrorStack(that, $AggregateError, that.stack, 1);
+    if (arguments.length > 2) installErrorCause(that, arguments[2]);
+    var errorsArray = [];
+    iterate$4(errors, push, { that: errorsArray });
+    createNonEnumerableProperty(that, 'errors', errorsArray);
+    return that;
+  };
+
+  if (setPrototypeOf) setPrototypeOf($AggregateError, $Error);
+  else copyConstructorProperties($AggregateError, $Error, { name: true });
+
+  var AggregateErrorPrototype = $AggregateError.prototype = create($Error.prototype, {
+    constructor: createPropertyDescriptor(1, $AggregateError),
+    message: createPropertyDescriptor(1, ''),
+    name: createPropertyDescriptor(1, 'AggregateError')
+  });
+
+  // `AggregateError` constructor
+  // https://tc39.es/ecma262/#sec-aggregate-error-constructor
+  $$i({ global: true, constructor: true, arity: 2 }, {
+    AggregateError: $AggregateError
+  });
+
+  var classof = classofRaw$2;
+
+  var engineIsNode = typeof process != 'undefined' && classof(process) == 'process';
+
+  var anObject$1 = anObject$f;
+  var aConstructor = aConstructor$3;
+  var isNullOrUndefined = isNullOrUndefined$6;
+  var wellKnownSymbol$1 = wellKnownSymbol$q;
+
+  var SPECIES$1 = wellKnownSymbol$1('species');
+
+  // `SpeciesConstructor` abstract operation
+  // https://tc39.es/ecma262/#sec-speciesconstructor
+  var speciesConstructor$2 = function (O, defaultConstructor) {
+    var C = anObject$1(O).constructor;
+    var S;
+    return C === undefined || isNullOrUndefined(S = anObject$1(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
+  };
+
+  var userAgent$2 = engineUserAgent;
+
+  // eslint-disable-next-line redos/no-vulnerable -- safe
+  var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
+
+  var global$9 = global$r;
+  var apply$1 = functionApply;
+  var bind$2 = functionBindContext;
+  var isCallable$4 = isCallable$q;
+  var hasOwn = hasOwnProperty_1;
+  var fails$4 = fails$x;
+  var html = html$2;
+  var arraySlice$1 = arraySlice$7;
+  var createElement = documentCreateElement$1;
+  var validateArgumentsLength$1 = validateArgumentsLength$5;
+  var IS_IOS$1 = engineIsIos;
+  var IS_NODE$3 = engineIsNode;
+
+  var set = global$9.setImmediate;
+  var clear = global$9.clearImmediate;
+  var process$3 = global$9.process;
+  var Dispatch = global$9.Dispatch;
+  var Function$2 = global$9.Function;
+  var MessageChannel = global$9.MessageChannel;
+  var String$1 = global$9.String;
+  var counter = 0;
+  var queue$3 = {};
+  var ONREADYSTATECHANGE = 'onreadystatechange';
+  var $location, defer, channel, port;
+
+  fails$4(function () {
+    // Deno throws a ReferenceError on `location` access without `--location` flag
+    $location = global$9.location;
+  });
+
+  var run = function (id) {
+    if (hasOwn(queue$3, id)) {
+      var fn = queue$3[id];
+      delete queue$3[id];
+      fn();
+    }
+  };
+
+  var runner = function (id) {
+    return function () {
+      run(id);
+    };
+  };
+
+  var eventListener = function (event) {
+    run(event.data);
+  };
+
+  var globalPostMessageDefer = function (id) {
+    // old engines have not location.origin
+    global$9.postMessage(String$1(id), $location.protocol + '//' + $location.host);
+  };
+
+  // Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+  if (!set || !clear) {
+    set = function setImmediate(handler) {
+      validateArgumentsLength$1(arguments.length, 1);
+      var fn = isCallable$4(handler) ? handler : Function$2(handler);
+      var args = arraySlice$1(arguments, 1);
+      queue$3[++counter] = function () {
+        apply$1(fn, undefined, args);
+      };
+      defer(counter);
+      return counter;
+    };
+    clear = function clearImmediate(id) {
+      delete queue$3[id];
+    };
+    // Node.js 0.8-
+    if (IS_NODE$3) {
+      defer = function (id) {
+        process$3.nextTick(runner(id));
+      };
+    // Sphere (JS game engine) Dispatch API
+    } else if (Dispatch && Dispatch.now) {
+      defer = function (id) {
+        Dispatch.now(runner(id));
+      };
+    // Browsers with MessageChannel, includes WebWorkers
+    // except iOS - https://github.com/zloirock/core-js/issues/624
+    } else if (MessageChannel && !IS_IOS$1) {
+      channel = new MessageChannel();
+      port = channel.port2;
+      channel.port1.onmessage = eventListener;
+      defer = bind$2(port.postMessage, port);
+    // Browsers with postMessage, skip WebWorkers
+    // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
+    } else if (
+      global$9.addEventListener &&
+      isCallable$4(global$9.postMessage) &&
+      !global$9.importScripts &&
+      $location && $location.protocol !== 'file:' &&
+      !fails$4(globalPostMessageDefer)
+    ) {
+      defer = globalPostMessageDefer;
+      global$9.addEventListener('message', eventListener, false);
+    // IE8-
+    } else if (ONREADYSTATECHANGE in createElement('script')) {
+      defer = function (id) {
+        html.appendChild(createElement('script'))[ONREADYSTATECHANGE] = function () {
+          html.removeChild(this);
+          run(id);
+        };
+      };
+    // Rest old browsers
+    } else {
+      defer = function (id) {
+        setTimeout(runner(id), 0);
+      };
+    }
+  }
+
+  var task$1 = {
+    set: set,
+    clear: clear
+  };
+
+  var Queue$2 = function () {
+    this.head = null;
+    this.tail = null;
+  };
+
+  Queue$2.prototype = {
+    add: function (item) {
+      var entry = { item: item, next: null };
+      var tail = this.tail;
+      if (tail) tail.next = entry;
+      else this.head = entry;
+      this.tail = entry;
+    },
+    get: function () {
+      var entry = this.head;
+      if (entry) {
+        var next = this.head = entry.next;
+        if (next === null) this.tail = null;
+        return entry.item;
+      }
+    }
+  };
+
+  var queue$2 = Queue$2;
+
+  var userAgent$1 = engineUserAgent;
+
+  var engineIsIosPebble = /ipad|iphone|ipod/i.test(userAgent$1) && typeof Pebble != 'undefined';
+
+  var userAgent = engineUserAgent;
+
+  var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
+
+  var global$8 = global$r;
+  var bind$1 = functionBindContext;
+  var getOwnPropertyDescriptor$8 = objectGetOwnPropertyDescriptor.f;
+  var macrotask = task$1.set;
+  var Queue$1 = queue$2;
+  var IS_IOS = engineIsIos;
+  var IS_IOS_PEBBLE = engineIsIosPebble;
+  var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
+  var IS_NODE$2 = engineIsNode;
+
+  var MutationObserver$1 = global$8.MutationObserver || global$8.WebKitMutationObserver;
+  var document$2 = global$8.document;
+  var process$2 = global$8.process;
+  var Promise$1 = global$8.Promise;
+  // Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
+  var queueMicrotaskDescriptor = getOwnPropertyDescriptor$8(global$8, 'queueMicrotask');
+  var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
+  var notify$1, toggle, node, promise$6, then;
+
+  // modern engines have queueMicrotask method
+  if (!microtask$1) {
+    var queue$1 = new Queue$1();
+
+    var flush = function () {
+      var parent, fn;
+      if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
+      while (fn = queue$1.get()) try {
+        fn();
+      } catch (error) {
+        if (queue$1.head) notify$1();
+        throw error;
+      }
+      if (parent) parent.enter();
+    };
+
+    // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
+    // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
+    if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$2) {
+      toggle = true;
+      node = document$2.createTextNode('');
+      new MutationObserver$1(flush).observe(node, { characterData: true });
+      notify$1 = function () {
+        node.data = toggle = !toggle;
+      };
+    // environments with maybe non-completely correct, but existent Promise
+    } else if (!IS_IOS_PEBBLE && Promise$1 && Promise$1.resolve) {
+      // Promise.resolve without an argument throws an error in LG WebOS 2
+      promise$6 = Promise$1.resolve(undefined);
+      // workaround of WebKit ~ iOS Safari 10.1 bug
+      promise$6.constructor = Promise$1;
+      then = bind$1(promise$6.then, promise$6);
+      notify$1 = function () {
+        then(flush);
+      };
+    // Node.js without promises
+    } else if (IS_NODE$2) {
+      notify$1 = function () {
+        process$2.nextTick(flush);
+      };
+    // for other environments - macrotask based on:
+    // - setImmediate
+    // - MessageChannel
+    // - window.postMessage
+    // - onreadystatechange
+    // - setTimeout
+    } else {
+      // `webpack` dev server bug on IE global methods - use bind(fn, global)
+      macrotask = bind$1(macrotask, global$8);
+      notify$1 = function () {
+        macrotask(flush);
+      };
+    }
+
+    microtask$1 = function (fn) {
+      if (!queue$1.head) notify$1();
+      queue$1.add(fn);
+    };
+  }
+
+  var microtask_1 = microtask$1;
+
+  var hostReportErrors$1 = function (a, b) {
+    try {
+      // eslint-disable-next-line no-console -- safe
+      arguments.length == 1 ? console.error(a) : console.error(a, b);
+    } catch (error) { /* empty */ }
+  };
+
+  var perform$6 = function (exec) {
+    try {
+      return { error: false, value: exec() };
+    } catch (error) {
+      return { error: true, value: error };
+    }
+  };
+
+  var global$7 = global$r;
+
+  var promiseNativeConstructor = global$7.Promise;
+
+  /* global Deno -- Deno case */
+
+  var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
+
+  var IS_DENO$1 = engineIsDeno;
+  var IS_NODE$1 = engineIsNode;
+
+  var engineIsBrowser = !IS_DENO$1 && !IS_NODE$1
+    && typeof window == 'object'
+    && typeof document == 'object';
+
+  var global$6 = global$r;
+  var NativePromiseConstructor$5 = promiseNativeConstructor;
+  var isCallable$3 = isCallable$q;
+  var isForced = isForced_1;
+  var inspectSource = inspectSource$2;
+  var wellKnownSymbol = wellKnownSymbol$q;
+  var IS_BROWSER = engineIsBrowser;
+  var IS_DENO = engineIsDeno;
+  var V8_VERSION = engineV8Version;
+
+  var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
+  var SPECIES = wellKnownSymbol('species');
+  var SUBCLASSING = false;
+  var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$3(global$6.PromiseRejectionEvent);
+
+  var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
+    var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
+    var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(NativePromiseConstructor$5);
+    // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
+    // We can't detect it synchronously, so just check versions
+    if (!GLOBAL_CORE_JS_PROMISE && V8_VERSION === 66) return true;
+    // We need Promise#{ catch, finally } in the pure version for preventing prototype pollution
+    if (!(NativePromisePrototype$2['catch'] && NativePromisePrototype$2['finally'])) return true;
+    // We can't use @@species feature detection in V8 since it causes
+    // deoptimization and performance degradation
+    // https://github.com/zloirock/core-js/issues/679
+    if (!V8_VERSION || V8_VERSION < 51 || !/native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) {
+      // Detect correctness of subclassing with @@species support
+      var promise = new NativePromiseConstructor$5(function (resolve) { resolve(1); });
+      var FakePromise = function (exec) {
+        exec(function () { /* empty */ }, function () { /* empty */ });
+      };
+      var constructor = promise.constructor = {};
+      constructor[SPECIES] = FakePromise;
+      SUBCLASSING = promise.then(function () { /* empty */ }) instanceof FakePromise;
+      if (!SUBCLASSING) return true;
+    // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
+    } return !GLOBAL_CORE_JS_PROMISE && (IS_BROWSER || IS_DENO) && !NATIVE_PROMISE_REJECTION_EVENT$1;
+  });
+
+  var promiseConstructorDetection = {
+    CONSTRUCTOR: FORCED_PROMISE_CONSTRUCTOR$5,
+    REJECTION_EVENT: NATIVE_PROMISE_REJECTION_EVENT$1,
+    SUBCLASSING: SUBCLASSING
+  };
+
+  var newPromiseCapability$2 = {};
+
+  var aCallable$5 = aCallable$h;
+
+  var $TypeError$2 = TypeError;
+
+  var PromiseCapability = function (C) {
+    var resolve, reject;
+    this.promise = new C(function ($$resolve, $$reject) {
+      if (resolve !== undefined || reject !== undefined) throw $TypeError$2('Bad Promise constructor');
+      resolve = $$resolve;
+      reject = $$reject;
+    });
+    this.resolve = aCallable$5(resolve);
+    this.reject = aCallable$5(reject);
+  };
+
+  // `NewPromiseCapability` abstract operation
+  // https://tc39.es/ecma262/#sec-newpromisecapability
+  newPromiseCapability$2.f = function (C) {
+    return new PromiseCapability(C);
+  };
+
+  var $$h = _export;
+  var IS_NODE = engineIsNode;
+  var global$5 = global$r;
+  var call$5 = functionCall;
+  var defineBuiltIn = defineBuiltIn$8;
+  var setToStringTag = setToStringTag$9;
+  var setSpecies = setSpecies$2;
+  var aCallable$4 = aCallable$h;
+  var isCallable$2 = isCallable$q;
+  var isObject$1 = isObject$j;
+  var anInstance = anInstance$5;
+  var speciesConstructor$1 = speciesConstructor$2;
+  var task = task$1.set;
+  var microtask = microtask_1;
+  var hostReportErrors = hostReportErrors$1;
+  var perform$5 = perform$6;
+  var Queue = queue$2;
+  var InternalStateModule = internalState;
+  var NativePromiseConstructor$4 = promiseNativeConstructor;
+  var PromiseConstructorDetection = promiseConstructorDetection;
+  var newPromiseCapabilityModule$6 = newPromiseCapability$2;
+
+  var PROMISE = 'Promise';
+  var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
+  var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
+  PromiseConstructorDetection.SUBCLASSING;
+  var getInternalPromiseState = InternalStateModule.getterFor(PROMISE);
+  var setInternalState = InternalStateModule.set;
+  var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
+  var PromiseConstructor = NativePromiseConstructor$4;
+  var PromisePrototype = NativePromisePrototype$1;
+  var TypeError$1 = global$5.TypeError;
+  var document$1 = global$5.document;
+  var process$1 = global$5.process;
+  var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
+  var newGenericPromiseCapability = newPromiseCapability$1;
+
+  var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$5.dispatchEvent);
+  var UNHANDLED_REJECTION = 'unhandledrejection';
+  var REJECTION_HANDLED = 'rejectionhandled';
+  var PENDING = 0;
+  var FULFILLED = 1;
+  var REJECTED = 2;
+  var HANDLED = 1;
+  var UNHANDLED = 2;
+
+  var Internal, OwnPromiseCapability, PromiseWrapper;
+
+  // helpers
+  var isThenable = function (it) {
+    var then;
+    return isObject$1(it) && isCallable$2(then = it.then) ? then : false;
+  };
+
+  var callReaction = function (reaction, state) {
+    var value = state.value;
+    var ok = state.state == FULFILLED;
+    var handler = ok ? reaction.ok : reaction.fail;
+    var resolve = reaction.resolve;
+    var reject = reaction.reject;
+    var domain = reaction.domain;
+    var result, then, exited;
+    try {
+      if (handler) {
+        if (!ok) {
+          if (state.rejection === UNHANDLED) onHandleUnhandled(state);
+          state.rejection = HANDLED;
+        }
+        if (handler === true) result = value;
+        else {
+          if (domain) domain.enter();
+          result = handler(value); // can throw
+          if (domain) {
+            domain.exit();
+            exited = true;
+          }
+        }
+        if (result === reaction.promise) {
+          reject(TypeError$1('Promise-chain cycle'));
+        } else if (then = isThenable(result)) {
+          call$5(then, result, resolve, reject);
+        } else resolve(result);
+      } else reject(value);
+    } catch (error) {
+      if (domain && !exited) domain.exit();
+      reject(error);
+    }
+  };
+
+  var notify = function (state, isReject) {
+    if (state.notified) return;
+    state.notified = true;
+    microtask(function () {
+      var reactions = state.reactions;
+      var reaction;
+      while (reaction = reactions.get()) {
+        callReaction(reaction, state);
+      }
+      state.notified = false;
+      if (isReject && !state.rejection) onUnhandled(state);
+    });
+  };
+
+  var dispatchEvent = function (name, promise, reason) {
+    var event, handler;
+    if (DISPATCH_EVENT) {
+      event = document$1.createEvent('Event');
+      event.promise = promise;
+      event.reason = reason;
+      event.initEvent(name, false, true);
+      global$5.dispatchEvent(event);
+    } else event = { promise: promise, reason: reason };
+    if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$5['on' + name])) handler(event);
+    else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
+  };
+
+  var onUnhandled = function (state) {
+    call$5(task, global$5, function () {
+      var promise = state.facade;
+      var value = state.value;
+      var IS_UNHANDLED = isUnhandled(state);
+      var result;
+      if (IS_UNHANDLED) {
+        result = perform$5(function () {
+          if (IS_NODE) {
+            process$1.emit('unhandledRejection', value, promise);
+          } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
+        });
+        // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
+        state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
+        if (result.error) throw result.value;
+      }
+    });
+  };
+
+  var isUnhandled = function (state) {
+    return state.rejection !== HANDLED && !state.parent;
+  };
+
+  var onHandleUnhandled = function (state) {
+    call$5(task, global$5, function () {
+      var promise = state.facade;
+      if (IS_NODE) {
+        process$1.emit('rejectionHandled', promise);
+      } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
+    });
+  };
+
+  var bind = function (fn, state, unwrap) {
+    return function (value) {
+      fn(state, value, unwrap);
+    };
+  };
+
+  var internalReject = function (state, value, unwrap) {
+    if (state.done) return;
+    state.done = true;
+    if (unwrap) state = unwrap;
+    state.value = value;
+    state.state = REJECTED;
+    notify(state, true);
+  };
+
+  var internalResolve = function (state, value, unwrap) {
+    if (state.done) return;
+    state.done = true;
+    if (unwrap) state = unwrap;
+    try {
+      if (state.facade === value) throw TypeError$1("Promise can't be resolved itself");
+      var then = isThenable(value);
+      if (then) {
+        microtask(function () {
+          var wrapper = { done: false };
+          try {
+            call$5(then, value,
+              bind(internalResolve, wrapper, state),
+              bind(internalReject, wrapper, state)
+            );
+          } catch (error) {
+            internalReject(wrapper, error, state);
+          }
+        });
+      } else {
+        state.value = value;
+        state.state = FULFILLED;
+        notify(state, false);
+      }
+    } catch (error) {
+      internalReject({ done: false }, error, state);
+    }
+  };
+
+  // constructor polyfill
+  if (FORCED_PROMISE_CONSTRUCTOR$4) {
+    // 25.4.3.1 Promise(executor)
+    PromiseConstructor = function Promise(executor) {
+      anInstance(this, PromisePrototype);
+      aCallable$4(executor);
+      call$5(Internal, this);
+      var state = getInternalPromiseState(this);
+      try {
+        executor(bind(internalResolve, state), bind(internalReject, state));
+      } catch (error) {
+        internalReject(state, error);
+      }
+    };
+
+    PromisePrototype = PromiseConstructor.prototype;
+
+    // eslint-disable-next-line no-unused-vars -- required for `.length`
+    Internal = function Promise(executor) {
+      setInternalState(this, {
+        type: PROMISE,
+        done: false,
+        notified: false,
+        parent: false,
+        reactions: new Queue(),
+        rejection: false,
+        state: PENDING,
+        value: undefined
+      });
+    };
+
+    // `Promise.prototype.then` method
+    // https://tc39.es/ecma262/#sec-promise.prototype.then
+    Internal.prototype = defineBuiltIn(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
+      var state = getInternalPromiseState(this);
+      var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
+      state.parent = true;
+      reaction.ok = isCallable$2(onFulfilled) ? onFulfilled : true;
+      reaction.fail = isCallable$2(onRejected) && onRejected;
+      reaction.domain = IS_NODE ? process$1.domain : undefined;
+      if (state.state == PENDING) state.reactions.add(reaction);
+      else microtask(function () {
+        callReaction(reaction, state);
+      });
+      return reaction.promise;
+    });
+
+    OwnPromiseCapability = function () {
+      var promise = new Internal();
+      var state = getInternalPromiseState(promise);
+      this.promise = promise;
+      this.resolve = bind(internalResolve, state);
+      this.reject = bind(internalReject, state);
+    };
+
+    newPromiseCapabilityModule$6.f = newPromiseCapability$1 = function (C) {
+      return C === PromiseConstructor || C === PromiseWrapper
+        ? new OwnPromiseCapability(C)
+        : newGenericPromiseCapability(C);
+    };
+  }
+
+  $$h({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+    Promise: PromiseConstructor
+  });
+
+  setToStringTag(PromiseConstructor, PROMISE, false, true);
+  setSpecies(PROMISE);
+
+  var NativePromiseConstructor$3 = promiseNativeConstructor;
+  var checkCorrectnessOfIteration = checkCorrectnessOfIteration$2;
+  var FORCED_PROMISE_CONSTRUCTOR$3 = promiseConstructorDetection.CONSTRUCTOR;
+
+  var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCorrectnessOfIteration(function (iterable) {
+    NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
+  });
+
+  var $$g = _export;
+  var call$4 = functionCall;
+  var aCallable$3 = aCallable$h;
+  var newPromiseCapabilityModule$5 = newPromiseCapability$2;
+  var perform$4 = perform$6;
+  var iterate$3 = iterate$l;
+  var PROMISE_STATICS_INCORRECT_ITERATION$3 = promiseStaticsIncorrectIteration;
+
+  // `Promise.all` method
+  // https://tc39.es/ecma262/#sec-promise.all
+  $$g({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
+    all: function all(iterable) {
+      var C = this;
+      var capability = newPromiseCapabilityModule$5.f(C);
+      var resolve = capability.resolve;
+      var reject = capability.reject;
+      var result = perform$4(function () {
+        var $promiseResolve = aCallable$3(C.resolve);
+        var values = [];
+        var counter = 0;
+        var remaining = 1;
+        iterate$3(iterable, function (promise) {
+          var index = counter++;
+          var alreadyCalled = false;
+          remaining++;
+          call$4($promiseResolve, C, promise).then(function (value) {
+            if (alreadyCalled) return;
+            alreadyCalled = true;
+            values[index] = value;
+            --remaining || resolve(values);
+          }, reject);
+        });
+        --remaining || resolve(values);
+      });
+      if (result.error) reject(result.value);
+      return capability.promise;
+    }
+  });
+
+  var $$f = _export;
+  var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
+  var NativePromiseConstructor$2 = promiseNativeConstructor;
+
+  NativePromiseConstructor$2 && NativePromiseConstructor$2.prototype;
+
+  // `Promise.prototype.catch` method
+  // https://tc39.es/ecma262/#sec-promise.prototype.catch
+  $$f({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+    'catch': function (onRejected) {
+      return this.then(undefined, onRejected);
+    }
+  });
+
+  var $$e = _export;
+  var call$3 = functionCall;
+  var aCallable$2 = aCallable$h;
+  var newPromiseCapabilityModule$4 = newPromiseCapability$2;
+  var perform$3 = perform$6;
+  var iterate$2 = iterate$l;
+  var PROMISE_STATICS_INCORRECT_ITERATION$2 = promiseStaticsIncorrectIteration;
+
+  // `Promise.race` method
+  // https://tc39.es/ecma262/#sec-promise.race
+  $$e({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
+    race: function race(iterable) {
+      var C = this;
+      var capability = newPromiseCapabilityModule$4.f(C);
+      var reject = capability.reject;
+      var result = perform$3(function () {
+        var $promiseResolve = aCallable$2(C.resolve);
+        iterate$2(iterable, function (promise) {
+          call$3($promiseResolve, C, promise).then(capability.resolve, reject);
+        });
+      });
+      if (result.error) reject(result.value);
+      return capability.promise;
+    }
+  });
+
+  var $$d = _export;
+  var call$2 = functionCall;
+  var newPromiseCapabilityModule$3 = newPromiseCapability$2;
+  var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
+
+  // `Promise.reject` method
+  // https://tc39.es/ecma262/#sec-promise.reject
+  $$d({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+    reject: function reject(r) {
+      var capability = newPromiseCapabilityModule$3.f(this);
+      call$2(capability.reject, undefined, r);
+      return capability.promise;
+    }
+  });
+
+  var anObject = anObject$f;
+  var isObject = isObject$j;
+  var newPromiseCapability = newPromiseCapability$2;
+
+  var promiseResolve$2 = function (C, x) {
+    anObject(C);
+    if (isObject(x) && x.constructor === C) return x;
+    var promiseCapability = newPromiseCapability.f(C);
+    var resolve = promiseCapability.resolve;
+    resolve(x);
+    return promiseCapability.promise;
+  };
+
+  var $$c = _export;
+  var getBuiltIn$2 = getBuiltIn$h;
+  var IS_PURE = isPure;
+  var NativePromiseConstructor$1 = promiseNativeConstructor;
+  var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
+  var promiseResolve$1 = promiseResolve$2;
+
+  var PromiseConstructorWrapper = getBuiltIn$2('Promise');
+  var CHECK_WRAPPER = !FORCED_PROMISE_CONSTRUCTOR;
+
+  // `Promise.resolve` method
+  // https://tc39.es/ecma262/#sec-promise.resolve
+  $$c({ target: 'Promise', stat: true, forced: IS_PURE  }, {
+    resolve: function resolve(x) {
+      return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
+    }
+  });
+
+  var $$b = _export;
+  var call$1 = functionCall;
+  var aCallable$1 = aCallable$h;
+  var newPromiseCapabilityModule$2 = newPromiseCapability$2;
+  var perform$2 = perform$6;
+  var iterate$1 = iterate$l;
+  var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
+
+  // `Promise.allSettled` method
+  // https://tc39.es/ecma262/#sec-promise.allsettled
+  $$b({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+    allSettled: function allSettled(iterable) {
+      var C = this;
+      var capability = newPromiseCapabilityModule$2.f(C);
+      var resolve = capability.resolve;
+      var reject = capability.reject;
+      var result = perform$2(function () {
+        var promiseResolve = aCallable$1(C.resolve);
+        var values = [];
+        var counter = 0;
+        var remaining = 1;
+        iterate$1(iterable, function (promise) {
+          var index = counter++;
+          var alreadyCalled = false;
+          remaining++;
+          call$1(promiseResolve, C, promise).then(function (value) {
+            if (alreadyCalled) return;
+            alreadyCalled = true;
+            values[index] = { status: 'fulfilled', value: value };
+            --remaining || resolve(values);
+          }, function (error) {
+            if (alreadyCalled) return;
+            alreadyCalled = true;
+            values[index] = { status: 'rejected', reason: error };
+            --remaining || resolve(values);
+          });
+        });
+        --remaining || resolve(values);
+      });
+      if (result.error) reject(result.value);
+      return capability.promise;
+    }
+  });
+
+  var $$a = _export;
+  var call = functionCall;
+  var aCallable = aCallable$h;
+  var getBuiltIn$1 = getBuiltIn$h;
+  var newPromiseCapabilityModule$1 = newPromiseCapability$2;
+  var perform$1 = perform$6;
+  var iterate = iterate$l;
+  var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
+
+  var PROMISE_ANY_ERROR = 'No one promise resolved';
+
+  // `Promise.any` method
+  // https://tc39.es/ecma262/#sec-promise.any
+  $$a({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+    any: function any(iterable) {
+      var C = this;
+      var AggregateError = getBuiltIn$1('AggregateError');
+      var capability = newPromiseCapabilityModule$1.f(C);
+      var resolve = capability.resolve;
+      var reject = capability.reject;
+      var result = perform$1(function () {
+        var promiseResolve = aCallable(C.resolve);
+        var errors = [];
+        var counter = 0;
+        var remaining = 1;
+        var alreadyResolved = false;
+        iterate(iterable, function (promise) {
+          var index = counter++;
+          var alreadyRejected = false;
+          remaining++;
+          call(promiseResolve, C, promise).then(function (value) {
+            if (alreadyRejected || alreadyResolved) return;
+            alreadyResolved = true;
+            resolve(value);
+          }, function (error) {
+            if (alreadyRejected || alreadyResolved) return;
+            alreadyRejected = true;
+            errors[index] = error;
+            --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
+          });
+        });
+        --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
+      });
+      if (result.error) reject(result.value);
+      return capability.promise;
+    }
+  });
+
+  var $$9 = _export;
+  var NativePromiseConstructor = promiseNativeConstructor;
+  var fails$3 = fails$x;
+  var getBuiltIn = getBuiltIn$h;
+  var isCallable$1 = isCallable$q;
+  var speciesConstructor = speciesConstructor$2;
+  var promiseResolve = promiseResolve$2;
+
+  var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
+
+  // Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
+  var NON_GENERIC = !!NativePromiseConstructor && fails$3(function () {
+    // eslint-disable-next-line unicorn/no-thenable -- required for testing
+    NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
+  });
+
+  // `Promise.prototype.finally` method
+  // https://tc39.es/ecma262/#sec-promise.prototype.finally
+  $$9({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+    'finally': function (onFinally) {
+      var C = speciesConstructor(this, getBuiltIn('Promise'));
+      var isFunction = isCallable$1(onFinally);
+      return this.then(
+        isFunction ? function (x) {
+          return promiseResolve(C, onFinally()).then(function () { return x; });
+        } : onFinally,
+        isFunction ? function (e) {
+          return promiseResolve(C, onFinally()).then(function () { throw e; });
+        } : onFinally
+      );
+    }
+  });
+
+  var path$6 = path$n;
+
+  var promise$5 = path$6.Promise;
+
+  var parent$q = promise$5;
+
+
+  var promise$4 = parent$q;
+
+  var parent$p = promise$4;
+
+  var promise$3 = parent$p;
+
+  // TODO: Remove from `core-js@4`
+  var $$8 = _export;
+  var newPromiseCapabilityModule = newPromiseCapability$2;
+  var perform = perform$6;
+
+  // `Promise.try` method
+  // https://github.com/tc39/proposal-promise-try
+  $$8({ target: 'Promise', stat: true, forced: true }, {
+    'try': function (callbackfn) {
+      var promiseCapability = newPromiseCapabilityModule.f(this);
+      var result = perform(callbackfn);
+      (result.error ? promiseCapability.reject : promiseCapability.resolve)(result.value);
+      return promiseCapability.promise;
+    }
+  });
+
+  var parent$o = promise$3;
+
+  // TODO: Remove from `core-js@4`
+
+
+
+
+  var promise$2 = parent$o;
+
+  var promise$1 = promise$2;
+
+  var promise = promise$1;
+
+  var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
+
   var DESCRIPTORS$2 = descriptors;
-  var isArray = isArray$d;
+  var isArray$1 = isArray$d;
 
   var $TypeError$1 = TypeError;
   // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
@@ -10610,7 +10658,7 @@
   }();
 
   var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
-    if (isArray(O) && !getOwnPropertyDescriptor$7(O, 'length').writable) {
+    if (isArray$1(O) && !getOwnPropertyDescriptor$7(O, 'length').writable) {
       throw $TypeError$1('Cannot set read only .length');
     } return O.length = length;
   } : function (O, length) {
@@ -10625,7 +10673,7 @@
     if (!delete O[P]) throw $TypeError('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
   };
 
-  var $$6 = _export;
+  var $$7 = _export;
   var toObject$1 = toObject$a;
   var toAbsoluteIndex = toAbsoluteIndex$4;
   var toIntegerOrInfinity = toIntegerOrInfinity$4;
@@ -10645,7 +10693,7 @@
   // `Array.prototype.splice` method
   // https://tc39.es/ecma262/#sec-array.prototype.splice
   // with adding support of @@species
-  $$6({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+  $$7({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
     splice: function splice(start, deleteCount /* , ...items */) {
       var O = toObject$1(this);
       var len = lengthOfArrayLike(O);
@@ -10692,31 +10740,31 @@
     }
   });
 
-  var entryVirtual = entryVirtual$b;
+  var entryVirtual$1 = entryVirtual$b;
 
-  var splice$6 = entryVirtual('Array').splice;
+  var splice$6 = entryVirtual$1('Array').splice;
 
-  var isPrototypeOf = objectIsPrototypeOf;
-  var method = splice$6;
+  var isPrototypeOf$1 = objectIsPrototypeOf;
+  var method$1 = splice$6;
 
-  var ArrayPrototype = Array.prototype;
+  var ArrayPrototype$1 = Array.prototype;
 
   var splice$5 = function (it) {
     var own = it.splice;
-    return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.splice) ? method : own;
+    return it === ArrayPrototype$1 || (isPrototypeOf$1(ArrayPrototype$1, it) && own === ArrayPrototype$1.splice) ? method$1 : own;
   };
 
-  var parent$k = splice$5;
+  var parent$n = splice$5;
 
-  var splice$4 = parent$k;
+  var splice$4 = parent$n;
 
-  var parent$j = splice$4;
+  var parent$m = splice$4;
 
-  var splice$3 = parent$j;
+  var splice$3 = parent$m;
 
-  var parent$i = splice$3;
+  var parent$l = splice$3;
 
-  var splice$2 = parent$i;
+  var splice$2 = parent$l;
 
   var splice$1 = splice$2;
 
@@ -11492,6 +11540,444 @@
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$3(arr, i) || _nonIterableRest();
   }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+    try {
+      var info = gen[key](arg);
+      var value = info.value;
+    } catch (error) {
+      reject(error);
+      return;
+    }
+    if (info.done) {
+      resolve(value);
+    } else {
+      _Promise.resolve(value).then(_next, _throw);
+    }
+  }
+  function _asyncToGenerator(fn) {
+    return function () {
+      var self = this,
+        args = arguments;
+      return new _Promise(function (resolve, reject) {
+        var gen = fn.apply(self, args);
+        function _next(value) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+        }
+        function _throw(err) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+        }
+        _next(undefined);
+      });
+    };
+  }
+
+  var regeneratorRuntime$1 = {exports: {}};
+
+  var _typeof = {exports: {}};
+
+  (function (module) {
+  	var _Symbol = symbol;
+  	var _Symbol$iterator = iterator;
+  	function _typeof(obj) {
+  	  "@babel/helpers - typeof";
+
+  	  return (module.exports = _typeof = "function" == typeof _Symbol && "symbol" == typeof _Symbol$iterator ? function (obj) {
+  	    return typeof obj;
+  	  } : function (obj) {
+  	    return obj && "function" == typeof _Symbol && obj.constructor === _Symbol && obj !== _Symbol.prototype ? "symbol" : typeof obj;
+  	  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
+  	}
+  	module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports; 
+  } (_typeof));
+
+  var _typeofExports = _typeof.exports;
+
+  var $$6 = _export;
+  var uncurryThis$1 = functionUncurryThis;
+  var isArray = isArray$d;
+
+  var nativeReverse = uncurryThis$1([].reverse);
+  var test = [1, 2];
+
+  // `Array.prototype.reverse` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reverse
+  // fix for Safari 12.0 bug
+  // https://bugs.webkit.org/show_bug.cgi?id=188794
+  $$6({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
+    reverse: function reverse() {
+      // eslint-disable-next-line no-self-assign -- dirty hack
+      if (isArray(this)) this.length = this.length;
+      return nativeReverse(this);
+    }
+  });
+
+  var entryVirtual = entryVirtual$b;
+
+  var reverse$6 = entryVirtual('Array').reverse;
+
+  var isPrototypeOf = objectIsPrototypeOf;
+  var method = reverse$6;
+
+  var ArrayPrototype = Array.prototype;
+
+  var reverse$5 = function (it) {
+    var own = it.reverse;
+    return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.reverse) ? method : own;
+  };
+
+  var parent$k = reverse$5;
+
+  var reverse$4 = parent$k;
+
+  var parent$j = reverse$4;
+
+  var reverse$3 = parent$j;
+
+  var parent$i = reverse$3;
+
+  var reverse$2 = parent$i;
+
+  var reverse$1 = reverse$2;
+
+  var reverse = reverse$1;
+
+  (function (module) {
+  	var _typeof = _typeofExports["default"];
+  	var _Object$defineProperty = defineProperty$6;
+  	var _Symbol = symbol;
+  	var _Object$create = create$3;
+  	var _Object$getPrototypeOf = getPrototypeOf$1;
+  	var _forEachInstanceProperty = forEach$1;
+  	var _Object$setPrototypeOf = setPrototypeOf$1;
+  	var _Promise = promise;
+  	var _reverseInstanceProperty = reverse;
+  	var _sliceInstanceProperty = slice;
+  	function _regeneratorRuntime() {
+  	  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
+  	    return exports;
+  	  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
+  	  var exports = {},
+  	    Op = Object.prototype,
+  	    hasOwn = Op.hasOwnProperty,
+  	    defineProperty = _Object$defineProperty || function (obj, key, desc) {
+  	      obj[key] = desc.value;
+  	    },
+  	    $Symbol = "function" == typeof _Symbol ? _Symbol : {},
+  	    iteratorSymbol = $Symbol.iterator || "@@iterator",
+  	    asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
+  	    toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+  	  function define(obj, key, value) {
+  	    return _Object$defineProperty(obj, key, {
+  	      value: value,
+  	      enumerable: !0,
+  	      configurable: !0,
+  	      writable: !0
+  	    }), obj[key];
+  	  }
+  	  try {
+  	    define({}, "");
+  	  } catch (err) {
+  	    define = function define(obj, key, value) {
+  	      return obj[key] = value;
+  	    };
+  	  }
+  	  function wrap(innerFn, outerFn, self, tryLocsList) {
+  	    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
+  	      generator = _Object$create(protoGenerator.prototype),
+  	      context = new Context(tryLocsList || []);
+  	    return defineProperty(generator, "_invoke", {
+  	      value: makeInvokeMethod(innerFn, self, context)
+  	    }), generator;
+  	  }
+  	  function tryCatch(fn, obj, arg) {
+  	    try {
+  	      return {
+  	        type: "normal",
+  	        arg: fn.call(obj, arg)
+  	      };
+  	    } catch (err) {
+  	      return {
+  	        type: "throw",
+  	        arg: err
+  	      };
+  	    }
+  	  }
+  	  exports.wrap = wrap;
+  	  var ContinueSentinel = {};
+  	  function Generator() {}
+  	  function GeneratorFunction() {}
+  	  function GeneratorFunctionPrototype() {}
+  	  var IteratorPrototype = {};
+  	  define(IteratorPrototype, iteratorSymbol, function () {
+  	    return this;
+  	  });
+  	  var getProto = _Object$getPrototypeOf,
+  	    NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  	  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
+  	  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = _Object$create(IteratorPrototype);
+  	  function defineIteratorMethods(prototype) {
+  	    var _context;
+  	    _forEachInstanceProperty(_context = ["next", "throw", "return"]).call(_context, function (method) {
+  	      define(prototype, method, function (arg) {
+  	        return this._invoke(method, arg);
+  	      });
+  	    });
+  	  }
+  	  function AsyncIterator(generator, PromiseImpl) {
+  	    function invoke(method, arg, resolve, reject) {
+  	      var record = tryCatch(generator[method], generator, arg);
+  	      if ("throw" !== record.type) {
+  	        var result = record.arg,
+  	          value = result.value;
+  	        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
+  	          invoke("next", value, resolve, reject);
+  	        }, function (err) {
+  	          invoke("throw", err, resolve, reject);
+  	        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
+  	          result.value = unwrapped, resolve(result);
+  	        }, function (error) {
+  	          return invoke("throw", error, resolve, reject);
+  	        });
+  	      }
+  	      reject(record.arg);
+  	    }
+  	    var previousPromise;
+  	    defineProperty(this, "_invoke", {
+  	      value: function value(method, arg) {
+  	        function callInvokeWithMethodAndArg() {
+  	          return new PromiseImpl(function (resolve, reject) {
+  	            invoke(method, arg, resolve, reject);
+  	          });
+  	        }
+  	        return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+  	      }
+  	    });
+  	  }
+  	  function makeInvokeMethod(innerFn, self, context) {
+  	    var state = "suspendedStart";
+  	    return function (method, arg) {
+  	      if ("executing" === state) throw new Error("Generator is already running");
+  	      if ("completed" === state) {
+  	        if ("throw" === method) throw arg;
+  	        return doneResult();
+  	      }
+  	      for (context.method = method, context.arg = arg;;) {
+  	        var delegate = context.delegate;
+  	        if (delegate) {
+  	          var delegateResult = maybeInvokeDelegate(delegate, context);
+  	          if (delegateResult) {
+  	            if (delegateResult === ContinueSentinel) continue;
+  	            return delegateResult;
+  	          }
+  	        }
+  	        if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
+  	          if ("suspendedStart" === state) throw state = "completed", context.arg;
+  	          context.dispatchException(context.arg);
+  	        } else "return" === context.method && context.abrupt("return", context.arg);
+  	        state = "executing";
+  	        var record = tryCatch(innerFn, self, context);
+  	        if ("normal" === record.type) {
+  	          if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
+  	          return {
+  	            value: record.arg,
+  	            done: context.done
+  	          };
+  	        }
+  	        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
+  	      }
+  	    };
+  	  }
+  	  function maybeInvokeDelegate(delegate, context) {
+  	    var methodName = context.method,
+  	      method = delegate.iterator[methodName];
+  	    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
+  	    var record = tryCatch(method, delegate.iterator, context.arg);
+  	    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
+  	    var info = record.arg;
+  	    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
+  	  }
+  	  function pushTryEntry(locs) {
+  	    var entry = {
+  	      tryLoc: locs[0]
+  	    };
+  	    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
+  	  }
+  	  function resetTryEntry(entry) {
+  	    var record = entry.completion || {};
+  	    record.type = "normal", delete record.arg, entry.completion = record;
+  	  }
+  	  function Context(tryLocsList) {
+  	    this.tryEntries = [{
+  	      tryLoc: "root"
+  	    }], _forEachInstanceProperty(tryLocsList).call(tryLocsList, pushTryEntry, this), this.reset(!0);
+  	  }
+  	  function values(iterable) {
+  	    if (iterable) {
+  	      var iteratorMethod = iterable[iteratorSymbol];
+  	      if (iteratorMethod) return iteratorMethod.call(iterable);
+  	      if ("function" == typeof iterable.next) return iterable;
+  	      if (!isNaN(iterable.length)) {
+  	        var i = -1,
+  	          next = function next() {
+  	            for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
+  	            return next.value = undefined, next.done = !0, next;
+  	          };
+  	        return next.next = next;
+  	      }
+  	    }
+  	    return {
+  	      next: doneResult
+  	    };
+  	  }
+  	  function doneResult() {
+  	    return {
+  	      value: undefined,
+  	      done: !0
+  	    };
+  	  }
+  	  return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
+  	    value: GeneratorFunctionPrototype,
+  	    configurable: !0
+  	  }), defineProperty(GeneratorFunctionPrototype, "constructor", {
+  	    value: GeneratorFunction,
+  	    configurable: !0
+  	  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
+  	    var ctor = "function" == typeof genFun && genFun.constructor;
+  	    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
+  	  }, exports.mark = function (genFun) {
+  	    return _Object$setPrototypeOf ? _Object$setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = _Object$create(Gp), genFun;
+  	  }, exports.awrap = function (arg) {
+  	    return {
+  	      __await: arg
+  	    };
+  	  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
+  	    return this;
+  	  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+  	    void 0 === PromiseImpl && (PromiseImpl = _Promise);
+  	    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
+  	    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
+  	      return result.done ? result.value : iter.next();
+  	    });
+  	  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
+  	    return this;
+  	  }), define(Gp, "toString", function () {
+  	    return "[object Generator]";
+  	  }), exports.keys = function (val) {
+  	    var object = Object(val),
+  	      keys = [];
+  	    for (var key in object) keys.push(key);
+  	    return _reverseInstanceProperty(keys).call(keys), function next() {
+  	      for (; keys.length;) {
+  	        var key = keys.pop();
+  	        if (key in object) return next.value = key, next.done = !1, next;
+  	      }
+  	      return next.done = !0, next;
+  	    };
+  	  }, exports.values = values, Context.prototype = {
+  	    constructor: Context,
+  	    reset: function reset(skipTempReset) {
+  	      var _context2;
+  	      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, _forEachInstanceProperty(_context2 = this.tryEntries).call(_context2, resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+_sliceInstanceProperty(name).call(name, 1)) && (this[name] = undefined);
+  	    },
+  	    stop: function stop() {
+  	      this.done = !0;
+  	      var rootRecord = this.tryEntries[0].completion;
+  	      if ("throw" === rootRecord.type) throw rootRecord.arg;
+  	      return this.rval;
+  	    },
+  	    dispatchException: function dispatchException(exception) {
+  	      if (this.done) throw exception;
+  	      var context = this;
+  	      function handle(loc, caught) {
+  	        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
+  	      }
+  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+  	        var entry = this.tryEntries[i],
+  	          record = entry.completion;
+  	        if ("root" === entry.tryLoc) return handle("end");
+  	        if (entry.tryLoc <= this.prev) {
+  	          var hasCatch = hasOwn.call(entry, "catchLoc"),
+  	            hasFinally = hasOwn.call(entry, "finallyLoc");
+  	          if (hasCatch && hasFinally) {
+  	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+  	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+  	          } else if (hasCatch) {
+  	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+  	          } else {
+  	            if (!hasFinally) throw new Error("try statement without catch or finally");
+  	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+  	          }
+  	        }
+  	      }
+  	    },
+  	    abrupt: function abrupt(type, arg) {
+  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+  	        var entry = this.tryEntries[i];
+  	        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
+  	          var finallyEntry = entry;
+  	          break;
+  	        }
+  	      }
+  	      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
+  	      var record = finallyEntry ? finallyEntry.completion : {};
+  	      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
+  	    },
+  	    complete: function complete(record, afterLoc) {
+  	      if ("throw" === record.type) throw record.arg;
+  	      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
+  	    },
+  	    finish: function finish(finallyLoc) {
+  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+  	        var entry = this.tryEntries[i];
+  	        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
+  	      }
+  	    },
+  	    "catch": function _catch(tryLoc) {
+  	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+  	        var entry = this.tryEntries[i];
+  	        if (entry.tryLoc === tryLoc) {
+  	          var record = entry.completion;
+  	          if ("throw" === record.type) {
+  	            var thrown = record.arg;
+  	            resetTryEntry(entry);
+  	          }
+  	          return thrown;
+  	        }
+  	      }
+  	      throw new Error("illegal catch attempt");
+  	    },
+  	    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
+  	      return this.delegate = {
+  	        iterator: values(iterable),
+  	        resultName: resultName,
+  	        nextLoc: nextLoc
+  	      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
+  	    }
+  	  }, exports;
+  	}
+  	module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports; 
+  } (regeneratorRuntime$1));
+
+  var regeneratorRuntimeExports = regeneratorRuntime$1.exports;
+
+  // TODO(Babel 8): Remove this file.
+
+  var runtime = regeneratorRuntimeExports();
+  var regenerator = runtime;
+
+  // Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
+  try {
+    regeneratorRuntime = runtime;
+  } catch (accidentalStrictMode) {
+    if (typeof globalThis === "object") {
+      globalThis.regeneratorRuntime = runtime;
+    } else {
+      Function("r", "regeneratorRuntime = r")(runtime);
+    }
+  }
+
+  var _regeneratorRuntime = /*@__PURE__*/getDefaultExportFromCjs(regenerator);
 
   var URLNode = /*#__PURE__*/function () {
     function URLNode(url) {
@@ -21109,7 +21595,7 @@
     return ErrorLoading;
   }(Loading);
 
-  var css_248z$3 = ".video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.2);\n  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  overflow: hidden;\n  padding: 5px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n}\n.video-topbar-controller {\n  padding: 3px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 30px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
+  var css_248z$3 = ".video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.3);\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  overflow: hidden;\n  padding: 5px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n}\n.video-topbar-controller {\n  padding: 3px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 30px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
   styleInject(css_248z$3);
 
   function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -21315,465 +21801,6 @@
     }]);
     return MobileVolume;
   }(Component);
-
-  let fn1 = Document.prototype.createElement;
-  // 此函数为重载实现
-  function createElement(tagName, options) {
-      let dom = fn1.call(window.document, tagName, options);
-      let prototype = dom.__proto__;
-      let proto = Object.create(prototype);
-      proto.addEventListener = addEventListener;
-      Object.setPrototypeOf(dom, proto);
-      Object.setPrototypeOf(proto, prototype);
-      return dom;
-  }
-
-  let fn3$1 = Document.prototype.getElementsByClassName;
-  function getElementsByClassName(classNames) {
-      let doms = fn3$1.call(window.document, classNames);
-      doms.forEach(dom => {
-          if (dom.__proto__ instanceof HTMLElement) {
-              let proto = Object.create(dom.__proto__);
-              proto.addEventListener = addEventListener;
-              Object.setPrototypeOf(dom, proto);
-          }
-      });
-      return doms;
-  }
-
-  let fn2 = Document.prototype.getElementById;
-  function getElementById(elementId) {
-      let dom = fn2.call(window.document, elementId) || null;
-      if (dom === null)
-          return null;
-      if (dom.__proto__ instanceof HTMLElement) {
-          let proto = Object.create(dom.__proto__);
-          proto.addEventListener = addEventListener;
-          Object.setPrototypeOf(dom, proto);
-      }
-      return dom;
-  }
-
-  let fn3 = Document.prototype.getElementsByTagName;
-  function getElementsByTagName(qualifiedName) {
-      let doms = fn3.call(window.document, qualifiedName);
-      doms.forEach(dom => {
-          if (dom.__proto__ instanceof HTMLElement) {
-              let proto = Object.create(dom.__proto__);
-              proto.addEventListener = addEventListener;
-              Object.setPrototypeOf(dom, proto);
-          }
-      });
-      return doms;
-  }
-
-  function computeDistance(x1, y1, x2, y2) {
-      return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-  }
-  function computeVectorLen(v) {
-      return Math.sqrt(v.x * v.x + v.y * v.y);
-  }
-  // 计算两个向量之间的角度
-  function computeAngle(v1, v2) {
-      let lv1 = computeVectorLen(v1);
-      let lv2 = computeVectorLen(v2);
-      let angle = 0;
-      let l = (lv1 * lv2);
-      if (l) {
-          let cosVal = (v1.x * v2.x + v1.y * v2.y) / l;
-          angle = Math.acos(Math.min(cosVal, 1)); //得到两个向量的夹角
-          angle = v1.x * v2.y - v2.x * v1.y > 0 ? -angle : angle; //得到夹角的方向（顺时针逆时针）
-          return angle * 180 / Math.PI;
-      }
-      return 0;
-  }
-  function isListenerConfig(value) {
-      return typeof value === "object" && value.stopPropagation !== null;
-  }
-
-  function singleOrDoubleOrLongTap(ctx, event, listener, options) {
-      let tapTimer = null;
-      let longTapTimer = null;
-      let lastTapEndTime = -1;
-      let isMove = false;
-      let startTime = 0;
-      let isDoubleTap = false;
-      let betweenTime = 0;
-      let ifStop = false;
-      if (isListenerConfig(options)) {
-          ifStop = options.stopPropagation;
-      }
-      ctx.addEventListener("touchstart", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1)
-              return;
-          startTime = Date.now();
-          if (event === "longTap") {
-              longTapTimer = window.setTimeout(() => {
-                  // ToDo,触发长按事件
-              }, 800);
-          }
-          // 如果lastTapEndTime不小于0的话则表明上一次也发生过点击事件且上一次的单击事件的监听器还未触发，说明两次点击间隔很短，
-          // 但是为了区别是双击还是单击，在第二次点击发生时判断开始点击的时间和上一次点击结束的时间，
-          // 如果间隔很短，说明是双击，此时不应该触发单击事件;如果距离上一次点击间隔很长，表明此次点击是单击
-          if (lastTapEndTime > 0 && startTime - lastTapEndTime < 150) {
-              window.clearTimeout(tapTimer);
-              betweenTime = startTime - lastTapEndTime;
-              tapTimer = null;
-              lastTapEndTime = -1;
-              isDoubleTap = true;
-          }
-      });
-      ctx.addEventListener("touchmove", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1)
-              return;
-          isMove = true;
-          e.preventDefault();
-          if (longTapTimer) {
-              window.clearTimeout(longTapTimer);
-              longTapTimer = null;
-          }
-      });
-      ctx.addEventListener("touchend", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1)
-              return;
-          let interval = Date.now() - startTime;
-          if (longTapTimer) {
-              window.clearTimeout(longTapTimer);
-              longTapTimer = null;
-          }
-          if (interval < 150 && !isMove) {
-              if (event === "singleTap" && isDoubleTap === false) {
-                  tapTimer = window.setTimeout(() => {
-                      let ev = Object.assign(Object.assign({}, e), { interval, e });
-                      if (listener instanceof Function) {
-                          listener(ev);
-                      }
-                      else {
-                          listener.handleEvent(ev);
-                      }
-                  }, 150);
-              }
-              else if (event === "doubleTap" && isDoubleTap === true) {
-                  tapTimer = window.setTimeout(() => {
-                      let ev = Object.assign(Object.assign({}, e), { interval: betweenTime, e });
-                      if (listener instanceof Function) {
-                          listener(ev);
-                      }
-                      else {
-                          listener.handleEvent(ev);
-                      }
-                  });
-              }
-              lastTapEndTime = Date.now();
-          }
-          isMove = false;
-          isDoubleTap = false;
-      });
-  }
-
-  function moveOrSwipe(ctx, event, listener, options) {
-      let isMove = false;
-      let pos = {
-          x: 0,
-          y: 0,
-      };
-      let dx = 0, dy = 0;
-      let ifStop = false;
-      if (isListenerConfig(options)) {
-          ifStop = options.stopPropagation;
-      }
-      ctx.addEventListener("touchstart", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1)
-              return;
-          pos.x = e.touches[0].clientX;
-          pos.y = e.touches[0].clientY;
-      });
-      ctx.addEventListener("touchmove", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1)
-              return;
-          isMove = true;
-          e.preventDefault();
-          let x = e.touches[0].clientX;
-          let y = e.touches[0].clientY;
-          dx = x - pos.x;
-          dy = y - pos.y;
-          if ((event === "moveLeft" && dx < 0) ||
-              (event === "moveRight" && dx > 0) ||
-              (event === "moveTop" && dy < 0) ||
-              (event === "moveDown" && dy > 0) ||
-              event === "move") {
-              let ev = Object.assign(Object.assign({}, e), { startPos: pos, deltaX: dx, deltaY: dy, e });
-              if (listener instanceof Function) {
-                  listener(ev);
-              }
-              else {
-                  listener.handleEvent(ev);
-              }
-          }
-      });
-      ctx.addEventListener("touchend", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1)
-              return;
-          let end = {
-              x: pos.x + dx,
-              y: pos.y + dy,
-          };
-          if (isMove &&
-              ((event === "swipeLeft" && dx < 0) ||
-                  (event === "swipeRight" && dx > 0) ||
-                  (event === "swipeTop" && dy < 0) ||
-                  (event === "swipeDown" && dy > 0) ||
-                  event === "swipe")) {
-              let ev = Object.assign(Object.assign({}, e), { startPos: pos, endPos: end, e });
-              if (listener instanceof Function) {
-                  listener(ev);
-              }
-              else {
-                  listener.handleEvent(ev);
-              }
-          }
-          isMove = false;
-      });
-  }
-
-  function fastSlide(ctx, event, listener, options) {
-      let lastTime = 0;
-      let startTime = 0;
-      // 初始的x,y坐标
-      let x = 0, y = 0;
-      let lastPos = { x: 0, y: 0 };
-      let startPos = { x: 0, y: 0 };
-      let speed = [];
-      let ifStop = false;
-      if (isListenerConfig(options)) {
-          ifStop = options.stopPropagation;
-      }
-      ctx.addEventListener("touchstart", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1)
-              return;
-          lastTime = Date.now();
-          startTime = Date.now();
-          startPos = {
-              x: e.touches[0].clientX,
-              y: e.touches[0].clientY,
-          };
-          lastPos = {
-              x: e.touches[0].clientX,
-              y: e.touches[0].clientY,
-          };
-          (x = lastPos.x), (y = lastPos.y);
-      });
-      ctx.addEventListener("touchmove", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1)
-              return;
-          e.preventDefault();
-          let now = Date.now();
-          if (now - lastTime >= 10) {
-              let distance = computeDistance(e.touches[0].clientX, lastPos.x, e.touches[0].clientY, lastPos.y);
-              speed.push(distance / (now - lastTime));
-              lastPos = {
-                  x: e.touches[0].clientX,
-                  y: e.touches[0].clientY,
-              };
-              lastTime = now;
-          }
-      });
-      ctx.addEventListener("touchend", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1)
-              return;
-          let sum = 0;
-          let index = 1;
-          lastTime = Date.now();
-          console.log(speed);
-          for (let i = speed.length - 1; i >= 0; i--) {
-              if (speed[i] > speed[i - 1]) {
-                  sum += speed[i] - speed[i - 1];
-                  index++;
-              }
-              else
-                  break;
-          }
-          let dx = lastPos.x - x;
-          let dy = lastPos.y - y;
-          if ((sum / index) * 100 >= 10 && speed[speed.length - 1] >= 20) {
-              if ((dx <= 0 && event === "fastSlideLeft") ||
-                  (dx >= 0 && event === "fastSlideRight") ||
-                  (dy >= 0 && event === "fastSlideDown") ||
-                  (dy <= 0 && event === "fastSlideTop") ||
-                  event === "fastSlide") {
-                  let ev = Object.assign(Object.assign({}, e), { startPos: startPos, endPos: lastPos, interval: lastTime - startTime, lastSpeed: speed[speed.length - 1], e });
-                  if (listener instanceof Function) {
-                      listener(ev);
-                  }
-                  else {
-                      listener.handleEvent(ev);
-                  }
-              }
-          }
-          speed = [];
-          lastPos = { x: 0, y: 0 };
-          startPos = { x: 0, y: 0 };
-          lastTime = 0;
-          startTime = 0;
-      });
-  }
-
-  function pintchOrRotate(ctx, event, listener, options) {
-      let prevV = { x: 0, y: 0 };
-      let v1, v2;
-      let scale = 1;
-      let ifStop = false;
-      if (isListenerConfig(options)) {
-          ifStop = options.stopPropagation;
-      }
-      ctx.addEventListener("touchstart", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          if (e.touches.length > 1) {
-              v1 = e.touches[0];
-              v2 = e.touches[1];
-              prevV = {
-                  x: v2.clientX - v1.clientX,
-                  y: v2.clientY - v1.clientY,
-              };
-          }
-      });
-      ctx.addEventListener("touchmove", (e) => {
-          if (ifStop)
-              e.stopPropagation();
-          e.preventDefault();
-          if (e.touches.length > 1) {
-              let v1 = e.touches[0];
-              let v2 = e.touches[1];
-              let V = {
-                  x: v2.clientX - v1.clientX,
-                  y: v2.clientY - v1.clientY,
-              };
-              //利用前后的向量模比计算放大或缩小的倍数
-              scale = computeVectorLen(V) / computeVectorLen(prevV);
-              if (event === "pintch") {
-                  let ev = Object.assign(Object.assign({}, e), { scale, e });
-                  if (listener instanceof Function) {
-                      listener(ev);
-                  }
-                  else {
-                      listener.handleEvent(ev);
-                  }
-              }
-              // 计算出拖动时旋转的角度
-              let angle = computeAngle(prevV, V);
-              if (event === "rotate") {
-                  let ev = Object.assign(Object.assign({}, e), { angle, e });
-                  if (listener instanceof Function) {
-                      listener(ev);
-                  }
-                  else {
-                      listener.handleEvent(ev);
-                  }
-              }
-          }
-      });
-      ctx.addEventListener("touchend", (e) => {
-          //ToDo
-          if (ifStop)
-              e.stopPropagation();
-          // 只要最初的两个手指离开一个就行
-          if ([...e.touches].indexOf(v1) === -1 ||
-              [...e.touches].indexOf(v2) === -1) {
-              if (event === "pintchOver") {
-                  let ev = Object.assign(Object.assign({}, e), { scale, e });
-                  if (listener instanceof Function) {
-                      listener(ev);
-                  }
-                  else {
-                      listener.handleEvent(ev);
-                  }
-              }
-          }
-          prevV = { x: 0, y: 0 };
-      });
-  }
-
-  function wrap(dom) {
-      if (dom.__proto__.addEventListener === addEventListener) {
-          return dom;
-      }
-      let prototype = dom.__proto__;
-      let proto = Object.create(prototype);
-      proto.addEventListener = addEventListener;
-      Object.setPrototypeOf(dom, proto);
-      Object.setPrototypeOf(proto, prototype);
-      return dom;
-  }
-
-  const fn = HTMLElement.prototype.addEventListener;
-  function addEventListener(event, listener, options) {
-      let ctx = this;
-      switch (event) {
-          case "singleTap":
-          case "doubleTap":
-          case "longTap":
-              singleOrDoubleOrLongTap(ctx, event, listener, options);
-              break;
-          case "swipe":
-          case "swipeLeft":
-          case "swipeRight":
-          case "swipeTop":
-          case "swipeDown":
-          case "move":
-          case "moveLeft":
-          case "moveRight":
-          case "moveTop":
-          case "moveDown":
-              moveOrSwipe(ctx, event, listener, options);
-              break;
-          case "fastSlide":
-          case "fastSlideLeft":
-          case "fastSlideRight":
-          case "fastSlideTop":
-          case "fastSlideDown":
-              fastSlide(ctx, event, listener, options);
-              break;
-          case "pintch":
-          case "pintchOver":
-          case "rotate":
-              pintchOrRotate(ctx, event, listener, options);
-              break;
-          default:
-              if (ctx === document$1.body) {
-                  fn.call(window.document.body, event, listener, options);
-              }
-              else {
-                  fn.call(ctx, event, listener, options);
-              }
-      }
-  }
-  let body = Object.create(window.document.body);
-  body.addEventListener = addEventListener;
-  let document$1 = { body: body };
-  document$1.createElement = createElement;
-  document$1.getElementById = getElementById;
-  document$1.getElementsByClassName = getElementsByClassName;
-  document$1.getElementsByTagName = getElementsByTagName;
-  Object.setPrototypeOf(document$1, Document.prototype);
 
   var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-container {\n  position: relative;\n  overflow: hidden;\n  background-color: #000;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
   styleInject(css_248z$1);
@@ -22043,6 +22070,7 @@
           } else {
             _this5.emit('hidetoolbar', e);
           }
+          _this5.emit('videoClick');
         });
         // 双击
         wrap(this.video).addEventListener('doubleTap', function (e) {

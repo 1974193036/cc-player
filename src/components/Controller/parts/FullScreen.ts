@@ -5,10 +5,10 @@ import { fullscreenExitPath, fullscreenPath } from '../path/defaultPath'
 import { storeControlComponent } from '@/utils/store'
 import { Options } from './Options'
 import screenfull from 'screenfull'
+import { wrap } from 'ntouch.js'
 
 export class FullScreen extends Options {
   readonly id = 'FullScreen'
-  icon: SVGSVGElement
   enterFullScreen: boolean = false
 
   constructor(
@@ -19,8 +19,6 @@ export class FullScreen extends Options {
     children?: Node[]
   ) {
     super(player, container, 0, 0, desc, props, children)
-    this.player = player
-    this.props = props || {}
     this.init()
   }
 
@@ -42,24 +40,12 @@ export class FullScreen extends Options {
   }
 
   initEvent() {
-    if (this.player.env === 'PC') {
-      this.initPCEvent()
-    } else {
-      this.initMobileEvent()
-    }
-  }
-
-  initPCEvent() {
     this.onClick = this.onClick.bind(this)
-    this.el.onclick = this.onClick
-  }
-
-  initMobileEvent(): void {
-    // 单击
-    this.el.addEventListener('singleTap', async (e) => {
-      // console.log(e, 'singleTap')
-      this.onClick(e)
-    })
+    if (this.player.env === 'PC') {
+      this.el.onclick = this.onClick
+    } else {
+      wrap(this.el).addEventListener('singleTap', this.onClick)
+    }
   }
 
   onClick(e: Event) {
