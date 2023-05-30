@@ -6,6 +6,7 @@ import { Progress } from '../Progress/progress'
 import { Controller } from '../Controller/controller'
 import { storeControlComponent } from '@/utils/store'
 import { MoveEvent, SingleTapEvent } from 'ntouch.js'
+import { EVENT } from '@/events'
 import './toolbar.less'
 
 export class ToolBar extends Component implements ComponentItem {
@@ -48,12 +49,12 @@ export class ToolBar extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on('showtoolbar', (e) => {
+    this.player.on(EVENT.SHOW_TOOLBAR, (e: Event | SingleTapEvent | MoveEvent) => {
       this.onShowToolBar(e)
     })
 
-    this.player.on('hidetoolbar', (e) => {
-      this.onHideToolBar(e)
+    this.player.on(EVENT.HIDE_TOOLBAR, () => {
+      this.onHideToolBar()
     })
   }
 
@@ -65,7 +66,7 @@ export class ToolBar extends Component implements ComponentItem {
     this.showToolBar(e)
   }
 
-  onHideToolBar(e: Event) {
+  onHideToolBar() {
     this.hideToolBar()
   }
 

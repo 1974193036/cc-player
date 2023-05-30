@@ -2,6 +2,7 @@ import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { $, addClass, checkIsMouseInRange } from '@/utils/domUtils'
+import { EVENT } from '@/events'
 
 export class Options extends Component implements ComponentItem {
   id = 'Options'
@@ -70,7 +71,7 @@ export class Options extends Component implements ComponentItem {
       }
     })
 
-    this.player.on('videoClick', () => {
+    this.player.on(EVENT.VIDEO_CLICK, () => {
       this.hideBox.style.display = 'none'
     })
   }

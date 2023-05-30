@@ -21,6 +21,10 @@
           height: 100%;
           background-color: aquamarine;
         } */
+        .video {
+          width: 640px;
+          height: 480px;
+        }
     </style>
 </head>
 <body>
@@ -36,7 +40,7 @@
           </path>
       </svg>
     </div> -->
-    <div class="video"></div>
+    <div class="video" id="video"></div>
 
     <script>
       console.log(Player)
@@ -48,11 +52,11 @@
           // url: 'https://novaex.cc/monster.mp4',
           // url: 'https://novaex.cc/demo.mp4',
           // url: 'https://a0.muscache.com/airbnb/static/Paris-P1-1.mp4', // 支持流式
-          container: document.getElementsByClassName('video')[0],
-          width: '640px',
-          height: '480px',
+          container: document.getElementById('video'),
+          // width: '640px',
+          // height: '480px',
           autoplay: false,
-          // rightControllers: ['Playrate', 'Volume', 'FullScreen']
+          // rightBottomBarControllers: ['Playrate', 'Volume', 'FullScreen']
         })
 
         // player.attachSource('http://localhost:8889/video.mp4')

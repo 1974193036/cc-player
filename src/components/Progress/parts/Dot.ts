@@ -5,6 +5,7 @@ import { addClass, getElementSize, includeClass, removeClass } from '@/utils/dom
 import { storeControlComponent } from '@/utils/store'
 import { Progress } from '../progress'
 import { MoveEvent, SwipeEvent, wrap } from 'ntouch.js'
+import { EVENT } from '@/events'
 
 export class Dot extends Component implements ComponentItem {
   readonly id = 'Dot'
@@ -37,25 +38,25 @@ export class Dot extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on('progress-mouseenter', (e) => {
+    this.player.on(EVENT.VIDEO_PROGRESS_MOUSE_ENTER, (e) => {
       // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
       if (this.player.enableSeek) {
         this.onShowDot(e)
       }
     })
 
-    this.player.on('progress-mouseleave', (e) => {
+    this.player.on(EVENT.VIDEO_PROGRESS_MOUSE_LEAVE, (e) => {
       // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
       if (this.player.enableSeek) {
         this.onHideDot(e)
       }
     })
 
-    this.player.on('progress-click', (e: MouseEvent, ctx: Progress) => {
+    this.player.on(EVENT.VIDEO_PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
       this.onChangePos(e, ctx)
     })
 
-    this.player.on('timeupdate', (e: Event) => {
+    this.player.on(EVENT.TIME_UPDATE, (e: Event) => {
       // 防抖效果：针对Dot按下拖动时不触发timeupdate，拖完鼠标抬起时再触发timeupdate
       if (this.player.enableSeek) {
         this.updatePos(e)
@@ -73,14 +74,14 @@ export class Dot extends Component implements ComponentItem {
     this.el.addEventListener('mousedown', (e) => {
       e.preventDefault()
       this.onMouseMove = this.onMouseMove.bind(this)
-      this.player.emit('dotdown')
+      this.player.emit(EVENT.DOT_DOWN)
       this.mouseX = e.pageX
       this.left = parseInt(this.el.style.left)
 
       document.body.addEventListener('mousemove', this.onMouseMove)
 
       document.body.addEventListener('mouseup', (e) => {
-        this.player.emit('dotup')
+        this.player.emit(EVENT.DOT_UP)
         this.player.video.currentTime = Math.floor(this.playScale * this.player.video.duration)
         document.body.removeEventListener('mousemove', this.onMouseMove)
       })
@@ -90,12 +91,12 @@ export class Dot extends Component implements ComponentItem {
   initMobileEvent(): void {
     this.player.video.addEventListener('touchstart', (e) => {
       e.preventDefault()
-      this.player.emit('dotdown')
+      this.player.emit(EVENT.DOT_DOWN)
       this.left = this.el.style.left ? parseInt(this.el.style.left) : 0
     })
 
     this.player.video.addEventListener('touchend', (e) => {
-      this.player.emit('dotup')
+      this.player.emit(EVENT.DOT_UP)
     })
 
     this.player.on('moveHorizontal', (e: MoveEvent) => {
@@ -111,11 +112,11 @@ export class Dot extends Component implements ComponentItem {
         this.container.clientWidth * scale - getElementSize(this.el).width / 2 + 'px'
 
       if (this.player.video.paused) this.player.video.play()
-      this.player.emit('dotdrag', scale, e)
+      this.player.emit(EVENT.DOT_DRAG, scale, e)
     })
 
     this.player.on('slideHorizontal', (e: SwipeEvent) => {
-      this.player.emit('dotup')
+      this.player.emit(EVENT.DOT_UP)
       this.player.video.currentTime = Math.floor(this.playScale * this.player.video.duration)
     })
   }
@@ -131,7 +132,7 @@ export class Dot extends Component implements ComponentItem {
     this.el.style.left =
       this.container.offsetWidth * scale - getElementSize(this.el).width / 2 + 'px'
     if (this.player.video.paused) this.player.video.play()
-    this.player.emit('dotdrag', scale, e)
+    this.player.emit(EVENT.DOT_DRAG, scale, e)
   }
 
   onShowDot(e: MouseEvent) {

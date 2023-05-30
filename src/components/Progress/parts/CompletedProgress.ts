@@ -3,6 +3,7 @@ import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { Progress } from '../progress'
 import { storeControlComponent } from '@/utils/store'
+import { EVENT } from '@/events'
 
 export class CompletedProgress extends Component implements ComponentItem {
   readonly id = 'CompletedProgress'
@@ -29,17 +30,17 @@ export class CompletedProgress extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on('progress-click', (e: MouseEvent, ctx: Progress) => {
+    this.player.on(EVENT.VIDEO_PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
       this.onChangeSize(e, ctx)
     })
 
-    this.player.on('timeupdate', (e) => {
+    this.player.on(EVENT.TIME_UPDATE, (e) => {
       if (this.player.enableSeek) {
         this.updatePos(e)
       }
     })
 
-    this.player.on('dotdrag', (scale: number) => {
+    this.player.on(EVENT.DOT_DRAG, (scale: number) => {
       this.el.style.width = scale * 100 + '%'
     })
   }

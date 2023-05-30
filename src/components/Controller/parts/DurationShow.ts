@@ -1,9 +1,10 @@
-import { Component } from '../../../class/Component'
-import { Player } from '../../../page/player'
-import { ComponentItem, DOMProps, Node } from '../../../types/Player'
-import { addClass } from '../../../utils/domUtils'
-import { formatTime } from '../../../utils/format'
-import { storeControlComponent } from '../../../utils/store'
+import { Component } from '@/class/Component'
+import { Player } from '@/page/player'
+import { ComponentItem, DOMProps, Node } from '@/types/Player'
+import { addClass } from '@/utils/domUtils'
+import { formatTime } from '@/utils/math'
+import { storeControlComponent } from '@/utils/store'
+import { EVENT } from '@/events'
 
 export class DutaionShow extends Component implements ComponentItem {
   readonly id = 'DurationShow'
@@ -22,7 +23,7 @@ export class DutaionShow extends Component implements ComponentItem {
   ) {
     super(container, desc, props, children)
     this.player = player
-    this.props = props;
+    this.props = props
     this.init()
   }
 
@@ -38,7 +39,7 @@ export class DutaionShow extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on('loadedmetadata', (e) => {
+    this.player.on(EVENT.LOADED_META_DATA, (e) => {
       let video = e.target as HTMLVideoElement
       // console.log(video.duration) // 12.612
       this.totalTime = formatTime(video.duration)
@@ -46,7 +47,7 @@ export class DutaionShow extends Component implements ComponentItem {
       this.el.innerText = `${this.currentTime}/${this.totalTime}`
     })
 
-    this.player.on('timeupdate', (e: Event) => {
+    this.player.on(EVENT.TIME_UPDATE, (e: Event) => {
       let video = e.target as HTMLVideoElement
       this.currentTime = formatTime(video.currentTime)
       this.el.innerText = `${this.currentTime}/${this.totalTime}`

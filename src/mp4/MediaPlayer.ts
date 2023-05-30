@@ -7,9 +7,12 @@ import MP4Box, {
   MP4MediaSource
 } from 'mp4box'
 import { Player } from '@/page/player'
-import { FactoryObject } from '../types/dash/Factory'
 import { MoovBoxInfo, MediaTrack } from '../types/mp4'
 import { DownLoader } from './net/DownLoader'
+
+export type FactoryObject = {
+  [props: string]: any
+}
 
 class MediaPlayer {
   url: string

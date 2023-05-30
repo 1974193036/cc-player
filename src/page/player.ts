@@ -3,15 +3,13 @@ import {
   PlayerOptions,
   DOMProps,
   RegisterComponentOptions,
-  UpdateComponentOptions
+  UpdateComponentOptions,
+  Plugin
 } from '@/types/Player'
 import { Component } from '@/class/Component'
 import { ToolBar } from '@/components/ToolBar/toolbar'
 import { $, addClass, patchComponent, removeClass } from '@/utils/domUtils'
-import { Plugin } from '@/types/Player'
 import { COMPONENT_STORE, HIDEEN_COMPONENT_STORE, ONCE_COMPONENT_STORE } from '@/utils/store'
-import { getFileExtension } from '@/utils/play'
-import MpdMediaPlayerFactory from '@/dash/MediaPlayer'
 import Mp4MediaPlayer from '../mp4/MediaPlayer'
 // import { DanmakuController } from '@/danmaku'
 import { TimeLoading } from '@/components/Loading/parts/TimeLoading'
@@ -20,7 +18,8 @@ import { TopBar } from '@/components/TopBar/TopBar'
 import { Env } from '@/utils/env'
 import { MobileVolume } from '@/components/Mobile/MobileVolume'
 import { MoveEvent, wrap } from 'ntouch.js'
-import { computeAngle } from '@/utils/play'
+import { computeAngle } from '@/utils/math'
+import { EVENT } from '@/events'
 
 import './player.less'
 
@@ -29,13 +28,8 @@ class Player extends Component implements ComponentItem {
   // el: div.video-wrapper
 
   // 播放器的默认配置
-  readonly playerOptions: PlayerOptions = {
-    url: '',
-    container: document.body,
-    autoplay: false,
-    width: '100%',
-    height: '100%'
-  }
+  readonly playerOptions: PlayerOptions
+  enableSeek = true
   env = Env.env
   fullScreenMode: 'Vertical' | 'Horizontal' = 'Horizontal'
   video: HTMLVideoElement
@@ -44,15 +38,21 @@ class Player extends Component implements ComponentItem {
   topbar: TopBar
   loading: TimeLoading
   error: ErrorLoading
-  enableSeek = true
+  containerWidth: number
+  containerHeight: number
 
   constructor(options: PlayerOptions) {
     super(options.container, 'div.video-wrapper')
-    this.playerOptions = Object.assign(this.playerOptions, options)
-    options.container.className = 'video-container'
-    options.container.style.width = this.playerOptions.width
-    options.container.style.height = this.playerOptions.height
+    this.playerOptions = Object.assign(
+      {
+        autoPlay: false,
+        streamPlay: false
+      },
+      options
+    )
     this.container = options.container
+    this.containerHeight = options.container.clientHeight
+    this.containerWidth = options.container.clientWidth
     this.init()
   }
 
@@ -62,8 +62,8 @@ class Player extends Component implements ComponentItem {
     this.video['x5-video-player-type'] = 'h5' // 启用H5播放器,是wechat安卓版特性
     this.video.crossOrigin = 'anonymous'
 
-    this.attachSource(this.playerOptions.url)
     this.el.appendChild(this.video)
+    this.playerOptions?.url && this.attachSource(this.playerOptions.url)
     this.initComponent()
     this.initTemplate()
     this.initEvent()
@@ -108,7 +108,7 @@ class Player extends Component implements ComponentItem {
     const resizeObserver = new ResizeObserver((entries) => {
       // console.log('监听到了尺寸变化了...')
       // 触发尺寸变化事件
-      this.emit('resize', entries)
+      this.emit(EVENT.RESIZE, entries)
       let width = entries[0].contentRect.width
       let subsetting
       // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
@@ -165,55 +165,55 @@ class Player extends Component implements ComponentItem {
     }
 
     this.video.onloadedmetadata = (e) => {
-      this.emit('loadedmetadata', e)
+      this.emit(EVENT.LOADED_META_DATA, e)
     }
 
     this.video.addEventListener('timeupdate', (e) => {
-      this.emit('timeupdate', e)
+      this.emit(EVENT.TIME_UPDATE, e)
     })
 
     this.video.onplay = (e) => {
-      this.emit('play', e)
+      this.emit(EVENT.PLAY, e)
     }
 
     this.video.onpause = (e) => {
-      this.emit('pause', e)
+      this.emit(EVENT.PAUSE, e)
     }
 
     // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
     this.video.addEventListener('seeking', (e) => {
       // 防抖效果：针对Dot按下拖动时不触发seeking，拖完鼠标抬起时再触发seeking
       if (this.enableSeek) {
-        this.emit('seeking', e)
+        this.emit(EVENT.SEEKING, e)
       }
     })
 
     // waiting 事件在视频由于需要缓冲下一帧而停止时触发
     this.video.addEventListener('waiting', (e) => {
-      this.emit('waiting', e)
+      this.emit(EVENT.WAITING, e)
     })
 
     // canplay 该视频已准备好开始播放
     this.video.addEventListener('canplay', (e) => {
-      this.emit('canplay', e)
+      this.emit(EVENT.CAN_PLAY, e)
     })
 
     // error 视频加载发生错误时
     this.video.addEventListener('error', (e) => {
-      this.emit('videoError')
+      this.emit(EVENT.ERROR)
     })
 
     // abort 视频终止加载时
     this.video.addEventListener('abort', (e) => {
-      this.emit('videoError')
+      this.emit(EVENT.ERROR)
     })
 
     // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
     this.video.addEventListener('ratechange', (e) => {
-      this.emit('ratechange')
+      this.emit(EVENT.RATE_CHANGE)
     })
 
-    this.on('progress-click', (e, ctx) => {
+    this.on(EVENT.VIDEO_PROGRESS_CLICK, (e, ctx) => {
       let scale = e.offsetX / ctx.el.offsetWidth
       if (scale < 0) {
         scale = 0
@@ -224,29 +224,29 @@ class Player extends Component implements ComponentItem {
       this.video.paused && this.video.play()
     })
 
-    this.on('inputFocus', () => {
+    this.on(EVENT.DANMAKU_INPUT_FOCUS, () => {
       this.el.onmouseleave = null
     })
 
-    this.on('inputBlur', () => {
+    this.on(EVENT.DANMAKU_INPUT_BLUR, () => {
       this.el.onmouseleave = (e) => {
         this.emit('hidetoolbar', e)
       }
     })
 
-    this.on('dotdown', () => {
+    this.on(EVENT.DOT_DOWN, () => {
       // console.log('dotdown')
       this.enableSeek = false
     })
-    this.on('dotup', () => {
+    this.on(EVENT.DOT_UP, () => {
       // console.log('dotup')
       this.enableSeek = true
     })
-    this.on('dotdrag', (val: number, e: Event | MoveEvent) => {
+    this.on(EVENT.DOT_DRAG, (val: number, e: Event | MoveEvent) => {
       this.emit('showtoolbar', e)
     })
 
-    this.on('enterFullscreen', () => {
+    this.on(EVENT.ENTER_FULLSCREEN, () => {
       document.querySelectorAll('.video-controller').forEach((el) => {
         ;(el as HTMLElement).style.marginRight = '10px'
       })
@@ -255,7 +255,7 @@ class Player extends Component implements ComponentItem {
       })
     })
 
-    this.on('leaveFullscreen', () => {
+    this.on(EVENT.LEAVE_FULLSCREEN, () => {
       document.querySelectorAll('.video-controller').forEach((el) => {
         ;(el as HTMLElement).style.marginRight = ''
       })
@@ -275,15 +275,15 @@ class Player extends Component implements ComponentItem {
     }
 
     this.el.onmouseenter = (e) => {
-      this.emit('showtoolbar', e)
+      this.emit(EVENT.SHOW_TOOLBAR, e)
     }
 
     this.el.onmousemove = (e) => {
-      this.emit('showtoolbar', e)
+      this.emit(EVENT.SHOW_TOOLBAR, e)
     }
 
     this.el.onmouseleave = (e) => {
-      this.emit('hidetoolbar', e)
+      this.emit(EVENT.HIDE_TOOLBAR, e)
     }
   }
 
@@ -292,11 +292,11 @@ class Player extends Component implements ComponentItem {
     wrap(this.video).addEventListener('singleTap', (e) => {
       // console.log(e, 'singletap')
       if (this.toolBar.status === 'hidden') {
-        this.emit('showtoolbar', e)
+        this.emit(EVENT.SHOW_TOOLBAR, e)
       } else {
-        this.emit('hidetoolbar', e)
+        this.emit(EVENT.HIDE_TOOLBAR, e)
       }
-      this.emit('videoClick')
+      this.emit(EVENT.VIDEO_CLICK)
     })
 
     // 双击
@@ -315,9 +315,9 @@ class Player extends Component implements ComponentItem {
       let dx = e.deltaX
       let dy = e.deltaY
       if (computeAngle(dx, dy) >= 75) {
-        this.emit('moveVertical', e)
+        this.emit(EVENT.MOVE_VERTICAL, e)
       } else if (computeAngle(dx, dy) <= 15) {
-        this.emit('moveHorizontal', e)
+        this.emit(EVENT.MOVE_HORIZONTAL, e)
       }
     })
 
@@ -330,9 +330,9 @@ class Player extends Component implements ComponentItem {
       //   this.emit('slideVertical', e)
       // }
       if (computeAngle(dx, dy) >= 75) {
-        this.emit('slideVertical', e)
+        this.emit(EVENT.SLIDE_VERTICAL, e)
       } else if (computeAngle(dx, dy) <= 15) {
-        this.emit('slideHorizontal', e)
+        this.emit(EVENT.SLIDE_HORIZONTAL, e)
       }
     })
   }
@@ -345,33 +345,24 @@ class Player extends Component implements ComponentItem {
     }
   }
 
-  initMp4Player(url: string) {
-    new Mp4MediaPlayer(this.playerOptions.url, this)
-  }
+  // initMp4Player(url: string) {
+  //   new Mp4MediaPlayer(this.playerOptions.url, this)
+  // }
 
-  initMpdPlayer(url: string) {
-    // 工厂模式
-    // let player = new MediaPlayer({context: {}}, ...args)
-    let player = MpdMediaPlayerFactory().create()
-    player.attachVideo(this.video)
-    player.attachSource(url)
-  }
+  // initMpdPlayer(url: string) {
+  //   // 工厂模式
+  //   // let player = new MediaPlayer({context: {}}, ...args)
+  //   let player = MpdMediaPlayerFactory().create()
+  //   player.attachVideo(this.video)
+  //   player.attachSource(url)
+  // }
 
   attachSource(url: string) {
-    switch (getFileExtension(url)) {
-      case 'mp4':
-      case 'mp3':
-        // mp4流式播放
-        // this.initMp4Player(url)
-
-        // 非流式播放
-        this.video.src = url
-        break
-      case 'mpd':
-        this.initMpdPlayer(url)
-        break
-      case 'm3u8':
-      // ToDo
+     // 是否启动流式播放
+     if (this.playerOptions.streamPlay) {
+      new Mp4MediaPlayer(url, this)
+    } else {
+      this.video.src = url
     }
   }
 

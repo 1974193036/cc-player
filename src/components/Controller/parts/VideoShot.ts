@@ -4,7 +4,6 @@ import { addClass, createSvg } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
 import { videoShotPath } from '../path/defaultPath'
 import { Options } from './Options'
-import { wrap } from 'ntouch.js'
 
 export class VideoShot extends Options {
   readonly id = 'VideoShot'

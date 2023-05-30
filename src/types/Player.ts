@@ -5,10 +5,11 @@ export type PlayerOptions = {
   url: string
   container: HTMLElement
   autoplay?: boolean
-  width?: string
-  height?: string
-  leftControllers?: (ComponentConstructor | string)[]
-  rightControllers?: (ComponentConstructor | string)[]
+  streamPlay?: boolean
+  leftBottomBarControllers?: (ComponentConstructor | string)[]
+  rightBottomBarControllers?: (ComponentConstructor | string)[]
+  leftTopBarControllers?: (ComponentConstructor | string)[]
+  rightTopBarController?: (ComponentConstructor | string)[]
   plugins?: Plugin[]
 }
 

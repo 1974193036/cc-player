@@ -1,6 +1,7 @@
 import { Player } from '@/page/player'
 import { addClass } from '@/utils/domUtils'
 import { Loading } from '../Loading'
+import { EVENT } from '@/events'
 
 export class TimeLoading extends Loading {
   readonly id = 'timeloading'
@@ -14,12 +15,12 @@ export class TimeLoading extends Loading {
 
   initEvent(): void {
     // 在视频由于需要缓冲下一帧而停止时触发
-    this.player.on('waiting', () => {
+    this.player.on(EVENT.WAITING, () => {
       this.addLoading()
     })
 
     // 该视频已准备好开始播放
-    this.player.on('canplay', () => {
+    this.player.on(EVENT.CAN_PLAY, () => {
       this.removeLoading()
     })
   }

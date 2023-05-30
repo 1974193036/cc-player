@@ -3,6 +3,7 @@ import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { Progress } from '../progress'
 import { storeControlComponent } from '@/utils/store'
+import { EVENT } from '@/events'
 
 export class BufferedProgress extends Component implements ComponentItem {
   readonly id = 'BufferedProgress'
@@ -30,18 +31,14 @@ export class BufferedProgress extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on('progress-click', (e: MouseEvent, ctx: Progress) => {
-      this.onChangeWidth(e, ctx)
+    this.player.on(EVENT.VIDEO_PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
+      let scale = e.offsetX / ctx.el.offsetWidth
+      if (scale < 0) {
+        scale = 0
+      } else if (scale > 1) {
+        scale = 1
+      }
+      this.el.style.width = scale * 100 + '%'
     })
-  }
-
-  onChangeWidth(e: MouseEvent, ctx: Component) {
-    let scale = e.offsetX / ctx.el.offsetWidth
-    if (scale < 0) {
-      scale = 0
-    } else if (scale > 1) {
-      scale = 1
-    }
-    this.el.style.width = scale * 100 + '%'
   }
 }
