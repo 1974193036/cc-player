@@ -479,22 +479,22 @@
   var global$k = global$r;
   var isObject$g = isObject$j;
 
-  var document$3 = global$k.document;
+  var document$4 = global$k.document;
   // typeof document.createElement is 'object' in old IE
-  var EXISTS$1 = isObject$g(document$3) && isObject$g(document$3.createElement);
+  var EXISTS$1 = isObject$g(document$4) && isObject$g(document$4.createElement);
 
   var documentCreateElement$1 = function (it) {
-    return EXISTS$1 ? document$3.createElement(it) : {};
+    return EXISTS$1 ? document$4.createElement(it) : {};
   };
 
   var DESCRIPTORS$j = descriptors;
   var fails$s = fails$x;
-  var createElement$1 = documentCreateElement$1;
+  var createElement$2 = documentCreateElement$1;
 
   // Thanks to IE8 for its funny defineProperty
   var ie8DomDefine = !DESCRIPTORS$j && !fails$s(function () {
     // eslint-disable-next-line es/no-object-defineproperty -- required for testing
-    return Object.defineProperty(createElement$1('div'), 'a', {
+    return Object.defineProperty(createElement$2('div'), 'a', {
       get: function () { return 7; }
     }).a != 7;
   });
@@ -1659,7 +1659,7 @@
     }
   } : nativeDefineProperty;
 
-  var wrap = function (tag, description) {
+  var wrap$1 = function (tag, description) {
     var symbol = AllSymbols[tag] = nativeObjectCreate(SymbolPrototype);
     setInternalState$7(symbol, {
       type: SYMBOL,
@@ -1753,7 +1753,7 @@
         setSymbolDescriptor(this, tag, createPropertyDescriptor$4(1, value));
       };
       if (DESCRIPTORS$c && USE_SETTER) setSymbolDescriptor(ObjectPrototype$2, tag, { configurable: true, set: setter });
-      return wrap(tag, description);
+      return wrap$1(tag, description);
     };
 
     SymbolPrototype = $Symbol[PROTOTYPE];
@@ -1763,7 +1763,7 @@
     });
 
     defineBuiltIn$6($Symbol, 'withoutSetter', function (description) {
-      return wrap(uid$1(description), description);
+      return wrap$1(uid$1(description), description);
     });
 
     propertyIsEnumerableModule$1.f = $propertyIsEnumerable;
@@ -1774,7 +1774,7 @@
     getOwnPropertySymbolsModule$3.f = $getOwnPropertySymbols;
 
     wrappedWellKnownSymbolModule.f = function (name) {
-      return wrap(wellKnownSymbol$g(name), name);
+      return wrap$1(wellKnownSymbol$g(name), name);
     };
 
     if (DESCRIPTORS$c) {
@@ -5232,116 +5232,6 @@
 
   var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
 
-  var prototype = HTMLElement.prototype;
-  var proto = {
-    addEventListener: function addEventListener(event, listener) {
-      var ctx = this;
-      var tapTimer = null;
-      var lastTapEndTime = -1;
-      function singleOrDoubleTap() {
-        var startTime = 0;
-        var isMove = false;
-        var isDoubleTap = false;
-        ctx.addEventListener('touchstart', function (e) {
-          startTime = Date.now();
-          // 如果lastTapEndTime不小于0的话则表明上一次也发生过点击事件且上一次的单击事件的监听器还未触发，说明两次点击间隔很短，
-          // 但是为了区别是双击还是单击，在第二次点击发生时判断开始点击的时间和上一次点击结束的时间，
-          // 如果间隔很短，说明是双击，此时不应该触发单击事件;如果距离上一次点击间隔很长，表明此次点击是单击
-          if (lastTapEndTime > 0 && startTime - lastTapEndTime < 150) {
-            window.clearTimeout(tapTimer);
-            tapTimer = null;
-            lastTapEndTime = -1;
-            isDoubleTap = true;
-          }
-        });
-        ctx.addEventListener('touchmove', function (e) {
-          isMove = true;
-        });
-        ctx.addEventListener('touchend', function (e) {
-          var interval = Date.now() - startTime;
-          if (interval < 150 && !isMove) {
-            if (event === 'singleTap' && isDoubleTap === false) {
-              // 单机事件
-              tapTimer = setTimeout(function () {
-                listener.call(ctx, e);
-              }, 150);
-            } else if (event === 'doubleTap' && isDoubleTap === true) {
-              // 双击事件
-              tapTimer = setTimeout(function () {
-                listener.call(ctx, e);
-              }, 150);
-            }
-            lastTapEndTime = Date.now();
-          }
-          isMove = false;
-          isDoubleTap = false;
-        });
-      }
-      function moveOrSlide() {
-        var _this = this;
-        var isMove = false;
-        var pos = {
-          x: 0,
-          y: 0
-        };
-        var dx = 0,
-          dy = 0;
-        ctx.addEventListener('touchstart', function (e) {
-          pos.x = e.touches[0].clientX;
-          pos.y = e.touches[0].clientY;
-        });
-        ctx.addEventListener('touchmove', function (e) {
-          isMove = true;
-          var x = e.touches[0].clientX;
-          var y = e.touches[0].clientY;
-          dx = x - pos.x;
-          dy = y - pos.y;
-          if (event === 'moveLeft' && dx < 0 || event === 'moveRight' && dx > 0 || event === 'moveTop' && dy < 0 || event === 'moveDown' && dy > 0) {
-            listener.call(_this, {
-              event: e,
-              dx: dx,
-              dy: dy
-            });
-          }
-        });
-        ctx.addEventListener('touchend', function (e) {
-          if (isMove) {
-            if (event === 'slideLeft' && dx < 0 || event === 'slideRight' && dx > 0 || event === 'slideTop' && dy < 0 || event === 'slideDown' && dy > 0) {
-              listener.call(_this, {
-                event: e,
-                dx: dx,
-                dy: dy,
-                start: pos,
-                end: {
-                  x: dx + pos.x,
-                  y: dy + pos.y
-                }
-              });
-            }
-          }
-        });
-      }
-      switch (event) {
-        case 'singleTap':
-        case 'doubleTap':
-          singleOrDoubleTap();
-          break;
-        case 'moveLeft':
-        case 'moveRight':
-        case 'moveTop':
-        case 'moveDown':
-        case 'slideLeft':
-        case 'slideRight':
-        case 'slideTop':
-        case 'slideDown':
-          moveOrSlide();
-          break;
-        default:
-          prototype.addEventListener.call(ctx, event, listener);
-      }
-    }
-  };
-
   function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
   function _unsupportedIterableToArray$2(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
   function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -5400,9 +5290,6 @@
     match[1] = regArray ? regArray[2] : undefined; // app
     match[2] = regArray ? regArray[3] : undefined; // a
     var el = match[0] ? document.createElement(match[0]) : document.createElement('div');
-    var prototype = el.__proto__;
-    // 坑点！！！
-    el = _Object$setPrototypeOf(el, _Object$setPrototypeOf(_Object$assign({}, proto), prototype));
     if (match[1]) {
       el.id = match[1];
     }
@@ -5840,7 +5727,7 @@
   var fails$6 = fails$x;
   var html = html$2;
   var arraySlice$3 = arraySlice$7;
-  var createElement = documentCreateElement$1;
+  var createElement$1 = documentCreateElement$1;
   var validateArgumentsLength$4 = validateArgumentsLength$5;
   var IS_IOS$1 = engineIsIos;
   var IS_NODE$3 = engineIsNode;
@@ -5929,9 +5816,9 @@
       defer = globalPostMessageDefer;
       global$b.addEventListener('message', eventListener, false);
     // IE8-
-    } else if (ONREADYSTATECHANGE in createElement('script')) {
+    } else if (ONREADYSTATECHANGE in createElement$1('script')) {
       defer = function (id) {
-        html.appendChild(createElement('script'))[ONREADYSTATECHANGE] = function () {
+        html.appendChild(createElement$1('script'))[ONREADYSTATECHANGE] = function () {
           html.removeChild(this);
           run(id);
         };
@@ -5993,7 +5880,7 @@
   var IS_NODE$2 = engineIsNode;
 
   var MutationObserver$1 = global$a.MutationObserver || global$a.WebKitMutationObserver;
-  var document$2 = global$a.document;
+  var document$3 = global$a.document;
   var process$2 = global$a.process;
   var Promise$1 = global$a.Promise;
   // Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
@@ -6019,9 +5906,9 @@
 
     // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
     // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
-    if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$2) {
+    if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$3) {
       toggle = true;
-      node = document$2.createTextNode('');
+      node = document$3.createTextNode('');
       new MutationObserver$1(flush).observe(node, { characterData: true });
       notify$1 = function () {
         node.data = toggle = !toggle;
@@ -6195,12 +6082,12 @@
   var PromiseConstructor = NativePromiseConstructor$4;
   var PromisePrototype = NativePromisePrototype$1;
   var TypeError$3 = global$7.TypeError;
-  var document$1 = global$7.document;
+  var document$2 = global$7.document;
   var process$1 = global$7.process;
   var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
   var newGenericPromiseCapability = newPromiseCapability$1;
 
-  var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$7.dispatchEvent);
+  var DISPATCH_EVENT = !!(document$2 && document$2.createEvent && global$7.dispatchEvent);
   var UNHANDLED_REJECTION = 'unhandledrejection';
   var REJECTION_HANDLED = 'rejectionhandled';
   var PENDING = 0;
@@ -6269,7 +6156,7 @@
   var dispatchEvent = function (name, promise, reason) {
     var event, handler;
     if (DISPATCH_EVENT) {
-      event = document$1.createEvent('Event');
+      event = document$2.createEvent('Event');
       event.promise = promise;
       event.reason = reason;
       event.initEvent(name, false, true);
@@ -10541,7 +10428,9 @@
           removeClass(this.el, ['video-controls-hidden']);
           this.status = 'show';
         }
-        if (e.target === this.player.video) {
+        var target;
+        if (e instanceof Event) target = e.target;else target = e.e.target;
+        if (target === this.player.video) {
           this.timer = window.setTimeout(function () {
             _this3.hideToolBar();
           }, 3000);
@@ -21293,7 +21182,9 @@
         if (includeClass(this.el, 'video-topbar-hidden')) {
           removeClass(this.el, ['video-topbar-hidden']);
         }
-        if (e.target === this.player.video) {
+        var target;
+        if (e instanceof Event) target = e.target;else target = e.e.target;
+        if (target === this.player.video) {
           this.timer = window.setTimeout(function () {
             _this3.hideToolBar();
           }, 3000);
@@ -21395,14 +21286,14 @@
       value: function initEvent() {
         var _this2 = this;
         var width = this.completedBox.clientWidth;
-        this.player.on('moveVertical', function (val) {
+        this.player.on('moveVertical', function (e) {
           console.log('正在滑动');
           if (_this2.timer) {
             window.clearInterval(_this2.timer);
           }
           _this2.timer = null;
           _this2.el.style.display = '';
-          var dy = val.dy;
+          var dy = e.deltaY;
           var scale = (width + -dy) / _this2.progressBox.clientWidth;
           if (scale < 0) {
             scale = 0;
@@ -21413,7 +21304,7 @@
           _this2.completedBox.style.width = scale * 100 + '%';
           _this2.player.video.volume = scale;
         });
-        this.player.on('slideVertical', function (val) {
+        this.player.on('slideVertical', function (e) {
           console.log('滑动结束');
           width = _this2.completedBox.clientWidth;
           _this2.timer = window.setTimeout(function () {
@@ -21424,6 +21315,465 @@
     }]);
     return MobileVolume;
   }(Component);
+
+  let fn1 = Document.prototype.createElement;
+  // 此函数为重载实现
+  function createElement(tagName, options) {
+      let dom = fn1.call(window.document, tagName, options);
+      let prototype = dom.__proto__;
+      let proto = Object.create(prototype);
+      proto.addEventListener = addEventListener;
+      Object.setPrototypeOf(dom, proto);
+      Object.setPrototypeOf(proto, prototype);
+      return dom;
+  }
+
+  let fn3$1 = Document.prototype.getElementsByClassName;
+  function getElementsByClassName(classNames) {
+      let doms = fn3$1.call(window.document, classNames);
+      doms.forEach(dom => {
+          if (dom.__proto__ instanceof HTMLElement) {
+              let proto = Object.create(dom.__proto__);
+              proto.addEventListener = addEventListener;
+              Object.setPrototypeOf(dom, proto);
+          }
+      });
+      return doms;
+  }
+
+  let fn2 = Document.prototype.getElementById;
+  function getElementById(elementId) {
+      let dom = fn2.call(window.document, elementId) || null;
+      if (dom === null)
+          return null;
+      if (dom.__proto__ instanceof HTMLElement) {
+          let proto = Object.create(dom.__proto__);
+          proto.addEventListener = addEventListener;
+          Object.setPrototypeOf(dom, proto);
+      }
+      return dom;
+  }
+
+  let fn3 = Document.prototype.getElementsByTagName;
+  function getElementsByTagName(qualifiedName) {
+      let doms = fn3.call(window.document, qualifiedName);
+      doms.forEach(dom => {
+          if (dom.__proto__ instanceof HTMLElement) {
+              let proto = Object.create(dom.__proto__);
+              proto.addEventListener = addEventListener;
+              Object.setPrototypeOf(dom, proto);
+          }
+      });
+      return doms;
+  }
+
+  function computeDistance(x1, y1, x2, y2) {
+      return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+  }
+  function computeVectorLen(v) {
+      return Math.sqrt(v.x * v.x + v.y * v.y);
+  }
+  // 计算两个向量之间的角度
+  function computeAngle(v1, v2) {
+      let lv1 = computeVectorLen(v1);
+      let lv2 = computeVectorLen(v2);
+      let angle = 0;
+      let l = (lv1 * lv2);
+      if (l) {
+          let cosVal = (v1.x * v2.x + v1.y * v2.y) / l;
+          angle = Math.acos(Math.min(cosVal, 1)); //得到两个向量的夹角
+          angle = v1.x * v2.y - v2.x * v1.y > 0 ? -angle : angle; //得到夹角的方向（顺时针逆时针）
+          return angle * 180 / Math.PI;
+      }
+      return 0;
+  }
+  function isListenerConfig(value) {
+      return typeof value === "object" && value.stopPropagation !== null;
+  }
+
+  function singleOrDoubleOrLongTap(ctx, event, listener, options) {
+      let tapTimer = null;
+      let longTapTimer = null;
+      let lastTapEndTime = -1;
+      let isMove = false;
+      let startTime = 0;
+      let isDoubleTap = false;
+      let betweenTime = 0;
+      let ifStop = false;
+      if (isListenerConfig(options)) {
+          ifStop = options.stopPropagation;
+      }
+      ctx.addEventListener("touchstart", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          startTime = Date.now();
+          if (event === "longTap") {
+              longTapTimer = window.setTimeout(() => {
+                  // ToDo,触发长按事件
+              }, 800);
+          }
+          // 如果lastTapEndTime不小于0的话则表明上一次也发生过点击事件且上一次的单击事件的监听器还未触发，说明两次点击间隔很短，
+          // 但是为了区别是双击还是单击，在第二次点击发生时判断开始点击的时间和上一次点击结束的时间，
+          // 如果间隔很短，说明是双击，此时不应该触发单击事件;如果距离上一次点击间隔很长，表明此次点击是单击
+          if (lastTapEndTime > 0 && startTime - lastTapEndTime < 150) {
+              window.clearTimeout(tapTimer);
+              betweenTime = startTime - lastTapEndTime;
+              tapTimer = null;
+              lastTapEndTime = -1;
+              isDoubleTap = true;
+          }
+      });
+      ctx.addEventListener("touchmove", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          isMove = true;
+          e.preventDefault();
+          if (longTapTimer) {
+              window.clearTimeout(longTapTimer);
+              longTapTimer = null;
+          }
+      });
+      ctx.addEventListener("touchend", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          let interval = Date.now() - startTime;
+          if (longTapTimer) {
+              window.clearTimeout(longTapTimer);
+              longTapTimer = null;
+          }
+          if (interval < 150 && !isMove) {
+              if (event === "singleTap" && isDoubleTap === false) {
+                  tapTimer = window.setTimeout(() => {
+                      let ev = Object.assign(Object.assign({}, e), { interval, e });
+                      if (listener instanceof Function) {
+                          listener(ev);
+                      }
+                      else {
+                          listener.handleEvent(ev);
+                      }
+                  }, 150);
+              }
+              else if (event === "doubleTap" && isDoubleTap === true) {
+                  tapTimer = window.setTimeout(() => {
+                      let ev = Object.assign(Object.assign({}, e), { interval: betweenTime, e });
+                      if (listener instanceof Function) {
+                          listener(ev);
+                      }
+                      else {
+                          listener.handleEvent(ev);
+                      }
+                  });
+              }
+              lastTapEndTime = Date.now();
+          }
+          isMove = false;
+          isDoubleTap = false;
+      });
+  }
+
+  function moveOrSwipe(ctx, event, listener, options) {
+      let isMove = false;
+      let pos = {
+          x: 0,
+          y: 0,
+      };
+      let dx = 0, dy = 0;
+      let ifStop = false;
+      if (isListenerConfig(options)) {
+          ifStop = options.stopPropagation;
+      }
+      ctx.addEventListener("touchstart", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          pos.x = e.touches[0].clientX;
+          pos.y = e.touches[0].clientY;
+      });
+      ctx.addEventListener("touchmove", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          isMove = true;
+          e.preventDefault();
+          let x = e.touches[0].clientX;
+          let y = e.touches[0].clientY;
+          dx = x - pos.x;
+          dy = y - pos.y;
+          if ((event === "moveLeft" && dx < 0) ||
+              (event === "moveRight" && dx > 0) ||
+              (event === "moveTop" && dy < 0) ||
+              (event === "moveDown" && dy > 0) ||
+              event === "move") {
+              let ev = Object.assign(Object.assign({}, e), { startPos: pos, deltaX: dx, deltaY: dy, e });
+              if (listener instanceof Function) {
+                  listener(ev);
+              }
+              else {
+                  listener.handleEvent(ev);
+              }
+          }
+      });
+      ctx.addEventListener("touchend", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          let end = {
+              x: pos.x + dx,
+              y: pos.y + dy,
+          };
+          if (isMove &&
+              ((event === "swipeLeft" && dx < 0) ||
+                  (event === "swipeRight" && dx > 0) ||
+                  (event === "swipeTop" && dy < 0) ||
+                  (event === "swipeDown" && dy > 0) ||
+                  event === "swipe")) {
+              let ev = Object.assign(Object.assign({}, e), { startPos: pos, endPos: end, e });
+              if (listener instanceof Function) {
+                  listener(ev);
+              }
+              else {
+                  listener.handleEvent(ev);
+              }
+          }
+          isMove = false;
+      });
+  }
+
+  function fastSlide(ctx, event, listener, options) {
+      let lastTime = 0;
+      let startTime = 0;
+      // 初始的x,y坐标
+      let x = 0, y = 0;
+      let lastPos = { x: 0, y: 0 };
+      let startPos = { x: 0, y: 0 };
+      let speed = [];
+      let ifStop = false;
+      if (isListenerConfig(options)) {
+          ifStop = options.stopPropagation;
+      }
+      ctx.addEventListener("touchstart", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          lastTime = Date.now();
+          startTime = Date.now();
+          startPos = {
+              x: e.touches[0].clientX,
+              y: e.touches[0].clientY,
+          };
+          lastPos = {
+              x: e.touches[0].clientX,
+              y: e.touches[0].clientY,
+          };
+          (x = lastPos.x), (y = lastPos.y);
+      });
+      ctx.addEventListener("touchmove", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          e.preventDefault();
+          let now = Date.now();
+          if (now - lastTime >= 10) {
+              let distance = computeDistance(e.touches[0].clientX, lastPos.x, e.touches[0].clientY, lastPos.y);
+              speed.push(distance / (now - lastTime));
+              lastPos = {
+                  x: e.touches[0].clientX,
+                  y: e.touches[0].clientY,
+              };
+              lastTime = now;
+          }
+      });
+      ctx.addEventListener("touchend", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1)
+              return;
+          let sum = 0;
+          let index = 1;
+          lastTime = Date.now();
+          console.log(speed);
+          for (let i = speed.length - 1; i >= 0; i--) {
+              if (speed[i] > speed[i - 1]) {
+                  sum += speed[i] - speed[i - 1];
+                  index++;
+              }
+              else
+                  break;
+          }
+          let dx = lastPos.x - x;
+          let dy = lastPos.y - y;
+          if ((sum / index) * 100 >= 10 && speed[speed.length - 1] >= 20) {
+              if ((dx <= 0 && event === "fastSlideLeft") ||
+                  (dx >= 0 && event === "fastSlideRight") ||
+                  (dy >= 0 && event === "fastSlideDown") ||
+                  (dy <= 0 && event === "fastSlideTop") ||
+                  event === "fastSlide") {
+                  let ev = Object.assign(Object.assign({}, e), { startPos: startPos, endPos: lastPos, interval: lastTime - startTime, lastSpeed: speed[speed.length - 1], e });
+                  if (listener instanceof Function) {
+                      listener(ev);
+                  }
+                  else {
+                      listener.handleEvent(ev);
+                  }
+              }
+          }
+          speed = [];
+          lastPos = { x: 0, y: 0 };
+          startPos = { x: 0, y: 0 };
+          lastTime = 0;
+          startTime = 0;
+      });
+  }
+
+  function pintchOrRotate(ctx, event, listener, options) {
+      let prevV = { x: 0, y: 0 };
+      let v1, v2;
+      let scale = 1;
+      let ifStop = false;
+      if (isListenerConfig(options)) {
+          ifStop = options.stopPropagation;
+      }
+      ctx.addEventListener("touchstart", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          if (e.touches.length > 1) {
+              v1 = e.touches[0];
+              v2 = e.touches[1];
+              prevV = {
+                  x: v2.clientX - v1.clientX,
+                  y: v2.clientY - v1.clientY,
+              };
+          }
+      });
+      ctx.addEventListener("touchmove", (e) => {
+          if (ifStop)
+              e.stopPropagation();
+          e.preventDefault();
+          if (e.touches.length > 1) {
+              let v1 = e.touches[0];
+              let v2 = e.touches[1];
+              let V = {
+                  x: v2.clientX - v1.clientX,
+                  y: v2.clientY - v1.clientY,
+              };
+              //利用前后的向量模比计算放大或缩小的倍数
+              scale = computeVectorLen(V) / computeVectorLen(prevV);
+              if (event === "pintch") {
+                  let ev = Object.assign(Object.assign({}, e), { scale, e });
+                  if (listener instanceof Function) {
+                      listener(ev);
+                  }
+                  else {
+                      listener.handleEvent(ev);
+                  }
+              }
+              // 计算出拖动时旋转的角度
+              let angle = computeAngle(prevV, V);
+              if (event === "rotate") {
+                  let ev = Object.assign(Object.assign({}, e), { angle, e });
+                  if (listener instanceof Function) {
+                      listener(ev);
+                  }
+                  else {
+                      listener.handleEvent(ev);
+                  }
+              }
+          }
+      });
+      ctx.addEventListener("touchend", (e) => {
+          //ToDo
+          if (ifStop)
+              e.stopPropagation();
+          // 只要最初的两个手指离开一个就行
+          if ([...e.touches].indexOf(v1) === -1 ||
+              [...e.touches].indexOf(v2) === -1) {
+              if (event === "pintchOver") {
+                  let ev = Object.assign(Object.assign({}, e), { scale, e });
+                  if (listener instanceof Function) {
+                      listener(ev);
+                  }
+                  else {
+                      listener.handleEvent(ev);
+                  }
+              }
+          }
+          prevV = { x: 0, y: 0 };
+      });
+  }
+
+  function wrap(dom) {
+      if (dom.__proto__.addEventListener === addEventListener) {
+          return dom;
+      }
+      let prototype = dom.__proto__;
+      let proto = Object.create(prototype);
+      proto.addEventListener = addEventListener;
+      Object.setPrototypeOf(dom, proto);
+      Object.setPrototypeOf(proto, prototype);
+      return dom;
+  }
+
+  const fn = HTMLElement.prototype.addEventListener;
+  function addEventListener(event, listener, options) {
+      let ctx = this;
+      switch (event) {
+          case "singleTap":
+          case "doubleTap":
+          case "longTap":
+              singleOrDoubleOrLongTap(ctx, event, listener, options);
+              break;
+          case "swipe":
+          case "swipeLeft":
+          case "swipeRight":
+          case "swipeTop":
+          case "swipeDown":
+          case "move":
+          case "moveLeft":
+          case "moveRight":
+          case "moveTop":
+          case "moveDown":
+              moveOrSwipe(ctx, event, listener, options);
+              break;
+          case "fastSlide":
+          case "fastSlideLeft":
+          case "fastSlideRight":
+          case "fastSlideTop":
+          case "fastSlideDown":
+              fastSlide(ctx, event, listener, options);
+              break;
+          case "pintch":
+          case "pintchOver":
+          case "rotate":
+              pintchOrRotate(ctx, event, listener, options);
+              break;
+          default:
+              if (ctx === document$1.body) {
+                  fn.call(window.document.body, event, listener, options);
+              }
+              else {
+                  fn.call(ctx, event, listener, options);
+              }
+      }
+  }
+  let body = Object.create(window.document.body);
+  body.addEventListener = addEventListener;
+  let document$1 = { body: body };
+  document$1.createElement = createElement;
+  document$1.getElementById = getElementById;
+  document$1.getElementsByClassName = getElementsByClassName;
+  document$1.getElementsByTagName = getElementsByTagName;
+  Object.setPrototypeOf(document$1, Document.prototype);
 
   var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-container {\n  position: relative;\n  overflow: hidden;\n  background-color: #000;\n}\n.video-container .video-wrapper {\n  width: 100%;\n  height: 100%;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n}\n.video-container .video-wrapper video {\n  width: 100%;\n  height: 100%;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
   styleInject(css_248z$1);
@@ -21498,6 +21848,9 @@
         this.topbar = new TopBar(this, this.el, 'div');
         // new DanmakuController(this)
       }
+      /**
+       * @@description 监听视频播放器大小的变化
+       */
     }, {
       key: "initResizeObserver",
       value: function initResizeObserver() {
@@ -21518,6 +21871,7 @@
           _this2.emit('resize', entries);
           var width = entries[0].contentRect.width;
           var subsetting;
+          // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
           if (width <= 600) {
             // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
             _forEachInstanceProperty(_STORE).call(_STORE, function (value, key) {
@@ -21682,8 +22036,8 @@
       value: function initMobileEvent() {
         var _this5 = this;
         // 单击
-        this.video.addEventListener('singleTap', function (e) {
-          // console.log(e, 'singleTap')
+        wrap(this.video).addEventListener('singleTap', function (e) {
+          // console.log(e, 'singletap')
           if (_this5.toolBar.status === 'hidden') {
             _this5.emit('showtoolbar', e);
           } else {
@@ -21691,7 +22045,7 @@
           }
         });
         // 双击
-        this.video.addEventListener('doubleTap', function (e) {
+        wrap(this.video).addEventListener('doubleTap', function (e) {
           // console.log(e, 'doubleTap')
           if (_this5.video.paused) {
             _this5.video.play();
@@ -21699,42 +22053,22 @@
             _this5.video.pause();
           }
         });
-        // 当手势具有向上或者向下、向左、向右的位移，且处在滑动状态
-        this.video.addEventListener('moveLeft', function (val) {});
-        this.video.addEventListener('moveRight', function (val) {});
-        this.video.addEventListener('moveTop', function (val) {
-          // console.log(val, 'moveTop')
-          _this5.emit('moveTop', val);
-          if (Math.abs(val.dx) <= Math.abs(val.dy)) {
-            _this5.emit('moveVertical', val);
-          } else {
-            _this5.emit('moveHorizontal', val);
+        // 手势上下处于滑动中
+        wrap(this.video).addEventListener('move', function (e) {
+          // console.log(e, 'move')
+          var dx = e.deltaX;
+          var dy = e.deltaY;
+          if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+            _this5.emit('moveVertical', e);
           }
         });
-        this.video.addEventListener('moveDown', function (val) {
-          // console.log(val, 'moveDown')
-          _this5.emit('moveDown', val);
-          if (Math.abs(val.dx) <= Math.abs(val.dy)) {
-            _this5.emit('moveVertical', val);
-          } else {
-            _this5.emit('moveHorizontal', val);
-          }
-        });
-        // 当手势具有向上或者向下的位移且滑动结束后触发该事件
-        this.video.addEventListener('slideTop', function (val) {
-          // console.log(val, 'slideTop')
-          if (Math.abs(val.dx) <= Math.abs(val.dy)) {
-            _this5.emit('slideVertical');
-          } else {
-            _this5.emit('slideHorizontal');
-          }
-        });
-        this.video.addEventListener('slideDown', function (val) {
-          // console.log(val, 'slideDown')
-          if (Math.abs(val.dx) <= Math.abs(val.dy)) {
-            _this5.emit('slideVertical');
-          } else {
-            _this5.emit('slideHorizontal');
+        // 手势上下滑动结束
+        wrap(this.video).addEventListener('swipe', function (e) {
+          console.log(e, 'swipe');
+          var dx = e.endPos.x - e.startPos.x;
+          var dy = e.endPos.y - e.startPos.y;
+          if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+            _this5.emit('slideVertical', e);
           }
         });
       }

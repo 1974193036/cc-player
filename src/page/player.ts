@@ -19,6 +19,7 @@ import { ErrorLoading } from '@/components/Loading/parts/ErrorLoading'
 import { TopBar } from '@/components/TopBar/TopBar'
 import { Env } from '@/utils/env'
 import { MobileVolume } from '@/components/Mobile/MobileVolume'
+import { wrap } from 'ntouch.js'
 
 import './player.less'
 
@@ -87,6 +88,9 @@ class Player extends Component implements ComponentItem {
     // new DanmakuController(this)
   }
 
+  /**
+   * @@description 监听视频播放器大小的变化
+   */
   initResizeObserver() {
     /**
       window.resize弊端
@@ -106,6 +110,7 @@ class Player extends Component implements ComponentItem {
       this.emit('resize', entries)
       let width = entries[0].contentRect.width
       let subsetting
+      // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
       if (width <= 600) {
         // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
         _STORE.forEach((value, key) => {
@@ -280,8 +285,8 @@ class Player extends Component implements ComponentItem {
 
   initMobileEvent(): void {
     // 单击
-    this.video.addEventListener('singleTap', (e) => {
-      // console.log(e, 'singleTap')
+    wrap(this.video).addEventListener('singleTap', (e) => {
+      // console.log(e, 'singletap')
       if (this.toolBar.status === 'hidden') {
         this.emit('showtoolbar', e)
       } else {
@@ -290,7 +295,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 双击
-    this.video.addEventListener('doubleTap', (e) => {
+    wrap(this.video).addEventListener('doubleTap', (e) => {
       // console.log(e, 'doubleTap')
       if (this.video.paused) {
         this.video.play()
@@ -299,47 +304,23 @@ class Player extends Component implements ComponentItem {
       }
     })
 
-    // 当手势具有向上或者向下、向左、向右的位移，且处在滑动状态
-    this.video.addEventListener('moveLeft', (val) => {})
-
-    this.video.addEventListener('moveRight', (val) => {})
-
-    this.video.addEventListener('moveTop', (val: any) => {
-      // console.log(val, 'moveTop')
-      this.emit('moveTop', val)
-      if (Math.abs(val.dx) <= Math.abs(val.dy)) {
-        this.emit('moveVertical', val)
-      } else {
-        this.emit('moveHorizontal', val)
+    // 手势上下处于滑动中
+    wrap(this.video).addEventListener('move', (e) => {
+      // console.log(e, 'move')
+      let dx = e.deltaX
+      let dy = e.deltaY
+      if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+        this.emit('moveVertical', e)
       }
     })
 
-    this.video.addEventListener('moveDown', (val: any) => {
-      // console.log(val, 'moveDown')
-      this.emit('moveDown', val)
-      if (Math.abs(val.dx) <= Math.abs(val.dy)) {
-        this.emit('moveVertical', val)
-      } else {
-        this.emit('moveHorizontal', val)
-      }
-    })
-
-    // 当手势具有向上或者向下的位移且滑动结束后触发该事件
-    this.video.addEventListener('slideTop', (val: any) => {
-      // console.log(val, 'slideTop')
-      if (Math.abs(val.dx) <= Math.abs(val.dy)) {
-        this.emit('slideVertical')
-      } else {
-        this.emit('slideHorizontal')
-      }
-    })
-
-    this.video.addEventListener('slideDown', (val: any) => {
-      // console.log(val, 'slideDown')
-      if (Math.abs(val.dx) <= Math.abs(val.dy)) {
-        this.emit('slideVertical')
-      } else {
-        this.emit('slideHorizontal')
+    // 手势上下滑动结束
+    wrap(this.video).addEventListener('swipe', (e) => {
+      console.log(e, 'swipe')
+      let dx = e.endPos.x - e.startPos.x
+      let dy = e.endPos.y - e.startPos.y
+      if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+        this.emit('slideVertical', e)
       }
     })
   }

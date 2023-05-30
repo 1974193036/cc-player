@@ -1,4 +1,4 @@
-import proto from '../MobileEvent'
+import { ExternalHTMLElement } from 'ntouch.js/lib/types'
 import {
   ComponentItem,
   DOMProps,
@@ -57,7 +57,7 @@ const SELECTOR_REG = /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/
  * @param {Node[]} children
  * @returns
  */
-export function $<T extends HTMLElement>(
+export function $<T extends ExternalHTMLElement>(
   desc?: string,
   props?: DOMProps,
   children?: string | Array<Node>
@@ -69,12 +69,8 @@ export function $<T extends HTMLElement>(
   match[0] = regArray ? regArray[1] : undefined // div
   match[1] = regArray ? regArray[2] : undefined // app
   match[2] = regArray ? regArray[3] : undefined // a
-  let el: HTMLElement = match[0] ? document.createElement(match[0]) : document.createElement('div')
-  
-  let prototype = (el as any).__proto__
-  // 坑点！！！
-  el = Object.setPrototypeOf(el, Object.setPrototypeOf(Object.assign({}, proto), prototype))
-  
+  let el = match[0] ? document.createElement(match[0]) : document.createElement('div')
+
   if (match[1]) {
     el.id = match[1]
   }

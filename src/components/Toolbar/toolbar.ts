@@ -5,6 +5,7 @@ import { addClass, includeClass, removeClass } from '@/utils/domUtils'
 import { Progress } from '../Progress/progress'
 import { Controller } from '../Controller/controller'
 import { storeControlComponent } from '@/utils/store'
+import { SingleTapEvent } from 'ntouch.js'
 import './toolbar.less'
 
 export class ToolBar extends Component implements ComponentItem {
@@ -56,7 +57,7 @@ export class ToolBar extends Component implements ComponentItem {
     })
   }
 
-  onShowToolBar(e: MouseEvent) {
+  onShowToolBar(e: Event | SingleTapEvent) {
     if (this.timer) {
       window.clearTimeout(this.timer)
       this.timer = null
@@ -64,17 +65,21 @@ export class ToolBar extends Component implements ComponentItem {
     this.showToolBar(e)
   }
 
-  onHideToolBar(e: MouseEvent) {
+  onHideToolBar(e: Event | SingleTapEvent) {
     this.hideToolBar()
   }
 
-  private showToolBar(e: MouseEvent) {
+  private showToolBar(e: Event | SingleTapEvent) {
     if (includeClass(this.el, 'video-controls-hidden')) {
       removeClass(this.el, ['video-controls-hidden'])
       this.status = 'show'
     }
 
-    if (e.target === this.player.video) {
+    let target
+    if (e instanceof Event) target = e.target
+    else target = (e as SingleTapEvent).e.target
+
+    if (target === this.player.video) {
       this.timer = window.setTimeout(() => {
         this.hideToolBar()
       }, 3000)
