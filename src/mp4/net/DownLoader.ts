@@ -1,7 +1,7 @@
 import { Log } from 'mp4box'
-import HTTPRequest from '../../dash/net/HTTPRequest'
-import XHRLoaderFactory from '../../dash/net/XHRLoader'
-import { RequestHeader } from '../../types/dash/Net'
+import HTTPRequest from './HTTPRequest'
+import { XHRLoader } from './XHRLoader'
+import { RequestHeader } from '@/types/mp4'
 
 class DownLoader {
   isActive: boolean = false
@@ -15,9 +15,11 @@ class DownLoader {
   url: string = ''
   callback: Function = null
   eof: boolean = false
+  loader: XHRLoader
 
   constructor(url?: string) {
     this.url = url || ''
+    this.loader = new XHRLoader()
   }
 
   // 从开头去请求文件，也就是初始化文件的请求过程直到所有文件都请求完成
@@ -132,10 +134,7 @@ class DownLoader {
       return
     }
     let request = this.initHttpRequest()
-    // 单例 let loader = new XHRLoader({context: {}}, ...args)
-    let loader = XHRLoaderFactory({}).getInstance()
-    // console.log('当前发送请求的范围为: ', request.header.Range)
-    loader.load({
+    this.loader.load({
       request: request,
       error: error,
       success: success

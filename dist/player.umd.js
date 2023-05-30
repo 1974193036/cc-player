@@ -1201,17 +1201,17 @@
 
 	var construct$5 = path$k.Reflect.construct;
 
-	var parent$1s = construct$5;
+	var parent$1r = construct$5;
 
-	var construct$4 = parent$1s;
+	var construct$4 = parent$1r;
 
-	var parent$1r = construct$4;
+	var parent$1q = construct$4;
 
-	var construct$3 = parent$1r;
+	var construct$3 = parent$1q;
 
-	var parent$1q = construct$3;
+	var parent$1p = construct$3;
 
-	var construct$2 = parent$1q;
+	var construct$2 = parent$1p;
 
 	var construct$1 = construct$2;
 
@@ -1241,17 +1241,17 @@
 
 	var isArray$a = path$j.Array.isArray;
 
-	var parent$1p = isArray$a;
+	var parent$1o = isArray$a;
 
-	var isArray$9 = parent$1p;
+	var isArray$9 = parent$1o;
 
-	var parent$1o = isArray$9;
+	var parent$1n = isArray$9;
 
-	var isArray$8 = parent$1o;
+	var isArray$8 = parent$1n;
 
-	var parent$1n = isArray$8;
+	var parent$1m = isArray$8;
 
-	var isArray$7 = parent$1n;
+	var isArray$7 = parent$1m;
 
 	var isArray$6 = isArray$7;
 
@@ -2578,10 +2578,10 @@
 	  Iterators$2[COLLECTION_NAME] = Iterators$2.Array;
 	}
 
-	var parent$1m = symbol$5;
+	var parent$1l = symbol$5;
 
 
-	var symbol$4 = parent$1m;
+	var symbol$4 = parent$1l;
 
 	var defineWellKnownSymbol$7 = wellKnownSymbolDefine;
 
@@ -2589,11 +2589,11 @@
 	// https://github.com/tc39/proposal-explicit-resource-management
 	defineWellKnownSymbol$7('dispose');
 
-	var parent$1l = symbol$4;
+	var parent$1k = symbol$4;
 
 
 
-	var symbol$3 = parent$1l;
+	var symbol$3 = parent$1k;
 
 	var defineWellKnownSymbol$6 = wellKnownSymbolDefine;
 
@@ -2695,7 +2695,7 @@
 
 	defineWellKnownSymbol('replaceAll');
 
-	var parent$1k = symbol$3;
+	var parent$1j = symbol$3;
 
 
 
@@ -2707,7 +2707,7 @@
 
 
 
-	var symbol$2 = parent$1k;
+	var symbol$2 = parent$1j;
 
 	var symbol$1 = symbol$2;
 
@@ -2801,18 +2801,18 @@
 
 	var getIteratorMethod_1 = getIteratorMethod$9;
 
-	var parent$1j = getIteratorMethod_1;
+	var parent$1i = getIteratorMethod_1;
 
 
-	var getIteratorMethod$8 = parent$1j;
+	var getIteratorMethod$8 = parent$1i;
 
-	var parent$1i = getIteratorMethod$8;
+	var parent$1h = getIteratorMethod$8;
 
-	var getIteratorMethod$7 = parent$1i;
+	var getIteratorMethod$7 = parent$1h;
 
-	var parent$1h = getIteratorMethod$7;
+	var parent$1g = getIteratorMethod$7;
 
-	var getIteratorMethod$6 = parent$1h;
+	var getIteratorMethod$6 = parent$1g;
 
 	var getIteratorMethod$5 = getIteratorMethod$6;
 
@@ -2985,17 +2985,17 @@
 
 	var from$6 = path$g.Array.from;
 
-	var parent$1g = from$6;
+	var parent$1f = from$6;
 
-	var from$5 = parent$1g;
+	var from$5 = parent$1f;
 
-	var parent$1f = from$5;
+	var parent$1e = from$5;
 
-	var from$4 = parent$1f;
+	var from$4 = parent$1e;
 
-	var parent$1e = from$4;
+	var parent$1d = from$4;
 
-	var from$3 = parent$1e;
+	var from$3 = parent$1d;
 
 	var from$2 = from$3;
 
@@ -3076,17 +3076,17 @@
 	  return it === ArrayPrototype$7 || (isPrototypeOf$b(ArrayPrototype$7, it) && own === ArrayPrototype$7.slice) ? method$7 : own;
 	};
 
-	var parent$1d = slice$5;
+	var parent$1c = slice$5;
 
-	var slice$4 = parent$1d;
+	var slice$4 = parent$1c;
 
-	var parent$1c = slice$4;
+	var parent$1b = slice$4;
 
-	var slice$3 = parent$1c;
+	var slice$3 = parent$1b;
 
-	var parent$1b = slice$3;
+	var parent$1a = slice$3;
 
-	var slice$2 = parent$1b;
+	var slice$2 = parent$1a;
 
 	var slice$1 = slice$2;
 
@@ -3143,17 +3143,17 @@
 
 	var definePropertyExports = defineProperty$a.exports;
 
-	var parent$1a = definePropertyExports;
+	var parent$19 = definePropertyExports;
 
-	var defineProperty$7 = parent$1a;
+	var defineProperty$7 = parent$19;
 
-	var parent$19 = defineProperty$7;
+	var parent$18 = defineProperty$7;
 
-	var defineProperty$6 = parent$19;
+	var defineProperty$6 = parent$18;
 
-	var parent$18 = defineProperty$6;
+	var parent$17 = defineProperty$6;
 
-	var defineProperty$5 = parent$18;
+	var defineProperty$5 = parent$17;
 
 	var defineProperty$4 = defineProperty$5;
 
@@ -3165,18 +3165,18 @@
 
 	var iterator$5 = WrappedWellKnownSymbolModule$1.f('iterator');
 
-	var parent$17 = iterator$5;
+	var parent$16 = iterator$5;
 
 
-	var iterator$4 = parent$17;
+	var iterator$4 = parent$16;
 
-	var parent$16 = iterator$4;
+	var parent$15 = iterator$4;
 
-	var iterator$3 = parent$16;
+	var iterator$3 = parent$15;
 
-	var parent$15 = iterator$3;
+	var parent$14 = iterator$3;
 
-	var iterator$2 = parent$15;
+	var iterator$2 = parent$14;
 
 	var iterator$1 = iterator$2;
 
@@ -3198,17 +3198,17 @@
 
 	var toPrimitive$5 = WrappedWellKnownSymbolModule.f('toPrimitive');
 
-	var parent$14 = toPrimitive$5;
+	var parent$13 = toPrimitive$5;
 
-	var toPrimitive$4 = parent$14;
+	var toPrimitive$4 = parent$13;
 
-	var parent$13 = toPrimitive$4;
+	var parent$12 = toPrimitive$4;
 
-	var toPrimitive$3 = parent$13;
+	var toPrimitive$3 = parent$12;
 
-	var parent$12 = toPrimitive$3;
+	var parent$11 = toPrimitive$3;
 
-	var toPrimitive$2 = parent$12;
+	var toPrimitive$2 = parent$11;
 
 	var toPrimitive$1 = toPrimitive$2;
 
@@ -3276,17 +3276,17 @@
 	  return Object$2.create(P, D);
 	};
 
-	var parent$11 = create$8;
+	var parent$10 = create$8;
 
-	var create$7 = parent$11;
+	var create$7 = parent$10;
 
-	var parent$10 = create$7;
+	var parent$$ = create$7;
 
-	var create$6 = parent$10;
+	var create$6 = parent$$;
 
-	var parent$$ = create$6;
+	var parent$_ = create$6;
 
-	var create$5 = parent$$;
+	var create$5 = parent$_;
 
 	var create$4 = create$5;
 
@@ -3307,17 +3307,17 @@
 
 	var setPrototypeOf$6 = path$c.Object.setPrototypeOf;
 
-	var parent$_ = setPrototypeOf$6;
+	var parent$Z = setPrototypeOf$6;
 
-	var setPrototypeOf$5 = parent$_;
+	var setPrototypeOf$5 = parent$Z;
 
-	var parent$Z = setPrototypeOf$5;
+	var parent$Y = setPrototypeOf$5;
 
-	var setPrototypeOf$4 = parent$Z;
+	var setPrototypeOf$4 = parent$Y;
 
-	var parent$Y = setPrototypeOf$4;
+	var parent$X = setPrototypeOf$4;
 
-	var setPrototypeOf$3 = parent$Y;
+	var setPrototypeOf$3 = parent$X;
 
 	var setPrototypeOf$2 = setPrototypeOf$3;
 
@@ -3350,17 +3350,17 @@
 	  return it === FunctionPrototype || (isPrototypeOf$a(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$6 : own;
 	};
 
-	var parent$X = bind$k;
+	var parent$W = bind$k;
 
-	var bind$j = parent$X;
+	var bind$j = parent$W;
 
-	var parent$W = bind$j;
+	var parent$V = bind$j;
 
-	var bind$i = parent$W;
+	var bind$i = parent$V;
 
-	var parent$V = bind$i;
+	var parent$U = bind$i;
 
-	var bind$h = parent$V;
+	var bind$h = parent$U;
 
 	var bind$g = bind$h;
 
@@ -3423,17 +3423,17 @@
 
 	var getPrototypeOf$6 = path$b.Object.getPrototypeOf;
 
-	var parent$U = getPrototypeOf$6;
+	var parent$T = getPrototypeOf$6;
 
-	var getPrototypeOf$5 = parent$U;
+	var getPrototypeOf$5 = parent$T;
 
-	var parent$T = getPrototypeOf$5;
+	var parent$S = getPrototypeOf$5;
 
-	var getPrototypeOf$4 = parent$T;
+	var getPrototypeOf$4 = parent$S;
 
-	var parent$S = getPrototypeOf$4;
+	var parent$R = getPrototypeOf$4;
 
-	var getPrototypeOf$3 = parent$S;
+	var getPrototypeOf$3 = parent$R;
 
 	var getPrototypeOf$2 = getPrototypeOf$3;
 
@@ -3535,17 +3535,17 @@
 
 	var assign$6 = path$a.Object.assign;
 
-	var parent$R = assign$6;
+	var parent$Q = assign$6;
 
-	var assign$5 = parent$R;
+	var assign$5 = parent$Q;
 
-	var parent$Q = assign$5;
+	var parent$P = assign$5;
 
-	var assign$4 = parent$Q;
+	var assign$4 = parent$P;
 
-	var parent$P = assign$4;
+	var parent$O = assign$4;
 
-	var assign$3 = parent$P;
+	var assign$3 = parent$O;
 
 	var assign$2 = assign$3;
 
@@ -4083,14 +4083,14 @@
 
 	var map$c = path$9.Map;
 
-	var parent$O = map$c;
+	var parent$N = map$c;
 
 
-	var map$b = parent$O;
+	var map$b = parent$N;
 
-	var parent$N = map$b;
+	var parent$M = map$b;
 
-	var map$a = parent$N;
+	var map$a = parent$M;
 
 	// https://tc39.github.io/proposal-setmap-offrom/
 	var bind$c = functionBindContext;
@@ -4597,7 +4597,7 @@
 	  updateOrInsert: upsert
 	});
 
-	var parent$M = map$a;
+	var parent$L = map$a;
 
 
 
@@ -4621,7 +4621,7 @@
 	// TODO: remove from `core-js@4`
 
 
-	var map$9 = parent$M;
+	var map$9 = parent$L;
 
 	var map$8 = map$9;
 
@@ -4665,9 +4665,9 @@
 
 	var forEach$6 = entryVirtual$7('Array').forEach;
 
-	var parent$L = forEach$6;
+	var parent$K = forEach$6;
 
-	var forEach$5 = parent$L;
+	var forEach$5 = parent$K;
 
 	var classof$3 = classof$d;
 	var hasOwn$4 = hasOwnProperty_1;
@@ -4687,13 +4687,13 @@
 	    || hasOwn$4(DOMIterables, classof$3(it)) ? method$5 : own;
 	};
 
-	var parent$K = forEach$4;
+	var parent$J = forEach$4;
 
-	var forEach$3 = parent$K;
+	var forEach$3 = parent$J;
 
-	var parent$J = forEach$3;
+	var parent$I = forEach$3;
 
-	var forEach$2 = parent$J;
+	var forEach$2 = parent$I;
 
 	var forEach$1 = forEach$2;
 
@@ -4738,17 +4738,17 @@
 	  return it === ArrayPrototype$5 || (isPrototypeOf$6(ArrayPrototype$5, it) && own === ArrayPrototype$5.indexOf) ? method$4 : own;
 	};
 
-	var parent$I = indexOf$5;
+	var parent$H = indexOf$5;
 
-	var indexOf$4 = parent$I;
+	var indexOf$4 = parent$H;
 
-	var parent$H = indexOf$4;
+	var parent$G = indexOf$4;
 
-	var indexOf$3 = parent$H;
+	var indexOf$3 = parent$G;
 
-	var parent$G = indexOf$3;
+	var parent$F = indexOf$3;
 
-	var indexOf$2 = parent$G;
+	var indexOf$2 = parent$F;
 
 	var indexOf$1 = indexOf$2;
 
@@ -4827,17 +4827,17 @@
 
 	var _parseInt$6 = path$8.parseInt;
 
-	var parent$F = _parseInt$6;
+	var parent$E = _parseInt$6;
 
-	var _parseInt$5 = parent$F;
+	var _parseInt$5 = parent$E;
 
-	var parent$E = _parseInt$5;
+	var parent$D = _parseInt$5;
 
-	var _parseInt$4 = parent$E;
+	var _parseInt$4 = parent$D;
 
-	var parent$D = _parseInt$4;
+	var parent$C = _parseInt$4;
 
-	var _parseInt$3 = parent$D;
+	var _parseInt$3 = parent$C;
 
 	var _parseInt$2 = _parseInt$3;
 
@@ -4859,17 +4859,17 @@
 	  return it === ArrayPrototype$4 || (isPrototypeOf$5(ArrayPrototype$4, it) && own === ArrayPrototype$4.concat) ? method$3 : own;
 	};
 
-	var parent$C = concat$6;
+	var parent$B = concat$6;
 
-	var concat$5 = parent$C;
+	var concat$5 = parent$B;
 
-	var parent$B = concat$5;
+	var parent$A = concat$5;
 
-	var concat$4 = parent$B;
+	var concat$4 = parent$A;
 
-	var parent$A = concat$4;
+	var parent$z = concat$4;
 
-	var concat$3 = parent$A;
+	var concat$3 = parent$z;
 
 	var concat$2 = concat$3;
 
@@ -5172,17 +5172,17 @@
 	  return it === ArrayPrototype$3 || (isPrototypeOf$4(ArrayPrototype$3, it) && own === ArrayPrototype$3.filter) ? method$2 : own;
 	};
 
-	var parent$z = filter$5;
+	var parent$y = filter$5;
 
-	var filter$4 = parent$z;
+	var filter$4 = parent$y;
 
-	var parent$y = filter$4;
+	var parent$x = filter$4;
 
-	var filter$3 = parent$y;
+	var filter$3 = parent$x;
 
-	var parent$x = filter$3;
+	var parent$w = filter$3;
 
-	var filter$2 = parent$x;
+	var filter$2 = parent$w;
 
 	var filter$1 = filter$2;
 
@@ -5231,8 +5231,8 @@
 	  return BaseEvent;
 	}();
 
-	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Component = /*#__PURE__*/function (_BaseEvent) {
 	  _inherits(Component, _BaseEvent);
 	  var _super = _createSuper$o(Component);
@@ -5332,8 +5332,8 @@
 	  EVENT["VOLUME_PROGRESS_CLICK"] = "volume-progress-click";
 	})(EVENT || (EVENT = {}));
 
-	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Options = /*#__PURE__*/function (_Component) {
 	  _inherits(Options, _Component);
 	  var _super = _createSuper$n(Options);
@@ -6048,8 +6048,8 @@
 	document$3.getElementsByTagName = getElementsByTagName;
 	Object.setPrototypeOf(document$3, Document.prototype);
 
-	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullScreen = /*#__PURE__*/function (_Options) {
 	  _inherits(FullScreen, _Options);
 	  var _super = _createSuper$m(FullScreen);
@@ -6117,8 +6117,8 @@
 	  return FullScreen;
 	}(Options);
 
-	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PlayButton = /*#__PURE__*/function (_Component) {
 	  _inherits(PlayButton, _Component);
 	  var _super = _createSuper$l(PlayButton);
@@ -6208,8 +6208,8 @@
 	  return PlayButton;
 	}(Component);
 
-	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	/**
 	 * @description 播放速率的类
 	 */
@@ -6296,8 +6296,8 @@
 	  return Playrate;
 	}(Options);
 
-	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Volume = /*#__PURE__*/function (_Options) {
 	  _inherits(Volume, _Options);
 	  var _super = _createSuper$j(Volume);
@@ -6390,8 +6390,8 @@
 	  FullScreen: FullScreen
 	};
 
-	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Dot = /*#__PURE__*/function (_Component) {
 	  _inherits(Dot, _Component);
 	  var _super = _createSuper$i(Dot);
@@ -6480,7 +6480,7 @@
 	      this.player.video.addEventListener('touchend', function (e) {
 	        _this4.player.emit(EVENT.DOT_UP);
 	      });
-	      this.player.on('moveHorizontal', function (e) {
+	      this.player.on(EVENT.MOVE_HORIZONTAL, function (e) {
 	        var scale = (_this4.left + e.deltaX) / _this4.container.clientWidth;
 	        if (scale < 0) {
 	          scale = 0;
@@ -6492,7 +6492,7 @@
 	        if (_this4.player.video.paused) _this4.player.video.play();
 	        _this4.player.emit(EVENT.DOT_DRAG, scale, e);
 	      });
-	      this.player.on('slideHorizontal', function (e) {
+	      this.player.on(EVENT.SLIDE_HORIZONTAL, function (e) {
 	        _this4.player.emit(EVENT.DOT_UP);
 	        _this4.player.video.currentTime = Math.floor(_this4.playScale * _this4.player.video.duration);
 	      });
@@ -6547,8 +6547,8 @@
 	  return Dot;
 	}(Component);
 
-	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var CompletedProgress = /*#__PURE__*/function (_Component) {
 	  _inherits(CompletedProgress, _Component);
 	  var _super = _createSuper$h(CompletedProgress);
@@ -6614,8 +6614,8 @@
 	  return CompletedProgress;
 	}(Component);
 
-	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var BufferedProgress = /*#__PURE__*/function (_Component) {
 	  _inherits(BufferedProgress, _Component);
 	  var _super = _createSuper$g(BufferedProgress);
@@ -6686,8 +6686,8 @@
 	var css_248z$7 = ".video-progress {\n  width: 100%;\n  height: 3px;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #007aff;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
 	styleInject(css_248z$7);
 
-	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Progress = /*#__PURE__*/function (_Component) {
 	  _inherits(Progress, _Component);
 	  var _super = _createSuper$f(Progress);
@@ -6768,17 +6768,17 @@
 	  return it === ArrayPrototype$2 || (isPrototypeOf$3(ArrayPrototype$2, it) && own === ArrayPrototype$2.map) ? method$1 : own;
 	};
 
-	var parent$w = map$5;
+	var parent$v = map$5;
 
-	var map$4 = parent$w;
+	var map$4 = parent$v;
 
-	var parent$v = map$4;
+	var parent$u = map$4;
 
-	var map$3 = parent$v;
+	var map$3 = parent$u;
 
-	var parent$u = map$3;
+	var parent$t = map$3;
 
-	var map$2 = parent$u;
+	var map$2 = parent$t;
 
 	var map$1 = map$2;
 
@@ -6786,8 +6786,8 @@
 
 	var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map);
 
-	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullPage = /*#__PURE__*/function (_Options) {
 	  _inherits(FullPage, _Options);
 	  var _super = _createSuper$e(FullPage);
@@ -6854,8 +6854,8 @@
 	  return FullPage;
 	}(Options);
 
-	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PicInPic = /*#__PURE__*/function (_Options) {
 	  _inherits(PicInPic, _Options);
 	  var _super = _createSuper$d(PicInPic);
@@ -8666,17 +8666,17 @@
 
 	var url$5 = path$7.URL;
 
-	var parent$t = url$5;
+	var parent$s = url$5;
 
-	var url$4 = parent$t;
+	var url$4 = parent$s;
 
-	var parent$s = url$4;
+	var parent$r = url$4;
 
-	var url$3 = parent$s;
+	var url$3 = parent$r;
 
-	var parent$r = url$3;
+	var parent$q = url$3;
 
-	var url$2 = parent$r;
+	var url$2 = parent$q;
 
 	var url$1 = url$2;
 
@@ -8684,8 +8684,8 @@
 
 	var _URL = /*@__PURE__*/getDefaultExportFromCjs(url);
 
-	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ScreenShot = /*#__PURE__*/function (_Options) {
 	  _inherits(ScreenShot, _Options);
 	  var _super = _createSuper$c(ScreenShot);
@@ -8756,8 +8756,8 @@
 	  return ScreenShot;
 	}(Options);
 
-	function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubSetting = /*#__PURE__*/function (_Options) {
 	  _inherits(SubSetting, _Options);
 	  var _super = _createSuper$b(SubSetting);
@@ -8806,8 +8806,8 @@
 	  return Math.round(Math.atan(Math.abs(dy) / Math.abs(dx)) * 180 / Math.PI);
 	}
 
-	function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DutaionShow = /*#__PURE__*/function (_Component) {
 	  _inherits(DutaionShow, _Component);
 	  var _super = _createSuper$a(DutaionShow);
@@ -8863,8 +8863,8 @@
 	  return DutaionShow;
 	}(Component);
 
-	function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var VideoShot = /*#__PURE__*/function (_Options) {
 	  _inherits(VideoShot, _Options);
 	  var _super = _createSuper$9(VideoShot);
@@ -8979,8 +8979,8 @@
 	var css_248z$6 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  height: 140px;\n  padding-bottom: 8px;\n}\n.video-subsettings svg {\n  -webkit-transition: fill 0.15s ease-in-out;\n  transition: fill 0.15s ease-in-out;\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 5px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 3px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
 	styleInject(css_248z$6);
 
-	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Controller = /*#__PURE__*/function (_Component) {
 	  _inherits(Controller, _Component);
 	  var _super = _createSuper$8(Controller);
@@ -9096,8 +9096,8 @@
 	var css_248z$5 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: transparent;\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n}\n";
 	styleInject(css_248z$5);
 
-	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ToolBar = /*#__PURE__*/function (_Component) {
 	  _inherits(ToolBar, _Component);
 	  var _super = _createSuper$7(ToolBar);
@@ -17379,158 +17379,21 @@
 	  _classCallCheck(this, HTTPRequest);
 	  _defineProperty(this, "sendRequestTime", void 0);
 	  _defineProperty(this, "getResponseTime", void 0);
-	  _defineProperty(this, "url", '');
 	  _defineProperty(this, "header", void 0);
 	  _defineProperty(this, "method", void 0);
+	  _defineProperty(this, "url", '');
 	  _defineProperty(this, "responseType", void 0);
 	  _defineProperty(this, "xhr", void 0);
-	  this.sendRequestTime = new Date().getTime();
 	  this.url = config.url;
 	  this.header = config.header;
 	  this.method = config.method;
-	  this.responseType = config.responseType;
+	  this.responseType = config.responseType || 'arraybuffer';
 	  this.xhr = config.xhr;
 	});
 
-	function _isNativeReflectConstruct$7() {
-	  if (typeof Reflect === "undefined" || !_Reflect$construct) return false;
-	  if (_Reflect$construct.sham) return false;
-	  if (typeof Proxy === "function") return true;
-	  try {
-	    Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {}));
-	    return true;
-	  } catch (e) {
-	    return false;
-	  }
-	}
-
-	function _construct(Parent, args, Class) {
-	  if (_isNativeReflectConstruct$7()) {
-	    var _context;
-	    _construct = _bindInstanceProperty(_context = _Reflect$construct).call(_context);
-	  } else {
-	    _construct = function _construct(Parent, args, Class) {
-	      var a = [null];
-	      a.push.apply(a, args);
-	      var Constructor = _bindInstanceProperty(Function).apply(Parent, a);
-	      var instance = new Constructor();
-	      if (Class) _setPrototypeOf(instance, Class.prototype);
-	      return instance;
-	    };
-	  }
-	  return _construct.apply(null, arguments);
-	}
-
-	var FactoryMaker = function () {
-	  var FactoryMaker = /*#__PURE__*/function () {
-	    function FactoryMaker() {
-	      _classCallCheck(this, FactoryMaker);
-	      _defineProperty(this, "__class_factoryMap", void 0);
-	      _defineProperty(this, "__single_factoryMap", void 0);
-	      _defineProperty(this, "__single_instanceMap", void 0);
-	      this.__class_factoryMap = {};
-	      this.__single_factoryMap = {};
-	      this.__single_instanceMap = {};
-	    }
-	    _createClass(FactoryMaker, [{
-	      key: "getClassFactory",
-	      value: function getClassFactory(classConstructor) {
-	        var factory = this.__class_factoryMap[classConstructor.name];
-	        var ctx = this;
-	        if (!factory) {
-	          // context为调用factory函数时传入的上下文，也就是函数的执行环境
-	          factory = function factory(context) {
-	            if (!context) context = {};
-	            return {
-	              create: function create() {
-	                var _context;
-	                for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-	                  args[_key] = arguments[_key];
-	                }
-	                return ctx.merge.apply(ctx, _concatInstanceProperty(_context = [classConstructor, context]).call(_context, args));
-	              }
-	            };
-	          };
-	          this.__class_factoryMap[classConstructor.name] = factory;
-	        }
-	        return factory;
-	      }
-	    }, {
-	      key: "getSingleFactory",
-	      value: function getSingleFactory(classConstructor) {
-	        var factory = this.__single_factoryMap[classConstructor.name];
-	        var ctx = this;
-	        if (!factory) {
-	          factory = function factory(context) {
-	            if (!context) context = {};
-	            return {
-	              getInstance: function getInstance() {
-	                var instance = ctx.__single_instanceMap[classConstructor.name];
-	                if (!instance) {
-	                  var _context2;
-	                  for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	                    args[_key2] = arguments[_key2];
-	                  }
-	                  instance = _construct(classConstructor, _concatInstanceProperty(_context2 = [{
-	                    context: context
-	                  }]).call(_context2, args));
-	                  ctx.__single_instanceMap[classConstructor.name] = instance;
-	                }
-	                return instance;
-	              }
-	            };
-	          };
-	        }
-	        return factory;
-	      }
-	    }, {
-	      key: "merge",
-	      value: function merge(classConstructor, context) {
-	        var extensionObject = context[classConstructor.name];
-	        for (var _len3 = arguments.length, args = new Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
-	          args[_key3 - 2] = arguments[_key3];
-	        }
-	        if (extensionObject) {
-	          // 如果获取到的上下文的属性classConstructor.name对应的对象上具有覆写（override）属性，则意味着需要覆写classConstructor上对应的属性
-	          if (extensionObject.override) {
-	            var _context3;
-	            var instance = _construct(classConstructor, _concatInstanceProperty(_context3 = [{
-	              context: context
-	            }]).call(_context3, args));
-	            var override = new extensionObject.instance({
-	              context: context,
-	              parent: instance
-	            });
-	            for (var props in override) {
-	              if (instance.hasOwnProperty(props)) {
-	                instance[props] = parent[props];
-	              }
-	            }
-	          } else {
-	            // 如果不需要覆写，则意味着直接拿context中传入的构造函数来替换这个构造函数
-	            return new extensionObject.instance({
-	              context: context
-	            });
-	          }
-	        } else {
-	          var _context4;
-	          return _construct(classConstructor, _concatInstanceProperty(_context4 = [{
-	            context: context
-	          }]).call(_context4, args));
-	        }
-	      }
-	    }]);
-	    return FactoryMaker;
-	  }();
-	  return new FactoryMaker();
-	}();
-
 	var XHRLoader = /*#__PURE__*/function () {
-	  function XHRLoader(ctx) {
+	  function XHRLoader() {
 	    _classCallCheck(this, XHRLoader);
-	    _defineProperty(this, "config", {});
-	    this.config = ctx.context;
-	    this.setup();
 	  }
 	  _createClass(XHRLoader, [{
 	    key: "setup",
@@ -17547,7 +17410,7 @@
 	        request.xhr = xhr;
 	      }
 	      xhr.open(request.method || 'get', request.url);
-	      xhr.responseType = request.responseType || 'arraybuffer';
+	      xhr.responseType = request.responseType;
 	      if (request.header) {
 	        for (var key in request.header) {
 	          xhr.setRequestHeader(key, request.header[key]);
@@ -17576,7 +17439,6 @@
 	  }]);
 	  return XHRLoader;
 	}();
-	var factory = FactoryMaker.getSingleFactory(XHRLoader);
 
 	var DownLoader = /*#__PURE__*/function () {
 	  function DownLoader(url) {
@@ -17592,7 +17454,9 @@
 	    _defineProperty(this, "url", '');
 	    _defineProperty(this, "callback", null);
 	    _defineProperty(this, "eof", false);
+	    _defineProperty(this, "loader", void 0);
 	    this.url = url || '';
+	    this.loader = new XHRLoader();
 	  }
 	  // 从开头去请求文件，也就是初始化文件的请求过程直到所有文件都请求完成
 	  _createClass(DownLoader, [{
@@ -17719,10 +17583,7 @@
 	        return;
 	      }
 	      var request = this.initHttpRequest();
-	      // 单例 let loader = new XHRLoader({context: {}}, ...args)
-	      var loader = factory({}).getInstance();
-	      // console.log('当前发送请求的范围为: ', request.header.Range)
-	      loader.load({
+	      this.loader.load({
 	        request: request,
 	        error: error,
 	        success: success
@@ -18135,17 +17996,17 @@
 	  } return own;
 	};
 
-	var parent$q = includes$5;
+	var parent$p = includes$5;
 
-	var includes$4 = parent$q;
+	var includes$4 = parent$p;
 
-	var parent$p = includes$4;
+	var parent$o = includes$4;
 
-	var includes$3 = parent$p;
+	var includes$3 = parent$o;
 
-	var parent$o = includes$3;
+	var parent$n = includes$3;
 
-	var includes$2 = parent$o;
+	var includes$2 = parent$n;
 
 	var includes$1 = includes$2;
 
@@ -18454,8 +18315,8 @@
 	    value: function initEvent() {
 	      var _this2 = this;
 	      var width = this.completedBox.clientWidth;
-	      this.player.on('moveVertical', function (e) {
-	        console.log('正在滑动');
+	      this.player.on(EVENT.MOVE_VERTICAL, function (e) {
+	        // console.log('正在滑动')
 	        if (_this2.timer) {
 	          window.clearInterval(_this2.timer);
 	        }
@@ -18472,14 +18333,14 @@
 	        _this2.completedBox.style.width = scale * 100 + '%';
 	        _this2.player.video.volume = scale;
 	      });
-	      this.player.on('slideVertical', function (e) {
-	        console.log('滑动结束');
+	      this.player.on(EVENT.SLIDE_VERTICAL, function (e) {
+	        // console.log('滑动结束')
 	        width = _this2.completedBox.clientWidth;
 	        _this2.timer = window.setTimeout(function () {
 	          _this2.el.style.display = 'none';
 	        }, 600);
 	      });
-	      this.player.on('videoClick', function () {
+	      this.player.on(EVENT.VIDEO_CLICK, function () {
 	        _this2.el.style.display = 'none';
 	      });
 	    }
@@ -19002,17 +18863,17 @@
 
 	var keys$5 = path$6.Object.keys;
 
-	var parent$n = keys$5;
+	var parent$m = keys$5;
 
-	var keys$4 = parent$n;
+	var keys$4 = parent$m;
 
-	var parent$m = keys$4;
+	var parent$l = keys$4;
 
-	var keys$3 = parent$m;
+	var keys$3 = parent$l;
 
-	var parent$l = keys$3;
+	var parent$k = keys$3;
 
-	var keys$2 = parent$l;
+	var keys$2 = parent$k;
 
 	var keys$1 = keys$2;
 
@@ -19024,17 +18885,17 @@
 
 	var getOwnPropertySymbols$5 = path$5.Object.getOwnPropertySymbols;
 
-	var parent$k = getOwnPropertySymbols$5;
+	var parent$j = getOwnPropertySymbols$5;
 
-	var getOwnPropertySymbols$4 = parent$k;
+	var getOwnPropertySymbols$4 = parent$j;
 
-	var parent$j = getOwnPropertySymbols$4;
+	var parent$i = getOwnPropertySymbols$4;
 
-	var getOwnPropertySymbols$3 = parent$j;
+	var getOwnPropertySymbols$3 = parent$i;
 
-	var parent$i = getOwnPropertySymbols$3;
+	var parent$h = getOwnPropertySymbols$3;
 
-	var getOwnPropertySymbols$2 = parent$i;
+	var getOwnPropertySymbols$2 = parent$h;
 
 	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
 
@@ -19072,17 +18933,17 @@
 
 	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$8.exports;
 
-	var parent$h = getOwnPropertyDescriptorExports;
+	var parent$g = getOwnPropertyDescriptorExports;
 
-	var getOwnPropertyDescriptor$6 = parent$h;
+	var getOwnPropertyDescriptor$6 = parent$g;
 
-	var parent$g = getOwnPropertyDescriptor$6;
+	var parent$f = getOwnPropertyDescriptor$6;
 
-	var getOwnPropertyDescriptor$5 = parent$g;
+	var getOwnPropertyDescriptor$5 = parent$f;
 
-	var parent$f = getOwnPropertyDescriptor$5;
+	var parent$e = getOwnPropertyDescriptor$5;
 
-	var getOwnPropertyDescriptor$4 = parent$f;
+	var getOwnPropertyDescriptor$4 = parent$e;
 
 	var getOwnPropertyDescriptor$3 = getOwnPropertyDescriptor$4;
 
@@ -19134,17 +18995,17 @@
 
 	var getOwnPropertyDescriptors$5 = path$3.Object.getOwnPropertyDescriptors;
 
-	var parent$e = getOwnPropertyDescriptors$5;
+	var parent$d = getOwnPropertyDescriptors$5;
 
-	var getOwnPropertyDescriptors$4 = parent$e;
+	var getOwnPropertyDescriptors$4 = parent$d;
 
-	var parent$d = getOwnPropertyDescriptors$4;
+	var parent$c = getOwnPropertyDescriptors$4;
 
-	var getOwnPropertyDescriptors$3 = parent$d;
+	var getOwnPropertyDescriptors$3 = parent$c;
 
-	var parent$c = getOwnPropertyDescriptors$3;
+	var parent$b = getOwnPropertyDescriptors$3;
 
-	var getOwnPropertyDescriptors$2 = parent$c;
+	var getOwnPropertyDescriptors$2 = parent$b;
 
 	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
 
@@ -19188,17 +19049,17 @@
 
 	var _parseFloat$6 = path$2.parseFloat;
 
-	var parent$b = _parseFloat$6;
+	var parent$a = _parseFloat$6;
 
-	var _parseFloat$5 = parent$b;
+	var _parseFloat$5 = parent$a;
 
-	var parent$a = _parseFloat$5;
+	var parent$9 = _parseFloat$5;
 
-	var _parseFloat$4 = parent$a;
+	var _parseFloat$4 = parent$9;
 
-	var parent$9 = _parseFloat$4;
+	var parent$8 = _parseFloat$4;
 
-	var _parseFloat$3 = parent$9;
+	var _parseFloat$3 = parent$8;
 
 	var _parseFloat$2 = _parseFloat$3;
 
@@ -19322,17 +19183,17 @@
 	  return it === ArrayPrototype || (isPrototypeOf$1(ArrayPrototype, it) && own === ArrayPrototype.splice) ? method : own;
 	};
 
-	var parent$8 = splice$5;
+	var parent$7 = splice$5;
 
-	var splice$4 = parent$8;
+	var splice$4 = parent$7;
 
-	var parent$7 = splice$4;
+	var parent$6 = splice$4;
 
-	var splice$3 = parent$7;
+	var splice$3 = parent$6;
 
-	var parent$6 = splice$3;
+	var parent$5 = splice$3;
 
-	var splice$2 = parent$6;
+	var splice$2 = parent$5;
 
 	var splice$1 = splice$2;
 
@@ -20344,14 +20205,14 @@
 
 	var promise$5 = path$1.Promise;
 
-	var parent$5 = promise$5;
+	var parent$4 = promise$5;
 
 
-	var promise$4 = parent$5;
+	var promise$4 = parent$4;
 
-	var parent$4 = promise$4;
+	var parent$3 = promise$4;
 
-	var promise$3 = parent$4;
+	var promise$3 = parent$3;
 
 	// TODO: Remove from `core-js@4`
 	var $$2 = _export;
@@ -20369,14 +20230,14 @@
 	  }
 	});
 
-	var parent$3 = promise$3;
+	var parent$2 = promise$3;
 
 	// TODO: Remove from `core-js@4`
 
 
 
 
-	var promise$2 = parent$3;
+	var promise$2 = parent$2;
 
 	var promise$1 = promise$2;
 
@@ -20447,13 +20308,13 @@
 
 	var setImmediate$4 = path.setImmediate;
 
-	var parent$2 = setImmediate$4;
+	var parent$1 = setImmediate$4;
 
-	var setImmediate$3 = parent$2;
+	var setImmediate$3 = parent$1;
 
-	var parent$1 = setImmediate$3;
+	var parent = setImmediate$3;
 
-	var setImmediate$2 = parent$1;
+	var setImmediate$2 = parent;
 
 	var setImmediate$1 = setImmediate$2;
 
@@ -21017,13 +20878,19 @@
 	exports.DanmakuInput = DanmakuInput;
 	exports.DanmakuSettings = DanmakuSettings;
 	exports.Dot = Dot;
+	exports.DutaionShow = DutaionShow;
+	exports.FullPage = FullPage;
 	exports.FullScreen = FullScreen;
 	exports.Options = Options;
+	exports.PicInPic = PicInPic;
 	exports.PlayButton = PlayButton;
 	exports.Player = Player;
 	exports.Playrate = Playrate;
 	exports.Progress = Progress;
+	exports.ScreenShot = ScreenShot;
+	exports.SubSetting = SubSetting;
 	exports.ToolBar = ToolBar;
+	exports.VideoShot = VideoShot;
 	exports.Volume = Volume;
 	exports.addZero = addZero;
 	exports.computeAngle = computeAngle;

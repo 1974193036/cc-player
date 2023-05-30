@@ -4,6 +4,7 @@ import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { $, addClass, createSvg } from '@/utils/domUtils'
 import { volumePath$1 } from '../Controller/path/defaultPath'
 import { MoveEvent, SwipeEvent } from 'ntouch.js'
+import { EVENT } from "@/events";
 import './index.less'
 
 export class MobileVolume extends Component implements ComponentItem {
@@ -50,8 +51,8 @@ export class MobileVolume extends Component implements ComponentItem {
 
   initEvent() {
     let width = this.completedBox.clientWidth
-    this.player.on('moveVertical', (e: MoveEvent) => {
-      console.log('正在滑动')
+    this.player.on(EVENT.MOVE_VERTICAL, (e: MoveEvent) => {
+      // console.log('正在滑动')
       if (this.timer) {
         window.clearInterval(this.timer)
       }
@@ -69,15 +70,15 @@ export class MobileVolume extends Component implements ComponentItem {
       this.player.video.volume = scale
     })
 
-    this.player.on('slideVertical', (e: SwipeEvent) => {
-      console.log('滑动结束')
+    this.player.on(EVENT.SLIDE_VERTICAL, (e: SwipeEvent) => {
+      // console.log('滑动结束')
       width = this.completedBox.clientWidth
       this.timer = window.setTimeout(() => {
         this.el.style.display = 'none'
       }, 600)
     })
 
-    this.player.on('videoClick', () => {
+    this.player.on(EVENT.VIDEO_CLICK, () => {
       this.el.style.display = 'none'
     })
   }
