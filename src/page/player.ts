@@ -38,9 +38,10 @@ class Player extends Component implements ComponentItem {
   topbar: TopBar
   loading: TimeLoading
   error: ErrorLoading
+  mask: HTMLElement
   containerWidth: number
   containerHeight: number
-  mediaProportion: number = 0 // 视频比例 原始高度/原始宽度
+  mediaProportion: number = 9 / 16 // 视频比例 原始高度/原始宽度
 
   constructor(options: PlayerOptions) {
     super(options.container, 'div.video-wrapper')
@@ -65,8 +66,8 @@ class Player extends Component implements ComponentItem {
       this.video = $('video')
       this.video['playsinline'] = true // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
       this.video['x5-video-player-type'] = 'h5' // 启用H5播放器,是wechat安卓版特性
-      this.video.crossOrigin = 'anonymous'
     }
+    this.video.crossOrigin = 'anonymous'
 
     this.el.appendChild(this.video)
     this.playerOptions?.url && this.attachSource(this.playerOptions.url)
@@ -169,13 +170,14 @@ class Player extends Component implements ComponentItem {
     // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
     if (this.mediaProportion !== 0) {
       // 容器宽度偏小，高度偏大
-      if (this.container.clientHeight / this.container.clientWidth > this.mediaProportion) {
+      if (this.el.clientHeight / this.el.clientWidth > this.mediaProportion) {
         this.video.style.width = '100%'
-        this.video.style.height = (this.container.clientWidth * 9) / 16 + 5 + 'px'
+        this.video.style.height =
+          this.el.clientWidth * this.mediaProportion + 0.05 * this.el.clientWidth + 'px'
       } else {
         // 容器宽度偏大，高度偏小（类似带鱼屏）
         this.video.style.height = '100%'
-        this.video.style.width = this.container.clientHeight / this.mediaProportion + 'px'
+        this.video.style.width = this.el.clientHeight / this.mediaProportion + 'px'
       }
     }
   }
@@ -293,7 +295,7 @@ class Player extends Component implements ComponentItem {
   }
 
   initPCEvent(): void {
-    this.el.onclick = (e) => {
+    this.video.onclick = (e) => {
       if (this.video.paused) {
         this.video.play()
       } else if (this.video.played) {
@@ -316,7 +318,7 @@ class Player extends Component implements ComponentItem {
 
   initMobileEvent(): void {
     // 单击
-    wrap(this.el).addEventListener('singleTap', (e) => {
+    wrap(this.video).addEventListener('singleTap', (e) => {
       // console.log(e, 'singletap')
       if (this.toolBar.status === 'hidden') {
         this.emit(EVENT.SHOW_TOOLBAR, e)
@@ -327,7 +329,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 双击
-    wrap(this.el).addEventListener('doubleTap', (e) => {
+    wrap(this.video).addEventListener('doubleTap', (e) => {
       // console.log(e, 'doubleTap')
       if (this.video.paused) {
         this.video.play()
@@ -337,7 +339,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 手势上下处于滑动中
-    wrap(this.el).addEventListener('move', (e) => {
+    wrap(this.video).addEventListener('move', (e) => {
       // console.log(e, 'move')
       let dx = e.deltaX
       let dy = e.deltaY
@@ -349,7 +351,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 手势上下滑动结束
-    wrap(this.el).addEventListener('swipe', (e) => {
+    wrap(this.video).addEventListener('swipe', (e) => {
       // console.log(e, 'swipe')
       let dx = e.endPos.x - e.startPos.x
       let dy = e.endPos.y - e.startPos.y

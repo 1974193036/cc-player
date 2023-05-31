@@ -6197,7 +6197,7 @@
 	    value: function initEvent() {
 	      var _this2 = this;
 	      this.player.on(EVENT.VOLUME_PROGRESS_CLICK, function (e, ctx) {
-	        var eoffsetY = e.pageY - getDOMPoint(_this2.volumeProgress).y;
+	        var eoffsetY = e.clientY - getDOMPoint(_this2.volumeProgress).y;
 	        var offsetY = _this2.volumeProgress.clientHeight - eoffsetY;
 	        var scale = offsetY / _this2.volumeProgress.clientHeight;
 	        if (scale < 0) {
@@ -6211,6 +6211,7 @@
 	        _this2.player.video.volume = _this2.volume;
 	      });
 	      this.volumeProgress.onclick = function (e) {
+	        e.stopPropagation();
 	        _this2.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, _this2);
 	      };
 	    }
@@ -6677,18 +6678,12 @@
 	    key: "onClick",
 	    value: function onClick(e) {
 	      if (!this.isFullPage) {
-	        addClass(this.player.container, ['video-fullpage']);
-	        this.player.container.style.position = 'fixed';
-	        this.player.container.style.width = '100%';
-	        this.player.container.style.height = '100%';
+	        addClass(this.player.el, ['video-wrapper-fullpage']);
 	        this.iconBox.removeChild(this.icon);
 	        this.icon = createSvg(fullPageExitPath);
 	        this.iconBox.appendChild(this.icon);
 	      } else {
-	        removeClass(this.player.container, ['video-fullpage']);
-	        this.player.container.style.position = '';
-	        this.player.container.style.width = this.player.containerWidth + 'px';
-	        this.player.container.style.height = this.player.containerHeight + 'px';
+	        removeClass(this.player.el, ['video-wrapper-fullpage']);
 	        this.iconBox.removeChild(this.icon);
 	        this.icon = createSvg(fullPagePath);
 	        this.iconBox.appendChild(this.icon);
@@ -18229,7 +18224,7 @@
 	  return MobileVolume;
 	}(Component);
 
-	var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.video-wrapper:focus {\n  outline: none;\n}\n.video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.video-wrapper video:focus {\n  outline: none;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
+	var css_248z$1 = ".video-wrapper-fullpage {\n  position: fixed!important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.video-wrapper:focus {\n  outline: none;\n}\n.video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.video-wrapper video:focus {\n  outline: none;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
 	styleInject(css_248z$1);
 
 	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -18255,9 +18250,10 @@
 	    _defineProperty(_assertThisInitialized(_this), "topbar", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "loading", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "error", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mask", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "containerWidth", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "containerHeight", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mediaProportion", 0);
+	    _defineProperty(_assertThisInitialized(_this), "mediaProportion", 9 / 16);
 	    _this.playerOptions = _Object$assign({
 	      autoPlay: false,
 	      streamPlay: false
@@ -18279,8 +18275,9 @@
 	        this.video = $$q('video');
 	        this.video['playsinline'] = true; // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
 	        this.video['x5-video-player-type'] = 'h5'; // 启用H5播放器,是wechat安卓版特性
-	        this.video.crossOrigin = 'anonymous';
 	      }
+
+	      this.video.crossOrigin = 'anonymous';
 	      this.el.appendChild(this.video);
 	      ((_this$playerOptions = this.playerOptions) === null || _this$playerOptions === void 0 ? void 0 : _this$playerOptions.url) && this.attachSource(this.playerOptions.url);
 	      this.initComponent();
@@ -18385,13 +18382,13 @@
 	      // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
 	      if (this.mediaProportion !== 0) {
 	        // 容器宽度偏小，高度偏大
-	        if (this.container.clientHeight / this.container.clientWidth > this.mediaProportion) {
+	        if (this.el.clientHeight / this.el.clientWidth > this.mediaProportion) {
 	          this.video.style.width = '100%';
-	          this.video.style.height = this.container.clientWidth * 9 / 16 + 5 + 'px';
+	          this.video.style.height = this.el.clientWidth * this.mediaProportion + 0.05 * this.el.clientWidth + 'px';
 	        } else {
 	          // 容器宽度偏大，高度偏小（类似带鱼屏）
 	          this.video.style.height = '100%';
-	          this.video.style.width = this.container.clientHeight / this.mediaProportion + 'px';
+	          this.video.style.width = this.el.clientHeight / this.mediaProportion + 'px';
 	        }
 	      }
 	    }
@@ -18499,7 +18496,7 @@
 	    key: "initPCEvent",
 	    value: function initPCEvent() {
 	      var _this4 = this;
-	      this.el.onclick = function (e) {
+	      this.video.onclick = function (e) {
 	        if (_this4.video.paused) {
 	          _this4.video.play();
 	        } else if (_this4.video.played) {
@@ -18521,7 +18518,7 @@
 	    value: function initMobileEvent() {
 	      var _this5 = this;
 	      // 单击
-	      wrap(this.el).addEventListener('singleTap', function (e) {
+	      wrap(this.video).addEventListener('singleTap', function (e) {
 	        // console.log(e, 'singletap')
 	        if (_this5.toolBar.status === 'hidden') {
 	          _this5.emit(EVENT.SHOW_TOOLBAR, e);
@@ -18531,7 +18528,7 @@
 	        _this5.emit(EVENT.VIDEO_CLICK);
 	      });
 	      // 双击
-	      wrap(this.el).addEventListener('doubleTap', function (e) {
+	      wrap(this.video).addEventListener('doubleTap', function (e) {
 	        // console.log(e, 'doubleTap')
 	        if (_this5.video.paused) {
 	          _this5.video.play();
@@ -18540,7 +18537,7 @@
 	        }
 	      });
 	      // 手势上下处于滑动中
-	      wrap(this.el).addEventListener('move', function (e) {
+	      wrap(this.video).addEventListener('move', function (e) {
 	        // console.log(e, 'move')
 	        var dx = e.deltaX;
 	        var dy = e.deltaY;
@@ -18551,7 +18548,7 @@
 	        }
 	      });
 	      // 手势上下滑动结束
-	      wrap(this.el).addEventListener('swipe', function (e) {
+	      wrap(this.video).addEventListener('swipe', function (e) {
 	        // console.log(e, 'swipe')
 	        var dx = e.endPos.x - e.startPos.x;
 	        var dy = e.endPos.y - e.startPos.y;

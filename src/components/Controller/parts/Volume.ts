@@ -56,7 +56,7 @@ export class Volume extends Options {
 
   initEvent() {
     this.player.on(EVENT.VOLUME_PROGRESS_CLICK, (e: MouseEvent, ctx: Volume) => {
-      let eoffsetY = e.pageY - getDOMPoint(this.volumeProgress).y
+      let eoffsetY = e.clientY - getDOMPoint(this.volumeProgress).y
       let offsetY = this.volumeProgress.clientHeight - eoffsetY
       let scale = offsetY / this.volumeProgress.clientHeight
       if (scale < 0) {
@@ -71,6 +71,7 @@ export class Volume extends Options {
     })
 
     this.volumeProgress.onclick = (e) => {
+      e.stopPropagation()
       this.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, this)
     }
   }
