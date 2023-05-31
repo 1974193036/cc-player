@@ -4756,95 +4756,6 @@
 
 	var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
 
-	// a string of all valid unicode whitespaces
-	var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
-	  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-
-	var uncurryThis$8 = functionUncurryThis;
-	var requireObjectCoercible$1 = requireObjectCoercible$5;
-	var toString$5 = toString$b;
-	var whitespaces$2 = whitespaces$3;
-
-	var replace$4 = uncurryThis$8(''.replace);
-	var ltrim = RegExp('^[' + whitespaces$2 + ']+');
-	var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
-
-	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
-	var createMethod = function (TYPE) {
-	  return function ($this) {
-	    var string = toString$5(requireObjectCoercible$1($this));
-	    if (TYPE & 1) string = replace$4(string, ltrim, '');
-	    if (TYPE & 2) string = replace$4(string, rtrim, '$1');
-	    return string;
-	  };
-	};
-
-	var stringTrim = {
-	  // `String.prototype.{ trimLeft, trimStart }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
-	  start: createMethod(1),
-	  // `String.prototype.{ trimRight, trimEnd }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
-	  end: createMethod(2),
-	  // `String.prototype.trim` method
-	  // https://tc39.es/ecma262/#sec-string.prototype.trim
-	  trim: createMethod(3)
-	};
-
-	var global$c = global$r;
-	var fails$9 = fails$x;
-	var uncurryThis$7 = functionUncurryThis;
-	var toString$4 = toString$b;
-	var trim$1 = stringTrim.trim;
-	var whitespaces$1 = whitespaces$3;
-
-	var $parseInt$1 = global$c.parseInt;
-	var Symbol$2 = global$c.Symbol;
-	var ITERATOR$3 = Symbol$2 && Symbol$2.iterator;
-	var hex = /^[+-]?0x/i;
-	var exec$2 = uncurryThis$7(hex.exec);
-	var FORCED$2 = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
-	  // MS Edge 18- broken with boxed symbols
-	  || (ITERATOR$3 && !fails$9(function () { $parseInt$1(Object(ITERATOR$3)); }));
-
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
-	  var S = trim$1(toString$4(string));
-	  return $parseInt$1(S, (radix >>> 0) || (exec$2(hex, S) ? 16 : 10));
-	} : $parseInt$1;
-
-	var $$q = _export;
-	var $parseInt = numberParseInt;
-
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	$$q({ global: true, forced: parseInt != $parseInt }, {
-	  parseInt: $parseInt
-	});
-
-	var path$8 = path$n;
-
-	var _parseInt$6 = path$8.parseInt;
-
-	var parent$E = _parseInt$6;
-
-	var _parseInt$5 = parent$E;
-
-	var parent$D = _parseInt$5;
-
-	var _parseInt$4 = parent$D;
-
-	var parent$C = _parseInt$4;
-
-	var _parseInt$3 = parent$C;
-
-	var _parseInt$2 = _parseInt$3;
-
-	var _parseInt = _parseInt$2;
-
-	var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
-
 	var entryVirtual$5 = entryVirtual$a;
 
 	var concat$7 = entryVirtual$5('Array').concat;
@@ -4859,17 +4770,17 @@
 	  return it === ArrayPrototype$4 || (isPrototypeOf$5(ArrayPrototype$4, it) && own === ArrayPrototype$4.concat) ? method$3 : own;
 	};
 
-	var parent$B = concat$6;
+	var parent$E = concat$6;
 
-	var concat$5 = parent$B;
+	var concat$5 = parent$E;
 
-	var parent$A = concat$5;
+	var parent$D = concat$5;
 
-	var concat$4 = parent$A;
+	var concat$4 = parent$D;
 
-	var parent$z = concat$4;
+	var parent$C = concat$4;
 
-	var concat$3 = parent$z;
+	var concat$3 = parent$C;
 
 	var concat$2 = concat$3;
 
@@ -4904,11 +4815,11 @@
 	 * @param pageY
 	 * @returns {boolean}
 	 */
-	function checkIsMouseInRange(parent, topChild, pageX, pageY) {
+	function checkIsMouseInRange(parent, topChild, bottom, pageX, pageY) {
 	  var _getDOMPoint = getDOMPoint(parent),
 	    x = _getDOMPoint.x,
 	    y = _getDOMPoint.y;
-	  var allTop = y - _parseInt$1(topChild.style.bottom) - topChild.clientHeight;
+	  var allTop = y - bottom - topChild.clientHeight;
 	  var allBottom = y + parent.clientHeight;
 	  var allLeft = x + Math.round(parent.clientWidth / 2) - Math.round(topChild.clientWidth / 2);
 	  var allRight = x + Math.round(parent.clientWidth / 2) + Math.round(topChild.clientWidth / 2);
@@ -4926,7 +4837,7 @@
 	 * @param {Node[]} children
 	 * @returns
 	 */
-	function $$p(desc, props, children) {
+	function $$q(desc, props, children) {
 	  var match = [];
 	  var regArray = SELECTOR_REG.exec(desc);
 	  // /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/.exec('div#app.a.b')
@@ -5143,7 +5054,7 @@
 	  return fn.bind(context);
 	}
 
-	var $$o = _export;
+	var $$p = _export;
 	var $filter = arrayIteration.filter;
 	var arrayMethodHasSpeciesSupport$2 = arrayMethodHasSpeciesSupport$5;
 
@@ -5152,7 +5063,7 @@
 	// `Array.prototype.filter` method
 	// https://tc39.es/ecma262/#sec-array.prototype.filter
 	// with adding support of @@species
-	$$o({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
+	$$p({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
 	  filter: function filter(callbackfn /* , thisArg */) {
 	    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	  }
@@ -5172,17 +5083,17 @@
 	  return it === ArrayPrototype$3 || (isPrototypeOf$4(ArrayPrototype$3, it) && own === ArrayPrototype$3.filter) ? method$2 : own;
 	};
 
-	var parent$y = filter$5;
+	var parent$B = filter$5;
 
-	var filter$4 = parent$y;
+	var filter$4 = parent$B;
 
-	var parent$x = filter$4;
+	var parent$A = filter$4;
 
-	var filter$3 = parent$x;
+	var filter$3 = parent$A;
 
-	var parent$w = filter$3;
+	var parent$z = filter$3;
 
-	var filter$2 = parent$w;
+	var filter$2 = parent$z;
 
 	var filter$1 = filter$2;
 
@@ -5246,7 +5157,7 @@
 	    if (!desc) {
 	      desc = 'div';
 	    }
-	    var dom = $$p(desc, props, children);
+	    var dom = $$q(desc, props, children);
 	    _this.el = dom;
 	    _this.container = container;
 	    // 安装组件成功
@@ -5285,6 +5196,95 @@
 	  }]);
 	  return Component;
 	}(BaseEvent);
+
+	// a string of all valid unicode whitespaces
+	var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
+	  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+	var uncurryThis$8 = functionUncurryThis;
+	var requireObjectCoercible$1 = requireObjectCoercible$5;
+	var toString$5 = toString$b;
+	var whitespaces$2 = whitespaces$3;
+
+	var replace$4 = uncurryThis$8(''.replace);
+	var ltrim = RegExp('^[' + whitespaces$2 + ']+');
+	var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
+
+	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+	var createMethod = function (TYPE) {
+	  return function ($this) {
+	    var string = toString$5(requireObjectCoercible$1($this));
+	    if (TYPE & 1) string = replace$4(string, ltrim, '');
+	    if (TYPE & 2) string = replace$4(string, rtrim, '$1');
+	    return string;
+	  };
+	};
+
+	var stringTrim = {
+	  // `String.prototype.{ trimLeft, trimStart }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+	  start: createMethod(1),
+	  // `String.prototype.{ trimRight, trimEnd }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
+	  end: createMethod(2),
+	  // `String.prototype.trim` method
+	  // https://tc39.es/ecma262/#sec-string.prototype.trim
+	  trim: createMethod(3)
+	};
+
+	var global$c = global$r;
+	var fails$9 = fails$x;
+	var uncurryThis$7 = functionUncurryThis;
+	var toString$4 = toString$b;
+	var trim$1 = stringTrim.trim;
+	var whitespaces$1 = whitespaces$3;
+
+	var $parseInt$1 = global$c.parseInt;
+	var Symbol$2 = global$c.Symbol;
+	var ITERATOR$3 = Symbol$2 && Symbol$2.iterator;
+	var hex = /^[+-]?0x/i;
+	var exec$2 = uncurryThis$7(hex.exec);
+	var FORCED$2 = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
+	  // MS Edge 18- broken with boxed symbols
+	  || (ITERATOR$3 && !fails$9(function () { $parseInt$1(Object(ITERATOR$3)); }));
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
+	  var S = trim$1(toString$4(string));
+	  return $parseInt$1(S, (radix >>> 0) || (exec$2(hex, S) ? 16 : 10));
+	} : $parseInt$1;
+
+	var $$o = _export;
+	var $parseInt = numberParseInt;
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	$$o({ global: true, forced: parseInt != $parseInt }, {
+	  parseInt: $parseInt
+	});
+
+	var path$8 = path$n;
+
+	var _parseInt$6 = path$8.parseInt;
+
+	var parent$y = _parseInt$6;
+
+	var _parseInt$5 = parent$y;
+
+	var parent$x = _parseInt$5;
+
+	var _parseInt$4 = parent$x;
+
+	var parent$w = _parseInt$4;
+
+	var _parseInt$3 = parent$w;
+
+	var _parseInt$2 = _parseInt$3;
+
+	var _parseInt = _parseInt$2;
+
+	var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
 
 	var playPath = "M6 2.914v18.172L20.279 12 6 2.914z";
 	var pausePath = "M14.333 20.133H19V3.8h-4.667M5 20.133h4.667V3.8H5v16.333z";
@@ -5349,6 +5349,7 @@
 	    _defineProperty(_assertThisInitialized(_this), "hideBox", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "icon", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "bottom", 48);
 	    _this.player = player;
 	    props ? _this.props = props : _this.props = {};
 	    _this.hideHeight = hideHeight;
@@ -5365,13 +5366,8 @@
 	  }, {
 	    key: "initBaseTemplate",
 	    value: function initBaseTemplate() {
-	      this.hideBox = $$p('div', {
-	        style: {
-	          display: 'none',
-	          bottom: '48px'
-	        }
-	      });
-	      addClass(this.hideBox, ['video-set']);
+	      this.hideBox = $$q('div');
+	      addClass(this.hideBox, ['video-set', 'video-set-hidden']);
 	      if (this.hideHeight && this.hideHeight > 0) {
 	        this.hideBox.style.height = this.hideHeight + 'px';
 	      }
@@ -5379,7 +5375,7 @@
 	        this.hideBox.style.width = this.hideWidth + 'px';
 	      }
 	      this.el.appendChild(this.hideBox);
-	      this.iconBox = $$p('div');
+	      this.iconBox = $$q('div');
 	      addClass(this.iconBox, ['video-icon']);
 	      this.el.appendChild(this.iconBox);
 	    }
@@ -5389,7 +5385,7 @@
 	      var _this2 = this;
 	      this.el.onmouseenter = function (e) {
 	        var ctx = _this2;
-	        ctx.hideBox.style.display = 'block';
+	        removeClass(_this2.hideBox, ['video-set-hidden']);
 	        document.body.onmousemove = ctx.handleMouseMove.bind(_this2);
 	        _this2.player.emit('oneControllerHover', _this2);
 	      };
@@ -5397,13 +5393,13 @@
 	      this.player.on('oneControllerHover', function (controller) {
 	        // console.log(this, controller, this === controller)
 	        if (_this2 !== controller) {
-	          if (_this2.hideBox.style.display !== 'none') {
-	            _this2.hideBox.style.display = 'none';
+	          if (!includeClass(_this2.hideBox, 'video-set-hidden')) {
+	            addClass(_this2.hideBox, ['video-set-hidden']);
 	          }
 	        }
 	      });
 	      this.player.on(EVENT.VIDEO_CLICK, function () {
-	        _this2.hideBox.style.display = 'none';
+	        addClass(_this2.hideBox, ['video-set-hidden']);
 	      });
 	    }
 	  }, {
@@ -5412,8 +5408,8 @@
 	      var pX = e.pageX,
 	        pY = e.pageY;
 	      var ctx = this;
-	      if (!checkIsMouseInRange(ctx.el, ctx.hideBox, pX, pY)) {
-	        ctx.hideBox.style.display = 'none';
+	      if (!checkIsMouseInRange(ctx.el, ctx.hideBox, this.bottom, pX, pY)) {
+	        addClass(this.hideBox, ['video-set-hidden']);
 	        document.body.onmousemove = null;
 	      }
 	    }
@@ -6150,7 +6146,7 @@
 	    key: "initTemplate",
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-start-pause', 'video-controller']);
-	      this.iconBox = $$p('div.video-icon');
+	      this.iconBox = $$q('div.video-icon');
 	      this.el.appendChild(this.iconBox);
 	      this.pauseIcon = createSvg(pausePath);
 	      this.playIcon = createSvg(playPath);
@@ -6239,14 +6235,14 @@
 	      this.el['aria-label'] = '播放倍速';
 	      addClass(this.el, ['video-playrate', 'video-controller']);
 	      this.el.removeChild(this.iconBox);
-	      this.iconBox = $$p('span', null, '倍速');
+	      this.iconBox = $$q('span', null, '倍速');
 	      this.el.appendChild(this.iconBox);
 	      this.el.removeChild(this.hideBox);
 	      // this.hideBox = $('ul', { style: { display: 'none' }, 'aria-label': '播放速度调节' })
 	      addClass(this.hideBox, ['video-playrate-set']);
 	      this.el.appendChild(this.hideBox);
 	      for (var i = this.playrateArray.length - 1; i >= 0; i--) {
-	        var li = $$p('li');
+	        var li = $$q('li');
 	        li.innerText = this.playrateArray[i];
 	        if (this.playrateArray[i] === '1.0') {
 	          li.style.color = '#007aff';
@@ -6327,19 +6323,19 @@
 	      addClass(this.el, ['video-volume', 'video-controller']);
 	      this.el['aria-label'] = '音量';
 	      addClass(this.hideBox, ['video-volume-set']);
-	      this.volumeProgress = $$p('div.video-volume-progress', {
+	      this.volumeProgress = $$q('div.video-volume-progress', {
 	        style: {
 	          height: '70px'
 	        }
 	      });
-	      this.volumeShow = $$p('div.video-volume-show');
+	      this.volumeShow = $$q('div.video-volume-show');
 	      this.volumeShow.innerText = (this.volume * 100).toFixed(0);
 	      // this.volumeCompleted = new VolumeCompletedProgress(
 	      //   this.player,
 	      //   this.volumeProgress,
 	      //   'div.video-volume-completed'
 	      // )
-	      this.volumeCompleted = $$p('div.video-volume-completed');
+	      this.volumeCompleted = $$q('div.video-volume-completed');
 	      this.volumeProgress.appendChild(this.volumeCompleted);
 	      this.hideBox.appendChild(this.volumeShow);
 	      this.hideBox.appendChild(this.volumeProgress);
@@ -8761,12 +8757,13 @@
 	var SubSetting = /*#__PURE__*/function (_Options) {
 	  _inherits(SubSetting, _Options);
 	  var _super = _createSuper$b(SubSetting);
-	  // el: div.video-subsettings.video-controllert
 	  function SubSetting(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, SubSetting);
 	    _this = _super.call(this, player, container, 0, 0, desc);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'SubSetting');
+	    // el: div.video-subsettings.video-controllert
+	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", void 0);
 	    _this.init();
 	    return _this;
 	  }
@@ -8774,6 +8771,7 @@
 	    key: "init",
 	    value: function init() {
 	      this.initTemplate();
+	      this.initEvent();
 	      storeControlComponent(this);
 	    }
 	  }, {
@@ -8786,6 +8784,40 @@
 	      this.iconBox.appendChild(this.icon);
 	      this.el.appendChild(this.iconBox);
 	      this.el.appendChild(this.hideBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      if (this.player.env === 'PC') {
+	        this.initPCEvent();
+	      } else {
+	        this.initMobileEvent();
+	      }
+	      this.el.onmouseenter = null;
+	      wrap(this.iconBox).addEventListener(this.clickOrTap, function (e) {
+	        if (!includeClass(_this2.icon, 'video-subsettings-animate')) {
+	          addClass(_this2.icon, ['video-subsettings-animate']);
+	        } else {
+	          removeClass(_this2.icon, ['video-subsettings-animate']);
+	        }
+	        if (!includeClass(_this2.hideBox, 'video-set-hidden')) {
+	          addClass(_this2.hideBox, ['video-set-hidden']);
+	        } else {
+	          removeClass(_this2.hideBox, ['video-set-hidden']);
+	        }
+	        _this2.player.emit('oneControllerHover', _this2);
+	      });
+	    }
+	  }, {
+	    key: "initPCEvent",
+	    value: function initPCEvent() {
+	      this.clickOrTap = 'click';
+	    }
+	  }, {
+	    key: "initMobileEvent",
+	    value: function initMobileEvent() {
+	      this.clickOrTap = 'singleTap';
 	    }
 	  }]);
 	  return SubSetting;
@@ -8976,7 +9008,7 @@
 	  return VideoShot;
 	}(Options);
 
-	var css_248z$6 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  height: 140px;\n  padding-bottom: 8px;\n}\n.video-subsettings svg {\n  -webkit-transition: fill 0.15s ease-in-out;\n  transition: fill 0.15s ease-in-out;\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 5px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 3px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
+	var css_248z$6 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  height: 140px;\n  padding-bottom: 8px;\n}\n.video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease-in-out;\n  transition: -webkit-transform 0.5s ease-in-out;\n  transition: transform 0.5s ease-in-out;\n  transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;\n}\n.video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 5px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 3px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n  bottom: 48px;\n}\n.video-controller .video-set-hidden {\n  display: none;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n";
 	styleInject(css_248z$6);
 
 	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -9052,9 +9084,9 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      this.leftArea = $$p('div.video-subplay');
-	      this.mediumArea = $$p('div.video-medium');
-	      this.rightArea = $$p('div.video-settings');
+	      this.leftArea = $$q('div.video-subplay');
+	      this.mediumArea = $$q('div.video-medium');
+	      this.rightArea = $$q('div.video-settings');
 	      this.el.appendChild(this.leftArea);
 	      this.el.appendChild(this.mediumArea);
 	      this.el.appendChild(this.rightArea);
@@ -18049,8 +18081,8 @@
 	    key: "initTemplate",
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-loading']);
-	      this.loadingBox = $$p('div');
-	      this.messageBox = $$p('div.video-loading-msgbox');
+	      this.loadingBox = $$q('div');
+	      this.messageBox = $$q('div.video-loading-msgbox');
 	      this.messageBox.innerText = this.message;
 	      this.el.appendChild(this.loadingBox);
 	      this.el.appendChild(this.messageBox);
@@ -18142,7 +18174,7 @@
 	  return ErrorLoading;
 	}(Loading);
 
-	var css_248z$3 = ".video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.3);\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  overflow: hidden;\n  padding: 5px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n}\n.video-topbar-controller {\n  padding: 3px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 30px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n";
+	var css_248z$3 = ".video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n}\n.video-topbar-controller {\n  padding: 3px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 30px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  white-space: nowrap;\n  top: 32px;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none;\n}\n.video-topbar-controller .video-subsettings-set {\n  right: 0;\n  left: auto!important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n";
 	styleInject(css_248z$3);
 
 	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -18181,8 +18213,8 @@
 	    key: "initTemplate",
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
-	      this.leftArea = $$p('div.video-topbar-left');
-	      this.rightArea = $$p('div.video-topbar-right');
+	      this.leftArea = $$q('div.video-topbar-left');
+	      this.rightArea = $$q('div.video-topbar-right');
 	      this.el.appendChild(this.leftArea);
 	      this.el.appendChild(this.rightArea);
 	    }
@@ -18297,9 +18329,9 @@
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-mobile-medium-wrapper']);
 	      this.el.style.display = 'none';
-	      this.iconBox = $$p('div.video-mobile-medium-iconbox');
-	      this.progressBox = $$p('div.video-mobile-medium-progressbox');
-	      this.completedBox = $$p('div.video-mobile-medium-completed', {
+	      this.iconBox = $$q('div.video-mobile-medium-iconbox');
+	      this.progressBox = $$q('div.video-mobile-medium-progressbox');
+	      this.completedBox = $$q('div.video-mobile-medium-completed', {
 	        style: {
 	          width: '0px'
 	        }
@@ -18393,7 +18425,7 @@
 	        this.video = this.playerOptions.video;
 	        this.video.parentNode && this.video.parentNode.removeChild(this.video);
 	      } else {
-	        this.video = $$p('video');
+	        this.video = $$q('video');
 	        this.video['playsinline'] = true; // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
 	        this.video['x5-video-player-type'] = 'h5'; // 启用H5播放器,是wechat安卓版特性
 	        this.video.crossOrigin = 'anonymous';
@@ -20842,10 +20874,10 @@
 	    key: "initTemplate",
 	    value: function initTemplate() {
 	      addClass(this.el, ['danmaku-input-wrapper']);
-	      this.inputBox = $$p('input.danmaku-input', {
+	      this.inputBox = $$q('input.danmaku-input', {
 	        type: 'text'
 	      });
-	      this.sendBox = $$p('span.danmaku-send');
+	      this.sendBox = $$q('span.danmaku-send');
 	      this.sendBox.innerText = '发送';
 	      this.el.appendChild(this.inputBox);
 	      this.el.appendChild(this.sendBox);

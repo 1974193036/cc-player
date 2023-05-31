@@ -33,11 +33,12 @@ export function getDOMPoint(dom: HTMLElement): { x: number; y: number } {
 export function checkIsMouseInRange(
   parent: HTMLElement,
   topChild: HTMLElement,
+  bottom: number,
   pageX: number,
   pageY: number
 ) {
   let { x, y } = getDOMPoint(parent)
-  let allTop = y - parseInt(topChild.style.bottom) - topChild.clientHeight
+  let allTop = y - bottom - topChild.clientHeight
   let allBottom = y + parent.clientHeight
   let allLeft = x + Math.round(parent.clientWidth / 2) - Math.round(topChild.clientWidth / 2)
   let allRight = x + Math.round(parent.clientWidth / 2) + Math.round(topChild.clientWidth / 2)
@@ -113,7 +114,7 @@ export function getEl(dom: HTMLElement | string): HTMLElement | null {
   return null
 }
 
-export function addClass(dom: HTMLElement, classNames: Array<string>) {
+export function addClass(dom: Element, classNames: Array<string>) {
   let classList = dom.classList
   for (let name of classNames) {
     if (!includeClass(dom, name)) {
@@ -122,16 +123,16 @@ export function addClass(dom: HTMLElement, classNames: Array<string>) {
   }
 }
 
-export function removeClass(dom: HTMLElement, classNames: Array<string>) {
+export function removeClass(dom: Element, classNames: Array<string>) {
   let classList = dom.classList
   classList.remove(...classNames)
 }
 
-export function changeClass(dom: HTMLElement, className) {
+export function changeClass(dom: Element, className) {
   dom.className = className
 }
 
-export function includeClass(dom: HTMLElement, className: string): boolean {
+export function includeClass(dom: Element, className: string): boolean {
   let classList = dom.classList
   for (let key in classList) {
     if (classList[key] === className) return true
