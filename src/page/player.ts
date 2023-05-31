@@ -40,6 +40,7 @@ class Player extends Component implements ComponentItem {
   error: ErrorLoading
   containerWidth: number
   containerHeight: number
+  mediaProportion: number = 0 // 视频比例 原始高度/原始宽度
 
   constructor(options: PlayerOptions) {
     super(options.container, 'div.video-wrapper')
@@ -114,6 +115,7 @@ class Player extends Component implements ComponentItem {
       // console.log('监听到了尺寸变化了...')
       // 触发尺寸变化事件
       this.emit(EVENT.RESIZE, entries)
+      this.adjustMediaSize()
       let width = entries[0].contentRect.width
       let subsetting
       // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
@@ -162,6 +164,22 @@ class Player extends Component implements ComponentItem {
     resizeObserver.observe(this.el)
   }
 
+  // 调整video的尺寸
+  adjustMediaSize() {
+    // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
+    if (this.mediaProportion !== 0) {
+      // 容器宽度偏小，高度偏大
+      if (this.container.clientHeight / this.container.clientWidth > this.mediaProportion) {
+        this.video.style.width = '100%'
+        this.video.style.height = (this.container.clientWidth * 9) / 16 + 5 + 'px'
+      } else {
+        // 容器宽度偏大，高度偏小（类似带鱼屏）
+        this.video.style.height = '100%'
+        this.video.style.width = this.container.clientHeight / this.mediaProportion + 'px'
+      }
+    }
+  }
+
   initEvent() {
     if (this.env === 'Mobile') {
       this.initMobileEvent()
@@ -169,21 +187,25 @@ class Player extends Component implements ComponentItem {
       this.initPCEvent()
     }
 
-    this.video.onloadedmetadata = (e) => {
+    this.video.addEventListener('loadedmetadata', (e) => {
       this.emit(EVENT.LOADED_META_DATA, e)
-    }
+      // videoWidth: 视频原始宽度
+      // videoHeight: 视频原始高度
+      this.mediaProportion = this.video.videoHeight / this.video.videoWidth
+      this.adjustMediaSize()
+    })
 
     this.video.addEventListener('timeupdate', (e) => {
       this.emit(EVENT.TIME_UPDATE, e)
     })
 
-    this.video.onplay = (e) => {
+    this.video.addEventListener('play', (e) => {
       this.emit(EVENT.PLAY, e)
-    }
+    })
 
-    this.video.onpause = (e) => {
+    this.video.addEventListener('pause', (e) => {
       this.emit(EVENT.PAUSE, e)
-    }
+    })
 
     // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
     this.video.addEventListener('seeking', (e) => {
@@ -271,7 +293,7 @@ class Player extends Component implements ComponentItem {
   }
 
   initPCEvent(): void {
-    this.video.onclick = (e) => {
+    this.el.onclick = (e) => {
       if (this.video.paused) {
         this.video.play()
       } else if (this.video.played) {
@@ -294,7 +316,7 @@ class Player extends Component implements ComponentItem {
 
   initMobileEvent(): void {
     // 单击
-    wrap(this.video).addEventListener('singleTap', (e) => {
+    wrap(this.el).addEventListener('singleTap', (e) => {
       // console.log(e, 'singletap')
       if (this.toolBar.status === 'hidden') {
         this.emit(EVENT.SHOW_TOOLBAR, e)
@@ -305,7 +327,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 双击
-    wrap(this.video).addEventListener('doubleTap', (e) => {
+    wrap(this.el).addEventListener('doubleTap', (e) => {
       // console.log(e, 'doubleTap')
       if (this.video.paused) {
         this.video.play()
@@ -315,7 +337,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 手势上下处于滑动中
-    wrap(this.video).addEventListener('move', (e) => {
+    wrap(this.el).addEventListener('move', (e) => {
       // console.log(e, 'move')
       let dx = e.deltaX
       let dy = e.deltaY
@@ -327,7 +349,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 手势上下滑动结束
-    wrap(this.video).addEventListener('swipe', (e) => {
+    wrap(this.el).addEventListener('swipe', (e) => {
       // console.log(e, 'swipe')
       let dx = e.endPos.x - e.startPos.x
       let dy = e.endPos.y - e.startPos.y

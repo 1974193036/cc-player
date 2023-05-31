@@ -5408,8 +5408,8 @@
 	  }, {
 	    key: "handleMouseMove",
 	    value: function handleMouseMove(e) {
-	      var pX = e.pageX,
-	        pY = e.pageY;
+	      var pX = e.clientX,
+	        pY = e.clientY;
 	      var ctx = this;
 	      if (!checkIsMouseInRange(ctx.el, ctx.hideBox, this.bottom, pX, pY)) {
 	        addClass(this.hideBox, ['video-set-hidden']);
@@ -6040,6 +6040,7 @@
 	      } else {
 	        this.player.video.pause();
 	      }
+	      e.stopPropagation && e.stopPropagation();
 	    }
 	  }, {
 	    key: "resetEvent",
@@ -18228,7 +18229,7 @@
 	  return MobileVolume;
 	}(Component);
 
-	var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n}\n.video-wrapper video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
+	var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.video-wrapper:focus {\n  outline: none;\n}\n.video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.video-wrapper video:focus {\n  outline: none;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
 	styleInject(css_248z$1);
 
 	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -18236,6 +18237,7 @@
 	var Player = /*#__PURE__*/function (_Component) {
 	  _inherits(Player, _Component);
 	  var _super = _createSuper$1(Player);
+	  // 视频比例 原始高度/原始宽度
 	  function Player(options) {
 	    var _this;
 	    _classCallCheck(this, Player);
@@ -18255,6 +18257,7 @@
 	    _defineProperty(_assertThisInitialized(_this), "error", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "containerWidth", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "containerHeight", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mediaProportion", 0);
 	    _this.playerOptions = _Object$assign({
 	      autoPlay: false,
 	      streamPlay: false
@@ -18326,6 +18329,7 @@
 	        // console.log('监听到了尺寸变化了...')
 	        // 触发尺寸变化事件
 	        _this2.emit(EVENT.RESIZE, entries);
+	        _this2.adjustMediaSize();
 	        var width = entries[0].contentRect.width;
 	        var subsetting;
 	        // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
@@ -18374,6 +18378,23 @@
 	      // 开始观察
 	      resizeObserver.observe(this.el);
 	    }
+	    // 调整video的尺寸
+	  }, {
+	    key: "adjustMediaSize",
+	    value: function adjustMediaSize() {
+	      // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
+	      if (this.mediaProportion !== 0) {
+	        // 容器宽度偏小，高度偏大
+	        if (this.container.clientHeight / this.container.clientWidth > this.mediaProportion) {
+	          this.video.style.width = '100%';
+	          this.video.style.height = this.container.clientWidth * 9 / 16 + 5 + 'px';
+	        } else {
+	          // 容器宽度偏大，高度偏小（类似带鱼屏）
+	          this.video.style.height = '100%';
+	          this.video.style.width = this.container.clientHeight / this.mediaProportion + 'px';
+	        }
+	      }
+	    }
 	  }, {
 	    key: "initEvent",
 	    value: function initEvent() {
@@ -18383,18 +18404,22 @@
 	      } else {
 	        this.initPCEvent();
 	      }
-	      this.video.onloadedmetadata = function (e) {
+	      this.video.addEventListener('loadedmetadata', function (e) {
 	        _this3.emit(EVENT.LOADED_META_DATA, e);
-	      };
+	        // videoWidth: 视频原始宽度
+	        // videoHeight: 视频原始高度
+	        _this3.mediaProportion = _this3.video.videoHeight / _this3.video.videoWidth;
+	        _this3.adjustMediaSize();
+	      });
 	      this.video.addEventListener('timeupdate', function (e) {
 	        _this3.emit(EVENT.TIME_UPDATE, e);
 	      });
-	      this.video.onplay = function (e) {
+	      this.video.addEventListener('play', function (e) {
 	        _this3.emit(EVENT.PLAY, e);
-	      };
-	      this.video.onpause = function (e) {
+	      });
+	      this.video.addEventListener('pause', function (e) {
 	        _this3.emit(EVENT.PAUSE, e);
-	      };
+	      });
 	      // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
 	      this.video.addEventListener('seeking', function (e) {
 	        // 防抖效果：针对Dot按下拖动时不触发seeking，拖完鼠标抬起时再触发seeking
@@ -18474,7 +18499,7 @@
 	    key: "initPCEvent",
 	    value: function initPCEvent() {
 	      var _this4 = this;
-	      this.video.onclick = function (e) {
+	      this.el.onclick = function (e) {
 	        if (_this4.video.paused) {
 	          _this4.video.play();
 	        } else if (_this4.video.played) {
@@ -18496,7 +18521,7 @@
 	    value: function initMobileEvent() {
 	      var _this5 = this;
 	      // 单击
-	      wrap(this.video).addEventListener('singleTap', function (e) {
+	      wrap(this.el).addEventListener('singleTap', function (e) {
 	        // console.log(e, 'singletap')
 	        if (_this5.toolBar.status === 'hidden') {
 	          _this5.emit(EVENT.SHOW_TOOLBAR, e);
@@ -18506,7 +18531,7 @@
 	        _this5.emit(EVENT.VIDEO_CLICK);
 	      });
 	      // 双击
-	      wrap(this.video).addEventListener('doubleTap', function (e) {
+	      wrap(this.el).addEventListener('doubleTap', function (e) {
 	        // console.log(e, 'doubleTap')
 	        if (_this5.video.paused) {
 	          _this5.video.play();
@@ -18515,7 +18540,7 @@
 	        }
 	      });
 	      // 手势上下处于滑动中
-	      wrap(this.video).addEventListener('move', function (e) {
+	      wrap(this.el).addEventListener('move', function (e) {
 	        // console.log(e, 'move')
 	        var dx = e.deltaX;
 	        var dy = e.deltaY;
@@ -18526,7 +18551,7 @@
 	        }
 	      });
 	      // 手势上下滑动结束
-	      wrap(this.video).addEventListener('swipe', function (e) {
+	      wrap(this.el).addEventListener('swipe', function (e) {
 	        // console.log(e, 'swipe')
 	        var dx = e.endPos.x - e.startPos.x;
 	        var dy = e.endPos.y - e.startPos.y;

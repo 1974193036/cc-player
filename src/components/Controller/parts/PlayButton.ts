@@ -81,6 +81,7 @@ export class PlayButton extends Component implements ComponentItem {
     } else {
       this.player.video.pause()
     }
+    e.stopPropagation && e.stopPropagation()
   }
 
   resetEvent() {
