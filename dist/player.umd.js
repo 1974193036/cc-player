@@ -20931,7 +20931,10 @@
 	exports.Volume = Volume;
 	exports.addZero = addZero;
 	exports.computeAngle = computeAngle;
+	exports.default = Player;
 	exports.formatTime = formatTime;
+
+	Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
 //# sourceMappingURL=player.umd.js.map

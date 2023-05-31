@@ -7,3 +7,5 @@ export * from './components/Controller/controller'
 export * from './components/Controller/parts'
 export * from './utils/math'
 export * from './danmaku'
+
+export { Player as default } from './page/player'
