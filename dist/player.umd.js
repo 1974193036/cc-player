@@ -4792,20 +4792,23 @@
 	function _unsupportedIterableToArray(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 	function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	function getDOMPoint(dom) {
-	  var t = 0;
-	  var l = 0;
-	  //判断是否有父容器，如果存在则累加其边距
-	  while (dom !== document.body) {
-	    t += dom.offsetTop; //叠加父容器的上边距
-	    l += dom.offsetLeft; //叠加父容器的左边距
-	    //if(dom.style.borderLeftWidth) l += Number(dom.style.borderLeftWidth);
-	    //if(dom.style.borderTopWidth) t += Number(dom.style.borderTopWidth);
-	    dom = dom.parentNode;
-	  }
+	  var rect = dom.getBoundingClientRect();
 	  return {
-	    x: l,
-	    y: t
+	    x: rect.left,
+	    y: rect.top
 	  };
+	  // var t = 0
+	  // var l = 0
+	  // //判断是否有父容器，如果存在则累加其边距
+	  // while (dom !== document.body) {
+	  //   t += dom.offsetTop //叠加父容器的上边距
+	  //   l += dom.offsetLeft //叠加父容器的左边距
+	  //   //if(dom.style.borderLeftWidth) l += Number(dom.style.borderLeftWidth);
+	  //   //if(dom.style.borderTopWidth) t += Number(dom.style.borderTopWidth);
+	  //   dom = dom.parentNode as HTMLElement
+	  // }
+	  // console.log('22', { x: l, y: t })
+	  // return { x: l, y: t }
 	}
 	/**
 	 * @description 查看当前的鼠标位置是否在父元素和绝对定位的子元素的组合范围内，如果超出则返回false
@@ -4826,7 +4829,7 @@
 	  var parentLeft = x;
 	  var parentRight = x + parent.clientWidth;
 	  if (pageX >= allLeft && pageX <= allRight && pageY <= y && pageY >= allTop) return true;
-	  if (pageX >= parentLeft && pageX <= parentRight && pageY >= y && pageY <= allBottom) return true;
+	  if (pageX >= parentLeft - 5 && pageX <= parentRight + 5 && pageY >= y - 5 && pageY <= allBottom + 5) return true;
 	  return false;
 	}
 	var SELECTOR_REG = /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/;
@@ -18225,7 +18228,7 @@
 	  return MobileVolume;
 	}(Component);
 
-	var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n}\n.video-wrapper video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
+	var css_248z$1 = ".video-fullpage {\n  z-index: 20001;\n  left: 0;\n  top: 0;\n  right: 0;\n}\n.video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n}\n.video-wrapper video {\n  width: 100%;\n  height: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
 	styleInject(css_248z$1);
 
 	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }

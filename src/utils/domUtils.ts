@@ -9,17 +9,20 @@ import {
 } from '../types/Player'
 
 export function getDOMPoint(dom: HTMLElement): { x: number; y: number } {
-  var t = 0
-  var l = 0
-  //判断是否有父容器，如果存在则累加其边距
-  while (dom !== document.body) {
-    t += dom.offsetTop //叠加父容器的上边距
-    l += dom.offsetLeft //叠加父容器的左边距
-    //if(dom.style.borderLeftWidth) l += Number(dom.style.borderLeftWidth);
-    //if(dom.style.borderTopWidth) t += Number(dom.style.borderTopWidth);
-    dom = dom.parentNode as HTMLElement
-  }
-  return { x: l, y: t }
+  let rect = dom.getBoundingClientRect()
+  return { x: rect.left, y: rect.top }
+  // var t = 0
+  // var l = 0
+  // //判断是否有父容器，如果存在则累加其边距
+  // while (dom !== document.body) {
+  //   t += dom.offsetTop //叠加父容器的上边距
+  //   l += dom.offsetLeft //叠加父容器的左边距
+  //   //if(dom.style.borderLeftWidth) l += Number(dom.style.borderLeftWidth);
+  //   //if(dom.style.borderTopWidth) t += Number(dom.style.borderTopWidth);
+  //   dom = dom.parentNode as HTMLElement
+  // }
+  // console.log('22', { x: l, y: t })
+  // return { x: l, y: t }
 }
 
 /**
@@ -45,7 +48,7 @@ export function checkIsMouseInRange(
   let parentLeft = x
   let parentRight = x + parent.clientWidth
   if (pageX >= allLeft && pageX <= allRight && pageY <= y && pageY >= allTop) return true
-  if (pageX >= parentLeft && pageX <= parentRight && pageY >= y && pageY <= allBottom) return true
+  if (pageX >= parentLeft - 5 && pageX <= parentRight + 5 && pageY >= y - 5 && pageY <= allBottom + 5) return true
   return false
 }
 
