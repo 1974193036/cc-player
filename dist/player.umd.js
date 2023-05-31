@@ -1259,14 +1259,14 @@
 
 	var _Array$isArray = /*@__PURE__*/getDefaultExportFromCjs(isArray$5);
 
-	function _arrayLikeToArray$1(arr, len) {
+	function _arrayLikeToArray$2(arr, len) {
 	  if (len == null || len > arr.length) len = arr.length;
 	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
 	  return arr2;
 	}
 
 	function _arrayWithoutHoles(arr) {
-	  if (_Array$isArray(arr)) return _arrayLikeToArray$1(arr);
+	  if (_Array$isArray(arr)) return _arrayLikeToArray$2(arr);
 	}
 
 	var $TypeError$c = TypeError;
@@ -3094,14 +3094,14 @@
 
 	var _sliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(slice);
 
-	function _unsupportedIterableToArray$1(o, minLen) {
+	function _unsupportedIterableToArray$2(o, minLen) {
 	  var _context;
 	  if (!o) return;
-	  if (typeof o === "string") return _arrayLikeToArray$1(o, minLen);
+	  if (typeof o === "string") return _arrayLikeToArray$2(o, minLen);
 	  var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
 	  if (n === "Object" && o.constructor) n = o.constructor.name;
 	  if (n === "Map" || n === "Set") return _Array$from(o);
-	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen);
+	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen);
 	}
 
 	function _nonIterableSpread() {
@@ -3109,7 +3109,7 @@
 	}
 
 	function _toConsumableArray(arr) {
-	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$1(arr) || _nonIterableSpread();
+	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$2(arr) || _nonIterableSpread();
 	}
 
 	function _classCallCheck(instance, Constructor) {
@@ -4788,9 +4788,9 @@
 
 	var _concatInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(concat$1);
 
-	function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-	function _unsupportedIterableToArray(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-	function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray$1(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+	function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	function getDOMPoint(dom) {
 	  var rect = dom.getBoundingClientRect();
 	  return {
@@ -4871,7 +4871,7 @@
 	  if (typeof children === 'string') {
 	    el.innerHTML += children;
 	  } else if (children) {
-	    var _iterator = _createForOfIteratorHelper(children),
+	    var _iterator = _createForOfIteratorHelper$1(children),
 	      _step;
 	    try {
 	      for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -4888,7 +4888,7 @@
 	}
 	function addClass(dom, classNames) {
 	  var classList = dom.classList;
-	  var _iterator2 = _createForOfIteratorHelper(classNames),
+	  var _iterator2 = _createForOfIteratorHelper$1(classNames),
 	    _step2;
 	  try {
 	    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -4941,7 +4941,7 @@
 	  var viewBox = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0 0 24 24';
 	  var svg = document.createElementNS(svgNS, 'svg');
 	  svg.setAttribute('viewBox', viewBox);
-	  var _iterator3 = _createForOfIteratorHelper(d),
+	  var _iterator3 = _createForOfIteratorHelper$1(d),
 	    _step3;
 	  try {
 	    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
@@ -4973,7 +4973,7 @@
 	        if (replaceElementType === 'replaceOuterHTMLOfComponent') {
 	          target.el = another.el;
 	        } else {
-	          var _iterator4 = _createForOfIteratorHelper(target.el.childNodes),
+	          var _iterator4 = _createForOfIteratorHelper$1(target.el.childNodes),
 	            _step4;
 	          try {
 	            for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
@@ -5145,11 +5145,11 @@
 	  return BaseEvent;
 	}();
 
-	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Component = /*#__PURE__*/function (_BaseEvent) {
 	  _inherits(Component, _BaseEvent);
-	  var _super = _createSuper$o(Component);
+	  var _super = _createSuper$p(Component);
 	  function Component(container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Component);
@@ -5196,6 +5196,9 @@
 	  }, {
 	    key: "resetEvent",
 	    value: function resetEvent() {}
+	  }, {
+	    key: "dispose",
+	    value: function dispose() {}
 	  }]);
 	  return Component;
 	}(BaseEvent);
@@ -5302,6 +5305,8 @@
 	var screenShot$1 = "M981.333333 789.333333h-106.666666V256c0-59.733333-46.933333-106.666667-106.666667-106.666667H234.666667V42.666667c0-25.6-17.066667-42.666667-42.666667-42.666667s-42.666667 17.066667-42.666667 42.666667v106.666666H42.666667c-25.6 0-42.666667 17.066667-42.666667 42.666667s17.066667 42.666667 42.666667 42.666667h106.666666V768c0 59.733333 46.933333 106.666667 106.666667 106.666667h533.333333V981.333333c0 25.6 17.066667 42.666667 42.666667 42.666667s42.666667-17.066667 42.666667-42.666667v-106.666666H981.333333c25.6 0 42.666667-17.066667 42.666667-42.666667s-17.066667-42.666667-42.666667-42.666667z m-213.333333-554.666666c12.8 0 21.333333 8.533333 21.333333 21.333333v341.333333l-145.066666-140.8c-17.066667-17.066667-42.666667-17.066667-59.733334 0l-140.8 145.066667L384 541.866667c-17.066667-17.066667-38.4-17.066667-55.466667-4.266667l-89.6 72.533333V234.666667H768z m-512 554.666666c-12.8 0-21.333333-8.533333-21.333333-21.333333v-42.666667l115.2-93.866666 64 64c8.533333 8.533333 17.066667 12.8 29.866666 12.8s21.333333-4.266667 29.866667-12.8l140.8-145.066667 174.933333 166.4v72.533333H256z";
 	var screenShot$2 = "M384 482.133333c51.2 0 93.866667-42.666667 93.866667-93.866666s-42.666667-93.866667-93.866667-93.866667-93.866667 38.4-93.866667 89.6 42.666667 98.133333 93.866667 98.133333z m0-128c17.066667 0 34.133333 12.8 34.133333 34.133334s-17.066667 29.866667-34.133333 29.866666-34.133333-17.066667-34.133333-34.133333 17.066667-29.866667 34.133333-29.866667z";
 	var videoShotPath = "M659.925333 128a74.666667 74.666667 0 0 1 71.338667 52.618667L754.56 256H821.333333c64.8 0 117.333333 52.533333 117.333334 117.333333v426.666667c0 64.8-52.533333 117.333333-117.333334 117.333333H202.666667c-64.8 0-117.333333-52.533333-117.333334-117.333333V373.333333c0-64.8 52.533333-117.333333 117.333334-117.333333h66.773333l23.296-75.381333A74.666667 74.666667 0 0 1 364.074667 128h295.850666zM512 405.333333c-88.362667 0-160 71.637333-160 160 0 88.362667 71.637333 160 160 160 88.362667 0 160-71.637333 160-160 0-88.362667-71.637333-160-160-160z m0 256a96 96 0 1 0 0-192 96 96 0 0 0 0 192z";
+	var confirmPath = "M456.899566 728.522382c-15.978926 15.977903-40.33873 18.47477-58.932204 7.492648-3.446495-2.039449-9.653871-9.990538-9.653871-9.990538L188.797435 526.509459c-18.938328-18.938328-18.938328-47.148833 0-66.084091 18.934235-18.938328 49.64263-16.442484 68.579935 2.495844l165.227112 165.225065 312.24449-312.24142c18.938328-18.938328 49.6457-21.435195 68.583005-2.495844 18.938328 18.940374 18.939351 47.149856 0 66.085114L456.909799 728.507032c0 0-0.005117 0.00921-0.010233 0.013303l0 0L456.899566 728.522382zM510.742868 64.090691c-246.752894 0-446.786743 200.032826-446.786743 446.786743 0 246.75187 200.033849 446.785719 446.786743 446.785719 246.752894 0 446.787766-200.034872 446.787766-446.785719C957.531658 264.125563 757.495762 64.090691 510.742868 64.090691L510.742868 64.090691 510.742868 64.090691 510.742868 64.090691z";
+	var countdownPath = "M449.59694 552.460488c-2.589471 0-5.210911-0.319688-7.800382-0.959063C313.729623 519.308862 224.280976 404.668816 224.280976 272.733659L224.280976 160.842927c0-17.646767 14.322014-31.96878 31.96878-31.96878s31.96878 14.322014 31.96878 31.96878l0 111.890732c0 102.587817 69.564066 191.716777 169.114849 216.748332 17.134267 4.315785 27.52512 21.674833 23.241303 38.778131C476.930248 542.805916 463.886985 552.460488 449.59694 552.460488L449.59694 552.460488zM574.40306 552.460488c-14.290045 0-27.301339-9.654572-30.977748-24.168398-4.315785-17.134267 6.074068-34.493315 23.208336-38.777132C666.217397 464.450435 735.781463 375.321475 735.781463 272.733659L735.781463 160.842927c0-17.646767 14.290045-31.96878 31.96878-31.96878s31.96878 14.322014 31.96878 31.96878l0 111.890732c0 131.935157-89.448648 246.575204-217.483614 278.767766C579.613971 552.1408 576.992531 552.460488 574.40306 552.460488zM767.750244 896.124878c-17.678736 0-31.96878-14.322014-31.96878-31.96878l0-95.906341c0-102.619785-69.564066-191.748745-169.114849-216.748332-17.134267-4.283817-27.52512-21.674833-23.241303-38.778131 4.347754-17.134267 21.930583-27.397245 38.777132-23.208336C710.270377 521.642583 799.719024 636.28263 799.719024 768.249756l0 95.906341C799.719024 881.802864 785.42898 896.124878 767.750244 896.124878zM256.249756 896.124878c-17.646767 0-31.96878-14.322014-31.96878-31.96878l0-95.906341c0-131.967126 89.448648-246.607173 217.516581-278.767766 17.167235-4.18791 34.461346 6.074068 38.777132 23.209335 4.315785 17.134267-6.074068 34.493315-23.241303 38.777132C357.750634 576.501011 288.218537 665.629971 288.218537 768.249756l0 95.906341C288.218537 881.802864 273.896523 896.124878 256.249756 896.124878zM863.656585 192.811707 160.343415 192.811707c-17.646767 0-31.96878-14.322014-31.96878-31.96878L128.374634 32.967805c0-17.646767 14.322014-31.96878 31.96878-31.96878l703.313171 0c17.678736 0 31.96878 14.322014 31.96878 31.96878l0 127.875122C895.625366 178.489694 881.335321 192.811707 863.656585 192.811707zM192.312195 128.874146l639.37561 0L831.687805 64.936585 192.312195 64.936585 192.312195 128.874146zM863.656585 1024 160.343415 1024c-17.646767 0-31.96878-14.322014-31.96878-31.96878L128.374634 864.156098c0-17.646767 14.322014-31.96878 31.96878-31.96878l703.313171 0c17.678736 0 31.96878 14.322014 31.96878 31.96878l0 127.875122C895.625366 1009.677986 881.335321 1024 863.656585 1024zM192.312195 960.062439l639.37561 0 0-63.937561L192.312195 896.124878 192.312195 960.062439z";
 
 	var EVENT;
 	(function (EVENT) {
@@ -5335,11 +5340,11 @@
 	  EVENT["VOLUME_PROGRESS_CLICK"] = "volume-progress-click";
 	})(EVENT || (EVENT = {}));
 
-	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Options = /*#__PURE__*/function (_Component) {
 	  _inherits(Options, _Component);
-	  var _super = _createSuper$n(Options);
+	  var _super = _createSuper$o(Options);
 	  function Options(player, container, hideWidth, hideHeight, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Options);
@@ -5892,11 +5897,11 @@
 	document$3.getElementsByTagName = getElementsByTagName;
 	Object.setPrototypeOf(document$3, Document.prototype);
 
-	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullScreen = /*#__PURE__*/function (_Options) {
 	  _inherits(FullScreen, _Options);
-	  var _super = _createSuper$m(FullScreen);
+	  var _super = _createSuper$n(FullScreen);
 	  function FullScreen(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, FullScreen);
@@ -5961,11 +5966,11 @@
 	  return FullScreen;
 	}(Options);
 
-	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PlayButton = /*#__PURE__*/function (_Component) {
 	  _inherits(PlayButton, _Component);
-	  var _super = _createSuper$l(PlayButton);
+	  var _super = _createSuper$m(PlayButton);
 	  function PlayButton(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, PlayButton);
@@ -6053,14 +6058,14 @@
 	  return PlayButton;
 	}(Component);
 
-	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	/**
 	 * @description 播放速率的类
 	 */
 	var Playrate = /*#__PURE__*/function (_Options) {
 	  _inherits(Playrate, _Options);
-	  var _super = _createSuper$k(Playrate);
+	  var _super = _createSuper$l(Playrate);
 	  function Playrate(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Playrate);
@@ -6084,7 +6089,7 @@
 	      this.el['aria-label'] = '播放倍速';
 	      addClass(this.el, ['video-playrate', 'video-controller']);
 	      this.el.removeChild(this.iconBox);
-	      this.iconBox = $$q('span', null, '倍速');
+	      this.iconBox = $$q('span.video-controller-span', null, '倍速');
 	      this.el.appendChild(this.iconBox);
 	      this.el.removeChild(this.hideBox);
 	      // this.hideBox = $('ul', { style: { display: 'none' }, 'aria-label': '播放速度调节' })
@@ -6141,11 +6146,11 @@
 	  return Playrate;
 	}(Options);
 
-	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Volume = /*#__PURE__*/function (_Options) {
 	  _inherits(Volume, _Options);
-	  var _super = _createSuper$j(Volume);
+	  var _super = _createSuper$k(Volume);
 	  function Volume(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Volume);
@@ -6156,6 +6161,8 @@
 	    _defineProperty(_assertThisInitialized(_this), "volumeShow", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "volume", 0.5);
+	    _defineProperty(_assertThisInitialized(_this), "volumeDot", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mouseY", 0);
 	    _this.init();
 	    return _this;
 	  }
@@ -6188,6 +6195,8 @@
 	      this.volumeProgress.appendChild(this.volumeCompleted);
 	      this.hideBox.appendChild(this.volumeShow);
 	      this.hideBox.appendChild(this.volumeProgress);
+	      this.volumeDot = $$q('div.video-volume-dot');
+	      this.volumeProgress.appendChild(this.volumeDot);
 	      this.icon = createSvg(volumePath$1);
 	      this.iconBox.appendChild(this.icon);
 	      this.player.video.volume = this.volume;
@@ -6206,13 +6215,38 @@
 	          scale = 1;
 	        }
 	        _this2.volumeCompleted.style.height = scale * 100 + '%';
+	        _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
 	        _this2.volume = scale;
-	        _this2.volumeShow.innerText = (_this2.volume * 100).toFixed(0);
+	        _this2.volumeShow.innerText = Math.round(_this2.volume * 100) + '';
 	        _this2.player.video.volume = _this2.volume;
 	      });
 	      this.volumeProgress.onclick = function (e) {
 	        e.stopPropagation();
 	        _this2.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, _this2);
+	      };
+	      this.volumeDot.onmousedown = function (e) {
+	        _this2.mouseY = e.pageY;
+	        var top = _parseInt$1(getComputedStyle(_this2.volumeDot).top);
+	        document.body.onmousemove = function (e) {
+	          e.preventDefault();
+	          var dy = top + e.pageY - _this2.mouseY;
+	          // console.log(dy)
+	          var scale = (_this2.volumeProgress.clientHeight - dy) / _this2.volumeProgress.clientHeight;
+	          if (scale < 0) {
+	            scale = 0;
+	          } else if (scale > 1) {
+	            scale = 1;
+	          }
+	          _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
+	          _this2.volumeCompleted.style.height = scale * 100 + '%';
+	          _this2.volumeShow.innerText = Math.round(scale * 100) + '';
+	          _this2.player.video.volume = scale;
+	          _this2.volume = scale;
+	        };
+	        document.body.onmouseup = function (e) {
+	          document.body.onmousemove = null;
+	          document.body.onmouseup = null;
+	        };
 	      };
 	    }
 	  }]);
@@ -6236,11 +6270,11 @@
 	  FullScreen: FullScreen
 	};
 
-	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Dot = /*#__PURE__*/function (_Component) {
 	  _inherits(Dot, _Component);
-	  var _super = _createSuper$i(Dot);
+	  var _super = _createSuper$j(Dot);
 	  function Dot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Dot);
@@ -6307,11 +6341,12 @@
 	        _this3.mouseX = e.pageX;
 	        _this3.left = _parseInt$1(_this3.el.style.left);
 	        document.body.addEventListener('mousemove', _this3.onMouseMove);
-	        document.body.addEventListener('mouseup', function (e) {
+	        document.body.onmouseup = function (e) {
 	          _this3.player.emit(EVENT.DOT_UP);
 	          _this3.player.video.currentTime = Math.floor(_this3.playScale * _this3.player.video.duration);
 	          document.body.removeEventListener('mousemove', _this3.onMouseMove);
-	        });
+	          document.body.onmouseup = null;
+	        };
 	      });
 	    }
 	  }, {
@@ -6393,11 +6428,11 @@
 	  return Dot;
 	}(Component);
 
-	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var CompletedProgress = /*#__PURE__*/function (_Component) {
 	  _inherits(CompletedProgress, _Component);
-	  var _super = _createSuper$h(CompletedProgress);
+	  var _super = _createSuper$i(CompletedProgress);
 	  function CompletedProgress(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, CompletedProgress);
@@ -6460,11 +6495,11 @@
 	  return CompletedProgress;
 	}(Component);
 
-	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var BufferedProgress = /*#__PURE__*/function (_Component) {
 	  _inherits(BufferedProgress, _Component);
-	  var _super = _createSuper$g(BufferedProgress);
+	  var _super = _createSuper$h(BufferedProgress);
 	  function BufferedProgress(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, BufferedProgress);
@@ -6529,14 +6564,14 @@
 	  }
 	}
 
-	var css_248z$7 = ".video-progress {\n  width: 100%;\n  height: 3px;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #007aff;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
-	styleInject(css_248z$7);
+	var css_248z$8 = ".video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #007aff;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
+	styleInject(css_248z$8);
 
-	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Progress = /*#__PURE__*/function (_Component) {
 	  _inherits(Progress, _Component);
-	  var _super = _createSuper$f(Progress);
+	  var _super = _createSuper$g(Progress);
 	  function Progress(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Progress);
@@ -6632,11 +6667,11 @@
 
 	var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map);
 
-	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullPage = /*#__PURE__*/function (_Options) {
 	  _inherits(FullPage, _Options);
-	  var _super = _createSuper$e(FullPage);
+	  var _super = _createSuper$f(FullPage);
 	  function FullPage(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, FullPage);
@@ -6694,11 +6729,11 @@
 	  return FullPage;
 	}(Options);
 
-	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PicInPic = /*#__PURE__*/function (_Options) {
 	  _inherits(PicInPic, _Options);
-	  var _super = _createSuper$d(PicInPic);
+	  var _super = _createSuper$e(PicInPic);
 	  // el: div.video-picInpic.video-controller
 	  function PicInPic(player, container, desc, props, children) {
 	    var _this;
@@ -8524,17 +8559,224 @@
 
 	var _URL = /*@__PURE__*/getDefaultExportFromCjs(url);
 
+	var DESCRIPTORS$2 = descriptors;
+	var isArray = isArray$c;
+
+	var $TypeError$3 = TypeError;
+	// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+	var getOwnPropertyDescriptor$8 = Object.getOwnPropertyDescriptor;
+
+	// Safari < 13 does not throw an error in this case
+	var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS$2 && !function () {
+	  // makes no sense without proper strict mode support
+	  if (this !== undefined) return true;
+	  try {
+	    // eslint-disable-next-line es/no-object-defineproperty -- safe
+	    Object.defineProperty([], 'length', { writable: false }).length = 1;
+	  } catch (error) {
+	    return error instanceof TypeError;
+	  }
+	}();
+
+	var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
+	  if (isArray(O) && !getOwnPropertyDescriptor$8(O, 'length').writable) {
+	    throw $TypeError$3('Cannot set read only .length');
+	  } return O.length = length;
+	} : function (O, length) {
+	  return O.length = length;
+	};
+
+	var tryToString = tryToString$7;
+
+	var $TypeError$2 = TypeError;
+
+	var deletePropertyOrThrow$1 = function (O, P) {
+	  if (!delete O[P]) throw $TypeError$2('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
+	};
+
+	var $$j = _export;
+	var toObject$1 = toObject$a;
+	var toAbsoluteIndex = toAbsoluteIndex$4;
+	var toIntegerOrInfinity = toIntegerOrInfinity$4;
+	var lengthOfArrayLike = lengthOfArrayLike$8;
+	var setArrayLength = arraySetLength;
+	var doesNotExceedSafeInteger = doesNotExceedSafeInteger$2;
+	var arraySpeciesCreate = arraySpeciesCreate$3;
+	var createProperty$1 = createProperty$6;
+	var deletePropertyOrThrow = deletePropertyOrThrow$1;
+	var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$5;
+
+	var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
+
+	var max = Math.max;
+	var min = Math.min;
+
+	// `Array.prototype.splice` method
+	// https://tc39.es/ecma262/#sec-array.prototype.splice
+	// with adding support of @@species
+	$$j({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+	  splice: function splice(start, deleteCount /* , ...items */) {
+	    var O = toObject$1(this);
+	    var len = lengthOfArrayLike(O);
+	    var actualStart = toAbsoluteIndex(start, len);
+	    var argumentsLength = arguments.length;
+	    var insertCount, actualDeleteCount, A, k, from, to;
+	    if (argumentsLength === 0) {
+	      insertCount = actualDeleteCount = 0;
+	    } else if (argumentsLength === 1) {
+	      insertCount = 0;
+	      actualDeleteCount = len - actualStart;
+	    } else {
+	      insertCount = argumentsLength - 2;
+	      actualDeleteCount = min(max(toIntegerOrInfinity(deleteCount), 0), len - actualStart);
+	    }
+	    doesNotExceedSafeInteger(len + insertCount - actualDeleteCount);
+	    A = arraySpeciesCreate(O, actualDeleteCount);
+	    for (k = 0; k < actualDeleteCount; k++) {
+	      from = actualStart + k;
+	      if (from in O) createProperty$1(A, k, O[from]);
+	    }
+	    A.length = actualDeleteCount;
+	    if (insertCount < actualDeleteCount) {
+	      for (k = actualStart; k < len - actualDeleteCount; k++) {
+	        from = k + actualDeleteCount;
+	        to = k + insertCount;
+	        if (from in O) O[to] = O[from];
+	        else deletePropertyOrThrow(O, to);
+	      }
+	      for (k = len; k > len - actualDeleteCount + insertCount; k--) deletePropertyOrThrow(O, k - 1);
+	    } else if (insertCount > actualDeleteCount) {
+	      for (k = len - actualDeleteCount; k > actualStart; k--) {
+	        from = k + actualDeleteCount - 1;
+	        to = k + insertCount - 1;
+	        if (from in O) O[to] = O[from];
+	        else deletePropertyOrThrow(O, to);
+	      }
+	    }
+	    for (k = 0; k < insertCount; k++) {
+	      O[k + actualStart] = arguments[k + 2];
+	    }
+	    setArrayLength(O, len - actualDeleteCount + insertCount);
+	    return A;
+	  }
+	});
+
+	var entryVirtual$2 = entryVirtual$a;
+
+	var splice$6 = entryVirtual$2('Array').splice;
+
+	var isPrototypeOf$2 = objectIsPrototypeOf;
+	var method = splice$6;
+
+	var ArrayPrototype$1 = Array.prototype;
+
+	var splice$5 = function (it) {
+	  var own = it.splice;
+	  return it === ArrayPrototype$1 || (isPrototypeOf$2(ArrayPrototype$1, it) && own === ArrayPrototype$1.splice) ? method : own;
+	};
+
+	var parent$p = splice$5;
+
+	var splice$4 = parent$p;
+
+	var parent$o = splice$4;
+
+	var splice$3 = parent$o;
+
+	var parent$n = splice$3;
+
+	var splice$2 = parent$n;
+
+	var splice$1 = splice$2;
+
+	var splice = splice$1;
+
+	var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice);
+
+	var css_248z$7 = ".video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.video-toast-animate {\n  opacity: 1;\n}\n";
+	styleInject(css_248z$7);
+
+	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Toast = /*#__PURE__*/function (_Component) {
+	  _inherits(Toast, _Component);
+	  var _super = _createSuper$d(Toast);
+	  function Toast(player, dom, props) {
+	    var _this;
+	    _classCallCheck(this, Toast);
+	    _this = _super.call(this, null, 'div', props, null);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Toast');
+	    // el: div.video-toast-wrapper.video-toast-animate
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "dom", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _this.player = player;
+	    _this.props = props;
+	    _this.dom = dom || null;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Toast, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      var _this2 = this;
+	      if (this.dom) {
+	        this.el.appendChild(this.dom);
+	      }
+	      addClass(this.el, ['video-toast-wrapper']);
+	      this.player.el.appendChild(this.el);
+	      window.setTimeout(function () {
+	        addClass(_this2.el, ['video-toast-animate']);
+	        var start = 30;
+	        for (var i in Toast.ToastQueue) {
+	          start += Toast.ToastQueue[i].el.clientHeight + 10;
+	        }
+	        _this2.el.style.transform = "translateY(".concat(start, "px)");
+	        Toast.ToastQueue.push(_this2);
+	      });
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {}
+	  }, {
+	    key: "dispose",
+	    value: function dispose() {
+	      var _context, _context2;
+	      var index = _indexOfInstanceProperty(_context = Toast.ToastQueue).call(_context, this);
+	      _spliceInstanceProperty(_context2 = Toast.ToastQueue).call(_context2, index, 1);
+	      this.el.parentElement.removeChild(this.el);
+	      for (var i = index; i < Toast.ToastQueue.length; i++) {
+	        var toast = Toast.ToastQueue[i];
+	        if (i === index) {
+	          toast.el.style.transform = "translateY(".concat(10 + this.el.clientHeight, "px)");
+	        } else {
+	          toast.el.style.transform = "translateY(".concat(10 + Toast.ToastQueue[i - 1].el.clientHeight, "px)");
+	        }
+	      }
+	    }
+	  }]);
+	  return Toast;
+	}(Component);
+	_defineProperty(Toast, "ToastQueue", []);
+
 	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ScreenShot = /*#__PURE__*/function (_Options) {
 	  _inherits(ScreenShot, _Options);
 	  var _super = _createSuper$c(ScreenShot);
-	  // el: div.video-screenshot.video-controller
 	  function ScreenShot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, ScreenShot);
 	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'ScreenShot');
+	    // el: div.video-screenshot.video-controller
+	    _defineProperty(_assertThisInitialized(_this), "confirmIcon", void 0);
 	    _this.init();
 	    return _this;
 	  }
@@ -8548,6 +8790,7 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
+	      this.confirmIcon = createSvg(confirmPath, '0 0 1024 1024');
 	      addClass(this.el, ['video-screenshot', 'video-controller']);
 	      this.icon = createSvgs([screenShot$1, screenShot$2], '0 0 1024 1024');
 	      this.iconBox.appendChild(this.icon);
@@ -8568,6 +8811,14 @@
 	  }, {
 	    key: "onClick",
 	    value: function onClick(e) {
+	      var _this2 = this;
+	      if (!includeClass(this.icon, 'video-screenshot-animate')) {
+	        addClass(this.icon, ['video-screenshot-animate']);
+	        this.icon.ontransitionend = function (e) {
+	          removeClass(_this2.icon, ['video-screenshot-animate']);
+	          _this2.icon.ontransitionend = null;
+	        };
+	      }
 	      this.screenShot();
 	    }
 	  }, {
@@ -8580,22 +8831,78 @@
 	      canvas.height = video.videoHeight;
 	      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 	      var fileName = _concatInstanceProperty(_context = "".concat(_sliceInstanceProperty(_context2 = Math.random().toString(36)).call(_context2, -8), "_")).call(_context, video.currentTime, ".png");
-	      canvas.toBlob(function (blob) {
-	        var url = _URL.createObjectURL(blob);
-	        var a = document.createElement('a');
-	        a.href = url;
-	        a.download = fileName;
-	        a.style.display = 'none';
-	        document.body.appendChild(a);
-	        a.click();
-	        document.body.removeChild(a);
-	        _URL.revokeObjectURL(url);
-	      }, 'image/png');
+	      try {
+	        canvas.toBlob(function (blob) {
+	          var url = _URL.createObjectURL(blob);
+	          var a = document.createElement('a');
+	          a.href = url;
+	          a.download = fileName;
+	          a.style.display = 'none';
+	          document.body.appendChild(a);
+	          a.click();
+	          document.body.removeChild(a);
+	          _URL.revokeObjectURL(url);
+	        }, 'image/png');
+	      } catch (_unused) {
+	        // todo
+	      }
+	      var dom = $$q('div.video-screenshot-toast');
+	      var span = $$q('span');
+	      span.innerText = '截图成功!';
+	      var icon = this.confirmIcon.cloneNode(true);
+	      dom.appendChild(icon);
+	      dom.appendChild(span);
+	      var toast = new Toast(this.player, dom);
+	      setTimeout(function () {
+	        toast.dispose();
+	        toast = null;
+	      }, 2000);
 	    }
 	  }]);
 	  return ScreenShot;
 	}(Options);
 
+	var SubsettingItem = /*#__PURE__*/function () {
+	  function SubsettingItem(message, player) {
+	    _classCallCheck(this, SubsettingItem);
+	    _defineProperty(this, "el", void 0);
+	    _defineProperty(this, "player", void 0);
+	    _defineProperty(this, "msg", void 0);
+	    _defineProperty(this, "checkBox", void 0);
+	    this.msg = message;
+	    this.player = player;
+	    this.init();
+	    this.initEvent();
+	  }
+	  _createClass(SubsettingItem, [{
+	    key: "init",
+	    value: function init() {
+	      this.el = $$q('div.video-subsettings-item');
+	      var left = $$q('div.video-subsettings-itemleft');
+	      var right = $$q('div.video-subsettings-itemright');
+	      this.el.append(left, right);
+	      this.checkBox = $$q('input.video-subsettings-switch', {
+	        type: 'checkbox'
+	      });
+	      left.innerText = this.msg;
+	      right.appendChild(this.checkBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this = this;
+	      this.checkBox.addEventListener('change', function (e) {
+	        // console.log((e.target as HTMLInputElement).checked, this.msg)
+	        _this.player.emit('checkBox', e, _this.msg);
+	      });
+	    }
+	  }]);
+	  return SubsettingItem;
+	}();
+
+	function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray(o, minLen) { var _context; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+	function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubSetting = /*#__PURE__*/function (_Options) {
@@ -8608,6 +8915,8 @@
 	    _defineProperty(_assertThisInitialized(_this), "id", 'SubSetting');
 	    // el: div.video-subsettings.video-controllert
 	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "subsettingItem", ['关灯模式', '护眼模式', '洗脑循环']);
+	    _defineProperty(_assertThisInitialized(_this), "mask", void 0);
 	    _this.init();
 	    return _this;
 	  }
@@ -8628,6 +8937,25 @@
 	      this.iconBox.appendChild(this.icon);
 	      this.el.appendChild(this.iconBox);
 	      this.el.appendChild(this.hideBox);
+	      this.initSubSettingTemplate();
+	    }
+	  }, {
+	    key: "initSubSettingTemplate",
+	    value: function initSubSettingTemplate() {
+	      this.mask = $$q('div.fullscreen-mask');
+	      var _iterator = _createForOfIteratorHelper(this.subsettingItem),
+	        _step;
+	      try {
+	        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	          var str = _step.value;
+	          var instance = new SubsettingItem(str, this.player);
+	          this.hideBox.appendChild(instance.el);
+	        }
+	      } catch (err) {
+	        _iterator.e(err);
+	      } finally {
+	        _iterator.f();
+	      }
 	    }
 	  }, {
 	    key: "initEvent",
@@ -8638,6 +8966,27 @@
 	      } else {
 	        this.initMobileEvent();
 	      }
+	      this.player.on('checkBox', function (e, msg) {
+	        var checked = e.target.checked;
+	        switch (msg) {
+	          case '洗脑循环':
+	            if (checked) {
+	              _this2.player.video.loop = true;
+	            } else {
+	              _this2.player.video.loop = false;
+	            }
+	            break;
+	          case '关灯模式':
+	            if (checked) {
+	              document.body.appendChild(_this2.mask);
+	              _this2.player.el.style.zIndex = '2001';
+	            } else {
+	              document.body.removeChild(_this2.mask);
+	              _this2.player.el.style.zIndex = '';
+	            }
+	            break;
+	        }
+	      });
 	      this.el.onmouseenter = null;
 	      wrap(this.iconBox).addEventListener(this.clickOrTap, function (e) {
 	        if (!includeClass(_this2.icon, 'video-subsettings-animate')) {
@@ -8734,6 +9083,11 @@
 	        _this2.currentTime = formatTime(video.currentTime);
 	        _this2.el.innerText = _concatInstanceProperty(_context3 = "".concat(_this2.currentTime, "/")).call(_context3, _this2.totalTime);
 	      });
+	      this.player.on(EVENT.DOT_DRAG, function (scale, e) {
+	        var _context4;
+	        _this2.currentTime = formatTime(_this2.player.video.duration * scale);
+	        _this2.el.innerText = _concatInstanceProperty(_context4 = "".concat(_this2.currentTime, "/")).call(_context4, _this2.totalTime);
+	      });
 	    }
 	  }]);
 	  return DutaionShow;
@@ -8752,6 +9106,9 @@
 	    // el: div.video-videoshot.video-controller
 	    _defineProperty(_assertThisInitialized(_this), "countDown", 30);
 	    _defineProperty(_assertThisInitialized(_this), "timer", null);
+	    _defineProperty(_assertThisInitialized(_this), "warnIcon", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "successIcon", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "inProgressIcon", void 0);
 	    _this.init();
 	    return _this;
 	  }
@@ -8782,9 +9139,11 @@
 	        this.el.ontouchstart = this.onDown;
 	      }
 	    }
+	    // 当鼠标或者手指按下的时刻开始启动录屏
 	  }, {
 	    key: "onDown",
 	    value: function onDown() {
+	      addClass(this.icon, ['video-videoshot-animate']);
 	      if (this.player.video.played) {
 	        this.videoShot();
 	      }
@@ -8793,6 +9152,7 @@
 	    key: "videoShot",
 	    value: function videoShot() {
 	      var _this2 = this;
+	      var inProgressToast = this.createInProgressToast();
 	      // MediaRecorder(stream[, options]) 构造函数会创建一个对指定的 MediaStream 进行录制的 MediaRecorder 对象
 	      var recorder = new MediaRecorder(this.player.video.captureStream(60));
 	      recorder.addEventListener('start', function (e) {
@@ -8818,7 +9178,8 @@
 	      // 开始录制视频
 	      recorder.start();
 	      this.timer = window.setInterval(function () {
-	        // console.log(this.countDown)
+	        console.log(_this2.countDown);
+	        inProgressToast.el.querySelector('span').innerText = "\u5F00\u59CB\u5F55\u5C4F\uFF0C\u6700\u591A\u5F55\u523630\u79D2; \u8FD8\u5269".concat(_this2.countDown, "\u79D2");
 	        if (_this2.countDown === 0) {
 	          // 结束录制视频，30s后自动结束录制
 	          _this2.stop(recorder);
@@ -8833,7 +9194,16 @@
 	      } else {
 	        // 结束录制视频，手动抬起鼠标结束录制
 	        this.el.onmouseup = function (e) {
+	          removeClass(_this2.icon, ['video-videoshot-animate']);
 	          _this2.stop(recorder);
+	          // 销毁toast组件
+	          inProgressToast.dispose();
+	          inProgressToast = null;
+	          var successToast = _this2.createSuccessToast();
+	          window.setTimeout(function () {
+	            successToast.dispose();
+	            successToast = null;
+	          }, 2000);
 	        };
 	      }
 	    }
@@ -8848,11 +9218,35 @@
 	      this.el.ontouchend = null;
 	      this.countDown = 30;
 	    }
+	  }, {
+	    key: "createInProgressToast",
+	    value: function createInProgressToast() {
+	      var inProgressIcon = createSvg(countdownPath, '0 0 1024 1024');
+	      var dom = $$q('div.video-videoshot-inprogress-toast');
+	      var span = $$q('span');
+	      span.innerText = "\u5F00\u59CB\u5F55\u5C4F\uFF0C\u6700\u591A\u5F55\u523630\u79D2; \u8FD8\u5269".concat(this.countDown, "\u79D2");
+	      dom.appendChild(inProgressIcon);
+	      dom.appendChild(span);
+	      var toast = new Toast(this.player, dom);
+	      return toast;
+	    }
+	  }, {
+	    key: "createSuccessToast",
+	    value: function createSuccessToast() {
+	      var successIcon = createSvg(confirmPath, '0 0 1024 1024');
+	      var dom = $$q('div.video-videoshot-success-toast');
+	      var span = $$q('span');
+	      span.innerText = "\u5F55\u5236\u6210\u529F!";
+	      dom.appendChild(successIcon);
+	      dom.appendChild(span);
+	      var toast = new Toast(this.player, dom);
+	      return toast;
+	    }
 	  }]);
 	  return VideoShot;
 	}(Options);
 
-	var css_248z$6 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 36px;\n  line-height: 36px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  height: 140px;\n  padding-bottom: 8px;\n}\n.video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease-in-out;\n  transition: -webkit-transform 0.5s ease-in-out;\n  transition: transform 0.5s ease-in-out;\n  transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;\n}\n.video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 5px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 3px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n  bottom: 48px;\n}\n.video-controller .video-set-hidden {\n  display: none;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n";
+	var css_248z$6 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 5px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  padding-bottom: 8px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item {\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  width: 100%;\n  padding: 5px 0px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  height: 32px;\n  font-size: 13px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  text-align: center;\n  line-height: 20px;\n  height: 100%;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 100%;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright input {\n  vertical-align: middle;\n  background-color: #007aff;\n}\n.video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.85;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n  bottom: 48px;\n}\n.video-controller .video-set-hidden {\n  display: none;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 1001;\n}\n";
 	styleInject(css_248z$6);
 
 	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -8969,7 +9363,7 @@
 	  return Controller;
 	}(Component);
 
-	var css_248z$5 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  background-color: transparent;\n  color: #fff;\n  height: 55px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n}\n";
+	var css_248z$5 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n";
 	styleInject(css_248z$5);
 
 	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -17771,7 +18165,7 @@
 	  return MediaPlayer;
 	}();
 
-	var $$j = _export;
+	var $$i = _export;
 	var $includes = arrayIncludes.includes;
 	var fails$6 = fails$x;
 
@@ -17783,15 +18177,15 @@
 
 	// `Array.prototype.includes` method
 	// https://tc39.es/ecma262/#sec-array.prototype.includes
-	$$j({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+	$$i({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
 	  includes: function includes(el /* , fromIndex = 0 */) {
 	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
 	  }
 	});
 
-	var entryVirtual$2 = entryVirtual$a;
+	var entryVirtual$1 = entryVirtual$a;
 
-	var includes$7 = entryVirtual$2('Array').includes;
+	var includes$7 = entryVirtual$1('Array').includes;
 
 	var isObject$3 = isObject$j;
 	var classof$1 = classofRaw$2;
@@ -17808,11 +18202,11 @@
 
 	var isRegExp = isRegexp;
 
-	var $TypeError$3 = TypeError;
+	var $TypeError$1 = TypeError;
 
 	var notARegexp = function (it) {
 	  if (isRegExp(it)) {
-	    throw $TypeError$3("The method doesn't accept regular expressions");
+	    throw $TypeError$1("The method doesn't accept regular expressions");
 	  } return it;
 	};
 
@@ -17832,7 +18226,7 @@
 	  } return false;
 	};
 
-	var $$i = _export;
+	var $$h = _export;
 	var uncurryThis$3 = functionUncurryThis;
 	var notARegExp = notARegexp;
 	var requireObjectCoercible = requireObjectCoercible$5;
@@ -17843,7 +18237,7 @@
 
 	// `String.prototype.includes` method
 	// https://tc39.es/ecma262/#sec-string.prototype.includes
-	$$i({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+	$$h({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
 	  includes: function includes(searchString /* , position = 0 */) {
 	    return !!~stringIndexOf(
 	      toString$2(requireObjectCoercible(this)),
@@ -17853,36 +18247,36 @@
 	  }
 	});
 
-	var entryVirtual$1 = entryVirtual$a;
+	var entryVirtual = entryVirtual$a;
 
-	var includes$6 = entryVirtual$1('String').includes;
+	var includes$6 = entryVirtual('String').includes;
 
-	var isPrototypeOf$2 = objectIsPrototypeOf;
+	var isPrototypeOf$1 = objectIsPrototypeOf;
 	var arrayMethod = includes$7;
 	var stringMethod = includes$6;
 
-	var ArrayPrototype$1 = Array.prototype;
+	var ArrayPrototype = Array.prototype;
 	var StringPrototype = String.prototype;
 
 	var includes$5 = function (it) {
 	  var own = it.includes;
-	  if (it === ArrayPrototype$1 || (isPrototypeOf$2(ArrayPrototype$1, it) && own === ArrayPrototype$1.includes)) return arrayMethod;
-	  if (typeof it == 'string' || it === StringPrototype || (isPrototypeOf$2(StringPrototype, it) && own === StringPrototype.includes)) {
+	  if (it === ArrayPrototype || (isPrototypeOf$1(ArrayPrototype, it) && own === ArrayPrototype.includes)) return arrayMethod;
+	  if (typeof it == 'string' || it === StringPrototype || (isPrototypeOf$1(StringPrototype, it) && own === StringPrototype.includes)) {
 	    return stringMethod;
 	  } return own;
 	};
 
-	var parent$p = includes$5;
+	var parent$m = includes$5;
 
-	var includes$4 = parent$p;
+	var includes$4 = parent$m;
 
-	var parent$o = includes$4;
+	var parent$l = includes$4;
 
-	var includes$3 = parent$o;
+	var includes$3 = parent$l;
 
-	var parent$n = includes$3;
+	var parent$k = includes$3;
 
-	var includes$2 = parent$n;
+	var includes$2 = parent$k;
 
 	var includes$1 = includes$2;
 
@@ -18476,10 +18870,10 @@
 	      this.on(EVENT.ENTER_FULLSCREEN, function () {
 	        var _context3, _context4;
 	        _forEachInstanceProperty(_context3 = document.querySelectorAll('.video-controller')).call(_context3, function (el) {
-	          el.style.marginRight = '10px';
+	          el.style.marginRight = '15px';
 	        });
 	        _forEachInstanceProperty(_context4 = document.querySelectorAll('.video-topbar-controller')).call(_context4, function (el) {
-	          el.style.marginRight = '10px';
+	          el.style.marginRight = '15px';
 	        });
 	      });
 	      this.on(EVENT.LEAVE_FULLSCREEN, function () {
@@ -18689,6 +19083,7 @@
 	      HIDEEN_COMPONENT_STORE.delete(id);
 	    }
 	    // 卸载某一个component组件，所谓卸载一个组件指的是仅仅将其DOM元素从视图上移除，但是不会删除其实例对象，还可以继续挂载
+	    // 注意：卸载一个组件会清除该组件上挂载的class和id，意味着之后用户可以将组件挂载到任何位置
 	  }, {
 	    key: "unmountComponent",
 	    value: function unmountComponent(id) {
@@ -18751,8 +19146,8 @@
 	  return Player;
 	}(Component);
 
-	var $$h = _export;
-	var toObject$1 = toObject$a;
+	var $$g = _export;
+	var toObject = toObject$a;
 	var nativeKeys = objectKeys$3;
 	var fails$5 = fails$x;
 
@@ -18760,9 +19155,9 @@
 
 	// `Object.keys` method
 	// https://tc39.es/ecma262/#sec-object.keys
-	$$h({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
+	$$g({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
 	  keys: function keys(it) {
-	    return nativeKeys(toObject$1(it));
+	    return nativeKeys(toObject(it));
 	  }
 	});
 
@@ -18770,17 +19165,17 @@
 
 	var keys$5 = path$6.Object.keys;
 
-	var parent$m = keys$5;
+	var parent$j = keys$5;
 
-	var keys$4 = parent$m;
+	var keys$4 = parent$j;
 
-	var parent$l = keys$4;
+	var parent$i = keys$4;
 
-	var keys$3 = parent$l;
+	var keys$3 = parent$i;
 
-	var parent$k = keys$3;
+	var parent$h = keys$3;
 
-	var keys$2 = parent$k;
+	var keys$2 = parent$h;
 
 	var keys$1 = keys$2;
 
@@ -18792,17 +19187,17 @@
 
 	var getOwnPropertySymbols$5 = path$5.Object.getOwnPropertySymbols;
 
-	var parent$j = getOwnPropertySymbols$5;
+	var parent$g = getOwnPropertySymbols$5;
 
-	var getOwnPropertySymbols$4 = parent$j;
+	var getOwnPropertySymbols$4 = parent$g;
 
-	var parent$i = getOwnPropertySymbols$4;
+	var parent$f = getOwnPropertySymbols$4;
 
-	var getOwnPropertySymbols$3 = parent$i;
+	var getOwnPropertySymbols$3 = parent$f;
 
-	var parent$h = getOwnPropertySymbols$3;
+	var parent$e = getOwnPropertySymbols$3;
 
-	var getOwnPropertySymbols$2 = parent$h;
+	var getOwnPropertySymbols$2 = parent$e;
 
 	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
 
@@ -18810,19 +19205,19 @@
 
 	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
 
-	var getOwnPropertyDescriptor$8 = {exports: {}};
+	var getOwnPropertyDescriptor$7 = {exports: {}};
 
-	var $$g = _export;
+	var $$f = _export;
 	var fails$4 = fails$x;
 	var toIndexedObject$1 = toIndexedObject$a;
 	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
-	var DESCRIPTORS$2 = descriptors;
+	var DESCRIPTORS$1 = descriptors;
 
-	var FORCED$1 = !DESCRIPTORS$2 || fails$4(function () { nativeGetOwnPropertyDescriptor(1); });
+	var FORCED$1 = !DESCRIPTORS$1 || fails$4(function () { nativeGetOwnPropertyDescriptor(1); });
 
 	// `Object.getOwnPropertyDescriptor` method
 	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-	$$g({ target: 'Object', stat: true, forced: FORCED$1, sham: !DESCRIPTORS$2 }, {
+	$$f({ target: 'Object', stat: true, forced: FORCED$1, sham: !DESCRIPTORS$1 }, {
 	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
 	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
 	  }
@@ -18832,31 +19227,31 @@
 
 	var Object$1 = path$4.Object;
 
-	var getOwnPropertyDescriptor$7 = getOwnPropertyDescriptor$8.exports = function getOwnPropertyDescriptor(it, key) {
+	var getOwnPropertyDescriptor$6 = getOwnPropertyDescriptor$7.exports = function getOwnPropertyDescriptor(it, key) {
 	  return Object$1.getOwnPropertyDescriptor(it, key);
 	};
 
-	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$7.sham = true;
+	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$6.sham = true;
 
-	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$8.exports;
+	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$7.exports;
 
-	var parent$g = getOwnPropertyDescriptorExports;
+	var parent$d = getOwnPropertyDescriptorExports;
 
-	var getOwnPropertyDescriptor$6 = parent$g;
+	var getOwnPropertyDescriptor$5 = parent$d;
 
-	var parent$f = getOwnPropertyDescriptor$6;
+	var parent$c = getOwnPropertyDescriptor$5;
 
-	var getOwnPropertyDescriptor$5 = parent$f;
+	var getOwnPropertyDescriptor$4 = parent$c;
 
-	var parent$e = getOwnPropertyDescriptor$5;
+	var parent$b = getOwnPropertyDescriptor$4;
 
-	var getOwnPropertyDescriptor$4 = parent$e;
-
-	var getOwnPropertyDescriptor$3 = getOwnPropertyDescriptor$4;
+	var getOwnPropertyDescriptor$3 = parent$b;
 
 	var getOwnPropertyDescriptor$2 = getOwnPropertyDescriptor$3;
 
-	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$2);
+	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
+
+	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$1);
 
 	var getBuiltIn$3 = getBuiltIn$h;
 	var uncurryThis$2 = functionUncurryThis;
@@ -18873,16 +19268,16 @@
 	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
 	};
 
-	var $$f = _export;
-	var DESCRIPTORS$1 = descriptors;
+	var $$e = _export;
+	var DESCRIPTORS = descriptors;
 	var ownKeys$2 = ownKeys$3;
 	var toIndexedObject = toIndexedObject$a;
 	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
-	var createProperty$1 = createProperty$6;
+	var createProperty = createProperty$6;
 
 	// `Object.getOwnPropertyDescriptors` method
 	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
-	$$f({ target: 'Object', stat: true, sham: !DESCRIPTORS$1 }, {
+	$$e({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
 	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
 	    var O = toIndexedObject(object);
 	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
@@ -18892,7 +19287,7 @@
 	    var key, descriptor;
 	    while (keys.length > index) {
 	      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
-	      if (descriptor !== undefined) createProperty$1(result, key, descriptor);
+	      if (descriptor !== undefined) createProperty(result, key, descriptor);
 	    }
 	    return result;
 	  }
@@ -18902,17 +19297,17 @@
 
 	var getOwnPropertyDescriptors$5 = path$3.Object.getOwnPropertyDescriptors;
 
-	var parent$d = getOwnPropertyDescriptors$5;
+	var parent$a = getOwnPropertyDescriptors$5;
 
-	var getOwnPropertyDescriptors$4 = parent$d;
+	var getOwnPropertyDescriptors$4 = parent$a;
 
-	var parent$c = getOwnPropertyDescriptors$4;
+	var parent$9 = getOwnPropertyDescriptors$4;
 
-	var getOwnPropertyDescriptors$3 = parent$c;
+	var getOwnPropertyDescriptors$3 = parent$9;
 
-	var parent$b = getOwnPropertyDescriptors$3;
+	var parent$8 = getOwnPropertyDescriptors$3;
 
-	var getOwnPropertyDescriptors$2 = parent$b;
+	var getOwnPropertyDescriptors$2 = parent$8;
 
 	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
 
@@ -18943,12 +19338,12 @@
 	  return result === 0 && charAt(trimmedString, 0) == '-' ? -0 : result;
 	} : $parseFloat$1;
 
-	var $$e = _export;
+	var $$d = _export;
 	var $parseFloat = numberParseFloat;
 
 	// `parseFloat` method
 	// https://tc39.es/ecma262/#sec-parsefloat-string
-	$$e({ global: true, forced: parseFloat != $parseFloat }, {
+	$$d({ global: true, forced: parseFloat != $parseFloat }, {
 	  parseFloat: $parseFloat
 	});
 
@@ -18956,157 +19351,23 @@
 
 	var _parseFloat$6 = path$2.parseFloat;
 
-	var parent$a = _parseFloat$6;
+	var parent$7 = _parseFloat$6;
 
-	var _parseFloat$5 = parent$a;
+	var _parseFloat$5 = parent$7;
 
-	var parent$9 = _parseFloat$5;
+	var parent$6 = _parseFloat$5;
 
-	var _parseFloat$4 = parent$9;
+	var _parseFloat$4 = parent$6;
 
-	var parent$8 = _parseFloat$4;
+	var parent$5 = _parseFloat$4;
 
-	var _parseFloat$3 = parent$8;
+	var _parseFloat$3 = parent$5;
 
 	var _parseFloat$2 = _parseFloat$3;
 
 	var _parseFloat = _parseFloat$2;
 
 	var _parseFloat$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseFloat);
-
-	var DESCRIPTORS = descriptors;
-	var isArray = isArray$c;
-
-	var $TypeError$2 = TypeError;
-	// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-	var getOwnPropertyDescriptor$1 = Object.getOwnPropertyDescriptor;
-
-	// Safari < 13 does not throw an error in this case
-	var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS && !function () {
-	  // makes no sense without proper strict mode support
-	  if (this !== undefined) return true;
-	  try {
-	    // eslint-disable-next-line es/no-object-defineproperty -- safe
-	    Object.defineProperty([], 'length', { writable: false }).length = 1;
-	  } catch (error) {
-	    return error instanceof TypeError;
-	  }
-	}();
-
-	var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
-	  if (isArray(O) && !getOwnPropertyDescriptor$1(O, 'length').writable) {
-	    throw $TypeError$2('Cannot set read only .length');
-	  } return O.length = length;
-	} : function (O, length) {
-	  return O.length = length;
-	};
-
-	var tryToString = tryToString$7;
-
-	var $TypeError$1 = TypeError;
-
-	var deletePropertyOrThrow$1 = function (O, P) {
-	  if (!delete O[P]) throw $TypeError$1('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
-	};
-
-	var $$d = _export;
-	var toObject = toObject$a;
-	var toAbsoluteIndex = toAbsoluteIndex$4;
-	var toIntegerOrInfinity = toIntegerOrInfinity$4;
-	var lengthOfArrayLike = lengthOfArrayLike$8;
-	var setArrayLength = arraySetLength;
-	var doesNotExceedSafeInteger = doesNotExceedSafeInteger$2;
-	var arraySpeciesCreate = arraySpeciesCreate$3;
-	var createProperty = createProperty$6;
-	var deletePropertyOrThrow = deletePropertyOrThrow$1;
-	var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$5;
-
-	var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
-
-	var max = Math.max;
-	var min = Math.min;
-
-	// `Array.prototype.splice` method
-	// https://tc39.es/ecma262/#sec-array.prototype.splice
-	// with adding support of @@species
-	$$d({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
-	  splice: function splice(start, deleteCount /* , ...items */) {
-	    var O = toObject(this);
-	    var len = lengthOfArrayLike(O);
-	    var actualStart = toAbsoluteIndex(start, len);
-	    var argumentsLength = arguments.length;
-	    var insertCount, actualDeleteCount, A, k, from, to;
-	    if (argumentsLength === 0) {
-	      insertCount = actualDeleteCount = 0;
-	    } else if (argumentsLength === 1) {
-	      insertCount = 0;
-	      actualDeleteCount = len - actualStart;
-	    } else {
-	      insertCount = argumentsLength - 2;
-	      actualDeleteCount = min(max(toIntegerOrInfinity(deleteCount), 0), len - actualStart);
-	    }
-	    doesNotExceedSafeInteger(len + insertCount - actualDeleteCount);
-	    A = arraySpeciesCreate(O, actualDeleteCount);
-	    for (k = 0; k < actualDeleteCount; k++) {
-	      from = actualStart + k;
-	      if (from in O) createProperty(A, k, O[from]);
-	    }
-	    A.length = actualDeleteCount;
-	    if (insertCount < actualDeleteCount) {
-	      for (k = actualStart; k < len - actualDeleteCount; k++) {
-	        from = k + actualDeleteCount;
-	        to = k + insertCount;
-	        if (from in O) O[to] = O[from];
-	        else deletePropertyOrThrow(O, to);
-	      }
-	      for (k = len; k > len - actualDeleteCount + insertCount; k--) deletePropertyOrThrow(O, k - 1);
-	    } else if (insertCount > actualDeleteCount) {
-	      for (k = len - actualDeleteCount; k > actualStart; k--) {
-	        from = k + actualDeleteCount - 1;
-	        to = k + insertCount - 1;
-	        if (from in O) O[to] = O[from];
-	        else deletePropertyOrThrow(O, to);
-	      }
-	    }
-	    for (k = 0; k < insertCount; k++) {
-	      O[k + actualStart] = arguments[k + 2];
-	    }
-	    setArrayLength(O, len - actualDeleteCount + insertCount);
-	    return A;
-	  }
-	});
-
-	var entryVirtual = entryVirtual$a;
-
-	var splice$6 = entryVirtual('Array').splice;
-
-	var isPrototypeOf$1 = objectIsPrototypeOf;
-	var method = splice$6;
-
-	var ArrayPrototype = Array.prototype;
-
-	var splice$5 = function (it) {
-	  var own = it.splice;
-	  return it === ArrayPrototype || (isPrototypeOf$1(ArrayPrototype, it) && own === ArrayPrototype.splice) ? method : own;
-	};
-
-	var parent$7 = splice$5;
-
-	var splice$4 = parent$7;
-
-	var parent$6 = splice$4;
-
-	var splice$3 = parent$6;
-
-	var parent$5 = splice$3;
-
-	var splice$2 = parent$5;
-
-	var splice$1 = splice$2;
-
-	var splice = splice$1;
-
-	var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice);
 
 	var hasOwn$1 = hasOwnProperty_1;
 	var ownKeys$1 = ownKeys$3;

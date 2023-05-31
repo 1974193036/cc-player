@@ -5,6 +5,7 @@ export type PlayerOptions = {
   url: string
   container: HTMLElement
   video?: HTMLVideoElement
+  post?: string
   autoplay?: boolean
   streamPlay?: boolean
   leftBottomBarControllers?: (ComponentConstructor | string)[]

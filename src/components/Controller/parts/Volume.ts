@@ -1,7 +1,7 @@
 import { Options } from './Options'
 import { Player } from '@/page/player'
 import { DOMProps, Node } from '@/types/Player'
-import { $, addClass, createSvg, getDOMPoint } from '@/utils/domUtils'
+import { $, addClass, createSvg, getDOMPoint, getElementSize } from '@/utils/domUtils'
 import { volumePath$1 } from '../path/defaultPath'
 import { storeControlComponent } from '@/utils/store'
 import { EVENT } from '@/events'
@@ -13,6 +13,8 @@ export class Volume extends Options {
   volumeShow: HTMLElement
   volumeCompleted: HTMLElement
   volume: number = 0.5
+  volumeDot: HTMLElement
+  mouseY: number = 0
 
   constructor(
     player: Player,
@@ -49,6 +51,9 @@ export class Volume extends Options {
     this.hideBox.appendChild(this.volumeShow)
     this.hideBox.appendChild(this.volumeProgress)
 
+    this.volumeDot = $('div.video-volume-dot')
+    this.volumeProgress.appendChild(this.volumeDot)
+
     this.icon = createSvg(volumePath$1)
     this.iconBox.appendChild(this.icon)
     this.player.video.volume = this.volume
@@ -65,14 +70,41 @@ export class Volume extends Options {
         scale = 1
       }
       this.volumeCompleted.style.height = scale * 100 + '%'
+      this.volumeDot.style.top = (1 - scale) * this.volumeProgress.clientHeight + 'px'
       this.volume = scale
-      this.volumeShow.innerText = (this.volume * 100).toFixed(0)
+      this.volumeShow.innerText = Math.round(this.volume * 100) + ''
       this.player.video.volume = this.volume
     })
 
-    this.volumeProgress.onclick = (e) => {
+    this.volumeProgress.onclick = (e: MouseEvent) => {
       e.stopPropagation()
       this.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, this)
+    }
+
+    this.volumeDot.onmousedown = (e: MouseEvent) => {
+      this.mouseY = e.pageY
+      let top = parseInt(getComputedStyle(this.volumeDot).top)
+      document.body.onmousemove = (e: MouseEvent) => {
+        e.preventDefault()
+        let dy = top + e.pageY - this.mouseY
+        // console.log(dy)
+        let scale = (this.volumeProgress.clientHeight - dy) / this.volumeProgress.clientHeight
+        if (scale < 0) {
+          scale = 0
+        } else if (scale > 1) {
+          scale = 1
+        }
+        this.volumeDot.style.top = (1 - scale) * this.volumeProgress.clientHeight + 'px'
+        this.volumeCompleted.style.height = scale * 100 + '%'
+        this.volumeShow.innerText = Math.round(scale * 100) + ''
+        this.player.video.volume = scale
+        this.volume = scale
+      }
+
+      document.body.onmouseup = (e) => {
+        document.body.onmousemove = null
+        document.body.onmouseup = null
+      }
     }
   }
 }
