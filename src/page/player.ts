@@ -57,10 +57,15 @@ class Player extends Component implements ComponentItem {
   }
 
   init() {
-    this.video = $('video')
-    this.video['playsinline'] = true // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
-    this.video['x5-video-player-type'] = 'h5' // 启用H5播放器,是wechat安卓版特性
-    this.video.crossOrigin = 'anonymous'
+    if (this.playerOptions.video) {
+      this.video = this.playerOptions.video
+      this.video.parentNode && this.video.parentNode.removeChild(this.video)
+    } else {
+      this.video = $('video')
+      this.video['playsinline'] = true // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
+      this.video['x5-video-player-type'] = 'h5' // 启用H5播放器,是wechat安卓版特性
+      this.video.crossOrigin = 'anonymous'
+    }
 
     this.el.appendChild(this.video)
     this.playerOptions?.url && this.attachSource(this.playerOptions.url)
@@ -358,8 +363,8 @@ class Player extends Component implements ComponentItem {
   // }
 
   attachSource(url: string) {
-     // 是否启动流式播放
-     if (this.playerOptions.streamPlay) {
+    // 是否启动流式播放
+    if (this.playerOptions.streamPlay) {
       new Mp4MediaPlayer(url, this)
     } else {
       this.video.src = url

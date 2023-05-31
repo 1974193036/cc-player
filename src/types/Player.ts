@@ -4,6 +4,7 @@ import { Component } from '../class/Component'
 export type PlayerOptions = {
   url: string
   container: HTMLElement
+  video?: HTMLVideoElement
   autoplay?: boolean
   streamPlay?: boolean
   leftBottomBarControllers?: (ComponentConstructor | string)[]
