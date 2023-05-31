@@ -40,7 +40,13 @@
           </path>
       </svg>
     </div> -->
+
     <div class="video" id="video"></div>
+
+    <!-- 支持用户自定义传入video -->
+    <!-- <div id="video" class="video custom-video">
+      <video playsinline="true" x5-video-player-type = "true"></video>
+    </div> -->
 
     <script>
       console.log(Player)
@@ -58,6 +64,7 @@
           // height: '480px',
           autoplay: false,
           streamPlay: false,
+          // video: document.getElementsByTagName('video')[0]
           // rightBottomBarControllers: ['Playrate', 'Volume', 'FullScreen']
         })
 
