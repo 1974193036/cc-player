@@ -4,7 +4,7 @@ import { addClass, createSvg } from '@/utils/domUtils'
 import { fullscreenExitPath, fullscreenPath } from '../path/defaultPath'
 import { storeControlComponent } from '@/utils/store'
 import { Options } from './Options'
-import screenfull from 'screenfull'
+import { beFull, exitFull, isFull } from 'be-full'
 import { wrap, SingleTapEvent } from 'ntouch.js'
 import { EVENT } from '@/events'
 
@@ -51,17 +51,17 @@ export class FullScreen extends Options {
 
   onClick(e: Event | SingleTapEvent) {
     // 横屏全屏
-    if (screenfull.isEnabled && !screenfull.isFullscreen) {
+    if (!isFull(this.player.container)) {
       // 调用浏览器提供的全屏API接口去请求元素的全屏，原生全屏分为  竖屏全屏 + 横屏全屏
-      screenfull.request(this.player.container)
+      beFull(this.player.container)
       this.iconBox.removeChild(this.icon)
       this.icon = createSvg(fullscreenExitPath)
       this.iconBox.appendChild(this.icon)
       this.player.container.addEventListener('fullscreenchange', (e) => {
         this.player.emit(EVENT.ENTER_FULLSCREEN)
       })
-    } else if (screenfull.isFullscreen) {
-      screenfull.exit()
+    } else if (isFull(this.player.container)) {
+      exitFull()
       this.iconBox.removeChild(this.icon)
       this.icon = createSvg(fullscreenPath)
       this.iconBox.appendChild(this.icon)

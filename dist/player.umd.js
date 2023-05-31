@@ -5424,166 +5424,11 @@
 	  return Options;
 	}(Component);
 
-	/* eslint-disable promise/prefer-await-to-then */
+	var main_min = {};
 
-	const methodMap = [
-		[
-			'requestFullscreen',
-			'exitFullscreen',
-			'fullscreenElement',
-			'fullscreenEnabled',
-			'fullscreenchange',
-			'fullscreenerror',
-		],
-		// New WebKit
-		[
-			'webkitRequestFullscreen',
-			'webkitExitFullscreen',
-			'webkitFullscreenElement',
-			'webkitFullscreenEnabled',
-			'webkitfullscreenchange',
-			'webkitfullscreenerror',
-
-		],
-		// Old WebKit
-		[
-			'webkitRequestFullScreen',
-			'webkitCancelFullScreen',
-			'webkitCurrentFullScreenElement',
-			'webkitCancelFullScreen',
-			'webkitfullscreenchange',
-			'webkitfullscreenerror',
-
-		],
-		[
-			'mozRequestFullScreen',
-			'mozCancelFullScreen',
-			'mozFullScreenElement',
-			'mozFullScreenEnabled',
-			'mozfullscreenchange',
-			'mozfullscreenerror',
-		],
-		[
-			'msRequestFullscreen',
-			'msExitFullscreen',
-			'msFullscreenElement',
-			'msFullscreenEnabled',
-			'MSFullscreenChange',
-			'MSFullscreenError',
-		],
-	];
-
-	const nativeAPI = (() => {
-		if (typeof document === 'undefined') {
-			return false;
-		}
-
-		const unprefixedMethods = methodMap[0];
-		const returnValue = {};
-
-		for (const methodList of methodMap) {
-			const exitFullscreenMethod = methodList?.[1];
-			if (exitFullscreenMethod in document) {
-				for (const [index, method] of methodList.entries()) {
-					returnValue[unprefixedMethods[index]] = method;
-				}
-
-				return returnValue;
-			}
-		}
-
-		return false;
-	})();
-
-	const eventNameMap = {
-		change: nativeAPI.fullscreenchange,
-		error: nativeAPI.fullscreenerror,
-	};
-
-	// eslint-disable-next-line import/no-mutable-exports
-	let screenfull = {
-		// eslint-disable-next-line default-param-last
-		request(element = document.documentElement, options) {
-			return new Promise((resolve, reject) => {
-				const onFullScreenEntered = () => {
-					screenfull.off('change', onFullScreenEntered);
-					resolve();
-				};
-
-				screenfull.on('change', onFullScreenEntered);
-
-				const returnPromise = element[nativeAPI.requestFullscreen](options);
-
-				if (returnPromise instanceof Promise) {
-					returnPromise.then(onFullScreenEntered).catch(reject);
-				}
-			});
-		},
-		exit() {
-			return new Promise((resolve, reject) => {
-				if (!screenfull.isFullscreen) {
-					resolve();
-					return;
-				}
-
-				const onFullScreenExit = () => {
-					screenfull.off('change', onFullScreenExit);
-					resolve();
-				};
-
-				screenfull.on('change', onFullScreenExit);
-
-				const returnPromise = document[nativeAPI.exitFullscreen]();
-
-				if (returnPromise instanceof Promise) {
-					returnPromise.then(onFullScreenExit).catch(reject);
-				}
-			});
-		},
-		toggle(element, options) {
-			return screenfull.isFullscreen ? screenfull.exit() : screenfull.request(element, options);
-		},
-		onchange(callback) {
-			screenfull.on('change', callback);
-		},
-		onerror(callback) {
-			screenfull.on('error', callback);
-		},
-		on(event, callback) {
-			const eventName = eventNameMap[event];
-			if (eventName) {
-				document.addEventListener(eventName, callback, false);
-			}
-		},
-		off(event, callback) {
-			const eventName = eventNameMap[event];
-			if (eventName) {
-				document.removeEventListener(eventName, callback, false);
-			}
-		},
-		raw: nativeAPI,
-	};
-
-	Object.defineProperties(screenfull, {
-		isFullscreen: {
-			get: () => Boolean(document[nativeAPI.fullscreenElement]),
-		},
-		element: {
-			enumerable: true,
-			get: () => document[nativeAPI.fullscreenElement] ?? undefined,
-		},
-		isEnabled: {
-			enumerable: true,
-			// Coerce to boolean in case of old WebKit.
-			get: () => Boolean(document[nativeAPI.fullscreenEnabled]),
-		},
-	});
-
-	if (!nativeAPI) {
-		screenfull = {isEnabled: false};
-	}
-
-	var screenfull$1 = screenfull;
+	(function (exports) {
+	Object.defineProperty(exports,"__esModule",{value:!0}),exports.toggleFull=exports.isFull=exports.exitFull=exports.beFull=void 0;var e=document.documentElement,l=e.querySelector("head"),n=document.createElement("style"),t="requestFullscreen",u="exitFullscreen",r="fullscreenElement";if("webkitRequestFullScreen"in e)t="webkitRequestFullScreen",u="webkitExitFullscreen",r="webkitFullscreenElement";else if("msRequestFullscreen"in e)t="msRequestFullscreen",u="msExitFullscreen",r="msFullscreenElement";else if("mozRequestFullScreen"in e)t="mozRequestFullScreen",u="mozCancelFullScreen",r="mozFullScreenElement";else if(!("requestFullscreen"in e))throw "当前浏览器不支持Fullscreen API !";function c(l){return l instanceof HTMLElement?l:e}function o(e,u){return u&&(null===l&&(l=document.createElement("head")),n.innerHTML=":fullscreen{background-color:"+u+";}",l.appendChild(n)),c(e)[t]()}function i(){return e.contains(n)&&(null==l||l.removeChild(n)),document[u]()}function F(e){return c(e)===document[r]}function m(e,l){return F(e)?(i(),!1):(o(e,l),!0)}exports.beFull=o,exports.exitFull=i,exports.isFull=F,exports.toggleFull=m; 
+	} (main_min));
 
 	let fn1 = Document.prototype.createElement;
 	// 此函数为重载实现
@@ -6090,17 +5935,17 @@
 	    value: function onClick(e) {
 	      var _this2 = this;
 	      // 横屏全屏
-	      if (screenfull$1.isEnabled && !screenfull$1.isFullscreen) {
+	      if (!main_min.isFull(this.player.container)) {
 	        // 调用浏览器提供的全屏API接口去请求元素的全屏，原生全屏分为  竖屏全屏 + 横屏全屏
-	        screenfull$1.request(this.player.container);
+	        main_min.beFull(this.player.container);
 	        this.iconBox.removeChild(this.icon);
 	        this.icon = createSvg(fullscreenExitPath);
 	        this.iconBox.appendChild(this.icon);
 	        this.player.container.addEventListener('fullscreenchange', function (e) {
 	          _this2.player.emit(EVENT.ENTER_FULLSCREEN);
 	        });
-	      } else if (screenfull$1.isFullscreen) {
-	        screenfull$1.exit();
+	      } else if (main_min.isFull(this.player.container)) {
+	        main_min.exitFull();
 	        this.iconBox.removeChild(this.icon);
 	        this.icon = createSvg(fullscreenPath);
 	        this.iconBox.appendChild(this.icon);
