@@ -1,7 +1,7 @@
-import { FullScreen } from '@/components/Controller/parts/FullScreen'
-import { PlayButton } from '@/components/Controller/parts/PlayButton'
-import { Playrate } from '@/components/Controller/parts/Playrate'
-import { Volume } from '@/components/Controller/parts/Volume'
+import { FullScreen } from '@/components/ToolBar/BottomBar/parts/FullScreen'
+import { PlayButton } from '@/components/ToolBar/BottomBar/parts/PlayButton'
+import { Playrate } from '@/components/ToolBar/BottomBar/parts/Playrate'
+import { Volume } from '@/components/ToolBar/BottomBar/parts/Volume'
 import { ComponentItem } from '../types/Player'
 
 // COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件

@@ -2,7 +2,7 @@ import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { $, addClass, createSvg } from '@/utils/domUtils'
-import { volumePath$1 } from '../Controller/path/defaultPath'
+import { volumePath$1 } from '@/svg'
 import { MoveEvent, SwipeEvent } from 'ntouch.js'
 import { EVENT } from "@/events";
 import './index.less'

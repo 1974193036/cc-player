@@ -31,7 +31,7 @@ export class BufferedProgress extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on(EVENT.VIDEO_PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
+    this.player.on(EVENT.PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
       let scale = e.offsetX / ctx.el.offsetWidth
       if (scale < 0) {
         scale = 0

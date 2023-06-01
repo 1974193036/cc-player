@@ -2,7 +2,7 @@ import { Options } from './Options'
 import { Player } from '@/page/player'
 import { DOMProps, Node } from '@/types/Player'
 import { $, addClass, createSvg, getDOMPoint, getElementSize } from '@/utils/domUtils'
-import { volumePath$1 } from '../path/defaultPath'
+import { volumePath$1 } from '@/svg'
 import { storeControlComponent } from '@/utils/store'
 import { EVENT } from '@/events'
 

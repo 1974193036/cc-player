@@ -11,7 +11,7 @@ import { ToolBar } from '@/components/ToolBar/toolbar'
 import { $, addClass, patchComponent, removeClass } from '@/utils/domUtils'
 import { COMPONENT_STORE, HIDEEN_COMPONENT_STORE, ONCE_COMPONENT_STORE } from '@/utils/store'
 import Mp4MediaPlayer from '../mp4/MediaPlayer'
-// import { DanmakuController } from '@/danmaku'
+import { DanmakuController } from '@/danmaku'
 import { TimeLoading } from '@/components/Loading/parts/TimeLoading'
 import { ErrorLoading } from '@/components/Loading/parts/ErrorLoading'
 import { TopBar } from '@/components/TopBar/TopBar'
@@ -21,11 +21,9 @@ import { MoveEvent, wrap } from 'ntouch.js'
 import { computeAngle } from '@/utils/math'
 import { EVENT } from '@/events'
 
-import './player.less'
-
 class Player extends Component implements ComponentItem {
   readonly id = 'Player'
-  // el: div.video-wrapper
+  // el: div.Niplayer_video-wrapper
 
   // 播放器的默认配置
   readonly playerOptions: PlayerOptions
@@ -44,7 +42,7 @@ class Player extends Component implements ComponentItem {
   mediaProportion: number = 9 / 16 // 视频比例 原始高度/原始宽度
 
   constructor(options: PlayerOptions) {
-    super(options.container, 'div.video-wrapper')
+    super(options.container, 'div.Niplayer_video-wrapper')
     this.playerOptions = Object.assign(
       {
         autoPlay: false,
@@ -93,7 +91,7 @@ class Player extends Component implements ComponentItem {
     this.toolBar = new ToolBar(this, this.el, 'div')
     this.topbar = new TopBar(this, this.el, 'div')
 
-    // new DanmakuController(this)
+    new DanmakuController(this)
   }
 
   /**
@@ -242,7 +240,7 @@ class Player extends Component implements ComponentItem {
       this.emit(EVENT.RATE_CHANGE)
     })
 
-    this.on(EVENT.VIDEO_PROGRESS_CLICK, (e, ctx) => {
+    this.on(EVENT.PROGRESS_CLICK, (e, ctx) => {
       let scale = e.offsetX / ctx.el.offsetWidth
       if (scale < 0) {
         scale = 0
@@ -272,7 +270,7 @@ class Player extends Component implements ComponentItem {
       this.enableSeek = true
     })
     this.on(EVENT.DOT_DRAG, (val: number, e: Event | MoveEvent) => {
-      this.emit('showtoolbar', e)
+      this.emit(EVENT.SHOW_TOOLBAR, e)
     })
 
     this.on(EVENT.ENTER_FULLSCREEN, () => {
@@ -373,18 +371,6 @@ class Player extends Component implements ComponentItem {
       })
     }
   }
-
-  // initMp4Player(url: string) {
-  //   new Mp4MediaPlayer(this.playerOptions.url, this)
-  // }
-
-  // initMpdPlayer(url: string) {
-  //   // 工厂模式
-  //   // let player = new MediaPlayer({context: {}}, ...args)
-  //   let player = MpdMediaPlayerFactory().create()
-  //   player.attachVideo(this.video)
-  //   player.attachSource(url)
-  // }
 
   attachSource(url: string) {
     // 是否启动流式播放
@@ -507,36 +493,6 @@ class Player extends Component implements ComponentItem {
     }
     ONCE_COMPONENT_STORE.delete(id)
   }
-
-  // // 注册最右侧的控制栏上的组件
-  // registerControls(
-  //   id: string,
-  //   component: Partial<ComponentItem> & registerOptions,
-  //   pos: 'left' | 'right' | 'medium'
-  // ) {
-  //   let store = CONTROL_COMPONENT_STORE
-  //   if (store.has(id)) {
-  //     // patchComponent(store.get(id), component)
-  //     if (component.replaceElementType) {
-  //       patchComponent(store.get(id), component, {
-  //         replaceElementType: component.replaceElementType
-  //       })
-  //     } else {
-  //       patchComponent(store.get(id), component)
-  //     }
-  //   } else {
-  //     // 如果该组件实例是用户自创的话
-  //     if (!component.el) throw new Error(`传入的原创组件${id}没有对应的DOM元素`)
-  //     if (pos === 'left') {
-  //       this.toolBar.controller.leftArea.appendChild(component.el)
-  //     } else if (pos === 'right') {
-  //       let settings = this.toolBar.controller.rightArea
-  //       settings.insertBefore(component.el, settings.firstChild)
-  //     } else if (pos === 'medium') {
-  //       this.toolBar.controller.mediumArea.appendChild(component.el)
-  //     }
-  //   }
-  // }
 
   /**
    * @description 注册对应的组件

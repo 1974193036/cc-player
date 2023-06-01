@@ -1,9 +1,8 @@
 import { Player } from '@/page/player'
 import { DOMProps, Node } from '@/types/Player'
 import { $, addClass, createSvg, removeClass } from '@/utils/domUtils'
-import { nextTick } from '@/utils/nextTick'
 import { storeControlComponent } from '@/utils/store'
-import { confirmPath, countdownPath, videoShotPath } from '../path/defaultPath'
+import { confirmPath, countdownPath, videoShotPath } from '@/svg'
 import { Toast } from '@/components/Toast/Toast'
 import { Options } from './Options'
 

@@ -1,22 +1,23 @@
 import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
-import { addClass, getElementSize, includeClass, removeClass } from '@/utils/domUtils'
+import { addClass } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
 import { Progress } from '../progress'
-import { MoveEvent, SwipeEvent, wrap } from 'ntouch.js'
+import { MoveEvent, SwipeEvent } from 'ntouch.js'
 import { EVENT } from '@/events'
 
 export class Dot extends Component implements ComponentItem {
   readonly id = 'Dot'
   // el: div.video-dot.video-dot-hidden
   props: DOMProps
+  progress: Progress
   player: Player
   mouseX: number
   left = 0
-  playScale = 0
 
   constructor(
+    progress: Progress,
     player: Player,
     container: HTMLElement,
     desc?: string,
@@ -24,43 +25,46 @@ export class Dot extends Component implements ComponentItem {
     children?: Node[]
   ) {
     super(container, desc, props, children)
-    this.props = props || {}
+    this.progress = progress
     this.player = player
-    this.container = container
     this.init()
   }
 
   init() {
-    addClass(this.el, ['video-dot', 'video-dot-hidden'])
+    addClass(this.el, ['progress-dot', 'progress-dot-hidden'])
     this.initEvent()
 
     storeControlComponent(this)
   }
 
   initEvent() {
-    this.player.on(EVENT.VIDEO_PROGRESS_MOUSE_ENTER, (e) => {
-      // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
-      if (this.player.enableSeek) {
-        this.onShowDot(e)
-      }
-    })
+    // this.player.on(EVENT.PROGRESS_MOUSE_ENTER, (e) => {
+    //   // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
+    //   if (this.player.enableSeek) {
+    //     this.onShowDot(e)
+    //   }
+    // })
 
-    this.player.on(EVENT.VIDEO_PROGRESS_MOUSE_LEAVE, (e) => {
-      // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
-      if (this.player.enableSeek) {
-        this.onHideDot(e)
-      }
-    })
+    // this.player.on(EVENT.PROGRESS_MOUSE_LEAVE, (e) => {
+    //   // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
+    //   if (this.player.enableSeek) {
+    //     this.onHideDot(e)
+    //   }
+    // })
 
-    this.player.on(EVENT.VIDEO_PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
+    // this.player.on(EVENT.PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
+    //   this.onChangePos(e, ctx)
+    // })
+
+    // this.player.on(EVENT.TIME_UPDATE, (e: Event) => {
+    //   // 防抖效果：针对Dot按下拖动时不触发timeupdate，拖完鼠标抬起时再触发timeupdate
+    //   if (this.player.enableSeek) {
+    //     this.updatePos(e)
+    //   }
+    // })
+
+    this.progress.on(EVENT.PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
       this.onChangePos(e, ctx)
-    })
-
-    this.player.on(EVENT.TIME_UPDATE, (e: Event) => {
-      // 防抖效果：针对Dot按下拖动时不触发timeupdate，拖完鼠标抬起时再触发timeupdate
-      if (this.player.enableSeek) {
-        this.updatePos(e)
-      }
     })
 
     if (this.player.env === 'PC') {
@@ -71,18 +75,20 @@ export class Dot extends Component implements ComponentItem {
   }
 
   initPCEvent(): void {
-    this.el.addEventListener('mousedown', (e) => {
+    this.el.addEventListener('mousedown', (e: MouseEvent) => {
       e.preventDefault()
       this.onMouseMove = this.onMouseMove.bind(this)
       this.player.emit(EVENT.DOT_DOWN)
+      this.progress.emit(EVENT.DOT_DOWN)
       this.mouseX = e.pageX
       this.left = parseInt(this.el.style.left)
 
       document.body.addEventListener('mousemove', this.onMouseMove)
 
-      document.body.onmouseup =  (e) => {
+      document.body.onmouseup = (e: MouseEvent) => {
         this.player.emit(EVENT.DOT_UP)
-        this.player.video.currentTime = Math.floor(this.playScale * this.player.video.duration)
+        this.progress.emit(EVENT.DOT_UP)
+        // this.player.video.currentTime = Math.floor(this.playScale * this.player.video.duration)
         document.body.removeEventListener('mousemove', this.onMouseMove)
         document.body.onmouseup = null
       }
@@ -93,12 +99,13 @@ export class Dot extends Component implements ComponentItem {
     this.player.video.addEventListener('touchstart', (e) => {
       e.preventDefault()
       this.player.emit(EVENT.DOT_DOWN)
+      this.progress.emit(EVENT.DOT_DOWN)
       this.left = this.el.style.left ? parseInt(this.el.style.left) : 0
     })
 
-    this.player.video.addEventListener('touchend', (e) => {
-      this.player.emit(EVENT.DOT_UP)
-    })
+    // this.player.video.addEventListener('touchend', (e) => {
+    //   this.player.emit(EVENT.DOT_UP)
+    // })
 
     this.player.on(EVENT.MOVE_HORIZONTAL, (e: MoveEvent) => {
       let scale = (this.left + e.deltaX) / this.container.clientWidth
@@ -108,65 +115,75 @@ export class Dot extends Component implements ComponentItem {
       } else if (scale > 1) {
         scale = 1
       }
-      this.playScale = scale
-      this.el.style.left =
-        this.container.clientWidth * scale - getElementSize(this.el).width / 2 + 'px'
 
-      if (this.player.video.paused) this.player.video.play()
+      this.el.style.left = scale * 100 + '%'
       this.player.emit(EVENT.DOT_DRAG, scale, e)
+      this.progress.emit(EVENT.DOT_DRAG, scale, e)
+      // this.playScale = scale
+      // this.el.style.left =
+      //   this.container.clientWidth * scale - getElementSize(this.el).width / 2 + 'px'
+
+      // if (this.player.video.paused) this.player.video.play()
+      // this.player.emit(EVENT.DOT_DRAG, scale, e)
     })
 
     this.player.on(EVENT.SLIDE_HORIZONTAL, (e: SwipeEvent) => {
       this.player.emit(EVENT.DOT_UP)
-      this.player.video.currentTime = Math.floor(this.playScale * this.player.video.duration)
+      this.progress.emit(EVENT.DOT_UP)
+      // this.player.video.currentTime = Math.floor(this.playScale * this.player.video.duration)
     })
   }
 
   onMouseMove(e: MouseEvent) {
-    let scale = (e.pageX - this.mouseX + this.left) / this.container.offsetWidth
+    let scale = (e.pageX - this.mouseX + this.left) / this.container.clientWidth
     if (scale < 0) {
       scale = 0
     } else if (scale > 1) {
       scale = 1
     }
-    this.playScale = scale
-    this.el.style.left =
-      this.container.offsetWidth * scale - getElementSize(this.el).width / 2 + 'px'
-    if (this.player.video.paused) this.player.video.play()
+
+    this.el.style.left = scale * 100 + '%'
     this.player.emit(EVENT.DOT_DRAG, scale, e)
+    this.progress.emit(EVENT.DOT_DRAG, scale, e)
+    // this.playScale = scale
+    // this.el.style.left =
+    //   this.container.offsetWidth * scale - getElementSize(this.el).width / 2 + 'px'
+    // if (this.player.video.paused) this.player.video.play()
+    // this.player.emit(EVENT.DOT_DRAG, scale, e)
   }
 
-  onShowDot(e: MouseEvent) {
-    if (includeClass(this.el, 'video-dot-hidden')) {
-      removeClass(this.el, ['video-dot-hidden'])
-    }
-  }
+  // onShowDot(e: MouseEvent) {
+  //   if (includeClass(this.el, 'video-dot-hidden')) {
+  //     removeClass(this.el, ['video-dot-hidden'])
+  //   }
+  // }
 
-  onHideDot(e: MouseEvent) {
-    if (!includeClass(this.el, 'video-dot-hidden')) {
-      addClass(this.el, ['video-dot-hidden'])
-    }
-  }
+  // onHideDot(e: MouseEvent) {
+  //   if (!includeClass(this.el, 'video-dot-hidden')) {
+  //     addClass(this.el, ['video-dot-hidden'])
+  //   }
+  // }
 
   onChangePos(e: MouseEvent, ctx: Component) {
-    let scale = e.offsetX / ctx.el.offsetWidth
+    let scale = e.offsetX / ctx.el.clientWidth
     if (scale < 0) {
       scale = 0
     } else if (scale > 1) {
       scale = 1
     }
-    this.el.style.left = e.offsetX - getElementSize(this.el).width / 2 + 'px'
+    // this.el.style.left = e.offsetX - getElementSize(this.el).width / 2 + 'px'
+    this.el.style.left = scale * 100 + '%'
   }
 
-  updatePos(e: Event) {
-    let video = e.target as HTMLVideoElement
-    let scale = video.currentTime / video.duration
-    if (scale < 0) {
-      scale = 0
-    } else if (scale > 1) {
-      scale = 1
-    }
-    this.el.style.left =
-      scale * this.container.clientWidth - getElementSize(this.el).width / 2 + 'px'
-  }
+  // updatePos(e: Event) {
+  //   let video = e.target as HTMLVideoElement
+  //   let scale = video.currentTime / video.duration
+  //   if (scale < 0) {
+  //     scale = 0
+  //   } else if (scale > 1) {
+  //     scale = 1
+  //   }
+  //   this.el.style.left =
+  //     scale * this.container.clientWidth - getElementSize(this.el).width / 2 + 'px'
+  // }
 }

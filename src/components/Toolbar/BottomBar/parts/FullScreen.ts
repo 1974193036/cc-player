@@ -1,7 +1,7 @@
 import { Player } from '@/page/player'
 import { DOMProps, Node } from '@/types/Player'
 import { addClass, createSvg } from '@/utils/domUtils'
-import { fullscreenExitPath, fullscreenPath } from '../path/defaultPath'
+import { fullscreenExitPath, fullscreenPath } from '@/svg'
 import { storeControlComponent } from '@/utils/store'
 import { Options } from './Options'
 import { beFull, exitFull, isFull } from 'be-full'

@@ -5,7 +5,6 @@ import { $, addClass, includeClass, removeClass } from '@/utils/domUtils'
 import { storeControlComponent } from '../../utils/store'
 import { SingleTapEvent } from 'ntouch.js'
 import { EVENT } from '@/events'
-import './TopBar.less'
 
 export class TopBar extends Component implements ComponentItem {
   readonly id: string = 'TopBar'

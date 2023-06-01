@@ -1,21 +1,25 @@
-import { DanmakuData, Track } from '../types/danmaku'
-import { nextTick } from '../utils/nextTick'
+import { DanmakuData, Track } from '@/types/danmaku'
+import { nextTick } from '@/utils/nextTick'
+import { Player } from '@/page/player'
+import { PriorityQueue } from './utils/PriorityQueue'
 
 /**
- * @description 弹幕类
+ * @description 弹幕类，只专注于实现弹幕的基本逻辑，View层
  */
 
 let flag = false
 
 export class Danmaku {
-  private queue: DanmakuData[] = []
+  private queue: PriorityQueue<DanmakuData>
   private moovingQueue: DanmakuData[] = [] // 正在运动中的弹幕
   private container: HTMLElement
+  private player: Player
   private timer: number | null = null
   private renderInterval: number = 100
   // 每一条弹幕轨道的高度默认为20px
   private trackHeight: number = 20
   private isStopped = true
+  private isHidden = false
   private tracks: Array<{
     track: Track
     datas: DanmakuData[]
@@ -28,9 +32,10 @@ export class Danmaku {
     fontWeight: 500
   }
 
-  constructor(queue: DanmakuData[], container: HTMLElement) {
-    this.queue = queue
-    this.container = container
+  constructor(container: HTMLElement, player: Player) {
+    this.queue = new PriorityQueue<DanmakuData>()
+    this.container = container // div.Niplayer_video-wrapper
+    this.player = player
     this.init()
   }
 
@@ -72,6 +77,7 @@ export class Danmaku {
     })
   }
 
+  // 恢复单条弹幕的运动
   resumeOneData(data) {
     data.dom.style.transform = `translateX(-${data.totalDistance}px)`
     data.startTime = Date.now()
@@ -79,6 +85,7 @@ export class Danmaku {
     data.dom.style.transition = `transform ${data.rollTime}s linear`
   }
 
+  // 暂停单条弹幕的运动
   pauseOneData(data) {
     let currentRollDistance = ((Date.now() - data.startTime) * data.rollSpeed) / 1000
     data.rollDistance = currentRollDistance + (data.rollDistance ? data.rollDistance : 0)
@@ -94,12 +101,13 @@ export class Danmaku {
   addData(data: any) {
     this.queue.push(this.parseData(data))
 
-    // if (flag) return
+    // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
+    if (flag) return
     if (this.timer === null) {
       nextTick(() => {
         this.render()
       })
-      // flag = true
+      flag = true
     }
   }
 
@@ -110,14 +118,15 @@ export class Danmaku {
         fontColor: '#fff',
         fontSize: this.trackHeight,
         fontFamily: '',
-        fontWeight: 500
+        fontWeight: 500,
+        timestamp: this.player.video.currentTime
       }
     }
     if (typeof data === 'object') {
       if (!data.message || data.message === '') {
         throw new Error(`传入的弹幕数据${data}不合法`)
       }
-      return Object.assign({ ...this.defaultDanma }, data)
+      return Object.assign({ ...this.defaultDanma, timestamp: this.player.video.currentTime }, data)
     }
     throw new Error(`传入的弹幕数据${data}不合法`)
   }
@@ -134,6 +143,7 @@ export class Danmaku {
     if (this.queue.length === 0) {
       window.clearTimeout(this.timer)
       this.timer = null
+      flag = false
     } else {
       this.timer = window.setTimeout(() => {
         this.render()
@@ -144,7 +154,7 @@ export class Danmaku {
   // 向指定的DOM元素上渲染一条弹幕
   renderToDOM() {
     if (this.queue.length === 0) return
-    let data = this.queue[0]
+    let data = this.queue.shift()
     if (!data.dom) {
       let dom = document.createElement('div')
       dom.innerText = data.message
@@ -160,6 +170,7 @@ export class Danmaku {
       dom.style.whiteSpace = 'nowrap'
       dom.style.willChange = 'transform'
       dom.style.cursor = 'pointer'
+      dom.style.visibility = this.isHidden ? 'hidden' : ''
       data.dom = dom
       this.container.appendChild(dom)
     }
@@ -171,6 +182,7 @@ export class Danmaku {
     data.rollSpeed = parseFloat((data.totalDistance / data.rollTime).toFixed(2))
     // useTracks描述的是该弹幕占用了多少个轨道
     data.useTracks = Math.ceil(data.dom.clientHeight / this.trackHeight)
+    // 重点，此处数组y的作用是表明该弹幕占的轨道的id数组
     data.y = []
     data.dom.ontransitionstart = (e) => {
       data.startTime = Date.now()
@@ -192,11 +204,10 @@ export class Danmaku {
       if ([...this.container.childNodes].includes(data.dom)) {
         this.container.removeChild(data.dom)
       }
-      this.queue.splice(0, 1).push(data)
+      this.queue.push(data)
     } else {
       data.dom.style.top = data.y[0] * this.trackHeight + 3 + 'px'
       this.startAnimate(data)
-      this.queue.shift()
     }
   }
 
@@ -267,13 +278,13 @@ export class Danmaku {
   // 清空所有的弹幕，包括正在运动中的或者还在缓冲区未被释放的
   flush() {
     this.moovingQueue.forEach((data) => {
-      this.container.removeChild(data.dom)
+      data.dom.parentNode?.removeChild(data.dom)
       data.dom.ontransitionstart = null
       data.dom.ontransitionend = null
     })
     this.queue.forEach((data) => {
       if ([...this.container.children].includes(data.dom)) {
-        this.container.removeChild(data.dom)
+        data.dom.parentNode?.removeChild(data.dom)
         data.dom.ontransitionstart = null
         data.dom.ontransitionend = null
       }
@@ -283,20 +294,47 @@ export class Danmaku {
       obj.datas = []
     })
     this.moovingQueue = []
-    this.queue = []
+    this.queue.clear()
   }
 
-  // 丢弃一部分没用或者过时的弹幕
-  disCard(start: number, end: number) {
-    this.queue.splice(start, end - start + 1)
-  }
+  // 隐藏所有的弹幕
+  close() {
+    this.isHidden = true
+    this.moovingQueue.forEach((data) => {
+      data.dom.style.visibility = 'hidden'
+    })
 
-  clearOutdatedDanmaku(currentTime: number, interval: number) {
-    this.queue = this.queue.filter((item) => {
-      if (currentTime - item.timestamp > interval) {
-        return false
+    this.queue.forEach((data, index) => {
+      if (data.dom) {
+        data.dom.style.visibility = 'hidden'
       }
-      return true
     })
   }
+
+  open() {
+    this.isHidden = false
+    this.moovingQueue.forEach((data) => {
+      data.dom.style.visibility = ''
+    })
+
+    this.queue.forEach((data, index) => {
+      if (data.dom) {
+        data.dom.style.visibility = ''
+      }
+    })
+  }
+
+  // // 丢弃一部分没用或者过时的弹幕
+  // disCard(start: number, end: number) {
+  //   this.queue.splice(start, end - start + 1)
+  // }
+
+  // clearOutdatedDanmaku(currentTime: number, interval: number) {
+  //   this.queue = this.queue.filter((item) => {
+  //     if (currentTime - item.timestamp > interval) {
+  //       return false
+  //     }
+  //     return true
+  //   })
+  // }
 }

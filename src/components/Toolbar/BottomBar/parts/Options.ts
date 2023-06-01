@@ -17,7 +17,7 @@ export class Options extends Component implements ComponentItem {
 
   constructor(
     player: Player,
-    container: HTMLElement,
+    container?: HTMLElement,
     hideWidth?: number,
     hideHeight?: number,
     desc?: string,

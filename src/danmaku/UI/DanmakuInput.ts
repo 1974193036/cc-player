@@ -3,6 +3,7 @@ import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { $, addClass } from '@/utils/domUtils'
 import './index.less'
+import { EVENT } from '@/events'
 
 export class DanmakuInput extends Component implements ComponentItem {
   readonly id = 'DanmakuInput'
@@ -48,11 +49,11 @@ export class DanmakuInput extends Component implements ComponentItem {
     }
 
     this.inputBox.addEventListener('focus', () => {
-      this.player.emit('inputFocus')
+      this.player.emit(EVENT.DANMAKU_INPUT_FOCUS)
     })
 
     this.inputBox.addEventListener('blur', () => {
-      this.player.emit('inputBlur')
+      this.player.emit(EVENT.DANMAKU_INPUT_BLUR)
     })
   }
 }

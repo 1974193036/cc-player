@@ -8,18 +8,14 @@ import { EVENT } from '@/events'
 export class CompletedProgress extends Component implements ComponentItem {
   readonly id = 'CompletedProgress'
   // el: div.video-completed
-  props: DOMProps
   player: Player
 
   constructor(
     player: Player,
     container: HTMLElement,
-    desc?: string,
-    props?: DOMProps,
-    children?: Node[]
+    desc?: string
   ) {
-    super(container, desc, props, children)
-    this.props = props || {}
+    super(container, desc)
     this.player = player
     this.init()
   }
@@ -30,15 +26,15 @@ export class CompletedProgress extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on(EVENT.VIDEO_PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
+    this.player.on(EVENT.PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
       this.onChangeSize(e, ctx)
     })
 
-    this.player.on(EVENT.TIME_UPDATE, (e) => {
-      if (this.player.enableSeek) {
-        this.updatePos(e)
-      }
-    })
+    // this.player.on(EVENT.TIME_UPDATE, (e) => {
+    //   if (this.player.enableSeek) {
+    //     this.updatePos(e)
+    //   }
+    // })
 
     this.player.on(EVENT.DOT_DRAG, (scale: number) => {
       this.el.style.width = scale * 100 + '%'

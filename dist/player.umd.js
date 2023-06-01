@@ -4914,17 +4914,6 @@
 	  }
 	  return false;
 	}
-	function getElementSize(dom) {
-	  var clone = dom.cloneNode(true);
-	  clone.style.position = 'absolute';
-	  clone.style.opacity = '0';
-	  clone.removeAttribute('hidden');
-	  var parent = dom.parentNode || document.body;
-	  parent.appendChild(clone);
-	  var rect = clone.getBoundingClientRect();
-	  parent.removeChild(clone);
-	  return rect;
-	}
 	var svgNS = 'http://www.w3.org/2000/svg';
 	function createSvg(d) {
 	  var viewBox = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0 0 24 24';
@@ -5145,11 +5134,11 @@
 	  return BaseEvent;
 	}();
 
-	function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$s(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$s(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$s() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Component = /*#__PURE__*/function (_BaseEvent) {
 	  _inherits(Component, _BaseEvent);
-	  var _super = _createSuper$p(Component);
+	  var _super = _createSuper$s(Component);
 	  function Component(container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Component);
@@ -5203,94 +5192,52 @@
 	  return Component;
 	}(BaseEvent);
 
-	// a string of all valid unicode whitespaces
-	var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
-	  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-
-	var uncurryThis$8 = functionUncurryThis;
-	var requireObjectCoercible$1 = requireObjectCoercible$5;
-	var toString$5 = toString$b;
-	var whitespaces$2 = whitespaces$3;
-
-	var replace$4 = uncurryThis$8(''.replace);
-	var ltrim = RegExp('^[' + whitespaces$2 + ']+');
-	var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
-
-	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
-	var createMethod = function (TYPE) {
-	  return function ($this) {
-	    var string = toString$5(requireObjectCoercible$1($this));
-	    if (TYPE & 1) string = replace$4(string, ltrim, '');
-	    if (TYPE & 2) string = replace$4(string, rtrim, '$1');
-	    return string;
-	  };
-	};
-
-	var stringTrim = {
-	  // `String.prototype.{ trimLeft, trimStart }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
-	  start: createMethod(1),
-	  // `String.prototype.{ trimRight, trimEnd }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
-	  end: createMethod(2),
-	  // `String.prototype.trim` method
-	  // https://tc39.es/ecma262/#sec-string.prototype.trim
-	  trim: createMethod(3)
-	};
-
-	var global$c = global$r;
-	var fails$9 = fails$x;
-	var uncurryThis$7 = functionUncurryThis;
-	var toString$4 = toString$b;
-	var trim$1 = stringTrim.trim;
-	var whitespaces$1 = whitespaces$3;
-
-	var $parseInt$1 = global$c.parseInt;
-	var Symbol$2 = global$c.Symbol;
-	var ITERATOR$3 = Symbol$2 && Symbol$2.iterator;
-	var hex = /^[+-]?0x/i;
-	var exec$2 = uncurryThis$7(hex.exec);
-	var FORCED$2 = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
-	  // MS Edge 18- broken with boxed symbols
-	  || (ITERATOR$3 && !fails$9(function () { $parseInt$1(Object(ITERATOR$3)); }));
-
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
-	  var S = trim$1(toString$4(string));
-	  return $parseInt$1(S, (radix >>> 0) || (exec$2(hex, S) ? 16 : 10));
-	} : $parseInt$1;
-
 	var $$o = _export;
-	var $parseInt = numberParseInt;
+	var $map = arrayIteration.map;
+	var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
 
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	$$o({ global: true, forced: parseInt != $parseInt }, {
-	  parseInt: $parseInt
+	var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('map');
+
+	// `Array.prototype.map` method
+	// https://tc39.es/ecma262/#sec-array.prototype.map
+	// with adding support of @@species
+	$$o({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
+	  map: function map(callbackfn /* , thisArg */) {
+	    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	  }
 	});
 
-	var path$8 = path$n;
+	var entryVirtual$3 = entryVirtual$a;
 
-	var _parseInt$6 = path$8.parseInt;
+	var map$6 = entryVirtual$3('Array').map;
 
-	var parent$y = _parseInt$6;
+	var isPrototypeOf$3 = objectIsPrototypeOf;
+	var method$1 = map$6;
 
-	var _parseInt$5 = parent$y;
+	var ArrayPrototype$2 = Array.prototype;
 
-	var parent$x = _parseInt$5;
+	var map$5 = function (it) {
+	  var own = it.map;
+	  return it === ArrayPrototype$2 || (isPrototypeOf$3(ArrayPrototype$2, it) && own === ArrayPrototype$2.map) ? method$1 : own;
+	};
 
-	var _parseInt$4 = parent$x;
+	var parent$y = map$5;
 
-	var parent$w = _parseInt$4;
+	var map$4 = parent$y;
 
-	var _parseInt$3 = parent$w;
+	var parent$x = map$4;
 
-	var _parseInt$2 = _parseInt$3;
+	var map$3 = parent$x;
 
-	var _parseInt = _parseInt$2;
+	var parent$w = map$3;
 
-	var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
+	var map$2 = parent$w;
+
+	var map$1 = map$2;
+
+	var map = map$1;
+
+	var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map);
 
 	var playPath = "M6 2.914v18.172L20.279 12 6 2.914z";
 	var pausePath = "M14.333 20.133H19V3.8h-4.667M5 20.133h4.667V3.8H5v16.333z";
@@ -5307,6 +5254,9 @@
 	var videoShotPath = "M659.925333 128a74.666667 74.666667 0 0 1 71.338667 52.618667L754.56 256H821.333333c64.8 0 117.333333 52.533333 117.333334 117.333333v426.666667c0 64.8-52.533333 117.333333-117.333334 117.333333H202.666667c-64.8 0-117.333333-52.533333-117.333334-117.333333V373.333333c0-64.8 52.533333-117.333333 117.333334-117.333333h66.773333l23.296-75.381333A74.666667 74.666667 0 0 1 364.074667 128h295.850666zM512 405.333333c-88.362667 0-160 71.637333-160 160 0 88.362667 71.637333 160 160 160 88.362667 0 160-71.637333 160-160 0-88.362667-71.637333-160-160-160z m0 256a96 96 0 1 0 0-192 96 96 0 0 0 0 192z";
 	var confirmPath = "M456.899566 728.522382c-15.978926 15.977903-40.33873 18.47477-58.932204 7.492648-3.446495-2.039449-9.653871-9.990538-9.653871-9.990538L188.797435 526.509459c-18.938328-18.938328-18.938328-47.148833 0-66.084091 18.934235-18.938328 49.64263-16.442484 68.579935 2.495844l165.227112 165.225065 312.24449-312.24142c18.938328-18.938328 49.6457-21.435195 68.583005-2.495844 18.938328 18.940374 18.939351 47.149856 0 66.085114L456.909799 728.507032c0 0-0.005117 0.00921-0.010233 0.013303l0 0L456.899566 728.522382zM510.742868 64.090691c-246.752894 0-446.786743 200.032826-446.786743 446.786743 0 246.75187 200.033849 446.785719 446.786743 446.785719 246.752894 0 446.787766-200.034872 446.787766-446.785719C957.531658 264.125563 757.495762 64.090691 510.742868 64.090691L510.742868 64.090691 510.742868 64.090691 510.742868 64.090691z";
 	var countdownPath = "M449.59694 552.460488c-2.589471 0-5.210911-0.319688-7.800382-0.959063C313.729623 519.308862 224.280976 404.668816 224.280976 272.733659L224.280976 160.842927c0-17.646767 14.322014-31.96878 31.96878-31.96878s31.96878 14.322014 31.96878 31.96878l0 111.890732c0 102.587817 69.564066 191.716777 169.114849 216.748332 17.134267 4.315785 27.52512 21.674833 23.241303 38.778131C476.930248 542.805916 463.886985 552.460488 449.59694 552.460488L449.59694 552.460488zM574.40306 552.460488c-14.290045 0-27.301339-9.654572-30.977748-24.168398-4.315785-17.134267 6.074068-34.493315 23.208336-38.777132C666.217397 464.450435 735.781463 375.321475 735.781463 272.733659L735.781463 160.842927c0-17.646767 14.290045-31.96878 31.96878-31.96878s31.96878 14.322014 31.96878 31.96878l0 111.890732c0 131.935157-89.448648 246.575204-217.483614 278.767766C579.613971 552.1408 576.992531 552.460488 574.40306 552.460488zM767.750244 896.124878c-17.678736 0-31.96878-14.322014-31.96878-31.96878l0-95.906341c0-102.619785-69.564066-191.748745-169.114849-216.748332-17.134267-4.283817-27.52512-21.674833-23.241303-38.778131 4.347754-17.134267 21.930583-27.397245 38.777132-23.208336C710.270377 521.642583 799.719024 636.28263 799.719024 768.249756l0 95.906341C799.719024 881.802864 785.42898 896.124878 767.750244 896.124878zM256.249756 896.124878c-17.646767 0-31.96878-14.322014-31.96878-31.96878l0-95.906341c0-131.967126 89.448648-246.607173 217.516581-278.767766 17.167235-4.18791 34.461346 6.074068 38.777132 23.209335 4.315785 17.134267-6.074068 34.493315-23.241303 38.777132C357.750634 576.501011 288.218537 665.629971 288.218537 768.249756l0 95.906341C288.218537 881.802864 273.896523 896.124878 256.249756 896.124878zM863.656585 192.811707 160.343415 192.811707c-17.646767 0-31.96878-14.322014-31.96878-31.96878L128.374634 32.967805c0-17.646767 14.322014-31.96878 31.96878-31.96878l703.313171 0c17.678736 0 31.96878 14.322014 31.96878 31.96878l0 127.875122C895.625366 178.489694 881.335321 192.811707 863.656585 192.811707zM192.312195 128.874146l639.37561 0L831.687805 64.936585 192.312195 64.936585 192.312195 128.874146zM863.656585 1024 160.343415 1024c-17.646767 0-31.96878-14.322014-31.96878-31.96878L128.374634 864.156098c0-17.646767 14.322014-31.96878 31.96878-31.96878l703.313171 0c17.678736 0 31.96878 14.322014 31.96878 31.96878l0 127.875122C895.625366 1009.677986 881.335321 1024 863.656585 1024zM192.312195 960.062439l639.37561 0 0-63.937561L192.312195 896.124878 192.312195 960.062439z";
+	var danmakuSettingPath = "M226.58 320.39h-48c-35.9 0-65-29.1-65-65s29.1-65 65-65h48c35.9 0 65 29.1 65 65s-29.1 65-65 65zM723.58 320.39h-322c-35.9 0-65-29.1-65-65s29.1-65 65-65h322c35.9 0 65 29.1 65 65s-29.1 65-65 65zM402.58 580.39h-224c-35.9 0-65-29.1-65-65s29.1-65 65-65h224c35.9 0 65 29.1 65 65s-29.1 65-65 65zM251.58 839.39h-73c-35.9 0-65-29.1-65-65s29.1-65 65-65h73c35.9 0 65 29.1 65 65s-29.1 65-65 65zM424.58 839.39h-1c-35.9 0-65-29.1-65-65s29.1-65 65-65h1c35.9 0 65 29.1 65 65s-29.1 65-65 65zM954.82 588.59l-93.4-161.78a59.189 59.189 0 0 0-51.27-29.6h-186.8a59.201 59.201 0 0 0-51.27 29.6l-93.4 161.78a59.225 59.225 0 0 0 0 59.2l93.4 161.78a59.189 59.189 0 0 0 51.27 29.6h186.81c21.15 0 40.69-11.28 51.27-29.6l93.4-161.78a59.2 59.2 0 0 0-0.01-59.2z m-238.07 95.78c-36.55 0-66.18-29.63-66.18-66.18 0-36.55 29.63-66.18 66.18-66.18 36.55 0 66.18 29.63 66.18 66.18 0 36.55-29.63 66.18-66.18 66.18z";
+	var danmakuClosePath = "M217.8 319.89h-48c-35.9 0-65-29.1-65-65s29.1-65 65-65h48c35.9 0 65 29.1 65 65s-29.1 65-65 65zM714.8 319.89h-322c-35.9 0-65-29.1-65-65s29.1-65 65-65h322c35.9 0 65 29.1 65 65s-29.1 65-65 65zM403.8 579.89h-234c-35.9 0-65-29.1-65-65s29.1-65 65-65h234c35.9 0 65 29.1 65 65s-29.1 65-65 65zM252.8 838.89h-83c-35.9 0-65-29.1-65-65s29.1-65 65-65h83c35.9 0 65 29.1 65 65s-29.1 65-65 65zM425.8 838.89h-1c-35.9 0-65-29.1-65-65s29.1-65 65-65h1c35.9 0 65 29.1 65 65s-29.1 65-65 65zM717.73 398.22c-122.04 0-220.97 98.93-220.97 220.97 0 122.04 98.93 220.97 220.97 220.97 122.04 0 220.97-98.93 220.97-220.97 0.01-122.04-98.93-220.97-220.97-220.97zM822 554.48l-165.25 171.2c-5.9 6.12-13.77 9.19-21.65 9.19-7.52 0-15.05-2.8-20.89-8.44-11.95-11.54-12.29-30.58-0.75-42.54l165.25-171.2c11.54-11.96 30.58-12.29 42.54-0.75 11.95 11.55 12.29 30.59 0.75 42.54z";
+	var danmakuOpenPath = "M221.58 319.89h-48c-35.9 0-65-29.1-65-65s29.1-65 65-65h48c35.9 0 65 29.1 65 65s-29.1 65-65 65zM718.58 319.89h-322c-35.9 0-65-29.1-65-65s29.1-65 65-65h322c35.9 0 65 29.1 65 65s-29.1 65-65 65zM407.58 579.89h-234c-35.9 0-65-29.1-65-65s29.1-65 65-65h234c35.9 0 65 29.1 65 65s-29.1 65-65 65zM256.58 838.89h-83c-35.9 0-65-29.1-65-65s29.1-65 65-65h83c35.9 0 65 29.1 65 65s-29.1 65-65 65zM429.58 838.89h-1c-35.9 0-65-29.1-65-65s29.1-65 65-65h1c35.9 0 65 29.1 65 65s-29.1 65-65 65zM713.96 396.72c-122.04 0-220.97 98.93-220.97 220.97s98.93 220.97 220.97 220.97 220.97-98.93 220.97-220.97S836 396.72 713.96 396.72zM837.9 561.91L689.88 715.26a30.078 30.078 0 0 1-21.38 9.19h-0.27c-7.97 0-15.63-3.17-21.27-8.81l-56.57-56.57c-11.75-11.75-11.75-30.79 0-42.54s30.79-11.75 42.54 0l34.92 34.91 126.76-131.32c11.54-11.96 30.58-12.29 42.54-0.75 11.95 11.54 12.29 30.58 0.75 42.54z";
 
 	var EVENT;
 	(function (EVENT) {
@@ -5320,9 +5270,9 @@
 	  EVENT["ERROR"] = "videoError";
 	  EVENT["RATE_CHANGE"] = "ratechange";
 	  EVENT["VIDEO_CLICK"] = "videoClick";
-	  EVENT["VIDEO_PROGRESS_CLICK"] = "progress-click";
-	  EVENT["VIDEO_PROGRESS_MOUSE_ENTER"] = "progress-mouseenter";
-	  EVENT["VIDEO_PROGRESS_MOUSE_LEAVE"] = "progress-mouseleave";
+	  EVENT["PROGRESS_CLICK"] = "progress-click";
+	  EVENT["PROGRESS_MOUSE_ENTER"] = "progress-mouseenter";
+	  EVENT["PROGRESS_MOUSE_LEAVE"] = "progress-mouseleave";
 	  EVENT["DANMAKU_INPUT_FOCUS"] = "inputFocus";
 	  EVENT["DANMAKU_INPUT_BLUR"] = "inputBlur";
 	  EVENT["DOT_DOWN"] = "dotdown";
@@ -5340,11 +5290,11 @@
 	  EVENT["VOLUME_PROGRESS_CLICK"] = "volume-progress-click";
 	})(EVENT || (EVENT = {}));
 
-	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Options = /*#__PURE__*/function (_Component) {
 	  _inherits(Options, _Component);
-	  var _super = _createSuper$o(Options);
+	  var _super = _createSuper$r(Options);
 	  function Options(player, container, hideWidth, hideHeight, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Options);
@@ -5897,11 +5847,11 @@
 	document$3.getElementsByTagName = getElementsByTagName;
 	Object.setPrototypeOf(document$3, Document.prototype);
 
-	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullScreen = /*#__PURE__*/function (_Options) {
 	  _inherits(FullScreen, _Options);
-	  var _super = _createSuper$n(FullScreen);
+	  var _super = _createSuper$q(FullScreen);
 	  function FullScreen(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, FullScreen);
@@ -5966,11 +5916,11 @@
 	  return FullScreen;
 	}(Options);
 
-	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PlayButton = /*#__PURE__*/function (_Component) {
 	  _inherits(PlayButton, _Component);
-	  var _super = _createSuper$m(PlayButton);
+	  var _super = _createSuper$p(PlayButton);
 	  function PlayButton(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, PlayButton);
@@ -6010,12 +5960,12 @@
 	    key: "initEvent",
 	    value: function initEvent() {
 	      var _this2 = this;
-	      this.player.on('play', function (e) {
+	      this.player.on(EVENT.PLAY, function (e) {
 	        _this2.iconBox.removeChild(_this2.button);
 	        _this2.button = _this2.pauseIcon;
 	        _this2.iconBox.appendChild(_this2.button);
 	      });
-	      this.player.on('pause', function (e) {
+	      this.player.on(EVENT.PAUSE, function (e) {
 	        _this2.iconBox.removeChild(_this2.button);
 	        _this2.button = _this2.playIcon;
 	        _this2.iconBox.appendChild(_this2.button);
@@ -6058,14 +6008,14 @@
 	  return PlayButton;
 	}(Component);
 
-	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	/**
 	 * @description 播放速率的类
 	 */
 	var Playrate = /*#__PURE__*/function (_Options) {
 	  _inherits(Playrate, _Options);
-	  var _super = _createSuper$l(Playrate);
+	  var _super = _createSuper$o(Playrate);
 	  function Playrate(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Playrate);
@@ -6146,11 +6096,100 @@
 	  return Playrate;
 	}(Options);
 
-	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	// a string of all valid unicode whitespaces
+	var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
+	  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+	var uncurryThis$8 = functionUncurryThis;
+	var requireObjectCoercible$1 = requireObjectCoercible$5;
+	var toString$5 = toString$b;
+	var whitespaces$2 = whitespaces$3;
+
+	var replace$4 = uncurryThis$8(''.replace);
+	var ltrim = RegExp('^[' + whitespaces$2 + ']+');
+	var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
+
+	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+	var createMethod = function (TYPE) {
+	  return function ($this) {
+	    var string = toString$5(requireObjectCoercible$1($this));
+	    if (TYPE & 1) string = replace$4(string, ltrim, '');
+	    if (TYPE & 2) string = replace$4(string, rtrim, '$1');
+	    return string;
+	  };
+	};
+
+	var stringTrim = {
+	  // `String.prototype.{ trimLeft, trimStart }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+	  start: createMethod(1),
+	  // `String.prototype.{ trimRight, trimEnd }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
+	  end: createMethod(2),
+	  // `String.prototype.trim` method
+	  // https://tc39.es/ecma262/#sec-string.prototype.trim
+	  trim: createMethod(3)
+	};
+
+	var global$c = global$r;
+	var fails$9 = fails$x;
+	var uncurryThis$7 = functionUncurryThis;
+	var toString$4 = toString$b;
+	var trim$1 = stringTrim.trim;
+	var whitespaces$1 = whitespaces$3;
+
+	var $parseInt$1 = global$c.parseInt;
+	var Symbol$2 = global$c.Symbol;
+	var ITERATOR$3 = Symbol$2 && Symbol$2.iterator;
+	var hex = /^[+-]?0x/i;
+	var exec$2 = uncurryThis$7(hex.exec);
+	var FORCED$2 = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
+	  // MS Edge 18- broken with boxed symbols
+	  || (ITERATOR$3 && !fails$9(function () { $parseInt$1(Object(ITERATOR$3)); }));
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
+	  var S = trim$1(toString$4(string));
+	  return $parseInt$1(S, (radix >>> 0) || (exec$2(hex, S) ? 16 : 10));
+	} : $parseInt$1;
+
+	var $$n = _export;
+	var $parseInt = numberParseInt;
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	$$n({ global: true, forced: parseInt != $parseInt }, {
+	  parseInt: $parseInt
+	});
+
+	var path$8 = path$n;
+
+	var _parseInt$6 = path$8.parseInt;
+
+	var parent$v = _parseInt$6;
+
+	var _parseInt$5 = parent$v;
+
+	var parent$u = _parseInt$5;
+
+	var _parseInt$4 = parent$u;
+
+	var parent$t = _parseInt$4;
+
+	var _parseInt$3 = parent$t;
+
+	var _parseInt$2 = _parseInt$3;
+
+	var _parseInt = _parseInt$2;
+
+	var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
+
+	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Volume = /*#__PURE__*/function (_Options) {
 	  _inherits(Volume, _Options);
-	  var _super = _createSuper$k(Volume);
+	  var _super = _createSuper$n(Volume);
 	  function Volume(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Volume);
@@ -6270,408 +6309,11 @@
 	  FullScreen: FullScreen
 	};
 
-	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Dot = /*#__PURE__*/function (_Component) {
-	  _inherits(Dot, _Component);
-	  var _super = _createSuper$j(Dot);
-	  function Dot(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, Dot);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Dot');
-	    // el: div.video-dot.video-dot-hidden
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mouseX", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "left", 0);
-	    _defineProperty(_assertThisInitialized(_this), "playScale", 0);
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.container = container;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Dot, [{
-	    key: "init",
-	    value: function init() {
-	      addClass(this.el, ['video-dot', 'video-dot-hidden']);
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.player.on(EVENT.VIDEO_PROGRESS_MOUSE_ENTER, function (e) {
-	        // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
-	        if (_this2.player.enableSeek) {
-	          _this2.onShowDot(e);
-	        }
-	      });
-	      this.player.on(EVENT.VIDEO_PROGRESS_MOUSE_LEAVE, function (e) {
-	        // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
-	        if (_this2.player.enableSeek) {
-	          _this2.onHideDot(e);
-	        }
-	      });
-	      this.player.on(EVENT.VIDEO_PROGRESS_CLICK, function (e, ctx) {
-	        _this2.onChangePos(e, ctx);
-	      });
-	      this.player.on(EVENT.TIME_UPDATE, function (e) {
-	        // 防抖效果：针对Dot按下拖动时不触发timeupdate，拖完鼠标抬起时再触发timeupdate
-	        if (_this2.player.enableSeek) {
-	          _this2.updatePos(e);
-	        }
-	      });
-	      if (this.player.env === 'PC') {
-	        this.initPCEvent();
-	      } else {
-	        this.initMobileEvent();
-	      }
-	    }
-	  }, {
-	    key: "initPCEvent",
-	    value: function initPCEvent() {
-	      var _this3 = this;
-	      this.el.addEventListener('mousedown', function (e) {
-	        e.preventDefault();
-	        _this3.onMouseMove = _this3.onMouseMove.bind(_this3);
-	        _this3.player.emit(EVENT.DOT_DOWN);
-	        _this3.mouseX = e.pageX;
-	        _this3.left = _parseInt$1(_this3.el.style.left);
-	        document.body.addEventListener('mousemove', _this3.onMouseMove);
-	        document.body.onmouseup = function (e) {
-	          _this3.player.emit(EVENT.DOT_UP);
-	          _this3.player.video.currentTime = Math.floor(_this3.playScale * _this3.player.video.duration);
-	          document.body.removeEventListener('mousemove', _this3.onMouseMove);
-	          document.body.onmouseup = null;
-	        };
-	      });
-	    }
-	  }, {
-	    key: "initMobileEvent",
-	    value: function initMobileEvent() {
-	      var _this4 = this;
-	      this.player.video.addEventListener('touchstart', function (e) {
-	        e.preventDefault();
-	        _this4.player.emit(EVENT.DOT_DOWN);
-	        _this4.left = _this4.el.style.left ? _parseInt$1(_this4.el.style.left) : 0;
-	      });
-	      this.player.video.addEventListener('touchend', function (e) {
-	        _this4.player.emit(EVENT.DOT_UP);
-	      });
-	      this.player.on(EVENT.MOVE_HORIZONTAL, function (e) {
-	        var scale = (_this4.left + e.deltaX) / _this4.container.clientWidth;
-	        if (scale < 0) {
-	          scale = 0;
-	        } else if (scale > 1) {
-	          scale = 1;
-	        }
-	        _this4.playScale = scale;
-	        _this4.el.style.left = _this4.container.clientWidth * scale - getElementSize(_this4.el).width / 2 + 'px';
-	        if (_this4.player.video.paused) _this4.player.video.play();
-	        _this4.player.emit(EVENT.DOT_DRAG, scale, e);
-	      });
-	      this.player.on(EVENT.SLIDE_HORIZONTAL, function (e) {
-	        _this4.player.emit(EVENT.DOT_UP);
-	        _this4.player.video.currentTime = Math.floor(_this4.playScale * _this4.player.video.duration);
-	      });
-	    }
-	  }, {
-	    key: "onMouseMove",
-	    value: function onMouseMove(e) {
-	      var scale = (e.pageX - this.mouseX + this.left) / this.container.offsetWidth;
-	      if (scale < 0) {
-	        scale = 0;
-	      } else if (scale > 1) {
-	        scale = 1;
-	      }
-	      this.playScale = scale;
-	      this.el.style.left = this.container.offsetWidth * scale - getElementSize(this.el).width / 2 + 'px';
-	      if (this.player.video.paused) this.player.video.play();
-	      this.player.emit(EVENT.DOT_DRAG, scale, e);
-	    }
-	  }, {
-	    key: "onShowDot",
-	    value: function onShowDot(e) {
-	      if (includeClass(this.el, 'video-dot-hidden')) {
-	        removeClass(this.el, ['video-dot-hidden']);
-	      }
-	    }
-	  }, {
-	    key: "onHideDot",
-	    value: function onHideDot(e) {
-	      if (!includeClass(this.el, 'video-dot-hidden')) {
-	        addClass(this.el, ['video-dot-hidden']);
-	      }
-	    }
-	  }, {
-	    key: "onChangePos",
-	    value: function onChangePos(e, ctx) {
-	      e.offsetX / ctx.el.offsetWidth;
-	      this.el.style.left = e.offsetX - getElementSize(this.el).width / 2 + 'px';
-	    }
-	  }, {
-	    key: "updatePos",
-	    value: function updatePos(e) {
-	      var video = e.target;
-	      var scale = video.currentTime / video.duration;
-	      if (scale < 0) {
-	        scale = 0;
-	      } else if (scale > 1) {
-	        scale = 1;
-	      }
-	      this.el.style.left = scale * this.container.clientWidth - getElementSize(this.el).width / 2 + 'px';
-	    }
-	  }]);
-	  return Dot;
-	}(Component);
-
-	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var CompletedProgress = /*#__PURE__*/function (_Component) {
-	  _inherits(CompletedProgress, _Component);
-	  var _super = _createSuper$i(CompletedProgress);
-	  function CompletedProgress(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, CompletedProgress);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'CompletedProgress');
-	    // el: div.video-completed
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(CompletedProgress, [{
-	    key: "init",
-	    value: function init() {
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.player.on(EVENT.VIDEO_PROGRESS_CLICK, function (e, ctx) {
-	        _this2.onChangeSize(e, ctx);
-	      });
-	      this.player.on(EVENT.TIME_UPDATE, function (e) {
-	        if (_this2.player.enableSeek) {
-	          _this2.updatePos(e);
-	        }
-	      });
-	      this.player.on(EVENT.DOT_DRAG, function (scale) {
-	        _this2.el.style.width = scale * 100 + '%';
-	      });
-	    }
-	  }, {
-	    key: "onChangeSize",
-	    value: function onChangeSize(e, ctx) {
-	      var scale = e.offsetX / ctx.el.offsetWidth;
-	      if (scale < 0) {
-	        scale = 0;
-	      } else if (scale > 1) {
-	        scale = 1;
-	      }
-	      this.el.style.width = scale * 100 + '%';
-	    }
-	  }, {
-	    key: "updatePos",
-	    value: function updatePos(e) {
-	      var video = e.target;
-	      var scale = video.currentTime / video.duration;
-	      if (scale < 0) {
-	        scale = 0;
-	      } else if (scale > 1) {
-	        scale = 1;
-	      }
-	      this.el.style.width = scale * 100 + '%';
-	    }
-	  }]);
-	  return CompletedProgress;
-	}(Component);
-
-	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var BufferedProgress = /*#__PURE__*/function (_Component) {
-	  _inherits(BufferedProgress, _Component);
-	  var _super = _createSuper$h(BufferedProgress);
-	  function BufferedProgress(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, BufferedProgress);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'BufferedProgress');
-	    // el: div.video-buffered
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(BufferedProgress, [{
-	    key: "init",
-	    value: function init() {
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.player.on(EVENT.VIDEO_PROGRESS_CLICK, function (e, ctx) {
-	        var scale = e.offsetX / ctx.el.offsetWidth;
-	        if (scale < 0) {
-	          scale = 0;
-	        } else if (scale > 1) {
-	          scale = 1;
-	        }
-	        _this2.el.style.width = scale * 100 + '%';
-	      });
-	    }
-	  }]);
-	  return BufferedProgress;
-	}(Component);
-
-	function styleInject(css, ref) {
-	  if ( ref === void 0 ) ref = {};
-	  var insertAt = ref.insertAt;
-
-	  if (!css || typeof document === 'undefined') { return; }
-
-	  var head = document.head || document.getElementsByTagName('head')[0];
-	  var style = document.createElement('style');
-	  style.type = 'text/css';
-
-	  if (insertAt === 'top') {
-	    if (head.firstChild) {
-	      head.insertBefore(style, head.firstChild);
-	    } else {
-	      head.appendChild(style);
-	    }
-	  } else {
-	    head.appendChild(style);
-	  }
-
-	  if (style.styleSheet) {
-	    style.styleSheet.cssText = css;
-	  } else {
-	    style.appendChild(document.createTextNode(css));
-	  }
-	}
-
-	var css_248z$8 = ".video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.video-progress .video-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.video-progress .video-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.video-progress .video-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 1002;\n}\n.video-progress .video-dot-hidden {\n  opacity: 0;\n  -webkit-transition: all 0.6s ease;\n  transition: all 0.6s ease;\n}\n.video-progress .video-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #007aff;\n  cursor: pointer;\n  z-index: 1003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n}\n";
-	styleInject(css_248z$8);
-
-	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Progress = /*#__PURE__*/function (_Component) {
-	  _inherits(Progress, _Component);
-	  var _super = _createSuper$g(Progress);
-	  function Progress(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, Progress);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Progress');
-	    // el: div.video-progress
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "dot", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "completedProgress", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "bufferedProgress", void 0);
-	    _this.player = player;
-	    _this.props = props || {};
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Progress, [{
-	    key: "init",
-	    value: function init() {
-	      this.initComponent();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initComponent",
-	    value: function initComponent() {
-	      this.dot = new Dot(this.player, this.el, 'div');
-	      this.completedProgress = new CompletedProgress(this.player, this.el, 'div.video-completed');
-	      this.bufferedProgress = new BufferedProgress(this.player, this.el, 'div.video-buffered');
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.el.onmouseenter = function (e) {
-	        _this2.player.emit(EVENT.VIDEO_PROGRESS_MOUSE_ENTER, e, _this2);
-	      };
-	      this.el.onmouseleave = function (e) {
-	        _this2.player.emit(EVENT.VIDEO_PROGRESS_MOUSE_LEAVE, e, _this2);
-	      };
-	      this.el.onclick = function (e) {
-	        _this2.player.emit(EVENT.VIDEO_PROGRESS_CLICK, e, _this2);
-	      };
-	    }
-	  }]);
-	  return Progress;
-	}(Component);
-
-	var $$n = _export;
-	var $map = arrayIteration.map;
-	var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
-
-	var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('map');
-
-	// `Array.prototype.map` method
-	// https://tc39.es/ecma262/#sec-array.prototype.map
-	// with adding support of @@species
-	$$n({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
-	  map: function map(callbackfn /* , thisArg */) {
-	    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	  }
-	});
-
-	var entryVirtual$3 = entryVirtual$a;
-
-	var map$6 = entryVirtual$3('Array').map;
-
-	var isPrototypeOf$3 = objectIsPrototypeOf;
-	var method$1 = map$6;
-
-	var ArrayPrototype$2 = Array.prototype;
-
-	var map$5 = function (it) {
-	  var own = it.map;
-	  return it === ArrayPrototype$2 || (isPrototypeOf$3(ArrayPrototype$2, it) && own === ArrayPrototype$2.map) ? method$1 : own;
-	};
-
-	var parent$v = map$5;
-
-	var map$4 = parent$v;
-
-	var parent$u = map$4;
-
-	var map$3 = parent$u;
-
-	var parent$t = map$3;
-
-	var map$2 = parent$t;
-
-	var map$1 = map$2;
-
-	var map = map$1;
-
-	var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map);
-
-	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullPage = /*#__PURE__*/function (_Options) {
 	  _inherits(FullPage, _Options);
-	  var _super = _createSuper$f(FullPage);
+	  var _super = _createSuper$m(FullPage);
 	  function FullPage(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, FullPage);
@@ -6729,11 +6371,11 @@
 	  return FullPage;
 	}(Options);
 
-	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PicInPic = /*#__PURE__*/function (_Options) {
 	  _inherits(PicInPic, _Options);
-	  var _super = _createSuper$e(PicInPic);
+	  var _super = _createSuper$l(PicInPic);
 	  // el: div.video-picInpic.video-controller
 	  function PicInPic(player, container, desc, props, children) {
 	    var _this;
@@ -8693,14 +8335,11 @@
 
 	var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice);
 
-	var css_248z$7 = ".video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.video-toast-animate {\n  opacity: 1;\n}\n";
-	styleInject(css_248z$7);
-
-	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Toast = /*#__PURE__*/function (_Component) {
 	  _inherits(Toast, _Component);
-	  var _super = _createSuper$d(Toast);
+	  var _super = _createSuper$k(Toast);
 	  function Toast(player, dom, props) {
 	    var _this;
 	    _classCallCheck(this, Toast);
@@ -8765,11 +8404,11 @@
 	}(Component);
 	_defineProperty(Toast, "ToastQueue", []);
 
-	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ScreenShot = /*#__PURE__*/function (_Options) {
 	  _inherits(ScreenShot, _Options);
-	  var _super = _createSuper$c(ScreenShot);
+	  var _super = _createSuper$j(ScreenShot);
 	  function ScreenShot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, ScreenShot);
@@ -8903,11 +8542,11 @@
 	function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 	function _unsupportedIterableToArray(o, minLen) { var _context; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 	function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-	function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubSetting = /*#__PURE__*/function (_Options) {
 	  _inherits(SubSetting, _Options);
-	  var _super = _createSuper$b(SubSetting);
+	  var _super = _createSuper$i(SubSetting);
 	  function SubSetting(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, SubSetting);
@@ -8979,7 +8618,7 @@
 	          case '关灯模式':
 	            if (checked) {
 	              document.body.appendChild(_this2.mask);
-	              _this2.player.el.style.zIndex = '2001';
+	              _this2.player.el.style.zIndex = '2002';
 	            } else {
 	              document.body.removeChild(_this2.mask);
 	              _this2.player.el.style.zIndex = '';
@@ -9031,11 +8670,11 @@
 	  return Math.round(Math.atan(Math.abs(dy) / Math.abs(dx)) * 180 / Math.PI);
 	}
 
-	function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DutaionShow = /*#__PURE__*/function (_Component) {
 	  _inherits(DutaionShow, _Component);
-	  var _super = _createSuper$a(DutaionShow);
+	  var _super = _createSuper$h(DutaionShow);
 	  function DutaionShow(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, DutaionShow);
@@ -9093,11 +8732,11 @@
 	  return DutaionShow;
 	}(Component);
 
-	function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var VideoShot = /*#__PURE__*/function (_Options) {
 	  _inherits(VideoShot, _Options);
-	  var _super = _createSuper$9(VideoShot);
+	  var _super = _createSuper$g(VideoShot);
 	  function VideoShot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, VideoShot);
@@ -9246,22 +8885,18 @@
 	  return VideoShot;
 	}(Options);
 
-	var css_248z$6 = ".video-play {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 5px 5px 0 5px;\n  position: relative;\n}\n.video-play .video-subplay {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 30px;\n  position: relative;\n}\n.video-play .video-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 35px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.video-play .video-settings {\n  position: relative;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  color: hsla(0, 0%, 100%, 0.8);\n  fill: hsla(0, 0%, 100%, 0.8);\n  height: 30px;\n}\n.video-start-pause {\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-duration {\n  margin-left: 5px;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n}\n.video-resolvepower {\n  margin-right: 5px;\n  position: relative;\n}\n.video-resolvepower .video-resolvepower-set {\n  list-style: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  cursor: pointer;\n}\n.video-resolvepower .video-resolvepower-set li {\n  width: 145px;\n  padding: 0 12px;\n  height: 36px;\n  white-space: nowrap;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  font-weight: 500;\n  color: #fff;\n}\n.video-resolvepower .video-resolvepower-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-playrate {\n  margin-right: 5px;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.video-volume {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  text-align: center;\n  line-height: 15px;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.video-duration-time {\n  font-size: 13px;\n  margin-right: 5px;\n}\n.video-subsettings .video-subsettings-set {\n  width: 102px;\n  padding-bottom: 8px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item {\n  cursor: pointer;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  width: 100%;\n  padding: 5px 0px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  height: 32px;\n  font-size: 13px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  text-align: center;\n  line-height: 20px;\n  height: 100%;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 100%;\n}\n.video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright input {\n  vertical-align: middle;\n  background-color: #007aff;\n}\n.video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.85;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n  bottom: 48px;\n}\n.video-controller .video-set-hidden {\n  display: none;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 1001;\n}\n";
-	styleInject(css_248z$6);
-
-	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Controller = /*#__PURE__*/function (_Component) {
 	  _inherits(Controller, _Component);
-	  var _super = _createSuper$8(Controller);
+	  var _super = _createSuper$f(Controller);
 	  //代表最右侧的区域
-	  function Controller(player, container, desc, props, children) {
+	  function Controller(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, Controller);
-	    _this = _super.call(this, container, desc, props, children);
+	    _this = _super.call(this, container, desc);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'Controller');
-	    // el: div.video-play
-	    _defineProperty(_assertThisInitialized(_this), "props", {});
+	    // el: div.video-bottombar
 	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
 	    // 控件
 	    _defineProperty(_assertThisInitialized(_this), "leftControllers", [PlayButton, Volume, DutaionShow]);
@@ -9277,7 +8912,6 @@
 	    _defineProperty(_assertThisInitialized(_this), "mediumArea", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
 	    _this.player = player;
-	    _this.props = props || {};
 	    _this.init();
 	    return _this;
 	  }
@@ -9322,9 +8956,12 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      this.leftArea = $$q('div.video-subplay');
-	      this.mediumArea = $$q('div.video-medium');
-	      this.rightArea = $$q('div.video-settings');
+	      // this.leftArea = $('div.video-subplay')
+	      // this.mediumArea = $('div.video-medium')
+	      // this.rightArea = $('div.video-settings')
+	      this.leftArea = $$q('div.video-bottombar-left');
+	      this.mediumArea = $$q('div.video-bottombar-medium');
+	      this.rightArea = $$q('div.video-bottombar-right');
 	      this.el.appendChild(this.leftArea);
 	      this.el.appendChild(this.mediumArea);
 	      this.el.appendChild(this.rightArea);
@@ -9343,43 +8980,72 @@
 	        var instance = new ControlConstructor(_this2.player, _this2.rightArea, 'div');
 	        _this2[instance.id] = instance;
 	      });
-	      // this.playButton = new PlayButton(this.player, this.subPlay, 'div')
-	      // this.DutaionShow = new DutaionShow(this.player, this.subPlay, 'div')
-	      // this.volume = new Volume(this.player, this.settings, 'div')
-	      // this.playrate = new Playrate(this.player, this.settings, 'div')
-	      // this.ScreenShot = new ScreenShot(this.player, this.settings, 'div')
-	      // this.FullPage = new FullPage(this.player, this.settings, 'div')
-	      // this.fullscreen = new FullScreen(this.player, this.settings, 'div')
-	      // this.PicInPic = new PicInPic(this.player, this.settings, 'div')
-	      // this.SubSetting = new SubSetting(this.player, this.settings, 'div')
-	      // this.VideoShot = new VideoShot(this.player, this.settings, 'div')
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      // this.player.on('danmaku-plugin-add', () => {})
+	      // this.playButton = new PlayButton(this.player, this.leftArea, 'div')
+	      // this.volume = new Volume(this.player, this.leftArea, 'div')
+	      // this.DutaionShow = new DutaionShow(this.player, this.leftArea, 'div')
+	      // this.playrate = new Playrate(this.player, this.rightArea, 'div')
+	      // this.SubSetting = new SubSetting(this.player, this.rightArea, 'div')
+	      // this.VideoShot = new VideoShot(this.player, this.rightArea, 'div')
+	      // this.ScreenShot = new ScreenShot(this.player, this.rightArea, 'div')
+	      // this.PicInPic = new PicInPic(this.player, this.rightArea, 'div')
+	      // this.FullPage = new FullPage(this.player, this.rightArea, 'div')
+	      // this.fullscreen = new FullScreen(this.player, this.rightArea, 'div')
 	    }
 	  }]);
 	  return Controller;
 	}(Component);
 
-	var css_248z$5 = ".video-controls {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n";
-	styleInject(css_248z$5);
+	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var MediumBar = /*#__PURE__*/function (_Component) {
+	  _inherits(MediumBar, _Component);
+	  var _super = _createSuper$e(MediumBar);
+	  function MediumBar(player, container, desc) {
+	    var _this;
+	    _classCallCheck(this, MediumBar);
+	    _this = _super.call(this, container, desc);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'MediumBar');
+	    // el: div.video-mediumbar
+	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mediumArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(MediumBar, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      this.leftArea = $$q('div.video-mediumbar-left');
+	      this.mediumArea = $$q('div.video-mediumbar-medium');
+	      this.rightArea = $$q('div.video-mediumbar-right');
+	      this.el.append(this.leftArea, this.mediumArea, this.rightArea);
+	    }
+	  }]);
+	  return MediumBar;
+	}(Component);
 
-	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ToolBar = /*#__PURE__*/function (_Component) {
 	  _inherits(ToolBar, _Component);
-	  var _super = _createSuper$7(ToolBar);
+	  var _super = _createSuper$d(ToolBar);
 	  function ToolBar(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, ToolBar);
 	    _this = _super.call(this, container, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'ToolBar');
-	    // el: div.video-controls.video-controls-hidden
+	    // el: div.video-toolbar.video-toolbar-hidden
 	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "progress", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mediumbar", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "controller", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "status", 'hidden');
 	    _defineProperty(_assertThisInitialized(_this), "timer", 0);
@@ -9399,13 +9065,15 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      addClass(this.el, ['video-controls', 'video-controls-hidden']);
+	      addClass(this.el, ['video-toolbar', 'video-toolbar-hidden']);
 	    }
 	  }, {
 	    key: "initComponent",
 	    value: function initComponent() {
-	      this.progress = new Progress(this.player, this.el, 'div.video-progress');
-	      this.controller = new Controller(this.player, this.el, 'div.video-play');
+	      // this.progress = new Progress(this.player, this.el, 'div.video-progress')
+	      // this.controller = new Controller(this.player, this.el, 'div.video-play')
+	      this.mediumbar = new MediumBar(this.player, this.el, 'div.video-mediumbar');
+	      this.controller = new Controller(this.player, this.el, 'div.video-bottombar');
 	    }
 	  }, {
 	    key: "initEvent",
@@ -9436,8 +9104,8 @@
 	    key: "showToolBar",
 	    value: function showToolBar(e) {
 	      var _this3 = this;
-	      if (includeClass(this.el, 'video-controls-hidden')) {
-	        removeClass(this.el, ['video-controls-hidden']);
+	      if (includeClass(this.el, 'video-toolbar-hidden')) {
+	        removeClass(this.el, ['video-toolbar-hidden']);
 	        this.status = 'show';
 	      }
 	      var target;
@@ -9451,8 +9119,8 @@
 	  }, {
 	    key: "hideToolBar",
 	    value: function hideToolBar() {
-	      if (!includeClass(this.el, 'video-controls-hidden')) {
-	        addClass(this.el, ['video-controls-hidden']);
+	      if (!includeClass(this.el, 'video-toolbar-hidden')) {
+	        addClass(this.el, ['video-toolbar-hidden']);
 	        this.status = 'hidden';
 	      }
 	    }
@@ -18166,18 +17834,241 @@
 	}();
 
 	var $$i = _export;
-	var $includes = arrayIncludes.includes;
+	var toObject = toObject$a;
+	var nativeKeys = objectKeys$3;
 	var fails$6 = fails$x;
 
+	var FAILS_ON_PRIMITIVES = fails$6(function () { nativeKeys(1); });
+
+	// `Object.keys` method
+	// https://tc39.es/ecma262/#sec-object.keys
+	$$i({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
+	  keys: function keys(it) {
+	    return nativeKeys(toObject(it));
+	  }
+	});
+
+	var path$6 = path$n;
+
+	var keys$5 = path$6.Object.keys;
+
+	var parent$m = keys$5;
+
+	var keys$4 = parent$m;
+
+	var parent$l = keys$4;
+
+	var keys$3 = parent$l;
+
+	var parent$k = keys$3;
+
+	var keys$2 = parent$k;
+
+	var keys$1 = keys$2;
+
+	var keys = keys$1;
+
+	var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys);
+
+	var path$5 = path$n;
+
+	var getOwnPropertySymbols$5 = path$5.Object.getOwnPropertySymbols;
+
+	var parent$j = getOwnPropertySymbols$5;
+
+	var getOwnPropertySymbols$4 = parent$j;
+
+	var parent$i = getOwnPropertySymbols$4;
+
+	var getOwnPropertySymbols$3 = parent$i;
+
+	var parent$h = getOwnPropertySymbols$3;
+
+	var getOwnPropertySymbols$2 = parent$h;
+
+	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
+
+	var getOwnPropertySymbols = getOwnPropertySymbols$1;
+
+	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
+
+	var getOwnPropertyDescriptor$7 = {exports: {}};
+
+	var $$h = _export;
+	var fails$5 = fails$x;
+	var toIndexedObject$1 = toIndexedObject$a;
+	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
+	var DESCRIPTORS$1 = descriptors;
+
+	var FORCED$1 = !DESCRIPTORS$1 || fails$5(function () { nativeGetOwnPropertyDescriptor(1); });
+
+	// `Object.getOwnPropertyDescriptor` method
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+	$$h({ target: 'Object', stat: true, forced: FORCED$1, sham: !DESCRIPTORS$1 }, {
+	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
+	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
+	  }
+	});
+
+	var path$4 = path$n;
+
+	var Object$1 = path$4.Object;
+
+	var getOwnPropertyDescriptor$6 = getOwnPropertyDescriptor$7.exports = function getOwnPropertyDescriptor(it, key) {
+	  return Object$1.getOwnPropertyDescriptor(it, key);
+	};
+
+	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$6.sham = true;
+
+	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$7.exports;
+
+	var parent$g = getOwnPropertyDescriptorExports;
+
+	var getOwnPropertyDescriptor$5 = parent$g;
+
+	var parent$f = getOwnPropertyDescriptor$5;
+
+	var getOwnPropertyDescriptor$4 = parent$f;
+
+	var parent$e = getOwnPropertyDescriptor$4;
+
+	var getOwnPropertyDescriptor$3 = parent$e;
+
+	var getOwnPropertyDescriptor$2 = getOwnPropertyDescriptor$3;
+
+	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
+
+	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$1);
+
+	var getBuiltIn$3 = getBuiltIn$h;
+	var uncurryThis$3 = functionUncurryThis;
+	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
+	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
+	var anObject$2 = anObject$f;
+
+	var concat = uncurryThis$3([].concat);
+
+	// all object keys, includes non-enumerable and symbols
+	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
+	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
+	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
+	};
+
+	var $$g = _export;
+	var DESCRIPTORS = descriptors;
+	var ownKeys$2 = ownKeys$3;
+	var toIndexedObject = toIndexedObject$a;
+	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
+	var createProperty = createProperty$6;
+
+	// `Object.getOwnPropertyDescriptors` method
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
+	$$g({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
+	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
+	    var O = toIndexedObject(object);
+	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
+	    var keys = ownKeys$2(O);
+	    var result = {};
+	    var index = 0;
+	    var key, descriptor;
+	    while (keys.length > index) {
+	      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
+	      if (descriptor !== undefined) createProperty(result, key, descriptor);
+	    }
+	    return result;
+	  }
+	});
+
+	var path$3 = path$n;
+
+	var getOwnPropertyDescriptors$5 = path$3.Object.getOwnPropertyDescriptors;
+
+	var parent$d = getOwnPropertyDescriptors$5;
+
+	var getOwnPropertyDescriptors$4 = parent$d;
+
+	var parent$c = getOwnPropertyDescriptors$4;
+
+	var getOwnPropertyDescriptors$3 = parent$c;
+
+	var parent$b = getOwnPropertyDescriptors$3;
+
+	var getOwnPropertyDescriptors$2 = parent$b;
+
+	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
+
+	var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
+
+	var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors);
+
+	var global$9 = global$r;
+	var fails$4 = fails$x;
+	var uncurryThis$2 = functionUncurryThis;
+	var toString$2 = toString$b;
+	var trim = stringTrim.trim;
+	var whitespaces = whitespaces$3;
+
+	var charAt = uncurryThis$2(''.charAt);
+	var $parseFloat$1 = global$9.parseFloat;
+	var Symbol$1 = global$9.Symbol;
+	var ITERATOR = Symbol$1 && Symbol$1.iterator;
+	var FORCED = 1 / $parseFloat$1(whitespaces + '-0') !== -Infinity
+	  // MS Edge 18- broken with boxed symbols
+	  || (ITERATOR && !fails$4(function () { $parseFloat$1(Object(ITERATOR)); }));
+
+	// `parseFloat` method
+	// https://tc39.es/ecma262/#sec-parsefloat-string
+	var numberParseFloat = FORCED ? function parseFloat(string) {
+	  var trimmedString = trim(toString$2(string));
+	  var result = $parseFloat$1(trimmedString);
+	  return result === 0 && charAt(trimmedString, 0) == '-' ? -0 : result;
+	} : $parseFloat$1;
+
+	var $$f = _export;
+	var $parseFloat = numberParseFloat;
+
+	// `parseFloat` method
+	// https://tc39.es/ecma262/#sec-parsefloat-string
+	$$f({ global: true, forced: parseFloat != $parseFloat }, {
+	  parseFloat: $parseFloat
+	});
+
+	var path$2 = path$n;
+
+	var _parseFloat$6 = path$2.parseFloat;
+
+	var parent$a = _parseFloat$6;
+
+	var _parseFloat$5 = parent$a;
+
+	var parent$9 = _parseFloat$5;
+
+	var _parseFloat$4 = parent$9;
+
+	var parent$8 = _parseFloat$4;
+
+	var _parseFloat$3 = parent$8;
+
+	var _parseFloat$2 = _parseFloat$3;
+
+	var _parseFloat = _parseFloat$2;
+
+	var _parseFloat$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseFloat);
+
+	var $$e = _export;
+	var $includes = arrayIncludes.includes;
+	var fails$3 = fails$x;
+
 	// FF99+ bug
-	var BROKEN_ON_SPARSE = fails$6(function () {
+	var BROKEN_ON_SPARSE = fails$3(function () {
 	  // eslint-disable-next-line es/no-array-prototype-includes -- detection
 	  return !Array(1).includes();
 	});
 
 	// `Array.prototype.includes` method
 	// https://tc39.es/ecma262/#sec-array.prototype.includes
-	$$i({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+	$$e({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
 	  includes: function includes(el /* , fromIndex = 0 */) {
 	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
 	  }
@@ -18226,22 +18117,22 @@
 	  } return false;
 	};
 
-	var $$h = _export;
-	var uncurryThis$3 = functionUncurryThis;
+	var $$d = _export;
+	var uncurryThis$1 = functionUncurryThis;
 	var notARegExp = notARegexp;
 	var requireObjectCoercible = requireObjectCoercible$5;
-	var toString$2 = toString$b;
+	var toString$1 = toString$b;
 	var correctIsRegExpLogic = correctIsRegexpLogic;
 
-	var stringIndexOf = uncurryThis$3(''.indexOf);
+	var stringIndexOf = uncurryThis$1(''.indexOf);
 
 	// `String.prototype.includes` method
 	// https://tc39.es/ecma262/#sec-string.prototype.includes
-	$$h({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+	$$d({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
 	  includes: function includes(searchString /* , position = 0 */) {
 	    return !!~stringIndexOf(
-	      toString$2(requireObjectCoercible(this)),
-	      toString$2(notARegExp(searchString)),
+	      toString$1(requireObjectCoercible(this)),
+	      toString$1(notARegExp(searchString)),
 	      arguments.length > 1 ? arguments[1] : undefined
 	    );
 	  }
@@ -18266,1108 +18157,23 @@
 	  } return own;
 	};
 
-	var parent$m = includes$5;
+	var parent$7 = includes$5;
 
-	var includes$4 = parent$m;
+	var includes$4 = parent$7;
 
-	var parent$l = includes$4;
+	var parent$6 = includes$4;
 
-	var includes$3 = parent$l;
+	var includes$3 = parent$6;
 
-	var parent$k = includes$3;
+	var parent$5 = includes$3;
 
-	var includes$2 = parent$k;
+	var includes$2 = parent$5;
 
 	var includes$1 = includes$2;
 
 	var includes = includes$1;
 
 	var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes);
-
-	var css_248z$4 = ".video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n";
-	styleInject(css_248z$4);
-
-	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Loading = /*#__PURE__*/function (_Component) {
-	  _inherits(Loading, _Component);
-	  var _super = _createSuper$6(Loading);
-	  function Loading(player, msg, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, Loading);
-	    _this = _super.call(this, null, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "message", void 0);
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.container = container;
-	    _this.message = msg;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Loading, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-loading']);
-	      this.loadingBox = $$q('div');
-	      this.messageBox = $$q('div.video-loading-msgbox');
-	      this.messageBox.innerText = this.message;
-	      this.el.appendChild(this.loadingBox);
-	      this.el.appendChild(this.messageBox);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {}
-	  }, {
-	    key: "addLoading",
-	    value: function addLoading() {
-	      var _context;
-	      if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
-	        this.container.appendChild(this.el);
-	      }
-	    }
-	  }, {
-	    key: "removeLoading",
-	    value: function removeLoading() {
-	      var _context2;
-	      if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
-	        this.container.removeChild(this.el);
-	      }
-	    }
-	  }]);
-	  return Loading;
-	}(Component);
-
-	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var TimeLoading = /*#__PURE__*/function (_Loading) {
-	  _inherits(TimeLoading, _Loading);
-	  var _super = _createSuper$5(TimeLoading);
-	  // el: div.video-loading
-	  function TimeLoading(player, msg, container) {
-	    var _this;
-	    _classCallCheck(this, TimeLoading);
-	    _this = _super.call(this, player, msg, container);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
-	    addClass(_this.loadingBox, ['video-loading-loadingbox']);
-	    _this.initEvent();
-	    return _this;
-	  }
-	  _createClass(TimeLoading, [{
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      // 在视频由于需要缓冲下一帧而停止时触发
-	      this.player.on(EVENT.WAITING, function () {
-	        _this2.addLoading();
-	      });
-	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function () {
-	        _this2.removeLoading();
-	      });
-	    }
-	  }]);
-	  return TimeLoading;
-	}(Loading);
-
-	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var ErrorLoading = /*#__PURE__*/function (_Loading) {
-	  _inherits(ErrorLoading, _Loading);
-	  var _super = _createSuper$4(ErrorLoading);
-	  // el: div.video-loading
-	  function ErrorLoading(player, msg, container) {
-	    var _this;
-	    _classCallCheck(this, ErrorLoading);
-	    _this = _super.call(this, player, msg, container);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
-	    addClass(_this.loadingBox, ['video-loading-errorloading']);
-	    _this.initEvent();
-	    return _this;
-	  }
-	  _createClass(ErrorLoading, [{
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      // 视频加载发生错误时
-	      this.player.on(EVENT.ERROR, function (e) {
-	        _this2.addLoading();
-	      });
-	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function (e) {
-	        _this2.removeLoading();
-	      });
-	    }
-	  }]);
-	  return ErrorLoading;
-	}(Loading);
-
-	var css_248z$3 = ".video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n}\n.video-topbar-controller {\n  padding: 3px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 30px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 16px;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon:hover {\n  background-color: #007aff;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set {\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  white-space: nowrap;\n  top: 32px;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none;\n}\n.video-topbar-controller .video-subsettings-set {\n  right: 0;\n  left: auto!important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n";
-	styleInject(css_248z$3);
-
-	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var TopBar = /*#__PURE__*/function (_Component) {
-	  _inherits(TopBar, _Component);
-	  var _super = _createSuper$3(TopBar);
-	  // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
-	  function TopBar(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, TopBar);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
-	    // el: div.video-topbar.video-topbar-hidden
-	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "timer", null);
-	    _this.player = player;
-	    _this.props = props || {};
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(TopBar, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	    /**
-	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
-	     */
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
-	      this.leftArea = $$q('div.video-topbar-left');
-	      this.rightArea = $$q('div.video-topbar-right');
-	      this.el.appendChild(this.leftArea);
-	      this.el.appendChild(this.rightArea);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.player.on(EVENT.SHOW_TOOLBAR, function (e) {
-	        _this2.onShowToolBar(e);
-	      });
-	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
-	        _this2.onHideToolBar();
-	      });
-	    }
-	  }, {
-	    key: "hideToolBar",
-	    value: function hideToolBar() {
-	      if (!includeClass(this.el, 'video-topbar-hidden')) {
-	        addClass(this.el, ['video-topbar-hidden']);
-	      }
-	    }
-	  }, {
-	    key: "showToolBar",
-	    value: function showToolBar(e) {
-	      var _this3 = this;
-	      if (includeClass(this.el, 'video-topbar-hidden')) {
-	        removeClass(this.el, ['video-topbar-hidden']);
-	      }
-	      var target;
-	      if (e instanceof Event) target = e.target;else target = e.e.target;
-	      if (target === this.player.video) {
-	        this.timer = window.setTimeout(function () {
-	          _this3.hideToolBar();
-	        }, 3000);
-	      }
-	    }
-	  }, {
-	    key: "onShowToolBar",
-	    value: function onShowToolBar(e) {
-	      if (this.timer) {
-	        window.clearTimeout(this.timer);
-	        this.timer = null;
-	      }
-	      this.showToolBar(e);
-	    }
-	  }, {
-	    key: "onHideToolBar",
-	    value: function onHideToolBar() {
-	      this.hideToolBar();
-	    }
-	  }]);
-	  return TopBar;
-	}(Component);
-
-	var env = window.navigator.userAgent.toLowerCase();
-	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
-	var Env = {
-	  isInWeixin: function isInWeixin() {
-	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
-	  },
-	  isInApp: function isInApp() {
-	    return /(^|;\s)app\//.test(env);
-	  },
-	  isInIOS: function isInIOS() {
-	    return env.match(/(iphone|ipod|ipad);?/i);
-	  },
-	  isInAndroid: function isInAndroid() {
-	    return env.match(/android|adr/i);
-	  },
-	  isInPc: function isInPc() {
-	    return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin());
-	  },
-	  get env() {
-	    return this.isInPc() ? 'PC' : 'Mobile';
-	  }
-	};
-
-	var css_248z$2 = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
-	styleInject(css_248z$2);
-
-	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var MobileVolume = /*#__PURE__*/function (_Component) {
-	  _inherits(MobileVolume, _Component);
-	  var _super = _createSuper$2(MobileVolume);
-	  function MobileVolume(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, MobileVolume);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'MobileVolume');
-	    // el: div.video-mobile-medium-wrapper
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "progressBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "completedBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "icon", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "timer", 0);
-	    _this.player = player;
-	    _this.props = props || {};
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(MobileVolume, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-mobile-medium-wrapper']);
-	      this.el.style.display = 'none';
-	      this.iconBox = $$q('div.video-mobile-medium-iconbox');
-	      this.progressBox = $$q('div.video-mobile-medium-progressbox');
-	      this.completedBox = $$q('div.video-mobile-medium-completed', {
-	        style: {
-	          width: '0px'
-	        }
-	      });
-	      this.icon = createSvg(volumePath$1);
-	      this.iconBox.appendChild(this.icon);
-	      this.progressBox.appendChild(this.completedBox);
-	      this.el.appendChild(this.iconBox);
-	      this.el.appendChild(this.progressBox);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      var width = this.completedBox.clientWidth;
-	      this.player.on(EVENT.MOVE_VERTICAL, function (e) {
-	        // console.log('正在滑动')
-	        if (_this2.timer) {
-	          window.clearInterval(_this2.timer);
-	        }
-	        _this2.timer = null;
-	        _this2.el.style.display = '';
-	        var dy = e.deltaY;
-	        var scale = (width + -dy) / _this2.progressBox.clientWidth;
-	        if (scale < 0) {
-	          scale = 0;
-	        } else if (scale > 1) {
-	          scale = 1;
-	        }
-	        // console.log(scale)
-	        _this2.completedBox.style.width = scale * 100 + '%';
-	        _this2.player.video.volume = scale;
-	      });
-	      this.player.on(EVENT.SLIDE_VERTICAL, function (e) {
-	        // console.log('滑动结束')
-	        width = _this2.completedBox.clientWidth;
-	        _this2.timer = window.setTimeout(function () {
-	          _this2.el.style.display = 'none';
-	        }, 600);
-	      });
-	      this.player.on(EVENT.VIDEO_CLICK, function () {
-	        _this2.el.style.display = 'none';
-	      });
-	    }
-	  }]);
-	  return MobileVolume;
-	}(Component);
-
-	var css_248z$1 = ".video-wrapper-fullpage {\n  position: fixed!important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  resize: both;\n  overflow: hidden;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.video-wrapper:focus {\n  outline: none;\n}\n.video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.video-wrapper video:focus {\n  outline: none;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n";
-	styleInject(css_248z$1);
-
-	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Player = /*#__PURE__*/function (_Component) {
-	  _inherits(Player, _Component);
-	  var _super = _createSuper$1(Player);
-	  // 视频比例 原始高度/原始宽度
-	  function Player(options) {
-	    var _this;
-	    _classCallCheck(this, Player);
-	    _this = _super.call(this, options.container, 'div.video-wrapper');
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Player');
-	    // el: div.video-wrapper
-	    // 播放器的默认配置
-	    _defineProperty(_assertThisInitialized(_this), "playerOptions", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "enableSeek", true);
-	    _defineProperty(_assertThisInitialized(_this), "env", Env.env);
-	    _defineProperty(_assertThisInitialized(_this), "fullScreenMode", 'Horizontal');
-	    _defineProperty(_assertThisInitialized(_this), "video", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "topbar", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "loading", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "error", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mask", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "containerWidth", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "containerHeight", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mediaProportion", 9 / 16);
-	    _this.playerOptions = _Object$assign({
-	      autoPlay: false,
-	      streamPlay: false
-	    }, options);
-	    _this.container = options.container;
-	    _this.containerHeight = options.container.clientHeight;
-	    _this.containerWidth = options.container.clientWidth;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Player, [{
-	    key: "init",
-	    value: function init() {
-	      var _this$playerOptions;
-	      if (this.playerOptions.video) {
-	        this.video = this.playerOptions.video;
-	        this.video.parentNode && this.video.parentNode.removeChild(this.video);
-	      } else {
-	        this.video = $$q('video');
-	        this.video['playsinline'] = true; // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
-	        this.video['x5-video-player-type'] = 'h5'; // 启用H5播放器,是wechat安卓版特性
-	      }
-
-	      this.video.crossOrigin = 'anonymous';
-	      this.el.appendChild(this.video);
-	      ((_this$playerOptions = this.playerOptions) === null || _this$playerOptions === void 0 ? void 0 : _this$playerOptions.url) && this.attachSource(this.playerOptions.url);
-	      this.initComponent();
-	      this.initTemplate();
-	      this.initEvent();
-	      this.initPlugin();
-	      this.initResizeObserver();
-	      this.checkFullScreenMode();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      if (this.env === 'Mobile') {
-	        // 如果是在移动端，则音量的调节使用手势决定的
-	        this.unmountComponent('Volume');
-	        new MobileVolume(this, this.el, 'div');
-	      }
-	    }
-	  }, {
-	    key: "initComponent",
-	    value: function initComponent() {
-	      this.loading = new TimeLoading(this, '视频姬正在努力加载中(⑅˃◡˂⑅)', this.el);
-	      this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
-	      this.toolBar = new ToolBar(this, this.el, 'div');
-	      this.topbar = new TopBar(this, this.el, 'div');
-	      // new DanmakuController(this)
-	    }
-	    /**
-	     * @@description 监听视频播放器大小的变化
-	     */
-	  }, {
-	    key: "initResizeObserver",
-	    value: function initResizeObserver() {
-	      var _this2 = this;
-	      /**
-	        window.resize弊端
-	          reize事件会在一秒内触发将近60次，所以很容易在改变窗口大小时导致性能问题
-	          它会监听每个元素的大小变化，而不是具体到某个元素的变化
-	          只有window对象才有resize事件，而不是具体某个元素有resize事件
-	        ResizeObserver
-	          可以监听到 Element 的内容区域或SVGElement的边界框改变
-	       */
-	      // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
-	      var _STORE = new _Map(COMPONENT_STORE);
-	      var resizeObserver = new ResizeObserver(function (entries) {
-	        // console.log('监听到了尺寸变化了...')
-	        // 触发尺寸变化事件
-	        _this2.emit(EVENT.RESIZE, entries);
-	        _this2.adjustMediaSize();
-	        var width = entries[0].contentRect.width;
-	        var subsetting;
-	        // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
-	        if (width <= 600) {
-	          // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
-	          _forEachInstanceProperty(_STORE).call(_STORE, function (value, key) {
-	            var _context, _context2;
-	            if (_indexOfInstanceProperty(_context = ['SubSetting']).call(_context, key) !== -1) {
-	              subsetting = ONCE_COMPONENT_STORE.get(key);
-	              _this2.unmountComponent(key);
-	            } else if (_indexOfInstanceProperty(_context2 = ['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot']).call(_context2, key) !== -1) {
-	              if (!HIDEEN_COMPONENT_STORE.get(key)) {
-	                _this2.hideComponent(key);
-	              }
-	            }
-	          });
-	          _this2.mountComponent(subsetting.id, subsetting, {
-	            mode: {
-	              type: 'TopToolBar',
-	              pos: 'right'
-	            }
-	          });
-	          addClass(subsetting.el, ['video-subsettings', 'video-topbar-controller']);
-	        } else {
-	          // 展示之前隐藏的组件
-	          var _HIDDEN_STORE = new _Map(HIDEEN_COMPONENT_STORE);
-	          _forEachInstanceProperty(_HIDDEN_STORE).call(_HIDDEN_STORE, function (value, key) {
-	            _this2.showComponent(key);
-	          });
-	          if (COMPONENT_STORE.has('SubSetting')) {
-	            var key = 'SubSetting';
-	            var component = ONCE_COMPONENT_STORE.get(key);
-	            // 如果SubSetting已经挂载到视图上，需要先卸载
-	            _this2.unmountComponent(key);
-	            _this2.mountComponent(key, component, {
-	              mode: {
-	                type: 'BottomToolBar',
-	                pos: 'right'
-	              },
-	              index: 1
-	            });
-	            addClass(component.el, ['video-subsettings', 'video-controller']);
-	          }
-	        }
-	      });
-	      // 开始观察
-	      resizeObserver.observe(this.el);
-	    }
-	    // 调整video的尺寸
-	  }, {
-	    key: "adjustMediaSize",
-	    value: function adjustMediaSize() {
-	      // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
-	      if (this.mediaProportion !== 0) {
-	        // 容器宽度偏小，高度偏大
-	        if (this.el.clientHeight / this.el.clientWidth > this.mediaProportion) {
-	          this.video.style.width = '100%';
-	          this.video.style.height = this.el.clientWidth * this.mediaProportion + 0.05 * this.el.clientWidth + 'px';
-	        } else {
-	          // 容器宽度偏大，高度偏小（类似带鱼屏）
-	          this.video.style.height = '100%';
-	          this.video.style.width = this.el.clientHeight / this.mediaProportion + 'px';
-	        }
-	      }
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this3 = this;
-	      if (this.env === 'Mobile') {
-	        this.initMobileEvent();
-	      } else {
-	        this.initPCEvent();
-	      }
-	      this.video.addEventListener('loadedmetadata', function (e) {
-	        _this3.emit(EVENT.LOADED_META_DATA, e);
-	        // videoWidth: 视频原始宽度
-	        // videoHeight: 视频原始高度
-	        _this3.mediaProportion = _this3.video.videoHeight / _this3.video.videoWidth;
-	        _this3.adjustMediaSize();
-	      });
-	      this.video.addEventListener('timeupdate', function (e) {
-	        _this3.emit(EVENT.TIME_UPDATE, e);
-	      });
-	      this.video.addEventListener('play', function (e) {
-	        _this3.emit(EVENT.PLAY, e);
-	      });
-	      this.video.addEventListener('pause', function (e) {
-	        _this3.emit(EVENT.PAUSE, e);
-	      });
-	      // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
-	      this.video.addEventListener('seeking', function (e) {
-	        // 防抖效果：针对Dot按下拖动时不触发seeking，拖完鼠标抬起时再触发seeking
-	        if (_this3.enableSeek) {
-	          _this3.emit(EVENT.SEEKING, e);
-	        }
-	      });
-	      // waiting 事件在视频由于需要缓冲下一帧而停止时触发
-	      this.video.addEventListener('waiting', function (e) {
-	        _this3.emit(EVENT.WAITING, e);
-	      });
-	      // canplay 该视频已准备好开始播放
-	      this.video.addEventListener('canplay', function (e) {
-	        _this3.emit(EVENT.CAN_PLAY, e);
-	      });
-	      // error 视频加载发生错误时
-	      this.video.addEventListener('error', function (e) {
-	        _this3.emit(EVENT.ERROR);
-	      });
-	      // abort 视频终止加载时
-	      this.video.addEventListener('abort', function (e) {
-	        _this3.emit(EVENT.ERROR);
-	      });
-	      // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
-	      this.video.addEventListener('ratechange', function (e) {
-	        _this3.emit(EVENT.RATE_CHANGE);
-	      });
-	      this.on(EVENT.VIDEO_PROGRESS_CLICK, function (e, ctx) {
-	        var scale = e.offsetX / ctx.el.offsetWidth;
-	        if (scale < 0) {
-	          scale = 0;
-	        } else if (scale > 1) {
-	          scale = 1;
-	        }
-	        _this3.video.currentTime = Math.floor(scale * _this3.video.duration);
-	        _this3.video.paused && _this3.video.play();
-	      });
-	      this.on(EVENT.DANMAKU_INPUT_FOCUS, function () {
-	        _this3.el.onmouseleave = null;
-	      });
-	      this.on(EVENT.DANMAKU_INPUT_BLUR, function () {
-	        _this3.el.onmouseleave = function (e) {
-	          _this3.emit('hidetoolbar', e);
-	        };
-	      });
-	      this.on(EVENT.DOT_DOWN, function () {
-	        // console.log('dotdown')
-	        _this3.enableSeek = false;
-	      });
-	      this.on(EVENT.DOT_UP, function () {
-	        // console.log('dotup')
-	        _this3.enableSeek = true;
-	      });
-	      this.on(EVENT.DOT_DRAG, function (val, e) {
-	        _this3.emit('showtoolbar', e);
-	      });
-	      this.on(EVENT.ENTER_FULLSCREEN, function () {
-	        var _context3, _context4;
-	        _forEachInstanceProperty(_context3 = document.querySelectorAll('.video-controller')).call(_context3, function (el) {
-	          el.style.marginRight = '15px';
-	        });
-	        _forEachInstanceProperty(_context4 = document.querySelectorAll('.video-topbar-controller')).call(_context4, function (el) {
-	          el.style.marginRight = '15px';
-	        });
-	      });
-	      this.on(EVENT.LEAVE_FULLSCREEN, function () {
-	        var _context5, _context6;
-	        _forEachInstanceProperty(_context5 = document.querySelectorAll('.video-controller')).call(_context5, function (el) {
-	          el.style.marginRight = '';
-	        });
-	        _forEachInstanceProperty(_context6 = document.querySelectorAll('.video-topbar-controller')).call(_context6, function (el) {
-	          el.style.marginRight = '';
-	        });
-	      });
-	    }
-	  }, {
-	    key: "initPCEvent",
-	    value: function initPCEvent() {
-	      var _this4 = this;
-	      this.video.onclick = function (e) {
-	        if (_this4.video.paused) {
-	          _this4.video.play();
-	        } else if (_this4.video.played) {
-	          _this4.video.pause();
-	        }
-	      };
-	      this.el.onmouseenter = function (e) {
-	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
-	      };
-	      this.el.onmousemove = function (e) {
-	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
-	      };
-	      this.el.onmouseleave = function (e) {
-	        _this4.emit(EVENT.HIDE_TOOLBAR, e);
-	      };
-	    }
-	  }, {
-	    key: "initMobileEvent",
-	    value: function initMobileEvent() {
-	      var _this5 = this;
-	      // 单击
-	      wrap(this.video).addEventListener('singleTap', function (e) {
-	        // console.log(e, 'singletap')
-	        if (_this5.toolBar.status === 'hidden') {
-	          _this5.emit(EVENT.SHOW_TOOLBAR, e);
-	        } else {
-	          _this5.emit(EVENT.HIDE_TOOLBAR, e);
-	        }
-	        _this5.emit(EVENT.VIDEO_CLICK);
-	      });
-	      // 双击
-	      wrap(this.video).addEventListener('doubleTap', function (e) {
-	        // console.log(e, 'doubleTap')
-	        if (_this5.video.paused) {
-	          _this5.video.play();
-	        } else if (_this5.video.played) {
-	          _this5.video.pause();
-	        }
-	      });
-	      // 手势上下处于滑动中
-	      wrap(this.video).addEventListener('move', function (e) {
-	        // console.log(e, 'move')
-	        var dx = e.deltaX;
-	        var dy = e.deltaY;
-	        if (computeAngle(dx, dy) >= 75) {
-	          _this5.emit(EVENT.MOVE_VERTICAL, e);
-	        } else if (computeAngle(dx, dy) <= 15) {
-	          _this5.emit(EVENT.MOVE_HORIZONTAL, e);
-	        }
-	      });
-	      // 手势上下滑动结束
-	      wrap(this.video).addEventListener('swipe', function (e) {
-	        // console.log(e, 'swipe')
-	        var dx = e.endPos.x - e.startPos.x;
-	        var dy = e.endPos.y - e.startPos.y;
-	        // if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
-	        //   this.emit('slideVertical', e)
-	        // }
-	        if (computeAngle(dx, dy) >= 75) {
-	          _this5.emit(EVENT.SLIDE_VERTICAL, e);
-	        } else if (computeAngle(dx, dy) <= 15) {
-	          _this5.emit(EVENT.SLIDE_HORIZONTAL, e);
-	        }
-	      });
-	    }
-	  }, {
-	    key: "initPlugin",
-	    value: function initPlugin() {
-	      var _this6 = this;
-	      if (this.playerOptions.plugins) {
-	        var _context7;
-	        _forEachInstanceProperty(_context7 = this.playerOptions.plugins).call(_context7, function (plugin) {
-	          _this6.use(plugin);
-	        });
-	      }
-	    }
-	    // initMp4Player(url: string) {
-	    //   new Mp4MediaPlayer(this.playerOptions.url, this)
-	    // }
-	    // initMpdPlayer(url: string) {
-	    //   // 工厂模式
-	    //   // let player = new MediaPlayer({context: {}}, ...args)
-	    //   let player = MpdMediaPlayerFactory().create()
-	    //   player.attachVideo(this.video)
-	    //   player.attachSource(url)
-	    // }
-	  }, {
-	    key: "attachSource",
-	    value: function attachSource(url) {
-	      // 是否启动流式播放
-	      if (this.playerOptions.streamPlay) {
-	        new MediaPlayer(url, this);
-	      } else {
-	        this.video.src = url;
-	      }
-	    }
-	  }, {
-	    key: "checkFullScreenMode",
-	    value: function checkFullScreenMode() {}
-	    // 注册/挂载自己的组件,其中的id为组件实例的名称，分为内置和用户自定义这两种情况；注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
-	  }, {
-	    key: "mountComponent",
-	    value: function mountComponent(id, component, options) {
-	      if (COMPONENT_STORE.has(id)) {
-	        throw new Error('无法挂载一个已经存在于视图上的组件，请先将其卸载或者删除');
-	      }
-	      COMPONENT_STORE.set(id, component);
-	      if (!ONCE_COMPONENT_STORE.has(id)) {
-	        ONCE_COMPONENT_STORE.set(id, component);
-	      }
-	      if (!options) {
-	        if (!component.container) {
-	          throw new Error('必须传入Options选项或者传入的组件实例中需要有container选项');
-	        }
-	        component.container.appendChild(component.el);
-	      } else {
-	        var mode = options.mode;
-	        if (mode.type === 'BottomToolBar') {
-	          var area;
-	          if (mode.pos === 'left') {
-	            area = this.toolBar.controller.leftArea;
-	          } else if (mode.pos === 'right') {
-	            area = this.toolBar.controller.rightArea;
-	          } else if (mode.pos === 'medium') {
-	            area = this.toolBar.controller.mediumArea;
-	          }
-	          var children = _toConsumableArray(area.children);
-	          if (!options.index) {
-	            area.appendChild(component.el);
-	          } else {
-	            if (options.index < 0) throw new Error('index不能传入负值');
-	            area.insertBefore(component.el, children[options.index] || null);
-	          }
-	        } else if (mode.type === 'TopToolBar') {
-	          var _area;
-	          if (mode.pos === 'left') {
-	            _area = this.topbar.leftArea;
-	          } else {
-	            _area = this.topbar.rightArea;
-	          }
-	          var _children = _toConsumableArray(_area.children);
-	          if (!options.index) {
-	            _area.appendChild(component.el);
-	          } else {
-	            if (options.index < 0) throw new Error('index不能传入负值');
-	            _area.insertBefore(component.el, _children[options.index] || null);
-	          }
-	        } else if (mode.type === 'AnyPosition') {
-	          this.el.appendChild(component.el);
-	        }
-	        // 给组件中的container赋予新的值
-	        component.container = component.el.parentElement;
-	      }
-	    }
-	    // 更新一个已经挂载到视图层上的组件
-	  }, {
-	    key: "updateComponent",
-	    value: function updateComponent(id, component, options) {
-	      if (!COMPONENT_STORE.get(id)) {
-	        throw new Error('该组件不存在或者已经被卸载');
-	      }
-	      patchComponent(COMPONENT_STORE.get(id), component, options);
-	    }
-	    // 隐藏某一个已经挂载到视图上的组件
-	  }, {
-	    key: "hideComponent",
-	    value: function hideComponent(id) {
-	      if (!COMPONENT_STORE.get(id)) {
-	        throw new Error('无法隐藏一个未挂载在视图上的组件');
-	      }
-	      if (HIDEEN_COMPONENT_STORE.get(id)) {
-	        throw new Error('该元素已经隐藏');
-	      }
-	      var instance = COMPONENT_STORE.get(id);
-	      instance.el.style.display = 'none';
-	      HIDEEN_COMPONENT_STORE.set(id, instance);
-	    }
-	    // 展示一个隐藏的组件
-	  }, {
-	    key: "showComponent",
-	    value: function showComponent(id) {
-	      if (!HIDEEN_COMPONENT_STORE.get(id)) {
-	        throw new Error('该元素已经显示出来了');
-	      }
-	      if (!COMPONENT_STORE.get(id)) {
-	        throw new Error('该元素不存在或者被卸载');
-	      }
-	      var instance = COMPONENT_STORE.get(id);
-	      instance.el.style.display = '';
-	      HIDEEN_COMPONENT_STORE.delete(id);
-	    }
-	    // 卸载某一个component组件，所谓卸载一个组件指的是仅仅将其DOM元素从视图上移除，但是不会删除其实例对象，还可以继续挂载
-	    // 注意：卸载一个组件会清除该组件上挂载的class和id，意味着之后用户可以将组件挂载到任何位置
-	  }, {
-	    key: "unmountComponent",
-	    value: function unmountComponent(id) {
-	      if (!COMPONENT_STORE.has(id)) {
-	        throw new Error('该组件不存在或者已经被卸载');
-	      }
-	      var instance = COMPONENT_STORE.get(id);
-	      instance.el.parentElement.removeChild(instance.el);
-	      removeClass(instance.el, _toConsumableArray(instance.el.classList));
-	      COMPONENT_STORE.delete(id);
-	    }
-	    // 彻底删除一个组件，也就是直接销毁组件实例，卸载组件仅仅是将其el元素从视图上移除，但任然保留组建的实例对象
-	  }, {
-	    key: "deleteComponent",
-	    value: function deleteComponent(id) {
-	      if (COMPONENT_STORE.has(id)) {
-	        this.unmountComponent(id);
-	      }
-	      ONCE_COMPONENT_STORE.delete(id);
-	    }
-	    // // 注册最右侧的控制栏上的组件
-	    // registerControls(
-	    //   id: string,
-	    //   component: Partial<ComponentItem> & registerOptions,
-	    //   pos: 'left' | 'right' | 'medium'
-	    // ) {
-	    //   let store = CONTROL_COMPONENT_STORE
-	    //   if (store.has(id)) {
-	    //     // patchComponent(store.get(id), component)
-	    //     if (component.replaceElementType) {
-	    //       patchComponent(store.get(id), component, {
-	    //         replaceElementType: component.replaceElementType
-	    //       })
-	    //     } else {
-	    //       patchComponent(store.get(id), component)
-	    //     }
-	    //   } else {
-	    //     // 如果该组件实例是用户自创的话
-	    //     if (!component.el) throw new Error(`传入的原创组件${id}没有对应的DOM元素`)
-	    //     if (pos === 'left') {
-	    //       this.toolBar.controller.leftArea.appendChild(component.el)
-	    //     } else if (pos === 'right') {
-	    //       let settings = this.toolBar.controller.rightArea
-	    //       settings.insertBefore(component.el, settings.firstChild)
-	    //     } else if (pos === 'medium') {
-	    //       this.toolBar.controller.mediumArea.appendChild(component.el)
-	    //     }
-	    //   }
-	    // }
-	    /**
-	     * @description 注册对应的组件
-	     * @param plugin
-	     */
-	  }, {
-	    key: "use",
-	    value: function use(plugin) {
-	      plugin.install(this);
-	    }
-	  }]);
-	  return Player;
-	}(Component);
-
-	var $$g = _export;
-	var toObject = toObject$a;
-	var nativeKeys = objectKeys$3;
-	var fails$5 = fails$x;
-
-	var FAILS_ON_PRIMITIVES = fails$5(function () { nativeKeys(1); });
-
-	// `Object.keys` method
-	// https://tc39.es/ecma262/#sec-object.keys
-	$$g({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
-	  keys: function keys(it) {
-	    return nativeKeys(toObject(it));
-	  }
-	});
-
-	var path$6 = path$n;
-
-	var keys$5 = path$6.Object.keys;
-
-	var parent$j = keys$5;
-
-	var keys$4 = parent$j;
-
-	var parent$i = keys$4;
-
-	var keys$3 = parent$i;
-
-	var parent$h = keys$3;
-
-	var keys$2 = parent$h;
-
-	var keys$1 = keys$2;
-
-	var keys = keys$1;
-
-	var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys);
-
-	var path$5 = path$n;
-
-	var getOwnPropertySymbols$5 = path$5.Object.getOwnPropertySymbols;
-
-	var parent$g = getOwnPropertySymbols$5;
-
-	var getOwnPropertySymbols$4 = parent$g;
-
-	var parent$f = getOwnPropertySymbols$4;
-
-	var getOwnPropertySymbols$3 = parent$f;
-
-	var parent$e = getOwnPropertySymbols$3;
-
-	var getOwnPropertySymbols$2 = parent$e;
-
-	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
-
-	var getOwnPropertySymbols = getOwnPropertySymbols$1;
-
-	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
-
-	var getOwnPropertyDescriptor$7 = {exports: {}};
-
-	var $$f = _export;
-	var fails$4 = fails$x;
-	var toIndexedObject$1 = toIndexedObject$a;
-	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
-	var DESCRIPTORS$1 = descriptors;
-
-	var FORCED$1 = !DESCRIPTORS$1 || fails$4(function () { nativeGetOwnPropertyDescriptor(1); });
-
-	// `Object.getOwnPropertyDescriptor` method
-	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-	$$f({ target: 'Object', stat: true, forced: FORCED$1, sham: !DESCRIPTORS$1 }, {
-	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
-	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
-	  }
-	});
-
-	var path$4 = path$n;
-
-	var Object$1 = path$4.Object;
-
-	var getOwnPropertyDescriptor$6 = getOwnPropertyDescriptor$7.exports = function getOwnPropertyDescriptor(it, key) {
-	  return Object$1.getOwnPropertyDescriptor(it, key);
-	};
-
-	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$6.sham = true;
-
-	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$7.exports;
-
-	var parent$d = getOwnPropertyDescriptorExports;
-
-	var getOwnPropertyDescriptor$5 = parent$d;
-
-	var parent$c = getOwnPropertyDescriptor$5;
-
-	var getOwnPropertyDescriptor$4 = parent$c;
-
-	var parent$b = getOwnPropertyDescriptor$4;
-
-	var getOwnPropertyDescriptor$3 = parent$b;
-
-	var getOwnPropertyDescriptor$2 = getOwnPropertyDescriptor$3;
-
-	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
-
-	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$1);
-
-	var getBuiltIn$3 = getBuiltIn$h;
-	var uncurryThis$2 = functionUncurryThis;
-	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
-	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
-	var anObject$2 = anObject$f;
-
-	var concat = uncurryThis$2([].concat);
-
-	// all object keys, includes non-enumerable and symbols
-	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
-	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
-	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
-	};
-
-	var $$e = _export;
-	var DESCRIPTORS = descriptors;
-	var ownKeys$2 = ownKeys$3;
-	var toIndexedObject = toIndexedObject$a;
-	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
-	var createProperty = createProperty$6;
-
-	// `Object.getOwnPropertyDescriptors` method
-	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
-	$$e({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
-	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
-	    var O = toIndexedObject(object);
-	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
-	    var keys = ownKeys$2(O);
-	    var result = {};
-	    var index = 0;
-	    var key, descriptor;
-	    while (keys.length > index) {
-	      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
-	      if (descriptor !== undefined) createProperty(result, key, descriptor);
-	    }
-	    return result;
-	  }
-	});
-
-	var path$3 = path$n;
-
-	var getOwnPropertyDescriptors$5 = path$3.Object.getOwnPropertyDescriptors;
-
-	var parent$a = getOwnPropertyDescriptors$5;
-
-	var getOwnPropertyDescriptors$4 = parent$a;
-
-	var parent$9 = getOwnPropertyDescriptors$4;
-
-	var getOwnPropertyDescriptors$3 = parent$9;
-
-	var parent$8 = getOwnPropertyDescriptors$3;
-
-	var getOwnPropertyDescriptors$2 = parent$8;
-
-	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
-
-	var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
-
-	var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors);
-
-	var global$9 = global$r;
-	var fails$3 = fails$x;
-	var uncurryThis$1 = functionUncurryThis;
-	var toString$1 = toString$b;
-	var trim = stringTrim.trim;
-	var whitespaces = whitespaces$3;
-
-	var charAt = uncurryThis$1(''.charAt);
-	var $parseFloat$1 = global$9.parseFloat;
-	var Symbol$1 = global$9.Symbol;
-	var ITERATOR = Symbol$1 && Symbol$1.iterator;
-	var FORCED = 1 / $parseFloat$1(whitespaces + '-0') !== -Infinity
-	  // MS Edge 18- broken with boxed symbols
-	  || (ITERATOR && !fails$3(function () { $parseFloat$1(Object(ITERATOR)); }));
-
-	// `parseFloat` method
-	// https://tc39.es/ecma262/#sec-parsefloat-string
-	var numberParseFloat = FORCED ? function parseFloat(string) {
-	  var trimmedString = trim(toString$1(string));
-	  var result = $parseFloat$1(trimmedString);
-	  return result === 0 && charAt(trimmedString, 0) == '-' ? -0 : result;
-	} : $parseFloat$1;
-
-	var $$d = _export;
-	var $parseFloat = numberParseFloat;
-
-	// `parseFloat` method
-	// https://tc39.es/ecma262/#sec-parsefloat-string
-	$$d({ global: true, forced: parseFloat != $parseFloat }, {
-	  parseFloat: $parseFloat
-	});
-
-	var path$2 = path$n;
-
-	var _parseFloat$6 = path$2.parseFloat;
-
-	var parent$7 = _parseFloat$6;
-
-	var _parseFloat$5 = parent$7;
-
-	var parent$6 = _parseFloat$5;
-
-	var _parseFloat$4 = parent$6;
-
-	var parent$5 = _parseFloat$4;
-
-	var _parseFloat$3 = parent$5;
-
-	var _parseFloat$2 = _parseFloat$3;
-
-	var _parseFloat = _parseFloat$2;
-
-	var _parseFloat$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseFloat);
 
 	var hasOwn$1 = hasOwnProperty_1;
 	var ownKeys$1 = ownKeys$3;
@@ -20518,20 +19324,98 @@
 	  }
 	}
 
+	var PriorityQueue = /*#__PURE__*/function () {
+	  function PriorityQueue() {
+	    _classCallCheck(this, PriorityQueue);
+	    _defineProperty(this, "queue", void 0);
+	    _defineProperty(this, "newestTime", 0);
+	    _defineProperty(this, "maxInterval", 5);
+	    this.queue = [];
+	  }
+	  // 清理过期数据
+	  _createClass(PriorityQueue, [{
+	    key: "removeOutTimeData",
+	    value: function removeOutTimeData() {
+	      var _context,
+	        _this = this;
+	      _filterInstanceProperty(_context = this.queue).call(_context, function (value, index) {
+	        return _this.newestTime - value.timestamp <= _this.maxInterval;
+	      });
+	    }
+	    // 添加新的数据
+	  }, {
+	    key: "add",
+	    value: function add(data) {
+	      this.newestTime = data.timestamp;
+	      this.queue.unshift(data);
+	      // 清除过期的数据
+	      this.removeOutTimeData();
+	      return this;
+	    }
+	    // 直接将数据添加到缓冲队列的末尾
+	  }, {
+	    key: "push",
+	    value: function push(data) {
+	      this.queue.push(data);
+	      return this;
+	    }
+	    // 弹出队列的首个数据
+	  }, {
+	    key: "shift",
+	    value: function shift() {
+	      return this.queue.shift();
+	    }
+	  }, {
+	    key: "splice",
+	    value: function splice(index, number) {
+	      var _context2;
+	      _spliceInstanceProperty(_context2 = this.queue).call(_context2, index, number);
+	      return this;
+	    }
+	  }, {
+	    key: "clear",
+	    value: function clear() {
+	      while (this.queue.length) {
+	        this.queue.pop();
+	      }
+	      return this;
+	    }
+	  }, {
+	    key: "forEach",
+	    value: function forEach(cb) {
+	      for (var index = 0; index < this.queue.length; index++) {
+	        cb(this.queue[index], index);
+	      }
+	    }
+	  }, {
+	    key: "length",
+	    get: function get() {
+	      return this.queue.length;
+	    }
+	  }]);
+	  return PriorityQueue;
+	}();
+
 	function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context15, _context16; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context15 = ownKeys(Object(source), !0)).call(_context15, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context16 = ownKeys(Object(source))).call(_context16, function (key) { Object.defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context16, _context17; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context16 = ownKeys(Object(source), !0)).call(_context16, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context17 = ownKeys(Object(source))).call(_context17, function (key) { Object.defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+	/**
+	 * @description 弹幕类，只专注于实现弹幕的基本逻辑，View层
+	 */
+	var flag = false;
 	var Danmaku = /*#__PURE__*/function () {
-	  function Danmaku(queue, container) {
+	  function Danmaku(container, player) {
 	    _classCallCheck(this, Danmaku);
-	    _defineProperty(this, "queue", []);
+	    _defineProperty(this, "queue", void 0);
 	    _defineProperty(this, "moovingQueue", []);
 	    // 正在运动中的弹幕
 	    _defineProperty(this, "container", void 0);
+	    _defineProperty(this, "player", void 0);
 	    _defineProperty(this, "timer", null);
 	    _defineProperty(this, "renderInterval", 100);
 	    // 每一条弹幕轨道的高度默认为20px
 	    _defineProperty(this, "trackHeight", 20);
 	    _defineProperty(this, "isStopped", true);
+	    _defineProperty(this, "isHidden", false);
 	    _defineProperty(this, "tracks", new Array(15));
 	    _defineProperty(this, "defaultDanma", {
 	      message: 'default message',
@@ -20540,8 +19424,9 @@
 	      fontFamily: '',
 	      fontWeight: 500
 	    });
-	    this.queue = queue;
-	    this.container = container;
+	    this.queue = new PriorityQueue();
+	    this.container = container; // div.Niplayer_video-wrapper
+	    this.player = player;
 	    this.init();
 	  }
 	  _createClass(Danmaku, [{
@@ -20589,6 +19474,7 @@
 	        _this2.resumeOneData(data);
 	      });
 	    }
+	    // 恢复单条弹幕的运动
 	  }, {
 	    key: "resumeOneData",
 	    value: function resumeOneData(data) {
@@ -20597,6 +19483,7 @@
 	      data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
 	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
 	    }
+	    // 暂停单条弹幕的运动
 	  }, {
 	    key: "pauseOneData",
 	    value: function pauseOneData(data) {
@@ -20616,12 +19503,13 @@
 	    value: function addData(data) {
 	      var _this3 = this;
 	      this.queue.push(this.parseData(data));
-	      // if (flag) return
+	      // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
+	      if (flag) return;
 	      if (this.timer === null) {
 	        nextTick(function () {
 	          _this3.render();
 	        });
-	        // flag = true
+	        flag = true;
 	      }
 	    }
 	  }, {
@@ -20633,14 +19521,17 @@
 	          fontColor: '#fff',
 	          fontSize: this.trackHeight,
 	          fontFamily: '',
-	          fontWeight: 500
+	          fontWeight: 500,
+	          timestamp: this.player.video.currentTime
 	        };
 	      }
 	      if (_typeof(data) === 'object') {
 	        if (!data.message || data.message === '') {
 	          throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
 	        }
-	        return _Object$assign(_objectSpread({}, this.defaultDanma), data);
+	        return _Object$assign(_objectSpread(_objectSpread({}, this.defaultDanma), {}, {
+	          timestamp: this.player.video.currentTime
+	        }), data);
 	      }
 	      throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
 	    }
@@ -20660,6 +19551,7 @@
 	      if (this.queue.length === 0) {
 	        window.clearTimeout(this.timer);
 	        this.timer = null;
+	        flag = false;
 	      } else {
 	        this.timer = window.setTimeout(function () {
 	          _this4.render();
@@ -20672,7 +19564,7 @@
 	    value: function renderToDOM() {
 	      var _this5 = this;
 	      if (this.queue.length === 0) return;
-	      var data = this.queue[0];
+	      var data = this.queue.shift();
 	      if (!data.dom) {
 	        var dom = document.createElement('div');
 	        dom.innerText = data.message;
@@ -20688,6 +19580,7 @@
 	        dom.style.whiteSpace = 'nowrap';
 	        dom.style.willChange = 'transform';
 	        dom.style.cursor = 'pointer';
+	        dom.style.visibility = this.isHidden ? 'hidden' : '';
 	        data.dom = dom;
 	        this.container.appendChild(dom);
 	      }
@@ -20698,6 +19591,7 @@
 	      data.rollSpeed = _parseFloat$1((data.totalDistance / data.rollTime).toFixed(2));
 	      // useTracks描述的是该弹幕占用了多少个轨道
 	      data.useTracks = Math.ceil(data.dom.clientHeight / this.trackHeight);
+	      // 重点，此处数组y的作用是表明该弹幕占的轨道的id数组
 	      data.y = [];
 	      data.dom.ontransitionstart = function (e) {
 	        data.startTime = Date.now();
@@ -20712,15 +19606,14 @@
 	      };
 	      this.addDataToTrack(data);
 	      if (data.y.length === 0) {
-	        var _context3, _context4;
+	        var _context3;
 	        if (_includesInstanceProperty(_context3 = _toConsumableArray(this.container.childNodes)).call(_context3, data.dom)) {
 	          this.container.removeChild(data.dom);
 	        }
-	        _spliceInstanceProperty(_context4 = this.queue).call(_context4, 0, 1).push(data);
+	        this.queue.push(data);
 	      } else {
 	        data.dom.style.top = data.y[0] * this.trackHeight + 3 + 'px';
 	        this.startAnimate(data);
-	        this.queue.shift();
 	      }
 	    }
 	    // 将指定的data添加到弹幕轨道上
@@ -20752,9 +19645,9 @@
 	          }
 	        }
 	        if (y.length >= data.useTracks) {
-	          var _context5;
+	          var _context4;
 	          data.y = y;
-	          _forEachInstanceProperty(_context5 = data.y).call(_context5, function (id) {
+	          _forEachInstanceProperty(_context4 = data.y).call(_context4, function (id) {
 	            _this6.tracks[id].datas.push(data);
 	          });
 	          break;
@@ -20764,9 +19657,9 @@
 	  }, {
 	    key: "removeDataFromTrack",
 	    value: function removeDataFromTrack(data) {
-	      var _context6,
+	      var _context5,
 	        _this7 = this;
-	      _forEachInstanceProperty(_context6 = data.y).call(_context6, function (id) {
+	      _forEachInstanceProperty(_context5 = data.y).call(_context5, function (id) {
 	        var datas = _this7.tracks[id].datas;
 	        var index = _indexOfInstanceProperty(datas).call(datas, data);
 	        if (index === -1) return;
@@ -20781,13 +19674,13 @@
 	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
 	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
 	      data.dom.ontransitionend = function (e) {
-	        var _context7;
+	        var _context6;
 	        _this8.container.removeChild(data.dom);
 	        _this8.removeDataFromTrack(data);
-	        var index = _indexOfInstanceProperty(_context7 = _this8.moovingQueue).call(_context7, data);
+	        var index = _indexOfInstanceProperty(_context6 = _this8.moovingQueue).call(_context6, data);
 	        if (index > -1) {
-	          var _context8;
-	          _spliceInstanceProperty(_context8 = _this8.moovingQueue).call(_context8, index, 1);
+	          var _context7;
+	          _spliceInstanceProperty(_context7 = _this8.moovingQueue).call(_context7, index, 1);
 	        }
 	      };
 	    }
@@ -20795,46 +19688,59 @@
 	  }, {
 	    key: "flush",
 	    value: function flush() {
-	      var _context9,
+	      var _context8,
+	        _context9,
 	        _this9 = this,
-	        _context10,
-	        _context12;
-	      _forEachInstanceProperty(_context9 = this.moovingQueue).call(_context9, function (data) {
-	        _this9.container.removeChild(data.dom);
+	        _context11;
+	      _forEachInstanceProperty(_context8 = this.moovingQueue).call(_context8, function (data) {
+	        var _data$dom$parentNode;
+	        (_data$dom$parentNode = data.dom.parentNode) === null || _data$dom$parentNode === void 0 ? void 0 : _data$dom$parentNode.removeChild(data.dom);
 	        data.dom.ontransitionstart = null;
 	        data.dom.ontransitionend = null;
 	      });
-	      _forEachInstanceProperty(_context10 = this.queue).call(_context10, function (data) {
-	        var _context11;
-	        if (_includesInstanceProperty(_context11 = _toConsumableArray(_this9.container.children)).call(_context11, data.dom)) {
-	          _this9.container.removeChild(data.dom);
+	      _forEachInstanceProperty(_context9 = this.queue).call(_context9, function (data) {
+	        var _context10;
+	        if (_includesInstanceProperty(_context10 = _toConsumableArray(_this9.container.children)).call(_context10, data.dom)) {
+	          var _data$dom$parentNode2;
+	          (_data$dom$parentNode2 = data.dom.parentNode) === null || _data$dom$parentNode2 === void 0 ? void 0 : _data$dom$parentNode2.removeChild(data.dom);
 	          data.dom.ontransitionstart = null;
 	          data.dom.ontransitionend = null;
 	        }
 	      });
 	      // 清空轨道上的所有数据
-	      _forEachInstanceProperty(_context12 = this.tracks).call(_context12, function (obj) {
+	      _forEachInstanceProperty(_context11 = this.tracks).call(_context11, function (obj) {
 	        obj.datas = [];
 	      });
 	      this.moovingQueue = [];
-	      this.queue = [];
+	      this.queue.clear();
 	    }
-	    // 丢弃一部分没用或者过时的弹幕
+	    // 隐藏所有的弹幕
 	  }, {
-	    key: "disCard",
-	    value: function disCard(start, end) {
-	      var _context13;
-	      _spliceInstanceProperty(_context13 = this.queue).call(_context13, start, end - start + 1);
-	    }
-	  }, {
-	    key: "clearOutdatedDanmaku",
-	    value: function clearOutdatedDanmaku(currentTime, interval) {
-	      var _context14;
-	      this.queue = _filterInstanceProperty(_context14 = this.queue).call(_context14, function (item) {
-	        if (currentTime - item.timestamp > interval) {
-	          return false;
+	    key: "close",
+	    value: function close() {
+	      var _context12, _context13;
+	      this.isHidden = true;
+	      _forEachInstanceProperty(_context12 = this.moovingQueue).call(_context12, function (data) {
+	        data.dom.style.visibility = 'hidden';
+	      });
+	      _forEachInstanceProperty(_context13 = this.queue).call(_context13, function (data, index) {
+	        if (data.dom) {
+	          data.dom.style.visibility = 'hidden';
 	        }
-	        return true;
+	      });
+	    }
+	  }, {
+	    key: "open",
+	    value: function open() {
+	      var _context14, _context15;
+	      this.isHidden = false;
+	      _forEachInstanceProperty(_context14 = this.moovingQueue).call(_context14, function (data) {
+	        data.dom.style.visibility = '';
+	      });
+	      _forEachInstanceProperty(_context15 = this.queue).call(_context15, function (data, index) {
+	        if (data.dom) {
+	          data.dom.style.visibility = '';
+	        }
 	      });
 	    }
 	  }]);
@@ -20864,6 +19770,757 @@
 	  fontColor: 'red'
 	}, '111111111111而非武功果然'];
 
+	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Loading = /*#__PURE__*/function (_Component) {
+	  _inherits(Loading, _Component);
+	  var _super = _createSuper$c(Loading);
+	  function Loading(player, msg, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, Loading);
+	    _this = _super.call(this, null, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "message", void 0);
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.container = container;
+	    _this.message = msg;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Loading, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-loading']);
+	      this.loadingBox = $$q('div');
+	      this.messageBox = $$q('div.video-loading-msgbox');
+	      this.messageBox.innerText = this.message;
+	      this.el.appendChild(this.loadingBox);
+	      this.el.appendChild(this.messageBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {}
+	  }, {
+	    key: "addLoading",
+	    value: function addLoading() {
+	      var _context;
+	      if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
+	        this.container.appendChild(this.el);
+	      }
+	    }
+	  }, {
+	    key: "removeLoading",
+	    value: function removeLoading() {
+	      var _context2;
+	      if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
+	        this.container.removeChild(this.el);
+	      }
+	    }
+	  }]);
+	  return Loading;
+	}(Component);
+
+	function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var ErrorLoading = /*#__PURE__*/function (_Loading) {
+	  _inherits(ErrorLoading, _Loading);
+	  var _super = _createSuper$b(ErrorLoading);
+	  // el: div.video-loading
+	  function ErrorLoading(player, msg, container) {
+	    var _this;
+	    _classCallCheck(this, ErrorLoading);
+	    _this = _super.call(this, player, msg, container);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
+	    addClass(_this.loadingBox, ['video-loading-errorloading']);
+	    _this.initEvent();
+	    return _this;
+	  }
+	  _createClass(ErrorLoading, [{
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      // 视频加载发生错误时
+	      this.player.on(EVENT.ERROR, function (e) {
+	        _this2.addLoading();
+	      });
+	      // 该视频已准备好开始播放
+	      this.player.on(EVENT.CAN_PLAY, function (e) {
+	        _this2.removeLoading();
+	      });
+	    }
+	  }]);
+	  return ErrorLoading;
+	}(Loading);
+
+	function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var TimeLoading = /*#__PURE__*/function (_Loading) {
+	  _inherits(TimeLoading, _Loading);
+	  var _super = _createSuper$a(TimeLoading);
+	  // el: div.video-loading
+	  function TimeLoading(player, msg, container) {
+	    var _this;
+	    _classCallCheck(this, TimeLoading);
+	    _this = _super.call(this, player, msg, container);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
+	    addClass(_this.loadingBox, ['video-loading-loadingbox']);
+	    _this.initEvent();
+	    return _this;
+	  }
+	  _createClass(TimeLoading, [{
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      // 在视频由于需要缓冲下一帧而停止时触发
+	      this.player.on(EVENT.WAITING, function () {
+	        _this2.addLoading();
+	      });
+	      // 该视频已准备好开始播放
+	      this.player.on(EVENT.CAN_PLAY, function () {
+	        _this2.removeLoading();
+	      });
+	    }
+	  }]);
+	  return TimeLoading;
+	}(Loading);
+
+	function styleInject(css, ref) {
+	  if ( ref === void 0 ) ref = {};
+	  var insertAt = ref.insertAt;
+
+	  if (!css || typeof document === 'undefined') { return; }
+
+	  var head = document.head || document.getElementsByTagName('head')[0];
+	  var style = document.createElement('style');
+	  style.type = 'text/css';
+
+	  if (insertAt === 'top') {
+	    if (head.firstChild) {
+	      head.insertBefore(style, head.firstChild);
+	    } else {
+	      head.appendChild(style);
+	    }
+	  } else {
+	    head.appendChild(style);
+	  }
+
+	  if (style.styleSheet) {
+	    style.styleSheet.cssText = css;
+	  } else {
+	    style.appendChild(document.createTextNode(css));
+	  }
+	}
+
+	var css_248z$2 = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
+	styleInject(css_248z$2);
+
+	function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var MobileVolume = /*#__PURE__*/function (_Component) {
+	  _inherits(MobileVolume, _Component);
+	  var _super = _createSuper$9(MobileVolume);
+	  function MobileVolume(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, MobileVolume);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'MobileVolume');
+	    // el: div.video-mobile-medium-wrapper
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "progressBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "completedBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "icon", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "timer", 0);
+	    _this.player = player;
+	    _this.props = props || {};
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(MobileVolume, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-mobile-medium-wrapper']);
+	      this.el.style.display = 'none';
+	      this.iconBox = $$q('div.video-mobile-medium-iconbox');
+	      this.progressBox = $$q('div.video-mobile-medium-progressbox');
+	      this.completedBox = $$q('div.video-mobile-medium-completed', {
+	        style: {
+	          width: '0px'
+	        }
+	      });
+	      this.icon = createSvg(volumePath$1);
+	      this.iconBox.appendChild(this.icon);
+	      this.progressBox.appendChild(this.completedBox);
+	      this.el.appendChild(this.iconBox);
+	      this.el.appendChild(this.progressBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      var width = this.completedBox.clientWidth;
+	      this.player.on(EVENT.MOVE_VERTICAL, function (e) {
+	        // console.log('正在滑动')
+	        if (_this2.timer) {
+	          window.clearInterval(_this2.timer);
+	        }
+	        _this2.timer = null;
+	        _this2.el.style.display = '';
+	        var dy = e.deltaY;
+	        var scale = (width + -dy) / _this2.progressBox.clientWidth;
+	        if (scale < 0) {
+	          scale = 0;
+	        } else if (scale > 1) {
+	          scale = 1;
+	        }
+	        // console.log(scale)
+	        _this2.completedBox.style.width = scale * 100 + '%';
+	        _this2.player.video.volume = scale;
+	      });
+	      this.player.on(EVENT.SLIDE_VERTICAL, function (e) {
+	        // console.log('滑动结束')
+	        width = _this2.completedBox.clientWidth;
+	        _this2.timer = window.setTimeout(function () {
+	          _this2.el.style.display = 'none';
+	        }, 600);
+	      });
+	      this.player.on(EVENT.VIDEO_CLICK, function () {
+	        _this2.el.style.display = 'none';
+	      });
+	    }
+	  }]);
+	  return MobileVolume;
+	}(Component);
+
+	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Dot = /*#__PURE__*/function (_Component) {
+	  _inherits(Dot, _Component);
+	  var _super = _createSuper$8(Dot);
+	  function Dot(progress, player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, Dot);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Dot');
+	    // el: div.video-dot.video-dot-hidden
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "progress", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mouseX", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "left", 0);
+	    _this.progress = progress;
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Dot, [{
+	    key: "init",
+	    value: function init() {
+	      addClass(this.el, ['progress-dot', 'progress-dot-hidden']);
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      // this.player.on(EVENT.PROGRESS_MOUSE_ENTER, (e) => {
+	      //   // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
+	      //   if (this.player.enableSeek) {
+	      //     this.onShowDot(e)
+	      //   }
+	      // })
+	      // this.player.on(EVENT.PROGRESS_MOUSE_LEAVE, (e) => {
+	      //   // Dot按下的时候enableSeek为false，Dot抬起的时候enableSeek为true
+	      //   if (this.player.enableSeek) {
+	      //     this.onHideDot(e)
+	      //   }
+	      // })
+	      // this.player.on(EVENT.PROGRESS_CLICK, (e: MouseEvent, ctx: Progress) => {
+	      //   this.onChangePos(e, ctx)
+	      // })
+	      // this.player.on(EVENT.TIME_UPDATE, (e: Event) => {
+	      //   // 防抖效果：针对Dot按下拖动时不触发timeupdate，拖完鼠标抬起时再触发timeupdate
+	      //   if (this.player.enableSeek) {
+	      //     this.updatePos(e)
+	      //   }
+	      // })
+	      this.progress.on(EVENT.PROGRESS_CLICK, function (e, ctx) {
+	        _this2.onChangePos(e, ctx);
+	      });
+	      if (this.player.env === 'PC') {
+	        this.initPCEvent();
+	      } else {
+	        this.initMobileEvent();
+	      }
+	    }
+	  }, {
+	    key: "initPCEvent",
+	    value: function initPCEvent() {
+	      var _this3 = this;
+	      this.el.addEventListener('mousedown', function (e) {
+	        e.preventDefault();
+	        _this3.onMouseMove = _this3.onMouseMove.bind(_this3);
+	        _this3.player.emit(EVENT.DOT_DOWN);
+	        _this3.progress.emit(EVENT.DOT_DOWN);
+	        _this3.mouseX = e.pageX;
+	        _this3.left = _parseInt$1(_this3.el.style.left);
+	        document.body.addEventListener('mousemove', _this3.onMouseMove);
+	        document.body.onmouseup = function (e) {
+	          _this3.player.emit(EVENT.DOT_UP);
+	          _this3.progress.emit(EVENT.DOT_UP);
+	          // this.player.video.currentTime = Math.floor(this.playScale * this.player.video.duration)
+	          document.body.removeEventListener('mousemove', _this3.onMouseMove);
+	          document.body.onmouseup = null;
+	        };
+	      });
+	    }
+	  }, {
+	    key: "initMobileEvent",
+	    value: function initMobileEvent() {
+	      var _this4 = this;
+	      this.player.video.addEventListener('touchstart', function (e) {
+	        e.preventDefault();
+	        _this4.player.emit(EVENT.DOT_DOWN);
+	        _this4.progress.emit(EVENT.DOT_DOWN);
+	        _this4.left = _this4.el.style.left ? _parseInt$1(_this4.el.style.left) : 0;
+	      });
+	      // this.player.video.addEventListener('touchend', (e) => {
+	      //   this.player.emit(EVENT.DOT_UP)
+	      // })
+	      this.player.on(EVENT.MOVE_HORIZONTAL, function (e) {
+	        var scale = (_this4.left + e.deltaX) / _this4.container.clientWidth;
+	        if (scale < 0) {
+	          scale = 0;
+	        } else if (scale > 1) {
+	          scale = 1;
+	        }
+	        _this4.el.style.left = scale * 100 + '%';
+	        _this4.player.emit(EVENT.DOT_DRAG, scale, e);
+	        _this4.progress.emit(EVENT.DOT_DRAG, scale, e);
+	        // this.playScale = scale
+	        // this.el.style.left =
+	        //   this.container.clientWidth * scale - getElementSize(this.el).width / 2 + 'px'
+	        // if (this.player.video.paused) this.player.video.play()
+	        // this.player.emit(EVENT.DOT_DRAG, scale, e)
+	      });
+
+	      this.player.on(EVENT.SLIDE_HORIZONTAL, function (e) {
+	        _this4.player.emit(EVENT.DOT_UP);
+	        _this4.progress.emit(EVENT.DOT_UP);
+	        // this.player.video.currentTime = Math.floor(this.playScale * this.player.video.duration)
+	      });
+	    }
+	  }, {
+	    key: "onMouseMove",
+	    value: function onMouseMove(e) {
+	      var scale = (e.pageX - this.mouseX + this.left) / this.container.clientWidth;
+	      if (scale < 0) {
+	        scale = 0;
+	      } else if (scale > 1) {
+	        scale = 1;
+	      }
+	      this.el.style.left = scale * 100 + '%';
+	      this.player.emit(EVENT.DOT_DRAG, scale, e);
+	      this.progress.emit(EVENT.DOT_DRAG, scale, e);
+	      // this.playScale = scale
+	      // this.el.style.left =
+	      //   this.container.offsetWidth * scale - getElementSize(this.el).width / 2 + 'px'
+	      // if (this.player.video.paused) this.player.video.play()
+	      // this.player.emit(EVENT.DOT_DRAG, scale, e)
+	    }
+	    // onShowDot(e: MouseEvent) {
+	    //   if (includeClass(this.el, 'video-dot-hidden')) {
+	    //     removeClass(this.el, ['video-dot-hidden'])
+	    //   }
+	    // }
+	    // onHideDot(e: MouseEvent) {
+	    //   if (!includeClass(this.el, 'video-dot-hidden')) {
+	    //     addClass(this.el, ['video-dot-hidden'])
+	    //   }
+	    // }
+	  }, {
+	    key: "onChangePos",
+	    value: function onChangePos(e, ctx) {
+	      var scale = e.offsetX / ctx.el.clientWidth;
+	      if (scale < 0) {
+	        scale = 0;
+	      } else if (scale > 1) {
+	        scale = 1;
+	      }
+	      // this.el.style.left = e.offsetX - getElementSize(this.el).width / 2 + 'px'
+	      this.el.style.left = scale * 100 + '%';
+	    }
+	  }]);
+	  return Dot;
+	}(Component);
+
+	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var CompletedProgress = /*#__PURE__*/function (_Component) {
+	  _inherits(CompletedProgress, _Component);
+	  var _super = _createSuper$7(CompletedProgress);
+	  function CompletedProgress(player, container, desc) {
+	    var _this;
+	    _classCallCheck(this, CompletedProgress);
+	    _this = _super.call(this, container, desc);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'CompletedProgress');
+	    // el: div.video-completed
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(CompletedProgress, [{
+	    key: "init",
+	    value: function init() {
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.PROGRESS_CLICK, function (e, ctx) {
+	        _this2.onChangeSize(e, ctx);
+	      });
+	      // this.player.on(EVENT.TIME_UPDATE, (e) => {
+	      //   if (this.player.enableSeek) {
+	      //     this.updatePos(e)
+	      //   }
+	      // })
+	      this.player.on(EVENT.DOT_DRAG, function (scale) {
+	        _this2.el.style.width = scale * 100 + '%';
+	      });
+	    }
+	  }, {
+	    key: "onChangeSize",
+	    value: function onChangeSize(e, ctx) {
+	      var scale = e.offsetX / ctx.el.offsetWidth;
+	      if (scale < 0) {
+	        scale = 0;
+	      } else if (scale > 1) {
+	        scale = 1;
+	      }
+	      this.el.style.width = scale * 100 + '%';
+	    }
+	  }, {
+	    key: "updatePos",
+	    value: function updatePos(e) {
+	      var video = e.target;
+	      var scale = video.currentTime / video.duration;
+	      if (scale < 0) {
+	        scale = 0;
+	      } else if (scale > 1) {
+	        scale = 1;
+	      }
+	      this.el.style.width = scale * 100 + '%';
+	    }
+	  }]);
+	  return CompletedProgress;
+	}(Component);
+
+	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var BufferedProgress = /*#__PURE__*/function (_Component) {
+	  _inherits(BufferedProgress, _Component);
+	  var _super = _createSuper$6(BufferedProgress);
+	  function BufferedProgress(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, BufferedProgress);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'BufferedProgress');
+	    // el: div.video-buffered
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(BufferedProgress, [{
+	    key: "init",
+	    value: function init() {
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.PROGRESS_CLICK, function (e, ctx) {
+	        var scale = e.offsetX / ctx.el.offsetWidth;
+	        if (scale < 0) {
+	          scale = 0;
+	        } else if (scale > 1) {
+	          scale = 1;
+	        }
+	        _this2.el.style.width = scale * 100 + '%';
+	      });
+	    }
+	  }]);
+	  return BufferedProgress;
+	}(Component);
+
+	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Progress = /*#__PURE__*/function (_Component) {
+	  _inherits(Progress, _Component);
+	  var _super = _createSuper$5(Progress);
+	  function Progress(player, container, desc) {
+	    var _this;
+	    _classCallCheck(this, Progress);
+	    _this = _super.call(this, container, desc);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Progress');
+	    // el: div.video-progress
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "dot", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "completedProgress", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "bufferedProgress", void 0);
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Progress, [{
+	    key: "init",
+	    value: function init() {
+	      this.initComponent();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initComponent",
+	    value: function initComponent() {
+	      this.dot = new Dot(this, this.player, this.el);
+	      this.completedProgress = new CompletedProgress(this.player, this.el, 'div.completed-progress');
+	      this.bufferedProgress = new BufferedProgress(this.player, this.el, 'div.buffered-progress');
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.el.onmouseenter = function (e) {
+	        _this2.player.emit(EVENT.PROGRESS_MOUSE_ENTER, e, _this2);
+	        _this2.emit(EVENT.PROGRESS_MOUSE_ENTER, e, _this2);
+	      };
+	      this.el.onmouseleave = function (e) {
+	        _this2.player.emit(EVENT.PROGRESS_MOUSE_LEAVE, e, _this2);
+	        _this2.emit(EVENT.PROGRESS_MOUSE_LEAVE, e, _this2);
+	      };
+	      this.el.onclick = function (e) {
+	        _this2.player.emit(EVENT.PROGRESS_CLICK, e, _this2);
+	        _this2.emit(EVENT.PROGRESS_CLICK, e, _this2);
+	      };
+	    }
+	  }]);
+	  return Progress;
+	}(Component);
+
+	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var TopBar = /*#__PURE__*/function (_Component) {
+	  _inherits(TopBar, _Component);
+	  var _super = _createSuper$4(TopBar);
+	  // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
+	  function TopBar(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, TopBar);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
+	    // el: div.video-topbar.video-topbar-hidden
+	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "timer", null);
+	    _this.player = player;
+	    _this.props = props || {};
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(TopBar, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	    /**
+	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
+	     */
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
+	      this.leftArea = $$q('div.video-topbar-left');
+	      this.rightArea = $$q('div.video-topbar-right');
+	      this.el.appendChild(this.leftArea);
+	      this.el.appendChild(this.rightArea);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.SHOW_TOOLBAR, function (e) {
+	        _this2.onShowToolBar(e);
+	      });
+	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
+	        _this2.onHideToolBar();
+	      });
+	    }
+	  }, {
+	    key: "hideToolBar",
+	    value: function hideToolBar() {
+	      if (!includeClass(this.el, 'video-topbar-hidden')) {
+	        addClass(this.el, ['video-topbar-hidden']);
+	      }
+	    }
+	  }, {
+	    key: "showToolBar",
+	    value: function showToolBar(e) {
+	      var _this3 = this;
+	      if (includeClass(this.el, 'video-topbar-hidden')) {
+	        removeClass(this.el, ['video-topbar-hidden']);
+	      }
+	      var target;
+	      if (e instanceof Event) target = e.target;else target = e.e.target;
+	      if (target === this.player.video) {
+	        this.timer = window.setTimeout(function () {
+	          _this3.hideToolBar();
+	        }, 3000);
+	      }
+	    }
+	  }, {
+	    key: "onShowToolBar",
+	    value: function onShowToolBar(e) {
+	      if (this.timer) {
+	        window.clearTimeout(this.timer);
+	        this.timer = null;
+	      }
+	      this.showToolBar(e);
+	    }
+	  }, {
+	    key: "onHideToolBar",
+	    value: function onHideToolBar() {
+	      this.hideToolBar();
+	    }
+	  }]);
+	  return TopBar;
+	}(Component);
+
+	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var DanmakuOpenClose = /*#__PURE__*/function (_Options) {
+	  _inherits(DanmakuOpenClose, _Options);
+	  var _super = _createSuper$3(DanmakuOpenClose);
+	  function DanmakuOpenClose(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, DanmakuOpenClose);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuOpenClose');
+	    // el: div.video-danmaku-openclose.video-controller
+	    _defineProperty(_assertThisInitialized(_this), "danmakuClosePath", danmakuClosePath);
+	    _defineProperty(_assertThisInitialized(_this), "danmakuOpenPath", danmakuOpenPath);
+	    _defineProperty(_assertThisInitialized(_this), "status", 'open');
+	    _defineProperty(_assertThisInitialized(_this), "msg", '关闭弹幕');
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(DanmakuOpenClose, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-danmaku-openclose', 'video-controller']);
+	      // 设置画布大小为1024 * 1024
+	      this.icon = createSvg(this.danmakuOpenPath, '0 0 1024 1024');
+	      this.iconBox.appendChild(this.icon);
+	      this.hideBox.innerText = this.msg;
+	      this.hideBox.style.fontSize = '13px';
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.iconBox.addEventListener('click', function () {
+	        if (_this2.status === 'open') {
+	          _this2.replaceIcon(createSvg(danmakuClosePath, '0 0 1024 1024'));
+	          _this2.status = 'close';
+	          _this2.player.emit('closeDanmaku');
+	          _this2.msg = '开启弹幕';
+	        } else {
+	          _this2.replaceIcon(createSvg(danmakuOpenPath, '0 0 1024 1024'));
+	          _this2.status = 'open';
+	          _this2.player.emit('openDanmaku');
+	          _this2.msg = '关闭弹幕';
+	        }
+	        _this2.hideBox.innerText = _this2.msg;
+	      });
+	    }
+	  }]);
+	  return DanmakuOpenClose;
+	}(Options);
+
+	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var DanmakuSettings = /*#__PURE__*/function (_Options) {
+	  _inherits(DanmakuSettings, _Options);
+	  var _super = _createSuper$2(DanmakuSettings);
+	  // el: div.video-danmaku-settings.video-controller
+	  function DanmakuSettings(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, DanmakuSettings);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuSettings');
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(DanmakuSettings, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-danmaku-settings', 'video-controller']);
+	      // 设置画布大小为1024 * 1024
+	      this.icon = createSvg(danmakuSettingPath, '0 0 1024 1024');
+	      this.iconBox.appendChild(this.icon);
+	    }
+	  }]);
+	  return DanmakuSettings;
+	}(Options);
+
+	/**
+	 * @description 控制弹幕的类 Controller层
+	 */
 	var DanmakuController = /*#__PURE__*/function () {
 	  function DanmakuController(player) {
 	    _classCallCheck(this, DanmakuController);
@@ -20872,17 +20529,19 @@
 	    _defineProperty(this, "container", void 0);
 	    _defineProperty(this, "danmaku", void 0);
 	    _defineProperty(this, "danmakuInput", void 0);
+	    _defineProperty(this, "danmakuSettings", void 0);
+	    _defineProperty(this, "danmakuOpenClose", void 0);
 	    _defineProperty(this, "index", 0);
 	    _defineProperty(this, "timer", null);
 	    this.player = player;
 	    this.video = player.video;
-	    this.container = player.container;
+	    this.container = player.el; // div.Niplayer_video-wrapper
 	    this.init();
 	  }
 	  _createClass(DanmakuController, [{
 	    key: "init",
 	    value: function init() {
-	      this.danmaku = new Danmaku([], this.container);
+	      this.danmaku = new Danmaku(this.container, this.player);
 	      this.initTemplate();
 	      this.initializeEvent();
 	    }
@@ -20891,9 +20550,22 @@
 	    value: function initTemplate() {
 	      var ctx = this;
 	      this.danmakuInput = new DanmakuInput(this.player, null, 'div');
+	      this.danmakuSettings = new DanmakuSettings(this.player, null, 'div');
+	      this.danmakuOpenClose = new DanmakuOpenClose(this.player, null, 'div');
 	      this.player.use({
 	        install: function install(player) {
-	          // player.registerControls(ctx.danmakuInput.id, ctx.danmakuInput, 'medium')
+	          player.mountComponent(ctx.danmakuOpenClose.id, ctx.danmakuOpenClose, {
+	            mode: {
+	              type: 'BottomToolBar',
+	              pos: 'medium'
+	            }
+	          });
+	          player.mountComponent(ctx.danmakuSettings.id, ctx.danmakuSettings, {
+	            mode: {
+	              type: 'BottomToolBar',
+	              pos: 'medium'
+	            }
+	          });
 	          player.mountComponent(ctx.danmakuInput.id, ctx.danmakuInput, {
 	            mode: {
 	              type: 'BottomToolBar',
@@ -20907,79 +20579,84 @@
 	    key: "initializeEvent",
 	    value: function initializeEvent() {
 	      var _this = this;
+	      // 弹幕功能实现的核心是timeupdate方法！！！！
 	      this.video.addEventListener('timeupdate', function (e) {
 	        _this.onTimeupdate(e);
 	      });
 	      this.video.addEventListener('seeking', function (e) {
 	        _this.onSeeking(e);
 	      });
-	      this.video.addEventListener('play', function (e) {
-	        _this.start();
-	        _this.danmaku.resume();
-	      });
-	      this.video.addEventListener('pause', function (e) {
-	        _this.pause();
+	      this.video.addEventListener('pause', function () {
+	        // 暂停所有的弹幕
 	        _this.danmaku.pause();
 	      });
-	      this.video.addEventListener('loadedmetadata', function (e) {});
+	      this.video.addEventListener('play', function () {
+	        _this.danmaku.resume();
+	      });
 	      this.danmakuInput.on('sendData', function (data) {
 	        // 此处为发送弹幕的逻辑
 	        // console.log(data)
 	        queue.push(data);
 	      });
-	      this.player.on('dotdrag', function (e) {
+	      this.player.on(EVENT.DOT_DRAG, function (e) {
 	        _this.danmaku.flush();
+	      });
+	      this.player.on('closeDanmaku', function () {
+	        // 隐藏所有的弹幕
+	        _this.danmaku.close();
+	      });
+	      this.player.on('openDanmaku', function () {
+	        // 打开所有隐藏的弹幕
+	        _this.danmaku.open();
 	      });
 	    }
 	  }, {
 	    key: "onTimeupdate",
 	    value: function onTimeupdate(e) {
 	      var video = e.target;
-	      video.currentTime;
+	      console.log(video.currentTime);
+	      for (var i = 0; i < 10; i++) {
+	        this.danmaku.addData(queue[i % queue.length]);
+	      }
 	    }
+	    // start() {
+	    //   this.timer = window.setInterval(() => {
+	    //     this.danmaku.addData(queue[this.index++ % queue.length])
+	    //     // if (this.index >= 250) {
+	    //     //   window.clearInterval(this.timer)
+	    //     //   this.timer = null
+	    //     // }
+	    //   }, 50)
+	    //   // const send = () => {
+	    //   //   if (this.index >= 30) return
+	    //   //   let data = queue[(this.index++) % queue.length]
+	    //   //   this.danmaku.addData(data)
+	    //   //   send()
+	    //   // }
+	    //   // send()
+	    // }
+	    // pause() {
+	    //   window.clearInterval(this.timer)
+	    //   this.timer = null
+	    // }
 	    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
 	  }, {
 	    key: "onSeeking",
 	    value: function onSeeking(e) {
 	      this.danmaku.flush();
 	    }
-	  }, {
-	    key: "start",
-	    value: function start() {
-	      var _this2 = this;
-	      this.timer = window.setInterval(function () {
-	        _this2.danmaku.addData(queue[_this2.index++ % queue.length]);
-	        // if (this.index >= 250) {
-	        //   window.clearInterval(this.timer)
-	        //   this.timer = null
-	        // }
-	      }, 50);
-	      // const send = () => {
-	      //   if (this.index >= 30) return
-	      //   let data = queue[(this.index++) % queue.length]
-	      //   this.danmaku.addData(data)
-	      //   send()
-	      // }
-	      // send()
-	    }
-	  }, {
-	    key: "pause",
-	    value: function pause() {
-	      window.clearInterval(this.timer);
-	      this.timer = null;
-	    }
 	  }]);
 	  return DanmakuController;
 	}();
 
-	var css_248z = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  width: 100%;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 50px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 35px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n";
-	styleInject(css_248z);
+	var css_248z$1 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 40px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 35px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n";
+	styleInject(css_248z$1);
 
-	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DanmakuInput = /*#__PURE__*/function (_Component) {
 	  _inherits(DanmakuInput, _Component);
-	  var _super = _createSuper(DanmakuInput);
+	  var _super = _createSuper$1(DanmakuInput);
 	  function DanmakuInput(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, DanmakuInput);
@@ -21024,19 +20701,527 @@
 	        _this2.inputBox.blur();
 	      };
 	      this.inputBox.addEventListener('focus', function () {
-	        _this2.player.emit('inputFocus');
+	        _this2.player.emit(EVENT.DANMAKU_INPUT_FOCUS);
 	      });
 	      this.inputBox.addEventListener('blur', function () {
-	        _this2.player.emit('inputBlur');
+	        _this2.player.emit(EVENT.DANMAKU_INPUT_BLUR);
 	      });
 	    }
 	  }]);
 	  return DanmakuInput;
 	}(Component);
 
-	var DanmakuSettings = /*#__PURE__*/_createClass(function DanmakuSettings() {
-	  _classCallCheck(this, DanmakuSettings);
-	});
+	var env = window.navigator.userAgent.toLowerCase();
+	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
+	var Env = {
+	  isInWeixin: function isInWeixin() {
+	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
+	  },
+	  isInApp: function isInApp() {
+	    return /(^|;\s)app\//.test(env);
+	  },
+	  isInIOS: function isInIOS() {
+	    return env.match(/(iphone|ipod|ipad);?/i);
+	  },
+	  isInAndroid: function isInAndroid() {
+	    return env.match(/android|adr/i);
+	  },
+	  isInPc: function isInPc() {
+	    return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin());
+	  },
+	  get env() {
+	    return this.isInPc() ? 'PC' : 'Mobile';
+	  }
+	};
+
+	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Player = /*#__PURE__*/function (_Component) {
+	  _inherits(Player, _Component);
+	  var _super = _createSuper(Player);
+	  // 视频比例 原始高度/原始宽度
+	  function Player(options) {
+	    var _this;
+	    _classCallCheck(this, Player);
+	    _this = _super.call(this, options.container, 'div.Niplayer_video-wrapper');
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Player');
+	    // el: div.Niplayer_video-wrapper
+	    // 播放器的默认配置
+	    _defineProperty(_assertThisInitialized(_this), "playerOptions", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "enableSeek", true);
+	    _defineProperty(_assertThisInitialized(_this), "env", Env.env);
+	    _defineProperty(_assertThisInitialized(_this), "fullScreenMode", 'Horizontal');
+	    _defineProperty(_assertThisInitialized(_this), "video", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "topbar", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "loading", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "error", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mask", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "containerWidth", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "containerHeight", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mediaProportion", 9 / 16);
+	    _this.playerOptions = _Object$assign({
+	      autoPlay: false,
+	      streamPlay: false
+	    }, options);
+	    _this.container = options.container;
+	    _this.containerHeight = options.container.clientHeight;
+	    _this.containerWidth = options.container.clientWidth;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Player, [{
+	    key: "init",
+	    value: function init() {
+	      var _this$playerOptions;
+	      if (this.playerOptions.video) {
+	        this.video = this.playerOptions.video;
+	        this.video.parentNode && this.video.parentNode.removeChild(this.video);
+	      } else {
+	        this.video = $$q('video');
+	        this.video['playsinline'] = true; // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
+	        this.video['x5-video-player-type'] = 'h5'; // 启用H5播放器,是wechat安卓版特性
+	      }
+
+	      this.video.crossOrigin = 'anonymous';
+	      this.el.appendChild(this.video);
+	      ((_this$playerOptions = this.playerOptions) === null || _this$playerOptions === void 0 ? void 0 : _this$playerOptions.url) && this.attachSource(this.playerOptions.url);
+	      this.initComponent();
+	      this.initTemplate();
+	      this.initEvent();
+	      this.initPlugin();
+	      this.initResizeObserver();
+	      this.checkFullScreenMode();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      if (this.env === 'Mobile') {
+	        // 如果是在移动端，则音量的调节使用手势决定的
+	        this.unmountComponent('Volume');
+	        new MobileVolume(this, this.el, 'div');
+	      }
+	    }
+	  }, {
+	    key: "initComponent",
+	    value: function initComponent() {
+	      this.loading = new TimeLoading(this, '视频姬正在努力加载中(⑅˃◡˂⑅)', this.el);
+	      this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
+	      this.toolBar = new ToolBar(this, this.el, 'div');
+	      this.topbar = new TopBar(this, this.el, 'div');
+	      new DanmakuController(this);
+	    }
+	    /**
+	     * @@description 监听视频播放器大小的变化
+	     */
+	  }, {
+	    key: "initResizeObserver",
+	    value: function initResizeObserver() {
+	      var _this2 = this;
+	      /**
+	        window.resize弊端
+	          reize事件会在一秒内触发将近60次，所以很容易在改变窗口大小时导致性能问题
+	          它会监听每个元素的大小变化，而不是具体到某个元素的变化
+	          只有window对象才有resize事件，而不是具体某个元素有resize事件
+	        ResizeObserver
+	          可以监听到 Element 的内容区域或SVGElement的边界框改变
+	       */
+	      // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
+	      var _STORE = new _Map(COMPONENT_STORE);
+	      var resizeObserver = new ResizeObserver(function (entries) {
+	        // console.log('监听到了尺寸变化了...')
+	        // 触发尺寸变化事件
+	        _this2.emit(EVENT.RESIZE, entries);
+	        _this2.adjustMediaSize();
+	        var width = entries[0].contentRect.width;
+	        var subsetting;
+	        // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
+	        if (width <= 600) {
+	          // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
+	          _forEachInstanceProperty(_STORE).call(_STORE, function (value, key) {
+	            var _context, _context2;
+	            if (_indexOfInstanceProperty(_context = ['SubSetting']).call(_context, key) !== -1) {
+	              subsetting = ONCE_COMPONENT_STORE.get(key);
+	              _this2.unmountComponent(key);
+	            } else if (_indexOfInstanceProperty(_context2 = ['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot']).call(_context2, key) !== -1) {
+	              if (!HIDEEN_COMPONENT_STORE.get(key)) {
+	                _this2.hideComponent(key);
+	              }
+	            }
+	          });
+	          _this2.mountComponent(subsetting.id, subsetting, {
+	            mode: {
+	              type: 'TopToolBar',
+	              pos: 'right'
+	            }
+	          });
+	          addClass(subsetting.el, ['video-subsettings', 'video-topbar-controller']);
+	        } else {
+	          // 展示之前隐藏的组件
+	          var _HIDDEN_STORE = new _Map(HIDEEN_COMPONENT_STORE);
+	          _forEachInstanceProperty(_HIDDEN_STORE).call(_HIDDEN_STORE, function (value, key) {
+	            _this2.showComponent(key);
+	          });
+	          if (COMPONENT_STORE.has('SubSetting')) {
+	            var key = 'SubSetting';
+	            var component = ONCE_COMPONENT_STORE.get(key);
+	            // 如果SubSetting已经挂载到视图上，需要先卸载
+	            _this2.unmountComponent(key);
+	            _this2.mountComponent(key, component, {
+	              mode: {
+	                type: 'BottomToolBar',
+	                pos: 'right'
+	              },
+	              index: 1
+	            });
+	            addClass(component.el, ['video-subsettings', 'video-controller']);
+	          }
+	        }
+	      });
+	      // 开始观察
+	      resizeObserver.observe(this.el);
+	    }
+	    // 调整video的尺寸
+	  }, {
+	    key: "adjustMediaSize",
+	    value: function adjustMediaSize() {
+	      // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
+	      if (this.mediaProportion !== 0) {
+	        // 容器宽度偏小，高度偏大
+	        if (this.el.clientHeight / this.el.clientWidth > this.mediaProportion) {
+	          this.video.style.width = '100%';
+	          this.video.style.height = this.el.clientWidth * this.mediaProportion + 0.05 * this.el.clientWidth + 'px';
+	        } else {
+	          // 容器宽度偏大，高度偏小（类似带鱼屏）
+	          this.video.style.height = '100%';
+	          this.video.style.width = this.el.clientHeight / this.mediaProportion + 'px';
+	        }
+	      }
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this3 = this;
+	      if (this.env === 'Mobile') {
+	        this.initMobileEvent();
+	      } else {
+	        this.initPCEvent();
+	      }
+	      this.video.addEventListener('loadedmetadata', function (e) {
+	        _this3.emit(EVENT.LOADED_META_DATA, e);
+	        // videoWidth: 视频原始宽度
+	        // videoHeight: 视频原始高度
+	        _this3.mediaProportion = _this3.video.videoHeight / _this3.video.videoWidth;
+	        _this3.adjustMediaSize();
+	      });
+	      this.video.addEventListener('timeupdate', function (e) {
+	        _this3.emit(EVENT.TIME_UPDATE, e);
+	      });
+	      this.video.addEventListener('play', function (e) {
+	        _this3.emit(EVENT.PLAY, e);
+	      });
+	      this.video.addEventListener('pause', function (e) {
+	        _this3.emit(EVENT.PAUSE, e);
+	      });
+	      // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+	      this.video.addEventListener('seeking', function (e) {
+	        // 防抖效果：针对Dot按下拖动时不触发seeking，拖完鼠标抬起时再触发seeking
+	        if (_this3.enableSeek) {
+	          _this3.emit(EVENT.SEEKING, e);
+	        }
+	      });
+	      // waiting 事件在视频由于需要缓冲下一帧而停止时触发
+	      this.video.addEventListener('waiting', function (e) {
+	        _this3.emit(EVENT.WAITING, e);
+	      });
+	      // canplay 该视频已准备好开始播放
+	      this.video.addEventListener('canplay', function (e) {
+	        _this3.emit(EVENT.CAN_PLAY, e);
+	      });
+	      // error 视频加载发生错误时
+	      this.video.addEventListener('error', function (e) {
+	        _this3.emit(EVENT.ERROR);
+	      });
+	      // abort 视频终止加载时
+	      this.video.addEventListener('abort', function (e) {
+	        _this3.emit(EVENT.ERROR);
+	      });
+	      // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
+	      this.video.addEventListener('ratechange', function (e) {
+	        _this3.emit(EVENT.RATE_CHANGE);
+	      });
+	      this.on(EVENT.PROGRESS_CLICK, function (e, ctx) {
+	        var scale = e.offsetX / ctx.el.offsetWidth;
+	        if (scale < 0) {
+	          scale = 0;
+	        } else if (scale > 1) {
+	          scale = 1;
+	        }
+	        _this3.video.currentTime = Math.floor(scale * _this3.video.duration);
+	        _this3.video.paused && _this3.video.play();
+	      });
+	      this.on(EVENT.DANMAKU_INPUT_FOCUS, function () {
+	        _this3.el.onmouseleave = null;
+	      });
+	      this.on(EVENT.DANMAKU_INPUT_BLUR, function () {
+	        _this3.el.onmouseleave = function (e) {
+	          _this3.emit('hidetoolbar', e);
+	        };
+	      });
+	      this.on(EVENT.DOT_DOWN, function () {
+	        // console.log('dotdown')
+	        _this3.enableSeek = false;
+	      });
+	      this.on(EVENT.DOT_UP, function () {
+	        // console.log('dotup')
+	        _this3.enableSeek = true;
+	      });
+	      this.on(EVENT.DOT_DRAG, function (val, e) {
+	        _this3.emit(EVENT.SHOW_TOOLBAR, e);
+	      });
+	      this.on(EVENT.ENTER_FULLSCREEN, function () {
+	        var _context3, _context4;
+	        _forEachInstanceProperty(_context3 = document.querySelectorAll('.video-controller')).call(_context3, function (el) {
+	          el.style.marginRight = '15px';
+	        });
+	        _forEachInstanceProperty(_context4 = document.querySelectorAll('.video-topbar-controller')).call(_context4, function (el) {
+	          el.style.marginRight = '15px';
+	        });
+	      });
+	      this.on(EVENT.LEAVE_FULLSCREEN, function () {
+	        var _context5, _context6;
+	        _forEachInstanceProperty(_context5 = document.querySelectorAll('.video-controller')).call(_context5, function (el) {
+	          el.style.marginRight = '';
+	        });
+	        _forEachInstanceProperty(_context6 = document.querySelectorAll('.video-topbar-controller')).call(_context6, function (el) {
+	          el.style.marginRight = '';
+	        });
+	      });
+	    }
+	  }, {
+	    key: "initPCEvent",
+	    value: function initPCEvent() {
+	      var _this4 = this;
+	      this.video.onclick = function (e) {
+	        if (_this4.video.paused) {
+	          _this4.video.play();
+	        } else if (_this4.video.played) {
+	          _this4.video.pause();
+	        }
+	      };
+	      this.el.onmouseenter = function (e) {
+	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
+	      };
+	      this.el.onmousemove = function (e) {
+	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
+	      };
+	      this.el.onmouseleave = function (e) {
+	        _this4.emit(EVENT.HIDE_TOOLBAR, e);
+	      };
+	    }
+	  }, {
+	    key: "initMobileEvent",
+	    value: function initMobileEvent() {
+	      var _this5 = this;
+	      // 单击
+	      wrap(this.video).addEventListener('singleTap', function (e) {
+	        // console.log(e, 'singletap')
+	        if (_this5.toolBar.status === 'hidden') {
+	          _this5.emit(EVENT.SHOW_TOOLBAR, e);
+	        } else {
+	          _this5.emit(EVENT.HIDE_TOOLBAR, e);
+	        }
+	        _this5.emit(EVENT.VIDEO_CLICK);
+	      });
+	      // 双击
+	      wrap(this.video).addEventListener('doubleTap', function (e) {
+	        // console.log(e, 'doubleTap')
+	        if (_this5.video.paused) {
+	          _this5.video.play();
+	        } else if (_this5.video.played) {
+	          _this5.video.pause();
+	        }
+	      });
+	      // 手势上下处于滑动中
+	      wrap(this.video).addEventListener('move', function (e) {
+	        // console.log(e, 'move')
+	        var dx = e.deltaX;
+	        var dy = e.deltaY;
+	        if (computeAngle(dx, dy) >= 75) {
+	          _this5.emit(EVENT.MOVE_VERTICAL, e);
+	        } else if (computeAngle(dx, dy) <= 15) {
+	          _this5.emit(EVENT.MOVE_HORIZONTAL, e);
+	        }
+	      });
+	      // 手势上下滑动结束
+	      wrap(this.video).addEventListener('swipe', function (e) {
+	        // console.log(e, 'swipe')
+	        var dx = e.endPos.x - e.startPos.x;
+	        var dy = e.endPos.y - e.startPos.y;
+	        // if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+	        //   this.emit('slideVertical', e)
+	        // }
+	        if (computeAngle(dx, dy) >= 75) {
+	          _this5.emit(EVENT.SLIDE_VERTICAL, e);
+	        } else if (computeAngle(dx, dy) <= 15) {
+	          _this5.emit(EVENT.SLIDE_HORIZONTAL, e);
+	        }
+	      });
+	    }
+	  }, {
+	    key: "initPlugin",
+	    value: function initPlugin() {
+	      var _this6 = this;
+	      if (this.playerOptions.plugins) {
+	        var _context7;
+	        _forEachInstanceProperty(_context7 = this.playerOptions.plugins).call(_context7, function (plugin) {
+	          _this6.use(plugin);
+	        });
+	      }
+	    }
+	  }, {
+	    key: "attachSource",
+	    value: function attachSource(url) {
+	      // 是否启动流式播放
+	      if (this.playerOptions.streamPlay) {
+	        new MediaPlayer(url, this);
+	      } else {
+	        this.video.src = url;
+	      }
+	    }
+	  }, {
+	    key: "checkFullScreenMode",
+	    value: function checkFullScreenMode() {}
+	    // 注册/挂载自己的组件,其中的id为组件实例的名称，分为内置和用户自定义这两种情况；注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
+	  }, {
+	    key: "mountComponent",
+	    value: function mountComponent(id, component, options) {
+	      if (COMPONENT_STORE.has(id)) {
+	        throw new Error('无法挂载一个已经存在于视图上的组件，请先将其卸载或者删除');
+	      }
+	      COMPONENT_STORE.set(id, component);
+	      if (!ONCE_COMPONENT_STORE.has(id)) {
+	        ONCE_COMPONENT_STORE.set(id, component);
+	      }
+	      if (!options) {
+	        if (!component.container) {
+	          throw new Error('必须传入Options选项或者传入的组件实例中需要有container选项');
+	        }
+	        component.container.appendChild(component.el);
+	      } else {
+	        var mode = options.mode;
+	        if (mode.type === 'BottomToolBar') {
+	          var area;
+	          if (mode.pos === 'left') {
+	            area = this.toolBar.controller.leftArea;
+	          } else if (mode.pos === 'right') {
+	            area = this.toolBar.controller.rightArea;
+	          } else if (mode.pos === 'medium') {
+	            area = this.toolBar.controller.mediumArea;
+	          }
+	          var children = _toConsumableArray(area.children);
+	          if (!options.index) {
+	            area.appendChild(component.el);
+	          } else {
+	            if (options.index < 0) throw new Error('index不能传入负值');
+	            area.insertBefore(component.el, children[options.index] || null);
+	          }
+	        } else if (mode.type === 'TopToolBar') {
+	          var _area;
+	          if (mode.pos === 'left') {
+	            _area = this.topbar.leftArea;
+	          } else {
+	            _area = this.topbar.rightArea;
+	          }
+	          var _children = _toConsumableArray(_area.children);
+	          if (!options.index) {
+	            _area.appendChild(component.el);
+	          } else {
+	            if (options.index < 0) throw new Error('index不能传入负值');
+	            _area.insertBefore(component.el, _children[options.index] || null);
+	          }
+	        } else if (mode.type === 'AnyPosition') {
+	          this.el.appendChild(component.el);
+	        }
+	        // 给组件中的container赋予新的值
+	        component.container = component.el.parentElement;
+	      }
+	    }
+	    // 更新一个已经挂载到视图层上的组件
+	  }, {
+	    key: "updateComponent",
+	    value: function updateComponent(id, component, options) {
+	      if (!COMPONENT_STORE.get(id)) {
+	        throw new Error('该组件不存在或者已经被卸载');
+	      }
+	      patchComponent(COMPONENT_STORE.get(id), component, options);
+	    }
+	    // 隐藏某一个已经挂载到视图上的组件
+	  }, {
+	    key: "hideComponent",
+	    value: function hideComponent(id) {
+	      if (!COMPONENT_STORE.get(id)) {
+	        throw new Error('无法隐藏一个未挂载在视图上的组件');
+	      }
+	      if (HIDEEN_COMPONENT_STORE.get(id)) {
+	        throw new Error('该元素已经隐藏');
+	      }
+	      var instance = COMPONENT_STORE.get(id);
+	      instance.el.style.display = 'none';
+	      HIDEEN_COMPONENT_STORE.set(id, instance);
+	    }
+	    // 展示一个隐藏的组件
+	  }, {
+	    key: "showComponent",
+	    value: function showComponent(id) {
+	      if (!HIDEEN_COMPONENT_STORE.get(id)) {
+	        throw new Error('该元素已经显示出来了');
+	      }
+	      if (!COMPONENT_STORE.get(id)) {
+	        throw new Error('该元素不存在或者被卸载');
+	      }
+	      var instance = COMPONENT_STORE.get(id);
+	      instance.el.style.display = '';
+	      HIDEEN_COMPONENT_STORE.delete(id);
+	    }
+	    // 卸载某一个component组件，所谓卸载一个组件指的是仅仅将其DOM元素从视图上移除，但是不会删除其实例对象，还可以继续挂载
+	    // 注意：卸载一个组件会清除该组件上挂载的class和id，意味着之后用户可以将组件挂载到任何位置
+	  }, {
+	    key: "unmountComponent",
+	    value: function unmountComponent(id) {
+	      if (!COMPONENT_STORE.has(id)) {
+	        throw new Error('该组件不存在或者已经被卸载');
+	      }
+	      var instance = COMPONENT_STORE.get(id);
+	      instance.el.parentElement.removeChild(instance.el);
+	      removeClass(instance.el, _toConsumableArray(instance.el.classList));
+	      COMPONENT_STORE.delete(id);
+	    }
+	    // 彻底删除一个组件，也就是直接销毁组件实例，卸载组件仅仅是将其el元素从视图上移除，但任然保留组建的实例对象
+	  }, {
+	    key: "deleteComponent",
+	    value: function deleteComponent(id) {
+	      if (COMPONENT_STORE.has(id)) {
+	        this.unmountComponent(id);
+	      }
+	      ONCE_COMPONENT_STORE.delete(id);
+	    }
+	    /**
+	     * @description 注册对应的组件
+	     * @param plugin
+	     */
+	  }, {
+	    key: "use",
+	    value: function use(plugin) {
+	      plugin.install(this);
+	    }
+	  }]);
+	  return Player;
+	}(Component);
+
+	var css_248z = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 5px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  width: 102px;\n  padding-bottom: 8px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  cursor: pointer;\n  width: 100%;\n  padding: 5px 0px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  height: 32px;\n  font-size: 13px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  text-align: center;\n  line-height: 20px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright input {\n  vertical-align: middle;\n  background-color: #007aff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.85;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
+	styleInject(css_248z);
 
 	exports.BufferedProgress = BufferedProgress;
 	exports.CompletedProgress = CompletedProgress;

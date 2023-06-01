@@ -2,9 +2,10 @@ import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { $, addClass, createSvg } from '@/utils/domUtils'
-import { pausePath, playPath } from '../path/defaultPath'
+import { pausePath, playPath } from '@/svg'
 import { storeControlComponent } from '@/utils/store'
 import { wrap } from 'ntouch.js'
+import { EVENT } from '@/events'
 
 export class PlayButton extends Component implements ComponentItem {
   readonly id = 'PlayButton'
@@ -47,13 +48,13 @@ export class PlayButton extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on('play', (e: Event) => {
+    this.player.on(EVENT.PLAY, (e: Event) => {
       this.iconBox.removeChild(this.button)
       this.button = this.pauseIcon as SVGSVGElement
       this.iconBox.appendChild(this.button)
     })
 
-    this.player.on('pause', (e: Event) => {
+    this.player.on(EVENT.PAUSE, (e: Event) => {
       this.iconBox.removeChild(this.button)
       this.button = this.playIcon as SVGSVGElement
       this.iconBox.appendChild(this.button)

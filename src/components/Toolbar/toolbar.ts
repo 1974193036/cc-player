@@ -2,19 +2,19 @@ import { Component } from '@/class/Component'
 import { Player } from '@/page/player'
 import { ComponentItem, Node, DOMProps } from '@/types/Player'
 import { addClass, includeClass, removeClass } from '@/utils/domUtils'
-import { Progress } from '../Progress/progress'
-import { Controller } from '../Controller/controller'
+// import { Progress } from '../Progress/progress'
+import { Controller } from './BottomBar/Controller'
 import { storeControlComponent } from '@/utils/store'
 import { MoveEvent, SingleTapEvent } from 'ntouch.js'
 import { EVENT } from '@/events'
-import './toolbar.less'
+import { MediumBar } from './MediumBar/MediumBar'
 
 export class ToolBar extends Component implements ComponentItem {
   readonly id = 'ToolBar'
-  // el: div.video-controls.video-controls-hidden
+  // el: div.video-toolbar.video-toolbar-hidden
   props: DOMProps
   player: Player
-  progress: Progress
+  mediumbar: MediumBar
   controller: Controller
   status: 'show' | 'hidden' = 'hidden'
   private timer: number = 0
@@ -40,12 +40,15 @@ export class ToolBar extends Component implements ComponentItem {
   }
 
   initTemplate() {
-    addClass(this.el, ['video-controls', 'video-controls-hidden'])
+    addClass(this.el, ['video-toolbar', 'video-toolbar-hidden'])
   }
 
   initComponent() {
-    this.progress = new Progress(this.player, this.el, 'div.video-progress')
-    this.controller = new Controller(this.player, this.el, 'div.video-play')
+    // this.progress = new Progress(this.player, this.el, 'div.video-progress')
+    // this.controller = new Controller(this.player, this.el, 'div.video-play')
+
+    this.mediumbar = new MediumBar(this.player, this.el, 'div.video-mediumbar')
+    this.controller = new Controller(this.player, this.el, 'div.video-bottombar')
   }
 
   initEvent() {
@@ -71,8 +74,8 @@ export class ToolBar extends Component implements ComponentItem {
   }
 
   private showToolBar(e: Event | SingleTapEvent | MoveEvent) {
-    if (includeClass(this.el, 'video-controls-hidden')) {
-      removeClass(this.el, ['video-controls-hidden'])
+    if (includeClass(this.el, 'video-toolbar-hidden')) {
+      removeClass(this.el, ['video-toolbar-hidden'])
       this.status = 'show'
     }
 
@@ -88,8 +91,8 @@ export class ToolBar extends Component implements ComponentItem {
   }
 
   private hideToolBar() {
-    if (!includeClass(this.el, 'video-controls-hidden')) {
-      addClass(this.el, ['video-controls-hidden'])
+    if (!includeClass(this.el, 'video-toolbar-hidden')) {
+      addClass(this.el, ['video-toolbar-hidden'])
       this.status = 'hidden'
     }
   }

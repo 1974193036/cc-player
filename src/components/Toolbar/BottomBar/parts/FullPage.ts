@@ -1,14 +1,15 @@
 import { Player } from '@/page/player'
 import { DOMProps, Node } from '@/types/Player'
-import { addClass, createSvg } from '@/utils/domUtils'
+import { addClass, createSvg, removeClass } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
-import { picInPicPath } from '../path/defaultPath'
+import { fullPagePath, fullPageExitPath } from '@/svg'
 import { Options } from './Options'
 import { wrap } from 'ntouch.js'
 
-export class PicInPic extends Options {
-  readonly id = 'PicInPic'
-  // el: div.video-picInpic.video-controller
+export class FullPage extends Options {
+  readonly id = 'FullPage'
+  // el: div.video-fullpage.video-controller
+  isFullPage = false
 
   constructor(
     player: Player,
@@ -28,12 +29,12 @@ export class PicInPic extends Options {
   }
 
   initTemplate() {
-    addClass(this.el, ['video-picInpic', 'video-controller'])
-    this.icon = createSvg(picInPicPath, '0 0 1024 1024')
+    addClass(this.el, ['video-fullpage', 'video-controller'])
+    this.icon = createSvg(fullPagePath)
     this.iconBox.appendChild(this.icon)
     this.el.appendChild(this.iconBox)
 
-    this.hideBox.innerText = '画中画'
+    this.hideBox.innerText = '网页全屏'
     this.hideBox.style.fontSize = '13px'
   }
 
@@ -47,14 +48,17 @@ export class PicInPic extends Options {
   }
 
   onClick(e: Event) {
-    // document.pictureInPictureElement: 当前画中画的元素
-
-    if (document.pictureInPictureElement) {
-      // 当前存在画中画的元素，则退出画中画
-      document.exitPictureInPicture()
+    if (!this.isFullPage) {
+      addClass(this.player.el, ['video-wrapper-fullpage'])
+      this.iconBox.removeChild(this.icon)
+      this.icon = createSvg(fullPageExitPath)
+      this.iconBox.appendChild(this.icon)
     } else {
-      // 当前不存在画中画的元素，则开启画中画
-      this.player.video.requestPictureInPicture() // 返回 Promise，里面是 pipWindow
+      removeClass(this.player.el, ['video-wrapper-fullpage'])
+      this.iconBox.removeChild(this.icon)
+      this.icon = createSvg(fullPagePath)
+      this.iconBox.appendChild(this.icon)
     }
+    this.isFullPage = !this.isFullPage
   }
 }

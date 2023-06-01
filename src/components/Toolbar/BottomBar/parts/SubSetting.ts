@@ -2,7 +2,7 @@ import { Options } from './Options'
 import { Player } from '@/page/player'
 import { DOMProps, Node } from '@/types/Player'
 import { storeControlComponent } from '@/utils/store'
-import { subSettingPath } from '../path/defaultPath'
+import { subSettingPath } from '@/svg'
 import { $, addClass, createSvg, includeClass, removeClass } from '@/utils/domUtils'
 import { wrap } from 'ntouch.js'
 import { SubsettingItem } from './SubsettingItem'
@@ -72,7 +72,7 @@ export class SubSetting extends Options {
         case '关灯模式':
           if (checked) {
             document.body.appendChild(this.mask)
-            this.player.el.style.zIndex = '2001'
+            this.player.el.style.zIndex = '2002'
           } else {
             document.body.removeChild(this.mask)
             this.player.el.style.zIndex = ''

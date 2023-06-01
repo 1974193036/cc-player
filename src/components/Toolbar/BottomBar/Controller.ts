@@ -13,12 +13,10 @@ import { DutaionShow } from './parts/DurationShow'
 import { VideoShot } from './parts/VideoShot'
 import { Volume } from './parts/Volume'
 import { controllersMapping, storeControlComponent } from '@/utils/store'
-import './controller.less'
 
 export class Controller extends Component implements ComponentItem {
   readonly id = 'Controller'
-  // el: div.video-play
-  props: DOMProps = {}
+  // el: div.video-bottombar
   player: Player
   // 控件
   leftControllers: ComponentConstructor[] = [PlayButton, Volume, DutaionShow]
@@ -41,16 +39,9 @@ export class Controller extends Component implements ComponentItem {
   mediumArea: HTMLElement
   rightArea: HTMLElement //代表最右侧的区域
 
-  constructor(
-    player: Player,
-    container: HTMLElement,
-    desc?: string,
-    props?: DOMProps,
-    children?: Node[]
-  ) {
-    super(container, desc, props, children)
+  constructor(player: Player, container: HTMLElement, desc?: string) {
+    super(container, desc)
     this.player = player
-    this.props = props || {}
     this.init()
   }
 
@@ -63,8 +54,10 @@ export class Controller extends Component implements ComponentItem {
   }
 
   initControllers() {
-    let leftControllers = (this.player.playerOptions as PlayerOptions).leftBottomBarControllers || null
-    let rightControllers = (this.player.playerOptions as PlayerOptions).rightBottomBarControllers || null
+    let leftControllers =
+      (this.player.playerOptions as PlayerOptions).leftBottomBarControllers || null
+    let rightControllers =
+      (this.player.playerOptions as PlayerOptions).rightBottomBarControllers || null
 
     if (leftControllers) {
       this.leftControllers = leftControllers.map((item) => {
@@ -93,9 +86,12 @@ export class Controller extends Component implements ComponentItem {
   }
 
   initTemplate() {
-    this.leftArea = $('div.video-subplay')
-    this.mediumArea = $('div.video-medium')
-    this.rightArea = $('div.video-settings')
+    // this.leftArea = $('div.video-subplay')
+    // this.mediumArea = $('div.video-medium')
+    // this.rightArea = $('div.video-settings')
+    this.leftArea = $('div.video-bottombar-left')
+    this.mediumArea = $('div.video-bottombar-medium')
+    this.rightArea = $('div.video-bottombar-right')
     this.el.appendChild(this.leftArea)
     this.el.appendChild(this.mediumArea)
     this.el.appendChild(this.rightArea)
@@ -111,19 +107,15 @@ export class Controller extends Component implements ComponentItem {
       let instance = new ControlConstructor(this.player, this.rightArea, 'div')
       this[instance.id] = instance
     })
-    // this.playButton = new PlayButton(this.player, this.subPlay, 'div')
-    // this.DutaionShow = new DutaionShow(this.player, this.subPlay, 'div')
-    // this.volume = new Volume(this.player, this.settings, 'div')
-    // this.playrate = new Playrate(this.player, this.settings, 'div')
-    // this.ScreenShot = new ScreenShot(this.player, this.settings, 'div')
-    // this.FullPage = new FullPage(this.player, this.settings, 'div')
-    // this.fullscreen = new FullScreen(this.player, this.settings, 'div')
-    // this.PicInPic = new PicInPic(this.player, this.settings, 'div')
-    // this.SubSetting = new SubSetting(this.player, this.settings, 'div')
-    // this.VideoShot = new VideoShot(this.player, this.settings, 'div')
-  }
-
-  initEvent() {
-    // this.player.on('danmaku-plugin-add', () => {})
+    // this.playButton = new PlayButton(this.player, this.leftArea, 'div')
+    // this.volume = new Volume(this.player, this.leftArea, 'div')
+    // this.DutaionShow = new DutaionShow(this.player, this.leftArea, 'div')
+    // this.playrate = new Playrate(this.player, this.rightArea, 'div')
+    // this.SubSetting = new SubSetting(this.player, this.rightArea, 'div')
+    // this.VideoShot = new VideoShot(this.player, this.rightArea, 'div')
+    // this.ScreenShot = new ScreenShot(this.player, this.rightArea, 'div')
+    // this.PicInPic = new PicInPic(this.player, this.rightArea, 'div')
+    // this.FullPage = new FullPage(this.player, this.rightArea, 'div')
+    // this.fullscreen = new FullScreen(this.player, this.rightArea, 'div')
   }
 }
