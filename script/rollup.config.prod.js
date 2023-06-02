@@ -29,12 +29,12 @@ module.exports = defineConfig([
         plugins: [terser()]
       },
       {
-        file: './dist/player.es.js',
-        format: 'es'
+        file: './dist/player.esm.js',
+        format: 'esm'
       },
       {
-        file: './dist/player.es.min.js',
-        format: 'es',
+        file: './dist/player.esm.min.js',
+        format: 'esm',
         plugins: [terser()]
       },
       {

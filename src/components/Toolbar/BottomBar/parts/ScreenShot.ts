@@ -2,7 +2,7 @@ import { Player } from '@/page/player'
 import { DOMProps, Node } from '@/types/Player'
 import { $, addClass, createSvg, createSvgs, includeClass, removeClass } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
-import { confirmPath, screenShot$1, screenShot$2 } from '@/svg'
+import { confirmPath, screenShotPath } from '@/svg'
 import { Toast } from '@/components/Toast/Toast'
 import { Options } from './Options'
 import { wrap } from 'ntouch.js'
@@ -33,7 +33,7 @@ export class ScreenShot extends Options {
     this.confirmIcon = createSvg(confirmPath, '0 0 1024 1024')
 
     addClass(this.el, ['video-screenshot', 'video-controller'])
-    this.icon = createSvgs([screenShot$1, screenShot$2], '0 0 1024 1024')
+    this.icon = createSvg(screenShotPath, '0 0 1024 1024')
     this.iconBox.appendChild(this.icon)
     this.el.appendChild(this.iconBox)
 
