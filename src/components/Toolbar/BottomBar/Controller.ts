@@ -8,7 +8,7 @@ import { PicInPic } from './parts/PicInPic'
 import { PlayButton } from './parts/PlayButton'
 import { ScreenShot } from './parts/ScreenShot'
 import { Playrate } from './parts/Playrate'
-import { SubSetting } from './parts/SubSetting'
+import { SubSetting } from './parts/Subsettings/SubSetting'
 import { DutaionShow } from './parts/DurationShow'
 import { VideoShot } from './parts/VideoShot'
 import { Volume } from './parts/Volume'
@@ -21,7 +21,6 @@ export class Controller extends Component implements ComponentItem {
   // 控件
   leftControllers: ComponentConstructor[] = [PlayButton, Volume, DutaionShow]
   rightController: ComponentConstructor[] = [
-    Playrate,
     SubSetting,
     VideoShot,
     ScreenShot,

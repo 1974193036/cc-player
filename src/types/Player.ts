@@ -1,5 +1,6 @@
 import { Player } from '../page/player'
 import { Component } from '../class/Component'
+import { SubsettingItem } from '@/components/ToolBar/BottomBar/parts/Subsettings/SubsettingItem'
 
 export type PlayerOptions = {
   url: string
@@ -29,6 +30,15 @@ export interface ComponentItem {
   container?: HTMLElement
   props?: DOMProps
   [props: string]: any
+}
+
+// 描述的是Subsettings的上的Item的类型，也就是设置选项
+export interface SubsettingsItem {
+  leftIcon?: SVGSVGElement | HTMLElement
+  leftText?: string
+  rightTip?: string
+  rightIcon?: SVGSVGElement | HTMLElement
+  instance?: SubsettingItem
 }
 
 export interface Node {

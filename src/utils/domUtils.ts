@@ -48,7 +48,13 @@ export function checkIsMouseInRange(
   let parentLeft = x
   let parentRight = x + parent.clientWidth
   if (pageX >= allLeft && pageX <= allRight && pageY <= y && pageY >= allTop) return true
-  if (pageX >= parentLeft - 5 && pageX <= parentRight + 5 && pageY >= y - 5 && pageY <= allBottom + 5) return true
+  if (
+    pageX >= parentLeft - 5 &&
+    pageX <= parentRight + 5 &&
+    pageY >= y - 5 &&
+    pageY <= allBottom + 5
+  )
+    return true
   return false
 }
 
@@ -139,6 +145,23 @@ export function includeClass(dom: Element, className: string): boolean {
   let classList = dom.classList
   for (let key in classList) {
     if (classList[key] === className) return true
+  }
+  return false
+}
+
+export function containsDOM(parent: Element, child: Element): boolean {
+  // if (parent.childNodes.length) {
+  //   parent.childNodes.forEach((node) => {
+  //     if (node !== child) {
+  //       if (containsDOM(node as Element, child)) return true
+  //     }
+  //     return true
+  //   })
+  // }
+  // return false
+
+  if (parent !== child && parent.contains(child)) {
+    return true
   }
   return false
 }

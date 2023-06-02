@@ -1,26 +1,22 @@
-import { Options } from './Options'
+import { Options } from '../Options'
 import { Player } from '@/page/player'
-import { DOMProps, Node } from '@/types/Player'
 import { storeControlComponent } from '@/utils/store'
 import { subSettingPath } from '@/svg'
 import { $, addClass, createSvg, includeClass, removeClass } from '@/utils/domUtils'
 import { wrap } from 'ntouch.js'
-import { SubsettingItem } from './SubsettingItem'
+import { SubsettingsMain } from './parts/SubsettingsMain'
+import { SubsettingsPlayrate } from './parts/SubsettingsPlayrate'
+import { SubsettingsItem } from '@/types/Player'
 
 export class SubSetting extends Options {
   readonly id = 'SubSetting'
   // el: div.video-subsettings.video-controllert
   clickOrTap: 'click' | 'singleTap'
-  subsettingItem = ['关灯模式', '护眼模式', '洗脑循环']
-  mask: HTMLElement
+  subsettingsMain: SubsettingsMain
+  subsettingsPlayrate: SubsettingsPlayrate
+  currenttShow: HTMLElement
 
-  constructor(
-    player: Player,
-    container: HTMLElement,
-    desc?: string,
-    props?: DOMProps,
-    children?: Node[]
-  ) {
+  constructor(player: Player, container: HTMLElement, desc?: string) {
     super(player, container, 0, 0, desc)
     this.init()
   }
@@ -44,12 +40,12 @@ export class SubSetting extends Options {
   }
 
   initSubSettingTemplate() {
-    this.mask = $('div.fullscreen-mask')
-
-    for (let str of this.subsettingItem) {
-      let instance = new SubsettingItem(str, this.player)
-      this.hideBox.appendChild(instance.el)
-    }
+    this.subsettingsMain = new SubsettingsMain(this.player)
+    this.subsettingsPlayrate = new SubsettingsPlayrate(this.player)
+    this.hideBox.appendChild(this.subsettingsMain.el)
+    this.hideBox.appendChild(this.subsettingsPlayrate.el)
+    this.currenttShow = this.subsettingsMain.el
+    this.hideBox.style.width = this.subsettingsMain.el.dataset.width + 'px'
   }
 
   initEvent(): void {
@@ -58,32 +54,6 @@ export class SubSetting extends Options {
     } else {
       this.initMobileEvent()
     }
-
-    this.player.on('checkBox', (e: Event, msg: string) => {
-      let checked = (e.target as HTMLInputElement).checked
-      switch (msg) {
-        case '洗脑循环':
-          if (checked) {
-            this.player.video.loop = true
-          } else {
-            this.player.video.loop = false
-          }
-          break
-        case '关灯模式':
-          if (checked) {
-            document.body.appendChild(this.mask)
-            this.player.el.style.zIndex = '2002'
-          } else {
-            document.body.removeChild(this.mask)
-            this.player.el.style.zIndex = ''
-          }
-          break
-        case '护眼模式':
-          if (checked) {
-          } else {
-          }
-      }
-    })
 
     this.el.onmouseenter = null
     wrap(this.iconBox).addEventListener(this.clickOrTap, (e) => {
@@ -98,6 +68,17 @@ export class SubSetting extends Options {
         removeClass(this.hideBox, ['video-set-hidden'])
       }
       this.player.emit('oneControllerHover', this)
+    })
+
+    this.player.on('MainSubsettingsItemClick', (item: SubsettingsItem, index: number) => {
+      console.log(item, index)
+      if (index === 0) {
+        // 展示播放速率的设置界面
+        this.currenttShow.style.display = 'none'
+        this.subsettingsPlayrate.el.style.display = 'block'
+        this.hideBox.style.width = this.subsettingsPlayrate.el.dataset.width + 'px'
+        this.currenttShow = this.subsettingsPlayrate.el
+      }
     })
   }
 
