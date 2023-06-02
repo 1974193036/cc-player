@@ -150,12 +150,11 @@ export function includeClass(dom: Element, className: string): boolean {
 }
 
 export function containsDOM(parent: Element, child: Element): boolean {
-  // if (parent.childNodes.length) {
+  // if (parent.childNodes.length > 0) {
   //   parent.childNodes.forEach((node) => {
   //     if (node !== child) {
-  //       if (containsDOM(node as Element, child)) return true
-  //     }
-  //     return true
+  //       if (containsDOM(node as Element, child) === true) return true
+  //     } else return true
   //   })
   // }
   // return false

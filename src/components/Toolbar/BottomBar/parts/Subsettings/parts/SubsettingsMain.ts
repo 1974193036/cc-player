@@ -1,10 +1,11 @@
 import { Player } from '@/page/player'
 import { flipPath, playratePath, propotionPath$1, propotionPath$2, rightarrowPath } from '@/svg'
 import { SubsettingsItem } from '@/types/Player'
-import { $, containsDOM, createSvg, createSvgs } from '@/utils/domUtils'
+import { $, createSvg, createSvgs } from '@/utils/domUtils'
 import { SubsettingItem } from '../SubsettingItem'
+import { BaseEvent } from '@/class/BaseEvent'
 
-export class SubsettingsMain {
+export class SubsettingsMain extends BaseEvent {
   el: HTMLElement
   // el: div.video-subsettings-main
   readonly player: Player
@@ -30,13 +31,14 @@ export class SubsettingsMain {
   ]
 
   constructor(player: Player) {
+    super()
     this.player = player
     this.init()
   }
 
   init() {
     this.el = $('div.video-subsettings-main')
-    this.el.dataset.width = '250'
+    this.el.dataset.width = '200'
     this.initSubsettingsItem()
     this.initEvent()
   }
@@ -52,18 +54,24 @@ export class SubsettingsMain {
       )
       this.el.appendChild(instance.el)
       item.instance = instance
+      instance.el.dataset.SubsettingsMainType = item.leftText
     })
   }
 
   initEvent() {
-    this.el.addEventListener('click', (e: MouseEvent) => {
-      let index = 0
-      for (let item of this.SubsettingsItem) {
-        if (e.target === item.instance.el || containsDOM(item.instance.el, e.target as Element)) {
-          this.player.emit('MainSubsettingsItemClick', item, index)
-          break
-        }
-        index++
+    this.SubsettingsItem.forEach((item, index) => {
+      item.instance.el.addEventListener('click', () => {
+        this.player.emit('MainSubsettingsItemClick', item, index)
+      })
+    })
+
+    this.player.on('SubsettingsPlayrateClick', (item: SubsettingsItem, index: number) => {
+      let playrate = item.instance.el.dataset.SubsettingsPlayrate
+      if (playrate === '0') return
+      if (playrate === '1') {
+        this.SubsettingsItem[0].instance.rightTipBox.innerText = '正常'
+      } else {
+        this.SubsettingsItem[0].instance.rightTipBox.innerText = playrate
       }
     })
   }

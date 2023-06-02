@@ -7,12 +7,11 @@ import { FullScreen } from './parts/FullScreen'
 import { PicInPic } from './parts/PicInPic'
 import { PlayButton } from './parts/PlayButton'
 import { ScreenShot } from './parts/ScreenShot'
-import { Playrate } from './parts/Playrate'
 import { SubSetting } from './parts/Subsettings/SubSetting'
 import { DutaionShow } from './parts/DurationShow'
 import { VideoShot } from './parts/VideoShot'
 import { Volume } from './parts/Volume'
-import { controllersMapping, storeControlComponent } from '@/utils/store'
+import { storeControlComponent } from '@/utils/store'
 
 export class Controller extends Component implements ComponentItem {
   readonly id = 'Controller'
@@ -20,7 +19,7 @@ export class Controller extends Component implements ComponentItem {
   player: Player
   // 控件
   leftControllers: ComponentConstructor[] = [PlayButton, Volume, DutaionShow]
-  rightController: ComponentConstructor[] = [
+  rightControllers: ComponentConstructor[] = [
     SubSetting,
     VideoShot,
     ScreenShot,
@@ -53,34 +52,14 @@ export class Controller extends Component implements ComponentItem {
   }
 
   initControllers() {
-    let leftControllers =
-      (this.player.playerOptions as PlayerOptions).leftBottomBarControllers || null
-    let rightControllers =
-      (this.player.playerOptions as PlayerOptions).rightBottomBarControllers || null
+    let leftControllers = this.player.playerOptions.leftBottomBarControllers 
+    let rightControllers = this.player.playerOptions.rightBottomBarControllers
 
     if (leftControllers) {
-      this.leftControllers = leftControllers.map((item) => {
-        if (typeof item === 'string') {
-          if (!controllersMapping[item]) {
-            throw new Error(`传入的组件名${item}错误`)
-          }
-          return controllersMapping[item]
-        } else {
-          return item
-        }
-      })
+      this.leftControllers = leftControllers
     }
     if (rightControllers) {
-      this.rightController = rightControllers.map((item) => {
-        if (typeof item === 'string') {
-          if (!controllersMapping[item]) {
-            throw new Error(`传入的组件名${item}错误`)
-          }
-          return controllersMapping[item]
-        } else {
-          return item
-        }
-      })
+      this.rightControllers = rightControllers
     }
   }
 
@@ -102,7 +81,7 @@ export class Controller extends Component implements ComponentItem {
       this[instance.id] = instance
     })
 
-    this.rightController.forEach((ControlConstructor) => {
+    this.rightControllers.forEach((ControlConstructor) => {
       let instance = new ControlConstructor(this.player, this.rightArea, 'div')
       this[instance.id] = instance
     })

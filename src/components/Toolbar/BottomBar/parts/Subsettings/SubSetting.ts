@@ -14,7 +14,7 @@ export class SubSetting extends Options {
   clickOrTap: 'click' | 'singleTap'
   subsettingsMain: SubsettingsMain
   subsettingsPlayrate: SubsettingsPlayrate
-  currenttShow: HTMLElement
+  currentShow: HTMLElement
 
   constructor(player: Player, container: HTMLElement, desc?: string) {
     super(player, container, 0, 0, desc)
@@ -44,7 +44,7 @@ export class SubSetting extends Options {
     this.subsettingsPlayrate = new SubsettingsPlayrate(this.player)
     this.hideBox.appendChild(this.subsettingsMain.el)
     this.hideBox.appendChild(this.subsettingsPlayrate.el)
-    this.currenttShow = this.subsettingsMain.el
+    this.currentShow = this.subsettingsMain.el
     this.hideBox.style.width = this.subsettingsMain.el.dataset.width + 'px'
   }
 
@@ -71,13 +71,27 @@ export class SubSetting extends Options {
     })
 
     this.player.on('MainSubsettingsItemClick', (item: SubsettingsItem, index: number) => {
-      console.log(item, index)
-      if (index === 0) {
+      // console.log(item, index)
+      if (item.instance.el.dataset.SubsettingsMainType === '播放速度') {
         // 展示播放速率的设置界面
-        this.currenttShow.style.display = 'none'
+        this.currentShow.style.display = 'none'
         this.subsettingsPlayrate.el.style.display = 'block'
         this.hideBox.style.width = this.subsettingsPlayrate.el.dataset.width + 'px'
-        this.currenttShow = this.subsettingsPlayrate.el
+        this.currentShow = this.subsettingsPlayrate.el
+      } else if (item.instance.el.dataset.SubsettingsMainType === '画面比例') {
+      }
+    })
+
+    // 点击播放速度
+    this.player.on('SubsettingsPlayrateClick', (item: SubsettingsItem, index: number) => {
+      // console.log(item, index)
+      this.currentShow.style.display = 'none'
+      this.currentShow = this.subsettingsMain.el
+      this.currentShow.style.display = 'block'
+      this.hideBox.style.width = this.currentShow.dataset.width + 'px'
+      if (item.instance.el.dataset.SubsettingsPlayrate !== '0') {
+        // 设置播放器的播放速度
+        this.player.video.playbackRate = Number(item.instance.el.dataset.SubsettingsPlayrate)
       }
     })
   }

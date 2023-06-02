@@ -39,7 +39,7 @@ class Player extends Component implements ComponentItem {
   mask: HTMLElement
   containerWidth: number
   containerHeight: number
-  mediaProportion: number = 9 / 16 // 视频比例 原始高度/原始宽度
+  mediaProportion: number = 9 / 16 // 视频比例 原始高度/原始宽度，默认16:9
 
   constructor(options: PlayerOptions) {
     super(options.container, 'div.Niplayer_video-wrapper')
@@ -91,7 +91,7 @@ class Player extends Component implements ComponentItem {
     this.toolBar = new ToolBar(this, this.el, 'div')
     this.topbar = new TopBar(this, this.el, 'div')
 
-    new DanmakuController(this)
+    // new DanmakuController(this)
   }
 
   /**

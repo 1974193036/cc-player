@@ -1,6 +1,5 @@
 import { FullScreen } from '@/components/ToolBar/BottomBar/parts/FullScreen'
 import { PlayButton } from '@/components/ToolBar/BottomBar/parts/PlayButton'
-import { Playrate } from '@/components/ToolBar/BottomBar/parts/Playrate'
 import { Volume } from '@/components/ToolBar/BottomBar/parts/Volume'
 import { ComponentItem } from '../types/Player'
 
@@ -34,11 +33,4 @@ export const BuiltInProgressComponent = ['BufferedProgress', 'CompletedProgress'
 export function storeControlComponent(item: ComponentItem) {
   COMPONENT_STORE.set(item.id, item)
   ONCE_COMPONENT_STORE.set(item.id, item)
-}
-
-export const controllersMapping = {
-  PlayButton: PlayButton,
-  Playrate: Playrate,
-  Volume: Volume,
-  FullScreen: FullScreen
 }

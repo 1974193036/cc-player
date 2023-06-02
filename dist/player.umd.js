@@ -283,7 +283,7 @@
 
 	var getBuiltIn$g = getBuiltIn$h;
 	var isCallable$n = isCallable$q;
-	var isPrototypeOf$d = objectIsPrototypeOf;
+	var isPrototypeOf$c = objectIsPrototypeOf;
 	var USE_SYMBOL_AS_UID$1 = useSymbolAsUid;
 
 	var $Object$3 = Object;
@@ -292,7 +292,7 @@
 	  return typeof it == 'symbol';
 	} : function (it) {
 	  var $Symbol = getBuiltIn$g('Symbol');
-	  return isCallable$n($Symbol) && isPrototypeOf$d($Symbol.prototype, $Object$3(it));
+	  return isCallable$n($Symbol) && isPrototypeOf$c($Symbol.prototype, $Object$3(it));
 	};
 
 	var $String$4 = String;
@@ -1140,7 +1140,7 @@
 	  return Properties === undefined ? result : definePropertiesModule$1.f(result, Properties);
 	};
 
-	var $$15 = _export;
+	var $$14 = _export;
 	var getBuiltIn$d = getBuiltIn$h;
 	var apply$3 = functionApply;
 	var bind$p = functionBind;
@@ -1169,7 +1169,7 @@
 
 	var FORCED$6 = NEW_TARGET_BUG || ARGS_BUG;
 
-	$$15({ target: 'Reflect', stat: true, forced: FORCED$6, sham: FORCED$6 }, {
+	$$14({ target: 'Reflect', stat: true, forced: FORCED$6, sham: FORCED$6 }, {
 	  construct: function construct(Target, args /* , newTarget */) {
 	    aConstructor$2(Target);
 	    anObject$b(args);
@@ -1201,17 +1201,17 @@
 
 	var construct$5 = path$k.Reflect.construct;
 
-	var parent$1r = construct$5;
+	var parent$1o = construct$5;
 
-	var construct$4 = parent$1r;
+	var construct$4 = parent$1o;
 
-	var parent$1q = construct$4;
+	var parent$1n = construct$4;
 
-	var construct$3 = parent$1q;
+	var construct$3 = parent$1n;
 
-	var parent$1p = construct$3;
+	var parent$1m = construct$3;
 
-	var construct$2 = parent$1p;
+	var construct$2 = parent$1m;
 
 	var construct$1 = construct$2;
 
@@ -1228,12 +1228,12 @@
 	  return classof$b(argument) == 'Array';
 	};
 
-	var $$14 = _export;
+	var $$13 = _export;
 	var isArray$b = isArray$c;
 
 	// `Array.isArray` method
 	// https://tc39.es/ecma262/#sec-array.isarray
-	$$14({ target: 'Array', stat: true }, {
+	$$13({ target: 'Array', stat: true }, {
 	  isArray: isArray$b
 	});
 
@@ -1241,17 +1241,17 @@
 
 	var isArray$a = path$j.Array.isArray;
 
-	var parent$1o = isArray$a;
+	var parent$1l = isArray$a;
 
-	var isArray$9 = parent$1o;
+	var isArray$9 = parent$1l;
 
-	var parent$1n = isArray$9;
+	var parent$1k = isArray$9;
 
-	var isArray$8 = parent$1n;
+	var isArray$8 = parent$1k;
 
-	var parent$1m = isArray$8;
+	var parent$1j = isArray$8;
 
-	var isArray$7 = parent$1m;
+	var isArray$7 = parent$1j;
 
 	var isArray$6 = isArray$7;
 
@@ -1259,14 +1259,14 @@
 
 	var _Array$isArray = /*@__PURE__*/getDefaultExportFromCjs(isArray$5);
 
-	function _arrayLikeToArray$2(arr, len) {
+	function _arrayLikeToArray$1(arr, len) {
 	  if (len == null || len > arr.length) len = arr.length;
 	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
 	  return arr2;
 	}
 
 	function _arrayWithoutHoles(arr) {
-	  if (_Array$isArray(arr)) return _arrayLikeToArray$2(arr);
+	  if (_Array$isArray(arr)) return _arrayLikeToArray$1(arr);
 	}
 
 	var $TypeError$c = TypeError;
@@ -1324,7 +1324,7 @@
 
 	var SPECIES$4 = wellKnownSymbol$l('species');
 
-	var arrayMethodHasSpeciesSupport$5 = function (METHOD_NAME) {
+	var arrayMethodHasSpeciesSupport$4 = function (METHOD_NAME) {
 	  // We can't use this feature detection in V8 since it causes
 	  // deoptimization and serious performance degradation
 	  // https://github.com/zloirock/core-js/issues/677
@@ -1338,7 +1338,7 @@
 	  });
 	};
 
-	var $$13 = _export;
+	var $$12 = _export;
 	var fails$m = fails$x;
 	var isArray$3 = isArray$c;
 	var isObject$b = isObject$j;
@@ -1347,7 +1347,7 @@
 	var doesNotExceedSafeInteger$1 = doesNotExceedSafeInteger$2;
 	var createProperty$5 = createProperty$6;
 	var arraySpeciesCreate$2 = arraySpeciesCreate$3;
-	var arrayMethodHasSpeciesSupport$4 = arrayMethodHasSpeciesSupport$5;
+	var arrayMethodHasSpeciesSupport$3 = arrayMethodHasSpeciesSupport$4;
 	var wellKnownSymbol$k = wellKnownSymbol$q;
 	var V8_VERSION$1 = engineV8Version;
 
@@ -1368,12 +1368,12 @@
 	  return spreadable !== undefined ? !!spreadable : isArray$3(O);
 	};
 
-	var FORCED$5 = !IS_CONCAT_SPREADABLE_SUPPORT || !arrayMethodHasSpeciesSupport$4('concat');
+	var FORCED$5 = !IS_CONCAT_SPREADABLE_SUPPORT || !arrayMethodHasSpeciesSupport$3('concat');
 
 	// `Array.prototype.concat` method
 	// https://tc39.es/ecma262/#sec-array.prototype.concat
 	// with adding support of @@isConcatSpreadable and @@species
-	$$13({ target: 'Array', proto: true, arity: 1, forced: FORCED$5 }, {
+	$$12({ target: 'Array', proto: true, arity: 1, forced: FORCED$5 }, {
 	  // eslint-disable-next-line no-unused-vars -- required for `.length`
 	  concat: function concat(arg) {
 	    var O = toObject$8(this);
@@ -1703,7 +1703,7 @@
 	  filterReject: createMethod$2(7)
 	};
 
-	var $$12 = _export;
+	var $$11 = _export;
 	var global$g = global$r;
 	var call$j = functionCall;
 	var uncurryThis$j = functionUncurryThis;
@@ -1711,7 +1711,7 @@
 	var NATIVE_SYMBOL$3 = symbolConstructorDetection;
 	var fails$l = fails$x;
 	var hasOwn$a = hasOwnProperty_1;
-	var isPrototypeOf$c = objectIsPrototypeOf;
+	var isPrototypeOf$b = objectIsPrototypeOf;
 	var anObject$a = anObject$f;
 	var toIndexedObject$4 = toIndexedObject$a;
 	var toPropertyKey = toPropertyKey$4;
@@ -1864,7 +1864,7 @@
 	// https://tc39.es/ecma262/#sec-symbol-constructor
 	if (!NATIVE_SYMBOL$3) {
 	  $Symbol = function Symbol() {
-	    if (isPrototypeOf$c(SymbolPrototype, this)) throw TypeError$4('Symbol is not a constructor');
+	    if (isPrototypeOf$b(SymbolPrototype, this)) throw TypeError$4('Symbol is not a constructor');
 	    var description = !arguments.length || arguments[0] === undefined ? undefined : $toString$2(arguments[0]);
 	    var tag = uid$1(description);
 	    var setter = function (value) {
@@ -1908,7 +1908,7 @@
 	  }
 	}
 
-	$$12({ global: true, constructor: true, wrap: true, forced: !NATIVE_SYMBOL$3, sham: !NATIVE_SYMBOL$3 }, {
+	$$11({ global: true, constructor: true, wrap: true, forced: !NATIVE_SYMBOL$3, sham: !NATIVE_SYMBOL$3 }, {
 	  Symbol: $Symbol
 	});
 
@@ -1916,12 +1916,12 @@
 	  defineWellKnownSymbol$l(name);
 	});
 
-	$$12({ target: SYMBOL, stat: true, forced: !NATIVE_SYMBOL$3 }, {
+	$$11({ target: SYMBOL, stat: true, forced: !NATIVE_SYMBOL$3 }, {
 	  useSetter: function () { USE_SETTER = true; },
 	  useSimple: function () { USE_SETTER = false; }
 	});
 
-	$$12({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3, sham: !DESCRIPTORS$d }, {
+	$$11({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3, sham: !DESCRIPTORS$d }, {
 	  // `Object.create` method
 	  // https://tc39.es/ecma262/#sec-object.create
 	  create: $create,
@@ -1936,7 +1936,7 @@
 	  getOwnPropertyDescriptor: $getOwnPropertyDescriptor
 	});
 
-	$$12({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3 }, {
+	$$11({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3 }, {
 	  // `Object.getOwnPropertyNames` method
 	  // https://tc39.es/ecma262/#sec-object.getownpropertynames
 	  getOwnPropertyNames: $getOwnPropertyNames
@@ -1957,7 +1957,7 @@
 	/* eslint-disable es/no-symbol -- safe */
 	var symbolRegistryDetection = NATIVE_SYMBOL$2 && !!Symbol['for'] && !!Symbol.keyFor;
 
-	var $$11 = _export;
+	var $$10 = _export;
 	var getBuiltIn$b = getBuiltIn$h;
 	var hasOwn$9 = hasOwnProperty_1;
 	var toString$9 = toString$b;
@@ -1969,7 +1969,7 @@
 
 	// `Symbol.for` method
 	// https://tc39.es/ecma262/#sec-symbol.for
-	$$11({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY$1 }, {
+	$$10({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY$1 }, {
 	  'for': function (key) {
 	    var string = toString$9(key);
 	    if (hasOwn$9(StringToSymbolRegistry, string)) return StringToSymbolRegistry[string];
@@ -1980,7 +1980,7 @@
 	  }
 	});
 
-	var $$10 = _export;
+	var $$$ = _export;
 	var hasOwn$8 = hasOwnProperty_1;
 	var isSymbol$2 = isSymbol$5;
 	var tryToString$4 = tryToString$7;
@@ -1991,7 +1991,7 @@
 
 	// `Symbol.keyFor` method
 	// https://tc39.es/ecma262/#sec-symbol.keyfor
-	$$10({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
+	$$$({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
 	  keyFor: function keyFor(sym) {
 	    if (!isSymbol$2(sym)) throw TypeError(tryToString$4(sym) + ' is not a symbol');
 	    if (hasOwn$8(SymbolToStringRegistry, sym)) return SymbolToStringRegistry[sym];
@@ -2028,7 +2028,7 @@
 	  };
 	};
 
-	var $$$ = _export;
+	var $$_ = _export;
 	var getBuiltIn$a = getBuiltIn$h;
 	var apply$2 = functionApply;
 	var call$i = functionCall;
@@ -2091,7 +2091,7 @@
 	if ($stringify) {
 	  // `JSON.stringify` method
 	  // https://tc39.es/ecma262/#sec-json.stringify
-	  $$$({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE }, {
+	  $$_({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE }, {
 	    // eslint-disable-next-line no-unused-vars -- required for `.length`
 	    stringify: function stringify(it, replacer, space) {
 	      var args = arraySlice$5(arguments);
@@ -2101,7 +2101,7 @@
 	  });
 	}
 
-	var $$_ = _export;
+	var $$Z = _export;
 	var NATIVE_SYMBOL = symbolConstructorDetection;
 	var fails$j = fails$x;
 	var getOwnPropertySymbolsModule$2 = objectGetOwnPropertySymbols;
@@ -2113,7 +2113,7 @@
 
 	// `Object.getOwnPropertySymbols` method
 	// https://tc39.es/ecma262/#sec-object.getownpropertysymbols
-	$$_({ target: 'Object', stat: true, forced: FORCED$4 }, {
+	$$Z({ target: 'Object', stat: true, forced: FORCED$4 }, {
 	  getOwnPropertySymbols: function getOwnPropertySymbols(it) {
 	    var $getOwnPropertySymbols = getOwnPropertySymbolsModule$2.f;
 	    return $getOwnPropertySymbols ? $getOwnPropertySymbols(toObject$6(it)) : [];
@@ -2383,7 +2383,7 @@
 	  };
 	}() : undefined);
 
-	var $$Z = _export;
+	var $$Y = _export;
 	var call$h = functionCall;
 	var FunctionName = functionName;
 	var createIteratorConstructor$1 = iteratorCreateConstructor;
@@ -2457,7 +2457,7 @@
 	      if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
 	        defineBuiltIn$4(IterablePrototype, KEY, methods[KEY]);
 	      }
-	    } else $$Z({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
+	    } else $$Y({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
 	  }
 
 	  // define iterator
@@ -2578,10 +2578,10 @@
 	  Iterators$2[COLLECTION_NAME] = Iterators$2.Array;
 	}
 
-	var parent$1l = symbol$5;
+	var parent$1i = symbol$5;
 
 
-	var symbol$4 = parent$1l;
+	var symbol$4 = parent$1i;
 
 	var defineWellKnownSymbol$7 = wellKnownSymbolDefine;
 
@@ -2589,11 +2589,11 @@
 	// https://github.com/tc39/proposal-explicit-resource-management
 	defineWellKnownSymbol$7('dispose');
 
-	var parent$1k = symbol$4;
+	var parent$1h = symbol$4;
 
 
 
-	var symbol$3 = parent$1k;
+	var symbol$3 = parent$1h;
 
 	var defineWellKnownSymbol$6 = wellKnownSymbolDefine;
 
@@ -2601,7 +2601,7 @@
 	// https://github.com/tc39/proposal-async-explicit-resource-management
 	defineWellKnownSymbol$6('asyncDispose');
 
-	var $$Y = _export;
+	var $$X = _export;
 	var getBuiltIn$8 = getBuiltIn$h;
 	var uncurryThis$f = functionUncurryThis;
 
@@ -2611,7 +2611,7 @@
 
 	// `Symbol.isRegistered` method
 	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-isregistered
-	$$Y({ target: 'Symbol', stat: true }, {
+	$$X({ target: 'Symbol', stat: true }, {
 	  isRegistered: function isRegistered(value) {
 	    try {
 	      return keyFor(thisSymbolValue$1(value)) !== undefined;
@@ -2621,7 +2621,7 @@
 	  }
 	});
 
-	var $$X = _export;
+	var $$W = _export;
 	var shared = sharedExports;
 	var getBuiltIn$7 = getBuiltIn$h;
 	var uncurryThis$e = functionUncurryThis;
@@ -2645,7 +2645,7 @@
 	// `Symbol.isWellKnown` method
 	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-iswellknown
 	// We should patch it for newly added well-known symbols. If it's not required, this module just will not be injected
-	$$X({ target: 'Symbol', stat: true, forced: true }, {
+	$$W({ target: 'Symbol', stat: true, forced: true }, {
 	  isWellKnown: function isWellKnown(value) {
 	    if ($isWellKnown && $isWellKnown(value)) return true;
 	    try {
@@ -2695,7 +2695,7 @@
 
 	defineWellKnownSymbol('replaceAll');
 
-	var parent$1j = symbol$3;
+	var parent$1g = symbol$3;
 
 
 
@@ -2707,7 +2707,7 @@
 
 
 
-	var symbol$2 = parent$1j;
+	var symbol$2 = parent$1g;
 
 	var symbol$1 = symbol$2;
 
@@ -2801,18 +2801,18 @@
 
 	var getIteratorMethod_1 = getIteratorMethod$9;
 
-	var parent$1i = getIteratorMethod_1;
+	var parent$1f = getIteratorMethod_1;
 
 
-	var getIteratorMethod$8 = parent$1i;
+	var getIteratorMethod$8 = parent$1f;
 
-	var parent$1h = getIteratorMethod$8;
+	var parent$1e = getIteratorMethod$8;
 
-	var getIteratorMethod$7 = parent$1h;
+	var getIteratorMethod$7 = parent$1e;
 
-	var parent$1g = getIteratorMethod$7;
+	var parent$1d = getIteratorMethod$7;
 
-	var getIteratorMethod$6 = parent$1g;
+	var getIteratorMethod$6 = parent$1d;
 
 	var getIteratorMethod$5 = getIteratorMethod$6;
 
@@ -2860,11 +2860,11 @@
 	var Iterators = iterators;
 
 	var ITERATOR$5 = wellKnownSymbol$a('iterator');
-	var ArrayPrototype$8 = Array.prototype;
+	var ArrayPrototype$7 = Array.prototype;
 
 	// check on default Array iterator
 	var isArrayIteratorMethod$2 = function (it) {
-	  return it !== undefined && (Iterators.Array === it || ArrayPrototype$8[ITERATOR$5] === it);
+	  return it !== undefined && (Iterators.Array === it || ArrayPrototype$7[ITERATOR$5] === it);
 	};
 
 	var call$f = functionCall;
@@ -2966,7 +2966,7 @@
 	  return ITERATION_SUPPORT;
 	};
 
-	var $$W = _export;
+	var $$V = _export;
 	var from$7 = arrayFrom$1;
 	var checkCorrectnessOfIteration$1 = checkCorrectnessOfIteration$2;
 
@@ -2977,7 +2977,7 @@
 
 	// `Array.from` method
 	// https://tc39.es/ecma262/#sec-array.from
-	$$W({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+	$$V({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
 	  from: from$7
 	});
 
@@ -2985,17 +2985,17 @@
 
 	var from$6 = path$g.Array.from;
 
-	var parent$1f = from$6;
+	var parent$1c = from$6;
 
-	var from$5 = parent$1f;
+	var from$5 = parent$1c;
 
-	var parent$1e = from$5;
+	var parent$1b = from$5;
 
-	var from$4 = parent$1e;
+	var from$4 = parent$1b;
 
-	var parent$1d = from$4;
+	var parent$1a = from$4;
 
-	var from$3 = parent$1d;
+	var from$3 = parent$1a;
 
 	var from$2 = from$3;
 
@@ -3007,7 +3007,7 @@
 	  if (typeof _Symbol !== "undefined" && _getIteratorMethod(iter) != null || iter["@@iterator"] != null) return _Array$from(iter);
 	}
 
-	var $$V = _export;
+	var $$U = _export;
 	var isArray$1 = isArray$c;
 	var isConstructor = isConstructor$4;
 	var isObject$8 = isObject$j;
@@ -3016,10 +3016,10 @@
 	var toIndexedObject$2 = toIndexedObject$a;
 	var createProperty$2 = createProperty$6;
 	var wellKnownSymbol$8 = wellKnownSymbol$q;
-	var arrayMethodHasSpeciesSupport$3 = arrayMethodHasSpeciesSupport$5;
+	var arrayMethodHasSpeciesSupport$2 = arrayMethodHasSpeciesSupport$4;
 	var nativeSlice = arraySlice$8;
 
-	var HAS_SPECIES_SUPPORT$3 = arrayMethodHasSpeciesSupport$3('slice');
+	var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport$2('slice');
 
 	var SPECIES$3 = wellKnownSymbol$8('species');
 	var $Array = Array;
@@ -3028,7 +3028,7 @@
 	// `Array.prototype.slice` method
 	// https://tc39.es/ecma262/#sec-array.prototype.slice
 	// fallback for not array-like ES3 strings and DOM objects
-	$$V({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$3 }, {
+	$$U({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
 	  slice: function slice(start, end) {
 	    var O = toIndexedObject$2(this);
 	    var length = lengthOfArrayLike$2(O);
@@ -3058,35 +3058,35 @@
 
 	var path$f = path$n;
 
-	var entryVirtual$a = function (CONSTRUCTOR) {
+	var entryVirtual$9 = function (CONSTRUCTOR) {
 	  return path$f[CONSTRUCTOR + 'Prototype'];
 	};
 
-	var entryVirtual$9 = entryVirtual$a;
+	var entryVirtual$8 = entryVirtual$9;
 
-	var slice$6 = entryVirtual$9('Array').slice;
+	var slice$6 = entryVirtual$8('Array').slice;
 
-	var isPrototypeOf$b = objectIsPrototypeOf;
-	var method$7 = slice$6;
+	var isPrototypeOf$a = objectIsPrototypeOf;
+	var method$6 = slice$6;
 
-	var ArrayPrototype$7 = Array.prototype;
+	var ArrayPrototype$6 = Array.prototype;
 
 	var slice$5 = function (it) {
 	  var own = it.slice;
-	  return it === ArrayPrototype$7 || (isPrototypeOf$b(ArrayPrototype$7, it) && own === ArrayPrototype$7.slice) ? method$7 : own;
+	  return it === ArrayPrototype$6 || (isPrototypeOf$a(ArrayPrototype$6, it) && own === ArrayPrototype$6.slice) ? method$6 : own;
 	};
 
-	var parent$1c = slice$5;
+	var parent$19 = slice$5;
 
-	var slice$4 = parent$1c;
+	var slice$4 = parent$19;
 
-	var parent$1b = slice$4;
+	var parent$18 = slice$4;
 
-	var slice$3 = parent$1b;
+	var slice$3 = parent$18;
 
-	var parent$1a = slice$3;
+	var parent$17 = slice$3;
 
-	var slice$2 = parent$1a;
+	var slice$2 = parent$17;
 
 	var slice$1 = slice$2;
 
@@ -3094,14 +3094,14 @@
 
 	var _sliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(slice);
 
-	function _unsupportedIterableToArray$2(o, minLen) {
+	function _unsupportedIterableToArray$1(o, minLen) {
 	  var _context;
 	  if (!o) return;
-	  if (typeof o === "string") return _arrayLikeToArray$2(o, minLen);
+	  if (typeof o === "string") return _arrayLikeToArray$1(o, minLen);
 	  var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
 	  if (n === "Object" && o.constructor) n = o.constructor.name;
 	  if (n === "Map" || n === "Set") return _Array$from(o);
-	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen);
+	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen);
 	}
 
 	function _nonIterableSpread() {
@@ -3109,7 +3109,7 @@
 	}
 
 	function _toConsumableArray(arr) {
-	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$2(arr) || _nonIterableSpread();
+	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$1(arr) || _nonIterableSpread();
 	}
 
 	function _classCallCheck(instance, Constructor) {
@@ -3120,14 +3120,14 @@
 
 	var defineProperty$a = {exports: {}};
 
-	var $$U = _export;
+	var $$T = _export;
 	var DESCRIPTORS$b = descriptors;
 	var defineProperty$9 = objectDefineProperty.f;
 
 	// `Object.defineProperty` method
 	// https://tc39.es/ecma262/#sec-object.defineproperty
 	// eslint-disable-next-line es/no-object-defineproperty -- safe
-	$$U({ target: 'Object', stat: true, forced: Object.defineProperty !== defineProperty$9, sham: !DESCRIPTORS$b }, {
+	$$T({ target: 'Object', stat: true, forced: Object.defineProperty !== defineProperty$9, sham: !DESCRIPTORS$b }, {
 	  defineProperty: defineProperty$9
 	});
 
@@ -3143,17 +3143,17 @@
 
 	var definePropertyExports = defineProperty$a.exports;
 
-	var parent$19 = definePropertyExports;
+	var parent$16 = definePropertyExports;
 
-	var defineProperty$7 = parent$19;
+	var defineProperty$7 = parent$16;
 
-	var parent$18 = defineProperty$7;
+	var parent$15 = defineProperty$7;
 
-	var defineProperty$6 = parent$18;
+	var defineProperty$6 = parent$15;
 
-	var parent$17 = defineProperty$6;
+	var parent$14 = defineProperty$6;
 
-	var defineProperty$5 = parent$17;
+	var defineProperty$5 = parent$14;
 
 	var defineProperty$4 = defineProperty$5;
 
@@ -3165,18 +3165,18 @@
 
 	var iterator$5 = WrappedWellKnownSymbolModule$1.f('iterator');
 
-	var parent$16 = iterator$5;
+	var parent$13 = iterator$5;
 
 
-	var iterator$4 = parent$16;
+	var iterator$4 = parent$13;
 
-	var parent$15 = iterator$4;
+	var parent$12 = iterator$4;
 
-	var iterator$3 = parent$15;
+	var iterator$3 = parent$12;
 
-	var parent$14 = iterator$3;
+	var parent$11 = iterator$3;
 
-	var iterator$2 = parent$14;
+	var iterator$2 = parent$11;
 
 	var iterator$1 = iterator$2;
 
@@ -3198,17 +3198,17 @@
 
 	var toPrimitive$5 = WrappedWellKnownSymbolModule.f('toPrimitive');
 
-	var parent$13 = toPrimitive$5;
+	var parent$10 = toPrimitive$5;
 
-	var toPrimitive$4 = parent$13;
+	var toPrimitive$4 = parent$10;
 
-	var parent$12 = toPrimitive$4;
+	var parent$$ = toPrimitive$4;
 
-	var toPrimitive$3 = parent$12;
+	var toPrimitive$3 = parent$$;
 
-	var parent$11 = toPrimitive$3;
+	var parent$_ = toPrimitive$3;
 
-	var toPrimitive$2 = parent$11;
+	var toPrimitive$2 = parent$_;
 
 	var toPrimitive$1 = toPrimitive$2;
 
@@ -3258,13 +3258,13 @@
 	}
 
 	// TODO: Remove from `core-js@4`
-	var $$T = _export;
+	var $$S = _export;
 	var DESCRIPTORS$a = descriptors;
 	var create$9 = objectCreate;
 
 	// `Object.create` method
 	// https://tc39.es/ecma262/#sec-object.create
-	$$T({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
+	$$S({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
 	  create: create$9
 	});
 
@@ -3276,17 +3276,17 @@
 	  return Object$2.create(P, D);
 	};
 
-	var parent$10 = create$8;
+	var parent$Z = create$8;
 
-	var create$7 = parent$10;
+	var create$7 = parent$Z;
 
-	var parent$$ = create$7;
+	var parent$Y = create$7;
 
-	var create$6 = parent$$;
+	var create$6 = parent$Y;
 
-	var parent$_ = create$6;
+	var parent$X = create$6;
 
-	var create$5 = parent$_;
+	var create$5 = parent$X;
 
 	var create$4 = create$5;
 
@@ -3294,12 +3294,12 @@
 
 	var _Object$create = /*@__PURE__*/getDefaultExportFromCjs(create$3);
 
-	var $$S = _export;
+	var $$R = _export;
 	var setPrototypeOf$7 = objectSetPrototypeOf;
 
 	// `Object.setPrototypeOf` method
 	// https://tc39.es/ecma262/#sec-object.setprototypeof
-	$$S({ target: 'Object', stat: true }, {
+	$$R({ target: 'Object', stat: true }, {
 	  setPrototypeOf: setPrototypeOf$7
 	});
 
@@ -3307,17 +3307,17 @@
 
 	var setPrototypeOf$6 = path$c.Object.setPrototypeOf;
 
-	var parent$Z = setPrototypeOf$6;
+	var parent$W = setPrototypeOf$6;
 
-	var setPrototypeOf$5 = parent$Z;
+	var setPrototypeOf$5 = parent$W;
 
-	var parent$Y = setPrototypeOf$5;
+	var parent$V = setPrototypeOf$5;
 
-	var setPrototypeOf$4 = parent$Y;
+	var setPrototypeOf$4 = parent$V;
 
-	var parent$X = setPrototypeOf$4;
+	var parent$U = setPrototypeOf$4;
 
-	var setPrototypeOf$3 = parent$X;
+	var setPrototypeOf$3 = parent$U;
 
 	var setPrototypeOf$2 = setPrototypeOf$3;
 
@@ -3326,41 +3326,41 @@
 	var _Object$setPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(setPrototypeOf$1);
 
 	// TODO: Remove from `core-js@4`
-	var $$R = _export;
+	var $$Q = _export;
 	var bind$m = functionBind;
 
 	// `Function.prototype.bind` method
 	// https://tc39.es/ecma262/#sec-function.prototype.bind
 	// eslint-disable-next-line es/no-function-prototype-bind -- detection
-	$$R({ target: 'Function', proto: true, forced: Function.bind !== bind$m }, {
+	$$Q({ target: 'Function', proto: true, forced: Function.bind !== bind$m }, {
 	  bind: bind$m
 	});
 
-	var entryVirtual$8 = entryVirtual$a;
+	var entryVirtual$7 = entryVirtual$9;
 
-	var bind$l = entryVirtual$8('Function').bind;
+	var bind$l = entryVirtual$7('Function').bind;
 
-	var isPrototypeOf$a = objectIsPrototypeOf;
-	var method$6 = bind$l;
+	var isPrototypeOf$9 = objectIsPrototypeOf;
+	var method$5 = bind$l;
 
 	var FunctionPrototype = Function.prototype;
 
 	var bind$k = function (it) {
 	  var own = it.bind;
-	  return it === FunctionPrototype || (isPrototypeOf$a(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$6 : own;
+	  return it === FunctionPrototype || (isPrototypeOf$9(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$5 : own;
 	};
 
-	var parent$W = bind$k;
+	var parent$T = bind$k;
 
-	var bind$j = parent$W;
+	var bind$j = parent$T;
 
-	var parent$V = bind$j;
+	var parent$S = bind$j;
 
-	var bind$i = parent$V;
+	var bind$i = parent$S;
 
-	var parent$U = bind$i;
+	var parent$R = bind$i;
 
-	var bind$h = parent$U;
+	var bind$h = parent$R;
 
 	var bind$g = bind$h;
 
@@ -3403,7 +3403,7 @@
 	  return _assertThisInitialized(self);
 	}
 
-	var $$Q = _export;
+	var $$P = _export;
 	var fails$g = fails$x;
 	var toObject$3 = toObject$a;
 	var nativeGetPrototypeOf = objectGetPrototypeOf;
@@ -3413,7 +3413,7 @@
 
 	// `Object.getPrototypeOf` method
 	// https://tc39.es/ecma262/#sec-object.getprototypeof
-	$$Q({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
+	$$P({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
 	  getPrototypeOf: function getPrototypeOf(it) {
 	    return nativeGetPrototypeOf(toObject$3(it));
 	  }
@@ -3423,17 +3423,17 @@
 
 	var getPrototypeOf$6 = path$b.Object.getPrototypeOf;
 
-	var parent$T = getPrototypeOf$6;
+	var parent$Q = getPrototypeOf$6;
 
-	var getPrototypeOf$5 = parent$T;
+	var getPrototypeOf$5 = parent$Q;
 
-	var parent$S = getPrototypeOf$5;
+	var parent$P = getPrototypeOf$5;
 
-	var getPrototypeOf$4 = parent$S;
+	var getPrototypeOf$4 = parent$P;
 
-	var parent$R = getPrototypeOf$4;
+	var parent$O = getPrototypeOf$4;
 
-	var getPrototypeOf$3 = parent$R;
+	var getPrototypeOf$3 = parent$O;
 
 	var getPrototypeOf$2 = getPrototypeOf$3;
 
@@ -3521,13 +3521,13 @@
 	  } return T;
 	} : $assign;
 
-	var $$P = _export;
+	var $$O = _export;
 	var assign$7 = objectAssign;
 
 	// `Object.assign` method
 	// https://tc39.es/ecma262/#sec-object.assign
 	// eslint-disable-next-line es/no-object-assign -- required for testing
-	$$P({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$7 }, {
+	$$O({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$7 }, {
 	  assign: assign$7
 	});
 
@@ -3535,17 +3535,17 @@
 
 	var assign$6 = path$a.Object.assign;
 
-	var parent$Q = assign$6;
+	var parent$N = assign$6;
 
-	var assign$5 = parent$Q;
+	var assign$5 = parent$N;
 
-	var parent$P = assign$5;
+	var parent$M = assign$5;
 
-	var assign$4 = parent$P;
+	var assign$4 = parent$M;
 
-	var parent$O = assign$4;
+	var parent$L = assign$4;
 
-	var assign$3 = parent$O;
+	var assign$3 = parent$L;
 
 	var assign$2 = assign$3;
 
@@ -3590,7 +3590,7 @@
 	  return Object.isExtensible(Object.preventExtensions({}));
 	});
 
-	var $$O = _export;
+	var $$N = _export;
 	var uncurryThis$b = functionUncurryThis;
 	var hiddenKeys = hiddenKeys$6;
 	var isObject$6 = isObject$j;
@@ -3665,7 +3665,7 @@
 	      } return result;
 	    };
 
-	    $$O({ target: 'Object', stat: true, forced: true }, {
+	    $$N({ target: 'Object', stat: true, forced: true }, {
 	      getOwnPropertyNames: getOwnPropertyNamesExternalModule.f
 	    });
 	  }
@@ -3688,7 +3688,7 @@
 	var tryToString$2 = tryToString$7;
 	var isArrayIteratorMethod = isArrayIteratorMethod$2;
 	var lengthOfArrayLike$1 = lengthOfArrayLike$8;
-	var isPrototypeOf$9 = objectIsPrototypeOf;
+	var isPrototypeOf$8 = objectIsPrototypeOf;
 	var getIterator$1 = getIterator$3;
 	var getIteratorMethod$1 = getIteratorMethod$a;
 	var iteratorClose = iteratorClose$2;
@@ -3734,7 +3734,7 @@
 	    if (isArrayIteratorMethod(iterFn)) {
 	      for (index = 0, length = lengthOfArrayLike$1(iterable); length > index; index++) {
 	        result = callFn(iterable[index]);
-	        if (result && isPrototypeOf$9(ResultPrototype, result)) return result;
+	        if (result && isPrototypeOf$8(ResultPrototype, result)) return result;
 	      } return new Result(false);
 	    }
 	    iterator = getIterator$1(iterable, iterFn);
@@ -3747,20 +3747,20 @@
 	    } catch (error) {
 	      iteratorClose(iterator, 'throw', error);
 	    }
-	    if (typeof result == 'object' && result && isPrototypeOf$9(ResultPrototype, result)) return result;
+	    if (typeof result == 'object' && result && isPrototypeOf$8(ResultPrototype, result)) return result;
 	  } return new Result(false);
 	};
 
-	var isPrototypeOf$8 = objectIsPrototypeOf;
+	var isPrototypeOf$7 = objectIsPrototypeOf;
 
 	var $TypeError$8 = TypeError;
 
 	var anInstance$5 = function (it, Prototype) {
-	  if (isPrototypeOf$8(Prototype, it)) return it;
+	  if (isPrototypeOf$7(Prototype, it)) return it;
 	  throw $TypeError$8('Incorrect invocation');
 	};
 
-	var $$N = _export;
+	var $$M = _export;
 	var global$d = global$r;
 	var InternalMetadataModule = internalMetadataExports;
 	var fails$b = fails$x;
@@ -3829,7 +3829,7 @@
 	  setToStringTag$3(Constructor, CONSTRUCTOR_NAME, false, true);
 
 	  exported[CONSTRUCTOR_NAME] = Constructor;
-	  $$N({ global: true, forced: true }, exported);
+	  $$M({ global: true, forced: true }, exported);
 
 	  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
 
@@ -4081,16 +4081,16 @@
 
 	var path$9 = path$n;
 
-	var map$c = path$9.Map;
+	var map$5 = path$9.Map;
 
-	var parent$N = map$c;
+	var parent$K = map$5;
 
 
-	var map$b = parent$N;
+	var map$4 = parent$K;
 
-	var parent$M = map$b;
+	var parent$J = map$4;
 
-	var map$a = parent$M;
+	var map$3 = parent$J;
 
 	// https://tc39.github.io/proposal-setmap-offrom/
 	var bind$c = functionBindContext;
@@ -4123,12 +4123,12 @@
 	  return new this(array);
 	};
 
-	var $$M = _export;
+	var $$L = _export;
 	var from = collectionFrom;
 
 	// `Map.from` method
 	// https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
-	$$M({ target: 'Map', stat: true, forced: true }, {
+	$$L({ target: 'Map', stat: true, forced: true }, {
 	  from: from
 	});
 
@@ -4139,12 +4139,12 @@
 	  return new this(arraySlice$4(arguments));
 	};
 
-	var $$L = _export;
+	var $$K = _export;
 	var of = collectionOf;
 
 	// `Map.of` method
 	// https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
-	$$L({ target: 'Map', stat: true, forced: true }, {
+	$$K({ target: 'Map', stat: true, forced: true }, {
 	  of: of
 	});
 
@@ -4178,13 +4178,13 @@
 	  proto: Map$5.prototype
 	};
 
-	var $$K = _export;
+	var $$J = _export;
 	var aMap$d = aMap$e;
 	var remove = mapHelpers.remove;
 
 	// `Map.prototype.deleteAll` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$K({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$J({ target: 'Map', proto: true, real: true, forced: true }, {
 	  deleteAll: function deleteAll(/* ...elements */) {
 	    var collection = aMap$d(this);
 	    var allDeleted = true;
@@ -4196,7 +4196,7 @@
 	  }
 	});
 
-	var $$J = _export;
+	var $$I = _export;
 	var aMap$c = aMap$e;
 	var MapHelpers$4 = mapHelpers;
 
@@ -4206,7 +4206,7 @@
 
 	// `Map.prototype.emplace` method
 	// https://github.com/tc39/proposal-upsert
-	$$J({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$I({ target: 'Map', proto: true, real: true, forced: true }, {
 	  emplace: function emplace(key, handler) {
 	    var map = aMap$c(this);
 	    var value, inserted;
@@ -4242,14 +4242,14 @@
 	  }) : map.forEach(fn);
 	};
 
-	var $$I = _export;
+	var $$H = _export;
 	var bind$b = functionBindContext;
 	var aMap$b = aMap$e;
 	var iterate$h = mapIterate;
 
 	// `Map.prototype.every` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$I({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$H({ target: 'Map', proto: true, real: true, forced: true }, {
 	  every: function every(callbackfn /* , thisArg */) {
 	    var map = aMap$b(this);
 	    var boundFunction = bind$b(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4259,7 +4259,7 @@
 	  }
 	});
 
-	var $$H = _export;
+	var $$G = _export;
 	var bind$a = functionBindContext;
 	var aMap$a = aMap$e;
 	var MapHelpers$3 = mapHelpers;
@@ -4270,7 +4270,7 @@
 
 	// `Map.prototype.filter` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$H({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$G({ target: 'Map', proto: true, real: true, forced: true }, {
 	  filter: function filter(callbackfn /* , thisArg */) {
 	    var map = aMap$a(this);
 	    var boundFunction = bind$a(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4282,14 +4282,14 @@
 	  }
 	});
 
-	var $$G = _export;
+	var $$F = _export;
 	var bind$9 = functionBindContext;
 	var aMap$9 = aMap$e;
 	var iterate$f = mapIterate;
 
 	// `Map.prototype.find` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$G({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$F({ target: 'Map', proto: true, real: true, forced: true }, {
 	  find: function find(callbackfn /* , thisArg */) {
 	    var map = aMap$9(this);
 	    var boundFunction = bind$9(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4300,14 +4300,14 @@
 	  }
 	});
 
-	var $$F = _export;
+	var $$E = _export;
 	var bind$8 = functionBindContext;
 	var aMap$8 = aMap$e;
 	var iterate$e = mapIterate;
 
 	// `Map.prototype.findKey` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$F({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$E({ target: 'Map', proto: true, real: true, forced: true }, {
 	  findKey: function findKey(callbackfn /* , thisArg */) {
 	    var map = aMap$8(this);
 	    var boundFunction = bind$8(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4318,7 +4318,7 @@
 	  }
 	});
 
-	var $$E = _export;
+	var $$D = _export;
 	var call$9 = functionCall;
 	var uncurryThis$a = functionUncurryThis;
 	var isCallable$8 = isCallable$q;
@@ -4330,7 +4330,7 @@
 
 	// `Map.groupBy` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$E({ target: 'Map', stat: true, forced: true }, {
+	$$D({ target: 'Map', stat: true, forced: true }, {
 	  groupBy: function groupBy(iterable, keyDerivative) {
 	    var C = isCallable$8(this) ? this : Map$3;
 	    var newMap = new C();
@@ -4354,14 +4354,14 @@
 	  return x === y || x != x && y != y;
 	};
 
-	var $$D = _export;
+	var $$C = _export;
 	var sameValueZero = sameValueZero$1;
 	var aMap$7 = aMap$e;
 	var iterate$c = mapIterate;
 
 	// `Map.prototype.includes` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$D({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$C({ target: 'Map', proto: true, real: true, forced: true }, {
 	  includes: function includes(searchElement) {
 	    return iterate$c(aMap$7(this), function (value) {
 	      if (sameValueZero(value, searchElement)) return true;
@@ -4369,7 +4369,7 @@
 	  }
 	});
 
-	var $$C = _export;
+	var $$B = _export;
 	var call$8 = functionCall;
 	var iterate$b = iterate$l;
 	var isCallable$7 = isCallable$q;
@@ -4378,7 +4378,7 @@
 
 	// `Map.keyBy` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$C({ target: 'Map', stat: true, forced: true }, {
+	$$B({ target: 'Map', stat: true, forced: true }, {
 	  keyBy: function keyBy(iterable, keyDerivative) {
 	    var C = isCallable$7(this) ? this : Map$2;
 	    var newMap = new C();
@@ -4391,13 +4391,13 @@
 	  }
 	});
 
-	var $$B = _export;
+	var $$A = _export;
 	var aMap$6 = aMap$e;
 	var iterate$a = mapIterate;
 
 	// `Map.prototype.keyOf` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$B({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$A({ target: 'Map', proto: true, real: true, forced: true }, {
 	  keyOf: function keyOf(searchElement) {
 	    var result = iterate$a(aMap$6(this), function (value, key) {
 	      if (value === searchElement) return { key: key };
@@ -4406,7 +4406,7 @@
 	  }
 	});
 
-	var $$A = _export;
+	var $$z = _export;
 	var bind$7 = functionBindContext;
 	var aMap$5 = aMap$e;
 	var MapHelpers$2 = mapHelpers;
@@ -4417,7 +4417,7 @@
 
 	// `Map.prototype.mapKeys` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$A({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$z({ target: 'Map', proto: true, real: true, forced: true }, {
 	  mapKeys: function mapKeys(callbackfn /* , thisArg */) {
 	    var map = aMap$5(this);
 	    var boundFunction = bind$7(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4429,7 +4429,7 @@
 	  }
 	});
 
-	var $$z = _export;
+	var $$y = _export;
 	var bind$6 = functionBindContext;
 	var aMap$4 = aMap$e;
 	var MapHelpers$1 = mapHelpers;
@@ -4440,7 +4440,7 @@
 
 	// `Map.prototype.mapValues` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$z({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$y({ target: 'Map', proto: true, real: true, forced: true }, {
 	  mapValues: function mapValues(callbackfn /* , thisArg */) {
 	    var map = aMap$4(this);
 	    var boundFunction = bind$6(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4452,14 +4452,14 @@
 	  }
 	});
 
-	var $$y = _export;
+	var $$x = _export;
 	var aMap$3 = aMap$e;
 	var iterate$7 = iterate$l;
 	var set$2 = mapHelpers.set;
 
 	// `Map.prototype.merge` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$y({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
+	$$x({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
 	  // eslint-disable-next-line no-unused-vars -- required for `.length`
 	  merge: function merge(iterable /* ...iterables */) {
 	    var map = aMap$3(this);
@@ -4474,7 +4474,7 @@
 	  }
 	});
 
-	var $$x = _export;
+	var $$w = _export;
 	var aCallable$8 = aCallable$h;
 	var aMap$2 = aMap$e;
 	var iterate$6 = mapIterate;
@@ -4483,7 +4483,7 @@
 
 	// `Map.prototype.reduce` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$x({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$w({ target: 'Map', proto: true, real: true, forced: true }, {
 	  reduce: function reduce(callbackfn /* , initialValue */) {
 	    var map = aMap$2(this);
 	    var noInitial = arguments.length < 2;
@@ -4502,14 +4502,14 @@
 	  }
 	});
 
-	var $$w = _export;
+	var $$v = _export;
 	var bind$5 = functionBindContext;
 	var aMap$1 = aMap$e;
 	var iterate$5 = mapIterate;
 
 	// `Map.prototype.some` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$w({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$v({ target: 'Map', proto: true, real: true, forced: true }, {
 	  some: function some(callbackfn /* , thisArg */) {
 	    var map = aMap$1(this);
 	    var boundFunction = bind$5(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4519,7 +4519,7 @@
 	  }
 	});
 
-	var $$v = _export;
+	var $$u = _export;
 	var aCallable$7 = aCallable$h;
 	var aMap = aMap$e;
 	var MapHelpers = mapHelpers;
@@ -4531,7 +4531,7 @@
 
 	// `Map.prototype.update` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$v({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$u({ target: 'Map', proto: true, real: true, forced: true }, {
 	  update: function update(key, callback /* , thunk */) {
 	    var map = aMap(this);
 	    var length = arguments.length;
@@ -4578,26 +4578,26 @@
 	};
 
 	// TODO: remove from `core-js@4`
-	var $$u = _export;
+	var $$t = _export;
 	var upsert$1 = mapUpsert;
 
 	// `Map.prototype.upsert` method (replaced by `Map.prototype.emplace`)
 	// https://github.com/thumbsupep/proposal-upsert
-	$$u({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$t({ target: 'Map', proto: true, real: true, forced: true }, {
 	  upsert: upsert$1
 	});
 
 	// TODO: remove from `core-js@4`
-	var $$t = _export;
+	var $$s = _export;
 	var upsert = mapUpsert;
 
 	// `Map.prototype.updateOrInsert` method (replaced by `Map.prototype.emplace`)
 	// https://github.com/thumbsupep/proposal-upsert
-	$$t({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
+	$$s({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
 	  updateOrInsert: upsert
 	});
 
-	var parent$L = map$a;
+	var parent$I = map$3;
 
 
 
@@ -4621,13 +4621,13 @@
 	// TODO: remove from `core-js@4`
 
 
-	var map$9 = parent$L;
+	var map$2 = parent$I;
 
-	var map$8 = map$9;
+	var map$1 = map$2;
 
-	var map$7 = map$8;
+	var map = map$1;
 
-	var _Map = /*@__PURE__*/getDefaultExportFromCjs(map$7);
+	var _Map = /*@__PURE__*/getDefaultExportFromCjs(map);
 
 	var fails$a = fails$x;
 
@@ -4651,30 +4651,30 @@
 	// eslint-disable-next-line es/no-array-prototype-foreach -- safe
 	} : [].forEach;
 
-	var $$s = _export;
+	var $$r = _export;
 	var forEach$7 = arrayForEach;
 
 	// `Array.prototype.forEach` method
 	// https://tc39.es/ecma262/#sec-array.prototype.foreach
 	// eslint-disable-next-line es/no-array-prototype-foreach -- safe
-	$$s({ target: 'Array', proto: true, forced: [].forEach != forEach$7 }, {
+	$$r({ target: 'Array', proto: true, forced: [].forEach != forEach$7 }, {
 	  forEach: forEach$7
 	});
 
-	var entryVirtual$7 = entryVirtual$a;
+	var entryVirtual$6 = entryVirtual$9;
 
-	var forEach$6 = entryVirtual$7('Array').forEach;
+	var forEach$6 = entryVirtual$6('Array').forEach;
 
-	var parent$K = forEach$6;
+	var parent$H = forEach$6;
 
-	var forEach$5 = parent$K;
+	var forEach$5 = parent$H;
 
 	var classof$3 = classof$d;
 	var hasOwn$4 = hasOwnProperty_1;
-	var isPrototypeOf$7 = objectIsPrototypeOf;
-	var method$5 = forEach$5;
+	var isPrototypeOf$6 = objectIsPrototypeOf;
+	var method$4 = forEach$5;
 
-	var ArrayPrototype$6 = Array.prototype;
+	var ArrayPrototype$5 = Array.prototype;
 
 	var DOMIterables = {
 	  DOMTokenList: true,
@@ -4683,17 +4683,17 @@
 
 	var forEach$4 = function (it) {
 	  var own = it.forEach;
-	  return it === ArrayPrototype$6 || (isPrototypeOf$7(ArrayPrototype$6, it) && own === ArrayPrototype$6.forEach)
-	    || hasOwn$4(DOMIterables, classof$3(it)) ? method$5 : own;
+	  return it === ArrayPrototype$5 || (isPrototypeOf$6(ArrayPrototype$5, it) && own === ArrayPrototype$5.forEach)
+	    || hasOwn$4(DOMIterables, classof$3(it)) ? method$4 : own;
 	};
 
-	var parent$J = forEach$4;
+	var parent$G = forEach$4;
 
-	var forEach$3 = parent$J;
+	var forEach$3 = parent$G;
 
-	var parent$I = forEach$3;
+	var parent$F = forEach$3;
 
-	var forEach$2 = parent$I;
+	var forEach$2 = parent$F;
 
 	var forEach$1 = forEach$2;
 
@@ -4702,7 +4702,7 @@
 	var _forEachInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(forEach);
 
 	/* eslint-disable es/no-array-prototype-indexof -- required for testing */
-	var $$r = _export;
+	var $$q = _export;
 	var uncurryThis$9 = functionUncurryThisClause;
 	var $indexOf = arrayIncludes.indexOf;
 	var arrayMethodIsStrict = arrayMethodIsStrict$2;
@@ -4714,7 +4714,7 @@
 
 	// `Array.prototype.indexOf` method
 	// https://tc39.es/ecma262/#sec-array.prototype.indexof
-	$$r({ target: 'Array', proto: true, forced: FORCED$3 }, {
+	$$q({ target: 'Array', proto: true, forced: FORCED$3 }, {
 	  indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
 	    var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
 	    return NEGATIVE_ZERO
@@ -4724,31 +4724,31 @@
 	  }
 	});
 
-	var entryVirtual$6 = entryVirtual$a;
+	var entryVirtual$5 = entryVirtual$9;
 
-	var indexOf$6 = entryVirtual$6('Array').indexOf;
+	var indexOf$6 = entryVirtual$5('Array').indexOf;
 
-	var isPrototypeOf$6 = objectIsPrototypeOf;
-	var method$4 = indexOf$6;
+	var isPrototypeOf$5 = objectIsPrototypeOf;
+	var method$3 = indexOf$6;
 
-	var ArrayPrototype$5 = Array.prototype;
+	var ArrayPrototype$4 = Array.prototype;
 
 	var indexOf$5 = function (it) {
 	  var own = it.indexOf;
-	  return it === ArrayPrototype$5 || (isPrototypeOf$6(ArrayPrototype$5, it) && own === ArrayPrototype$5.indexOf) ? method$4 : own;
+	  return it === ArrayPrototype$4 || (isPrototypeOf$5(ArrayPrototype$4, it) && own === ArrayPrototype$4.indexOf) ? method$3 : own;
 	};
 
-	var parent$H = indexOf$5;
+	var parent$E = indexOf$5;
 
-	var indexOf$4 = parent$H;
+	var indexOf$4 = parent$E;
 
-	var parent$G = indexOf$4;
+	var parent$D = indexOf$4;
 
-	var indexOf$3 = parent$G;
+	var indexOf$3 = parent$D;
 
-	var parent$F = indexOf$3;
+	var parent$C = indexOf$3;
 
-	var indexOf$2 = parent$F;
+	var indexOf$2 = parent$C;
 
 	var indexOf$1 = indexOf$2;
 
@@ -4756,31 +4756,31 @@
 
 	var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
 
-	var entryVirtual$5 = entryVirtual$a;
+	var entryVirtual$4 = entryVirtual$9;
 
-	var concat$7 = entryVirtual$5('Array').concat;
+	var concat$7 = entryVirtual$4('Array').concat;
 
-	var isPrototypeOf$5 = objectIsPrototypeOf;
-	var method$3 = concat$7;
+	var isPrototypeOf$4 = objectIsPrototypeOf;
+	var method$2 = concat$7;
 
-	var ArrayPrototype$4 = Array.prototype;
+	var ArrayPrototype$3 = Array.prototype;
 
 	var concat$6 = function (it) {
 	  var own = it.concat;
-	  return it === ArrayPrototype$4 || (isPrototypeOf$5(ArrayPrototype$4, it) && own === ArrayPrototype$4.concat) ? method$3 : own;
+	  return it === ArrayPrototype$3 || (isPrototypeOf$4(ArrayPrototype$3, it) && own === ArrayPrototype$3.concat) ? method$2 : own;
 	};
 
-	var parent$E = concat$6;
+	var parent$B = concat$6;
 
-	var concat$5 = parent$E;
+	var concat$5 = parent$B;
 
-	var parent$D = concat$5;
+	var parent$A = concat$5;
 
-	var concat$4 = parent$D;
+	var concat$4 = parent$A;
 
-	var parent$C = concat$4;
+	var parent$z = concat$4;
 
-	var concat$3 = parent$C;
+	var concat$3 = parent$z;
 
 	var concat$2 = concat$3;
 
@@ -4788,9 +4788,9 @@
 
 	var _concatInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(concat$1);
 
-	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-	function _unsupportedIterableToArray$1(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
-	function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+	function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+	function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	function getDOMPoint(dom) {
 	  var rect = dom.getBoundingClientRect();
 	  return {
@@ -4840,7 +4840,7 @@
 	 * @param {Node[]} children
 	 * @returns
 	 */
-	function $$q(desc, props, children) {
+	function $$p(desc, props, children) {
 	  var match = [];
 	  var regArray = SELECTOR_REG.exec(desc);
 	  // /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/.exec('div#app.a.b')
@@ -4871,7 +4871,7 @@
 	  if (typeof children === 'string') {
 	    el.innerHTML += children;
 	  } else if (children) {
-	    var _iterator = _createForOfIteratorHelper$1(children),
+	    var _iterator = _createForOfIteratorHelper(children),
 	      _step;
 	    try {
 	      for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -4888,7 +4888,7 @@
 	}
 	function addClass(dom, classNames) {
 	  var classList = dom.classList;
-	  var _iterator2 = _createForOfIteratorHelper$1(classNames),
+	  var _iterator2 = _createForOfIteratorHelper(classNames),
 	    _step2;
 	  try {
 	    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -4914,21 +4914,6 @@
 	  }
 	  return false;
 	}
-	function containsDOM(parent, child) {
-	  // if (parent.childNodes.length) {
-	  //   parent.childNodes.forEach((node) => {
-	  //     if (node !== child) {
-	  //       if (containsDOM(node as Element, child)) return true
-	  //     }
-	  //     return true
-	  //   })
-	  // }
-	  // return false
-	  if (parent !== child && parent.contains(child)) {
-	    return true;
-	  }
-	  return false;
-	}
 	var svgNS = 'http://www.w3.org/2000/svg';
 	function createSvg(d) {
 	  var viewBox = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0 0 24 24';
@@ -4945,7 +4930,7 @@
 	  var viewBox = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0 0 24 24';
 	  var svg = document.createElementNS(svgNS, 'svg');
 	  svg.setAttribute('viewBox', viewBox);
-	  var _iterator3 = _createForOfIteratorHelper$1(d),
+	  var _iterator3 = _createForOfIteratorHelper(d),
 	    _step3;
 	  try {
 	    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
@@ -4977,7 +4962,7 @@
 	        if (replaceElementType === 'replaceOuterHTMLOfComponent') {
 	          target.el = another.el;
 	        } else {
-	          var _iterator4 = _createForOfIteratorHelper$1(target.el.childNodes),
+	          var _iterator4 = _createForOfIteratorHelper(target.el.childNodes),
 	            _step4;
 	          try {
 	            for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
@@ -5061,46 +5046,46 @@
 	  return fn.bind(context);
 	}
 
-	var $$p = _export;
+	var $$o = _export;
 	var $filter = arrayIteration.filter;
-	var arrayMethodHasSpeciesSupport$2 = arrayMethodHasSpeciesSupport$5;
+	var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$4;
 
-	var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport$2('filter');
+	var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('filter');
 
 	// `Array.prototype.filter` method
 	// https://tc39.es/ecma262/#sec-array.prototype.filter
 	// with adding support of @@species
-	$$p({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
+	$$o({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
 	  filter: function filter(callbackfn /* , thisArg */) {
 	    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	  }
 	});
 
-	var entryVirtual$4 = entryVirtual$a;
+	var entryVirtual$3 = entryVirtual$9;
 
-	var filter$6 = entryVirtual$4('Array').filter;
+	var filter$6 = entryVirtual$3('Array').filter;
 
-	var isPrototypeOf$4 = objectIsPrototypeOf;
-	var method$2 = filter$6;
+	var isPrototypeOf$3 = objectIsPrototypeOf;
+	var method$1 = filter$6;
 
-	var ArrayPrototype$3 = Array.prototype;
+	var ArrayPrototype$2 = Array.prototype;
 
 	var filter$5 = function (it) {
 	  var own = it.filter;
-	  return it === ArrayPrototype$3 || (isPrototypeOf$4(ArrayPrototype$3, it) && own === ArrayPrototype$3.filter) ? method$2 : own;
+	  return it === ArrayPrototype$2 || (isPrototypeOf$3(ArrayPrototype$2, it) && own === ArrayPrototype$2.filter) ? method$1 : own;
 	};
 
-	var parent$B = filter$5;
+	var parent$y = filter$5;
 
-	var filter$4 = parent$B;
+	var filter$4 = parent$y;
 
-	var parent$A = filter$4;
+	var parent$x = filter$4;
 
-	var filter$3 = parent$A;
+	var filter$3 = parent$x;
 
-	var parent$z = filter$3;
+	var parent$w = filter$3;
 
-	var filter$2 = parent$z;
+	var filter$2 = parent$w;
 
 	var filter$1 = filter$2;
 
@@ -5149,11 +5134,11 @@
 	  return BaseEvent;
 	}();
 
-	function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Component = /*#__PURE__*/function (_BaseEvent) {
 	  _inherits(Component, _BaseEvent);
-	  var _super = _createSuper$q(Component);
+	  var _super = _createSuper$r(Component);
 	  function Component(container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Component);
@@ -5164,7 +5149,7 @@
 	    if (!desc) {
 	      desc = 'div';
 	    }
-	    var dom = $$q(desc, props, children);
+	    var dom = $$p(desc, props, children);
 	    _this.el = dom;
 	    _this.container = container;
 	    // 安装组件成功
@@ -5207,52 +5192,16 @@
 	  return Component;
 	}(BaseEvent);
 
-	var $$o = _export;
-	var $map = arrayIteration.map;
-	var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$5;
-
-	var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('map');
-
-	// `Array.prototype.map` method
-	// https://tc39.es/ecma262/#sec-array.prototype.map
-	// with adding support of @@species
-	$$o({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
-	  map: function map(callbackfn /* , thisArg */) {
-	    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	  }
-	});
-
-	var entryVirtual$3 = entryVirtual$a;
-
-	var map$6 = entryVirtual$3('Array').map;
-
-	var isPrototypeOf$3 = objectIsPrototypeOf;
-	var method$1 = map$6;
-
-	var ArrayPrototype$2 = Array.prototype;
-
-	var map$5 = function (it) {
-	  var own = it.map;
-	  return it === ArrayPrototype$2 || (isPrototypeOf$3(ArrayPrototype$2, it) && own === ArrayPrototype$2.map) ? method$1 : own;
-	};
-
-	var parent$y = map$5;
-
-	var map$4 = parent$y;
-
-	var parent$x = map$4;
-
-	var map$3 = parent$x;
-
-	var parent$w = map$3;
-
-	var map$2 = parent$w;
-
-	var map$1 = map$2;
-
-	var map = map$1;
-
-	var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map);
+	// COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件
+	var COMPONENT_STORE = new _Map();
+	// ONCE_COMPONENT_STORE存储的是只要曾经在视图上展示过哪怕已经卸载，都会一直保留在此处，除非通过delete进行彻底删除
+	var ONCE_COMPONENT_STORE = new _Map();
+	// 存储需要隐藏的元素，但不进行卸载
+	var HIDEEN_COMPONENT_STORE = new _Map();
+	function storeControlComponent(item) {
+	  COMPONENT_STORE.set(item.id, item);
+	  ONCE_COMPONENT_STORE.set(item.id, item);
+	}
 
 	var playPath = "M6 2.914v18.172L20.279 12 6 2.914z";
 	var pausePath = "M14.333 20.133H19V3.8h-4.667M5 20.133h4.667V3.8H5v16.333z";
@@ -5316,11 +5265,11 @@
 	  EVENT["VOLUME_PROGRESS_CLICK"] = "volume-progress-click";
 	})(EVENT || (EVENT = {}));
 
-	function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Options = /*#__PURE__*/function (_Component) {
 	  _inherits(Options, _Component);
-	  var _super = _createSuper$p(Options);
+	  var _super = _createSuper$q(Options);
 	  function Options(player, container, hideWidth, hideHeight, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Options);
@@ -5350,7 +5299,7 @@
 	  }, {
 	    key: "initBaseTemplate",
 	    value: function initBaseTemplate() {
-	      this.hideBox = $$q('div');
+	      this.hideBox = $$p('div');
 	      addClass(this.hideBox, ['video-set', 'video-set-hidden']);
 	      if (this.hideHeight && this.hideHeight > 0) {
 	        this.hideBox.style.height = this.hideHeight + 'px';
@@ -5359,7 +5308,7 @@
 	        this.hideBox.style.width = this.hideWidth + 'px';
 	      }
 	      this.el.appendChild(this.hideBox);
-	      this.iconBox = $$q('div');
+	      this.iconBox = $$p('div');
 	      addClass(this.iconBox, ['video-icon']);
 	      this.el.appendChild(this.iconBox);
 	    }
@@ -5407,12 +5356,6 @@
 	  }]);
 	  return Options;
 	}(Component);
-
-	var main_min = {};
-
-	(function (exports) {
-	Object.defineProperty(exports,"__esModule",{value:!0}),exports.toggleFull=exports.isFull=exports.exitFull=exports.beFull=void 0;var e=document.documentElement,l=e.querySelector("head"),n=document.createElement("style"),t="requestFullscreen",u="exitFullscreen",r="fullscreenElement";if("webkitRequestFullScreen"in e)t="webkitRequestFullScreen",u="webkitExitFullscreen",r="webkitFullscreenElement";else if("msRequestFullscreen"in e)t="msRequestFullscreen",u="msExitFullscreen",r="msFullscreenElement";else if("mozRequestFullScreen"in e)t="mozRequestFullScreen",u="mozCancelFullScreen",r="mozFullScreenElement";else if(!("requestFullscreen"in e))throw "当前浏览器不支持Fullscreen API !";function c(l){return l instanceof HTMLElement?l:e}function o(e,u){return u&&(null===l&&(l=document.createElement("head")),n.innerHTML=":fullscreen{background-color:"+u+";}",l.appendChild(n)),c(e)[t]()}function i(){return e.contains(n)&&(null==l||l.removeChild(n)),document[u]()}function F(e){return c(e)===document[r]}function m(e,l){return F(e)?(i(),!1):(o(e,l),!0)}exports.beFull=o,exports.exitFull=i,exports.isFull=F,exports.toggleFull=m; 
-	} (main_min));
 
 	let fn1 = Document.prototype.createElement;
 	// 此函数为重载实现
@@ -5873,6 +5816,74 @@
 	document$3.getElementsByTagName = getElementsByTagName;
 	Object.setPrototypeOf(document$3, Document.prototype);
 
+	function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var FullPage = /*#__PURE__*/function (_Options) {
+	  _inherits(FullPage, _Options);
+	  var _super = _createSuper$p(FullPage);
+	  function FullPage(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, FullPage);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'FullPage');
+	    // el: div.video-fullpage.video-controller
+	    _defineProperty(_assertThisInitialized(_this), "isFullPage", false);
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(FullPage, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-fullpage', 'video-controller']);
+	      this.icon = createSvg(fullPagePath);
+	      this.iconBox.appendChild(this.icon);
+	      this.el.appendChild(this.iconBox);
+	      this.hideBox.innerText = '网页全屏';
+	      this.hideBox.style.fontSize = '13px';
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      this.onClick = this.onClick.bind(this);
+	      if (this.player.env === 'Mobile') {
+	        wrap(this.el).addEventListener('singleTap', this.onClick);
+	      } else {
+	        this.el.onclick = this.onClick;
+	      }
+	    }
+	  }, {
+	    key: "onClick",
+	    value: function onClick(e) {
+	      if (!this.isFullPage) {
+	        addClass(this.player.el, ['video-wrapper-fullpage']);
+	        this.iconBox.removeChild(this.icon);
+	        this.icon = createSvg(fullPageExitPath);
+	        this.iconBox.appendChild(this.icon);
+	      } else {
+	        removeClass(this.player.el, ['video-wrapper-fullpage']);
+	        this.iconBox.removeChild(this.icon);
+	        this.icon = createSvg(fullPagePath);
+	        this.iconBox.appendChild(this.icon);
+	      }
+	      this.isFullPage = !this.isFullPage;
+	    }
+	  }]);
+	  return FullPage;
+	}(Options);
+
+	var main_min = {};
+
+	(function (exports) {
+	Object.defineProperty(exports,"__esModule",{value:!0}),exports.toggleFull=exports.isFull=exports.exitFull=exports.beFull=void 0;var e=document.documentElement,l=e.querySelector("head"),n=document.createElement("style"),t="requestFullscreen",u="exitFullscreen",r="fullscreenElement";if("webkitRequestFullScreen"in e)t="webkitRequestFullScreen",u="webkitExitFullscreen",r="webkitFullscreenElement";else if("msRequestFullscreen"in e)t="msRequestFullscreen",u="msExitFullscreen",r="msFullscreenElement";else if("mozRequestFullScreen"in e)t="mozRequestFullScreen",u="mozCancelFullScreen",r="mozFullScreenElement";else if(!("requestFullscreen"in e))throw "当前浏览器不支持Fullscreen API !";function c(l){return l instanceof HTMLElement?l:e}function o(e,u){return u&&(null===l&&(l=document.createElement("head")),n.innerHTML=":fullscreen{background-color:"+u+";}",l.appendChild(n)),c(e)[t]()}function i(){return e.contains(n)&&(null==l||l.removeChild(n)),document[u]()}function F(e){return c(e)===document[r]}function m(e,l){return F(e)?(i(),!1):(o(e,l),!0)}exports.beFull=o,exports.exitFull=i,exports.isFull=F,exports.toggleFull=m; 
+	} (main_min));
+
 	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullScreen = /*#__PURE__*/function (_Options) {
@@ -5944,9 +5955,66 @@
 
 	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var PicInPic = /*#__PURE__*/function (_Options) {
+	  _inherits(PicInPic, _Options);
+	  var _super = _createSuper$n(PicInPic);
+	  // el: div.video-picInpic.video-controller
+	  function PicInPic(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, PicInPic);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'PicInPic');
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(PicInPic, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-picInpic', 'video-controller']);
+	      this.icon = createSvg(picInPicPath, '0 0 1024 1024');
+	      this.iconBox.appendChild(this.icon);
+	      this.el.appendChild(this.iconBox);
+	      this.hideBox.innerText = '画中画';
+	      this.hideBox.style.fontSize = '13px';
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      this.onClick = this.onClick.bind(this);
+	      if (this.player.env === 'Mobile') {
+	        wrap(this.el).addEventListener('singleTap', this.onClick);
+	      } else {
+	        this.el.onclick = this.onClick;
+	      }
+	    }
+	  }, {
+	    key: "onClick",
+	    value: function onClick(e) {
+	      // document.pictureInPictureElement: 当前画中画的元素
+	      if (document.pictureInPictureElement) {
+	        // 当前存在画中画的元素，则退出画中画
+	        document.exitPictureInPicture();
+	      } else {
+	        // 当前不存在画中画的元素，则开启画中画
+	        this.player.video.requestPictureInPicture(); // 返回 Promise，里面是 pipWindow
+	      }
+	    }
+	  }]);
+	  return PicInPic;
+	}(Options);
+
+	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PlayButton = /*#__PURE__*/function (_Component) {
 	  _inherits(PlayButton, _Component);
-	  var _super = _createSuper$n(PlayButton);
+	  var _super = _createSuper$m(PlayButton);
 	  function PlayButton(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, PlayButton);
@@ -5975,7 +6043,7 @@
 	    key: "initTemplate",
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-start-pause', 'video-controller']);
-	      this.iconBox = $$q('div.video-icon');
+	      this.iconBox = $$p('div.video-icon');
 	      this.el.appendChild(this.iconBox);
 	      this.pauseIcon = createSvg(pausePath);
 	      this.playIcon = createSvg(playPath);
@@ -6034,434 +6102,14 @@
 	  return PlayButton;
 	}(Component);
 
-	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	/**
-	 * @description 播放速率的类
-	 */
-	var Playrate = /*#__PURE__*/function (_Options) {
-	  _inherits(Playrate, _Options);
-	  var _super = _createSuper$m(Playrate);
-	  function Playrate(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, Playrate);
-	    _this = _super.call(this, player, container, 0, 0, desc);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Playrate');
-	    // el: div.video-playrate.video-controller
-	    _defineProperty(_assertThisInitialized(_this), "playrateArray", ['0.5', '0.75', '1.0', '1.25', '1.5', '2.0']);
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Playrate, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      this.el['aria-label'] = '播放倍速';
-	      addClass(this.el, ['video-playrate', 'video-controller']);
-	      this.el.removeChild(this.iconBox);
-	      this.iconBox = $$q('span.video-controller-span', null, '倍速');
-	      this.el.appendChild(this.iconBox);
-	      this.el.removeChild(this.hideBox);
-	      // this.hideBox = $('ul', { style: { display: 'none' }, 'aria-label': '播放速度调节' })
-	      addClass(this.hideBox, ['video-playrate-set']);
-	      this.el.appendChild(this.hideBox);
-	      for (var i = this.playrateArray.length - 1; i >= 0; i--) {
-	        var li = $$q('li');
-	        li.innerText = this.playrateArray[i];
-	        if (this.playrateArray[i] === '1.0') {
-	          li.style.color = '#007aff';
-	        }
-	        this.hideBox.appendChild(li);
-	      }
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.onClick = this.onClick.bind(this);
-	      if (this.player.env === 'PC') {
-	        this.hideBox.addEventListener('click', this.onClick);
-	      } else {
-	        wrap(this.hideBox).addEventListener('singleTap', this.onClick);
-	        wrap(this.el).addEventListener('singleTap', function (e) {
-	          if (_this2.hideBox.style.display === 'none') {
-	            _this2.hideBox.style.display = '';
-	          }
-	        });
-	      }
-	    }
-	  }, {
-	    key: "onClick",
-	    value: function onClick(e) {
-	      var _context;
-	      var target;
-	      if (e instanceof Event) {
-	        target = e.target;
-	      } else {
-	        target = e.e.target;
-	      }
-	      var text = target.innerText;
-	      var rate = Number(_sliceInstanceProperty(text).call(text, 0, text.length - 1));
-	      // playbackRate：设置视频播放速度，会触发 ratechange 事件
-	      this.player.video.playbackRate = rate;
-	      _forEachInstanceProperty(_context = _toConsumableArray(this.hideBox.childNodes)).call(_context, function (node) {
-	        if (node === target) {
-	          node.style.color = '#007aff';
-	        } else {
-	          node.style.color = '#fff';
-	        }
-	      });
-	    }
-	  }]);
-	  return Playrate;
-	}(Options);
-
-	// a string of all valid unicode whitespaces
-	var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
-	  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-
-	var uncurryThis$8 = functionUncurryThis;
-	var requireObjectCoercible$1 = requireObjectCoercible$5;
-	var toString$5 = toString$b;
-	var whitespaces$2 = whitespaces$3;
-
-	var replace$4 = uncurryThis$8(''.replace);
-	var ltrim = RegExp('^[' + whitespaces$2 + ']+');
-	var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
-
-	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
-	var createMethod = function (TYPE) {
-	  return function ($this) {
-	    var string = toString$5(requireObjectCoercible$1($this));
-	    if (TYPE & 1) string = replace$4(string, ltrim, '');
-	    if (TYPE & 2) string = replace$4(string, rtrim, '$1');
-	    return string;
-	  };
-	};
-
-	var stringTrim = {
-	  // `String.prototype.{ trimLeft, trimStart }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
-	  start: createMethod(1),
-	  // `String.prototype.{ trimRight, trimEnd }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
-	  end: createMethod(2),
-	  // `String.prototype.trim` method
-	  // https://tc39.es/ecma262/#sec-string.prototype.trim
-	  trim: createMethod(3)
-	};
-
-	var global$c = global$r;
 	var fails$9 = fails$x;
-	var uncurryThis$7 = functionUncurryThis;
-	var toString$4 = toString$b;
-	var trim$1 = stringTrim.trim;
-	var whitespaces$1 = whitespaces$3;
-
-	var $parseInt$1 = global$c.parseInt;
-	var Symbol$2 = global$c.Symbol;
-	var ITERATOR$3 = Symbol$2 && Symbol$2.iterator;
-	var hex = /^[+-]?0x/i;
-	var exec$2 = uncurryThis$7(hex.exec);
-	var FORCED$2 = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
-	  // MS Edge 18- broken with boxed symbols
-	  || (ITERATOR$3 && !fails$9(function () { $parseInt$1(Object(ITERATOR$3)); }));
-
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
-	  var S = trim$1(toString$4(string));
-	  return $parseInt$1(S, (radix >>> 0) || (exec$2(hex, S) ? 16 : 10));
-	} : $parseInt$1;
-
-	var $$n = _export;
-	var $parseInt = numberParseInt;
-
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	$$n({ global: true, forced: parseInt != $parseInt }, {
-	  parseInt: $parseInt
-	});
-
-	var path$8 = path$n;
-
-	var _parseInt$6 = path$8.parseInt;
-
-	var parent$v = _parseInt$6;
-
-	var _parseInt$5 = parent$v;
-
-	var parent$u = _parseInt$5;
-
-	var _parseInt$4 = parent$u;
-
-	var parent$t = _parseInt$4;
-
-	var _parseInt$3 = parent$t;
-
-	var _parseInt$2 = _parseInt$3;
-
-	var _parseInt = _parseInt$2;
-
-	var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
-
-	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Volume = /*#__PURE__*/function (_Options) {
-	  _inherits(Volume, _Options);
-	  var _super = _createSuper$l(Volume);
-	  function Volume(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, Volume);
-	    _this = _super.call(this, player, container, 0, 0, desc);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Volume');
-	    // el: div.video-volume video-controller
-	    _defineProperty(_assertThisInitialized(_this), "volumeProgress", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "volumeShow", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "volume", 0.5);
-	    _defineProperty(_assertThisInitialized(_this), "volumeDot", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mouseY", 0);
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Volume, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-volume', 'video-controller']);
-	      this.el['aria-label'] = '音量';
-	      addClass(this.hideBox, ['video-volume-set']);
-	      this.volumeProgress = $$q('div.video-volume-progress', {
-	        style: {
-	          height: '70px'
-	        }
-	      });
-	      this.volumeShow = $$q('div.video-volume-show');
-	      this.volumeShow.innerText = (this.volume * 100).toFixed(0);
-	      // this.volumeCompleted = new VolumeCompletedProgress(
-	      //   this.player,
-	      //   this.volumeProgress,
-	      //   'div.video-volume-completed'
-	      // )
-	      this.volumeCompleted = $$q('div.video-volume-completed');
-	      this.volumeProgress.appendChild(this.volumeCompleted);
-	      this.hideBox.appendChild(this.volumeShow);
-	      this.hideBox.appendChild(this.volumeProgress);
-	      this.volumeDot = $$q('div.video-volume-dot');
-	      this.volumeProgress.appendChild(this.volumeDot);
-	      this.icon = createSvg(volumePath$1);
-	      this.iconBox.appendChild(this.icon);
-	      this.player.video.volume = this.volume;
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.player.on(EVENT.VOLUME_PROGRESS_CLICK, function (e, ctx) {
-	        var eoffsetY = e.clientY - getDOMPoint(_this2.volumeProgress).y;
-	        var offsetY = _this2.volumeProgress.clientHeight - eoffsetY;
-	        var scale = offsetY / _this2.volumeProgress.clientHeight;
-	        if (scale < 0) {
-	          scale = 0;
-	        } else if (scale > 1) {
-	          scale = 1;
-	        }
-	        _this2.volumeCompleted.style.height = scale * 100 + '%';
-	        _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
-	        _this2.volume = scale;
-	        _this2.volumeShow.innerText = Math.round(_this2.volume * 100) + '';
-	        _this2.player.video.volume = _this2.volume;
-	      });
-	      this.volumeProgress.onclick = function (e) {
-	        e.stopPropagation();
-	        _this2.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, _this2);
-	      };
-	      this.volumeDot.onmousedown = function (e) {
-	        _this2.mouseY = e.pageY;
-	        var top = _parseInt$1(getComputedStyle(_this2.volumeDot).top);
-	        document.body.onmousemove = function (e) {
-	          e.preventDefault();
-	          var dy = top + e.pageY - _this2.mouseY;
-	          // console.log(dy)
-	          var scale = (_this2.volumeProgress.clientHeight - dy) / _this2.volumeProgress.clientHeight;
-	          if (scale < 0) {
-	            scale = 0;
-	          } else if (scale > 1) {
-	            scale = 1;
-	          }
-	          _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
-	          _this2.volumeCompleted.style.height = scale * 100 + '%';
-	          _this2.volumeShow.innerText = Math.round(scale * 100) + '';
-	          _this2.player.video.volume = scale;
-	          _this2.volume = scale;
-	        };
-	        document.body.onmouseup = function (e) {
-	          document.body.onmousemove = null;
-	          document.body.onmouseup = null;
-	        };
-	      };
-	    }
-	  }]);
-	  return Volume;
-	}(Options);
-
-	// COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件
-	var COMPONENT_STORE = new _Map();
-	// ONCE_COMPONENT_STORE存储的是只要曾经在视图上展示过哪怕已经卸载，都会一直保留在此处，除非通过delete进行彻底删除
-	var ONCE_COMPONENT_STORE = new _Map();
-	// 存储需要隐藏的元素，但不进行卸载
-	var HIDEEN_COMPONENT_STORE = new _Map();
-	function storeControlComponent(item) {
-	  COMPONENT_STORE.set(item.id, item);
-	  ONCE_COMPONENT_STORE.set(item.id, item);
-	}
-	var controllersMapping = {
-	  PlayButton: PlayButton,
-	  Playrate: Playrate,
-	  Volume: Volume,
-	  FullScreen: FullScreen
-	};
-
-	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var FullPage = /*#__PURE__*/function (_Options) {
-	  _inherits(FullPage, _Options);
-	  var _super = _createSuper$k(FullPage);
-	  function FullPage(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, FullPage);
-	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'FullPage');
-	    // el: div.video-fullpage.video-controller
-	    _defineProperty(_assertThisInitialized(_this), "isFullPage", false);
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(FullPage, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-fullpage', 'video-controller']);
-	      this.icon = createSvg(fullPagePath);
-	      this.iconBox.appendChild(this.icon);
-	      this.el.appendChild(this.iconBox);
-	      this.hideBox.innerText = '网页全屏';
-	      this.hideBox.style.fontSize = '13px';
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      this.onClick = this.onClick.bind(this);
-	      if (this.player.env === 'Mobile') {
-	        wrap(this.el).addEventListener('singleTap', this.onClick);
-	      } else {
-	        this.el.onclick = this.onClick;
-	      }
-	    }
-	  }, {
-	    key: "onClick",
-	    value: function onClick(e) {
-	      if (!this.isFullPage) {
-	        addClass(this.player.el, ['video-wrapper-fullpage']);
-	        this.iconBox.removeChild(this.icon);
-	        this.icon = createSvg(fullPageExitPath);
-	        this.iconBox.appendChild(this.icon);
-	      } else {
-	        removeClass(this.player.el, ['video-wrapper-fullpage']);
-	        this.iconBox.removeChild(this.icon);
-	        this.icon = createSvg(fullPagePath);
-	        this.iconBox.appendChild(this.icon);
-	      }
-	      this.isFullPage = !this.isFullPage;
-	    }
-	  }]);
-	  return FullPage;
-	}(Options);
-
-	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var PicInPic = /*#__PURE__*/function (_Options) {
-	  _inherits(PicInPic, _Options);
-	  var _super = _createSuper$j(PicInPic);
-	  // el: div.video-picInpic.video-controller
-	  function PicInPic(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, PicInPic);
-	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'PicInPic');
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(PicInPic, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-picInpic', 'video-controller']);
-	      this.icon = createSvg(picInPicPath, '0 0 1024 1024');
-	      this.iconBox.appendChild(this.icon);
-	      this.el.appendChild(this.iconBox);
-	      this.hideBox.innerText = '画中画';
-	      this.hideBox.style.fontSize = '13px';
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      this.onClick = this.onClick.bind(this);
-	      if (this.player.env === 'Mobile') {
-	        wrap(this.el).addEventListener('singleTap', this.onClick);
-	      } else {
-	        this.el.onclick = this.onClick;
-	      }
-	    }
-	  }, {
-	    key: "onClick",
-	    value: function onClick(e) {
-	      // document.pictureInPictureElement: 当前画中画的元素
-	      if (document.pictureInPictureElement) {
-	        // 当前存在画中画的元素，则退出画中画
-	        document.exitPictureInPicture();
-	      } else {
-	        // 当前不存在画中画的元素，则开启画中画
-	        this.player.video.requestPictureInPicture(); // 返回 Promise，里面是 pipWindow
-	      }
-	    }
-	  }]);
-	  return PicInPic;
-	}(Options);
-
-	var fails$8 = fails$x;
 	var wellKnownSymbol$6 = wellKnownSymbol$q;
 	var DESCRIPTORS$5 = descriptors;
 	var IS_PURE$1 = isPure;
 
-	var ITERATOR$2 = wellKnownSymbol$6('iterator');
+	var ITERATOR$3 = wellKnownSymbol$6('iterator');
 
-	var urlConstructorDetection = !fails$8(function () {
+	var urlConstructorDetection = !fails$9(function () {
 	  // eslint-disable-next-line unicorn/relative-url-style -- required for testing
 	  var url = new URL('b?a=1&b=2&c=3', 'http://a');
 	  var searchParams = url.searchParams;
@@ -6477,7 +6125,7 @@
 	    || url.href !== 'http://a/c%20d?a=1&c=3'
 	    || searchParams.get('c') !== '3'
 	    || String(new URLSearchParams('?a=1')) !== 'a=1'
-	    || !searchParams[ITERATOR$2]
+	    || !searchParams[ITERATOR$3]
 	    // throws in Edge
 	    || new URL('https://a@b').username !== 'a'
 	    || new URLSearchParams(new URLSearchParams('a=b')).get('a') !== 'b'
@@ -6492,7 +6140,7 @@
 	});
 
 	// based on https://github.com/bestiejs/punycode.js/blob/master/punycode.js
-	var uncurryThis$6 = functionUncurryThis;
+	var uncurryThis$8 = functionUncurryThis;
 
 	var maxInt = 2147483647; // aka. 0x7FFFFFFF or 2^31-1
 	var base = 36;
@@ -6509,15 +6157,15 @@
 	var baseMinusTMin = base - tMin;
 
 	var $RangeError = RangeError;
-	var exec$1 = uncurryThis$6(regexSeparators.exec);
+	var exec$2 = uncurryThis$8(regexSeparators.exec);
 	var floor$2 = Math.floor;
 	var fromCharCode = String.fromCharCode;
-	var charCodeAt = uncurryThis$6(''.charCodeAt);
-	var join$2 = uncurryThis$6([].join);
-	var push$3 = uncurryThis$6([].push);
-	var replace$3 = uncurryThis$6(''.replace);
-	var split$2 = uncurryThis$6(''.split);
-	var toLowerCase$1 = uncurryThis$6(''.toLowerCase);
+	var charCodeAt = uncurryThis$8(''.charCodeAt);
+	var join$2 = uncurryThis$8([].join);
+	var push$3 = uncurryThis$8([].push);
+	var replace$4 = uncurryThis$8(''.replace);
+	var split$2 = uncurryThis$8(''.split);
+	var toLowerCase$1 = uncurryThis$8(''.toLowerCase);
 
 	/**
 	 * Creates an array containing the numeric code points of each Unicode
@@ -6663,11 +6311,11 @@
 
 	var stringPunycodeToAscii = function (input) {
 	  var encoded = [];
-	  var labels = split$2(replace$3(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
+	  var labels = split$2(replace$4(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
 	  var i, label;
 	  for (i = 0; i < labels.length; i++) {
 	    label = labels[i];
-	    push$3(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode(label) : label);
+	    push$3(encoded, exec$2(regexNonASCII, label) ? 'xn--' + encode(label) : label);
 	  }
 	  return join$2(encoded, '.');
 	};
@@ -6726,10 +6374,10 @@
 
 	// TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-	var $$m = _export;
-	var global$b = global$r;
+	var $$n = _export;
+	var global$c = global$r;
 	var call$6 = functionCall;
-	var uncurryThis$5 = functionUncurryThis;
+	var uncurryThis$7 = functionUncurryThis;
 	var DESCRIPTORS$4 = descriptors;
 	var USE_NATIVE_URL$2 = urlConstructorDetection;
 	var defineBuiltIn$2 = defineBuiltIn$8;
@@ -6754,7 +6402,7 @@
 	var wellKnownSymbol$5 = wellKnownSymbol$q;
 	var arraySort = arraySort$1;
 
-	var ITERATOR$1 = wellKnownSymbol$5('iterator');
+	var ITERATOR$2 = wellKnownSymbol$5('iterator');
 	var URL_SEARCH_PARAMS = 'URLSearchParams';
 	var URL_SEARCH_PARAMS_ITERATOR = URL_SEARCH_PARAMS + 'Iterator';
 	var setInternalState$2 = InternalStateModule$2.set;
@@ -6765,8 +6413,8 @@
 
 	// Avoid NodeJS experimental warning
 	var safeGetBuiltIn = function (name) {
-	  if (!DESCRIPTORS$4) return global$b[name];
-	  var descriptor = getOwnPropertyDescriptor$9(global$b, name);
+	  if (!DESCRIPTORS$4) return global$c[name];
+	  var descriptor = getOwnPropertyDescriptor$9(global$c, name);
 	  return descriptor && descriptor.value;
 	};
 
@@ -6775,18 +6423,18 @@
 	var Headers = safeGetBuiltIn('Headers');
 	var RequestPrototype = NativeRequest && NativeRequest.prototype;
 	var HeadersPrototype = Headers && Headers.prototype;
-	var RegExp$1 = global$b.RegExp;
-	var TypeError$3 = global$b.TypeError;
-	var decodeURIComponent = global$b.decodeURIComponent;
-	var encodeURIComponent$1 = global$b.encodeURIComponent;
-	var charAt$2 = uncurryThis$5(''.charAt);
-	var join$1 = uncurryThis$5([].join);
-	var push$2 = uncurryThis$5([].push);
-	var replace$2 = uncurryThis$5(''.replace);
-	var shift$1 = uncurryThis$5([].shift);
-	var splice$7 = uncurryThis$5([].splice);
-	var split$1 = uncurryThis$5(''.split);
-	var stringSlice$1 = uncurryThis$5(''.slice);
+	var RegExp$1 = global$c.RegExp;
+	var TypeError$3 = global$c.TypeError;
+	var decodeURIComponent = global$c.decodeURIComponent;
+	var encodeURIComponent$1 = global$c.encodeURIComponent;
+	var charAt$2 = uncurryThis$7(''.charAt);
+	var join$1 = uncurryThis$7([].join);
+	var push$2 = uncurryThis$7([].push);
+	var replace$3 = uncurryThis$7(''.replace);
+	var shift$1 = uncurryThis$7([].shift);
+	var splice$7 = uncurryThis$7([].splice);
+	var split$1 = uncurryThis$7(''.split);
+	var stringSlice$1 = uncurryThis$7(''.slice);
 
 	var plus = /\+/g;
 	var sequences = Array(4);
@@ -6804,13 +6452,13 @@
 	};
 
 	var deserialize = function (it) {
-	  var result = replace$2(it, plus, ' ');
+	  var result = replace$3(it, plus, ' ');
 	  var bytes = 4;
 	  try {
 	    return decodeURIComponent(result);
 	  } catch (error) {
 	    while (bytes) {
-	      result = replace$2(result, percentSequence(bytes--), percentDecode);
+	      result = replace$3(result, percentSequence(bytes--), percentDecode);
 	    }
 	    return result;
 	  }
@@ -6832,7 +6480,7 @@
 	};
 
 	var serialize = function (it) {
-	  return replace$2(encodeURIComponent$1(it), find, replacer);
+	  return replace$3(encodeURIComponent$1(it), find, replacer);
 	};
 
 	var URLSearchParamsIterator = createIteratorConstructor(function Iterator(params, kind) {
@@ -7057,7 +6705,7 @@
 	}, { enumerable: true });
 
 	// `URLSearchParams.prototype[@@iterator]` method
-	defineBuiltIn$2(URLSearchParamsPrototype, ITERATOR$1, URLSearchParamsPrototype.entries, { name: 'entries' });
+	defineBuiltIn$2(URLSearchParamsPrototype, ITERATOR$2, URLSearchParamsPrototype.entries, { name: 'entries' });
 
 	// `URLSearchParams.prototype.toString` method
 	// https://url.spec.whatwg.org/#urlsearchparams-stringification-behavior
@@ -7077,14 +6725,14 @@
 
 	setToStringTag$2(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
 
-	$$m({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
+	$$n({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
 	  URLSearchParams: URLSearchParamsConstructor
 	});
 
 	// Wrap `fetch` and `Request` for correct work with polyfilled `URLSearchParams`
 	if (!USE_NATIVE_URL$2 && isCallable$5(Headers)) {
-	  var headersHas = uncurryThis$5(HeadersPrototype.has);
-	  var headersSet = uncurryThis$5(HeadersPrototype.set);
+	  var headersHas = uncurryThis$7(HeadersPrototype.has);
+	  var headersSet = uncurryThis$7(HeadersPrototype.set);
 
 	  var wrapRequestOptions = function (init) {
 	    if (isObject$4(init)) {
@@ -7104,7 +6752,7 @@
 	  };
 
 	  if (isCallable$5(nativeFetch)) {
-	    $$m({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
+	    $$n({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
 	      fetch: function fetch(input /* , init */) {
 	        return nativeFetch(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
 	      }
@@ -7120,7 +6768,7 @@
 	    RequestPrototype.constructor = RequestConstructor;
 	    RequestConstructor.prototype = RequestPrototype;
 
-	    $$m({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
+	    $$n({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
 	      Request: RequestConstructor
 	    });
 	  }
@@ -7133,12 +6781,12 @@
 
 	// TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-	var $$l = _export;
+	var $$m = _export;
 	var DESCRIPTORS$3 = descriptors;
 	var USE_NATIVE_URL$1 = urlConstructorDetection;
-	var global$a = global$r;
+	var global$b = global$r;
 	var bind$3 = functionBindContext;
-	var uncurryThis$4 = functionUncurryThis;
+	var uncurryThis$6 = functionUncurryThis;
 	var defineBuiltIn$1 = defineBuiltIn$8;
 	var defineBuiltInAccessor = defineBuiltInAccessor$5;
 	var anInstance$1 = anInstance$5;
@@ -7159,23 +6807,23 @@
 	var URLSearchParams$1 = URLSearchParamsModule.URLSearchParams;
 	var getInternalSearchParamsState = URLSearchParamsModule.getState;
 
-	var NativeURL = global$a.URL;
-	var TypeError$2 = global$a.TypeError;
-	var parseInt$1 = global$a.parseInt;
+	var NativeURL = global$b.URL;
+	var TypeError$2 = global$b.TypeError;
+	var parseInt$1 = global$b.parseInt;
 	var floor = Math.floor;
 	var pow = Math.pow;
-	var charAt$1 = uncurryThis$4(''.charAt);
-	var exec = uncurryThis$4(/./.exec);
-	var join = uncurryThis$4([].join);
-	var numberToString = uncurryThis$4(1.0.toString);
-	var pop = uncurryThis$4([].pop);
-	var push$1 = uncurryThis$4([].push);
-	var replace$1 = uncurryThis$4(''.replace);
-	var shift = uncurryThis$4([].shift);
-	var split = uncurryThis$4(''.split);
-	var stringSlice = uncurryThis$4(''.slice);
-	var toLowerCase = uncurryThis$4(''.toLowerCase);
-	var unshift = uncurryThis$4([].unshift);
+	var charAt$1 = uncurryThis$6(''.charAt);
+	var exec$1 = uncurryThis$6(/./.exec);
+	var join = uncurryThis$6([].join);
+	var numberToString = uncurryThis$6(1.0.toString);
+	var pop = uncurryThis$6([].pop);
+	var push$1 = uncurryThis$6([].push);
+	var replace$2 = uncurryThis$6(''.replace);
+	var shift = uncurryThis$6([].shift);
+	var split = uncurryThis$6(''.split);
+	var stringSlice = uncurryThis$6(''.slice);
+	var toLowerCase = uncurryThis$6(''.toLowerCase);
+	var unshift = uncurryThis$6([].unshift);
 
 	var INVALID_AUTHORITY = 'Invalid authority';
 	var INVALID_SCHEME = 'Invalid scheme';
@@ -7214,13 +6862,13 @@
 	    if (part == '') return input;
 	    radix = 10;
 	    if (part.length > 1 && charAt$1(part, 0) == '0') {
-	      radix = exec(HEX_START, part) ? 16 : 8;
+	      radix = exec$1(HEX_START, part) ? 16 : 8;
 	      part = stringSlice(part, radix == 8 ? 1 : 2);
 	    }
 	    if (part === '') {
 	      number = 0;
 	    } else {
-	      if (!exec(radix == 10 ? DEC : radix == 8 ? OCT : HEX, part)) return input;
+	      if (!exec$1(radix == 10 ? DEC : radix == 8 ? OCT : HEX, part)) return input;
 	      number = parseInt$1(part, radix);
 	    }
 	    push$1(numbers, number);
@@ -7267,7 +6915,7 @@
 	      continue;
 	    }
 	    value = length = 0;
-	    while (length < 4 && exec(HEX, chr())) {
+	    while (length < 4 && exec$1(HEX, chr())) {
 	      value = value * 16 + parseInt$1(chr(), 16);
 	      pointer++;
 	      length++;
@@ -7283,8 +6931,8 @@
 	          if (chr() == '.' && numbersSeen < 4) pointer++;
 	          else return;
 	        }
-	        if (!exec(DIGIT, chr())) return;
-	        while (exec(DIGIT, chr())) {
+	        if (!exec$1(DIGIT, chr())) return;
+	        while (exec$1(DIGIT, chr())) {
 	          number = parseInt$1(chr(), 10);
 	          if (ipv4Piece === null) ipv4Piece = number;
 	          else if (ipv4Piece == 0) return;
@@ -7400,7 +7048,7 @@
 	// https://url.spec.whatwg.org/#windows-drive-letter
 	var isWindowsDriveLetter = function (string, normalized) {
 	  var second;
-	  return string.length == 2 && exec(ALPHA, charAt$1(string, 0))
+	  return string.length == 2 && exec$1(ALPHA, charAt$1(string, 0))
 	    && ((second = charAt$1(string, 1)) == ':' || (!normalized && second == '|'));
 	};
 
@@ -7490,11 +7138,11 @@
 	      url.query = null;
 	      url.fragment = null;
 	      url.cannotBeABaseURL = false;
-	      input = replace$1(input, LEADING_C0_CONTROL_OR_SPACE, '');
-	      input = replace$1(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
+	      input = replace$2(input, LEADING_C0_CONTROL_OR_SPACE, '');
+	      input = replace$2(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
 	    }
 
-	    input = replace$1(input, TAB_AND_NEW_LINE, '');
+	    input = replace$2(input, TAB_AND_NEW_LINE, '');
 
 	    codePoints = arrayFrom(input);
 
@@ -7502,7 +7150,7 @@
 	      chr = codePoints[pointer];
 	      switch (state) {
 	        case SCHEME_START:
-	          if (chr && exec(ALPHA, chr)) {
+	          if (chr && exec$1(ALPHA, chr)) {
 	            buffer += toLowerCase(chr);
 	            state = SCHEME;
 	          } else if (!stateOverride) {
@@ -7512,7 +7160,7 @@
 	          break;
 
 	        case SCHEME:
-	          if (chr && (exec(ALPHANUMERIC, chr) || chr == '+' || chr == '-' || chr == '.')) {
+	          if (chr && (exec$1(ALPHANUMERIC, chr) || chr == '+' || chr == '-' || chr == '.')) {
 	            buffer += toLowerCase(chr);
 	          } else if (chr == ':') {
 	            if (stateOverride && (
@@ -7703,7 +7351,7 @@
 	          } break;
 
 	        case PORT:
-	          if (exec(DIGIT, chr)) {
+	          if (exec$1(DIGIT, chr)) {
 	            buffer += chr;
 	          } else if (
 	            chr == EOF || chr == '/' || chr == '?' || chr == '#' ||
@@ -7879,7 +7527,7 @@
 	      this.host = result;
 	    // opaque host
 	    } else if (!this.isSpecial()) {
-	      if (exec(FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT, input)) return INVALID_HOST;
+	      if (exec$1(FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT, input)) return INVALID_HOST;
 	      result = '';
 	      codePoints = arrayFrom(input);
 	      for (index = 0; index < codePoints.length; index++) {
@@ -7888,7 +7536,7 @@
 	      this.host = result;
 	    } else {
 	      input = toASCII(input);
-	      if (exec(FORBIDDEN_HOST_CODE_POINT, input)) return INVALID_HOST;
+	      if (exec$1(FORBIDDEN_HOST_CODE_POINT, input)) return INVALID_HOST;
 	      result = parseIPv4(input);
 	      if (result === null) return INVALID_HOST;
 	      this.host = result;
@@ -8171,32 +7819,32 @@
 
 	setToStringTag$1(URLConstructor, 'URL');
 
-	$$l({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
+	$$m({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
 	  URL: URLConstructor
 	});
 
-	var $$k = _export;
+	var $$l = _export;
 	var getBuiltIn$4 = getBuiltIn$h;
-	var fails$7 = fails$x;
+	var fails$8 = fails$x;
 	var validateArgumentsLength$2 = validateArgumentsLength$5;
-	var toString$3 = toString$b;
+	var toString$5 = toString$b;
 	var USE_NATIVE_URL = urlConstructorDetection;
 
 	var URL$1 = getBuiltIn$4('URL');
 
 	// https://github.com/nodejs/node/issues/47505
 	// https://github.com/denoland/deno/issues/18893
-	var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$7(function () {
+	var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$8(function () {
 	  URL$1.canParse();
 	});
 
 	// `URL.canParse` method
 	// https://url.spec.whatwg.org/#dom-url-canparse
-	$$k({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
+	$$l({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
 	  canParse: function canParse(url) {
 	    var length = validateArgumentsLength$2(arguments.length, 1);
-	    var urlString = toString$3(url);
-	    var base = length < 2 || arguments[1] === undefined ? undefined : toString$3(arguments[1]);
+	    var urlString = toString$5(url);
+	    var base = length < 2 || arguments[1] === undefined ? undefined : toString$5(arguments[1]);
 	    try {
 	      return !!new URL$1(urlString, base);
 	    } catch (error) {
@@ -8205,21 +7853,21 @@
 	  }
 	});
 
-	var path$7 = path$n;
+	var path$8 = path$n;
 
-	var url$5 = path$7.URL;
+	var url$5 = path$8.URL;
 
-	var parent$s = url$5;
+	var parent$v = url$5;
 
-	var url$4 = parent$s;
+	var url$4 = parent$v;
 
-	var parent$r = url$4;
+	var parent$u = url$4;
 
-	var url$3 = parent$r;
+	var url$3 = parent$u;
 
-	var parent$q = url$3;
+	var parent$t = url$3;
 
-	var url$2 = parent$q;
+	var url$2 = parent$t;
 
 	var url$1 = url$2;
 
@@ -8262,7 +7910,7 @@
 	  if (!delete O[P]) throw $TypeError$2('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
 	};
 
-	var $$j = _export;
+	var $$k = _export;
 	var toObject$1 = toObject$a;
 	var toAbsoluteIndex = toAbsoluteIndex$4;
 	var toIntegerOrInfinity = toIntegerOrInfinity$4;
@@ -8272,7 +7920,7 @@
 	var arraySpeciesCreate = arraySpeciesCreate$3;
 	var createProperty$1 = createProperty$6;
 	var deletePropertyOrThrow = deletePropertyOrThrow$1;
-	var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$5;
+	var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$4;
 
 	var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
 
@@ -8282,7 +7930,7 @@
 	// `Array.prototype.splice` method
 	// https://tc39.es/ecma262/#sec-array.prototype.splice
 	// with adding support of @@species
-	$$j({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+	$$k({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
 	  splice: function splice(start, deleteCount /* , ...items */) {
 	    var O = toObject$1(this);
 	    var len = lengthOfArrayLike(O);
@@ -8329,7 +7977,7 @@
 	  }
 	});
 
-	var entryVirtual$2 = entryVirtual$a;
+	var entryVirtual$2 = entryVirtual$9;
 
 	var splice$6 = entryVirtual$2('Array').splice;
 
@@ -8343,17 +7991,17 @@
 	  return it === ArrayPrototype$1 || (isPrototypeOf$2(ArrayPrototype$1, it) && own === ArrayPrototype$1.splice) ? method : own;
 	};
 
-	var parent$p = splice$5;
+	var parent$s = splice$5;
 
-	var splice$4 = parent$p;
+	var splice$4 = parent$s;
 
-	var parent$o = splice$4;
+	var parent$r = splice$4;
 
-	var splice$3 = parent$o;
+	var splice$3 = parent$r;
 
-	var parent$n = splice$3;
+	var parent$q = splice$3;
 
-	var splice$2 = parent$n;
+	var splice$2 = parent$q;
 
 	var splice$1 = splice$2;
 
@@ -8361,11 +8009,11 @@
 
 	var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice);
 
-	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Toast = /*#__PURE__*/function (_Component) {
 	  _inherits(Toast, _Component);
-	  var _super = _createSuper$i(Toast);
+	  var _super = _createSuper$l(Toast);
 	  function Toast(player, dom, props) {
 	    var _this;
 	    _classCallCheck(this, Toast);
@@ -8430,11 +8078,11 @@
 	}(Component);
 	_defineProperty(Toast, "ToastQueue", []);
 
-	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ScreenShot = /*#__PURE__*/function (_Options) {
 	  _inherits(ScreenShot, _Options);
-	  var _super = _createSuper$h(ScreenShot);
+	  var _super = _createSuper$k(ScreenShot);
 	  function ScreenShot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, ScreenShot);
@@ -8511,8 +8159,8 @@
 	      } catch (_unused) {
 	        // todo
 	      }
-	      var dom = $$q('div.video-screenshot-toast');
-	      var span = $$q('span');
+	      var dom = $$p('div.video-screenshot-toast');
+	      var span = $$p('span');
 	      span.innerText = '截图成功!';
 	      var icon = this.confirmIcon.cloneNode(true);
 	      dom.appendChild(icon);
@@ -8549,13 +8197,13 @@
 	  _createClass(SubsettingItem, [{
 	    key: "init",
 	    value: function init() {
-	      this.el = $$q('div.video-subsettings-item');
-	      this.leftArea = $$q('div.video-subsettings-itemleft');
-	      this.rightArea = $$q('div.video-subsettings-itemright');
-	      this.leftIconBox = $$q('div.video-subsettings-itemleft-icon');
-	      this.leftTextBox = $$q('div.video-subsettings-itemleft-text');
-	      this.rightTipBox = $$q('div.video-subsettings-itemright-tip');
-	      this.rightIcon = $$q('div.video-subsettings-itemright-icon');
+	      this.el = $$p('div.video-subsettings-item');
+	      this.leftArea = $$p('div.video-subsettings-itemleft');
+	      this.rightArea = $$p('div.video-subsettings-itemright');
+	      this.leftIconBox = $$p('div.video-subsettings-itemleft-icon');
+	      this.leftTextBox = $$p('div.video-subsettings-itemleft-text');
+	      this.rightTipBox = $$p('div.video-subsettings-itemright-tip');
+	      this.rightIcon = $$p('div.video-subsettings-itemright-icon');
 	      this.el.append(this.leftArea, this.rightArea);
 	      this.leftArea.append(this.leftIconBox, this.leftTextBox);
 	      this.rightArea.append(this.rightTipBox, this.rightIcon);
@@ -8564,16 +8212,19 @@
 	  return SubsettingItem;
 	}();
 
-	function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-	function _unsupportedIterableToArray(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-	function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-	var SubsettingsMain = /*#__PURE__*/function () {
+	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var SubsettingsMain = /*#__PURE__*/function (_BaseEvent) {
+	  _inherits(SubsettingsMain, _BaseEvent);
+	  var _super = _createSuper$j(SubsettingsMain);
 	  function SubsettingsMain(player) {
+	    var _this;
 	    _classCallCheck(this, SubsettingsMain);
-	    _defineProperty(this, "el", void 0);
+	    _this = _super.call(this);
+	    _defineProperty(_assertThisInitialized(_this), "el", void 0);
 	    // el: div.video-subsettings-main
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "SubsettingsItem", [{
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", [{
 	      leftIcon: createSvg(playratePath, '0 0 1024 1024'),
 	      leftText: '播放速度',
 	      rightTip: '正常',
@@ -8589,14 +8240,15 @@
 	      rightTip: '正常',
 	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024')
 	    }]);
-	    this.player = player;
-	    this.init();
+	    _this.player = player;
+	    _this.init();
+	    return _this;
 	  }
 	  _createClass(SubsettingsMain, [{
 	    key: "init",
 	    value: function init() {
-	      this.el = $$q('div.video-subsettings-main');
-	      this.el.dataset.width = '250';
+	      this.el = $$p('div.video-subsettings-main');
+	      this.el.dataset.width = '200';
 	      this.initSubsettingsItem();
 	      this.initEvent();
 	    }
@@ -8604,48 +8256,51 @@
 	    key: "initSubsettingsItem",
 	    value: function initSubsettingsItem() {
 	      var _context,
-	        _this = this;
+	        _this2 = this;
 	      _forEachInstanceProperty(_context = this.SubsettingsItem).call(_context, function (item) {
-	        var instance = new SubsettingItem(_this.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
-	        _this.el.appendChild(instance.el);
+	        var instance = new SubsettingItem(_this2.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
+	        _this2.el.appendChild(instance.el);
 	        item.instance = instance;
+	        instance.el.dataset.SubsettingsMainType = item.leftText;
 	      });
 	    }
 	  }, {
 	    key: "initEvent",
 	    value: function initEvent() {
-	      var _this2 = this;
-	      this.el.addEventListener('click', function (e) {
-	        var index = 0;
-	        var _iterator = _createForOfIteratorHelper(_this2.SubsettingsItem),
-	          _step;
-	        try {
-	          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-	            var item = _step.value;
-	            if (e.target === item.instance.el || containsDOM(item.instance.el, e.target)) {
-	              _this2.player.emit('MainSubsettingsItemClick', item, index);
-	              break;
-	            }
-	            index++;
-	          }
-	        } catch (err) {
-	          _iterator.e(err);
-	        } finally {
-	          _iterator.f();
+	      var _context2,
+	        _this3 = this;
+	      _forEachInstanceProperty(_context2 = this.SubsettingsItem).call(_context2, function (item, index) {
+	        item.instance.el.addEventListener('click', function () {
+	          _this3.player.emit('MainSubsettingsItemClick', item, index);
+	        });
+	      });
+	      this.player.on('SubsettingsPlayrateClick', function (item, index) {
+	        var playrate = item.instance.el.dataset.SubsettingsPlayrate;
+	        if (playrate === '0') return;
+	        if (playrate === '1') {
+	          _this3.SubsettingsItem[0].instance.rightTipBox.innerText = '正常';
+	        } else {
+	          _this3.SubsettingsItem[0].instance.rightTipBox.innerText = playrate;
 	        }
 	      });
 	    }
 	  }]);
 	  return SubsettingsMain;
-	}();
+	}(BaseEvent);
 
-	var SubsettingsPlayrate = /*#__PURE__*/function () {
+	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var SubsettingsPlayrate = /*#__PURE__*/function (_BaseEvent) {
+	  _inherits(SubsettingsPlayrate, _BaseEvent);
+	  var _super = _createSuper$i(SubsettingsPlayrate);
 	  function SubsettingsPlayrate(player) {
+	    var _this;
 	    _classCallCheck(this, SubsettingsPlayrate);
-	    _defineProperty(this, "el", void 0);
+	    _this = _super.call(this);
+	    _defineProperty(_assertThisInitialized(_this), "el", void 0);
 	    // el: div.video-subsettings-playrate
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "SubsettingsItem", [{
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", [{
 	      leftIcon: createSvg(leftarrowPath, '0 0 1024 1024'),
 	      leftText: '播放速度'
 	    }, {
@@ -8660,36 +8315,69 @@
 	    }, {
 	      leftText: '2'
 	    }]);
-	    this.player = player;
-	    this.init();
+	    _this.player = player;
+	    _this.init();
+	    return _this;
 	  }
 	  _createClass(SubsettingsPlayrate, [{
 	    key: "init",
 	    value: function init() {
-	      this.el = $$q('div.video-subsettings-playrate');
-	      this.el.dataset.width = '200';
+	      this.el = $$p('div.video-subsettings-playrate');
+	      this.el.dataset.width = '170';
 	      this.el.style.display = 'none';
 	      this.initSubsettingsItem();
+	      this.initEvent();
 	    }
 	  }, {
 	    key: "initSubsettingsItem",
 	    value: function initSubsettingsItem() {
 	      var _context,
-	        _this = this;
+	        _this2 = this;
 	      _forEachInstanceProperty(_context = this.SubsettingsItem).call(_context, function (item) {
-	        var instance = new SubsettingItem(_this.player, item.leftIcon, item.leftText);
-	        _this.el.append(instance.el);
+	        var instance = new SubsettingItem(_this2.player, item.leftIcon, item.leftText);
+	        item.instance = instance;
+	        if (item.leftText === '播放速度') instance.el.dataset.SubsettingsPlayrate = '0';else if (item.leftText === '正常') instance.el.dataset.SubsettingsPlayrate = '1';else {
+	          instance.el.dataset.SubsettingsPlayrate = item.leftText;
+	        }
+	        _this2.el.append(instance.el);
+	      });
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this3 = this;
+	      var _loop = function _loop(i) {
+	        var item = _this3.SubsettingsItem[i];
+	        item.instance.el.addEventListener('click', function () {
+	          item.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
+	          item.instance.leftIconBox.innerHTML = '';
+	          item.instance.leftIconBox.appendChild(item.leftIcon);
+	          for (var index in _this3.SubsettingsItem) {
+	            // console.log(index)
+	            if (index !== '0' && _this3.SubsettingsItem[index] !== item && _this3.SubsettingsItem[index].leftIcon) {
+	              _this3.SubsettingsItem[index].instance.leftIconBox.removeChild(_this3.SubsettingsItem[index].leftIcon);
+	              delete _this3.SubsettingsItem[index].leftIcon;
+	            }
+	          }
+	          _this3.player.emit('SubsettingsPlayrateClick', item, i);
+	        });
+	      };
+	      for (var i = 1; i < this.SubsettingsItem.length; i++) {
+	        _loop(i);
+	      }
+	      this.SubsettingsItem[0].instance.el.addEventListener('click', function () {
+	        _this3.player.emit('SubsettingsPlayrateClick', _this3.SubsettingsItem[0], 0);
 	      });
 	    }
 	  }]);
 	  return SubsettingsPlayrate;
-	}();
+	}(BaseEvent);
 
-	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubSetting = /*#__PURE__*/function (_Options) {
 	  _inherits(SubSetting, _Options);
-	  var _super = _createSuper$g(SubSetting);
+	  var _super = _createSuper$h(SubSetting);
 	  function SubSetting(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, SubSetting);
@@ -8699,7 +8387,7 @@
 	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "subsettingsMain", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "subsettingsPlayrate", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "currenttShow", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "currentShow", void 0);
 	    _this.init();
 	    return _this;
 	  }
@@ -8729,7 +8417,7 @@
 	      this.subsettingsPlayrate = new SubsettingsPlayrate(this.player);
 	      this.hideBox.appendChild(this.subsettingsMain.el);
 	      this.hideBox.appendChild(this.subsettingsPlayrate.el);
-	      this.currenttShow = this.subsettingsMain.el;
+	      this.currentShow = this.subsettingsMain.el;
 	      this.hideBox.style.width = this.subsettingsMain.el.dataset.width + 'px';
 	    }
 	  }, {
@@ -8756,13 +8444,25 @@
 	        _this2.player.emit('oneControllerHover', _this2);
 	      });
 	      this.player.on('MainSubsettingsItemClick', function (item, index) {
-	        console.log(item, index);
-	        if (index === 0) {
+	        // console.log(item, index)
+	        if (item.instance.el.dataset.SubsettingsMainType === '播放速度') {
 	          // 展示播放速率的设置界面
-	          _this2.currenttShow.style.display = 'none';
+	          _this2.currentShow.style.display = 'none';
 	          _this2.subsettingsPlayrate.el.style.display = 'block';
 	          _this2.hideBox.style.width = _this2.subsettingsPlayrate.el.dataset.width + 'px';
-	          _this2.currenttShow = _this2.subsettingsPlayrate.el;
+	          _this2.currentShow = _this2.subsettingsPlayrate.el;
+	        } else if (item.instance.el.dataset.SubsettingsMainType === '画面比例') ;
+	      });
+	      // 点击播放速度
+	      this.player.on('SubsettingsPlayrateClick', function (item, index) {
+	        // console.log(item, index)
+	        _this2.currentShow.style.display = 'none';
+	        _this2.currentShow = _this2.subsettingsMain.el;
+	        _this2.currentShow.style.display = 'block';
+	        _this2.hideBox.style.width = _this2.currentShow.dataset.width + 'px';
+	        if (item.instance.el.dataset.SubsettingsPlayrate !== '0') {
+	          // 设置播放器的播放速度
+	          _this2.player.video.playbackRate = Number(item.instance.el.dataset.SubsettingsPlayrate);
 	        }
 	      });
 	    }
@@ -8795,11 +8495,11 @@
 	  return Math.round(Math.atan(Math.abs(dy) / Math.abs(dx)) * 180 / Math.PI);
 	}
 
-	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DutaionShow = /*#__PURE__*/function (_Component) {
 	  _inherits(DutaionShow, _Component);
-	  var _super = _createSuper$f(DutaionShow);
+	  var _super = _createSuper$g(DutaionShow);
 	  function DutaionShow(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, DutaionShow);
@@ -8857,11 +8557,11 @@
 	  return DutaionShow;
 	}(Component);
 
-	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var VideoShot = /*#__PURE__*/function (_Options) {
 	  _inherits(VideoShot, _Options);
-	  var _super = _createSuper$e(VideoShot);
+	  var _super = _createSuper$f(VideoShot);
 	  function VideoShot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, VideoShot);
@@ -8986,8 +8686,8 @@
 	    key: "createInProgressToast",
 	    value: function createInProgressToast() {
 	      var inProgressIcon = createSvg(countdownPath, '0 0 1024 1024');
-	      var dom = $$q('div.video-videoshot-inprogress-toast');
-	      var span = $$q('span');
+	      var dom = $$p('div.video-videoshot-inprogress-toast');
+	      var span = $$p('span');
 	      span.innerText = "\u5F00\u59CB\u5F55\u5C4F\uFF0C\u6700\u591A\u5F55\u523630\u79D2; \u8FD8\u5269".concat(this.countDown, "\u79D2");
 	      dom.appendChild(inProgressIcon);
 	      dom.appendChild(span);
@@ -8998,8 +8698,8 @@
 	    key: "createSuccessToast",
 	    value: function createSuccessToast() {
 	      var successIcon = createSvg(confirmPath, '0 0 1024 1024');
-	      var dom = $$q('div.video-videoshot-success-toast');
-	      var span = $$q('span');
+	      var dom = $$p('div.video-videoshot-success-toast');
+	      var span = $$p('span');
 	      span.innerText = "\u5F55\u5236\u6210\u529F!";
 	      dom.appendChild(successIcon);
 	      dom.appendChild(span);
@@ -9008,6 +8708,202 @@
 	    }
 	  }]);
 	  return VideoShot;
+	}(Options);
+
+	// a string of all valid unicode whitespaces
+	var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
+	  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+	var uncurryThis$5 = functionUncurryThis;
+	var requireObjectCoercible$1 = requireObjectCoercible$5;
+	var toString$4 = toString$b;
+	var whitespaces$2 = whitespaces$3;
+
+	var replace$1 = uncurryThis$5(''.replace);
+	var ltrim = RegExp('^[' + whitespaces$2 + ']+');
+	var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
+
+	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+	var createMethod = function (TYPE) {
+	  return function ($this) {
+	    var string = toString$4(requireObjectCoercible$1($this));
+	    if (TYPE & 1) string = replace$1(string, ltrim, '');
+	    if (TYPE & 2) string = replace$1(string, rtrim, '$1');
+	    return string;
+	  };
+	};
+
+	var stringTrim = {
+	  // `String.prototype.{ trimLeft, trimStart }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+	  start: createMethod(1),
+	  // `String.prototype.{ trimRight, trimEnd }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
+	  end: createMethod(2),
+	  // `String.prototype.trim` method
+	  // https://tc39.es/ecma262/#sec-string.prototype.trim
+	  trim: createMethod(3)
+	};
+
+	var global$a = global$r;
+	var fails$7 = fails$x;
+	var uncurryThis$4 = functionUncurryThis;
+	var toString$3 = toString$b;
+	var trim$1 = stringTrim.trim;
+	var whitespaces$1 = whitespaces$3;
+
+	var $parseInt$1 = global$a.parseInt;
+	var Symbol$2 = global$a.Symbol;
+	var ITERATOR$1 = Symbol$2 && Symbol$2.iterator;
+	var hex = /^[+-]?0x/i;
+	var exec = uncurryThis$4(hex.exec);
+	var FORCED$2 = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
+	  // MS Edge 18- broken with boxed symbols
+	  || (ITERATOR$1 && !fails$7(function () { $parseInt$1(Object(ITERATOR$1)); }));
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
+	  var S = trim$1(toString$3(string));
+	  return $parseInt$1(S, (radix >>> 0) || (exec(hex, S) ? 16 : 10));
+	} : $parseInt$1;
+
+	var $$j = _export;
+	var $parseInt = numberParseInt;
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	$$j({ global: true, forced: parseInt != $parseInt }, {
+	  parseInt: $parseInt
+	});
+
+	var path$7 = path$n;
+
+	var _parseInt$6 = path$7.parseInt;
+
+	var parent$p = _parseInt$6;
+
+	var _parseInt$5 = parent$p;
+
+	var parent$o = _parseInt$5;
+
+	var _parseInt$4 = parent$o;
+
+	var parent$n = _parseInt$4;
+
+	var _parseInt$3 = parent$n;
+
+	var _parseInt$2 = _parseInt$3;
+
+	var _parseInt = _parseInt$2;
+
+	var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
+
+	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Volume = /*#__PURE__*/function (_Options) {
+	  _inherits(Volume, _Options);
+	  var _super = _createSuper$e(Volume);
+	  function Volume(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, Volume);
+	    _this = _super.call(this, player, container, 0, 0, desc);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Volume');
+	    // el: div.video-volume video-controller
+	    _defineProperty(_assertThisInitialized(_this), "volumeProgress", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "volumeShow", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "volume", 0.5);
+	    _defineProperty(_assertThisInitialized(_this), "volumeDot", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mouseY", 0);
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Volume, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-volume', 'video-controller']);
+	      this.el['aria-label'] = '音量';
+	      addClass(this.hideBox, ['video-volume-set']);
+	      this.volumeProgress = $$p('div.video-volume-progress', {
+	        style: {
+	          height: '70px'
+	        }
+	      });
+	      this.volumeShow = $$p('div.video-volume-show');
+	      this.volumeShow.innerText = (this.volume * 100).toFixed(0);
+	      // this.volumeCompleted = new VolumeCompletedProgress(
+	      //   this.player,
+	      //   this.volumeProgress,
+	      //   'div.video-volume-completed'
+	      // )
+	      this.volumeCompleted = $$p('div.video-volume-completed');
+	      this.volumeProgress.appendChild(this.volumeCompleted);
+	      this.hideBox.appendChild(this.volumeShow);
+	      this.hideBox.appendChild(this.volumeProgress);
+	      this.volumeDot = $$p('div.video-volume-dot');
+	      this.volumeProgress.appendChild(this.volumeDot);
+	      this.icon = createSvg(volumePath$1);
+	      this.iconBox.appendChild(this.icon);
+	      this.player.video.volume = this.volume;
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.VOLUME_PROGRESS_CLICK, function (e, ctx) {
+	        var eoffsetY = e.clientY - getDOMPoint(_this2.volumeProgress).y;
+	        var offsetY = _this2.volumeProgress.clientHeight - eoffsetY;
+	        var scale = offsetY / _this2.volumeProgress.clientHeight;
+	        if (scale < 0) {
+	          scale = 0;
+	        } else if (scale > 1) {
+	          scale = 1;
+	        }
+	        _this2.volumeCompleted.style.height = scale * 100 + '%';
+	        _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
+	        _this2.volume = scale;
+	        _this2.volumeShow.innerText = Math.round(_this2.volume * 100) + '';
+	        _this2.player.video.volume = _this2.volume;
+	      });
+	      this.volumeProgress.onclick = function (e) {
+	        e.stopPropagation();
+	        _this2.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, _this2);
+	      };
+	      this.volumeDot.onmousedown = function (e) {
+	        _this2.mouseY = e.pageY;
+	        var top = _parseInt$1(getComputedStyle(_this2.volumeDot).top);
+	        document.body.onmousemove = function (e) {
+	          e.preventDefault();
+	          var dy = top + e.pageY - _this2.mouseY;
+	          // console.log(dy)
+	          var scale = (_this2.volumeProgress.clientHeight - dy) / _this2.volumeProgress.clientHeight;
+	          if (scale < 0) {
+	            scale = 0;
+	          } else if (scale > 1) {
+	            scale = 1;
+	          }
+	          _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
+	          _this2.volumeCompleted.style.height = scale * 100 + '%';
+	          _this2.volumeShow.innerText = Math.round(scale * 100) + '';
+	          _this2.player.video.volume = scale;
+	          _this2.volume = scale;
+	        };
+	        document.body.onmouseup = function (e) {
+	          document.body.onmousemove = null;
+	          document.body.onmouseup = null;
+	        };
+	      };
+	    }
+	  }]);
+	  return Volume;
 	}(Options);
 
 	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -9025,7 +8921,7 @@
 	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
 	    // 控件
 	    _defineProperty(_assertThisInitialized(_this), "leftControllers", [PlayButton, Volume, DutaionShow]);
-	    _defineProperty(_assertThisInitialized(_this), "rightController", [SubSetting, VideoShot, ScreenShot, PicInPic, FullPage, FullScreen]);
+	    _defineProperty(_assertThisInitialized(_this), "rightControllers", [SubSetting, VideoShot, ScreenShot, PicInPic, FullPage, FullScreen]);
 	    // fullscreen: FullScreen
 	    // playButton: PlayButton
 	    // playrate: Playrate
@@ -9051,31 +8947,13 @@
 	  }, {
 	    key: "initControllers",
 	    value: function initControllers() {
-	      var leftControllers = this.player.playerOptions.leftBottomBarControllers || null;
-	      var rightControllers = this.player.playerOptions.rightBottomBarControllers || null;
+	      var leftControllers = this.player.playerOptions.leftBottomBarControllers;
+	      var rightControllers = this.player.playerOptions.rightBottomBarControllers;
 	      if (leftControllers) {
-	        this.leftControllers = _mapInstanceProperty(leftControllers).call(leftControllers, function (item) {
-	          if (typeof item === 'string') {
-	            if (!controllersMapping[item]) {
-	              throw new Error("\u4F20\u5165\u7684\u7EC4\u4EF6\u540D".concat(item, "\u9519\u8BEF"));
-	            }
-	            return controllersMapping[item];
-	          } else {
-	            return item;
-	          }
-	        });
+	        this.leftControllers = leftControllers;
 	      }
 	      if (rightControllers) {
-	        this.rightController = _mapInstanceProperty(rightControllers).call(rightControllers, function (item) {
-	          if (typeof item === 'string') {
-	            if (!controllersMapping[item]) {
-	              throw new Error("\u4F20\u5165\u7684\u7EC4\u4EF6\u540D".concat(item, "\u9519\u8BEF"));
-	            }
-	            return controllersMapping[item];
-	          } else {
-	            return item;
-	          }
-	        });
+	        this.rightControllers = rightControllers;
 	      }
 	    }
 	  }, {
@@ -9084,9 +8962,9 @@
 	      // this.leftArea = $('div.video-subplay')
 	      // this.mediumArea = $('div.video-medium')
 	      // this.rightArea = $('div.video-settings')
-	      this.leftArea = $$q('div.video-bottombar-left');
-	      this.mediumArea = $$q('div.video-bottombar-medium');
-	      this.rightArea = $$q('div.video-bottombar-right');
+	      this.leftArea = $$p('div.video-bottombar-left');
+	      this.mediumArea = $$p('div.video-bottombar-medium');
+	      this.rightArea = $$p('div.video-bottombar-right');
 	      this.el.appendChild(this.leftArea);
 	      this.el.appendChild(this.mediumArea);
 	      this.el.appendChild(this.rightArea);
@@ -9101,7 +8979,7 @@
 	        var instance = new ControlConstructor(_this2.player, _this2.leftArea, 'div');
 	        _this2[instance.id] = instance;
 	      });
-	      _forEachInstanceProperty(_context2 = this.rightController).call(_context2, function (ControlConstructor) {
+	      _forEachInstanceProperty(_context2 = this.rightControllers).call(_context2, function (ControlConstructor) {
 	        var instance = new ControlConstructor(_this2.player, _this2.rightArea, 'div');
 	        _this2[instance.id] = instance;
 	      });
@@ -9204,9 +9082,9 @@
 	  }, {
 	    key: "initBaseTemplate",
 	    value: function initBaseTemplate() {
-	      this.dot = $$q('div');
-	      this.completedProgress = $$q('div');
-	      this.bufferProgress = $$q('div');
+	      this.dot = $$p('div');
+	      this.completedProgress = $$p('div');
+	      this.bufferProgress = $$p('div');
 	      this.el.append(this.dot, this.completedProgress, this.bufferProgress);
 	    }
 	  }, {
@@ -9416,9 +9294,9 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      this.leftArea = $$q('div.video-mediumbar-left');
-	      this.mediumArea = $$q('div.video-mediumbar-medium');
-	      this.rightArea = $$q('div.video-mediumbar-right');
+	      this.leftArea = $$p('div.video-mediumbar-left');
+	      this.mediumArea = $$p('div.video-mediumbar-medium');
+	      this.rightArea = $$p('div.video-mediumbar-right');
 	      this.el.append(this.leftArea, this.mediumArea, this.rightArea);
 	    }
 	  }, {
@@ -18229,193 +18107,24 @@
 	}();
 
 	var $$h = _export;
-	var toObject = toObject$a;
-	var nativeKeys = objectKeys$3;
+	var $includes = arrayIncludes.includes;
 	var fails$5 = fails$x;
 
-	var FAILS_ON_PRIMITIVES = fails$5(function () { nativeKeys(1); });
-
-	// `Object.keys` method
-	// https://tc39.es/ecma262/#sec-object.keys
-	$$h({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
-	  keys: function keys(it) {
-	    return nativeKeys(toObject(it));
-	  }
-	});
-
-	var path$5 = path$n;
-
-	var keys$5 = path$5.Object.keys;
-
-	var parent$j = keys$5;
-
-	var keys$4 = parent$j;
-
-	var parent$i = keys$4;
-
-	var keys$3 = parent$i;
-
-	var parent$h = keys$3;
-
-	var keys$2 = parent$h;
-
-	var keys$1 = keys$2;
-
-	var keys = keys$1;
-
-	var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys);
-
-	var path$4 = path$n;
-
-	var getOwnPropertySymbols$5 = path$4.Object.getOwnPropertySymbols;
-
-	var parent$g = getOwnPropertySymbols$5;
-
-	var getOwnPropertySymbols$4 = parent$g;
-
-	var parent$f = getOwnPropertySymbols$4;
-
-	var getOwnPropertySymbols$3 = parent$f;
-
-	var parent$e = getOwnPropertySymbols$3;
-
-	var getOwnPropertySymbols$2 = parent$e;
-
-	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
-
-	var getOwnPropertySymbols = getOwnPropertySymbols$1;
-
-	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
-
-	var getOwnPropertyDescriptor$7 = {exports: {}};
-
-	var $$g = _export;
-	var fails$4 = fails$x;
-	var toIndexedObject$1 = toIndexedObject$a;
-	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
-	var DESCRIPTORS$1 = descriptors;
-
-	var FORCED = !DESCRIPTORS$1 || fails$4(function () { nativeGetOwnPropertyDescriptor(1); });
-
-	// `Object.getOwnPropertyDescriptor` method
-	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-	$$g({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS$1 }, {
-	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
-	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
-	  }
-	});
-
-	var path$3 = path$n;
-
-	var Object$1 = path$3.Object;
-
-	var getOwnPropertyDescriptor$6 = getOwnPropertyDescriptor$7.exports = function getOwnPropertyDescriptor(it, key) {
-	  return Object$1.getOwnPropertyDescriptor(it, key);
-	};
-
-	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$6.sham = true;
-
-	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$7.exports;
-
-	var parent$d = getOwnPropertyDescriptorExports;
-
-	var getOwnPropertyDescriptor$5 = parent$d;
-
-	var parent$c = getOwnPropertyDescriptor$5;
-
-	var getOwnPropertyDescriptor$4 = parent$c;
-
-	var parent$b = getOwnPropertyDescriptor$4;
-
-	var getOwnPropertyDescriptor$3 = parent$b;
-
-	var getOwnPropertyDescriptor$2 = getOwnPropertyDescriptor$3;
-
-	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
-
-	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$1);
-
-	var getBuiltIn$3 = getBuiltIn$h;
-	var uncurryThis$2 = functionUncurryThis;
-	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
-	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
-	var anObject$2 = anObject$f;
-
-	var concat = uncurryThis$2([].concat);
-
-	// all object keys, includes non-enumerable and symbols
-	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
-	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
-	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
-	};
-
-	var $$f = _export;
-	var DESCRIPTORS = descriptors;
-	var ownKeys$2 = ownKeys$3;
-	var toIndexedObject = toIndexedObject$a;
-	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
-	var createProperty = createProperty$6;
-
-	// `Object.getOwnPropertyDescriptors` method
-	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
-	$$f({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
-	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
-	    var O = toIndexedObject(object);
-	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
-	    var keys = ownKeys$2(O);
-	    var result = {};
-	    var index = 0;
-	    var key, descriptor;
-	    while (keys.length > index) {
-	      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
-	      if (descriptor !== undefined) createProperty(result, key, descriptor);
-	    }
-	    return result;
-	  }
-	});
-
-	var path$2 = path$n;
-
-	var getOwnPropertyDescriptors$5 = path$2.Object.getOwnPropertyDescriptors;
-
-	var parent$a = getOwnPropertyDescriptors$5;
-
-	var getOwnPropertyDescriptors$4 = parent$a;
-
-	var parent$9 = getOwnPropertyDescriptors$4;
-
-	var getOwnPropertyDescriptors$3 = parent$9;
-
-	var parent$8 = getOwnPropertyDescriptors$3;
-
-	var getOwnPropertyDescriptors$2 = parent$8;
-
-	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
-
-	var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
-
-	var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors);
-
-	var $$e = _export;
-	var $includes = arrayIncludes.includes;
-	var fails$3 = fails$x;
-
 	// FF99+ bug
-	var BROKEN_ON_SPARSE = fails$3(function () {
+	var BROKEN_ON_SPARSE = fails$5(function () {
 	  // eslint-disable-next-line es/no-array-prototype-includes -- detection
 	  return !Array(1).includes();
 	});
 
 	// `Array.prototype.includes` method
 	// https://tc39.es/ecma262/#sec-array.prototype.includes
-	$$e({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+	$$h({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
 	  includes: function includes(el /* , fromIndex = 0 */) {
 	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
 	  }
 	});
 
-	var entryVirtual$1 = entryVirtual$a;
+	var entryVirtual$1 = entryVirtual$9;
 
 	var includes$7 = entryVirtual$1('Array').includes;
 
@@ -18458,18 +18167,18 @@
 	  } return false;
 	};
 
-	var $$d = _export;
-	var uncurryThis$1 = functionUncurryThis;
+	var $$g = _export;
+	var uncurryThis$2 = functionUncurryThis;
 	var notARegExp = notARegexp;
 	var requireObjectCoercible = requireObjectCoercible$5;
 	var toString$1 = toString$b;
 	var correctIsRegExpLogic = correctIsRegexpLogic;
 
-	var stringIndexOf = uncurryThis$1(''.indexOf);
+	var stringIndexOf = uncurryThis$2(''.indexOf);
 
 	// `String.prototype.includes` method
 	// https://tc39.es/ecma262/#sec-string.prototype.includes
-	$$d({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+	$$g({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
 	  includes: function includes(searchString /* , position = 0 */) {
 	    return !!~stringIndexOf(
 	      toString$1(requireObjectCoercible(this)),
@@ -18479,7 +18188,7 @@
 	  }
 	});
 
-	var entryVirtual = entryVirtual$a;
+	var entryVirtual = entryVirtual$9;
 
 	var includes$6 = entryVirtual('String').includes;
 
@@ -18498,23 +18207,1019 @@
 	  } return own;
 	};
 
-	var parent$7 = includes$5;
+	var parent$j = includes$5;
 
-	var includes$4 = parent$7;
+	var includes$4 = parent$j;
 
-	var parent$6 = includes$4;
+	var parent$i = includes$4;
 
-	var includes$3 = parent$6;
+	var includes$3 = parent$i;
 
-	var parent$5 = includes$3;
+	var parent$h = includes$3;
 
-	var includes$2 = parent$5;
+	var includes$2 = parent$h;
 
 	var includes$1 = includes$2;
 
 	var includes = includes$1;
 
 	var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes);
+
+	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Loading = /*#__PURE__*/function (_Component) {
+	  _inherits(Loading, _Component);
+	  var _super = _createSuper$8(Loading);
+	  function Loading(player, msg, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, Loading);
+	    _this = _super.call(this, null, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "message", void 0);
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.container = container;
+	    _this.message = msg;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Loading, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-loading']);
+	      this.loadingBox = $$p('div');
+	      this.messageBox = $$p('div.video-loading-msgbox');
+	      this.messageBox.innerText = this.message;
+	      this.el.appendChild(this.loadingBox);
+	      this.el.appendChild(this.messageBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {}
+	  }, {
+	    key: "addLoading",
+	    value: function addLoading() {
+	      var _context;
+	      if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
+	        this.container.appendChild(this.el);
+	      }
+	    }
+	  }, {
+	    key: "removeLoading",
+	    value: function removeLoading() {
+	      var _context2;
+	      if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
+	        this.container.removeChild(this.el);
+	      }
+	    }
+	  }]);
+	  return Loading;
+	}(Component);
+
+	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var TimeLoading = /*#__PURE__*/function (_Loading) {
+	  _inherits(TimeLoading, _Loading);
+	  var _super = _createSuper$7(TimeLoading);
+	  // el: div.video-loading
+	  function TimeLoading(player, msg, container) {
+	    var _this;
+	    _classCallCheck(this, TimeLoading);
+	    _this = _super.call(this, player, msg, container);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
+	    addClass(_this.loadingBox, ['video-loading-loadingbox']);
+	    _this.initEvent();
+	    return _this;
+	  }
+	  _createClass(TimeLoading, [{
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      // 在视频由于需要缓冲下一帧而停止时触发
+	      this.player.on(EVENT.WAITING, function () {
+	        _this2.addLoading();
+	      });
+	      // 该视频已准备好开始播放
+	      this.player.on(EVENT.CAN_PLAY, function () {
+	        _this2.removeLoading();
+	      });
+	    }
+	  }]);
+	  return TimeLoading;
+	}(Loading);
+
+	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var ErrorLoading = /*#__PURE__*/function (_Loading) {
+	  _inherits(ErrorLoading, _Loading);
+	  var _super = _createSuper$6(ErrorLoading);
+	  // el: div.video-loading
+	  function ErrorLoading(player, msg, container) {
+	    var _this;
+	    _classCallCheck(this, ErrorLoading);
+	    _this = _super.call(this, player, msg, container);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
+	    addClass(_this.loadingBox, ['video-loading-errorloading']);
+	    _this.initEvent();
+	    return _this;
+	  }
+	  _createClass(ErrorLoading, [{
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      // 视频加载发生错误时
+	      this.player.on(EVENT.ERROR, function (e) {
+	        _this2.addLoading();
+	      });
+	      // 该视频已准备好开始播放
+	      this.player.on(EVENT.CAN_PLAY, function (e) {
+	        _this2.removeLoading();
+	      });
+	    }
+	  }]);
+	  return ErrorLoading;
+	}(Loading);
+
+	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var TopBar = /*#__PURE__*/function (_Component) {
+	  _inherits(TopBar, _Component);
+	  var _super = _createSuper$5(TopBar);
+	  // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
+	  function TopBar(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, TopBar);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
+	    // el: div.video-topbar.video-topbar-hidden
+	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "timer", null);
+	    _this.player = player;
+	    _this.props = props || {};
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(TopBar, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	    /**
+	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
+	     */
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
+	      this.leftArea = $$p('div.video-topbar-left');
+	      this.rightArea = $$p('div.video-topbar-right');
+	      this.el.appendChild(this.leftArea);
+	      this.el.appendChild(this.rightArea);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
+	        _this2.onShowToolBar();
+	      });
+	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
+	        _this2.onHideToolBar();
+	      });
+	    }
+	  }, {
+	    key: "hideToolBar",
+	    value: function hideToolBar() {
+	      if (!includeClass(this.el, 'video-topbar-hidden')) {
+	        addClass(this.el, ['video-topbar-hidden']);
+	      }
+	    }
+	  }, {
+	    key: "showToolBar",
+	    value: function showToolBar() {
+	      var _this3 = this;
+	      if (includeClass(this.el, 'video-topbar-hidden')) {
+	        removeClass(this.el, ['video-topbar-hidden']);
+	      }
+	      this.timer = window.setTimeout(function () {
+	        _this3.hideToolBar();
+	      }, 3000);
+	    }
+	  }, {
+	    key: "onShowToolBar",
+	    value: function onShowToolBar() {
+	      if (this.timer) {
+	        window.clearTimeout(this.timer);
+	        this.timer = null;
+	      }
+	      this.showToolBar();
+	    }
+	  }, {
+	    key: "onHideToolBar",
+	    value: function onHideToolBar() {
+	      this.hideToolBar();
+	    }
+	  }]);
+	  return TopBar;
+	}(Component);
+
+	var env = window.navigator.userAgent.toLowerCase();
+	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
+	var Env = {
+	  isInWeixin: function isInWeixin() {
+	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
+	  },
+	  isInApp: function isInApp() {
+	    return /(^|;\s)app\//.test(env);
+	  },
+	  isInIOS: function isInIOS() {
+	    return env.match(/(iphone|ipod|ipad);?/i);
+	  },
+	  isInAndroid: function isInAndroid() {
+	    return env.match(/android|adr/i);
+	  },
+	  isInPc: function isInPc() {
+	    return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin());
+	  },
+	  get env() {
+	    return this.isInPc() ? 'PC' : 'Mobile';
+	  }
+	};
+
+	function styleInject(css, ref) {
+	  if ( ref === void 0 ) ref = {};
+	  var insertAt = ref.insertAt;
+
+	  if (!css || typeof document === 'undefined') { return; }
+
+	  var head = document.head || document.getElementsByTagName('head')[0];
+	  var style = document.createElement('style');
+	  style.type = 'text/css';
+
+	  if (insertAt === 'top') {
+	    if (head.firstChild) {
+	      head.insertBefore(style, head.firstChild);
+	    } else {
+	      head.appendChild(style);
+	    }
+	  } else {
+	    head.appendChild(style);
+	  }
+
+	  if (style.styleSheet) {
+	    style.styleSheet.cssText = css;
+	  } else {
+	    style.appendChild(document.createTextNode(css));
+	  }
+	}
+
+	var css_248z$2 = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
+	styleInject(css_248z$2);
+
+	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var MobileVolume = /*#__PURE__*/function (_Component) {
+	  _inherits(MobileVolume, _Component);
+	  var _super = _createSuper$4(MobileVolume);
+	  function MobileVolume(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, MobileVolume);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'MobileVolume');
+	    // el: div.video-mobile-medium-wrapper
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "progressBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "completedBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "icon", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "timer", 0);
+	    _this.player = player;
+	    _this.props = props || {};
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(MobileVolume, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-mobile-medium-wrapper']);
+	      this.el.style.display = 'none';
+	      this.iconBox = $$p('div.video-mobile-medium-iconbox');
+	      this.progressBox = $$p('div.video-mobile-medium-progressbox');
+	      this.completedBox = $$p('div.video-mobile-medium-completed', {
+	        style: {
+	          width: '0px'
+	        }
+	      });
+	      this.icon = createSvg(volumePath$1);
+	      this.iconBox.appendChild(this.icon);
+	      this.progressBox.appendChild(this.completedBox);
+	      this.el.appendChild(this.iconBox);
+	      this.el.appendChild(this.progressBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      var width = this.completedBox.clientWidth;
+	      this.player.on(EVENT.MOVE_VERTICAL, function (e) {
+	        // console.log('正在滑动')
+	        if (_this2.timer) {
+	          window.clearInterval(_this2.timer);
+	        }
+	        _this2.timer = null;
+	        _this2.el.style.display = '';
+	        var dy = e.deltaY;
+	        var scale = (width + -dy) / _this2.progressBox.clientWidth;
+	        if (scale < 0) {
+	          scale = 0;
+	        } else if (scale > 1) {
+	          scale = 1;
+	        }
+	        // console.log(scale)
+	        _this2.completedBox.style.width = scale * 100 + '%';
+	        _this2.player.video.volume = scale;
+	      });
+	      this.player.on(EVENT.SLIDE_VERTICAL, function (e) {
+	        // console.log('滑动结束')
+	        width = _this2.completedBox.clientWidth;
+	        _this2.timer = window.setTimeout(function () {
+	          _this2.el.style.display = 'none';
+	        }, 600);
+	      });
+	      this.player.on(EVENT.VIDEO_CLICK, function () {
+	        _this2.el.style.display = 'none';
+	      });
+	    }
+	  }]);
+	  return MobileVolume;
+	}(Component);
+
+	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Player = /*#__PURE__*/function (_Component) {
+	  _inherits(Player, _Component);
+	  var _super = _createSuper$3(Player);
+	  // 视频比例 原始高度/原始宽度，默认16:9
+	  function Player(options) {
+	    var _this;
+	    _classCallCheck(this, Player);
+	    _this = _super.call(this, options.container, 'div.Niplayer_video-wrapper');
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Player');
+	    // el: div.Niplayer_video-wrapper
+	    // 播放器的默认配置
+	    _defineProperty(_assertThisInitialized(_this), "playerOptions", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "enableSeek", true);
+	    _defineProperty(_assertThisInitialized(_this), "env", Env.env);
+	    _defineProperty(_assertThisInitialized(_this), "fullScreenMode", 'Horizontal');
+	    _defineProperty(_assertThisInitialized(_this), "video", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "topbar", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "loading", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "error", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mask", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "containerWidth", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "containerHeight", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mediaProportion", 9 / 16);
+	    _this.playerOptions = _Object$assign({
+	      autoPlay: false,
+	      streamPlay: false
+	    }, options);
+	    _this.container = options.container;
+	    _this.containerHeight = options.container.clientHeight;
+	    _this.containerWidth = options.container.clientWidth;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Player, [{
+	    key: "init",
+	    value: function init() {
+	      var _this$playerOptions;
+	      if (this.playerOptions.video) {
+	        this.video = this.playerOptions.video;
+	        this.video.parentNode && this.video.parentNode.removeChild(this.video);
+	      } else {
+	        this.video = $$p('video');
+	        this.video['playsinline'] = true; // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
+	        this.video['x5-video-player-type'] = 'h5'; // 启用H5播放器,是wechat安卓版特性
+	      }
+
+	      this.video.crossOrigin = 'anonymous';
+	      this.el.appendChild(this.video);
+	      ((_this$playerOptions = this.playerOptions) === null || _this$playerOptions === void 0 ? void 0 : _this$playerOptions.url) && this.attachSource(this.playerOptions.url);
+	      this.initComponent();
+	      this.initTemplate();
+	      this.initEvent();
+	      this.initPlugin();
+	      this.initResizeObserver();
+	      this.checkFullScreenMode();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      if (this.env === 'Mobile') {
+	        // 如果是在移动端，则音量的调节使用手势决定的
+	        this.unmountComponent('Volume');
+	        new MobileVolume(this, this.el, 'div');
+	      }
+	    }
+	  }, {
+	    key: "initComponent",
+	    value: function initComponent() {
+	      this.loading = new TimeLoading(this, '视频姬正在努力加载中(⑅˃◡˂⑅)', this.el);
+	      this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
+	      this.toolBar = new ToolBar(this, this.el, 'div');
+	      this.topbar = new TopBar(this, this.el, 'div');
+	      // new DanmakuController(this)
+	    }
+	    /**
+	     * @@description 监听视频播放器大小的变化
+	     */
+	  }, {
+	    key: "initResizeObserver",
+	    value: function initResizeObserver() {
+	      var _this2 = this;
+	      /**
+	        window.resize弊端
+	          reize事件会在一秒内触发将近60次，所以很容易在改变窗口大小时导致性能问题
+	          它会监听每个元素的大小变化，而不是具体到某个元素的变化
+	          只有window对象才有resize事件，而不是具体某个元素有resize事件
+	        ResizeObserver
+	          可以监听到 Element 的内容区域或SVGElement的边界框改变
+	       */
+	      // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
+	      var _STORE = new _Map(COMPONENT_STORE);
+	      var resizeObserver = new ResizeObserver(function (entries) {
+	        // console.log('监听到了尺寸变化了...')
+	        // 触发尺寸变化事件
+	        _this2.emit(EVENT.RESIZE, entries);
+	        _this2.adjustMediaSize();
+	        var width = entries[0].contentRect.width;
+	        var subsetting;
+	        // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
+	        if (width <= 600) {
+	          // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
+	          _forEachInstanceProperty(_STORE).call(_STORE, function (value, key) {
+	            var _context, _context2;
+	            if (_indexOfInstanceProperty(_context = ['SubSetting']).call(_context, key) !== -1) {
+	              subsetting = ONCE_COMPONENT_STORE.get(key);
+	              _this2.unmountComponent(key);
+	            } else if (_indexOfInstanceProperty(_context2 = ['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot']).call(_context2, key) !== -1) {
+	              if (!HIDEEN_COMPONENT_STORE.get(key)) {
+	                _this2.hideComponent(key);
+	              }
+	            }
+	          });
+	          _this2.mountComponent(subsetting.id, subsetting, {
+	            mode: {
+	              type: 'TopToolBar',
+	              pos: 'right'
+	            }
+	          });
+	          addClass(subsetting.el, ['video-subsettings', 'video-topbar-controller']);
+	        } else {
+	          // 展示之前隐藏的组件
+	          var _HIDDEN_STORE = new _Map(HIDEEN_COMPONENT_STORE);
+	          _forEachInstanceProperty(_HIDDEN_STORE).call(_HIDDEN_STORE, function (value, key) {
+	            _this2.showComponent(key);
+	          });
+	          if (COMPONENT_STORE.has('SubSetting')) {
+	            var key = 'SubSetting';
+	            var component = ONCE_COMPONENT_STORE.get(key);
+	            // 如果SubSetting已经挂载到视图上，需要先卸载
+	            _this2.unmountComponent(key);
+	            _this2.mountComponent(key, component, {
+	              mode: {
+	                type: 'BottomToolBar',
+	                pos: 'right'
+	              },
+	              index: 1
+	            });
+	            addClass(component.el, ['video-subsettings', 'video-controller']);
+	          }
+	        }
+	      });
+	      // 开始观察
+	      resizeObserver.observe(this.el);
+	    }
+	    // 调整video的尺寸
+	  }, {
+	    key: "adjustMediaSize",
+	    value: function adjustMediaSize() {
+	      // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
+	      if (this.mediaProportion !== 0) {
+	        // 容器宽度偏小，高度偏大
+	        if (this.el.clientHeight / this.el.clientWidth > this.mediaProportion) {
+	          this.video.style.width = '100%';
+	          this.video.style.height = this.el.clientWidth * this.mediaProportion + 0.05 * this.el.clientWidth + 'px';
+	        } else {
+	          // 容器宽度偏大，高度偏小（类似带鱼屏）
+	          this.video.style.height = '100%';
+	          this.video.style.width = this.el.clientHeight / this.mediaProportion + 'px';
+	        }
+	      }
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this3 = this;
+	      if (this.env === 'Mobile') {
+	        this.initMobileEvent();
+	      } else {
+	        this.initPCEvent();
+	      }
+	      this.video.addEventListener('loadedmetadata', function (e) {
+	        _this3.emit(EVENT.LOADED_META_DATA, e);
+	        // videoWidth: 视频原始宽度
+	        // videoHeight: 视频原始高度
+	        _this3.mediaProportion = _this3.video.videoHeight / _this3.video.videoWidth;
+	        _this3.adjustMediaSize();
+	      });
+	      this.video.addEventListener('timeupdate', function (e) {
+	        _this3.emit(EVENT.TIME_UPDATE, e);
+	      });
+	      this.video.addEventListener('play', function (e) {
+	        _this3.emit(EVENT.PLAY, e);
+	      });
+	      this.video.addEventListener('pause', function (e) {
+	        _this3.emit(EVENT.PAUSE, e);
+	      });
+	      // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+	      this.video.addEventListener('seeking', function (e) {
+	        // 防抖效果：针对Dot按下并且拖动时不触发seeking，拖完鼠标抬起时再触发seeking
+	        if (_this3.enableSeek) {
+	          _this3.emit(EVENT.SEEKING, e);
+	        }
+	      });
+	      // waiting 事件在视频由于需要缓冲下一帧而停止时触发
+	      this.video.addEventListener('waiting', function (e) {
+	        _this3.emit(EVENT.WAITING, e);
+	      });
+	      // canplay 该视频已准备好开始播放
+	      this.video.addEventListener('canplay', function (e) {
+	        _this3.emit(EVENT.CAN_PLAY, e);
+	      });
+	      // error 视频加载发生错误时
+	      this.video.addEventListener('error', function (e) {
+	        _this3.emit(EVENT.ERROR);
+	      });
+	      // abort 视频终止加载时
+	      this.video.addEventListener('abort', function (e) {
+	        _this3.emit(EVENT.ERROR);
+	      });
+	      // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
+	      this.video.addEventListener('ratechange', function (e) {
+	        _this3.emit(EVENT.RATE_CHANGE);
+	      });
+	      this.on(EVENT.DANMAKU_INPUT_FOCUS, function () {
+	        _this3.el.onmouseleave = null;
+	      });
+	      this.on(EVENT.DANMAKU_INPUT_BLUR, function () {
+	        _this3.el.onmouseleave = function (e) {
+	          _this3.emit(EVENT.HIDE_TOOLBAR, e);
+	        };
+	      });
+	      this.on(EVENT.DOT_DOWN, function () {
+	        // console.log('dotdown')
+	        _this3.enableSeek = false;
+	      });
+	      this.on(EVENT.DOT_UP, function () {
+	        // console.log('dotup')
+	        _this3.enableSeek = true;
+	      });
+	      this.on(EVENT.VIDEO_DOT_DRAG, function (val, e) {
+	        _this3.emit(EVENT.SHOW_TOOLBAR, e);
+	      });
+	      this.on(EVENT.ENTER_FULLSCREEN, function () {
+	        var _context3, _context4;
+	        _forEachInstanceProperty(_context3 = document.querySelectorAll('.video-controller')).call(_context3, function (el) {
+	          el.style.marginRight = '15px';
+	        });
+	        _forEachInstanceProperty(_context4 = document.querySelectorAll('.video-topbar-controller')).call(_context4, function (el) {
+	          el.style.marginRight = '15px';
+	        });
+	      });
+	      this.on(EVENT.LEAVE_FULLSCREEN, function () {
+	        var _context5, _context6;
+	        _forEachInstanceProperty(_context5 = document.querySelectorAll('.video-controller')).call(_context5, function (el) {
+	          el.style.marginRight = '';
+	        });
+	        _forEachInstanceProperty(_context6 = document.querySelectorAll('.video-topbar-controller')).call(_context6, function (el) {
+	          el.style.marginRight = '';
+	        });
+	      });
+	    }
+	  }, {
+	    key: "initPCEvent",
+	    value: function initPCEvent() {
+	      var _this4 = this;
+	      this.video.onclick = function (e) {
+	        if (_this4.video.paused) {
+	          _this4.video.play();
+	        } else if (_this4.video.played) {
+	          _this4.video.pause();
+	        }
+	      };
+	      this.el.onmouseenter = function (e) {
+	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
+	      };
+	      this.el.onmousemove = function (e) {
+	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
+	      };
+	      this.el.onmouseleave = function (e) {
+	        _this4.emit(EVENT.HIDE_TOOLBAR, e);
+	      };
+	    }
+	  }, {
+	    key: "initMobileEvent",
+	    value: function initMobileEvent() {
+	      var _this5 = this;
+	      // 单击
+	      wrap(this.video).addEventListener('singleTap', function (e) {
+	        // console.log(e, 'singletap')
+	        if (_this5.toolBar.status === 'hidden') {
+	          _this5.emit(EVENT.SHOW_TOOLBAR, e);
+	        } else {
+	          _this5.emit(EVENT.HIDE_TOOLBAR, e);
+	        }
+	        _this5.emit(EVENT.VIDEO_CLICK);
+	      });
+	      // 双击
+	      wrap(this.video).addEventListener('doubleTap', function (e) {
+	        // console.log(e, 'doubleTap')
+	        if (_this5.video.paused) {
+	          _this5.video.play();
+	        } else if (_this5.video.played) {
+	          _this5.video.pause();
+	        }
+	      });
+	      // 手势上下处于滑动中
+	      wrap(this.video).addEventListener('move', function (e) {
+	        // console.log(e, 'move')
+	        var dx = e.deltaX;
+	        var dy = e.deltaY;
+	        if (computeAngle(dx, dy) >= 75) {
+	          _this5.emit(EVENT.MOVE_VERTICAL, e);
+	        } else if (computeAngle(dx, dy) <= 15) {
+	          _this5.emit(EVENT.MOVE_HORIZONTAL, e);
+	        }
+	      });
+	      // 手势上下滑动结束
+	      wrap(this.video).addEventListener('swipe', function (e) {
+	        // console.log(e, 'swipe')
+	        var dx = e.endPos.x - e.startPos.x;
+	        var dy = e.endPos.y - e.startPos.y;
+	        // if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+	        //   this.emit('slideVertical', e)
+	        // }
+	        if (computeAngle(dx, dy) >= 75) {
+	          _this5.emit(EVENT.SLIDE_VERTICAL, e);
+	        } else if (computeAngle(dx, dy) <= 15) {
+	          _this5.emit(EVENT.SLIDE_HORIZONTAL, e);
+	        }
+	      });
+	    }
+	  }, {
+	    key: "initPlugin",
+	    value: function initPlugin() {
+	      var _this6 = this;
+	      if (this.playerOptions.plugins) {
+	        var _context7;
+	        _forEachInstanceProperty(_context7 = this.playerOptions.plugins).call(_context7, function (plugin) {
+	          _this6.use(plugin);
+	        });
+	      }
+	    }
+	  }, {
+	    key: "attachSource",
+	    value: function attachSource(url) {
+	      // 是否启动流式播放
+	      if (this.playerOptions.streamPlay) {
+	        new MediaPlayer(url, this);
+	      } else {
+	        this.video.src = url;
+	      }
+	    }
+	  }, {
+	    key: "checkFullScreenMode",
+	    value: function checkFullScreenMode() {}
+	    // 注册/挂载自己的组件,其中的id为组件实例的名称，分为内置和用户自定义这两种情况；注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
+	  }, {
+	    key: "mountComponent",
+	    value: function mountComponent(id, component, options) {
+	      if (COMPONENT_STORE.has(id)) {
+	        throw new Error('无法挂载一个已经存在于视图上的组件，请先将其卸载或者删除');
+	      }
+	      COMPONENT_STORE.set(id, component);
+	      if (!ONCE_COMPONENT_STORE.has(id)) {
+	        ONCE_COMPONENT_STORE.set(id, component);
+	      }
+	      if (!options) {
+	        if (!component.container) {
+	          throw new Error('必须传入Options选项或者传入的组件实例中需要有container选项');
+	        }
+	        component.container.appendChild(component.el);
+	      } else {
+	        var mode = options.mode;
+	        if (mode.type === 'BottomToolBar') {
+	          var area;
+	          if (mode.pos === 'left') {
+	            area = this.toolBar.controller.leftArea;
+	          } else if (mode.pos === 'right') {
+	            area = this.toolBar.controller.rightArea;
+	          } else if (mode.pos === 'medium') {
+	            area = this.toolBar.controller.mediumArea;
+	          }
+	          var children = _toConsumableArray(area.children);
+	          if (!options.index) {
+	            area.appendChild(component.el);
+	          } else {
+	            if (options.index < 0) throw new Error('index不能传入负值');
+	            area.insertBefore(component.el, children[options.index] || null);
+	          }
+	        } else if (mode.type === 'TopToolBar') {
+	          var _area;
+	          if (mode.pos === 'left') {
+	            _area = this.topbar.leftArea;
+	          } else {
+	            _area = this.topbar.rightArea;
+	          }
+	          var _children = _toConsumableArray(_area.children);
+	          if (!options.index) {
+	            _area.appendChild(component.el);
+	          } else {
+	            if (options.index < 0) throw new Error('index不能传入负值');
+	            _area.insertBefore(component.el, _children[options.index] || null);
+	          }
+	        } else if (mode.type === 'AnyPosition') {
+	          this.el.appendChild(component.el);
+	        }
+	        // 给组件中的container赋予新的值
+	        component.container = component.el.parentElement;
+	      }
+	    }
+	    // 更新一个已经挂载到视图层上的组件
+	  }, {
+	    key: "updateComponent",
+	    value: function updateComponent(id, component, options) {
+	      if (!COMPONENT_STORE.get(id)) {
+	        throw new Error('该组件不存在或者已经被卸载');
+	      }
+	      patchComponent(COMPONENT_STORE.get(id), component, options);
+	    }
+	    // 隐藏某一个已经挂载到视图上的组件
+	  }, {
+	    key: "hideComponent",
+	    value: function hideComponent(id) {
+	      if (!COMPONENT_STORE.get(id)) {
+	        throw new Error('无法隐藏一个未挂载在视图上的组件');
+	      }
+	      if (HIDEEN_COMPONENT_STORE.get(id)) {
+	        throw new Error('该元素已经隐藏');
+	      }
+	      var instance = COMPONENT_STORE.get(id);
+	      instance.el.style.display = 'none';
+	      HIDEEN_COMPONENT_STORE.set(id, instance);
+	    }
+	    // 展示一个隐藏的组件
+	  }, {
+	    key: "showComponent",
+	    value: function showComponent(id) {
+	      if (!HIDEEN_COMPONENT_STORE.get(id)) {
+	        throw new Error('该元素已经显示出来了');
+	      }
+	      if (!COMPONENT_STORE.get(id)) {
+	        throw new Error('该元素不存在或者被卸载');
+	      }
+	      var instance = COMPONENT_STORE.get(id);
+	      instance.el.style.display = '';
+	      HIDEEN_COMPONENT_STORE.delete(id);
+	    }
+	    // 卸载某一个component组件，所谓卸载一个组件指的是仅仅将其DOM元素从视图上移除，但是不会删除其实例对象，还可以继续挂载
+	    // 注意：卸载一个组件会清除该组件上挂载的class和id，意味着之后用户可以将组件挂载到任何位置
+	  }, {
+	    key: "unmountComponent",
+	    value: function unmountComponent(id) {
+	      if (!COMPONENT_STORE.has(id)) {
+	        throw new Error('该组件不存在或者已经被卸载');
+	      }
+	      var instance = COMPONENT_STORE.get(id);
+	      instance.el.parentElement.removeChild(instance.el);
+	      removeClass(instance.el, _toConsumableArray(instance.el.classList));
+	      COMPONENT_STORE.delete(id);
+	    }
+	    // 彻底删除一个组件，也就是直接销毁组件实例，卸载组件仅仅是将其el元素从视图上移除，但任然保留组建的实例对象
+	  }, {
+	    key: "deleteComponent",
+	    value: function deleteComponent(id) {
+	      if (COMPONENT_STORE.has(id)) {
+	        this.unmountComponent(id);
+	      }
+	      ONCE_COMPONENT_STORE.delete(id);
+	    }
+	    /**
+	     * @description 注册对应的组件
+	     * @param plugin
+	     */
+	  }, {
+	    key: "use",
+	    value: function use(plugin) {
+	      plugin.install(this);
+	    }
+	  }]);
+	  return Player;
+	}(Component);
+
+	var $$f = _export;
+	var toObject = toObject$a;
+	var nativeKeys = objectKeys$3;
+	var fails$4 = fails$x;
+
+	var FAILS_ON_PRIMITIVES = fails$4(function () { nativeKeys(1); });
+
+	// `Object.keys` method
+	// https://tc39.es/ecma262/#sec-object.keys
+	$$f({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
+	  keys: function keys(it) {
+	    return nativeKeys(toObject(it));
+	  }
+	});
+
+	var path$5 = path$n;
+
+	var keys$5 = path$5.Object.keys;
+
+	var parent$g = keys$5;
+
+	var keys$4 = parent$g;
+
+	var parent$f = keys$4;
+
+	var keys$3 = parent$f;
+
+	var parent$e = keys$3;
+
+	var keys$2 = parent$e;
+
+	var keys$1 = keys$2;
+
+	var keys = keys$1;
+
+	var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys);
+
+	var path$4 = path$n;
+
+	var getOwnPropertySymbols$5 = path$4.Object.getOwnPropertySymbols;
+
+	var parent$d = getOwnPropertySymbols$5;
+
+	var getOwnPropertySymbols$4 = parent$d;
+
+	var parent$c = getOwnPropertySymbols$4;
+
+	var getOwnPropertySymbols$3 = parent$c;
+
+	var parent$b = getOwnPropertySymbols$3;
+
+	var getOwnPropertySymbols$2 = parent$b;
+
+	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
+
+	var getOwnPropertySymbols = getOwnPropertySymbols$1;
+
+	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
+
+	var getOwnPropertyDescriptor$7 = {exports: {}};
+
+	var $$e = _export;
+	var fails$3 = fails$x;
+	var toIndexedObject$1 = toIndexedObject$a;
+	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
+	var DESCRIPTORS$1 = descriptors;
+
+	var FORCED = !DESCRIPTORS$1 || fails$3(function () { nativeGetOwnPropertyDescriptor(1); });
+
+	// `Object.getOwnPropertyDescriptor` method
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+	$$e({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS$1 }, {
+	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
+	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
+	  }
+	});
+
+	var path$3 = path$n;
+
+	var Object$1 = path$3.Object;
+
+	var getOwnPropertyDescriptor$6 = getOwnPropertyDescriptor$7.exports = function getOwnPropertyDescriptor(it, key) {
+	  return Object$1.getOwnPropertyDescriptor(it, key);
+	};
+
+	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$6.sham = true;
+
+	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$7.exports;
+
+	var parent$a = getOwnPropertyDescriptorExports;
+
+	var getOwnPropertyDescriptor$5 = parent$a;
+
+	var parent$9 = getOwnPropertyDescriptor$5;
+
+	var getOwnPropertyDescriptor$4 = parent$9;
+
+	var parent$8 = getOwnPropertyDescriptor$4;
+
+	var getOwnPropertyDescriptor$3 = parent$8;
+
+	var getOwnPropertyDescriptor$2 = getOwnPropertyDescriptor$3;
+
+	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
+
+	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$1);
+
+	var getBuiltIn$3 = getBuiltIn$h;
+	var uncurryThis$1 = functionUncurryThis;
+	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
+	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
+	var anObject$2 = anObject$f;
+
+	var concat = uncurryThis$1([].concat);
+
+	// all object keys, includes non-enumerable and symbols
+	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
+	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
+	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
+	};
+
+	var $$d = _export;
+	var DESCRIPTORS = descriptors;
+	var ownKeys$2 = ownKeys$3;
+	var toIndexedObject = toIndexedObject$a;
+	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
+	var createProperty = createProperty$6;
+
+	// `Object.getOwnPropertyDescriptors` method
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
+	$$d({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
+	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
+	    var O = toIndexedObject(object);
+	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
+	    var keys = ownKeys$2(O);
+	    var result = {};
+	    var index = 0;
+	    var key, descriptor;
+	    while (keys.length > index) {
+	      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
+	      if (descriptor !== undefined) createProperty(result, key, descriptor);
+	    }
+	    return result;
+	  }
+	});
+
+	var path$2 = path$n;
+
+	var getOwnPropertyDescriptors$5 = path$2.Object.getOwnPropertyDescriptors;
+
+	var parent$7 = getOwnPropertyDescriptors$5;
+
+	var getOwnPropertyDescriptors$4 = parent$7;
+
+	var parent$6 = getOwnPropertyDescriptors$4;
+
+	var getOwnPropertyDescriptors$3 = parent$6;
+
+	var parent$5 = getOwnPropertyDescriptors$3;
+
+	var getOwnPropertyDescriptors$2 = parent$5;
+
+	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
+
+	var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
+
+	var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors);
 
 	var hasOwn$1 = hasOwnProperty_1;
 	var ownKeys$1 = ownKeys$3;
@@ -20111,339 +20816,11 @@
 	  fontColor: 'red'
 	}, '111111111111而非武功果然'];
 
-	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Loading = /*#__PURE__*/function (_Component) {
-	  _inherits(Loading, _Component);
-	  var _super = _createSuper$8(Loading);
-	  function Loading(player, msg, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, Loading);
-	    _this = _super.call(this, null, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "message", void 0);
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.container = container;
-	    _this.message = msg;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Loading, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-loading']);
-	      this.loadingBox = $$q('div');
-	      this.messageBox = $$q('div.video-loading-msgbox');
-	      this.messageBox.innerText = this.message;
-	      this.el.appendChild(this.loadingBox);
-	      this.el.appendChild(this.messageBox);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {}
-	  }, {
-	    key: "addLoading",
-	    value: function addLoading() {
-	      var _context;
-	      if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
-	        this.container.appendChild(this.el);
-	      }
-	    }
-	  }, {
-	    key: "removeLoading",
-	    value: function removeLoading() {
-	      var _context2;
-	      if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
-	        this.container.removeChild(this.el);
-	      }
-	    }
-	  }]);
-	  return Loading;
-	}(Component);
-
-	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var ErrorLoading = /*#__PURE__*/function (_Loading) {
-	  _inherits(ErrorLoading, _Loading);
-	  var _super = _createSuper$7(ErrorLoading);
-	  // el: div.video-loading
-	  function ErrorLoading(player, msg, container) {
-	    var _this;
-	    _classCallCheck(this, ErrorLoading);
-	    _this = _super.call(this, player, msg, container);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
-	    addClass(_this.loadingBox, ['video-loading-errorloading']);
-	    _this.initEvent();
-	    return _this;
-	  }
-	  _createClass(ErrorLoading, [{
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      // 视频加载发生错误时
-	      this.player.on(EVENT.ERROR, function (e) {
-	        _this2.addLoading();
-	      });
-	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function (e) {
-	        _this2.removeLoading();
-	      });
-	    }
-	  }]);
-	  return ErrorLoading;
-	}(Loading);
-
-	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var TimeLoading = /*#__PURE__*/function (_Loading) {
-	  _inherits(TimeLoading, _Loading);
-	  var _super = _createSuper$6(TimeLoading);
-	  // el: div.video-loading
-	  function TimeLoading(player, msg, container) {
-	    var _this;
-	    _classCallCheck(this, TimeLoading);
-	    _this = _super.call(this, player, msg, container);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
-	    addClass(_this.loadingBox, ['video-loading-loadingbox']);
-	    _this.initEvent();
-	    return _this;
-	  }
-	  _createClass(TimeLoading, [{
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      // 在视频由于需要缓冲下一帧而停止时触发
-	      this.player.on(EVENT.WAITING, function () {
-	        _this2.addLoading();
-	      });
-	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function () {
-	        _this2.removeLoading();
-	      });
-	    }
-	  }]);
-	  return TimeLoading;
-	}(Loading);
-
-	function styleInject(css, ref) {
-	  if ( ref === void 0 ) ref = {};
-	  var insertAt = ref.insertAt;
-
-	  if (!css || typeof document === 'undefined') { return; }
-
-	  var head = document.head || document.getElementsByTagName('head')[0];
-	  var style = document.createElement('style');
-	  style.type = 'text/css';
-
-	  if (insertAt === 'top') {
-	    if (head.firstChild) {
-	      head.insertBefore(style, head.firstChild);
-	    } else {
-	      head.appendChild(style);
-	    }
-	  } else {
-	    head.appendChild(style);
-	  }
-
-	  if (style.styleSheet) {
-	    style.styleSheet.cssText = css;
-	  } else {
-	    style.appendChild(document.createTextNode(css));
-	  }
-	}
-
-	var css_248z$2 = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
-	styleInject(css_248z$2);
-
-	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var MobileVolume = /*#__PURE__*/function (_Component) {
-	  _inherits(MobileVolume, _Component);
-	  var _super = _createSuper$5(MobileVolume);
-	  function MobileVolume(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, MobileVolume);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'MobileVolume');
-	    // el: div.video-mobile-medium-wrapper
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "progressBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "completedBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "icon", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "timer", 0);
-	    _this.player = player;
-	    _this.props = props || {};
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(MobileVolume, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-mobile-medium-wrapper']);
-	      this.el.style.display = 'none';
-	      this.iconBox = $$q('div.video-mobile-medium-iconbox');
-	      this.progressBox = $$q('div.video-mobile-medium-progressbox');
-	      this.completedBox = $$q('div.video-mobile-medium-completed', {
-	        style: {
-	          width: '0px'
-	        }
-	      });
-	      this.icon = createSvg(volumePath$1);
-	      this.iconBox.appendChild(this.icon);
-	      this.progressBox.appendChild(this.completedBox);
-	      this.el.appendChild(this.iconBox);
-	      this.el.appendChild(this.progressBox);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      var width = this.completedBox.clientWidth;
-	      this.player.on(EVENT.MOVE_VERTICAL, function (e) {
-	        // console.log('正在滑动')
-	        if (_this2.timer) {
-	          window.clearInterval(_this2.timer);
-	        }
-	        _this2.timer = null;
-	        _this2.el.style.display = '';
-	        var dy = e.deltaY;
-	        var scale = (width + -dy) / _this2.progressBox.clientWidth;
-	        if (scale < 0) {
-	          scale = 0;
-	        } else if (scale > 1) {
-	          scale = 1;
-	        }
-	        // console.log(scale)
-	        _this2.completedBox.style.width = scale * 100 + '%';
-	        _this2.player.video.volume = scale;
-	      });
-	      this.player.on(EVENT.SLIDE_VERTICAL, function (e) {
-	        // console.log('滑动结束')
-	        width = _this2.completedBox.clientWidth;
-	        _this2.timer = window.setTimeout(function () {
-	          _this2.el.style.display = 'none';
-	        }, 600);
-	      });
-	      this.player.on(EVENT.VIDEO_CLICK, function () {
-	        _this2.el.style.display = 'none';
-	      });
-	    }
-	  }]);
-	  return MobileVolume;
-	}(Component);
-
-	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var TopBar = /*#__PURE__*/function (_Component) {
-	  _inherits(TopBar, _Component);
-	  var _super = _createSuper$4(TopBar);
-	  // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
-	  function TopBar(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, TopBar);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
-	    // el: div.video-topbar.video-topbar-hidden
-	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "timer", null);
-	    _this.player = player;
-	    _this.props = props || {};
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(TopBar, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	    /**
-	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
-	     */
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
-	      this.leftArea = $$q('div.video-topbar-left');
-	      this.rightArea = $$q('div.video-topbar-right');
-	      this.el.appendChild(this.leftArea);
-	      this.el.appendChild(this.rightArea);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
-	        _this2.onShowToolBar();
-	      });
-	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
-	        _this2.onHideToolBar();
-	      });
-	    }
-	  }, {
-	    key: "hideToolBar",
-	    value: function hideToolBar() {
-	      if (!includeClass(this.el, 'video-topbar-hidden')) {
-	        addClass(this.el, ['video-topbar-hidden']);
-	      }
-	    }
-	  }, {
-	    key: "showToolBar",
-	    value: function showToolBar() {
-	      var _this3 = this;
-	      if (includeClass(this.el, 'video-topbar-hidden')) {
-	        removeClass(this.el, ['video-topbar-hidden']);
-	      }
-	      this.timer = window.setTimeout(function () {
-	        _this3.hideToolBar();
-	      }, 3000);
-	    }
-	  }, {
-	    key: "onShowToolBar",
-	    value: function onShowToolBar() {
-	      if (this.timer) {
-	        window.clearTimeout(this.timer);
-	        this.timer = null;
-	      }
-	      this.showToolBar();
-	    }
-	  }, {
-	    key: "onHideToolBar",
-	    value: function onHideToolBar() {
-	      this.hideToolBar();
-	    }
-	  }]);
-	  return TopBar;
-	}(Component);
-
-	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DanmakuOpenClose = /*#__PURE__*/function (_Options) {
 	  _inherits(DanmakuOpenClose, _Options);
-	  var _super = _createSuper$3(DanmakuOpenClose);
+	  var _super = _createSuper$2(DanmakuOpenClose);
 	  function DanmakuOpenClose(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, DanmakuOpenClose);
@@ -20498,11 +20875,11 @@
 	  return DanmakuOpenClose;
 	}(Options);
 
-	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DanmakuSettings = /*#__PURE__*/function (_Options) {
 	  _inherits(DanmakuSettings, _Options);
-	  var _super = _createSuper$2(DanmakuSettings);
+	  var _super = _createSuper$1(DanmakuSettings);
 	  // el: div.video-danmaku-settings.video-controller
 	  function DanmakuSettings(player, container, desc, props, children) {
 	    var _this;
@@ -20665,11 +21042,11 @@
 	var css_248z$1 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 40px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 30px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n";
 	styleInject(css_248z$1);
 
-	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DanmakuInput = /*#__PURE__*/function (_Component) {
 	  _inherits(DanmakuInput, _Component);
-	  var _super = _createSuper$1(DanmakuInput);
+	  var _super = _createSuper(DanmakuInput);
 	  function DanmakuInput(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, DanmakuInput);
@@ -20695,10 +21072,10 @@
 	    key: "initTemplate",
 	    value: function initTemplate() {
 	      addClass(this.el, ['danmaku-input-wrapper']);
-	      this.inputBox = $$q('input.danmaku-input', {
+	      this.inputBox = $$p('input.danmaku-input', {
 	        type: 'text'
 	      });
-	      this.sendBox = $$q('span.danmaku-send');
+	      this.sendBox = $$p('span.danmaku-send');
 	      this.sendBox.innerText = '发送';
 	      this.el.appendChild(this.inputBox);
 	      this.el.appendChild(this.sendBox);
@@ -20724,506 +21101,7 @@
 	  return DanmakuInput;
 	}(Component);
 
-	var env = window.navigator.userAgent.toLowerCase();
-	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
-	var Env = {
-	  isInWeixin: function isInWeixin() {
-	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
-	  },
-	  isInApp: function isInApp() {
-	    return /(^|;\s)app\//.test(env);
-	  },
-	  isInIOS: function isInIOS() {
-	    return env.match(/(iphone|ipod|ipad);?/i);
-	  },
-	  isInAndroid: function isInAndroid() {
-	    return env.match(/android|adr/i);
-	  },
-	  isInPc: function isInPc() {
-	    return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin());
-	  },
-	  get env() {
-	    return this.isInPc() ? 'PC' : 'Mobile';
-	  }
-	};
-
-	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Player = /*#__PURE__*/function (_Component) {
-	  _inherits(Player, _Component);
-	  var _super = _createSuper(Player);
-	  // 视频比例 原始高度/原始宽度
-	  function Player(options) {
-	    var _this;
-	    _classCallCheck(this, Player);
-	    _this = _super.call(this, options.container, 'div.Niplayer_video-wrapper');
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Player');
-	    // el: div.Niplayer_video-wrapper
-	    // 播放器的默认配置
-	    _defineProperty(_assertThisInitialized(_this), "playerOptions", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "enableSeek", true);
-	    _defineProperty(_assertThisInitialized(_this), "env", Env.env);
-	    _defineProperty(_assertThisInitialized(_this), "fullScreenMode", 'Horizontal');
-	    _defineProperty(_assertThisInitialized(_this), "video", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "topbar", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "loading", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "error", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mask", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "containerWidth", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "containerHeight", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mediaProportion", 9 / 16);
-	    _this.playerOptions = _Object$assign({
-	      autoPlay: false,
-	      streamPlay: false
-	    }, options);
-	    _this.container = options.container;
-	    _this.containerHeight = options.container.clientHeight;
-	    _this.containerWidth = options.container.clientWidth;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Player, [{
-	    key: "init",
-	    value: function init() {
-	      var _this$playerOptions;
-	      if (this.playerOptions.video) {
-	        this.video = this.playerOptions.video;
-	        this.video.parentNode && this.video.parentNode.removeChild(this.video);
-	      } else {
-	        this.video = $$q('video');
-	        this.video['playsinline'] = true; // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
-	        this.video['x5-video-player-type'] = 'h5'; // 启用H5播放器,是wechat安卓版特性
-	      }
-
-	      this.video.crossOrigin = 'anonymous';
-	      this.el.appendChild(this.video);
-	      ((_this$playerOptions = this.playerOptions) === null || _this$playerOptions === void 0 ? void 0 : _this$playerOptions.url) && this.attachSource(this.playerOptions.url);
-	      this.initComponent();
-	      this.initTemplate();
-	      this.initEvent();
-	      this.initPlugin();
-	      this.initResizeObserver();
-	      this.checkFullScreenMode();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      if (this.env === 'Mobile') {
-	        // 如果是在移动端，则音量的调节使用手势决定的
-	        this.unmountComponent('Volume');
-	        new MobileVolume(this, this.el, 'div');
-	      }
-	    }
-	  }, {
-	    key: "initComponent",
-	    value: function initComponent() {
-	      this.loading = new TimeLoading(this, '视频姬正在努力加载中(⑅˃◡˂⑅)', this.el);
-	      this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
-	      this.toolBar = new ToolBar(this, this.el, 'div');
-	      this.topbar = new TopBar(this, this.el, 'div');
-	      new DanmakuController(this);
-	    }
-	    /**
-	     * @@description 监听视频播放器大小的变化
-	     */
-	  }, {
-	    key: "initResizeObserver",
-	    value: function initResizeObserver() {
-	      var _this2 = this;
-	      /**
-	        window.resize弊端
-	          reize事件会在一秒内触发将近60次，所以很容易在改变窗口大小时导致性能问题
-	          它会监听每个元素的大小变化，而不是具体到某个元素的变化
-	          只有window对象才有resize事件，而不是具体某个元素有resize事件
-	        ResizeObserver
-	          可以监听到 Element 的内容区域或SVGElement的边界框改变
-	       */
-	      // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
-	      var _STORE = new _Map(COMPONENT_STORE);
-	      var resizeObserver = new ResizeObserver(function (entries) {
-	        // console.log('监听到了尺寸变化了...')
-	        // 触发尺寸变化事件
-	        _this2.emit(EVENT.RESIZE, entries);
-	        _this2.adjustMediaSize();
-	        var width = entries[0].contentRect.width;
-	        var subsetting;
-	        // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
-	        if (width <= 600) {
-	          // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
-	          _forEachInstanceProperty(_STORE).call(_STORE, function (value, key) {
-	            var _context, _context2;
-	            if (_indexOfInstanceProperty(_context = ['SubSetting']).call(_context, key) !== -1) {
-	              subsetting = ONCE_COMPONENT_STORE.get(key);
-	              _this2.unmountComponent(key);
-	            } else if (_indexOfInstanceProperty(_context2 = ['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot']).call(_context2, key) !== -1) {
-	              if (!HIDEEN_COMPONENT_STORE.get(key)) {
-	                _this2.hideComponent(key);
-	              }
-	            }
-	          });
-	          _this2.mountComponent(subsetting.id, subsetting, {
-	            mode: {
-	              type: 'TopToolBar',
-	              pos: 'right'
-	            }
-	          });
-	          addClass(subsetting.el, ['video-subsettings', 'video-topbar-controller']);
-	        } else {
-	          // 展示之前隐藏的组件
-	          var _HIDDEN_STORE = new _Map(HIDEEN_COMPONENT_STORE);
-	          _forEachInstanceProperty(_HIDDEN_STORE).call(_HIDDEN_STORE, function (value, key) {
-	            _this2.showComponent(key);
-	          });
-	          if (COMPONENT_STORE.has('SubSetting')) {
-	            var key = 'SubSetting';
-	            var component = ONCE_COMPONENT_STORE.get(key);
-	            // 如果SubSetting已经挂载到视图上，需要先卸载
-	            _this2.unmountComponent(key);
-	            _this2.mountComponent(key, component, {
-	              mode: {
-	                type: 'BottomToolBar',
-	                pos: 'right'
-	              },
-	              index: 1
-	            });
-	            addClass(component.el, ['video-subsettings', 'video-controller']);
-	          }
-	        }
-	      });
-	      // 开始观察
-	      resizeObserver.observe(this.el);
-	    }
-	    // 调整video的尺寸
-	  }, {
-	    key: "adjustMediaSize",
-	    value: function adjustMediaSize() {
-	      // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
-	      if (this.mediaProportion !== 0) {
-	        // 容器宽度偏小，高度偏大
-	        if (this.el.clientHeight / this.el.clientWidth > this.mediaProportion) {
-	          this.video.style.width = '100%';
-	          this.video.style.height = this.el.clientWidth * this.mediaProportion + 0.05 * this.el.clientWidth + 'px';
-	        } else {
-	          // 容器宽度偏大，高度偏小（类似带鱼屏）
-	          this.video.style.height = '100%';
-	          this.video.style.width = this.el.clientHeight / this.mediaProportion + 'px';
-	        }
-	      }
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this3 = this;
-	      if (this.env === 'Mobile') {
-	        this.initMobileEvent();
-	      } else {
-	        this.initPCEvent();
-	      }
-	      this.video.addEventListener('loadedmetadata', function (e) {
-	        _this3.emit(EVENT.LOADED_META_DATA, e);
-	        // videoWidth: 视频原始宽度
-	        // videoHeight: 视频原始高度
-	        _this3.mediaProportion = _this3.video.videoHeight / _this3.video.videoWidth;
-	        _this3.adjustMediaSize();
-	      });
-	      this.video.addEventListener('timeupdate', function (e) {
-	        _this3.emit(EVENT.TIME_UPDATE, e);
-	      });
-	      this.video.addEventListener('play', function (e) {
-	        _this3.emit(EVENT.PLAY, e);
-	      });
-	      this.video.addEventListener('pause', function (e) {
-	        _this3.emit(EVENT.PAUSE, e);
-	      });
-	      // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
-	      this.video.addEventListener('seeking', function (e) {
-	        // 防抖效果：针对Dot按下并且拖动时不触发seeking，拖完鼠标抬起时再触发seeking
-	        if (_this3.enableSeek) {
-	          _this3.emit(EVENT.SEEKING, e);
-	        }
-	      });
-	      // waiting 事件在视频由于需要缓冲下一帧而停止时触发
-	      this.video.addEventListener('waiting', function (e) {
-	        _this3.emit(EVENT.WAITING, e);
-	      });
-	      // canplay 该视频已准备好开始播放
-	      this.video.addEventListener('canplay', function (e) {
-	        _this3.emit(EVENT.CAN_PLAY, e);
-	      });
-	      // error 视频加载发生错误时
-	      this.video.addEventListener('error', function (e) {
-	        _this3.emit(EVENT.ERROR);
-	      });
-	      // abort 视频终止加载时
-	      this.video.addEventListener('abort', function (e) {
-	        _this3.emit(EVENT.ERROR);
-	      });
-	      // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
-	      this.video.addEventListener('ratechange', function (e) {
-	        _this3.emit(EVENT.RATE_CHANGE);
-	      });
-	      this.on(EVENT.DANMAKU_INPUT_FOCUS, function () {
-	        _this3.el.onmouseleave = null;
-	      });
-	      this.on(EVENT.DANMAKU_INPUT_BLUR, function () {
-	        _this3.el.onmouseleave = function (e) {
-	          _this3.emit(EVENT.HIDE_TOOLBAR, e);
-	        };
-	      });
-	      this.on(EVENT.DOT_DOWN, function () {
-	        // console.log('dotdown')
-	        _this3.enableSeek = false;
-	      });
-	      this.on(EVENT.DOT_UP, function () {
-	        // console.log('dotup')
-	        _this3.enableSeek = true;
-	      });
-	      this.on(EVENT.VIDEO_DOT_DRAG, function (val, e) {
-	        _this3.emit(EVENT.SHOW_TOOLBAR, e);
-	      });
-	      this.on(EVENT.ENTER_FULLSCREEN, function () {
-	        var _context3, _context4;
-	        _forEachInstanceProperty(_context3 = document.querySelectorAll('.video-controller')).call(_context3, function (el) {
-	          el.style.marginRight = '15px';
-	        });
-	        _forEachInstanceProperty(_context4 = document.querySelectorAll('.video-topbar-controller')).call(_context4, function (el) {
-	          el.style.marginRight = '15px';
-	        });
-	      });
-	      this.on(EVENT.LEAVE_FULLSCREEN, function () {
-	        var _context5, _context6;
-	        _forEachInstanceProperty(_context5 = document.querySelectorAll('.video-controller')).call(_context5, function (el) {
-	          el.style.marginRight = '';
-	        });
-	        _forEachInstanceProperty(_context6 = document.querySelectorAll('.video-topbar-controller')).call(_context6, function (el) {
-	          el.style.marginRight = '';
-	        });
-	      });
-	    }
-	  }, {
-	    key: "initPCEvent",
-	    value: function initPCEvent() {
-	      var _this4 = this;
-	      this.video.onclick = function (e) {
-	        if (_this4.video.paused) {
-	          _this4.video.play();
-	        } else if (_this4.video.played) {
-	          _this4.video.pause();
-	        }
-	      };
-	      this.el.onmouseenter = function (e) {
-	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
-	      };
-	      this.el.onmousemove = function (e) {
-	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
-	      };
-	      this.el.onmouseleave = function (e) {
-	        _this4.emit(EVENT.HIDE_TOOLBAR, e);
-	      };
-	    }
-	  }, {
-	    key: "initMobileEvent",
-	    value: function initMobileEvent() {
-	      var _this5 = this;
-	      // 单击
-	      wrap(this.video).addEventListener('singleTap', function (e) {
-	        // console.log(e, 'singletap')
-	        if (_this5.toolBar.status === 'hidden') {
-	          _this5.emit(EVENT.SHOW_TOOLBAR, e);
-	        } else {
-	          _this5.emit(EVENT.HIDE_TOOLBAR, e);
-	        }
-	        _this5.emit(EVENT.VIDEO_CLICK);
-	      });
-	      // 双击
-	      wrap(this.video).addEventListener('doubleTap', function (e) {
-	        // console.log(e, 'doubleTap')
-	        if (_this5.video.paused) {
-	          _this5.video.play();
-	        } else if (_this5.video.played) {
-	          _this5.video.pause();
-	        }
-	      });
-	      // 手势上下处于滑动中
-	      wrap(this.video).addEventListener('move', function (e) {
-	        // console.log(e, 'move')
-	        var dx = e.deltaX;
-	        var dy = e.deltaY;
-	        if (computeAngle(dx, dy) >= 75) {
-	          _this5.emit(EVENT.MOVE_VERTICAL, e);
-	        } else if (computeAngle(dx, dy) <= 15) {
-	          _this5.emit(EVENT.MOVE_HORIZONTAL, e);
-	        }
-	      });
-	      // 手势上下滑动结束
-	      wrap(this.video).addEventListener('swipe', function (e) {
-	        // console.log(e, 'swipe')
-	        var dx = e.endPos.x - e.startPos.x;
-	        var dy = e.endPos.y - e.startPos.y;
-	        // if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
-	        //   this.emit('slideVertical', e)
-	        // }
-	        if (computeAngle(dx, dy) >= 75) {
-	          _this5.emit(EVENT.SLIDE_VERTICAL, e);
-	        } else if (computeAngle(dx, dy) <= 15) {
-	          _this5.emit(EVENT.SLIDE_HORIZONTAL, e);
-	        }
-	      });
-	    }
-	  }, {
-	    key: "initPlugin",
-	    value: function initPlugin() {
-	      var _this6 = this;
-	      if (this.playerOptions.plugins) {
-	        var _context7;
-	        _forEachInstanceProperty(_context7 = this.playerOptions.plugins).call(_context7, function (plugin) {
-	          _this6.use(plugin);
-	        });
-	      }
-	    }
-	  }, {
-	    key: "attachSource",
-	    value: function attachSource(url) {
-	      // 是否启动流式播放
-	      if (this.playerOptions.streamPlay) {
-	        new MediaPlayer(url, this);
-	      } else {
-	        this.video.src = url;
-	      }
-	    }
-	  }, {
-	    key: "checkFullScreenMode",
-	    value: function checkFullScreenMode() {}
-	    // 注册/挂载自己的组件,其中的id为组件实例的名称，分为内置和用户自定义这两种情况；注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
-	  }, {
-	    key: "mountComponent",
-	    value: function mountComponent(id, component, options) {
-	      if (COMPONENT_STORE.has(id)) {
-	        throw new Error('无法挂载一个已经存在于视图上的组件，请先将其卸载或者删除');
-	      }
-	      COMPONENT_STORE.set(id, component);
-	      if (!ONCE_COMPONENT_STORE.has(id)) {
-	        ONCE_COMPONENT_STORE.set(id, component);
-	      }
-	      if (!options) {
-	        if (!component.container) {
-	          throw new Error('必须传入Options选项或者传入的组件实例中需要有container选项');
-	        }
-	        component.container.appendChild(component.el);
-	      } else {
-	        var mode = options.mode;
-	        if (mode.type === 'BottomToolBar') {
-	          var area;
-	          if (mode.pos === 'left') {
-	            area = this.toolBar.controller.leftArea;
-	          } else if (mode.pos === 'right') {
-	            area = this.toolBar.controller.rightArea;
-	          } else if (mode.pos === 'medium') {
-	            area = this.toolBar.controller.mediumArea;
-	          }
-	          var children = _toConsumableArray(area.children);
-	          if (!options.index) {
-	            area.appendChild(component.el);
-	          } else {
-	            if (options.index < 0) throw new Error('index不能传入负值');
-	            area.insertBefore(component.el, children[options.index] || null);
-	          }
-	        } else if (mode.type === 'TopToolBar') {
-	          var _area;
-	          if (mode.pos === 'left') {
-	            _area = this.topbar.leftArea;
-	          } else {
-	            _area = this.topbar.rightArea;
-	          }
-	          var _children = _toConsumableArray(_area.children);
-	          if (!options.index) {
-	            _area.appendChild(component.el);
-	          } else {
-	            if (options.index < 0) throw new Error('index不能传入负值');
-	            _area.insertBefore(component.el, _children[options.index] || null);
-	          }
-	        } else if (mode.type === 'AnyPosition') {
-	          this.el.appendChild(component.el);
-	        }
-	        // 给组件中的container赋予新的值
-	        component.container = component.el.parentElement;
-	      }
-	    }
-	    // 更新一个已经挂载到视图层上的组件
-	  }, {
-	    key: "updateComponent",
-	    value: function updateComponent(id, component, options) {
-	      if (!COMPONENT_STORE.get(id)) {
-	        throw new Error('该组件不存在或者已经被卸载');
-	      }
-	      patchComponent(COMPONENT_STORE.get(id), component, options);
-	    }
-	    // 隐藏某一个已经挂载到视图上的组件
-	  }, {
-	    key: "hideComponent",
-	    value: function hideComponent(id) {
-	      if (!COMPONENT_STORE.get(id)) {
-	        throw new Error('无法隐藏一个未挂载在视图上的组件');
-	      }
-	      if (HIDEEN_COMPONENT_STORE.get(id)) {
-	        throw new Error('该元素已经隐藏');
-	      }
-	      var instance = COMPONENT_STORE.get(id);
-	      instance.el.style.display = 'none';
-	      HIDEEN_COMPONENT_STORE.set(id, instance);
-	    }
-	    // 展示一个隐藏的组件
-	  }, {
-	    key: "showComponent",
-	    value: function showComponent(id) {
-	      if (!HIDEEN_COMPONENT_STORE.get(id)) {
-	        throw new Error('该元素已经显示出来了');
-	      }
-	      if (!COMPONENT_STORE.get(id)) {
-	        throw new Error('该元素不存在或者被卸载');
-	      }
-	      var instance = COMPONENT_STORE.get(id);
-	      instance.el.style.display = '';
-	      HIDEEN_COMPONENT_STORE.delete(id);
-	    }
-	    // 卸载某一个component组件，所谓卸载一个组件指的是仅仅将其DOM元素从视图上移除，但是不会删除其实例对象，还可以继续挂载
-	    // 注意：卸载一个组件会清除该组件上挂载的class和id，意味着之后用户可以将组件挂载到任何位置
-	  }, {
-	    key: "unmountComponent",
-	    value: function unmountComponent(id) {
-	      if (!COMPONENT_STORE.has(id)) {
-	        throw new Error('该组件不存在或者已经被卸载');
-	      }
-	      var instance = COMPONENT_STORE.get(id);
-	      instance.el.parentElement.removeChild(instance.el);
-	      removeClass(instance.el, _toConsumableArray(instance.el.classList));
-	      COMPONENT_STORE.delete(id);
-	    }
-	    // 彻底删除一个组件，也就是直接销毁组件实例，卸载组件仅仅是将其el元素从视图上移除，但任然保留组建的实例对象
-	  }, {
-	    key: "deleteComponent",
-	    value: function deleteComponent(id) {
-	      if (COMPONENT_STORE.has(id)) {
-	        this.unmountComponent(id);
-	      }
-	      ONCE_COMPONENT_STORE.delete(id);
-	    }
-	    /**
-	     * @description 注册对应的组件
-	     * @param plugin
-	     */
-	  }, {
-	    key: "use",
-	    value: function use(plugin) {
-	      plugin.install(this);
-	    }
-	  }]);
-	  return Player;
-	}(Component);
-
-	var css_248z = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #fff;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 5px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
+	var css_248z = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #fff;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 5px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
 	styleInject(css_248z);
 
 	exports.Controller = Controller;
@@ -21238,7 +21116,6 @@
 	exports.PicInPic = PicInPic;
 	exports.PlayButton = PlayButton;
 	exports.Player = Player;
-	exports.Playrate = Playrate;
 	exports.Progress = Progress;
 	exports.ScreenShot = ScreenShot;
 	exports.SubSetting = SubSetting;
