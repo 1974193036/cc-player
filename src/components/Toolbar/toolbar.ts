@@ -52,8 +52,8 @@ export class ToolBar extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on(EVENT.SHOW_TOOLBAR, (e: Event | SingleTapEvent | MoveEvent) => {
-      this.onShowToolBar(e)
+    this.player.on(EVENT.SHOW_TOOLBAR, () => {
+      this.onShowToolBar()
     })
 
     this.player.on(EVENT.HIDE_TOOLBAR, () => {
@@ -61,33 +61,27 @@ export class ToolBar extends Component implements ComponentItem {
     })
   }
 
-  onShowToolBar(e: Event | SingleTapEvent | MoveEvent) {
+  onShowToolBar() {
     if (this.timer) {
       window.clearTimeout(this.timer)
       this.timer = null
     }
-    this.showToolBar(e)
+    this.showToolBar()
   }
 
   onHideToolBar() {
     this.hideToolBar()
   }
 
-  private showToolBar(e: Event | SingleTapEvent | MoveEvent) {
+  private showToolBar() {
     if (includeClass(this.el, 'video-toolbar-hidden')) {
       removeClass(this.el, ['video-toolbar-hidden'])
       this.status = 'show'
     }
 
-    let target
-    if (e instanceof Event) target = e.target
-    else target = (e as SingleTapEvent | MoveEvent).e.target
-
-    if (target === this.player.video && this.player.env === 'PC') {
-      this.timer = window.setTimeout(() => {
-        this.hideToolBar()
-      }, 3000)
-    }
+    this.timer = window.setTimeout(() => {
+      this.hideToolBar()
+    }, 3000)
   }
 
   private hideToolBar() {

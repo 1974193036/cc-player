@@ -20,7 +20,7 @@ export class Progress extends Component implements ComponentItem {
   mouseX: number = 0
   dotLeft: number = 0
 
-  constructor(player: Player, container: HTMLElement, desc?: string) {
+  constructor(player: Player, container?: HTMLElement, desc?: string) {
     super(container, desc)
     this.player = player
     this.initBase()
@@ -82,14 +82,18 @@ export class Progress extends Component implements ComponentItem {
     }
 
     this.el.onclick = (e: MouseEvent) => {
+      if (e.target === this.dot) return
       this.emit(EVENT.PROGRESS_CLICK, e.offsetX, ctx)
     }
 
     this.dot.addEventListener('mousedown', (e: MouseEvent) => {
       e.preventDefault()
+      e.stopPropagation()
       this.emit(EVENT.DOT_DOWN)
       this.mouseX = e.pageX
-      this.dotLeft = this.dot.style.left ? parseInt(this.dot.style.left) : 0
+      // this.dot.style.left是一个百分比如"40.8%，变成px
+      this.dotLeft = (parseFloat(this.dot.style.left || '0') / 100) * this.el.clientWidth
+
       document.body.addEventListener('mousemove', ctx.onMouseMove)
 
       document.body.onmouseup = (e: MouseEvent) => {
@@ -103,7 +107,7 @@ export class Progress extends Component implements ComponentItem {
   initBaseMobileEvent() {
     let ctx = this
     wrap(this.el).addEventListener('singleTap', (e: SingleTapEvent) => {
-      let dx = e.e.touches[0].clientX - getDOMPoint(this.el).x
+      let dx = e.e.changedTouches[0].clientX - getDOMPoint(this.el).x
       this.emit(EVENT.PROGRESS_CLICK, dx, ctx)
     })
 
@@ -111,7 +115,9 @@ export class Progress extends Component implements ComponentItem {
       e.preventDefault()
       this.emit(EVENT.DOT_DOWN)
       this.mouseX = e.touches[0].clientX
-      this.dotLeft = this.el.style.left ? parseInt(this.el.style.left) : 0
+      // this.dotLeft = this.el.style.left ? parseInt(this.el.style.left) : 0
+      // this.dot.style.left是一个百分比如"40.8%，变成px
+      this.dotLeft = (parseFloat(this.dot.style.left || '0') / 100) * this.el.clientWidth
 
       document.body.addEventListener('touchmove', this.onMouseMove)
 
@@ -132,21 +138,4 @@ export class Progress extends Component implements ComponentItem {
       this.emit(EVENT.DOT_DRAG, dx, this)
     }
   }
-
-  // initEvent() {
-  //   this.el.onmouseenter = (e: Event) => {
-  //     this.player.emit(EVENT.PROGRESS_MOUSE_ENTER, e, this)
-  //     this.emit(EVENT.PROGRESS_MOUSE_ENTER, e, this)
-  //   }
-
-  //   this.el.onmouseleave = (e: Event) => {
-  //     this.player.emit(EVENT.PROGRESS_MOUSE_LEAVE, e, this)
-  //     this.emit(EVENT.PROGRESS_MOUSE_LEAVE, e, this)
-  //   }
-
-  //   this.el.onclick = (e: Event) => {
-  //     this.player.emit(EVENT.PROGRESS_CLICK, e, this)
-  //     this.emit(EVENT.PROGRESS_CLICK, e, this)
-  //   }
-  // }
 }

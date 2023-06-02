@@ -209,7 +209,7 @@ class Player extends Component implements ComponentItem {
 
     // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
     this.video.addEventListener('seeking', (e) => {
-      // 防抖效果：针对Dot按下拖动时不触发seeking，拖完鼠标抬起时再触发seeking
+      // 防抖效果：针对Dot按下并且拖动时不触发seeking，拖完鼠标抬起时再触发seeking
       if (this.enableSeek) {
         this.emit(EVENT.SEEKING, e)
       }
@@ -258,7 +258,7 @@ class Player extends Component implements ComponentItem {
       // console.log('dotup')
       this.enableSeek = true
     })
-    this.on(EVENT.DOT_DRAG, (val: number, e: Event | MoveEvent) => {
+    this.on(EVENT.VIDEO_DOT_DRAG, (val: number, e: Event | MoveEvent) => {
       this.emit(EVENT.SHOW_TOOLBAR, e)
     })
 

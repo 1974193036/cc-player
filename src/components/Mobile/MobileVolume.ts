@@ -4,7 +4,7 @@ import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { $, addClass, createSvg } from '@/utils/domUtils'
 import { volumePath$1 } from '@/svg'
 import { MoveEvent, SwipeEvent } from 'ntouch.js'
-import { EVENT } from "@/events";
+import { EVENT } from '@/events'
 import './index.less'
 
 export class MobileVolume extends Component implements ComponentItem {
