@@ -88,5 +88,9 @@ export class SubsettingsMain extends BaseEvent {
         this.SubsettingsItem[0].instance.rightTipBox.innerText = playrate
       }
     })
+
+    this.player.on('SubsettingsSubtitleChange', (item: SubsettingsItem) => {
+      // this.SubsettingsItem[3].instance.rightTipBox.innerText = item.leftText
+    })
   }
 }

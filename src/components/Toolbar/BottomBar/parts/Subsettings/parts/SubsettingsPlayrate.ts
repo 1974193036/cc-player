@@ -8,6 +8,7 @@ import { BaseEvent } from '@/class/BaseEvent'
 export class SubsettingsPlayrate extends BaseEvent {
   el: HTMLElement
   // el: div.video-subsettings-playrate
+  leadItem: SubsettingsItem
   readonly player: Player
   readonly SubsettingsItem: SubsettingsItem[] = [
     {
@@ -36,7 +37,6 @@ export class SubsettingsPlayrate extends BaseEvent {
     super()
     this.player = player
     this.init()
-
   }
 
   init() {

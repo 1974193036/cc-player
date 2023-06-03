@@ -1,7 +1,7 @@
 import { Player } from '@/page/player'
-import { leftarrowPath } from '@/svg'
+import { leftarrowPath, subtitleShowPath, switchOffPath, switchOnPath } from '@/svg'
 import { SubsettingsItem } from '@/types/Player'
-import { $, createSvg } from '@/utils/domUtils'
+import { $, addClass, createSvg } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
 import { SubsettingItem } from '../SubsettingItem'
 
@@ -9,6 +9,10 @@ export class SubsettingsSubtitle {
   readonly id = 'SubsettingsSubtitle'
   el: HTMLElement
   // el: div.video-subsettings-subtitle
+  leadItem: SubsettingsItem
+  switchOnIcon: SVGSVGElement = createSvg(switchOffPath, '0 0 1024 1024')
+  switchOffIcon: SVGSVGElement = createSvg(switchOnPath, '0 0 1024 1024')
+  status: 'show' | 'hide' = 'show'
   readonly player: Player
   SubsettingsItem: SubsettingsItem[] = [
     {
@@ -16,8 +20,10 @@ export class SubsettingsSubtitle {
       leftText: '字幕设置'
     },
     {
+      leftIcon: createSvg(subtitleShowPath, '0 0 1024 1024'),
       leftText: '字幕显示',
-      rightTip: 'Show'
+      rightTip: 'Show',
+      rightIcon: this.switchOnIcon
     }
   ]
 
@@ -32,6 +38,8 @@ export class SubsettingsSubtitle {
     this.el = $('div.video-subsettings-subtitle')
     this.el.dataset.width = '180'
     this.el.style.display = 'none'
+    addClass(this.switchOffIcon, ['video-switch-off'])
+    addClass(this.switchOnIcon, ['video-switch-on'])
     this.initSubsettingsItem()
     this.initEvent()
   }
@@ -49,17 +57,31 @@ export class SubsettingsSubtitle {
       item.instance = instance
       instance.el.dataset.SubsettingsSubtitleType = item.leftText
     })
+    this.SubsettingsItem[1].instance.rightIcon.appendChild(this.switchOffIcon)
+    this.switchOffIcon.style.display = 'none'
   }
 
   initEvent() {
-    for (let i = 1; i < this.SubsettingsItem.length; i++) {
+    for (let i = 0; i < this.SubsettingsItem.length; i++) {
       this.SubsettingsItem[i].instance.el.onclick = () => {
+        if (i === 1) {
+          if (this.status === 'show') {
+            this.player.emit('HideSubtitle')
+            this.switchOffIcon.style.display = 'block'
+            this.switchOnIcon.style.display = 'none'
+            this.status = 'hide'
+            this.SubsettingsItem[i].instance.rightTipBox.innerText = 'Hide'
+          } else {
+            this.player.emit('ShowSubtitle')
+            this.switchOffIcon.style.display = 'none'
+            this.switchOnIcon.style.display = 'block'
+            this.status = 'show'
+            this.SubsettingsItem[i].instance.rightTipBox.innerText = 'Show'
+          }
+          return
+        }
         this.player.emit('SubsettingsSubtitleClick', this.SubsettingsItem[i], i)
       }
-    }
-
-    this.SubsettingsItem[0].instance.el.onclick = () => {
-      this.player.emit('SubsettingsSubtitleClick', this.SubsettingsItem[0], 0)
     }
   }
 

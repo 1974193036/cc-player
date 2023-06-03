@@ -15,6 +15,7 @@ import { SubsettingItem } from '../ToolBar/BottomBar/parts/Subsettings/Subsettin
 export class Subtitle {
   readonly id = 'Subtitle'
   // el: div.video-texttrack-container
+  el: HTMLElement
   player: Player
   subtitles: (Subtitles & { instance?: SubsettingItem })[]
   defaultSubtitle: Subtitles
@@ -22,7 +23,7 @@ export class Subtitle {
   textTrack: TextTrack // 一个textTrack对应一个字幕文件
   xhrLoader: XHRLoader
   subsettingsSubtitle: SubsettingsSubtitle
-  el: HTMLElement
+  currentSource: string
 
   constructor(player: Player, subtitles: Subtitles[]) {
     this.player = player
@@ -51,6 +52,8 @@ export class Subtitle {
           leftText: item.tip,
           click(value: SubsettingsItem) {
             console.log(value)
+            ctx.player.emit('SubsettingsSubtitleChange', value)
+            ctx.subsettingsSubtitle.leadItem.instance.rightTipBox.innerText = item.tip
             ctx.trackElement.src = item.source
             for (let index in ctx.subtitles) {
               ctx.subtitles[index].instance.leftIconBox.innerHTML = ''
@@ -88,6 +91,17 @@ export class Subtitle {
     this.trackElement = document.createElement('track')
 
     this.player.video.appendChild(this.trackElement)
+
+    this.player.on('HideSubtitle', () => {
+      this.currentSource = this.trackElement.src
+      this.trackElement.src = ''
+      this.el.innerHTML = ''
+    })
+
+    this.player.on('ShowSubtitle', () => {
+      this.trackElement.src = this.currentSource
+    })
+
     this.loadVTTFile(this.defaultSubtitle.source)
   }
 
