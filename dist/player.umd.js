@@ -1259,14 +1259,14 @@
 
 	var _Array$isArray = /*@__PURE__*/getDefaultExportFromCjs(isArray$5);
 
-	function _arrayLikeToArray$1(arr, len) {
+	function _arrayLikeToArray$2(arr, len) {
 	  if (len == null || len > arr.length) len = arr.length;
 	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
 	  return arr2;
 	}
 
 	function _arrayWithoutHoles(arr) {
-	  if (_Array$isArray(arr)) return _arrayLikeToArray$1(arr);
+	  if (_Array$isArray(arr)) return _arrayLikeToArray$2(arr);
 	}
 
 	var $TypeError$c = TypeError;
@@ -3094,14 +3094,14 @@
 
 	var _sliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(slice);
 
-	function _unsupportedIterableToArray$1(o, minLen) {
+	function _unsupportedIterableToArray$2(o, minLen) {
 	  var _context;
 	  if (!o) return;
-	  if (typeof o === "string") return _arrayLikeToArray$1(o, minLen);
+	  if (typeof o === "string") return _arrayLikeToArray$2(o, minLen);
 	  var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
 	  if (n === "Object" && o.constructor) n = o.constructor.name;
 	  if (n === "Map" || n === "Set") return _Array$from(o);
-	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen);
+	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen);
 	}
 
 	function _nonIterableSpread() {
@@ -3109,7 +3109,7 @@
 	}
 
 	function _toConsumableArray(arr) {
-	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$1(arr) || _nonIterableSpread();
+	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$2(arr) || _nonIterableSpread();
 	}
 
 	function _classCallCheck(instance, Constructor) {
@@ -4788,9 +4788,9 @@
 
 	var _concatInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(concat$1);
 
-	function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-	function _unsupportedIterableToArray(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-	function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray$1(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+	function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	function getDOMPoint(dom) {
 	  var rect = dom.getBoundingClientRect();
 	  return {
@@ -4871,7 +4871,7 @@
 	  if (typeof children === 'string') {
 	    el.innerHTML += children;
 	  } else if (children) {
-	    var _iterator = _createForOfIteratorHelper(children),
+	    var _iterator = _createForOfIteratorHelper$1(children),
 	      _step;
 	    try {
 	      for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -4888,7 +4888,7 @@
 	}
 	function addClass(dom, classNames) {
 	  var classList = dom.classList;
-	  var _iterator2 = _createForOfIteratorHelper(classNames),
+	  var _iterator2 = _createForOfIteratorHelper$1(classNames),
 	    _step2;
 	  try {
 	    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -4930,7 +4930,7 @@
 	  var viewBox = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0 0 24 24';
 	  var svg = document.createElementNS(svgNS, 'svg');
 	  svg.setAttribute('viewBox', viewBox);
-	  var _iterator3 = _createForOfIteratorHelper(d),
+	  var _iterator3 = _createForOfIteratorHelper$1(d),
 	    _step3;
 	  try {
 	    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
@@ -4962,7 +4962,7 @@
 	        if (replaceElementType === 'replaceOuterHTMLOfComponent') {
 	          target.el = another.el;
 	        } else {
-	          var _iterator4 = _createForOfIteratorHelper(target.el.childNodes),
+	          var _iterator4 = _createForOfIteratorHelper$1(target.el.childNodes),
 	            _step4;
 	          try {
 	            for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
@@ -5226,6 +5226,8 @@
 	var flipPath = "M554.666667 810.666667v85.333333h-85.333334v-85.333333h85.333334zM170.666667 178.005333a42.666667 42.666667 0 0 1 34.986666 18.218667l203.904 291.328a42.666667 42.666667 0 0 1 0 48.896l-203.946666 291.328A42.666667 42.666667 0 0 1 128 803.328V220.672a42.666667 42.666667 0 0 1 42.666667-42.666667z m682.666666 0a42.666667 42.666667 0 0 1 42.368 37.717334l0.298667 4.949333v582.656a42.666667 42.666667 0 0 1-74.24 28.629333l-3.413333-4.181333-203.904-291.328a42.666667 42.666667 0 0 1-3.029334-43.861333l3.029334-5.034667 203.946666-291.328A42.666667 42.666667 0 0 1 853.333333 178.005333zM554.666667 640v85.333333h-85.333334v-85.333333h85.333334zM196.266667 319.104V716.8L335.957333 512 196.309333 319.104zM554.666667 469.333333v85.333334h-85.333334v-85.333334h85.333334z m0-170.666666v85.333333h-85.333334V298.666667h85.333334z m0-170.666667v85.333333h-85.333334V128h85.333334z";
 	var confirmPath = "M456.899566 728.522382c-15.978926 15.977903-40.33873 18.47477-58.932204 7.492648-3.446495-2.039449-9.653871-9.990538-9.653871-9.990538L188.797435 526.509459c-18.938328-18.938328-18.938328-47.148833 0-66.084091 18.934235-18.938328 49.64263-16.442484 68.579935 2.495844l165.227112 165.225065 312.24449-312.24142c18.938328-18.938328 49.6457-21.435195 68.583005-2.495844 18.938328 18.940374 18.939351 47.149856 0 66.085114L456.909799 728.507032c0 0-0.005117 0.00921-0.010233 0.013303l0 0L456.899566 728.522382zM510.742868 64.090691c-246.752894 0-446.786743 200.032826-446.786743 446.786743 0 246.75187 200.033849 446.785719 446.786743 446.785719 246.752894 0 446.787766-200.034872 446.787766-446.785719C957.531658 264.125563 757.495762 64.090691 510.742868 64.090691L510.742868 64.090691 510.742868 64.090691 510.742868 64.090691z";
 	var settingsConfirmPath = "M384 785.67L97.83 499.5l60.34-60.34L384 664.99l439.16-439.16 60.34 60.34z";
+	var subtitlePath$1 = "M803.6 150.498H220.4c-65.286 0-118.4 53.114-118.4 118.4v486.203c0 65.286 53.114 118.4 118.4 118.4h583.2c65.286 0 118.4-53.114 118.4-118.4V268.898c0-65.286-53.114-118.4-118.4-118.4zM862 755.102c0 32.202-26.198 58.4-58.4 58.4H220.4c-32.202 0-58.4-26.198-58.4-58.4V268.898c0-32.202 26.198-58.4 58.4-58.4h583.2c32.202 0 58.4 26.198 58.4 58.4v486.204z";
+	var subtitlePath$2 = "M691.841 322.542H332.159c-16.568 0-30 13.432-30 30s13.432 30 30 30H482v288.917c0 16.568 13.432 30 30 30 16.569 0 30-13.432 30-30V382.542h149.841c16.568 0 30-13.432 30-30s-13.432-30-30-30z";
 
 	var EVENT;
 	(function (EVENT) {
@@ -8237,6 +8239,11 @@
 	      leftText: '画面翻转',
 	      rightTip: '正常',
 	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024')
+	    }, {
+	      leftIcon: createSvgs([subtitlePath$1, subtitlePath$2], '0 0 1024 1024'),
+	      leftText: '字幕设置',
+	      rightTip: '默认',
+	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024')
 	    }]);
 	    _this.player = player;
 	    _this.init();
@@ -8371,6 +8378,80 @@
 	  return SubsettingsPlayrate;
 	}(BaseEvent);
 
+	var SubsettingsSubtitle = /*#__PURE__*/function () {
+	  function SubsettingsSubtitle(player) {
+	    _classCallCheck(this, SubsettingsSubtitle);
+	    _defineProperty(this, "id", 'SubsettingsSubtitle');
+	    _defineProperty(this, "el", void 0);
+	    // el: div.video-subsettings-subtitle
+	    _defineProperty(this, "player", void 0);
+	    _defineProperty(this, "SubsettingsItem", [{
+	      leftIcon: createSvg(leftarrowPath, '0 0 1024 1024'),
+	      leftText: '字幕设置'
+	    }, {
+	      leftText: '字幕显示',
+	      rightTip: 'Show'
+	    }]);
+	    this.player = player;
+	    this.init();
+	    storeControlComponent(this);
+	  }
+	  _createClass(SubsettingsSubtitle, [{
+	    key: "init",
+	    value: function init() {
+	      this.el = $$p('div.video-subsettings-subtitle');
+	      this.el.dataset.width = '180';
+	      this.el.style.display = 'none';
+	      this.initSubsettingsItem();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initSubsettingsItem",
+	    value: function initSubsettingsItem() {
+	      var _context,
+	        _this = this;
+	      _forEachInstanceProperty(_context = this.SubsettingsItem).call(_context, function (item) {
+	        var instance = new SubsettingItem(_this.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
+	        _this.el.appendChild(instance.el);
+	        item.instance = instance;
+	        instance.el.dataset.SubsettingsSubtitleType = item.leftText;
+	      });
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      var _loop = function _loop(i) {
+	        _this2.SubsettingsItem[i].instance.el.onclick = function () {
+	          _this2.player.emit('SubsettingsSubtitleClick', _this2.SubsettingsItem[i], i);
+	        };
+	      };
+	      for (var i = 1; i < this.SubsettingsItem.length; i++) {
+	        _loop(i);
+	      }
+	      this.SubsettingsItem[0].instance.el.onclick = function () {
+	        _this2.player.emit('SubsettingsSubtitleClick', _this2.SubsettingsItem[0], 0);
+	      };
+	    }
+	    // 在Subtitle设置中注册一个选项
+	  }, {
+	    key: "registerSubsettingsItem",
+	    value: function registerSubsettingsItem(item) {
+	      var _this3 = this;
+	      this.SubsettingsItem.push(item);
+	      var instance = new SubsettingItem(this.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
+	      item.instance = instance;
+	      this.el.appendChild(instance.el);
+	      instance.el.addEventListener('click', function (e) {
+	        _this3.player.emit('SubsettingsSubtitleClick', item, _this3.SubsettingsItem.length - 1);
+	        if (item.click) item.click(item);
+	      });
+	      return item;
+	    }
+	  }]);
+	  return SubsettingsSubtitle;
+	}();
+
 	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubSetting = /*#__PURE__*/function (_Options) {
@@ -8385,6 +8466,7 @@
 	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "subsettingsMain", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "subsettingsPlayrate", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "subsettingsSubtitle", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "currentShow", void 0);
 	    _this.init();
 	    return _this;
@@ -8413,8 +8495,10 @@
 	    value: function initSubSettingTemplate() {
 	      this.subsettingsMain = new SubsettingsMain(this.player);
 	      this.subsettingsPlayrate = new SubsettingsPlayrate(this.player);
+	      this.subsettingsSubtitle = new SubsettingsSubtitle(this.player);
 	      this.hideBox.appendChild(this.subsettingsMain.el);
 	      this.hideBox.appendChild(this.subsettingsPlayrate.el);
+	      this.hideBox.appendChild(this.subsettingsSubtitle.el);
 	      this.currentShow = this.subsettingsMain.el;
 	      this.hideBox.style.width = this.subsettingsMain.el.dataset.width + 'px';
 	    }
@@ -8449,7 +8533,12 @@
 	          _this2.subsettingsPlayrate.el.style.display = 'block';
 	          _this2.hideBox.style.width = _this2.subsettingsPlayrate.el.dataset.width + 'px';
 	          _this2.currentShow = _this2.subsettingsPlayrate.el;
-	        } else if (item.instance.el.dataset.SubsettingsMainType === '画面比例') ;
+	        } else if (item.instance.el.dataset.SubsettingsMainType === '画面比例') ; else if (item.instance.el.dataset.SubsettingsMainType === '字幕设置') {
+	          _this2.currentShow.style.display = 'none';
+	          _this2.subsettingsSubtitle.el.style.display = 'block';
+	          _this2.hideBox.style.width = _this2.subsettingsSubtitle.el.dataset.width + 'px';
+	          _this2.currentShow = _this2.subsettingsSubtitle.el;
+	        }
 	      });
 	      // 点击播放速度
 	      this.player.on('SubsettingsPlayrateClick', function (item, index) {
@@ -8462,6 +8551,13 @@
 	          // 设置播放器的播放速度
 	          _this2.player.video.playbackRate = Number(item.instance.el.dataset.SubsettingsPlayrate);
 	        }
+	      });
+	      // 点击字幕
+	      this.player.on('SubsettingsSubtitleClick', function (item, index) {
+	        _this2.currentShow.style.display = 'none';
+	        _this2.currentShow = _this2.subsettingsMain.el;
+	        _this2.currentShow.style.display = 'block';
+	        _this2.hideBox.style.width = _this2.currentShow.dataset.width + 'px';
 	      });
 	    }
 	  }, {
@@ -18574,6 +18670,1319 @@
 	  return MobileVolume;
 	}(Component);
 
+	var getBuiltIn$3 = getBuiltIn$h;
+	var uncurryThis$1 = functionUncurryThis;
+	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
+	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
+	var anObject$2 = anObject$f;
+
+	var concat = uncurryThis$1([].concat);
+
+	// all object keys, includes non-enumerable and symbols
+	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
+	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
+	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
+	};
+
+	var hasOwn$1 = hasOwnProperty_1;
+	var ownKeys$2 = ownKeys$3;
+	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
+	var definePropertyModule = objectDefineProperty;
+
+	var copyConstructorProperties$1 = function (target, source, exceptions) {
+	  var keys = ownKeys$2(source);
+	  var defineProperty = definePropertyModule.f;
+	  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
+	  for (var i = 0; i < keys.length; i++) {
+	    var key = keys[i];
+	    if (!hasOwn$1(target, key) && !(exceptions && hasOwn$1(exceptions, key))) {
+	      defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+	    }
+	  }
+	};
+
+	var isObject$2 = isObject$j;
+	var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
+
+	// `InstallErrorCause` abstract operation
+	// https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
+	var installErrorCause$1 = function (O, options) {
+	  if (isObject$2(options) && 'cause' in options) {
+	    createNonEnumerableProperty$2(O, 'cause', options.cause);
+	  }
+	};
+
+	var uncurryThis = functionUncurryThis;
+
+	var $Error$1 = Error;
+	var replace = uncurryThis(''.replace);
+
+	var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
+	// eslint-disable-next-line redos/no-vulnerable -- safe
+	var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
+	var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
+
+	var errorStackClear = function (stack, dropEntries) {
+	  if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error$1.prepareStackTrace) {
+	    while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
+	  } return stack;
+	};
+
+	var fails$4 = fails$x;
+	var createPropertyDescriptor$1 = createPropertyDescriptor$8;
+
+	var errorStackInstallable = !fails$4(function () {
+	  var error = Error('a');
+	  if (!('stack' in error)) return true;
+	  // eslint-disable-next-line es/no-object-defineproperty -- safe
+	  Object.defineProperty(error, 'stack', createPropertyDescriptor$1(1, 7));
+	  return error.stack !== 7;
+	});
+
+	var createNonEnumerableProperty$1 = createNonEnumerableProperty$9;
+	var clearErrorStack = errorStackClear;
+	var ERROR_STACK_INSTALLABLE = errorStackInstallable;
+
+	// non-standard V8
+	var captureStackTrace = Error.captureStackTrace;
+
+	var errorStackInstall = function (error, C, stack, dropEntries) {
+	  if (ERROR_STACK_INSTALLABLE) {
+	    if (captureStackTrace) captureStackTrace(error, C);
+	    else createNonEnumerableProperty$1(error, 'stack', clearErrorStack(stack, dropEntries));
+	  }
+	};
+
+	var toString = toString$b;
+
+	var normalizeStringArgument$1 = function (argument, $default) {
+	  return argument === undefined ? arguments.length < 2 ? '' : $default : toString(argument);
+	};
+
+	var $$f = _export;
+	var isPrototypeOf = objectIsPrototypeOf;
+	var getPrototypeOf = objectGetPrototypeOf;
+	var setPrototypeOf = objectSetPrototypeOf;
+	var copyConstructorProperties = copyConstructorProperties$1;
+	var create = objectCreate;
+	var createNonEnumerableProperty = createNonEnumerableProperty$9;
+	var createPropertyDescriptor = createPropertyDescriptor$8;
+	var installErrorCause = installErrorCause$1;
+	var installErrorStack = errorStackInstall;
+	var iterate$4 = iterate$l;
+	var normalizeStringArgument = normalizeStringArgument$1;
+	var wellKnownSymbol$2 = wellKnownSymbol$q;
+
+	var TO_STRING_TAG = wellKnownSymbol$2('toStringTag');
+	var $Error = Error;
+	var push = [].push;
+
+	var $AggregateError = function AggregateError(errors, message /* , options */) {
+	  var isInstance = isPrototypeOf(AggregateErrorPrototype, this);
+	  var that;
+	  if (setPrototypeOf) {
+	    that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
+	  } else {
+	    that = isInstance ? this : create(AggregateErrorPrototype);
+	    createNonEnumerableProperty(that, TO_STRING_TAG, 'Error');
+	  }
+	  if (message !== undefined) createNonEnumerableProperty(that, 'message', normalizeStringArgument(message));
+	  installErrorStack(that, $AggregateError, that.stack, 1);
+	  if (arguments.length > 2) installErrorCause(that, arguments[2]);
+	  var errorsArray = [];
+	  iterate$4(errors, push, { that: errorsArray });
+	  createNonEnumerableProperty(that, 'errors', errorsArray);
+	  return that;
+	};
+
+	if (setPrototypeOf) setPrototypeOf($AggregateError, $Error);
+	else copyConstructorProperties($AggregateError, $Error, { name: true });
+
+	var AggregateErrorPrototype = $AggregateError.prototype = create($Error.prototype, {
+	  constructor: createPropertyDescriptor(1, $AggregateError),
+	  message: createPropertyDescriptor(1, ''),
+	  name: createPropertyDescriptor(1, 'AggregateError')
+	});
+
+	// `AggregateError` constructor
+	// https://tc39.es/ecma262/#sec-aggregate-error-constructor
+	$$f({ global: true, constructor: true, arity: 2 }, {
+	  AggregateError: $AggregateError
+	});
+
+	var classof = classofRaw$2;
+
+	var engineIsNode = typeof process != 'undefined' && classof(process) == 'process';
+
+	var anObject$1 = anObject$f;
+	var aConstructor = aConstructor$3;
+	var isNullOrUndefined = isNullOrUndefined$6;
+	var wellKnownSymbol$1 = wellKnownSymbol$q;
+
+	var SPECIES$1 = wellKnownSymbol$1('species');
+
+	// `SpeciesConstructor` abstract operation
+	// https://tc39.es/ecma262/#sec-speciesconstructor
+	var speciesConstructor$2 = function (O, defaultConstructor) {
+	  var C = anObject$1(O).constructor;
+	  var S;
+	  return C === undefined || isNullOrUndefined(S = anObject$1(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
+	};
+
+	var userAgent$2 = engineUserAgent;
+
+	// eslint-disable-next-line redos/no-vulnerable -- safe
+	var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
+
+	var global$8 = global$r;
+	var apply$1 = functionApply;
+	var bind$2 = functionBindContext;
+	var isCallable$4 = isCallable$q;
+	var hasOwn = hasOwnProperty_1;
+	var fails$3 = fails$x;
+	var html = html$2;
+	var arraySlice$1 = arraySlice$8;
+	var createElement = documentCreateElement$1;
+	var validateArgumentsLength$1 = validateArgumentsLength$5;
+	var IS_IOS$1 = engineIsIos;
+	var IS_NODE$3 = engineIsNode;
+
+	var set = global$8.setImmediate;
+	var clear = global$8.clearImmediate;
+	var process$3 = global$8.process;
+	var Dispatch = global$8.Dispatch;
+	var Function$2 = global$8.Function;
+	var MessageChannel = global$8.MessageChannel;
+	var String$1 = global$8.String;
+	var counter = 0;
+	var queue$3 = {};
+	var ONREADYSTATECHANGE = 'onreadystatechange';
+	var $location, defer, channel, port;
+
+	fails$3(function () {
+	  // Deno throws a ReferenceError on `location` access without `--location` flag
+	  $location = global$8.location;
+	});
+
+	var run = function (id) {
+	  if (hasOwn(queue$3, id)) {
+	    var fn = queue$3[id];
+	    delete queue$3[id];
+	    fn();
+	  }
+	};
+
+	var runner = function (id) {
+	  return function () {
+	    run(id);
+	  };
+	};
+
+	var eventListener = function (event) {
+	  run(event.data);
+	};
+
+	var globalPostMessageDefer = function (id) {
+	  // old engines have not location.origin
+	  global$8.postMessage(String$1(id), $location.protocol + '//' + $location.host);
+	};
+
+	// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+	if (!set || !clear) {
+	  set = function setImmediate(handler) {
+	    validateArgumentsLength$1(arguments.length, 1);
+	    var fn = isCallable$4(handler) ? handler : Function$2(handler);
+	    var args = arraySlice$1(arguments, 1);
+	    queue$3[++counter] = function () {
+	      apply$1(fn, undefined, args);
+	    };
+	    defer(counter);
+	    return counter;
+	  };
+	  clear = function clearImmediate(id) {
+	    delete queue$3[id];
+	  };
+	  // Node.js 0.8-
+	  if (IS_NODE$3) {
+	    defer = function (id) {
+	      process$3.nextTick(runner(id));
+	    };
+	  // Sphere (JS game engine) Dispatch API
+	  } else if (Dispatch && Dispatch.now) {
+	    defer = function (id) {
+	      Dispatch.now(runner(id));
+	    };
+	  // Browsers with MessageChannel, includes WebWorkers
+	  // except iOS - https://github.com/zloirock/core-js/issues/624
+	  } else if (MessageChannel && !IS_IOS$1) {
+	    channel = new MessageChannel();
+	    port = channel.port2;
+	    channel.port1.onmessage = eventListener;
+	    defer = bind$2(port.postMessage, port);
+	  // Browsers with postMessage, skip WebWorkers
+	  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
+	  } else if (
+	    global$8.addEventListener &&
+	    isCallable$4(global$8.postMessage) &&
+	    !global$8.importScripts &&
+	    $location && $location.protocol !== 'file:' &&
+	    !fails$3(globalPostMessageDefer)
+	  ) {
+	    defer = globalPostMessageDefer;
+	    global$8.addEventListener('message', eventListener, false);
+	  // IE8-
+	  } else if (ONREADYSTATECHANGE in createElement('script')) {
+	    defer = function (id) {
+	      html.appendChild(createElement('script'))[ONREADYSTATECHANGE] = function () {
+	        html.removeChild(this);
+	        run(id);
+	      };
+	    };
+	  // Rest old browsers
+	  } else {
+	    defer = function (id) {
+	      setTimeout(runner(id), 0);
+	    };
+	  }
+	}
+
+	var task$1 = {
+	  set: set,
+	  clear: clear
+	};
+
+	var Queue$2 = function () {
+	  this.head = null;
+	  this.tail = null;
+	};
+
+	Queue$2.prototype = {
+	  add: function (item) {
+	    var entry = { item: item, next: null };
+	    var tail = this.tail;
+	    if (tail) tail.next = entry;
+	    else this.head = entry;
+	    this.tail = entry;
+	  },
+	  get: function () {
+	    var entry = this.head;
+	    if (entry) {
+	      var next = this.head = entry.next;
+	      if (next === null) this.tail = null;
+	      return entry.item;
+	    }
+	  }
+	};
+
+	var queue$2 = Queue$2;
+
+	var userAgent$1 = engineUserAgent;
+
+	var engineIsIosPebble = /ipad|iphone|ipod/i.test(userAgent$1) && typeof Pebble != 'undefined';
+
+	var userAgent = engineUserAgent;
+
+	var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
+
+	var global$7 = global$r;
+	var bind$1 = functionBindContext;
+	var getOwnPropertyDescriptor$7 = objectGetOwnPropertyDescriptor.f;
+	var macrotask = task$1.set;
+	var Queue$1 = queue$2;
+	var IS_IOS = engineIsIos;
+	var IS_IOS_PEBBLE = engineIsIosPebble;
+	var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
+	var IS_NODE$2 = engineIsNode;
+
+	var MutationObserver$1 = global$7.MutationObserver || global$7.WebKitMutationObserver;
+	var document$2 = global$7.document;
+	var process$2 = global$7.process;
+	var Promise$1 = global$7.Promise;
+	// Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
+	var queueMicrotaskDescriptor = getOwnPropertyDescriptor$7(global$7, 'queueMicrotask');
+	var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
+	var notify$1, toggle, node, promise$6, then;
+
+	// modern engines have queueMicrotask method
+	if (!microtask$1) {
+	  var queue$1 = new Queue$1();
+
+	  var flush = function () {
+	    var parent, fn;
+	    if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
+	    while (fn = queue$1.get()) try {
+	      fn();
+	    } catch (error) {
+	      if (queue$1.head) notify$1();
+	      throw error;
+	    }
+	    if (parent) parent.enter();
+	  };
+
+	  // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
+	  // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
+	  if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$2) {
+	    toggle = true;
+	    node = document$2.createTextNode('');
+	    new MutationObserver$1(flush).observe(node, { characterData: true });
+	    notify$1 = function () {
+	      node.data = toggle = !toggle;
+	    };
+	  // environments with maybe non-completely correct, but existent Promise
+	  } else if (!IS_IOS_PEBBLE && Promise$1 && Promise$1.resolve) {
+	    // Promise.resolve without an argument throws an error in LG WebOS 2
+	    promise$6 = Promise$1.resolve(undefined);
+	    // workaround of WebKit ~ iOS Safari 10.1 bug
+	    promise$6.constructor = Promise$1;
+	    then = bind$1(promise$6.then, promise$6);
+	    notify$1 = function () {
+	      then(flush);
+	    };
+	  // Node.js without promises
+	  } else if (IS_NODE$2) {
+	    notify$1 = function () {
+	      process$2.nextTick(flush);
+	    };
+	  // for other environments - macrotask based on:
+	  // - setImmediate
+	  // - MessageChannel
+	  // - window.postMessage
+	  // - onreadystatechange
+	  // - setTimeout
+	  } else {
+	    // `webpack` dev server bug on IE global methods - use bind(fn, global)
+	    macrotask = bind$1(macrotask, global$7);
+	    notify$1 = function () {
+	      macrotask(flush);
+	    };
+	  }
+
+	  microtask$1 = function (fn) {
+	    if (!queue$1.head) notify$1();
+	    queue$1.add(fn);
+	  };
+	}
+
+	var microtask_1 = microtask$1;
+
+	var hostReportErrors$1 = function (a, b) {
+	  try {
+	    // eslint-disable-next-line no-console -- safe
+	    arguments.length == 1 ? console.error(a) : console.error(a, b);
+	  } catch (error) { /* empty */ }
+	};
+
+	var perform$6 = function (exec) {
+	  try {
+	    return { error: false, value: exec() };
+	  } catch (error) {
+	    return { error: true, value: error };
+	  }
+	};
+
+	var global$6 = global$r;
+
+	var promiseNativeConstructor = global$6.Promise;
+
+	/* global Deno -- Deno case */
+
+	var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
+
+	var IS_DENO$1 = engineIsDeno;
+	var IS_NODE$1 = engineIsNode;
+
+	var engineIsBrowser = !IS_DENO$1 && !IS_NODE$1
+	  && typeof window == 'object'
+	  && typeof document == 'object';
+
+	var global$5 = global$r;
+	var NativePromiseConstructor$5 = promiseNativeConstructor;
+	var isCallable$3 = isCallable$q;
+	var isForced = isForced_1;
+	var inspectSource = inspectSource$2;
+	var wellKnownSymbol = wellKnownSymbol$q;
+	var IS_BROWSER = engineIsBrowser;
+	var IS_DENO = engineIsDeno;
+	var V8_VERSION = engineV8Version;
+
+	var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
+	var SPECIES = wellKnownSymbol('species');
+	var SUBCLASSING = false;
+	var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$3(global$5.PromiseRejectionEvent);
+
+	var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
+	  var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
+	  var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(NativePromiseConstructor$5);
+	  // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
+	  // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
+	  // We can't detect it synchronously, so just check versions
+	  if (!GLOBAL_CORE_JS_PROMISE && V8_VERSION === 66) return true;
+	  // We need Promise#{ catch, finally } in the pure version for preventing prototype pollution
+	  if (!(NativePromisePrototype$2['catch'] && NativePromisePrototype$2['finally'])) return true;
+	  // We can't use @@species feature detection in V8 since it causes
+	  // deoptimization and performance degradation
+	  // https://github.com/zloirock/core-js/issues/679
+	  if (!V8_VERSION || V8_VERSION < 51 || !/native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) {
+	    // Detect correctness of subclassing with @@species support
+	    var promise = new NativePromiseConstructor$5(function (resolve) { resolve(1); });
+	    var FakePromise = function (exec) {
+	      exec(function () { /* empty */ }, function () { /* empty */ });
+	    };
+	    var constructor = promise.constructor = {};
+	    constructor[SPECIES] = FakePromise;
+	    SUBCLASSING = promise.then(function () { /* empty */ }) instanceof FakePromise;
+	    if (!SUBCLASSING) return true;
+	  // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
+	  } return !GLOBAL_CORE_JS_PROMISE && (IS_BROWSER || IS_DENO) && !NATIVE_PROMISE_REJECTION_EVENT$1;
+	});
+
+	var promiseConstructorDetection = {
+	  CONSTRUCTOR: FORCED_PROMISE_CONSTRUCTOR$5,
+	  REJECTION_EVENT: NATIVE_PROMISE_REJECTION_EVENT$1,
+	  SUBCLASSING: SUBCLASSING
+	};
+
+	var newPromiseCapability$2 = {};
+
+	var aCallable$5 = aCallable$h;
+
+	var $TypeError = TypeError;
+
+	var PromiseCapability = function (C) {
+	  var resolve, reject;
+	  this.promise = new C(function ($$resolve, $$reject) {
+	    if (resolve !== undefined || reject !== undefined) throw $TypeError('Bad Promise constructor');
+	    resolve = $$resolve;
+	    reject = $$reject;
+	  });
+	  this.resolve = aCallable$5(resolve);
+	  this.reject = aCallable$5(reject);
+	};
+
+	// `NewPromiseCapability` abstract operation
+	// https://tc39.es/ecma262/#sec-newpromisecapability
+	newPromiseCapability$2.f = function (C) {
+	  return new PromiseCapability(C);
+	};
+
+	var $$e = _export;
+	var IS_NODE = engineIsNode;
+	var global$4 = global$r;
+	var call$5 = functionCall;
+	var defineBuiltIn = defineBuiltIn$8;
+	var setToStringTag = setToStringTag$9;
+	var setSpecies = setSpecies$2;
+	var aCallable$4 = aCallable$h;
+	var isCallable$2 = isCallable$q;
+	var isObject$1 = isObject$j;
+	var anInstance = anInstance$5;
+	var speciesConstructor$1 = speciesConstructor$2;
+	var task = task$1.set;
+	var microtask = microtask_1;
+	var hostReportErrors = hostReportErrors$1;
+	var perform$5 = perform$6;
+	var Queue = queue$2;
+	var InternalStateModule = internalState;
+	var NativePromiseConstructor$4 = promiseNativeConstructor;
+	var PromiseConstructorDetection = promiseConstructorDetection;
+	var newPromiseCapabilityModule$6 = newPromiseCapability$2;
+
+	var PROMISE = 'Promise';
+	var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
+	var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
+	PromiseConstructorDetection.SUBCLASSING;
+	var getInternalPromiseState = InternalStateModule.getterFor(PROMISE);
+	var setInternalState = InternalStateModule.set;
+	var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
+	var PromiseConstructor = NativePromiseConstructor$4;
+	var PromisePrototype = NativePromisePrototype$1;
+	var TypeError$1 = global$4.TypeError;
+	var document$1 = global$4.document;
+	var process$1 = global$4.process;
+	var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
+	var newGenericPromiseCapability = newPromiseCapability$1;
+
+	var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$4.dispatchEvent);
+	var UNHANDLED_REJECTION = 'unhandledrejection';
+	var REJECTION_HANDLED = 'rejectionhandled';
+	var PENDING = 0;
+	var FULFILLED = 1;
+	var REJECTED = 2;
+	var HANDLED = 1;
+	var UNHANDLED = 2;
+
+	var Internal, OwnPromiseCapability, PromiseWrapper;
+
+	// helpers
+	var isThenable = function (it) {
+	  var then;
+	  return isObject$1(it) && isCallable$2(then = it.then) ? then : false;
+	};
+
+	var callReaction = function (reaction, state) {
+	  var value = state.value;
+	  var ok = state.state == FULFILLED;
+	  var handler = ok ? reaction.ok : reaction.fail;
+	  var resolve = reaction.resolve;
+	  var reject = reaction.reject;
+	  var domain = reaction.domain;
+	  var result, then, exited;
+	  try {
+	    if (handler) {
+	      if (!ok) {
+	        if (state.rejection === UNHANDLED) onHandleUnhandled(state);
+	        state.rejection = HANDLED;
+	      }
+	      if (handler === true) result = value;
+	      else {
+	        if (domain) domain.enter();
+	        result = handler(value); // can throw
+	        if (domain) {
+	          domain.exit();
+	          exited = true;
+	        }
+	      }
+	      if (result === reaction.promise) {
+	        reject(TypeError$1('Promise-chain cycle'));
+	      } else if (then = isThenable(result)) {
+	        call$5(then, result, resolve, reject);
+	      } else resolve(result);
+	    } else reject(value);
+	  } catch (error) {
+	    if (domain && !exited) domain.exit();
+	    reject(error);
+	  }
+	};
+
+	var notify = function (state, isReject) {
+	  if (state.notified) return;
+	  state.notified = true;
+	  microtask(function () {
+	    var reactions = state.reactions;
+	    var reaction;
+	    while (reaction = reactions.get()) {
+	      callReaction(reaction, state);
+	    }
+	    state.notified = false;
+	    if (isReject && !state.rejection) onUnhandled(state);
+	  });
+	};
+
+	var dispatchEvent = function (name, promise, reason) {
+	  var event, handler;
+	  if (DISPATCH_EVENT) {
+	    event = document$1.createEvent('Event');
+	    event.promise = promise;
+	    event.reason = reason;
+	    event.initEvent(name, false, true);
+	    global$4.dispatchEvent(event);
+	  } else event = { promise: promise, reason: reason };
+	  if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$4['on' + name])) handler(event);
+	  else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
+	};
+
+	var onUnhandled = function (state) {
+	  call$5(task, global$4, function () {
+	    var promise = state.facade;
+	    var value = state.value;
+	    var IS_UNHANDLED = isUnhandled(state);
+	    var result;
+	    if (IS_UNHANDLED) {
+	      result = perform$5(function () {
+	        if (IS_NODE) {
+	          process$1.emit('unhandledRejection', value, promise);
+	        } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
+	      });
+	      // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
+	      state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
+	      if (result.error) throw result.value;
+	    }
+	  });
+	};
+
+	var isUnhandled = function (state) {
+	  return state.rejection !== HANDLED && !state.parent;
+	};
+
+	var onHandleUnhandled = function (state) {
+	  call$5(task, global$4, function () {
+	    var promise = state.facade;
+	    if (IS_NODE) {
+	      process$1.emit('rejectionHandled', promise);
+	    } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
+	  });
+	};
+
+	var bind = function (fn, state, unwrap) {
+	  return function (value) {
+	    fn(state, value, unwrap);
+	  };
+	};
+
+	var internalReject = function (state, value, unwrap) {
+	  if (state.done) return;
+	  state.done = true;
+	  if (unwrap) state = unwrap;
+	  state.value = value;
+	  state.state = REJECTED;
+	  notify(state, true);
+	};
+
+	var internalResolve = function (state, value, unwrap) {
+	  if (state.done) return;
+	  state.done = true;
+	  if (unwrap) state = unwrap;
+	  try {
+	    if (state.facade === value) throw TypeError$1("Promise can't be resolved itself");
+	    var then = isThenable(value);
+	    if (then) {
+	      microtask(function () {
+	        var wrapper = { done: false };
+	        try {
+	          call$5(then, value,
+	            bind(internalResolve, wrapper, state),
+	            bind(internalReject, wrapper, state)
+	          );
+	        } catch (error) {
+	          internalReject(wrapper, error, state);
+	        }
+	      });
+	    } else {
+	      state.value = value;
+	      state.state = FULFILLED;
+	      notify(state, false);
+	    }
+	  } catch (error) {
+	    internalReject({ done: false }, error, state);
+	  }
+	};
+
+	// constructor polyfill
+	if (FORCED_PROMISE_CONSTRUCTOR$4) {
+	  // 25.4.3.1 Promise(executor)
+	  PromiseConstructor = function Promise(executor) {
+	    anInstance(this, PromisePrototype);
+	    aCallable$4(executor);
+	    call$5(Internal, this);
+	    var state = getInternalPromiseState(this);
+	    try {
+	      executor(bind(internalResolve, state), bind(internalReject, state));
+	    } catch (error) {
+	      internalReject(state, error);
+	    }
+	  };
+
+	  PromisePrototype = PromiseConstructor.prototype;
+
+	  // eslint-disable-next-line no-unused-vars -- required for `.length`
+	  Internal = function Promise(executor) {
+	    setInternalState(this, {
+	      type: PROMISE,
+	      done: false,
+	      notified: false,
+	      parent: false,
+	      reactions: new Queue(),
+	      rejection: false,
+	      state: PENDING,
+	      value: undefined
+	    });
+	  };
+
+	  // `Promise.prototype.then` method
+	  // https://tc39.es/ecma262/#sec-promise.prototype.then
+	  Internal.prototype = defineBuiltIn(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
+	    var state = getInternalPromiseState(this);
+	    var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
+	    state.parent = true;
+	    reaction.ok = isCallable$2(onFulfilled) ? onFulfilled : true;
+	    reaction.fail = isCallable$2(onRejected) && onRejected;
+	    reaction.domain = IS_NODE ? process$1.domain : undefined;
+	    if (state.state == PENDING) state.reactions.add(reaction);
+	    else microtask(function () {
+	      callReaction(reaction, state);
+	    });
+	    return reaction.promise;
+	  });
+
+	  OwnPromiseCapability = function () {
+	    var promise = new Internal();
+	    var state = getInternalPromiseState(promise);
+	    this.promise = promise;
+	    this.resolve = bind(internalResolve, state);
+	    this.reject = bind(internalReject, state);
+	  };
+
+	  newPromiseCapabilityModule$6.f = newPromiseCapability$1 = function (C) {
+	    return C === PromiseConstructor || C === PromiseWrapper
+	      ? new OwnPromiseCapability(C)
+	      : newGenericPromiseCapability(C);
+	  };
+	}
+
+	$$e({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+	  Promise: PromiseConstructor
+	});
+
+	setToStringTag(PromiseConstructor, PROMISE, false, true);
+	setSpecies(PROMISE);
+
+	var NativePromiseConstructor$3 = promiseNativeConstructor;
+	var checkCorrectnessOfIteration = checkCorrectnessOfIteration$2;
+	var FORCED_PROMISE_CONSTRUCTOR$3 = promiseConstructorDetection.CONSTRUCTOR;
+
+	var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCorrectnessOfIteration(function (iterable) {
+	  NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
+	});
+
+	var $$d = _export;
+	var call$4 = functionCall;
+	var aCallable$3 = aCallable$h;
+	var newPromiseCapabilityModule$5 = newPromiseCapability$2;
+	var perform$4 = perform$6;
+	var iterate$3 = iterate$l;
+	var PROMISE_STATICS_INCORRECT_ITERATION$3 = promiseStaticsIncorrectIteration;
+
+	// `Promise.all` method
+	// https://tc39.es/ecma262/#sec-promise.all
+	$$d({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
+	  all: function all(iterable) {
+	    var C = this;
+	    var capability = newPromiseCapabilityModule$5.f(C);
+	    var resolve = capability.resolve;
+	    var reject = capability.reject;
+	    var result = perform$4(function () {
+	      var $promiseResolve = aCallable$3(C.resolve);
+	      var values = [];
+	      var counter = 0;
+	      var remaining = 1;
+	      iterate$3(iterable, function (promise) {
+	        var index = counter++;
+	        var alreadyCalled = false;
+	        remaining++;
+	        call$4($promiseResolve, C, promise).then(function (value) {
+	          if (alreadyCalled) return;
+	          alreadyCalled = true;
+	          values[index] = value;
+	          --remaining || resolve(values);
+	        }, reject);
+	      });
+	      --remaining || resolve(values);
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  }
+	});
+
+	var $$c = _export;
+	var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
+	var NativePromiseConstructor$2 = promiseNativeConstructor;
+
+	NativePromiseConstructor$2 && NativePromiseConstructor$2.prototype;
+
+	// `Promise.prototype.catch` method
+	// https://tc39.es/ecma262/#sec-promise.prototype.catch
+	$$c({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+	  'catch': function (onRejected) {
+	    return this.then(undefined, onRejected);
+	  }
+	});
+
+	var $$b = _export;
+	var call$3 = functionCall;
+	var aCallable$2 = aCallable$h;
+	var newPromiseCapabilityModule$4 = newPromiseCapability$2;
+	var perform$3 = perform$6;
+	var iterate$2 = iterate$l;
+	var PROMISE_STATICS_INCORRECT_ITERATION$2 = promiseStaticsIncorrectIteration;
+
+	// `Promise.race` method
+	// https://tc39.es/ecma262/#sec-promise.race
+	$$b({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
+	  race: function race(iterable) {
+	    var C = this;
+	    var capability = newPromiseCapabilityModule$4.f(C);
+	    var reject = capability.reject;
+	    var result = perform$3(function () {
+	      var $promiseResolve = aCallable$2(C.resolve);
+	      iterate$2(iterable, function (promise) {
+	        call$3($promiseResolve, C, promise).then(capability.resolve, reject);
+	      });
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  }
+	});
+
+	var $$a = _export;
+	var call$2 = functionCall;
+	var newPromiseCapabilityModule$3 = newPromiseCapability$2;
+	var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
+
+	// `Promise.reject` method
+	// https://tc39.es/ecma262/#sec-promise.reject
+	$$a({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+	  reject: function reject(r) {
+	    var capability = newPromiseCapabilityModule$3.f(this);
+	    call$2(capability.reject, undefined, r);
+	    return capability.promise;
+	  }
+	});
+
+	var anObject = anObject$f;
+	var isObject = isObject$j;
+	var newPromiseCapability = newPromiseCapability$2;
+
+	var promiseResolve$2 = function (C, x) {
+	  anObject(C);
+	  if (isObject(x) && x.constructor === C) return x;
+	  var promiseCapability = newPromiseCapability.f(C);
+	  var resolve = promiseCapability.resolve;
+	  resolve(x);
+	  return promiseCapability.promise;
+	};
+
+	var $$9 = _export;
+	var getBuiltIn$2 = getBuiltIn$h;
+	var IS_PURE = isPure;
+	var NativePromiseConstructor$1 = promiseNativeConstructor;
+	var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
+	var promiseResolve$1 = promiseResolve$2;
+
+	var PromiseConstructorWrapper = getBuiltIn$2('Promise');
+	var CHECK_WRAPPER = !FORCED_PROMISE_CONSTRUCTOR;
+
+	// `Promise.resolve` method
+	// https://tc39.es/ecma262/#sec-promise.resolve
+	$$9({ target: 'Promise', stat: true, forced: IS_PURE  }, {
+	  resolve: function resolve(x) {
+	    return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
+	  }
+	});
+
+	var $$8 = _export;
+	var call$1 = functionCall;
+	var aCallable$1 = aCallable$h;
+	var newPromiseCapabilityModule$2 = newPromiseCapability$2;
+	var perform$2 = perform$6;
+	var iterate$1 = iterate$l;
+	var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
+
+	// `Promise.allSettled` method
+	// https://tc39.es/ecma262/#sec-promise.allsettled
+	$$8({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+	  allSettled: function allSettled(iterable) {
+	    var C = this;
+	    var capability = newPromiseCapabilityModule$2.f(C);
+	    var resolve = capability.resolve;
+	    var reject = capability.reject;
+	    var result = perform$2(function () {
+	      var promiseResolve = aCallable$1(C.resolve);
+	      var values = [];
+	      var counter = 0;
+	      var remaining = 1;
+	      iterate$1(iterable, function (promise) {
+	        var index = counter++;
+	        var alreadyCalled = false;
+	        remaining++;
+	        call$1(promiseResolve, C, promise).then(function (value) {
+	          if (alreadyCalled) return;
+	          alreadyCalled = true;
+	          values[index] = { status: 'fulfilled', value: value };
+	          --remaining || resolve(values);
+	        }, function (error) {
+	          if (alreadyCalled) return;
+	          alreadyCalled = true;
+	          values[index] = { status: 'rejected', reason: error };
+	          --remaining || resolve(values);
+	        });
+	      });
+	      --remaining || resolve(values);
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  }
+	});
+
+	var $$7 = _export;
+	var call = functionCall;
+	var aCallable = aCallable$h;
+	var getBuiltIn$1 = getBuiltIn$h;
+	var newPromiseCapabilityModule$1 = newPromiseCapability$2;
+	var perform$1 = perform$6;
+	var iterate = iterate$l;
+	var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
+
+	var PROMISE_ANY_ERROR = 'No one promise resolved';
+
+	// `Promise.any` method
+	// https://tc39.es/ecma262/#sec-promise.any
+	$$7({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+	  any: function any(iterable) {
+	    var C = this;
+	    var AggregateError = getBuiltIn$1('AggregateError');
+	    var capability = newPromiseCapabilityModule$1.f(C);
+	    var resolve = capability.resolve;
+	    var reject = capability.reject;
+	    var result = perform$1(function () {
+	      var promiseResolve = aCallable(C.resolve);
+	      var errors = [];
+	      var counter = 0;
+	      var remaining = 1;
+	      var alreadyResolved = false;
+	      iterate(iterable, function (promise) {
+	        var index = counter++;
+	        var alreadyRejected = false;
+	        remaining++;
+	        call(promiseResolve, C, promise).then(function (value) {
+	          if (alreadyRejected || alreadyResolved) return;
+	          alreadyResolved = true;
+	          resolve(value);
+	        }, function (error) {
+	          if (alreadyRejected || alreadyResolved) return;
+	          alreadyRejected = true;
+	          errors[index] = error;
+	          --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
+	        });
+	      });
+	      --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  }
+	});
+
+	var $$6 = _export;
+	var NativePromiseConstructor = promiseNativeConstructor;
+	var fails$2 = fails$x;
+	var getBuiltIn = getBuiltIn$h;
+	var isCallable$1 = isCallable$q;
+	var speciesConstructor = speciesConstructor$2;
+	var promiseResolve = promiseResolve$2;
+
+	var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
+
+	// Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
+	var NON_GENERIC = !!NativePromiseConstructor && fails$2(function () {
+	  // eslint-disable-next-line unicorn/no-thenable -- required for testing
+	  NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
+	});
+
+	// `Promise.prototype.finally` method
+	// https://tc39.es/ecma262/#sec-promise.prototype.finally
+	$$6({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+	  'finally': function (onFinally) {
+	    var C = speciesConstructor(this, getBuiltIn('Promise'));
+	    var isFunction = isCallable$1(onFinally);
+	    return this.then(
+	      isFunction ? function (x) {
+	        return promiseResolve(C, onFinally()).then(function () { return x; });
+	      } : onFinally,
+	      isFunction ? function (e) {
+	        return promiseResolve(C, onFinally()).then(function () { throw e; });
+	      } : onFinally
+	    );
+	  }
+	});
+
+	var path$5 = path$n;
+
+	var promise$5 = path$5.Promise;
+
+	var parent$g = promise$5;
+
+
+	var promise$4 = parent$g;
+
+	var parent$f = promise$4;
+
+	var promise$3 = parent$f;
+
+	// TODO: Remove from `core-js@4`
+	var $$5 = _export;
+	var newPromiseCapabilityModule = newPromiseCapability$2;
+	var perform = perform$6;
+
+	// `Promise.try` method
+	// https://github.com/tc39/proposal-promise-try
+	$$5({ target: 'Promise', stat: true, forced: true }, {
+	  'try': function (callbackfn) {
+	    var promiseCapability = newPromiseCapabilityModule.f(this);
+	    var result = perform(callbackfn);
+	    (result.error ? promiseCapability.reject : promiseCapability.resolve)(result.value);
+	    return promiseCapability.promise;
+	  }
+	});
+
+	var parent$e = promise$3;
+
+	// TODO: Remove from `core-js@4`
+
+
+
+
+	var promise$2 = parent$e;
+
+	var promise$1 = promise$2;
+
+	var promise = promise$1;
+
+	var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
+
+	var $$4 = _export;
+	var global$3 = global$r;
+	var clearImmediate = task$1.clear;
+
+	// `clearImmediate` method
+	// http://w3c.github.io/setImmediate/#si-clearImmediate
+	$$4({ global: true, bind: true, enumerable: true, forced: global$3.clearImmediate !== clearImmediate }, {
+	  clearImmediate: clearImmediate
+	});
+
+	/* global Bun -- Deno case */
+
+	var engineIsBun = typeof Bun == 'function' && Bun && typeof Bun.version == 'string';
+
+	var global$2 = global$r;
+	var apply = functionApply;
+	var isCallable = isCallable$q;
+	var ENGINE_IS_BUN = engineIsBun;
+	var USER_AGENT = engineUserAgent;
+	var arraySlice = arraySlice$8;
+	var validateArgumentsLength = validateArgumentsLength$5;
+
+	var Function$1 = global$2.Function;
+	// dirty IE9- and Bun 0.3.0- checks
+	var WRAP = /MSIE .\./.test(USER_AGENT) || ENGINE_IS_BUN && (function () {
+	  var version = global$2.Bun.version.split('.');
+	  return version.length < 3 || version[0] == 0 && (version[1] < 3 || version[1] == 3 && version[2] == 0);
+	})();
+
+	// IE9- / Bun 0.3.0- setTimeout / setInterval / setImmediate additional parameters fix
+	// https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers
+	// https://github.com/oven-sh/bun/issues/1633
+	var schedulersFix$1 = function (scheduler, hasTimeArg) {
+	  var firstParamIndex = hasTimeArg ? 2 : 1;
+	  return WRAP ? function (handler, timeout /* , ...arguments */) {
+	    var boundArgs = validateArgumentsLength(arguments.length, 1) > firstParamIndex;
+	    var fn = isCallable(handler) ? handler : Function$1(handler);
+	    var params = boundArgs ? arraySlice(arguments, firstParamIndex) : [];
+	    var callback = boundArgs ? function () {
+	      apply(fn, this, params);
+	    } : fn;
+	    return hasTimeArg ? scheduler(callback, timeout) : scheduler(callback);
+	  } : scheduler;
+	};
+
+	var $$3 = _export;
+	var global$1 = global$r;
+	var setTask = task$1.set;
+	var schedulersFix = schedulersFix$1;
+
+	// https://github.com/oven-sh/bun/issues/1633
+	var setImmediate$5 = global$1.setImmediate ? schedulersFix(setTask, false) : setTask;
+
+	// `setImmediate` method
+	// http://w3c.github.io/setImmediate/#si-setImmediate
+	$$3({ global: true, bind: true, enumerable: true, forced: global$1.setImmediate !== setImmediate$5 }, {
+	  setImmediate: setImmediate$5
+	});
+
+	var path$4 = path$n;
+
+	var setImmediate$4 = path$4.setImmediate;
+
+	var parent$d = setImmediate$4;
+
+	var setImmediate$3 = parent$d;
+
+	var parent$c = setImmediate$3;
+
+	var setImmediate$2 = parent$c;
+
+	var setImmediate$1 = setImmediate$2;
+
+	var setImmediate = setImmediate$1;
+
+	var _setImmediate = /*@__PURE__*/getDefaultExportFromCjs(setImmediate);
+
+	function isNative(Ctor) {
+	  return typeof Ctor === 'function' && /native code/.test(Ctor.toString());
+	}
+	function nextTick(cb) {
+	  if (typeof _Promise !== 'undefined' && isNative(_Promise)) {
+	    _Promise.resolve().then(function () {
+	      return cb();
+	    });
+	  } else if (typeof MutationObserver !== 'undefined' && isNative(MutationObserver) && MutationObserver.toString() === '[object MutationObserverConstructor]') {
+	    var observer = new MutationObserver(cb);
+	    var count = 1;
+	    var node = document.createTextNode(String(count));
+	    observer.observe(node, {
+	      characterData: true
+	    });
+	    count++;
+	    node.data = String(count);
+	  } else if (typeof _setImmediate !== 'undefined' && isNative(_setImmediate)) {
+	    _setImmediate(function () {
+	      return cb();
+	    });
+	  } else {
+	    setTimeout(function () {
+	      return cb();
+	    });
+	  }
+	}
+
+	function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+	function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+	var Subtitle = /*#__PURE__*/function () {
+	  function Subtitle(player, subtitles) {
+	    _classCallCheck(this, Subtitle);
+	    _defineProperty(this, "id", 'Subtitle');
+	    // el: div.video-texttrack-container
+	    _defineProperty(this, "player", void 0);
+	    _defineProperty(this, "subtitles", void 0);
+	    _defineProperty(this, "defaultSubtitle", void 0);
+	    _defineProperty(this, "trackElement", void 0);
+	    _defineProperty(this, "textTrack", void 0);
+	    // 一个textTrack对应一个字幕文件
+	    _defineProperty(this, "xhrLoader", void 0);
+	    _defineProperty(this, "subsettingsSubtitle", void 0);
+	    _defineProperty(this, "el", void 0);
+	    this.player = player;
+	    this.subtitles = subtitles;
+	    this.init();
+	  }
+	  _createClass(Subtitle, [{
+	    key: "init",
+	    value: function init() {
+	      var _this = this;
+	      this.initTemplate();
+	      this.initTextTrack();
+	      this.initEvent();
+	      storeControlComponent(this);
+	      nextTick(function () {
+	        var _context;
+	        var ctx = _this;
+	        _this.subsettingsSubtitle = ONCE_COMPONENT_STORE.get('SubsettingsSubtitle');
+	        _forEachInstanceProperty(_context = _this.subtitles).call(_context, function (item) {
+	          var leftIcon = null;
+	          if (item === _this.defaultSubtitle) {
+	            leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
+	          }
+	          var subsettingsItem = _this.subsettingsSubtitle.registerSubsettingsItem({
+	            leftIcon: leftIcon,
+	            leftText: item.tip,
+	            click: function click(value) {
+	              console.log(value);
+	              ctx.trackElement.src = item.source;
+	              for (var index in ctx.subtitles) {
+	                ctx.subtitles[index].instance.leftIconBox.innerHTML = '';
+	                if (value.leftIcon) delete value.leftIcon;
+	                if (ctx.subtitles[index].instance === value.instance) {
+	                  value.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
+	                  ctx.subtitles[index].instance.leftIconBox.appendChild(value.leftIcon);
+	                }
+	              }
+	            }
+	          });
+	          item.instance = subsettingsItem.instance;
+	        });
+	      });
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      this.el = $$p('div.video-texttrack-container');
+	      this.player.el.appendChild(this.el);
+	    }
+	  }, {
+	    key: "initTextTrack",
+	    value: function initTextTrack() {
+	      this.xhrLoader = new XHRLoader();
+	      this.onsuccess = this.onsuccess.bind(this);
+	      this.defaultSubtitle = this.subtitles[0];
+	      var _iterator = _createForOfIteratorHelper(this.subtitles),
+	        _step;
+	      try {
+	        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	          var subtitle = _step.value;
+	          if (subtitle.default) {
+	            this.defaultSubtitle = subtitle;
+	            break;
+	          }
+	        }
+	      } catch (err) {
+	        _iterator.e(err);
+	      } finally {
+	        _iterator.f();
+	      }
+	      this.trackElement = document.createElement('track');
+	      this.player.video.appendChild(this.trackElement);
+	      this.loadVTTFile(this.defaultSubtitle.source);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
+	        addClass(_this2.el, ['video-texttrack-container-showtoolbar']);
+	      });
+	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
+	        removeClass(_this2.el, ['video-texttrack-container-showtoolbar']);
+	      });
+	      // textTracks 属性返回 TextTrackList 对象。TextTrackList 对象代表视频的可用文本轨道。
+	      // 每个可用的文本轨道都由一个 TextTrack 对象表示。
+	      this.textTrack = this.player.video.textTracks[0];
+	      this.textTrack.mode = 'hidden'; // 默认隐藏字幕，使用我们自己的样式
+	      this.textTrack.addEventListener('cuechange', function (e) {
+	        // 设置mode: hidden, 每次加载字幕会触发这个回调
+	        _this2.el.innerHTML = '';
+	        if (_this2.textTrack.activeCues.length > 0) {
+	          var _context2;
+	          _forEachInstanceProperty(_context2 = _toConsumableArray(_this2.textTrack.activeCues)).call(_context2, function (cue) {
+	            if (!cue) return;
+	            var texts = cue.text.split('\n');
+	            _forEachInstanceProperty(texts).call(texts, function (text) {
+	              var p = $$p('p');
+	              p.innerText = text;
+	              _this2.el.appendChild(p);
+	            });
+	          });
+	        }
+	      });
+	    }
+	    // 加载字幕文件
+	  }, {
+	    key: "loadVTTFile",
+	    value: function loadVTTFile(source) {
+	      var _this3 = this;
+	      var request = new HTTPRequest({
+	        url: source,
+	        method: 'get'
+	      });
+	      this.xhrLoader.load({
+	        request: request,
+	        success: function success(response) {
+	          _this3.onsuccess(response);
+	        } //指定成功加载的回调
+	      });
+	    }
+	  }, {
+	    key: "onsuccess",
+	    value: function onsuccess(response) {
+	      var url = _URL.createObjectURL(new Blob([response]));
+	      this.trackElement.src = url;
+	      this.trackElement.default = true;
+	      this.trackElement.srclang = this.defaultSubtitle.tip;
+	      this.trackElement.kind = 'subtitles';
+	    }
+	  }]);
+	  return Subtitle;
+	}();
+
 	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Player = /*#__PURE__*/function (_Component) {
@@ -18650,6 +20059,9 @@
 	      this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
 	      this.toolBar = new ToolBar(this, this.el, 'div');
 	      this.topbar = new TopBar(this, this.el, 'div');
+	      if (this.playerOptions.subtitles && this.playerOptions.subtitles.length > 0) {
+	        new Subtitle(this, this.playerOptions.subtitles);
+	      }
 	      // new DanmakuController(this)
 	    }
 	    /**
@@ -19050,36 +20462,36 @@
 	  return Player;
 	}(Component);
 
-	var $$f = _export;
+	var $$2 = _export;
 	var toObject = toObject$a;
 	var nativeKeys = objectKeys$3;
-	var fails$4 = fails$x;
+	var fails$1 = fails$x;
 
-	var FAILS_ON_PRIMITIVES = fails$4(function () { nativeKeys(1); });
+	var FAILS_ON_PRIMITIVES = fails$1(function () { nativeKeys(1); });
 
 	// `Object.keys` method
 	// https://tc39.es/ecma262/#sec-object.keys
-	$$f({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
+	$$2({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
 	  keys: function keys(it) {
 	    return nativeKeys(toObject(it));
 	  }
 	});
 
-	var path$5 = path$n;
+	var path$3 = path$n;
 
-	var keys$5 = path$5.Object.keys;
+	var keys$5 = path$3.Object.keys;
 
-	var parent$g = keys$5;
+	var parent$b = keys$5;
 
-	var keys$4 = parent$g;
+	var keys$4 = parent$b;
 
-	var parent$f = keys$4;
+	var parent$a = keys$4;
 
-	var keys$3 = parent$f;
+	var keys$3 = parent$a;
 
-	var parent$e = keys$3;
+	var parent$9 = keys$3;
 
-	var keys$2 = parent$e;
+	var keys$2 = parent$9;
 
 	var keys$1 = keys$2;
 
@@ -19087,21 +20499,21 @@
 
 	var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys);
 
-	var path$4 = path$n;
+	var path$2 = path$n;
 
-	var getOwnPropertySymbols$5 = path$4.Object.getOwnPropertySymbols;
+	var getOwnPropertySymbols$5 = path$2.Object.getOwnPropertySymbols;
 
-	var parent$d = getOwnPropertySymbols$5;
+	var parent$8 = getOwnPropertySymbols$5;
 
-	var getOwnPropertySymbols$4 = parent$d;
+	var getOwnPropertySymbols$4 = parent$8;
 
-	var parent$c = getOwnPropertySymbols$4;
+	var parent$7 = getOwnPropertySymbols$4;
 
-	var getOwnPropertySymbols$3 = parent$c;
+	var getOwnPropertySymbols$3 = parent$7;
 
-	var parent$b = getOwnPropertySymbols$3;
+	var parent$6 = getOwnPropertySymbols$3;
 
-	var getOwnPropertySymbols$2 = parent$b;
+	var getOwnPropertySymbols$2 = parent$6;
 
 	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
 
@@ -19109,83 +20521,68 @@
 
 	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
 
-	var getOwnPropertyDescriptor$7 = {exports: {}};
+	var getOwnPropertyDescriptor$6 = {exports: {}};
 
-	var $$e = _export;
-	var fails$3 = fails$x;
+	var $$1 = _export;
+	var fails = fails$x;
 	var toIndexedObject$1 = toIndexedObject$a;
 	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
 	var DESCRIPTORS$1 = descriptors;
 
-	var FORCED = !DESCRIPTORS$1 || fails$3(function () { nativeGetOwnPropertyDescriptor(1); });
+	var FORCED = !DESCRIPTORS$1 || fails(function () { nativeGetOwnPropertyDescriptor(1); });
 
 	// `Object.getOwnPropertyDescriptor` method
 	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-	$$e({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS$1 }, {
+	$$1({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS$1 }, {
 	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
 	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
 	  }
 	});
 
-	var path$3 = path$n;
+	var path$1 = path$n;
 
-	var Object$1 = path$3.Object;
+	var Object$1 = path$1.Object;
 
-	var getOwnPropertyDescriptor$6 = getOwnPropertyDescriptor$7.exports = function getOwnPropertyDescriptor(it, key) {
+	var getOwnPropertyDescriptor$5 = getOwnPropertyDescriptor$6.exports = function getOwnPropertyDescriptor(it, key) {
 	  return Object$1.getOwnPropertyDescriptor(it, key);
 	};
 
-	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$6.sham = true;
+	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$5.sham = true;
 
-	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$7.exports;
+	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$6.exports;
 
-	var parent$a = getOwnPropertyDescriptorExports;
+	var parent$5 = getOwnPropertyDescriptorExports;
 
-	var getOwnPropertyDescriptor$5 = parent$a;
+	var getOwnPropertyDescriptor$4 = parent$5;
 
-	var parent$9 = getOwnPropertyDescriptor$5;
+	var parent$4 = getOwnPropertyDescriptor$4;
 
-	var getOwnPropertyDescriptor$4 = parent$9;
+	var getOwnPropertyDescriptor$3 = parent$4;
 
-	var parent$8 = getOwnPropertyDescriptor$4;
+	var parent$3 = getOwnPropertyDescriptor$3;
 
-	var getOwnPropertyDescriptor$3 = parent$8;
-
-	var getOwnPropertyDescriptor$2 = getOwnPropertyDescriptor$3;
+	var getOwnPropertyDescriptor$2 = parent$3;
 
 	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
 
-	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$1);
+	var getOwnPropertyDescriptor = getOwnPropertyDescriptor$1;
 
-	var getBuiltIn$3 = getBuiltIn$h;
-	var uncurryThis$1 = functionUncurryThis;
-	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
-	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
-	var anObject$2 = anObject$f;
+	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor);
 
-	var concat = uncurryThis$1([].concat);
-
-	// all object keys, includes non-enumerable and symbols
-	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
-	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
-	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
-	};
-
-	var $$d = _export;
+	var $ = _export;
 	var DESCRIPTORS = descriptors;
-	var ownKeys$2 = ownKeys$3;
+	var ownKeys$1 = ownKeys$3;
 	var toIndexedObject = toIndexedObject$a;
-	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
+	var getOwnPropertyDescriptorModule = objectGetOwnPropertyDescriptor;
 	var createProperty = createProperty$6;
 
 	// `Object.getOwnPropertyDescriptors` method
 	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
-	$$d({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
+	$({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
 	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
 	    var O = toIndexedObject(object);
-	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
-	    var keys = ownKeys$2(O);
+	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+	    var keys = ownKeys$1(O);
 	    var result = {};
 	    var index = 0;
 	    var key, descriptor;
@@ -19197,1176 +20594,27 @@
 	  }
 	});
 
-	var path$2 = path$n;
+	var path = path$n;
 
-	var getOwnPropertyDescriptors$5 = path$2.Object.getOwnPropertyDescriptors;
+	var getOwnPropertyDescriptors$5 = path.Object.getOwnPropertyDescriptors;
 
-	var parent$7 = getOwnPropertyDescriptors$5;
+	var parent$2 = getOwnPropertyDescriptors$5;
 
-	var getOwnPropertyDescriptors$4 = parent$7;
+	var getOwnPropertyDescriptors$4 = parent$2;
 
-	var parent$6 = getOwnPropertyDescriptors$4;
+	var parent$1 = getOwnPropertyDescriptors$4;
 
-	var getOwnPropertyDescriptors$3 = parent$6;
+	var getOwnPropertyDescriptors$3 = parent$1;
 
-	var parent$5 = getOwnPropertyDescriptors$3;
+	var parent = getOwnPropertyDescriptors$3;
 
-	var getOwnPropertyDescriptors$2 = parent$5;
+	var getOwnPropertyDescriptors$2 = parent;
 
 	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
 
 	var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
 
 	var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors);
-
-	var hasOwn$1 = hasOwnProperty_1;
-	var ownKeys$1 = ownKeys$3;
-	var getOwnPropertyDescriptorModule = objectGetOwnPropertyDescriptor;
-	var definePropertyModule = objectDefineProperty;
-
-	var copyConstructorProperties$1 = function (target, source, exceptions) {
-	  var keys = ownKeys$1(source);
-	  var defineProperty = definePropertyModule.f;
-	  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
-	  for (var i = 0; i < keys.length; i++) {
-	    var key = keys[i];
-	    if (!hasOwn$1(target, key) && !(exceptions && hasOwn$1(exceptions, key))) {
-	      defineProperty(target, key, getOwnPropertyDescriptor(source, key));
-	    }
-	  }
-	};
-
-	var isObject$2 = isObject$j;
-	var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
-
-	// `InstallErrorCause` abstract operation
-	// https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
-	var installErrorCause$1 = function (O, options) {
-	  if (isObject$2(options) && 'cause' in options) {
-	    createNonEnumerableProperty$2(O, 'cause', options.cause);
-	  }
-	};
-
-	var uncurryThis = functionUncurryThis;
-
-	var $Error$1 = Error;
-	var replace = uncurryThis(''.replace);
-
-	var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
-	// eslint-disable-next-line redos/no-vulnerable -- safe
-	var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
-	var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
-
-	var errorStackClear = function (stack, dropEntries) {
-	  if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error$1.prepareStackTrace) {
-	    while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
-	  } return stack;
-	};
-
-	var fails$2 = fails$x;
-	var createPropertyDescriptor$1 = createPropertyDescriptor$8;
-
-	var errorStackInstallable = !fails$2(function () {
-	  var error = Error('a');
-	  if (!('stack' in error)) return true;
-	  // eslint-disable-next-line es/no-object-defineproperty -- safe
-	  Object.defineProperty(error, 'stack', createPropertyDescriptor$1(1, 7));
-	  return error.stack !== 7;
-	});
-
-	var createNonEnumerableProperty$1 = createNonEnumerableProperty$9;
-	var clearErrorStack = errorStackClear;
-	var ERROR_STACK_INSTALLABLE = errorStackInstallable;
-
-	// non-standard V8
-	var captureStackTrace = Error.captureStackTrace;
-
-	var errorStackInstall = function (error, C, stack, dropEntries) {
-	  if (ERROR_STACK_INSTALLABLE) {
-	    if (captureStackTrace) captureStackTrace(error, C);
-	    else createNonEnumerableProperty$1(error, 'stack', clearErrorStack(stack, dropEntries));
-	  }
-	};
-
-	var toString = toString$b;
-
-	var normalizeStringArgument$1 = function (argument, $default) {
-	  return argument === undefined ? arguments.length < 2 ? '' : $default : toString(argument);
-	};
-
-	var $$c = _export;
-	var isPrototypeOf = objectIsPrototypeOf;
-	var getPrototypeOf = objectGetPrototypeOf;
-	var setPrototypeOf = objectSetPrototypeOf;
-	var copyConstructorProperties = copyConstructorProperties$1;
-	var create = objectCreate;
-	var createNonEnumerableProperty = createNonEnumerableProperty$9;
-	var createPropertyDescriptor = createPropertyDescriptor$8;
-	var installErrorCause = installErrorCause$1;
-	var installErrorStack = errorStackInstall;
-	var iterate$4 = iterate$l;
-	var normalizeStringArgument = normalizeStringArgument$1;
-	var wellKnownSymbol$2 = wellKnownSymbol$q;
-
-	var TO_STRING_TAG = wellKnownSymbol$2('toStringTag');
-	var $Error = Error;
-	var push = [].push;
-
-	var $AggregateError = function AggregateError(errors, message /* , options */) {
-	  var isInstance = isPrototypeOf(AggregateErrorPrototype, this);
-	  var that;
-	  if (setPrototypeOf) {
-	    that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
-	  } else {
-	    that = isInstance ? this : create(AggregateErrorPrototype);
-	    createNonEnumerableProperty(that, TO_STRING_TAG, 'Error');
-	  }
-	  if (message !== undefined) createNonEnumerableProperty(that, 'message', normalizeStringArgument(message));
-	  installErrorStack(that, $AggregateError, that.stack, 1);
-	  if (arguments.length > 2) installErrorCause(that, arguments[2]);
-	  var errorsArray = [];
-	  iterate$4(errors, push, { that: errorsArray });
-	  createNonEnumerableProperty(that, 'errors', errorsArray);
-	  return that;
-	};
-
-	if (setPrototypeOf) setPrototypeOf($AggregateError, $Error);
-	else copyConstructorProperties($AggregateError, $Error, { name: true });
-
-	var AggregateErrorPrototype = $AggregateError.prototype = create($Error.prototype, {
-	  constructor: createPropertyDescriptor(1, $AggregateError),
-	  message: createPropertyDescriptor(1, ''),
-	  name: createPropertyDescriptor(1, 'AggregateError')
-	});
-
-	// `AggregateError` constructor
-	// https://tc39.es/ecma262/#sec-aggregate-error-constructor
-	$$c({ global: true, constructor: true, arity: 2 }, {
-	  AggregateError: $AggregateError
-	});
-
-	var classof = classofRaw$2;
-
-	var engineIsNode = typeof process != 'undefined' && classof(process) == 'process';
-
-	var anObject$1 = anObject$f;
-	var aConstructor = aConstructor$3;
-	var isNullOrUndefined = isNullOrUndefined$6;
-	var wellKnownSymbol$1 = wellKnownSymbol$q;
-
-	var SPECIES$1 = wellKnownSymbol$1('species');
-
-	// `SpeciesConstructor` abstract operation
-	// https://tc39.es/ecma262/#sec-speciesconstructor
-	var speciesConstructor$2 = function (O, defaultConstructor) {
-	  var C = anObject$1(O).constructor;
-	  var S;
-	  return C === undefined || isNullOrUndefined(S = anObject$1(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
-	};
-
-	var userAgent$2 = engineUserAgent;
-
-	// eslint-disable-next-line redos/no-vulnerable -- safe
-	var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
-
-	var global$8 = global$r;
-	var apply$1 = functionApply;
-	var bind$2 = functionBindContext;
-	var isCallable$4 = isCallable$q;
-	var hasOwn = hasOwnProperty_1;
-	var fails$1 = fails$x;
-	var html = html$2;
-	var arraySlice$1 = arraySlice$8;
-	var createElement = documentCreateElement$1;
-	var validateArgumentsLength$1 = validateArgumentsLength$5;
-	var IS_IOS$1 = engineIsIos;
-	var IS_NODE$3 = engineIsNode;
-
-	var set = global$8.setImmediate;
-	var clear = global$8.clearImmediate;
-	var process$3 = global$8.process;
-	var Dispatch = global$8.Dispatch;
-	var Function$2 = global$8.Function;
-	var MessageChannel = global$8.MessageChannel;
-	var String$1 = global$8.String;
-	var counter = 0;
-	var queue$3 = {};
-	var ONREADYSTATECHANGE = 'onreadystatechange';
-	var $location, defer, channel, port;
-
-	fails$1(function () {
-	  // Deno throws a ReferenceError on `location` access without `--location` flag
-	  $location = global$8.location;
-	});
-
-	var run = function (id) {
-	  if (hasOwn(queue$3, id)) {
-	    var fn = queue$3[id];
-	    delete queue$3[id];
-	    fn();
-	  }
-	};
-
-	var runner = function (id) {
-	  return function () {
-	    run(id);
-	  };
-	};
-
-	var eventListener = function (event) {
-	  run(event.data);
-	};
-
-	var globalPostMessageDefer = function (id) {
-	  // old engines have not location.origin
-	  global$8.postMessage(String$1(id), $location.protocol + '//' + $location.host);
-	};
-
-	// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
-	if (!set || !clear) {
-	  set = function setImmediate(handler) {
-	    validateArgumentsLength$1(arguments.length, 1);
-	    var fn = isCallable$4(handler) ? handler : Function$2(handler);
-	    var args = arraySlice$1(arguments, 1);
-	    queue$3[++counter] = function () {
-	      apply$1(fn, undefined, args);
-	    };
-	    defer(counter);
-	    return counter;
-	  };
-	  clear = function clearImmediate(id) {
-	    delete queue$3[id];
-	  };
-	  // Node.js 0.8-
-	  if (IS_NODE$3) {
-	    defer = function (id) {
-	      process$3.nextTick(runner(id));
-	    };
-	  // Sphere (JS game engine) Dispatch API
-	  } else if (Dispatch && Dispatch.now) {
-	    defer = function (id) {
-	      Dispatch.now(runner(id));
-	    };
-	  // Browsers with MessageChannel, includes WebWorkers
-	  // except iOS - https://github.com/zloirock/core-js/issues/624
-	  } else if (MessageChannel && !IS_IOS$1) {
-	    channel = new MessageChannel();
-	    port = channel.port2;
-	    channel.port1.onmessage = eventListener;
-	    defer = bind$2(port.postMessage, port);
-	  // Browsers with postMessage, skip WebWorkers
-	  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
-	  } else if (
-	    global$8.addEventListener &&
-	    isCallable$4(global$8.postMessage) &&
-	    !global$8.importScripts &&
-	    $location && $location.protocol !== 'file:' &&
-	    !fails$1(globalPostMessageDefer)
-	  ) {
-	    defer = globalPostMessageDefer;
-	    global$8.addEventListener('message', eventListener, false);
-	  // IE8-
-	  } else if (ONREADYSTATECHANGE in createElement('script')) {
-	    defer = function (id) {
-	      html.appendChild(createElement('script'))[ONREADYSTATECHANGE] = function () {
-	        html.removeChild(this);
-	        run(id);
-	      };
-	    };
-	  // Rest old browsers
-	  } else {
-	    defer = function (id) {
-	      setTimeout(runner(id), 0);
-	    };
-	  }
-	}
-
-	var task$1 = {
-	  set: set,
-	  clear: clear
-	};
-
-	var Queue$2 = function () {
-	  this.head = null;
-	  this.tail = null;
-	};
-
-	Queue$2.prototype = {
-	  add: function (item) {
-	    var entry = { item: item, next: null };
-	    var tail = this.tail;
-	    if (tail) tail.next = entry;
-	    else this.head = entry;
-	    this.tail = entry;
-	  },
-	  get: function () {
-	    var entry = this.head;
-	    if (entry) {
-	      var next = this.head = entry.next;
-	      if (next === null) this.tail = null;
-	      return entry.item;
-	    }
-	  }
-	};
-
-	var queue$2 = Queue$2;
-
-	var userAgent$1 = engineUserAgent;
-
-	var engineIsIosPebble = /ipad|iphone|ipod/i.test(userAgent$1) && typeof Pebble != 'undefined';
-
-	var userAgent = engineUserAgent;
-
-	var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
-
-	var global$7 = global$r;
-	var bind$1 = functionBindContext;
-	var getOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
-	var macrotask = task$1.set;
-	var Queue$1 = queue$2;
-	var IS_IOS = engineIsIos;
-	var IS_IOS_PEBBLE = engineIsIosPebble;
-	var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
-	var IS_NODE$2 = engineIsNode;
-
-	var MutationObserver$1 = global$7.MutationObserver || global$7.WebKitMutationObserver;
-	var document$2 = global$7.document;
-	var process$2 = global$7.process;
-	var Promise$1 = global$7.Promise;
-	// Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
-	var queueMicrotaskDescriptor = getOwnPropertyDescriptor(global$7, 'queueMicrotask');
-	var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
-	var notify$1, toggle, node, promise$6, then;
-
-	// modern engines have queueMicrotask method
-	if (!microtask$1) {
-	  var queue$1 = new Queue$1();
-
-	  var flush = function () {
-	    var parent, fn;
-	    if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
-	    while (fn = queue$1.get()) try {
-	      fn();
-	    } catch (error) {
-	      if (queue$1.head) notify$1();
-	      throw error;
-	    }
-	    if (parent) parent.enter();
-	  };
-
-	  // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
-	  // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
-	  if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$2) {
-	    toggle = true;
-	    node = document$2.createTextNode('');
-	    new MutationObserver$1(flush).observe(node, { characterData: true });
-	    notify$1 = function () {
-	      node.data = toggle = !toggle;
-	    };
-	  // environments with maybe non-completely correct, but existent Promise
-	  } else if (!IS_IOS_PEBBLE && Promise$1 && Promise$1.resolve) {
-	    // Promise.resolve without an argument throws an error in LG WebOS 2
-	    promise$6 = Promise$1.resolve(undefined);
-	    // workaround of WebKit ~ iOS Safari 10.1 bug
-	    promise$6.constructor = Promise$1;
-	    then = bind$1(promise$6.then, promise$6);
-	    notify$1 = function () {
-	      then(flush);
-	    };
-	  // Node.js without promises
-	  } else if (IS_NODE$2) {
-	    notify$1 = function () {
-	      process$2.nextTick(flush);
-	    };
-	  // for other environments - macrotask based on:
-	  // - setImmediate
-	  // - MessageChannel
-	  // - window.postMessage
-	  // - onreadystatechange
-	  // - setTimeout
-	  } else {
-	    // `webpack` dev server bug on IE global methods - use bind(fn, global)
-	    macrotask = bind$1(macrotask, global$7);
-	    notify$1 = function () {
-	      macrotask(flush);
-	    };
-	  }
-
-	  microtask$1 = function (fn) {
-	    if (!queue$1.head) notify$1();
-	    queue$1.add(fn);
-	  };
-	}
-
-	var microtask_1 = microtask$1;
-
-	var hostReportErrors$1 = function (a, b) {
-	  try {
-	    // eslint-disable-next-line no-console -- safe
-	    arguments.length == 1 ? console.error(a) : console.error(a, b);
-	  } catch (error) { /* empty */ }
-	};
-
-	var perform$6 = function (exec) {
-	  try {
-	    return { error: false, value: exec() };
-	  } catch (error) {
-	    return { error: true, value: error };
-	  }
-	};
-
-	var global$6 = global$r;
-
-	var promiseNativeConstructor = global$6.Promise;
-
-	/* global Deno -- Deno case */
-
-	var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
-
-	var IS_DENO$1 = engineIsDeno;
-	var IS_NODE$1 = engineIsNode;
-
-	var engineIsBrowser = !IS_DENO$1 && !IS_NODE$1
-	  && typeof window == 'object'
-	  && typeof document == 'object';
-
-	var global$5 = global$r;
-	var NativePromiseConstructor$5 = promiseNativeConstructor;
-	var isCallable$3 = isCallable$q;
-	var isForced = isForced_1;
-	var inspectSource = inspectSource$2;
-	var wellKnownSymbol = wellKnownSymbol$q;
-	var IS_BROWSER = engineIsBrowser;
-	var IS_DENO = engineIsDeno;
-	var V8_VERSION = engineV8Version;
-
-	var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
-	var SPECIES = wellKnownSymbol('species');
-	var SUBCLASSING = false;
-	var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$3(global$5.PromiseRejectionEvent);
-
-	var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
-	  var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
-	  var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(NativePromiseConstructor$5);
-	  // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
-	  // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
-	  // We can't detect it synchronously, so just check versions
-	  if (!GLOBAL_CORE_JS_PROMISE && V8_VERSION === 66) return true;
-	  // We need Promise#{ catch, finally } in the pure version for preventing prototype pollution
-	  if (!(NativePromisePrototype$2['catch'] && NativePromisePrototype$2['finally'])) return true;
-	  // We can't use @@species feature detection in V8 since it causes
-	  // deoptimization and performance degradation
-	  // https://github.com/zloirock/core-js/issues/679
-	  if (!V8_VERSION || V8_VERSION < 51 || !/native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) {
-	    // Detect correctness of subclassing with @@species support
-	    var promise = new NativePromiseConstructor$5(function (resolve) { resolve(1); });
-	    var FakePromise = function (exec) {
-	      exec(function () { /* empty */ }, function () { /* empty */ });
-	    };
-	    var constructor = promise.constructor = {};
-	    constructor[SPECIES] = FakePromise;
-	    SUBCLASSING = promise.then(function () { /* empty */ }) instanceof FakePromise;
-	    if (!SUBCLASSING) return true;
-	  // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
-	  } return !GLOBAL_CORE_JS_PROMISE && (IS_BROWSER || IS_DENO) && !NATIVE_PROMISE_REJECTION_EVENT$1;
-	});
-
-	var promiseConstructorDetection = {
-	  CONSTRUCTOR: FORCED_PROMISE_CONSTRUCTOR$5,
-	  REJECTION_EVENT: NATIVE_PROMISE_REJECTION_EVENT$1,
-	  SUBCLASSING: SUBCLASSING
-	};
-
-	var newPromiseCapability$2 = {};
-
-	var aCallable$5 = aCallable$h;
-
-	var $TypeError = TypeError;
-
-	var PromiseCapability = function (C) {
-	  var resolve, reject;
-	  this.promise = new C(function ($$resolve, $$reject) {
-	    if (resolve !== undefined || reject !== undefined) throw $TypeError('Bad Promise constructor');
-	    resolve = $$resolve;
-	    reject = $$reject;
-	  });
-	  this.resolve = aCallable$5(resolve);
-	  this.reject = aCallable$5(reject);
-	};
-
-	// `NewPromiseCapability` abstract operation
-	// https://tc39.es/ecma262/#sec-newpromisecapability
-	newPromiseCapability$2.f = function (C) {
-	  return new PromiseCapability(C);
-	};
-
-	var $$b = _export;
-	var IS_NODE = engineIsNode;
-	var global$4 = global$r;
-	var call$5 = functionCall;
-	var defineBuiltIn = defineBuiltIn$8;
-	var setToStringTag = setToStringTag$9;
-	var setSpecies = setSpecies$2;
-	var aCallable$4 = aCallable$h;
-	var isCallable$2 = isCallable$q;
-	var isObject$1 = isObject$j;
-	var anInstance = anInstance$5;
-	var speciesConstructor$1 = speciesConstructor$2;
-	var task = task$1.set;
-	var microtask = microtask_1;
-	var hostReportErrors = hostReportErrors$1;
-	var perform$5 = perform$6;
-	var Queue = queue$2;
-	var InternalStateModule = internalState;
-	var NativePromiseConstructor$4 = promiseNativeConstructor;
-	var PromiseConstructorDetection = promiseConstructorDetection;
-	var newPromiseCapabilityModule$6 = newPromiseCapability$2;
-
-	var PROMISE = 'Promise';
-	var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
-	var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
-	PromiseConstructorDetection.SUBCLASSING;
-	var getInternalPromiseState = InternalStateModule.getterFor(PROMISE);
-	var setInternalState = InternalStateModule.set;
-	var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
-	var PromiseConstructor = NativePromiseConstructor$4;
-	var PromisePrototype = NativePromisePrototype$1;
-	var TypeError$1 = global$4.TypeError;
-	var document$1 = global$4.document;
-	var process$1 = global$4.process;
-	var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
-	var newGenericPromiseCapability = newPromiseCapability$1;
-
-	var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$4.dispatchEvent);
-	var UNHANDLED_REJECTION = 'unhandledrejection';
-	var REJECTION_HANDLED = 'rejectionhandled';
-	var PENDING = 0;
-	var FULFILLED = 1;
-	var REJECTED = 2;
-	var HANDLED = 1;
-	var UNHANDLED = 2;
-
-	var Internal, OwnPromiseCapability, PromiseWrapper;
-
-	// helpers
-	var isThenable = function (it) {
-	  var then;
-	  return isObject$1(it) && isCallable$2(then = it.then) ? then : false;
-	};
-
-	var callReaction = function (reaction, state) {
-	  var value = state.value;
-	  var ok = state.state == FULFILLED;
-	  var handler = ok ? reaction.ok : reaction.fail;
-	  var resolve = reaction.resolve;
-	  var reject = reaction.reject;
-	  var domain = reaction.domain;
-	  var result, then, exited;
-	  try {
-	    if (handler) {
-	      if (!ok) {
-	        if (state.rejection === UNHANDLED) onHandleUnhandled(state);
-	        state.rejection = HANDLED;
-	      }
-	      if (handler === true) result = value;
-	      else {
-	        if (domain) domain.enter();
-	        result = handler(value); // can throw
-	        if (domain) {
-	          domain.exit();
-	          exited = true;
-	        }
-	      }
-	      if (result === reaction.promise) {
-	        reject(TypeError$1('Promise-chain cycle'));
-	      } else if (then = isThenable(result)) {
-	        call$5(then, result, resolve, reject);
-	      } else resolve(result);
-	    } else reject(value);
-	  } catch (error) {
-	    if (domain && !exited) domain.exit();
-	    reject(error);
-	  }
-	};
-
-	var notify = function (state, isReject) {
-	  if (state.notified) return;
-	  state.notified = true;
-	  microtask(function () {
-	    var reactions = state.reactions;
-	    var reaction;
-	    while (reaction = reactions.get()) {
-	      callReaction(reaction, state);
-	    }
-	    state.notified = false;
-	    if (isReject && !state.rejection) onUnhandled(state);
-	  });
-	};
-
-	var dispatchEvent = function (name, promise, reason) {
-	  var event, handler;
-	  if (DISPATCH_EVENT) {
-	    event = document$1.createEvent('Event');
-	    event.promise = promise;
-	    event.reason = reason;
-	    event.initEvent(name, false, true);
-	    global$4.dispatchEvent(event);
-	  } else event = { promise: promise, reason: reason };
-	  if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$4['on' + name])) handler(event);
-	  else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
-	};
-
-	var onUnhandled = function (state) {
-	  call$5(task, global$4, function () {
-	    var promise = state.facade;
-	    var value = state.value;
-	    var IS_UNHANDLED = isUnhandled(state);
-	    var result;
-	    if (IS_UNHANDLED) {
-	      result = perform$5(function () {
-	        if (IS_NODE) {
-	          process$1.emit('unhandledRejection', value, promise);
-	        } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
-	      });
-	      // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
-	      state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
-	      if (result.error) throw result.value;
-	    }
-	  });
-	};
-
-	var isUnhandled = function (state) {
-	  return state.rejection !== HANDLED && !state.parent;
-	};
-
-	var onHandleUnhandled = function (state) {
-	  call$5(task, global$4, function () {
-	    var promise = state.facade;
-	    if (IS_NODE) {
-	      process$1.emit('rejectionHandled', promise);
-	    } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
-	  });
-	};
-
-	var bind = function (fn, state, unwrap) {
-	  return function (value) {
-	    fn(state, value, unwrap);
-	  };
-	};
-
-	var internalReject = function (state, value, unwrap) {
-	  if (state.done) return;
-	  state.done = true;
-	  if (unwrap) state = unwrap;
-	  state.value = value;
-	  state.state = REJECTED;
-	  notify(state, true);
-	};
-
-	var internalResolve = function (state, value, unwrap) {
-	  if (state.done) return;
-	  state.done = true;
-	  if (unwrap) state = unwrap;
-	  try {
-	    if (state.facade === value) throw TypeError$1("Promise can't be resolved itself");
-	    var then = isThenable(value);
-	    if (then) {
-	      microtask(function () {
-	        var wrapper = { done: false };
-	        try {
-	          call$5(then, value,
-	            bind(internalResolve, wrapper, state),
-	            bind(internalReject, wrapper, state)
-	          );
-	        } catch (error) {
-	          internalReject(wrapper, error, state);
-	        }
-	      });
-	    } else {
-	      state.value = value;
-	      state.state = FULFILLED;
-	      notify(state, false);
-	    }
-	  } catch (error) {
-	    internalReject({ done: false }, error, state);
-	  }
-	};
-
-	// constructor polyfill
-	if (FORCED_PROMISE_CONSTRUCTOR$4) {
-	  // 25.4.3.1 Promise(executor)
-	  PromiseConstructor = function Promise(executor) {
-	    anInstance(this, PromisePrototype);
-	    aCallable$4(executor);
-	    call$5(Internal, this);
-	    var state = getInternalPromiseState(this);
-	    try {
-	      executor(bind(internalResolve, state), bind(internalReject, state));
-	    } catch (error) {
-	      internalReject(state, error);
-	    }
-	  };
-
-	  PromisePrototype = PromiseConstructor.prototype;
-
-	  // eslint-disable-next-line no-unused-vars -- required for `.length`
-	  Internal = function Promise(executor) {
-	    setInternalState(this, {
-	      type: PROMISE,
-	      done: false,
-	      notified: false,
-	      parent: false,
-	      reactions: new Queue(),
-	      rejection: false,
-	      state: PENDING,
-	      value: undefined
-	    });
-	  };
-
-	  // `Promise.prototype.then` method
-	  // https://tc39.es/ecma262/#sec-promise.prototype.then
-	  Internal.prototype = defineBuiltIn(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
-	    var state = getInternalPromiseState(this);
-	    var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
-	    state.parent = true;
-	    reaction.ok = isCallable$2(onFulfilled) ? onFulfilled : true;
-	    reaction.fail = isCallable$2(onRejected) && onRejected;
-	    reaction.domain = IS_NODE ? process$1.domain : undefined;
-	    if (state.state == PENDING) state.reactions.add(reaction);
-	    else microtask(function () {
-	      callReaction(reaction, state);
-	    });
-	    return reaction.promise;
-	  });
-
-	  OwnPromiseCapability = function () {
-	    var promise = new Internal();
-	    var state = getInternalPromiseState(promise);
-	    this.promise = promise;
-	    this.resolve = bind(internalResolve, state);
-	    this.reject = bind(internalReject, state);
-	  };
-
-	  newPromiseCapabilityModule$6.f = newPromiseCapability$1 = function (C) {
-	    return C === PromiseConstructor || C === PromiseWrapper
-	      ? new OwnPromiseCapability(C)
-	      : newGenericPromiseCapability(C);
-	  };
-	}
-
-	$$b({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
-	  Promise: PromiseConstructor
-	});
-
-	setToStringTag(PromiseConstructor, PROMISE, false, true);
-	setSpecies(PROMISE);
-
-	var NativePromiseConstructor$3 = promiseNativeConstructor;
-	var checkCorrectnessOfIteration = checkCorrectnessOfIteration$2;
-	var FORCED_PROMISE_CONSTRUCTOR$3 = promiseConstructorDetection.CONSTRUCTOR;
-
-	var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCorrectnessOfIteration(function (iterable) {
-	  NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
-	});
-
-	var $$a = _export;
-	var call$4 = functionCall;
-	var aCallable$3 = aCallable$h;
-	var newPromiseCapabilityModule$5 = newPromiseCapability$2;
-	var perform$4 = perform$6;
-	var iterate$3 = iterate$l;
-	var PROMISE_STATICS_INCORRECT_ITERATION$3 = promiseStaticsIncorrectIteration;
-
-	// `Promise.all` method
-	// https://tc39.es/ecma262/#sec-promise.all
-	$$a({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
-	  all: function all(iterable) {
-	    var C = this;
-	    var capability = newPromiseCapabilityModule$5.f(C);
-	    var resolve = capability.resolve;
-	    var reject = capability.reject;
-	    var result = perform$4(function () {
-	      var $promiseResolve = aCallable$3(C.resolve);
-	      var values = [];
-	      var counter = 0;
-	      var remaining = 1;
-	      iterate$3(iterable, function (promise) {
-	        var index = counter++;
-	        var alreadyCalled = false;
-	        remaining++;
-	        call$4($promiseResolve, C, promise).then(function (value) {
-	          if (alreadyCalled) return;
-	          alreadyCalled = true;
-	          values[index] = value;
-	          --remaining || resolve(values);
-	        }, reject);
-	      });
-	      --remaining || resolve(values);
-	    });
-	    if (result.error) reject(result.value);
-	    return capability.promise;
-	  }
-	});
-
-	var $$9 = _export;
-	var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
-	var NativePromiseConstructor$2 = promiseNativeConstructor;
-
-	NativePromiseConstructor$2 && NativePromiseConstructor$2.prototype;
-
-	// `Promise.prototype.catch` method
-	// https://tc39.es/ecma262/#sec-promise.prototype.catch
-	$$9({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
-	  'catch': function (onRejected) {
-	    return this.then(undefined, onRejected);
-	  }
-	});
-
-	var $$8 = _export;
-	var call$3 = functionCall;
-	var aCallable$2 = aCallable$h;
-	var newPromiseCapabilityModule$4 = newPromiseCapability$2;
-	var perform$3 = perform$6;
-	var iterate$2 = iterate$l;
-	var PROMISE_STATICS_INCORRECT_ITERATION$2 = promiseStaticsIncorrectIteration;
-
-	// `Promise.race` method
-	// https://tc39.es/ecma262/#sec-promise.race
-	$$8({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
-	  race: function race(iterable) {
-	    var C = this;
-	    var capability = newPromiseCapabilityModule$4.f(C);
-	    var reject = capability.reject;
-	    var result = perform$3(function () {
-	      var $promiseResolve = aCallable$2(C.resolve);
-	      iterate$2(iterable, function (promise) {
-	        call$3($promiseResolve, C, promise).then(capability.resolve, reject);
-	      });
-	    });
-	    if (result.error) reject(result.value);
-	    return capability.promise;
-	  }
-	});
-
-	var $$7 = _export;
-	var call$2 = functionCall;
-	var newPromiseCapabilityModule$3 = newPromiseCapability$2;
-	var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
-
-	// `Promise.reject` method
-	// https://tc39.es/ecma262/#sec-promise.reject
-	$$7({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
-	  reject: function reject(r) {
-	    var capability = newPromiseCapabilityModule$3.f(this);
-	    call$2(capability.reject, undefined, r);
-	    return capability.promise;
-	  }
-	});
-
-	var anObject = anObject$f;
-	var isObject = isObject$j;
-	var newPromiseCapability = newPromiseCapability$2;
-
-	var promiseResolve$2 = function (C, x) {
-	  anObject(C);
-	  if (isObject(x) && x.constructor === C) return x;
-	  var promiseCapability = newPromiseCapability.f(C);
-	  var resolve = promiseCapability.resolve;
-	  resolve(x);
-	  return promiseCapability.promise;
-	};
-
-	var $$6 = _export;
-	var getBuiltIn$2 = getBuiltIn$h;
-	var IS_PURE = isPure;
-	var NativePromiseConstructor$1 = promiseNativeConstructor;
-	var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
-	var promiseResolve$1 = promiseResolve$2;
-
-	var PromiseConstructorWrapper = getBuiltIn$2('Promise');
-	var CHECK_WRAPPER = !FORCED_PROMISE_CONSTRUCTOR;
-
-	// `Promise.resolve` method
-	// https://tc39.es/ecma262/#sec-promise.resolve
-	$$6({ target: 'Promise', stat: true, forced: IS_PURE  }, {
-	  resolve: function resolve(x) {
-	    return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
-	  }
-	});
-
-	var $$5 = _export;
-	var call$1 = functionCall;
-	var aCallable$1 = aCallable$h;
-	var newPromiseCapabilityModule$2 = newPromiseCapability$2;
-	var perform$2 = perform$6;
-	var iterate$1 = iterate$l;
-	var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
-
-	// `Promise.allSettled` method
-	// https://tc39.es/ecma262/#sec-promise.allsettled
-	$$5({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
-	  allSettled: function allSettled(iterable) {
-	    var C = this;
-	    var capability = newPromiseCapabilityModule$2.f(C);
-	    var resolve = capability.resolve;
-	    var reject = capability.reject;
-	    var result = perform$2(function () {
-	      var promiseResolve = aCallable$1(C.resolve);
-	      var values = [];
-	      var counter = 0;
-	      var remaining = 1;
-	      iterate$1(iterable, function (promise) {
-	        var index = counter++;
-	        var alreadyCalled = false;
-	        remaining++;
-	        call$1(promiseResolve, C, promise).then(function (value) {
-	          if (alreadyCalled) return;
-	          alreadyCalled = true;
-	          values[index] = { status: 'fulfilled', value: value };
-	          --remaining || resolve(values);
-	        }, function (error) {
-	          if (alreadyCalled) return;
-	          alreadyCalled = true;
-	          values[index] = { status: 'rejected', reason: error };
-	          --remaining || resolve(values);
-	        });
-	      });
-	      --remaining || resolve(values);
-	    });
-	    if (result.error) reject(result.value);
-	    return capability.promise;
-	  }
-	});
-
-	var $$4 = _export;
-	var call = functionCall;
-	var aCallable = aCallable$h;
-	var getBuiltIn$1 = getBuiltIn$h;
-	var newPromiseCapabilityModule$1 = newPromiseCapability$2;
-	var perform$1 = perform$6;
-	var iterate = iterate$l;
-	var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
-
-	var PROMISE_ANY_ERROR = 'No one promise resolved';
-
-	// `Promise.any` method
-	// https://tc39.es/ecma262/#sec-promise.any
-	$$4({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
-	  any: function any(iterable) {
-	    var C = this;
-	    var AggregateError = getBuiltIn$1('AggregateError');
-	    var capability = newPromiseCapabilityModule$1.f(C);
-	    var resolve = capability.resolve;
-	    var reject = capability.reject;
-	    var result = perform$1(function () {
-	      var promiseResolve = aCallable(C.resolve);
-	      var errors = [];
-	      var counter = 0;
-	      var remaining = 1;
-	      var alreadyResolved = false;
-	      iterate(iterable, function (promise) {
-	        var index = counter++;
-	        var alreadyRejected = false;
-	        remaining++;
-	        call(promiseResolve, C, promise).then(function (value) {
-	          if (alreadyRejected || alreadyResolved) return;
-	          alreadyResolved = true;
-	          resolve(value);
-	        }, function (error) {
-	          if (alreadyRejected || alreadyResolved) return;
-	          alreadyRejected = true;
-	          errors[index] = error;
-	          --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
-	        });
-	      });
-	      --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
-	    });
-	    if (result.error) reject(result.value);
-	    return capability.promise;
-	  }
-	});
-
-	var $$3 = _export;
-	var NativePromiseConstructor = promiseNativeConstructor;
-	var fails = fails$x;
-	var getBuiltIn = getBuiltIn$h;
-	var isCallable$1 = isCallable$q;
-	var speciesConstructor = speciesConstructor$2;
-	var promiseResolve = promiseResolve$2;
-
-	var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
-
-	// Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
-	var NON_GENERIC = !!NativePromiseConstructor && fails(function () {
-	  // eslint-disable-next-line unicorn/no-thenable -- required for testing
-	  NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
-	});
-
-	// `Promise.prototype.finally` method
-	// https://tc39.es/ecma262/#sec-promise.prototype.finally
-	$$3({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
-	  'finally': function (onFinally) {
-	    var C = speciesConstructor(this, getBuiltIn('Promise'));
-	    var isFunction = isCallable$1(onFinally);
-	    return this.then(
-	      isFunction ? function (x) {
-	        return promiseResolve(C, onFinally()).then(function () { return x; });
-	      } : onFinally,
-	      isFunction ? function (e) {
-	        return promiseResolve(C, onFinally()).then(function () { throw e; });
-	      } : onFinally
-	    );
-	  }
-	});
-
-	var path$1 = path$n;
-
-	var promise$5 = path$1.Promise;
-
-	var parent$4 = promise$5;
-
-
-	var promise$4 = parent$4;
-
-	var parent$3 = promise$4;
-
-	var promise$3 = parent$3;
-
-	// TODO: Remove from `core-js@4`
-	var $$2 = _export;
-	var newPromiseCapabilityModule = newPromiseCapability$2;
-	var perform = perform$6;
-
-	// `Promise.try` method
-	// https://github.com/tc39/proposal-promise-try
-	$$2({ target: 'Promise', stat: true, forced: true }, {
-	  'try': function (callbackfn) {
-	    var promiseCapability = newPromiseCapabilityModule.f(this);
-	    var result = perform(callbackfn);
-	    (result.error ? promiseCapability.reject : promiseCapability.resolve)(result.value);
-	    return promiseCapability.promise;
-	  }
-	});
-
-	var parent$2 = promise$3;
-
-	// TODO: Remove from `core-js@4`
-
-
-
-
-	var promise$2 = parent$2;
-
-	var promise$1 = promise$2;
-
-	var promise = promise$1;
-
-	var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
-
-	var $$1 = _export;
-	var global$3 = global$r;
-	var clearImmediate = task$1.clear;
-
-	// `clearImmediate` method
-	// http://w3c.github.io/setImmediate/#si-clearImmediate
-	$$1({ global: true, bind: true, enumerable: true, forced: global$3.clearImmediate !== clearImmediate }, {
-	  clearImmediate: clearImmediate
-	});
-
-	/* global Bun -- Deno case */
-
-	var engineIsBun = typeof Bun == 'function' && Bun && typeof Bun.version == 'string';
-
-	var global$2 = global$r;
-	var apply = functionApply;
-	var isCallable = isCallable$q;
-	var ENGINE_IS_BUN = engineIsBun;
-	var USER_AGENT = engineUserAgent;
-	var arraySlice = arraySlice$8;
-	var validateArgumentsLength = validateArgumentsLength$5;
-
-	var Function$1 = global$2.Function;
-	// dirty IE9- and Bun 0.3.0- checks
-	var WRAP = /MSIE .\./.test(USER_AGENT) || ENGINE_IS_BUN && (function () {
-	  var version = global$2.Bun.version.split('.');
-	  return version.length < 3 || version[0] == 0 && (version[1] < 3 || version[1] == 3 && version[2] == 0);
-	})();
-
-	// IE9- / Bun 0.3.0- setTimeout / setInterval / setImmediate additional parameters fix
-	// https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers
-	// https://github.com/oven-sh/bun/issues/1633
-	var schedulersFix$1 = function (scheduler, hasTimeArg) {
-	  var firstParamIndex = hasTimeArg ? 2 : 1;
-	  return WRAP ? function (handler, timeout /* , ...arguments */) {
-	    var boundArgs = validateArgumentsLength(arguments.length, 1) > firstParamIndex;
-	    var fn = isCallable(handler) ? handler : Function$1(handler);
-	    var params = boundArgs ? arraySlice(arguments, firstParamIndex) : [];
-	    var callback = boundArgs ? function () {
-	      apply(fn, this, params);
-	    } : fn;
-	    return hasTimeArg ? scheduler(callback, timeout) : scheduler(callback);
-	  } : scheduler;
-	};
-
-	var $ = _export;
-	var global$1 = global$r;
-	var setTask = task$1.set;
-	var schedulersFix = schedulersFix$1;
-
-	// https://github.com/oven-sh/bun/issues/1633
-	var setImmediate$5 = global$1.setImmediate ? schedulersFix(setTask, false) : setTask;
-
-	// `setImmediate` method
-	// http://w3c.github.io/setImmediate/#si-setImmediate
-	$({ global: true, bind: true, enumerable: true, forced: global$1.setImmediate !== setImmediate$5 }, {
-	  setImmediate: setImmediate$5
-	});
-
-	var path = path$n;
-
-	var setImmediate$4 = path.setImmediate;
-
-	var parent$1 = setImmediate$4;
-
-	var setImmediate$3 = parent$1;
-
-	var parent = setImmediate$3;
-
-	var setImmediate$2 = parent;
-
-	var setImmediate$1 = setImmediate$2;
-
-	var setImmediate = setImmediate$1;
-
-	var _setImmediate = /*@__PURE__*/getDefaultExportFromCjs(setImmediate);
-
-	function isNative(Ctor) {
-	  return typeof Ctor === 'function' && /native code/.test(Ctor.toString());
-	}
-	function nextTick(cb) {
-	  if (typeof _Promise !== 'undefined' && isNative(_Promise)) {
-	    _Promise.resolve().then(function () {
-	      return cb();
-	    });
-	  } else if (typeof MutationObserver !== 'undefined' && isNative(MutationObserver) && MutationObserver.toString() === '[object MutationObserverConstructor]') {
-	    var observer = new MutationObserver(cb);
-	    var count = 1;
-	    var node = document.createTextNode(String(count));
-	    observer.observe(node, {
-	      characterData: true
-	    });
-	    count++;
-	    node.data = String(count);
-	  } else if (typeof _setImmediate !== 'undefined' && isNative(_setImmediate)) {
-	    _setImmediate(function () {
-	      return cb();
-	    });
-	  } else {
-	    setTimeout(function () {
-	      return cb();
-	    });
-	  }
-	}
 
 	var PriorityQueue = /*#__PURE__*/function () {
 	  function PriorityQueue() {
@@ -21099,7 +21347,7 @@
 	  return DanmakuInput;
 	}(Component);
 
-	var css_248z = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #fff;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-controller {\n  margin-left: 5px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
+	var css_248z = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-texttrack-container-showtoolbar {\n  bottom: calc(50px + 5px) !important;\n}\n.Niplayer_video-wrapper .video-texttrack-container {\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n  position: absolute;\n  bottom: 5px;\n  color: #fe9200;\n  font-size: 20px;\n}\n.Niplayer_video-wrapper .video-texttrack-container p {\n  word-break: break-all;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  margin: 5px 0 0;\n  line-height: 1.2;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #fff;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-controller {\n  margin-left: 5px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
 	styleInject(css_248z);
 
 	exports.Controller = Controller;

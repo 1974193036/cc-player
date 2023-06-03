@@ -68,7 +68,25 @@
           autoplay: false,
           streamPlay: false,
           // video: document.getElementsByTagName('video')[0]
-          // rightBottomBarControllers: ['Playrate', 'Volume', 'FullScreen']
+          // rightBottomBarControllers: ['Playrate', 'Volume', 'FullScreen'],
+          subtitles: [
+            {
+              source: "http://127.0.0.1:8889/subtitle.vtt",
+              tip: "Bilingual",
+              lang: "en"
+            },
+            {
+              source: "http://127.0.0.1:8889/subtitle.zn.vtt",
+              tip: "Chinese",
+              lang: "zh",
+              default: true
+            },
+            {
+              source: "http://127.0.0.1:8889/subtitle.jp.vtt",
+              tip: "Japanese",
+              lang: "jp"
+            }
+          ]
         })
 
         // player.attachSource('http://localhost:8889/video.mp4')

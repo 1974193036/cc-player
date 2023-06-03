@@ -20,6 +20,7 @@ import { MobileVolume } from '@/components/Mobile/MobileVolume'
 import { MoveEvent, wrap } from 'ntouch.js'
 import { computeAngle } from '@/utils/math'
 import { EVENT } from '@/events'
+import { Subtitle } from '@/components/Subtitle/Subtitle'
 
 class Player extends Component implements ComponentItem {
   readonly id = 'Player'
@@ -90,6 +91,10 @@ class Player extends Component implements ComponentItem {
     this.error = new ErrorLoading(this, '视频加载发送错误', this.el)
     this.toolBar = new ToolBar(this, this.el, 'div')
     this.topbar = new TopBar(this, this.el, 'div')
+
+    if (this.playerOptions.subtitles && this.playerOptions.subtitles.length > 0) {
+      new Subtitle(this, this.playerOptions.subtitles)
+    }
 
     // new DanmakuController(this)
   }

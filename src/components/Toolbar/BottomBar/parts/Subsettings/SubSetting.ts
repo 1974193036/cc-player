@@ -7,6 +7,7 @@ import { wrap } from 'ntouch.js'
 import { SubsettingsMain } from './parts/SubsettingsMain'
 import { SubsettingsPlayrate } from './parts/SubsettingsPlayrate'
 import { SubsettingsItem } from '@/types/Player'
+import { SubsettingsSubtitle } from './parts/SubsettingsSubtitle'
 
 export class SubSetting extends Options {
   readonly id = 'SubSetting'
@@ -14,6 +15,7 @@ export class SubSetting extends Options {
   clickOrTap: 'click' | 'singleTap'
   subsettingsMain: SubsettingsMain
   subsettingsPlayrate: SubsettingsPlayrate
+  subsettingsSubtitle: SubsettingsSubtitle
   currentShow: HTMLElement
 
   constructor(player: Player, container: HTMLElement, desc?: string) {
@@ -42,8 +44,10 @@ export class SubSetting extends Options {
   initSubSettingTemplate() {
     this.subsettingsMain = new SubsettingsMain(this.player)
     this.subsettingsPlayrate = new SubsettingsPlayrate(this.player)
+    this.subsettingsSubtitle = new SubsettingsSubtitle(this.player)
     this.hideBox.appendChild(this.subsettingsMain.el)
     this.hideBox.appendChild(this.subsettingsPlayrate.el)
+    this.hideBox.appendChild(this.subsettingsSubtitle.el)
     this.currentShow = this.subsettingsMain.el
     this.hideBox.style.width = this.subsettingsMain.el.dataset.width + 'px'
   }
@@ -79,6 +83,11 @@ export class SubSetting extends Options {
         this.hideBox.style.width = this.subsettingsPlayrate.el.dataset.width + 'px'
         this.currentShow = this.subsettingsPlayrate.el
       } else if (item.instance.el.dataset.SubsettingsMainType === '画面比例') {
+      } else if (item.instance.el.dataset.SubsettingsMainType === '字幕设置') {
+        this.currentShow.style.display = 'none'
+        this.subsettingsSubtitle.el.style.display = 'block'
+        this.hideBox.style.width = this.subsettingsSubtitle.el.dataset.width + 'px'
+        this.currentShow = this.subsettingsSubtitle.el
       }
     })
 
@@ -93,6 +102,14 @@ export class SubSetting extends Options {
         // 设置播放器的播放速度
         this.player.video.playbackRate = Number(item.instance.el.dataset.SubsettingsPlayrate)
       }
+    })
+
+    // 点击字幕
+    this.player.on('SubsettingsSubtitleClick', (item: SubsettingsItem, index: number) => {
+      this.currentShow.style.display = 'none'
+      this.currentShow = this.subsettingsMain.el
+      this.currentShow.style.display = 'block'
+      this.hideBox.style.width = this.currentShow.dataset.width + 'px'
     })
   }
 
