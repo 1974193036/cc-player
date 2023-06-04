@@ -1,9 +1,9 @@
 {
   "name": "niplayer",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "This is a TS library for video player",
   "main": "./dist/player.umd.js",
-  "module": "./dist/player.es.js",
+  "module": "./dist/player.esm.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean:dist": "rimraf dist",

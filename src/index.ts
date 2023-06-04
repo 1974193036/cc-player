@@ -1,10 +1,8 @@
 export * from './types/Player'
+export * from './types/danmaku'
 export * from './page/player'
-export * from './components/ToolBar/toolbar'
-export * from './components/Progress/progress'
-export * from './components/ToolBar/BottomBar/Controller'
-export * from './components/ToolBar/BottomBar/parts'
-export * from './utils/math'
+export * from './components'
+export * from './utils'
 export * from './danmaku'
 
 import './index.less'
