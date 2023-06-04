@@ -96,7 +96,9 @@ class Player extends Component implements ComponentItem {
       new Subtitle(this, this.playerOptions.subtitles)
     }
 
-    // new DanmakuController(this)
+    if (this.playerOptions.danmaku && this.playerOptions.danmaku.open) {
+      new DanmakuController(this, this.playerOptions.danmaku)
+    }
   }
 
   /**

@@ -2,6 +2,7 @@ import { DanmakuData, Track } from '@/types/danmaku'
 import { nextTick } from '@/utils/nextTick'
 import { Player } from '@/page/player'
 import { PriorityQueue } from './utils/PriorityQueue'
+import { $ } from '@/utils/domUtils'
 
 /**
  * @description 弹幕类，只专注于实现弹幕的基本逻辑，View层
@@ -16,14 +17,14 @@ export class Danmaku {
   private player: Player
   private timer: number | null = null
   private renderInterval: number = 100
-  // 每一条弹幕轨道的高度默认为20px
-  private trackHeight: number = 20
+  // 每一条弹幕轨道的高度默认为10px
+  private trackHeight: number = 10
   private isStopped = true
   private isHidden = false
   private tracks: Array<{
     track: Track
     datas: DanmakuData[]
-  }> = new Array(15)
+  }>
   private defaultDanma: DanmakuData = {
     message: 'default message',
     fontColor: '#fff',
@@ -34,8 +35,9 @@ export class Danmaku {
 
   constructor(container: HTMLElement, player: Player) {
     this.queue = new PriorityQueue<DanmakuData>()
-    this.container = container // div.Niplayer_video-wrapper
+    this.container = container // div.video-danmaku-container
     this.player = player
+    this.tracks = new Array(this.container.clientHeight / this.trackHeight)
     this.init()
   }
 
@@ -156,9 +158,8 @@ export class Danmaku {
     if (this.queue.length === 0) return
     let data = this.queue.shift()
     if (!data.dom) {
-      let dom = document.createElement('div')
+      let dom = $('div.video-danmaku-message')
       dom.innerText = data.message
-      dom.className = 'danmaku-box'
       if (data.fontFamily !== '') {
         dom.style.fontFamily = data.fontFamily
       }
@@ -206,7 +207,7 @@ export class Danmaku {
       }
       this.queue.push(data)
     } else {
-      data.dom.style.top = data.y[0] * this.trackHeight + 3 + 'px'
+      data.dom.style.top = data.y[0] * this.trackHeight + 'px'
       this.startAnimate(data)
     }
   }

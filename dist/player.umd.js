@@ -1,10 +1,10 @@
 
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Player = {}));
-})(this, (function (exports) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('socket.io-client/dist/socket.io')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'socket.io-client/dist/socket.io'], factory) :
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Player = {}, global.io));
+})(this, (function (exports, io) { 'use strict';
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -17,7 +17,7 @@
 	};
 
 	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-	var global$r =
+	var global$o =
 	  // eslint-disable-next-line es/no-global-this -- safe
 	  check(typeof globalThis == 'object' && globalThis) ||
 	  check(typeof window == 'object' && window) ||
@@ -103,7 +103,7 @@
 
 	// `IsCallable` abstract operation
 	// https://tc39.es/ecma262/#sec-iscallable
-	var isCallable$q = $documentAll$1.IS_HTMLDDA ? function (argument) {
+	var isCallable$p = $documentAll$1.IS_HTMLDDA ? function (argument) {
 	  return typeof argument == 'function' || argument === documentAll$1;
 	} : function (argument) {
 	  return typeof argument == 'function';
@@ -193,30 +193,30 @@
 	  return IndexedObject$2(requireObjectCoercible$4(it));
 	};
 
-	var isCallable$p = isCallable$q;
+	var isCallable$o = isCallable$p;
 	var $documentAll = documentAll_1;
 
 	var documentAll = $documentAll.all;
 
 	var isObject$j = $documentAll.IS_HTMLDDA ? function (it) {
-	  return typeof it == 'object' ? it !== null : isCallable$p(it) || it === documentAll;
+	  return typeof it == 'object' ? it !== null : isCallable$o(it) || it === documentAll;
 	} : function (it) {
-	  return typeof it == 'object' ? it !== null : isCallable$p(it);
+	  return typeof it == 'object' ? it !== null : isCallable$o(it);
 	};
 
 	var path$n = {};
 
 	var path$m = path$n;
-	var global$q = global$r;
-	var isCallable$o = isCallable$q;
+	var global$n = global$o;
+	var isCallable$n = isCallable$p;
 
 	var aFunction = function (variable) {
-	  return isCallable$o(variable) ? variable : undefined;
+	  return isCallable$n(variable) ? variable : undefined;
 	};
 
 	var getBuiltIn$h = function (namespace, method) {
-	  return arguments.length < 2 ? aFunction(path$m[namespace]) || aFunction(global$q[namespace])
-	    : path$m[namespace] && path$m[namespace][method] || global$q[namespace] && global$q[namespace][method];
+	  return arguments.length < 2 ? aFunction(path$m[namespace]) || aFunction(global$n[namespace])
+	    : path$m[namespace] && path$m[namespace][method] || global$n[namespace] && global$n[namespace][method];
 	};
 
 	var uncurryThis$u = functionUncurryThis;
@@ -225,11 +225,11 @@
 
 	var engineUserAgent = typeof navigator != 'undefined' && String(navigator.userAgent) || '';
 
-	var global$p = global$r;
+	var global$m = global$o;
 	var userAgent$3 = engineUserAgent;
 
-	var process$4 = global$p.process;
-	var Deno$1 = global$p.Deno;
+	var process$4 = global$m.process;
+	var Deno$1 = global$m.Deno;
 	var versions = process$4 && process$4.versions || Deno$1 && Deno$1.version;
 	var v8 = versions && versions.v8;
 	var match, version;
@@ -257,9 +257,9 @@
 
 	var V8_VERSION$3 = engineV8Version;
 	var fails$t = fails$x;
-	var global$o = global$r;
+	var global$l = global$o;
 
-	var $String$5 = global$o.String;
+	var $String$5 = global$l.String;
 
 	// eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
 	var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$t(function () {
@@ -282,7 +282,7 @@
 	  && typeof Symbol.iterator == 'symbol';
 
 	var getBuiltIn$g = getBuiltIn$h;
-	var isCallable$n = isCallable$q;
+	var isCallable$m = isCallable$p;
 	var isPrototypeOf$c = objectIsPrototypeOf;
 	var USE_SYMBOL_AS_UID$1 = useSymbolAsUid;
 
@@ -292,7 +292,7 @@
 	  return typeof it == 'symbol';
 	} : function (it) {
 	  var $Symbol = getBuiltIn$g('Symbol');
-	  return isCallable$n($Symbol) && isPrototypeOf$c($Symbol.prototype, $Object$3(it));
+	  return isCallable$m($Symbol) && isPrototypeOf$c($Symbol.prototype, $Object$3(it));
 	};
 
 	var $String$4 = String;
@@ -305,14 +305,14 @@
 	  }
 	};
 
-	var isCallable$m = isCallable$q;
+	var isCallable$l = isCallable$p;
 	var tryToString$6 = tryToString$7;
 
 	var $TypeError$i = TypeError;
 
 	// `Assert: IsCallable(argument) is true`
 	var aCallable$h = function (argument) {
-	  if (isCallable$m(argument)) return argument;
+	  if (isCallable$l(argument)) return argument;
 	  throw $TypeError$i(tryToString$6(argument) + ' is not a function');
 	};
 
@@ -327,7 +327,7 @@
 	};
 
 	var call$n = functionCall;
-	var isCallable$l = isCallable$q;
+	var isCallable$k = isCallable$p;
 	var isObject$i = isObject$j;
 
 	var $TypeError$h = TypeError;
@@ -336,9 +336,9 @@
 	// https://tc39.es/ecma262/#sec-ordinarytoprimitive
 	var ordinaryToPrimitive$1 = function (input, pref) {
 	  var fn, val;
-	  if (pref === 'string' && isCallable$l(fn = input.toString) && !isObject$i(val = call$n(fn, input))) return val;
-	  if (isCallable$l(fn = input.valueOf) && !isObject$i(val = call$n(fn, input))) return val;
-	  if (pref !== 'string' && isCallable$l(fn = input.toString) && !isObject$i(val = call$n(fn, input))) return val;
+	  if (pref === 'string' && isCallable$k(fn = input.toString) && !isObject$i(val = call$n(fn, input))) return val;
+	  if (isCallable$k(fn = input.valueOf) && !isObject$i(val = call$n(fn, input))) return val;
+	  if (pref !== 'string' && isCallable$k(fn = input.toString) && !isObject$i(val = call$n(fn, input))) return val;
 	  throw $TypeError$h("Can't convert object to primitive value");
 	};
 
@@ -346,24 +346,24 @@
 
 	var isPure = true;
 
-	var global$n = global$r;
+	var global$k = global$o;
 
 	// eslint-disable-next-line es/no-object-defineproperty -- safe
 	var defineProperty$e = Object.defineProperty;
 
 	var defineGlobalProperty$1 = function (key, value) {
 	  try {
-	    defineProperty$e(global$n, key, { value: value, configurable: true, writable: true });
+	    defineProperty$e(global$k, key, { value: value, configurable: true, writable: true });
 	  } catch (error) {
-	    global$n[key] = value;
+	    global$k[key] = value;
 	  } return value;
 	};
 
-	var global$m = global$r;
+	var global$j = global$o;
 	var defineGlobalProperty = defineGlobalProperty$1;
 
 	var SHARED = '__core-js_shared__';
-	var store$3 = global$m[SHARED] || defineGlobalProperty(SHARED, {});
+	var store$3 = global$j[SHARED] || defineGlobalProperty(SHARED, {});
 
 	var sharedStore = store$3;
 
@@ -413,14 +413,14 @@
 	  return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString$c(++id$1 + postfix, 36);
 	};
 
-	var global$l = global$r;
+	var global$i = global$o;
 	var shared$6 = sharedExports;
 	var hasOwn$i = hasOwnProperty_1;
 	var uid$3 = uid$4;
 	var NATIVE_SYMBOL$4 = symbolConstructorDetection;
 	var USE_SYMBOL_AS_UID = useSymbolAsUid;
 
-	var Symbol$5 = global$l.Symbol;
+	var Symbol$5 = global$i.Symbol;
 	var WellKnownSymbolsStore$2 = shared$6('wks');
 	var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol$5['for'] || Symbol$5 : Symbol$5 && Symbol$5.withoutSetter || uid$3;
 
@@ -468,10 +468,10 @@
 	  return isSymbol$3(key) ? key : key + '';
 	};
 
-	var global$k = global$r;
+	var global$h = global$o;
 	var isObject$g = isObject$j;
 
-	var document$4 = global$k.document;
+	var document$4 = global$h.document;
 	// typeof document.createElement is 'object' in old IE
 	var EXISTS$1 = isObject$g(document$4) && isObject$g(document$4.createElement);
 
@@ -515,7 +515,7 @@
 	};
 
 	var fails$r = fails$x;
-	var isCallable$k = isCallable$q;
+	var isCallable$j = isCallable$p;
 
 	var replacement = /#|\.prototype\./;
 
@@ -523,7 +523,7 @@
 	  var value = data[normalize(feature)];
 	  return value == POLYFILL ? true
 	    : value == NATIVE ? false
-	    : isCallable$k(detection) ? fails$r(detection)
+	    : isCallable$j(detection) ? fails$r(detection)
 	    : !!detection;
 	};
 
@@ -632,10 +632,10 @@
 	  return object;
 	};
 
-	var global$j = global$r;
+	var global$g = global$o;
 	var apply$4 = functionApply;
 	var uncurryThis$q = functionUncurryThisClause;
-	var isCallable$j = isCallable$q;
+	var isCallable$i = isCallable$p;
 	var getOwnPropertyDescriptor$a = objectGetOwnPropertyDescriptor.f;
 	var isForced$1 = isForced_1;
 	var path$l = path$n;
@@ -678,7 +678,7 @@
 	  var STATIC = options.stat;
 	  var PROTO = options.proto;
 
-	  var nativeSource = GLOBAL ? global$j : STATIC ? global$j[TARGET] : (global$j[TARGET] || {}).prototype;
+	  var nativeSource = GLOBAL ? global$g : STATIC ? global$g[TARGET] : (global$g[TARGET] || {}).prototype;
 
 	  var target = GLOBAL ? path$l : path$l[TARGET] || createNonEnumerableProperty$8(path$l, TARGET, {})[TARGET];
 	  var targetPrototype = target.prototype;
@@ -704,11 +704,11 @@
 	    if (USE_NATIVE && typeof targetProperty == typeof sourceProperty) continue;
 
 	    // bind methods to global for calling from export context
-	    if (options.bind && USE_NATIVE) resultProperty = bind$q(sourceProperty, global$j);
+	    if (options.bind && USE_NATIVE) resultProperty = bind$q(sourceProperty, global$g);
 	    // wrap global constructors for prevent changes in this version
 	    else if (options.wrap && USE_NATIVE) resultProperty = wrapConstructor(sourceProperty);
 	    // make static versions for prototype methods
-	    else if (PROTO && isCallable$j(sourceProperty)) resultProperty = uncurryThis$q(sourceProperty);
+	    else if (PROTO && isCallable$i(sourceProperty)) resultProperty = uncurryThis$q(sourceProperty);
 	    // default case
 	    else resultProperty = sourceProperty;
 
@@ -736,13 +736,13 @@
 
 	var uncurryThis$p = functionUncurryThis;
 
-	var arraySlice$8 = uncurryThis$p([].slice);
+	var arraySlice$7 = uncurryThis$p([].slice);
 
 	var uncurryThis$o = functionUncurryThis;
 	var aCallable$e = aCallable$h;
 	var isObject$e = isObject$j;
 	var hasOwn$f = hasOwnProperty_1;
-	var arraySlice$7 = arraySlice$8;
+	var arraySlice$6 = arraySlice$7;
 	var NATIVE_BIND = functionBindNative;
 
 	var $Function = Function;
@@ -763,9 +763,9 @@
 	var functionBind = NATIVE_BIND ? $Function.bind : function bind(that /* , ...args */) {
 	  var F = aCallable$e(this);
 	  var Prototype = F.prototype;
-	  var partArgs = arraySlice$7(arguments, 1);
+	  var partArgs = arraySlice$6(arguments, 1);
 	  var boundFunction = function bound(/* args... */) {
-	    var args = concat$9(partArgs, arraySlice$7(arguments));
+	    var args = concat$9(partArgs, arraySlice$6(arguments));
 	    return this instanceof boundFunction ? construct$7(F, args.length, args) : F.apply(that, args);
 	  };
 	  if (isObject$e(Prototype)) boundFunction.prototype = Prototype;
@@ -782,7 +782,7 @@
 	var toStringTagSupport = String(test) === '[object z]';
 
 	var TO_STRING_TAG_SUPPORT$2 = toStringTagSupport;
-	var isCallable$i = isCallable$q;
+	var isCallable$h = isCallable$p;
 	var classofRaw = classofRaw$2;
 	var wellKnownSymbol$n = wellKnownSymbol$q;
 
@@ -808,17 +808,17 @@
 	    // builtinTag case
 	    : CORRECT_ARGUMENTS ? classofRaw(O)
 	    // ES3 arguments fallback
-	    : (result = classofRaw(O)) == 'Object' && isCallable$i(O.callee) ? 'Arguments' : result;
+	    : (result = classofRaw(O)) == 'Object' && isCallable$h(O.callee) ? 'Arguments' : result;
 	};
 
 	var uncurryThis$n = functionUncurryThis;
-	var isCallable$h = isCallable$q;
+	var isCallable$g = isCallable$p;
 	var store$1 = sharedStore;
 
 	var functionToString = uncurryThis$n(Function.toString);
 
 	// this helper broken in `core-js@3.4.1-3.4.4`, so we can't use `shared` helper
-	if (!isCallable$h(store$1.inspectSource)) {
+	if (!isCallable$g(store$1.inspectSource)) {
 	  store$1.inspectSource = function (it) {
 	    return functionToString(it);
 	  };
@@ -828,7 +828,7 @@
 
 	var uncurryThis$m = functionUncurryThis;
 	var fails$p = fails$x;
-	var isCallable$g = isCallable$q;
+	var isCallable$f = isCallable$p;
 	var classof$c = classof$d;
 	var getBuiltIn$f = getBuiltIn$h;
 	var inspectSource$1 = inspectSource$2;
@@ -841,7 +841,7 @@
 	var INCORRECT_TO_STRING = !constructorRegExp.exec(noop);
 
 	var isConstructorModern = function isConstructor(argument) {
-	  if (!isCallable$g(argument)) return false;
+	  if (!isCallable$f(argument)) return false;
 	  try {
 	    construct$6(noop, empty, argument);
 	    return true;
@@ -851,7 +851,7 @@
 	};
 
 	var isConstructorLegacy = function isConstructor(argument) {
-	  if (!isCallable$g(argument)) return false;
+	  if (!isCallable$f(argument)) return false;
 	  switch (classof$c(argument)) {
 	    case 'AsyncFunction':
 	    case 'GeneratorFunction':
@@ -1140,7 +1140,7 @@
 	  return Properties === undefined ? result : definePropertiesModule$1.f(result, Properties);
 	};
 
-	var $$14 = _export;
+	var $$12 = _export;
 	var getBuiltIn$d = getBuiltIn$h;
 	var apply$3 = functionApply;
 	var bind$p = functionBind;
@@ -1169,7 +1169,7 @@
 
 	var FORCED$6 = NEW_TARGET_BUG || ARGS_BUG;
 
-	$$14({ target: 'Reflect', stat: true, forced: FORCED$6, sham: FORCED$6 }, {
+	$$12({ target: 'Reflect', stat: true, forced: FORCED$6, sham: FORCED$6 }, {
 	  construct: function construct(Target, args /* , newTarget */) {
 	    aConstructor$2(Target);
 	    anObject$b(args);
@@ -1201,17 +1201,17 @@
 
 	var construct$5 = path$k.Reflect.construct;
 
-	var parent$1o = construct$5;
+	var parent$1p = construct$5;
 
-	var construct$4 = parent$1o;
+	var construct$4 = parent$1p;
 
-	var parent$1n = construct$4;
+	var parent$1o = construct$4;
 
-	var construct$3 = parent$1n;
+	var construct$3 = parent$1o;
 
-	var parent$1m = construct$3;
+	var parent$1n = construct$3;
 
-	var construct$2 = parent$1m;
+	var construct$2 = parent$1n;
 
 	var construct$1 = construct$2;
 
@@ -1228,12 +1228,12 @@
 	  return classof$b(argument) == 'Array';
 	};
 
-	var $$13 = _export;
+	var $$11 = _export;
 	var isArray$b = isArray$c;
 
 	// `Array.isArray` method
 	// https://tc39.es/ecma262/#sec-array.isarray
-	$$13({ target: 'Array', stat: true }, {
+	$$11({ target: 'Array', stat: true }, {
 	  isArray: isArray$b
 	});
 
@@ -1241,17 +1241,17 @@
 
 	var isArray$a = path$j.Array.isArray;
 
-	var parent$1l = isArray$a;
+	var parent$1m = isArray$a;
 
-	var isArray$9 = parent$1l;
+	var isArray$9 = parent$1m;
 
-	var parent$1k = isArray$9;
+	var parent$1l = isArray$9;
 
-	var isArray$8 = parent$1k;
+	var isArray$8 = parent$1l;
 
-	var parent$1j = isArray$8;
+	var parent$1k = isArray$8;
 
-	var isArray$7 = parent$1j;
+	var isArray$7 = parent$1k;
 
 	var isArray$6 = isArray$7;
 
@@ -1259,14 +1259,14 @@
 
 	var _Array$isArray = /*@__PURE__*/getDefaultExportFromCjs(isArray$5);
 
-	function _arrayLikeToArray$2(arr, len) {
+	function _arrayLikeToArray$3(arr, len) {
 	  if (len == null || len > arr.length) len = arr.length;
 	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
 	  return arr2;
 	}
 
 	function _arrayWithoutHoles(arr) {
-	  if (_Array$isArray(arr)) return _arrayLikeToArray$2(arr);
+	  if (_Array$isArray(arr)) return _arrayLikeToArray$3(arr);
 	}
 
 	var $TypeError$c = TypeError;
@@ -1338,7 +1338,7 @@
 	  });
 	};
 
-	var $$12 = _export;
+	var $$10 = _export;
 	var fails$m = fails$x;
 	var isArray$3 = isArray$c;
 	var isObject$b = isObject$j;
@@ -1373,7 +1373,7 @@
 	// `Array.prototype.concat` method
 	// https://tc39.es/ecma262/#sec-array.prototype.concat
 	// with adding support of @@isConcatSpreadable and @@species
-	$$12({ target: 'Array', proto: true, arity: 1, forced: FORCED$5 }, {
+	$$10({ target: 'Array', proto: true, arity: 1, forced: FORCED$5 }, {
 	  // eslint-disable-next-line no-unused-vars -- required for `.length`
 	  concat: function concat(arg) {
 	    var O = toObject$8(this);
@@ -1443,7 +1443,7 @@
 	var classof$9 = classofRaw$2;
 	var toIndexedObject$5 = toIndexedObject$a;
 	var $getOwnPropertyNames$1 = objectGetOwnPropertyNames.f;
-	var arraySlice$6 = arraySliceSimple;
+	var arraySlice$5 = arraySliceSimple;
 
 	var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
 	  ? Object.getOwnPropertyNames(window) : [];
@@ -1452,7 +1452,7 @@
 	  try {
 	    return $getOwnPropertyNames$1(it);
 	  } catch (error) {
-	    return arraySlice$6(windowNames);
+	    return arraySlice$5(windowNames);
 	  }
 	};
 
@@ -1551,15 +1551,15 @@
 	  }
 	};
 
-	var global$i = global$r;
-	var isCallable$f = isCallable$q;
+	var global$f = global$o;
+	var isCallable$e = isCallable$p;
 
-	var WeakMap$1 = global$i.WeakMap;
+	var WeakMap$1 = global$f.WeakMap;
 
-	var weakMapBasicDetection = isCallable$f(WeakMap$1) && /native code/.test(String(WeakMap$1));
+	var weakMapBasicDetection = isCallable$e(WeakMap$1) && /native code/.test(String(WeakMap$1));
 
 	var NATIVE_WEAK_MAP = weakMapBasicDetection;
-	var global$h = global$r;
+	var global$e = global$o;
 	var isObject$a = isObject$j;
 	var createNonEnumerableProperty$5 = createNonEnumerableProperty$9;
 	var hasOwn$b = hasOwnProperty_1;
@@ -1568,8 +1568,8 @@
 	var hiddenKeys$2 = hiddenKeys$6;
 
 	var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
-	var TypeError$5 = global$h.TypeError;
-	var WeakMap = global$h.WeakMap;
+	var TypeError$5 = global$e.TypeError;
+	var WeakMap = global$e.WeakMap;
 	var set$7, get$2, has$2;
 
 	var enforce = function (it) {
@@ -1703,8 +1703,8 @@
 	  filterReject: createMethod$2(7)
 	};
 
-	var $$11 = _export;
-	var global$g = global$r;
+	var $$$ = _export;
+	var global$d = global$o;
 	var call$j = functionCall;
 	var uncurryThis$j = functionUncurryThis;
 	var DESCRIPTORS$d = descriptors;
@@ -1748,10 +1748,10 @@
 	var getInternalState$2 = InternalStateModule$7.getterFor(SYMBOL);
 
 	var ObjectPrototype$1 = Object[PROTOTYPE];
-	var $Symbol = global$g.Symbol;
+	var $Symbol = global$d.Symbol;
 	var SymbolPrototype = $Symbol && $Symbol[PROTOTYPE];
-	var TypeError$4 = global$g.TypeError;
-	var QObject = global$g.QObject;
+	var TypeError$4 = global$d.TypeError;
+	var QObject = global$d.QObject;
 	var nativeGetOwnPropertyDescriptor$1 = getOwnPropertyDescriptorModule$2.f;
 	var nativeDefineProperty = definePropertyModule$1.f;
 	var nativeGetOwnPropertyNames = getOwnPropertyNamesExternal.f;
@@ -1908,7 +1908,7 @@
 	  }
 	}
 
-	$$11({ global: true, constructor: true, wrap: true, forced: !NATIVE_SYMBOL$3, sham: !NATIVE_SYMBOL$3 }, {
+	$$$({ global: true, constructor: true, wrap: true, forced: !NATIVE_SYMBOL$3, sham: !NATIVE_SYMBOL$3 }, {
 	  Symbol: $Symbol
 	});
 
@@ -1916,12 +1916,12 @@
 	  defineWellKnownSymbol$l(name);
 	});
 
-	$$11({ target: SYMBOL, stat: true, forced: !NATIVE_SYMBOL$3 }, {
+	$$$({ target: SYMBOL, stat: true, forced: !NATIVE_SYMBOL$3 }, {
 	  useSetter: function () { USE_SETTER = true; },
 	  useSimple: function () { USE_SETTER = false; }
 	});
 
-	$$11({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3, sham: !DESCRIPTORS$d }, {
+	$$$({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3, sham: !DESCRIPTORS$d }, {
 	  // `Object.create` method
 	  // https://tc39.es/ecma262/#sec-object.create
 	  create: $create,
@@ -1936,7 +1936,7 @@
 	  getOwnPropertyDescriptor: $getOwnPropertyDescriptor
 	});
 
-	$$11({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3 }, {
+	$$$({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3 }, {
 	  // `Object.getOwnPropertyNames` method
 	  // https://tc39.es/ecma262/#sec-object.getownpropertynames
 	  getOwnPropertyNames: $getOwnPropertyNames
@@ -1957,7 +1957,7 @@
 	/* eslint-disable es/no-symbol -- safe */
 	var symbolRegistryDetection = NATIVE_SYMBOL$2 && !!Symbol['for'] && !!Symbol.keyFor;
 
-	var $$10 = _export;
+	var $$_ = _export;
 	var getBuiltIn$b = getBuiltIn$h;
 	var hasOwn$9 = hasOwnProperty_1;
 	var toString$9 = toString$b;
@@ -1969,7 +1969,7 @@
 
 	// `Symbol.for` method
 	// https://tc39.es/ecma262/#sec-symbol.for
-	$$10({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY$1 }, {
+	$$_({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY$1 }, {
 	  'for': function (key) {
 	    var string = toString$9(key);
 	    if (hasOwn$9(StringToSymbolRegistry, string)) return StringToSymbolRegistry[string];
@@ -1980,7 +1980,7 @@
 	  }
 	});
 
-	var $$$ = _export;
+	var $$Z = _export;
 	var hasOwn$8 = hasOwnProperty_1;
 	var isSymbol$2 = isSymbol$5;
 	var tryToString$4 = tryToString$7;
@@ -1991,7 +1991,7 @@
 
 	// `Symbol.keyFor` method
 	// https://tc39.es/ecma262/#sec-symbol.keyfor
-	$$$({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
+	$$Z({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
 	  keyFor: function keyFor(sym) {
 	    if (!isSymbol$2(sym)) throw TypeError(tryToString$4(sym) + ' is not a symbol');
 	    if (hasOwn$8(SymbolToStringRegistry, sym)) return SymbolToStringRegistry[sym];
@@ -2000,14 +2000,14 @@
 
 	var uncurryThis$i = functionUncurryThis;
 	var isArray$2 = isArray$c;
-	var isCallable$e = isCallable$q;
+	var isCallable$d = isCallable$p;
 	var classof$7 = classofRaw$2;
 	var toString$8 = toString$b;
 
 	var push$6 = uncurryThis$i([].push);
 
 	var getJsonReplacerFunction = function (replacer) {
-	  if (isCallable$e(replacer)) return replacer;
+	  if (isCallable$d(replacer)) return replacer;
 	  if (!isArray$2(replacer)) return;
 	  var rawLength = replacer.length;
 	  var keys = [];
@@ -2028,15 +2028,15 @@
 	  };
 	};
 
-	var $$_ = _export;
+	var $$Y = _export;
 	var getBuiltIn$a = getBuiltIn$h;
 	var apply$2 = functionApply;
 	var call$i = functionCall;
 	var uncurryThis$h = functionUncurryThis;
 	var fails$k = fails$x;
-	var isCallable$d = isCallable$q;
+	var isCallable$c = isCallable$p;
 	var isSymbol$1 = isSymbol$5;
-	var arraySlice$5 = arraySlice$8;
+	var arraySlice$4 = arraySlice$7;
 	var getReplacerFunction = getJsonReplacerFunction;
 	var NATIVE_SYMBOL$1 = symbolConstructorDetection;
 
@@ -2069,12 +2069,12 @@
 	});
 
 	var stringifyWithSymbolsFix = function (it, replacer) {
-	  var args = arraySlice$5(arguments);
+	  var args = arraySlice$4(arguments);
 	  var $replacer = getReplacerFunction(replacer);
-	  if (!isCallable$d($replacer) && (it === undefined || isSymbol$1(it))) return; // IE8 returns string on undefined
+	  if (!isCallable$c($replacer) && (it === undefined || isSymbol$1(it))) return; // IE8 returns string on undefined
 	  args[1] = function (key, value) {
 	    // some old implementations (like WebKit) could pass numbers as keys
-	    if (isCallable$d($replacer)) value = call$i($replacer, this, $String$1(key), value);
+	    if (isCallable$c($replacer)) value = call$i($replacer, this, $String$1(key), value);
 	    if (!isSymbol$1(value)) return value;
 	  };
 	  return apply$2($stringify, null, args);
@@ -2091,17 +2091,17 @@
 	if ($stringify) {
 	  // `JSON.stringify` method
 	  // https://tc39.es/ecma262/#sec-json.stringify
-	  $$_({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE }, {
+	  $$Y({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE }, {
 	    // eslint-disable-next-line no-unused-vars -- required for `.length`
 	    stringify: function stringify(it, replacer, space) {
-	      var args = arraySlice$5(arguments);
+	      var args = arraySlice$4(arguments);
 	      var result = apply$2(WRONG_SYMBOLS_CONVERSION ? stringifyWithSymbolsFix : $stringify, null, args);
 	      return ILL_FORMED_UNICODE && typeof result == 'string' ? replace$5(result, tester, fixIllFormed) : result;
 	    }
 	  });
 	}
 
-	var $$Z = _export;
+	var $$X = _export;
 	var NATIVE_SYMBOL = symbolConstructorDetection;
 	var fails$j = fails$x;
 	var getOwnPropertySymbolsModule$2 = objectGetOwnPropertySymbols;
@@ -2113,7 +2113,7 @@
 
 	// `Object.getOwnPropertySymbols` method
 	// https://tc39.es/ecma262/#sec-object.getownpropertysymbols
-	$$Z({ target: 'Object', stat: true, forced: FORCED$4 }, {
+	$$X({ target: 'Object', stat: true, forced: FORCED$4 }, {
 	  getOwnPropertySymbols: function getOwnPropertySymbols(it) {
 	    var $getOwnPropertySymbols = getOwnPropertySymbolsModule$2.f;
 	    return $getOwnPropertySymbols ? $getOwnPropertySymbols(toObject$6(it)) : [];
@@ -2209,12 +2209,12 @@
 	// https://tc39.es/ecma262/#sec-symbol.unscopables
 	defineWellKnownSymbol$8('unscopables');
 
-	var global$f = global$r;
+	var global$c = global$o;
 	var setToStringTag$6 = setToStringTag$9;
 
 	// JSON[@@toStringTag] property
 	// https://tc39.es/ecma262/#sec-json-@@tostringtag
-	setToStringTag$6(global$f.JSON, 'JSON', true);
+	setToStringTag$6(global$c.JSON, 'JSON', true);
 
 	var path$h = path$n;
 
@@ -2250,7 +2250,7 @@
 	});
 
 	var hasOwn$6 = hasOwnProperty_1;
-	var isCallable$c = isCallable$q;
+	var isCallable$b = isCallable$p;
 	var toObject$5 = toObject$a;
 	var sharedKey = sharedKey$4;
 	var CORRECT_PROTOTYPE_GETTER$1 = correctPrototypeGetter;
@@ -2266,13 +2266,13 @@
 	  var object = toObject$5(O);
 	  if (hasOwn$6(object, IE_PROTO)) return object[IE_PROTO];
 	  var constructor = object.constructor;
-	  if (isCallable$c(constructor) && object instanceof constructor) {
+	  if (isCallable$b(constructor) && object instanceof constructor) {
 	    return constructor.prototype;
 	  } return object instanceof $Object ? ObjectPrototype : null;
 	};
 
 	var fails$h = fails$x;
-	var isCallable$b = isCallable$q;
+	var isCallable$a = isCallable$p;
 	var isObject$9 = isObject$j;
 	var create$b = objectCreate;
 	var getPrototypeOf$8 = objectGetPrototypeOf;
@@ -2308,7 +2308,7 @@
 
 	// `%IteratorPrototype%[@@iterator]()` method
 	// https://tc39.es/ecma262/#sec-%iteratorprototype%-@@iterator
-	if (!isCallable$b(IteratorPrototype$1[ITERATOR$8])) {
+	if (!isCallable$a(IteratorPrototype$1[ITERATOR$8])) {
 	  defineBuiltIn$5(IteratorPrototype$1, ITERATOR$8, function () {
 	    return this;
 	  });
@@ -2345,13 +2345,13 @@
 	  } catch (error) { /* empty */ }
 	};
 
-	var isCallable$a = isCallable$q;
+	var isCallable$9 = isCallable$p;
 
 	var $String = String;
 	var $TypeError$b = TypeError;
 
 	var aPossiblePrototype$1 = function (argument) {
-	  if (typeof argument == 'object' || isCallable$a(argument)) return argument;
+	  if (typeof argument == 'object' || isCallable$9(argument)) return argument;
 	  throw $TypeError$b("Can't set " + $String(argument) + ' as a prototype');
 	};
 
@@ -2383,7 +2383,7 @@
 	  };
 	}() : undefined);
 
-	var $$Y = _export;
+	var $$W = _export;
 	var call$h = functionCall;
 	var FunctionName = functionName;
 	var createIteratorConstructor$1 = iteratorCreateConstructor;
@@ -2457,7 +2457,7 @@
 	      if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
 	        defineBuiltIn$4(IterablePrototype, KEY, methods[KEY]);
 	      }
-	    } else $$Y({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
+	    } else $$W({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
 	  }
 
 	  // define iterator
@@ -2561,7 +2561,7 @@
 	};
 
 	var DOMIterables$1 = domIterables;
-	var global$e = global$r;
+	var global$b = global$o;
 	var classof$6 = classof$d;
 	var createNonEnumerableProperty$4 = createNonEnumerableProperty$9;
 	var Iterators$2 = iterators;
@@ -2570,7 +2570,7 @@
 	var TO_STRING_TAG$1 = wellKnownSymbol$d('toStringTag');
 
 	for (var COLLECTION_NAME in DOMIterables$1) {
-	  var Collection = global$e[COLLECTION_NAME];
+	  var Collection = global$b[COLLECTION_NAME];
 	  var CollectionPrototype = Collection && Collection.prototype;
 	  if (CollectionPrototype && classof$6(CollectionPrototype) !== TO_STRING_TAG$1) {
 	    createNonEnumerableProperty$4(CollectionPrototype, TO_STRING_TAG$1, COLLECTION_NAME);
@@ -2578,10 +2578,10 @@
 	  Iterators$2[COLLECTION_NAME] = Iterators$2.Array;
 	}
 
-	var parent$1i = symbol$5;
+	var parent$1j = symbol$5;
 
 
-	var symbol$4 = parent$1i;
+	var symbol$4 = parent$1j;
 
 	var defineWellKnownSymbol$7 = wellKnownSymbolDefine;
 
@@ -2589,11 +2589,11 @@
 	// https://github.com/tc39/proposal-explicit-resource-management
 	defineWellKnownSymbol$7('dispose');
 
-	var parent$1h = symbol$4;
+	var parent$1i = symbol$4;
 
 
 
-	var symbol$3 = parent$1h;
+	var symbol$3 = parent$1i;
 
 	var defineWellKnownSymbol$6 = wellKnownSymbolDefine;
 
@@ -2601,7 +2601,7 @@
 	// https://github.com/tc39/proposal-async-explicit-resource-management
 	defineWellKnownSymbol$6('asyncDispose');
 
-	var $$X = _export;
+	var $$V = _export;
 	var getBuiltIn$8 = getBuiltIn$h;
 	var uncurryThis$f = functionUncurryThis;
 
@@ -2611,7 +2611,7 @@
 
 	// `Symbol.isRegistered` method
 	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-isregistered
-	$$X({ target: 'Symbol', stat: true }, {
+	$$V({ target: 'Symbol', stat: true }, {
 	  isRegistered: function isRegistered(value) {
 	    try {
 	      return keyFor(thisSymbolValue$1(value)) !== undefined;
@@ -2621,7 +2621,7 @@
 	  }
 	});
 
-	var $$W = _export;
+	var $$U = _export;
 	var shared = sharedExports;
 	var getBuiltIn$7 = getBuiltIn$h;
 	var uncurryThis$e = functionUncurryThis;
@@ -2645,7 +2645,7 @@
 	// `Symbol.isWellKnown` method
 	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-iswellknown
 	// We should patch it for newly added well-known symbols. If it's not required, this module just will not be injected
-	$$W({ target: 'Symbol', stat: true, forced: true }, {
+	$$U({ target: 'Symbol', stat: true, forced: true }, {
 	  isWellKnown: function isWellKnown(value) {
 	    if ($isWellKnown && $isWellKnown(value)) return true;
 	    try {
@@ -2695,7 +2695,7 @@
 
 	defineWellKnownSymbol('replaceAll');
 
-	var parent$1g = symbol$3;
+	var parent$1h = symbol$3;
 
 
 
@@ -2707,7 +2707,7 @@
 
 
 
-	var symbol$2 = parent$1g;
+	var symbol$2 = parent$1h;
 
 	var symbol$1 = symbol$2;
 
@@ -2801,18 +2801,18 @@
 
 	var getIteratorMethod_1 = getIteratorMethod$9;
 
-	var parent$1f = getIteratorMethod_1;
+	var parent$1g = getIteratorMethod_1;
 
 
-	var getIteratorMethod$8 = parent$1f;
+	var getIteratorMethod$8 = parent$1g;
 
-	var parent$1e = getIteratorMethod$8;
+	var parent$1f = getIteratorMethod$8;
 
-	var getIteratorMethod$7 = parent$1e;
+	var getIteratorMethod$7 = parent$1f;
 
-	var parent$1d = getIteratorMethod$7;
+	var parent$1e = getIteratorMethod$7;
 
-	var getIteratorMethod$6 = parent$1d;
+	var getIteratorMethod$6 = parent$1e;
 
 	var getIteratorMethod$5 = getIteratorMethod$6;
 
@@ -2966,7 +2966,7 @@
 	  return ITERATION_SUPPORT;
 	};
 
-	var $$V = _export;
+	var $$T = _export;
 	var from$7 = arrayFrom$1;
 	var checkCorrectnessOfIteration$1 = checkCorrectnessOfIteration$2;
 
@@ -2977,7 +2977,7 @@
 
 	// `Array.from` method
 	// https://tc39.es/ecma262/#sec-array.from
-	$$V({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+	$$T({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
 	  from: from$7
 	});
 
@@ -2985,17 +2985,17 @@
 
 	var from$6 = path$g.Array.from;
 
-	var parent$1c = from$6;
+	var parent$1d = from$6;
 
-	var from$5 = parent$1c;
+	var from$5 = parent$1d;
 
-	var parent$1b = from$5;
+	var parent$1c = from$5;
 
-	var from$4 = parent$1b;
+	var from$4 = parent$1c;
 
-	var parent$1a = from$4;
+	var parent$1b = from$4;
 
-	var from$3 = parent$1a;
+	var from$3 = parent$1b;
 
 	var from$2 = from$3;
 
@@ -3007,7 +3007,7 @@
 	  if (typeof _Symbol !== "undefined" && _getIteratorMethod(iter) != null || iter["@@iterator"] != null) return _Array$from(iter);
 	}
 
-	var $$U = _export;
+	var $$S = _export;
 	var isArray$1 = isArray$c;
 	var isConstructor = isConstructor$4;
 	var isObject$8 = isObject$j;
@@ -3017,7 +3017,7 @@
 	var createProperty$2 = createProperty$6;
 	var wellKnownSymbol$8 = wellKnownSymbol$q;
 	var arrayMethodHasSpeciesSupport$2 = arrayMethodHasSpeciesSupport$4;
-	var nativeSlice = arraySlice$8;
+	var nativeSlice = arraySlice$7;
 
 	var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport$2('slice');
 
@@ -3028,7 +3028,7 @@
 	// `Array.prototype.slice` method
 	// https://tc39.es/ecma262/#sec-array.prototype.slice
 	// fallback for not array-like ES3 strings and DOM objects
-	$$U({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
+	$$S({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
 	  slice: function slice(start, end) {
 	    var O = toIndexedObject$2(this);
 	    var length = lengthOfArrayLike$2(O);
@@ -3076,17 +3076,17 @@
 	  return it === ArrayPrototype$6 || (isPrototypeOf$a(ArrayPrototype$6, it) && own === ArrayPrototype$6.slice) ? method$6 : own;
 	};
 
-	var parent$19 = slice$5;
+	var parent$1a = slice$5;
 
-	var slice$4 = parent$19;
+	var slice$4 = parent$1a;
 
-	var parent$18 = slice$4;
+	var parent$19 = slice$4;
 
-	var slice$3 = parent$18;
+	var slice$3 = parent$19;
 
-	var parent$17 = slice$3;
+	var parent$18 = slice$3;
 
-	var slice$2 = parent$17;
+	var slice$2 = parent$18;
 
 	var slice$1 = slice$2;
 
@@ -3094,14 +3094,14 @@
 
 	var _sliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(slice);
 
-	function _unsupportedIterableToArray$2(o, minLen) {
+	function _unsupportedIterableToArray$3(o, minLen) {
 	  var _context;
 	  if (!o) return;
-	  if (typeof o === "string") return _arrayLikeToArray$2(o, minLen);
+	  if (typeof o === "string") return _arrayLikeToArray$3(o, minLen);
 	  var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
 	  if (n === "Object" && o.constructor) n = o.constructor.name;
 	  if (n === "Map" || n === "Set") return _Array$from(o);
-	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen);
+	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen);
 	}
 
 	function _nonIterableSpread() {
@@ -3109,7 +3109,7 @@
 	}
 
 	function _toConsumableArray(arr) {
-	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$2(arr) || _nonIterableSpread();
+	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$3(arr) || _nonIterableSpread();
 	}
 
 	function _classCallCheck(instance, Constructor) {
@@ -3120,14 +3120,14 @@
 
 	var defineProperty$a = {exports: {}};
 
-	var $$T = _export;
+	var $$R = _export;
 	var DESCRIPTORS$b = descriptors;
 	var defineProperty$9 = objectDefineProperty.f;
 
 	// `Object.defineProperty` method
 	// https://tc39.es/ecma262/#sec-object.defineproperty
 	// eslint-disable-next-line es/no-object-defineproperty -- safe
-	$$T({ target: 'Object', stat: true, forced: Object.defineProperty !== defineProperty$9, sham: !DESCRIPTORS$b }, {
+	$$R({ target: 'Object', stat: true, forced: Object.defineProperty !== defineProperty$9, sham: !DESCRIPTORS$b }, {
 	  defineProperty: defineProperty$9
 	});
 
@@ -3143,17 +3143,17 @@
 
 	var definePropertyExports = defineProperty$a.exports;
 
-	var parent$16 = definePropertyExports;
+	var parent$17 = definePropertyExports;
 
-	var defineProperty$7 = parent$16;
+	var defineProperty$7 = parent$17;
 
-	var parent$15 = defineProperty$7;
+	var parent$16 = defineProperty$7;
 
-	var defineProperty$6 = parent$15;
+	var defineProperty$6 = parent$16;
 
-	var parent$14 = defineProperty$6;
+	var parent$15 = defineProperty$6;
 
-	var defineProperty$5 = parent$14;
+	var defineProperty$5 = parent$15;
 
 	var defineProperty$4 = defineProperty$5;
 
@@ -3165,18 +3165,18 @@
 
 	var iterator$5 = WrappedWellKnownSymbolModule$1.f('iterator');
 
-	var parent$13 = iterator$5;
+	var parent$14 = iterator$5;
 
 
-	var iterator$4 = parent$13;
+	var iterator$4 = parent$14;
 
-	var parent$12 = iterator$4;
+	var parent$13 = iterator$4;
 
-	var iterator$3 = parent$12;
+	var iterator$3 = parent$13;
 
-	var parent$11 = iterator$3;
+	var parent$12 = iterator$3;
 
-	var iterator$2 = parent$11;
+	var iterator$2 = parent$12;
 
 	var iterator$1 = iterator$2;
 
@@ -3198,17 +3198,17 @@
 
 	var toPrimitive$5 = WrappedWellKnownSymbolModule.f('toPrimitive');
 
-	var parent$10 = toPrimitive$5;
+	var parent$11 = toPrimitive$5;
 
-	var toPrimitive$4 = parent$10;
+	var toPrimitive$4 = parent$11;
 
-	var parent$$ = toPrimitive$4;
+	var parent$10 = toPrimitive$4;
 
-	var toPrimitive$3 = parent$$;
+	var toPrimitive$3 = parent$10;
 
-	var parent$_ = toPrimitive$3;
+	var parent$$ = toPrimitive$3;
 
-	var toPrimitive$2 = parent$_;
+	var toPrimitive$2 = parent$$;
 
 	var toPrimitive$1 = toPrimitive$2;
 
@@ -3258,13 +3258,13 @@
 	}
 
 	// TODO: Remove from `core-js@4`
-	var $$S = _export;
+	var $$Q = _export;
 	var DESCRIPTORS$a = descriptors;
 	var create$9 = objectCreate;
 
 	// `Object.create` method
 	// https://tc39.es/ecma262/#sec-object.create
-	$$S({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
+	$$Q({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
 	  create: create$9
 	});
 
@@ -3276,17 +3276,17 @@
 	  return Object$2.create(P, D);
 	};
 
-	var parent$Z = create$8;
+	var parent$_ = create$8;
 
-	var create$7 = parent$Z;
+	var create$7 = parent$_;
 
-	var parent$Y = create$7;
+	var parent$Z = create$7;
 
-	var create$6 = parent$Y;
+	var create$6 = parent$Z;
 
-	var parent$X = create$6;
+	var parent$Y = create$6;
 
-	var create$5 = parent$X;
+	var create$5 = parent$Y;
 
 	var create$4 = create$5;
 
@@ -3294,12 +3294,12 @@
 
 	var _Object$create = /*@__PURE__*/getDefaultExportFromCjs(create$3);
 
-	var $$R = _export;
+	var $$P = _export;
 	var setPrototypeOf$7 = objectSetPrototypeOf;
 
 	// `Object.setPrototypeOf` method
 	// https://tc39.es/ecma262/#sec-object.setprototypeof
-	$$R({ target: 'Object', stat: true }, {
+	$$P({ target: 'Object', stat: true }, {
 	  setPrototypeOf: setPrototypeOf$7
 	});
 
@@ -3307,17 +3307,17 @@
 
 	var setPrototypeOf$6 = path$c.Object.setPrototypeOf;
 
-	var parent$W = setPrototypeOf$6;
+	var parent$X = setPrototypeOf$6;
 
-	var setPrototypeOf$5 = parent$W;
+	var setPrototypeOf$5 = parent$X;
 
-	var parent$V = setPrototypeOf$5;
+	var parent$W = setPrototypeOf$5;
 
-	var setPrototypeOf$4 = parent$V;
+	var setPrototypeOf$4 = parent$W;
 
-	var parent$U = setPrototypeOf$4;
+	var parent$V = setPrototypeOf$4;
 
-	var setPrototypeOf$3 = parent$U;
+	var setPrototypeOf$3 = parent$V;
 
 	var setPrototypeOf$2 = setPrototypeOf$3;
 
@@ -3326,13 +3326,13 @@
 	var _Object$setPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(setPrototypeOf$1);
 
 	// TODO: Remove from `core-js@4`
-	var $$Q = _export;
+	var $$O = _export;
 	var bind$m = functionBind;
 
 	// `Function.prototype.bind` method
 	// https://tc39.es/ecma262/#sec-function.prototype.bind
 	// eslint-disable-next-line es/no-function-prototype-bind -- detection
-	$$Q({ target: 'Function', proto: true, forced: Function.bind !== bind$m }, {
+	$$O({ target: 'Function', proto: true, forced: Function.bind !== bind$m }, {
 	  bind: bind$m
 	});
 
@@ -3350,17 +3350,17 @@
 	  return it === FunctionPrototype || (isPrototypeOf$9(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$5 : own;
 	};
 
-	var parent$T = bind$k;
+	var parent$U = bind$k;
 
-	var bind$j = parent$T;
+	var bind$j = parent$U;
 
-	var parent$S = bind$j;
+	var parent$T = bind$j;
 
-	var bind$i = parent$S;
+	var bind$i = parent$T;
 
-	var parent$R = bind$i;
+	var parent$S = bind$i;
 
-	var bind$h = parent$R;
+	var bind$h = parent$S;
 
 	var bind$g = bind$h;
 
@@ -3403,7 +3403,7 @@
 	  return _assertThisInitialized(self);
 	}
 
-	var $$P = _export;
+	var $$N = _export;
 	var fails$g = fails$x;
 	var toObject$3 = toObject$a;
 	var nativeGetPrototypeOf = objectGetPrototypeOf;
@@ -3413,7 +3413,7 @@
 
 	// `Object.getPrototypeOf` method
 	// https://tc39.es/ecma262/#sec-object.getprototypeof
-	$$P({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
+	$$N({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
 	  getPrototypeOf: function getPrototypeOf(it) {
 	    return nativeGetPrototypeOf(toObject$3(it));
 	  }
@@ -3423,17 +3423,17 @@
 
 	var getPrototypeOf$6 = path$b.Object.getPrototypeOf;
 
-	var parent$Q = getPrototypeOf$6;
+	var parent$R = getPrototypeOf$6;
 
-	var getPrototypeOf$5 = parent$Q;
+	var getPrototypeOf$5 = parent$R;
 
-	var parent$P = getPrototypeOf$5;
+	var parent$Q = getPrototypeOf$5;
 
-	var getPrototypeOf$4 = parent$P;
+	var getPrototypeOf$4 = parent$Q;
 
-	var parent$O = getPrototypeOf$4;
+	var parent$P = getPrototypeOf$4;
 
-	var getPrototypeOf$3 = parent$O;
+	var getPrototypeOf$3 = parent$P;
 
 	var getPrototypeOf$2 = getPrototypeOf$3;
 
@@ -3521,13 +3521,13 @@
 	  } return T;
 	} : $assign;
 
-	var $$O = _export;
+	var $$M = _export;
 	var assign$7 = objectAssign;
 
 	// `Object.assign` method
 	// https://tc39.es/ecma262/#sec-object.assign
 	// eslint-disable-next-line es/no-object-assign -- required for testing
-	$$O({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$7 }, {
+	$$M({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$7 }, {
 	  assign: assign$7
 	});
 
@@ -3535,17 +3535,17 @@
 
 	var assign$6 = path$a.Object.assign;
 
-	var parent$N = assign$6;
+	var parent$O = assign$6;
 
-	var assign$5 = parent$N;
+	var assign$5 = parent$O;
 
-	var parent$M = assign$5;
+	var parent$N = assign$5;
 
-	var assign$4 = parent$M;
+	var assign$4 = parent$N;
 
-	var parent$L = assign$4;
+	var parent$M = assign$4;
 
-	var assign$3 = parent$L;
+	var assign$3 = parent$M;
 
 	var assign$2 = assign$3;
 
@@ -3590,7 +3590,7 @@
 	  return Object.isExtensible(Object.preventExtensions({}));
 	});
 
-	var $$N = _export;
+	var $$L = _export;
 	var uncurryThis$b = functionUncurryThis;
 	var hiddenKeys = hiddenKeys$6;
 	var isObject$6 = isObject$j;
@@ -3665,7 +3665,7 @@
 	      } return result;
 	    };
 
-	    $$N({ target: 'Object', stat: true, forced: true }, {
+	    $$L({ target: 'Object', stat: true, forced: true }, {
 	      getOwnPropertyNames: getOwnPropertyNamesExternalModule.f
 	    });
 	  }
@@ -3760,14 +3760,14 @@
 	  throw $TypeError$8('Incorrect invocation');
 	};
 
-	var $$M = _export;
-	var global$d = global$r;
+	var $$K = _export;
+	var global$a = global$o;
 	var InternalMetadataModule = internalMetadataExports;
 	var fails$b = fails$x;
 	var createNonEnumerableProperty$3 = createNonEnumerableProperty$9;
 	var iterate$k = iterate$l;
 	var anInstance$4 = anInstance$5;
-	var isCallable$9 = isCallable$q;
+	var isCallable$8 = isCallable$p;
 	var isObject$5 = isObject$j;
 	var setToStringTag$3 = setToStringTag$9;
 	var defineProperty = objectDefineProperty.f;
@@ -3782,12 +3782,12 @@
 	  var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
 	  var IS_WEAK = CONSTRUCTOR_NAME.indexOf('Weak') !== -1;
 	  var ADDER = IS_MAP ? 'set' : 'add';
-	  var NativeConstructor = global$d[CONSTRUCTOR_NAME];
+	  var NativeConstructor = global$a[CONSTRUCTOR_NAME];
 	  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
 	  var exported = {};
 	  var Constructor;
 
-	  if (!DESCRIPTORS$8 || !isCallable$9(NativeConstructor)
+	  if (!DESCRIPTORS$8 || !isCallable$8(NativeConstructor)
 	    || !(IS_WEAK || NativePrototype.forEach && !fails$b(function () { new NativeConstructor().entries().next(); }))
 	  ) {
 	    // create collection constructor
@@ -3829,7 +3829,7 @@
 	  setToStringTag$3(Constructor, CONSTRUCTOR_NAME, false, true);
 
 	  exported[CONSTRUCTOR_NAME] = Constructor;
-	  $$M({ global: true, forced: true }, exported);
+	  $$K({ global: true, forced: true }, exported);
 
 	  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
 
@@ -4083,14 +4083,14 @@
 
 	var map$5 = path$9.Map;
 
-	var parent$K = map$5;
+	var parent$L = map$5;
 
 
-	var map$4 = parent$K;
+	var map$4 = parent$L;
 
-	var parent$J = map$4;
+	var parent$K = map$4;
 
-	var map$3 = parent$J;
+	var map$3 = parent$K;
 
 	// https://tc39.github.io/proposal-setmap-offrom/
 	var bind$c = functionBindContext;
@@ -4123,28 +4123,28 @@
 	  return new this(array);
 	};
 
-	var $$L = _export;
+	var $$J = _export;
 	var from = collectionFrom;
 
 	// `Map.from` method
 	// https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
-	$$L({ target: 'Map', stat: true, forced: true }, {
+	$$J({ target: 'Map', stat: true, forced: true }, {
 	  from: from
 	});
 
-	var arraySlice$4 = arraySlice$8;
+	var arraySlice$3 = arraySlice$7;
 
 	// https://tc39.github.io/proposal-setmap-offrom/
 	var collectionOf = function of() {
-	  return new this(arraySlice$4(arguments));
+	  return new this(arraySlice$3(arguments));
 	};
 
-	var $$K = _export;
+	var $$I = _export;
 	var of = collectionOf;
 
 	// `Map.of` method
 	// https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
-	$$K({ target: 'Map', stat: true, forced: true }, {
+	$$I({ target: 'Map', stat: true, forced: true }, {
 	  of: of
 	});
 
@@ -4178,13 +4178,13 @@
 	  proto: Map$5.prototype
 	};
 
-	var $$J = _export;
+	var $$H = _export;
 	var aMap$d = aMap$e;
 	var remove = mapHelpers.remove;
 
 	// `Map.prototype.deleteAll` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$J({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$H({ target: 'Map', proto: true, real: true, forced: true }, {
 	  deleteAll: function deleteAll(/* ...elements */) {
 	    var collection = aMap$d(this);
 	    var allDeleted = true;
@@ -4196,7 +4196,7 @@
 	  }
 	});
 
-	var $$I = _export;
+	var $$G = _export;
 	var aMap$c = aMap$e;
 	var MapHelpers$4 = mapHelpers;
 
@@ -4206,7 +4206,7 @@
 
 	// `Map.prototype.emplace` method
 	// https://github.com/tc39/proposal-upsert
-	$$I({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$G({ target: 'Map', proto: true, real: true, forced: true }, {
 	  emplace: function emplace(key, handler) {
 	    var map = aMap$c(this);
 	    var value, inserted;
@@ -4242,14 +4242,14 @@
 	  }) : map.forEach(fn);
 	};
 
-	var $$H = _export;
+	var $$F = _export;
 	var bind$b = functionBindContext;
 	var aMap$b = aMap$e;
 	var iterate$h = mapIterate;
 
 	// `Map.prototype.every` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$H({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$F({ target: 'Map', proto: true, real: true, forced: true }, {
 	  every: function every(callbackfn /* , thisArg */) {
 	    var map = aMap$b(this);
 	    var boundFunction = bind$b(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4259,7 +4259,7 @@
 	  }
 	});
 
-	var $$G = _export;
+	var $$E = _export;
 	var bind$a = functionBindContext;
 	var aMap$a = aMap$e;
 	var MapHelpers$3 = mapHelpers;
@@ -4270,7 +4270,7 @@
 
 	// `Map.prototype.filter` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$G({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$E({ target: 'Map', proto: true, real: true, forced: true }, {
 	  filter: function filter(callbackfn /* , thisArg */) {
 	    var map = aMap$a(this);
 	    var boundFunction = bind$a(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4282,14 +4282,14 @@
 	  }
 	});
 
-	var $$F = _export;
+	var $$D = _export;
 	var bind$9 = functionBindContext;
 	var aMap$9 = aMap$e;
 	var iterate$f = mapIterate;
 
 	// `Map.prototype.find` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$F({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$D({ target: 'Map', proto: true, real: true, forced: true }, {
 	  find: function find(callbackfn /* , thisArg */) {
 	    var map = aMap$9(this);
 	    var boundFunction = bind$9(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4300,14 +4300,14 @@
 	  }
 	});
 
-	var $$E = _export;
+	var $$C = _export;
 	var bind$8 = functionBindContext;
 	var aMap$8 = aMap$e;
 	var iterate$e = mapIterate;
 
 	// `Map.prototype.findKey` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$E({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$C({ target: 'Map', proto: true, real: true, forced: true }, {
 	  findKey: function findKey(callbackfn /* , thisArg */) {
 	    var map = aMap$8(this);
 	    var boundFunction = bind$8(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4318,10 +4318,10 @@
 	  }
 	});
 
-	var $$D = _export;
+	var $$B = _export;
 	var call$9 = functionCall;
 	var uncurryThis$a = functionUncurryThis;
-	var isCallable$8 = isCallable$q;
+	var isCallable$7 = isCallable$p;
 	var aCallable$a = aCallable$h;
 	var iterate$d = iterate$l;
 	var Map$3 = mapHelpers.Map;
@@ -4330,9 +4330,9 @@
 
 	// `Map.groupBy` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$D({ target: 'Map', stat: true, forced: true }, {
+	$$B({ target: 'Map', stat: true, forced: true }, {
 	  groupBy: function groupBy(iterable, keyDerivative) {
-	    var C = isCallable$8(this) ? this : Map$3;
+	    var C = isCallable$7(this) ? this : Map$3;
 	    var newMap = new C();
 	    aCallable$a(keyDerivative);
 	    var has = aCallable$a(newMap.has);
@@ -4354,14 +4354,14 @@
 	  return x === y || x != x && y != y;
 	};
 
-	var $$C = _export;
+	var $$A = _export;
 	var sameValueZero = sameValueZero$1;
 	var aMap$7 = aMap$e;
 	var iterate$c = mapIterate;
 
 	// `Map.prototype.includes` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$C({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$A({ target: 'Map', proto: true, real: true, forced: true }, {
 	  includes: function includes(searchElement) {
 	    return iterate$c(aMap$7(this), function (value) {
 	      if (sameValueZero(value, searchElement)) return true;
@@ -4369,18 +4369,18 @@
 	  }
 	});
 
-	var $$B = _export;
+	var $$z = _export;
 	var call$8 = functionCall;
 	var iterate$b = iterate$l;
-	var isCallable$7 = isCallable$q;
+	var isCallable$6 = isCallable$p;
 	var aCallable$9 = aCallable$h;
 	var Map$2 = mapHelpers.Map;
 
 	// `Map.keyBy` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$B({ target: 'Map', stat: true, forced: true }, {
+	$$z({ target: 'Map', stat: true, forced: true }, {
 	  keyBy: function keyBy(iterable, keyDerivative) {
-	    var C = isCallable$7(this) ? this : Map$2;
+	    var C = isCallable$6(this) ? this : Map$2;
 	    var newMap = new C();
 	    aCallable$9(keyDerivative);
 	    var setter = aCallable$9(newMap.set);
@@ -4391,13 +4391,13 @@
 	  }
 	});
 
-	var $$A = _export;
+	var $$y = _export;
 	var aMap$6 = aMap$e;
 	var iterate$a = mapIterate;
 
 	// `Map.prototype.keyOf` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$A({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$y({ target: 'Map', proto: true, real: true, forced: true }, {
 	  keyOf: function keyOf(searchElement) {
 	    var result = iterate$a(aMap$6(this), function (value, key) {
 	      if (value === searchElement) return { key: key };
@@ -4406,7 +4406,7 @@
 	  }
 	});
 
-	var $$z = _export;
+	var $$x = _export;
 	var bind$7 = functionBindContext;
 	var aMap$5 = aMap$e;
 	var MapHelpers$2 = mapHelpers;
@@ -4417,7 +4417,7 @@
 
 	// `Map.prototype.mapKeys` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$z({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$x({ target: 'Map', proto: true, real: true, forced: true }, {
 	  mapKeys: function mapKeys(callbackfn /* , thisArg */) {
 	    var map = aMap$5(this);
 	    var boundFunction = bind$7(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4429,7 +4429,7 @@
 	  }
 	});
 
-	var $$y = _export;
+	var $$w = _export;
 	var bind$6 = functionBindContext;
 	var aMap$4 = aMap$e;
 	var MapHelpers$1 = mapHelpers;
@@ -4440,7 +4440,7 @@
 
 	// `Map.prototype.mapValues` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$y({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$w({ target: 'Map', proto: true, real: true, forced: true }, {
 	  mapValues: function mapValues(callbackfn /* , thisArg */) {
 	    var map = aMap$4(this);
 	    var boundFunction = bind$6(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4452,14 +4452,14 @@
 	  }
 	});
 
-	var $$x = _export;
+	var $$v = _export;
 	var aMap$3 = aMap$e;
 	var iterate$7 = iterate$l;
 	var set$2 = mapHelpers.set;
 
 	// `Map.prototype.merge` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$x({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
+	$$v({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
 	  // eslint-disable-next-line no-unused-vars -- required for `.length`
 	  merge: function merge(iterable /* ...iterables */) {
 	    var map = aMap$3(this);
@@ -4474,7 +4474,7 @@
 	  }
 	});
 
-	var $$w = _export;
+	var $$u = _export;
 	var aCallable$8 = aCallable$h;
 	var aMap$2 = aMap$e;
 	var iterate$6 = mapIterate;
@@ -4483,7 +4483,7 @@
 
 	// `Map.prototype.reduce` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$w({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$u({ target: 'Map', proto: true, real: true, forced: true }, {
 	  reduce: function reduce(callbackfn /* , initialValue */) {
 	    var map = aMap$2(this);
 	    var noInitial = arguments.length < 2;
@@ -4502,14 +4502,14 @@
 	  }
 	});
 
-	var $$v = _export;
+	var $$t = _export;
 	var bind$5 = functionBindContext;
 	var aMap$1 = aMap$e;
 	var iterate$5 = mapIterate;
 
 	// `Map.prototype.some` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$v({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$t({ target: 'Map', proto: true, real: true, forced: true }, {
 	  some: function some(callbackfn /* , thisArg */) {
 	    var map = aMap$1(this);
 	    var boundFunction = bind$5(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
@@ -4519,7 +4519,7 @@
 	  }
 	});
 
-	var $$u = _export;
+	var $$s = _export;
 	var aCallable$7 = aCallable$h;
 	var aMap = aMap$e;
 	var MapHelpers = mapHelpers;
@@ -4531,7 +4531,7 @@
 
 	// `Map.prototype.update` method
 	// https://github.com/tc39/proposal-collection-methods
-	$$u({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$s({ target: 'Map', proto: true, real: true, forced: true }, {
 	  update: function update(key, callback /* , thunk */) {
 	    var map = aMap(this);
 	    var length = arguments.length;
@@ -4548,7 +4548,7 @@
 
 	var call$7 = functionCall;
 	var aCallable$6 = aCallable$h;
-	var isCallable$6 = isCallable$q;
+	var isCallable$5 = isCallable$p;
 	var anObject$4 = anObject$f;
 
 	var $TypeError$5 = TypeError;
@@ -4562,42 +4562,42 @@
 	  var set = aCallable$6(map.set);
 	  var insertFn = arguments.length > 2 ? arguments[2] : undefined;
 	  var value;
-	  if (!isCallable$6(updateFn) && !isCallable$6(insertFn)) {
+	  if (!isCallable$5(updateFn) && !isCallable$5(insertFn)) {
 	    throw $TypeError$5('At least one callback required');
 	  }
 	  if (call$7(has, map, key)) {
 	    value = call$7(get, map, key);
-	    if (isCallable$6(updateFn)) {
+	    if (isCallable$5(updateFn)) {
 	      value = updateFn(value);
 	      call$7(set, map, key, value);
 	    }
-	  } else if (isCallable$6(insertFn)) {
+	  } else if (isCallable$5(insertFn)) {
 	    value = insertFn();
 	    call$7(set, map, key, value);
 	  } return value;
 	};
 
 	// TODO: remove from `core-js@4`
-	var $$t = _export;
+	var $$r = _export;
 	var upsert$1 = mapUpsert;
 
 	// `Map.prototype.upsert` method (replaced by `Map.prototype.emplace`)
 	// https://github.com/thumbsupep/proposal-upsert
-	$$t({ target: 'Map', proto: true, real: true, forced: true }, {
+	$$r({ target: 'Map', proto: true, real: true, forced: true }, {
 	  upsert: upsert$1
 	});
 
 	// TODO: remove from `core-js@4`
-	var $$s = _export;
+	var $$q = _export;
 	var upsert = mapUpsert;
 
 	// `Map.prototype.updateOrInsert` method (replaced by `Map.prototype.emplace`)
 	// https://github.com/thumbsupep/proposal-upsert
-	$$s({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
+	$$q({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
 	  updateOrInsert: upsert
 	});
 
-	var parent$I = map$3;
+	var parent$J = map$3;
 
 
 
@@ -4621,7 +4621,7 @@
 	// TODO: remove from `core-js@4`
 
 
-	var map$2 = parent$I;
+	var map$2 = parent$J;
 
 	var map$1 = map$2;
 
@@ -4651,13 +4651,13 @@
 	// eslint-disable-next-line es/no-array-prototype-foreach -- safe
 	} : [].forEach;
 
-	var $$r = _export;
+	var $$p = _export;
 	var forEach$7 = arrayForEach;
 
 	// `Array.prototype.forEach` method
 	// https://tc39.es/ecma262/#sec-array.prototype.foreach
 	// eslint-disable-next-line es/no-array-prototype-foreach -- safe
-	$$r({ target: 'Array', proto: true, forced: [].forEach != forEach$7 }, {
+	$$p({ target: 'Array', proto: true, forced: [].forEach != forEach$7 }, {
 	  forEach: forEach$7
 	});
 
@@ -4665,9 +4665,9 @@
 
 	var forEach$6 = entryVirtual$6('Array').forEach;
 
-	var parent$H = forEach$6;
+	var parent$I = forEach$6;
 
-	var forEach$5 = parent$H;
+	var forEach$5 = parent$I;
 
 	var classof$3 = classof$d;
 	var hasOwn$4 = hasOwnProperty_1;
@@ -4687,13 +4687,13 @@
 	    || hasOwn$4(DOMIterables, classof$3(it)) ? method$4 : own;
 	};
 
-	var parent$G = forEach$4;
+	var parent$H = forEach$4;
 
-	var forEach$3 = parent$G;
+	var forEach$3 = parent$H;
 
-	var parent$F = forEach$3;
+	var parent$G = forEach$3;
 
-	var forEach$2 = parent$F;
+	var forEach$2 = parent$G;
 
 	var forEach$1 = forEach$2;
 
@@ -4702,7 +4702,7 @@
 	var _forEachInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(forEach);
 
 	/* eslint-disable es/no-array-prototype-indexof -- required for testing */
-	var $$q = _export;
+	var $$o = _export;
 	var uncurryThis$9 = functionUncurryThisClause;
 	var $indexOf = arrayIncludes.indexOf;
 	var arrayMethodIsStrict = arrayMethodIsStrict$2;
@@ -4714,7 +4714,7 @@
 
 	// `Array.prototype.indexOf` method
 	// https://tc39.es/ecma262/#sec-array.prototype.indexof
-	$$q({ target: 'Array', proto: true, forced: FORCED$3 }, {
+	$$o({ target: 'Array', proto: true, forced: FORCED$3 }, {
 	  indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
 	    var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
 	    return NEGATIVE_ZERO
@@ -4738,17 +4738,17 @@
 	  return it === ArrayPrototype$4 || (isPrototypeOf$5(ArrayPrototype$4, it) && own === ArrayPrototype$4.indexOf) ? method$3 : own;
 	};
 
-	var parent$E = indexOf$5;
+	var parent$F = indexOf$5;
 
-	var indexOf$4 = parent$E;
+	var indexOf$4 = parent$F;
 
-	var parent$D = indexOf$4;
+	var parent$E = indexOf$4;
 
-	var indexOf$3 = parent$D;
+	var indexOf$3 = parent$E;
 
-	var parent$C = indexOf$3;
+	var parent$D = indexOf$3;
 
-	var indexOf$2 = parent$C;
+	var indexOf$2 = parent$D;
 
 	var indexOf$1 = indexOf$2;
 
@@ -4770,17 +4770,17 @@
 	  return it === ArrayPrototype$3 || (isPrototypeOf$4(ArrayPrototype$3, it) && own === ArrayPrototype$3.concat) ? method$2 : own;
 	};
 
-	var parent$B = concat$6;
+	var parent$C = concat$6;
 
-	var concat$5 = parent$B;
+	var concat$5 = parent$C;
 
-	var parent$A = concat$5;
+	var parent$B = concat$5;
 
-	var concat$4 = parent$A;
+	var concat$4 = parent$B;
 
-	var parent$z = concat$4;
+	var parent$A = concat$4;
 
-	var concat$3 = parent$z;
+	var concat$3 = parent$A;
 
 	var concat$2 = concat$3;
 
@@ -4788,9 +4788,9 @@
 
 	var _concatInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(concat$1);
 
-	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-	function _unsupportedIterableToArray$1(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
-	function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+	function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray$2(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
+	function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	function getDOMPoint(dom) {
 	  var rect = dom.getBoundingClientRect();
 	  return {
@@ -4840,7 +4840,7 @@
 	 * @param {Node[]} children
 	 * @returns
 	 */
-	function $$p(desc, props, children) {
+	function $$n(desc, props, children) {
 	  var match = [];
 	  var regArray = SELECTOR_REG.exec(desc);
 	  // /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/.exec('div#app.a.b')
@@ -4871,7 +4871,7 @@
 	  if (typeof children === 'string') {
 	    el.innerHTML += children;
 	  } else if (children) {
-	    var _iterator = _createForOfIteratorHelper$1(children),
+	    var _iterator = _createForOfIteratorHelper$2(children),
 	      _step;
 	    try {
 	      for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -4888,7 +4888,7 @@
 	}
 	function addClass(dom, classNames) {
 	  var classList = dom.classList;
-	  var _iterator2 = _createForOfIteratorHelper$1(classNames),
+	  var _iterator2 = _createForOfIteratorHelper$2(classNames),
 	    _step2;
 	  try {
 	    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -4930,7 +4930,7 @@
 	  var viewBox = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0 0 24 24';
 	  var svg = document.createElementNS(svgNS, 'svg');
 	  svg.setAttribute('viewBox', viewBox);
-	  var _iterator3 = _createForOfIteratorHelper$1(d),
+	  var _iterator3 = _createForOfIteratorHelper$2(d),
 	    _step3;
 	  try {
 	    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
@@ -4962,7 +4962,7 @@
 	        if (replaceElementType === 'replaceOuterHTMLOfComponent') {
 	          target.el = another.el;
 	        } else {
-	          var _iterator4 = _createForOfIteratorHelper$1(target.el.childNodes),
+	          var _iterator4 = _createForOfIteratorHelper$2(target.el.childNodes),
 	            _step4;
 	          try {
 	            for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
@@ -5046,7 +5046,7 @@
 	  return fn.bind(context);
 	}
 
-	var $$o = _export;
+	var $$m = _export;
 	var $filter = arrayIteration.filter;
 	var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$4;
 
@@ -5055,7 +5055,7 @@
 	// `Array.prototype.filter` method
 	// https://tc39.es/ecma262/#sec-array.prototype.filter
 	// with adding support of @@species
-	$$o({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
+	$$m({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
 	  filter: function filter(callbackfn /* , thisArg */) {
 	    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	  }
@@ -5075,17 +5075,17 @@
 	  return it === ArrayPrototype$2 || (isPrototypeOf$3(ArrayPrototype$2, it) && own === ArrayPrototype$2.filter) ? method$1 : own;
 	};
 
-	var parent$y = filter$5;
+	var parent$z = filter$5;
 
-	var filter$4 = parent$y;
+	var filter$4 = parent$z;
 
-	var parent$x = filter$4;
+	var parent$y = filter$4;
 
-	var filter$3 = parent$x;
+	var filter$3 = parent$y;
 
-	var parent$w = filter$3;
+	var parent$x = filter$3;
 
-	var filter$2 = parent$w;
+	var filter$2 = parent$x;
 
 	var filter$1 = filter$2;
 
@@ -5149,7 +5149,7 @@
 	    if (!desc) {
 	      desc = 'div';
 	    }
-	    var dom = $$p(desc, props, children);
+	    var dom = $$n(desc, props, children);
 	    _this.el = dom;
 	    _this.container = container;
 	    // 安装组件成功
@@ -5266,6 +5266,8 @@
 	  EVENT["SLIDE_VERTICAL"] = "slideVertical";
 	  EVENT["SLIDE_HORIZONTAL"] = "slideHorizontal";
 	  EVENT["VOLUME_PROGRESS_CLICK"] = "volume-progress-click";
+	  EVENT["REQUEST_DANMAKU_DATA"] = "RequestDanmakuData";
+	  EVENT["SEND_DANMAKU_DATA"] = "SendDanmakuData";
 	})(EVENT || (EVENT = {}));
 
 	function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -5302,7 +5304,7 @@
 	  }, {
 	    key: "initBaseTemplate",
 	    value: function initBaseTemplate() {
-	      this.hideBox = $$p('div');
+	      this.hideBox = $$n('div');
 	      addClass(this.hideBox, ['video-set', 'video-set-hidden']);
 	      if (this.hideHeight && this.hideHeight > 0) {
 	        this.hideBox.style.height = this.hideHeight + 'px';
@@ -5311,7 +5313,7 @@
 	        this.hideBox.style.width = this.hideWidth + 'px';
 	      }
 	      this.el.appendChild(this.hideBox);
-	      this.iconBox = $$p('div');
+	      this.iconBox = $$n('div');
 	      addClass(this.iconBox, ['video-icon']);
 	      this.el.appendChild(this.iconBox);
 	    }
@@ -5864,6 +5866,7 @@
 	  }, {
 	    key: "onClick",
 	    value: function onClick(e) {
+	      e.stopPropagation();
 	      if (!this.isFullPage) {
 	        addClass(this.player.el, ['video-wrapper-fullpage']);
 	        this.iconBox.removeChild(this.icon);
@@ -5932,6 +5935,7 @@
 	    key: "onClick",
 	    value: function onClick(e) {
 	      var _this2 = this;
+	      e.stopPropagation();
 	      // 横屏全屏
 	      if (!main_min.isFull(this.player.container)) {
 	        // 调用浏览器提供的全屏API接口去请求元素的全屏，原生全屏分为  竖屏全屏 + 横屏全屏
@@ -6000,6 +6004,7 @@
 	  }, {
 	    key: "onClick",
 	    value: function onClick(e) {
+	      e.stopPropagation();
 	      // document.pictureInPictureElement: 当前画中画的元素
 	      if (document.pictureInPictureElement) {
 	        // 当前存在画中画的元素，则退出画中画
@@ -6046,7 +6051,7 @@
 	    key: "initTemplate",
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-start-pause', 'video-controller']);
-	      this.iconBox = $$p('div.video-icon');
+	      this.iconBox = $$n('div.video-icon');
 	      this.el.appendChild(this.iconBox);
 	      this.pauseIcon = createSvg(pausePath);
 	      this.playIcon = createSvg(playPath);
@@ -6325,12 +6330,12 @@
 
 	var $TypeError$4 = TypeError;
 
-	var validateArgumentsLength$5 = function (passed, required) {
+	var validateArgumentsLength$4 = function (passed, required) {
 	  if (passed < required) throw $TypeError$4('Not enough arguments');
 	  return passed;
 	};
 
-	var arraySlice$3 = arraySliceSimple;
+	var arraySlice$2 = arraySliceSimple;
 
 	var floor$1 = Math.floor;
 
@@ -6339,8 +6344,8 @@
 	  var middle = floor$1(length / 2);
 	  return length < 8 ? insertionSort(array, comparefn) : merge(
 	    array,
-	    mergeSort(arraySlice$3(array, 0, middle), comparefn),
-	    mergeSort(arraySlice$3(array, middle), comparefn),
+	    mergeSort(arraySlice$2(array, 0, middle), comparefn),
+	    mergeSort(arraySlice$2(array, middle), comparefn),
 	    comparefn
 	  );
 	};
@@ -6377,8 +6382,8 @@
 
 	// TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-	var $$n = _export;
-	var global$c = global$r;
+	var $$l = _export;
+	var global$9 = global$o;
 	var call$6 = functionCall;
 	var uncurryThis$7 = functionUncurryThis;
 	var DESCRIPTORS$4 = descriptors;
@@ -6390,7 +6395,7 @@
 	var createIteratorConstructor = iteratorCreateConstructor;
 	var InternalStateModule$2 = internalState;
 	var anInstance$2 = anInstance$5;
-	var isCallable$5 = isCallable$q;
+	var isCallable$4 = isCallable$p;
 	var hasOwn$3 = hasOwnProperty_1;
 	var bind$4 = functionBindContext;
 	var classof$2 = classof$d;
@@ -6401,7 +6406,7 @@
 	var createPropertyDescriptor$2 = createPropertyDescriptor$8;
 	var getIterator = getIterator$3;
 	var getIteratorMethod = getIteratorMethod$a;
-	var validateArgumentsLength$4 = validateArgumentsLength$5;
+	var validateArgumentsLength$3 = validateArgumentsLength$4;
 	var wellKnownSymbol$5 = wellKnownSymbol$q;
 	var arraySort = arraySort$1;
 
@@ -6416,8 +6421,8 @@
 
 	// Avoid NodeJS experimental warning
 	var safeGetBuiltIn = function (name) {
-	  if (!DESCRIPTORS$4) return global$c[name];
-	  var descriptor = getOwnPropertyDescriptor$9(global$c, name);
+	  if (!DESCRIPTORS$4) return global$9[name];
+	  var descriptor = getOwnPropertyDescriptor$9(global$9, name);
 	  return descriptor && descriptor.value;
 	};
 
@@ -6426,10 +6431,10 @@
 	var Headers = safeGetBuiltIn('Headers');
 	var RequestPrototype = NativeRequest && NativeRequest.prototype;
 	var HeadersPrototype = Headers && Headers.prototype;
-	var RegExp$1 = global$c.RegExp;
-	var TypeError$3 = global$c.TypeError;
-	var decodeURIComponent = global$c.decodeURIComponent;
-	var encodeURIComponent$1 = global$c.encodeURIComponent;
+	var RegExp$1 = global$9.RegExp;
+	var TypeError$3 = global$9.TypeError;
+	var decodeURIComponent = global$9.decodeURIComponent;
+	var encodeURIComponent$1 = global$9.encodeURIComponent;
 	var charAt$2 = uncurryThis$7(''.charAt);
 	var join$1 = uncurryThis$7([].join);
 	var push$2 = uncurryThis$7([].push);
@@ -6590,7 +6595,7 @@
 	  // `URLSearchParams.prototype.append` method
 	  // https://url.spec.whatwg.org/#dom-urlsearchparams-append
 	  append: function append(name, value) {
-	    validateArgumentsLength$4(arguments.length, 2);
+	    validateArgumentsLength$3(arguments.length, 2);
 	    var state = getInternalParamsState(this);
 	    push$2(state.entries, { key: $toString$1(name), value: $toString$1(value) });
 	    if (!DESCRIPTORS$4) this.length++;
@@ -6599,7 +6604,7 @@
 	  // `URLSearchParams.prototype.delete` method
 	  // https://url.spec.whatwg.org/#dom-urlsearchparams-delete
 	  'delete': function (name) {
-	    validateArgumentsLength$4(arguments.length, 1);
+	    validateArgumentsLength$3(arguments.length, 1);
 	    var state = getInternalParamsState(this);
 	    var entries = state.entries;
 	    var key = $toString$1(name);
@@ -6614,7 +6619,7 @@
 	  // `URLSearchParams.prototype.get` method
 	  // https://url.spec.whatwg.org/#dom-urlsearchparams-get
 	  get: function get(name) {
-	    validateArgumentsLength$4(arguments.length, 1);
+	    validateArgumentsLength$3(arguments.length, 1);
 	    var entries = getInternalParamsState(this).entries;
 	    var key = $toString$1(name);
 	    var index = 0;
@@ -6626,7 +6631,7 @@
 	  // `URLSearchParams.prototype.getAll` method
 	  // https://url.spec.whatwg.org/#dom-urlsearchparams-getall
 	  getAll: function getAll(name) {
-	    validateArgumentsLength$4(arguments.length, 1);
+	    validateArgumentsLength$3(arguments.length, 1);
 	    var entries = getInternalParamsState(this).entries;
 	    var key = $toString$1(name);
 	    var result = [];
@@ -6639,7 +6644,7 @@
 	  // `URLSearchParams.prototype.has` method
 	  // https://url.spec.whatwg.org/#dom-urlsearchparams-has
 	  has: function has(name) {
-	    validateArgumentsLength$4(arguments.length, 1);
+	    validateArgumentsLength$3(arguments.length, 1);
 	    var entries = getInternalParamsState(this).entries;
 	    var key = $toString$1(name);
 	    var index = 0;
@@ -6651,7 +6656,7 @@
 	  // `URLSearchParams.prototype.set` method
 	  // https://url.spec.whatwg.org/#dom-urlsearchparams-set
 	  set: function set(name, value) {
-	    validateArgumentsLength$4(arguments.length, 1);
+	    validateArgumentsLength$3(arguments.length, 1);
 	    var state = getInternalParamsState(this);
 	    var entries = state.entries;
 	    var found = false;
@@ -6728,12 +6733,12 @@
 
 	setToStringTag$2(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
 
-	$$n({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
+	$$l({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
 	  URLSearchParams: URLSearchParamsConstructor
 	});
 
 	// Wrap `fetch` and `Request` for correct work with polyfilled `URLSearchParams`
-	if (!USE_NATIVE_URL$2 && isCallable$5(Headers)) {
+	if (!USE_NATIVE_URL$2 && isCallable$4(Headers)) {
 	  var headersHas = uncurryThis$7(HeadersPrototype.has);
 	  var headersSet = uncurryThis$7(HeadersPrototype.set);
 
@@ -6754,15 +6759,15 @@
 	    } return init;
 	  };
 
-	  if (isCallable$5(nativeFetch)) {
-	    $$n({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
+	  if (isCallable$4(nativeFetch)) {
+	    $$l({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
 	      fetch: function fetch(input /* , init */) {
 	        return nativeFetch(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
 	      }
 	    });
 	  }
 
-	  if (isCallable$5(NativeRequest)) {
+	  if (isCallable$4(NativeRequest)) {
 	    var RequestConstructor = function Request(input /* , init */) {
 	      anInstance$2(this, RequestPrototype);
 	      return new NativeRequest(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
@@ -6771,7 +6776,7 @@
 	    RequestPrototype.constructor = RequestConstructor;
 	    RequestConstructor.prototype = RequestPrototype;
 
-	    $$n({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
+	    $$l({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
 	      Request: RequestConstructor
 	    });
 	  }
@@ -6784,10 +6789,10 @@
 
 	// TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-	var $$m = _export;
+	var $$k = _export;
 	var DESCRIPTORS$3 = descriptors;
 	var USE_NATIVE_URL$1 = urlConstructorDetection;
-	var global$b = global$r;
+	var global$8 = global$o;
 	var bind$3 = functionBindContext;
 	var uncurryThis$6 = functionUncurryThis;
 	var defineBuiltIn$1 = defineBuiltIn$8;
@@ -6796,12 +6801,12 @@
 	var hasOwn$2 = hasOwnProperty_1;
 	var assign = objectAssign;
 	var arrayFrom = arrayFrom$1;
-	var arraySlice$2 = arraySliceSimple;
+	var arraySlice$1 = arraySliceSimple;
 	var codeAt = stringMultibyte.codeAt;
 	var toASCII = stringPunycodeToAscii;
 	var $toString = toString$b;
 	var setToStringTag$1 = setToStringTag$9;
-	var validateArgumentsLength$3 = validateArgumentsLength$5;
+	var validateArgumentsLength$2 = validateArgumentsLength$4;
 	var URLSearchParamsModule = web_urlSearchParams_constructor;
 	var InternalStateModule$1 = internalState;
 
@@ -6810,9 +6815,9 @@
 	var URLSearchParams$1 = URLSearchParamsModule.URLSearchParams;
 	var getInternalSearchParamsState = URLSearchParamsModule.getState;
 
-	var NativeURL = global$b.URL;
-	var TypeError$2 = global$b.TypeError;
-	var parseInt$1 = global$b.parseInt;
+	var NativeURL = global$8.URL;
+	var TypeError$2 = global$8.TypeError;
+	var parseInt$1 = global$8.parseInt;
 	var floor = Math.floor;
 	var pow = Math.pow;
 	var charAt$1 = uncurryThis$6(''.charAt);
@@ -7203,7 +7208,7 @@
 	          if (!base || (base.cannotBeABaseURL && chr != '#')) return INVALID_SCHEME;
 	          if (base.cannotBeABaseURL && chr == '#') {
 	            url.scheme = base.scheme;
-	            url.path = arraySlice$2(base.path);
+	            url.path = arraySlice$1(base.path);
 	            url.query = base.query;
 	            url.fragment = '';
 	            url.cannotBeABaseURL = true;
@@ -7238,7 +7243,7 @@
 	            url.password = base.password;
 	            url.host = base.host;
 	            url.port = base.port;
-	            url.path = arraySlice$2(base.path);
+	            url.path = arraySlice$1(base.path);
 	            url.query = base.query;
 	          } else if (chr == '/' || (chr == '\\' && url.isSpecial())) {
 	            state = RELATIVE_SLASH;
@@ -7247,7 +7252,7 @@
 	            url.password = base.password;
 	            url.host = base.host;
 	            url.port = base.port;
-	            url.path = arraySlice$2(base.path);
+	            url.path = arraySlice$1(base.path);
 	            url.query = '';
 	            state = QUERY;
 	          } else if (chr == '#') {
@@ -7255,7 +7260,7 @@
 	            url.password = base.password;
 	            url.host = base.host;
 	            url.port = base.port;
-	            url.path = arraySlice$2(base.path);
+	            url.path = arraySlice$1(base.path);
 	            url.query = base.query;
 	            url.fragment = '';
 	            state = FRAGMENT;
@@ -7264,7 +7269,7 @@
 	            url.password = base.password;
 	            url.host = base.host;
 	            url.port = base.port;
-	            url.path = arraySlice$2(base.path);
+	            url.path = arraySlice$1(base.path);
 	            url.path.length--;
 	            state = PATH;
 	            continue;
@@ -7379,23 +7384,23 @@
 	          else if (base && base.scheme == 'file') {
 	            if (chr == EOF) {
 	              url.host = base.host;
-	              url.path = arraySlice$2(base.path);
+	              url.path = arraySlice$1(base.path);
 	              url.query = base.query;
 	            } else if (chr == '?') {
 	              url.host = base.host;
-	              url.path = arraySlice$2(base.path);
+	              url.path = arraySlice$1(base.path);
 	              url.query = '';
 	              state = QUERY;
 	            } else if (chr == '#') {
 	              url.host = base.host;
-	              url.path = arraySlice$2(base.path);
+	              url.path = arraySlice$1(base.path);
 	              url.query = base.query;
 	              url.fragment = '';
 	              state = FRAGMENT;
 	            } else {
-	              if (!startsWithWindowsDriveLetter(join(arraySlice$2(codePoints, pointer), ''))) {
+	              if (!startsWithWindowsDriveLetter(join(arraySlice$1(codePoints, pointer), ''))) {
 	                url.host = base.host;
-	                url.path = arraySlice$2(base.path);
+	                url.path = arraySlice$1(base.path);
 	                url.shortenPath();
 	              }
 	              state = PATH;
@@ -7411,7 +7416,7 @@
 	            state = FILE_HOST;
 	            break;
 	          }
-	          if (base && base.scheme == 'file' && !startsWithWindowsDriveLetter(join(arraySlice$2(codePoints, pointer), ''))) {
+	          if (base && base.scheme == 'file' && !startsWithWindowsDriveLetter(join(arraySlice$1(codePoints, pointer), ''))) {
 	            if (isWindowsDriveLetter(base.path[0], true)) push$1(url.path, base.path[0]);
 	            else url.host = base.host;
 	          }
@@ -7725,7 +7730,7 @@
 	// https://url.spec.whatwg.org/#url-class
 	var URLConstructor = function URL(url /* , base */) {
 	  var that = anInstance$1(this, URLPrototype);
-	  var base = validateArgumentsLength$3(arguments.length, 1) > 1 ? arguments[1] : undefined;
+	  var base = validateArgumentsLength$2(arguments.length, 1) > 1 ? arguments[1] : undefined;
 	  var state = setInternalState$1(that, new URLState(url, false, base));
 	  if (!DESCRIPTORS$3) {
 	    that.href = state.serialize();
@@ -7822,14 +7827,14 @@
 
 	setToStringTag$1(URLConstructor, 'URL');
 
-	$$m({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
+	$$k({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
 	  URL: URLConstructor
 	});
 
-	var $$l = _export;
+	var $$j = _export;
 	var getBuiltIn$4 = getBuiltIn$h;
 	var fails$8 = fails$x;
-	var validateArgumentsLength$2 = validateArgumentsLength$5;
+	var validateArgumentsLength$1 = validateArgumentsLength$4;
 	var toString$5 = toString$b;
 	var USE_NATIVE_URL = urlConstructorDetection;
 
@@ -7843,9 +7848,9 @@
 
 	// `URL.canParse` method
 	// https://url.spec.whatwg.org/#dom-url-canparse
-	$$l({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
+	$$j({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
 	  canParse: function canParse(url) {
-	    var length = validateArgumentsLength$2(arguments.length, 1);
+	    var length = validateArgumentsLength$1(arguments.length, 1);
 	    var urlString = toString$5(url);
 	    var base = length < 2 || arguments[1] === undefined ? undefined : toString$5(arguments[1]);
 	    try {
@@ -7860,17 +7865,17 @@
 
 	var url$5 = path$8.URL;
 
-	var parent$v = url$5;
+	var parent$w = url$5;
 
-	var url$4 = parent$v;
+	var url$4 = parent$w;
 
-	var parent$u = url$4;
+	var parent$v = url$4;
 
-	var url$3 = parent$u;
+	var url$3 = parent$v;
 
-	var parent$t = url$3;
+	var parent$u = url$3;
 
-	var url$2 = parent$t;
+	var url$2 = parent$u;
 
 	var url$1 = url$2;
 
@@ -7913,7 +7918,7 @@
 	  if (!delete O[P]) throw $TypeError$2('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
 	};
 
-	var $$k = _export;
+	var $$i = _export;
 	var toObject$1 = toObject$a;
 	var toAbsoluteIndex = toAbsoluteIndex$4;
 	var toIntegerOrInfinity = toIntegerOrInfinity$4;
@@ -7933,7 +7938,7 @@
 	// `Array.prototype.splice` method
 	// https://tc39.es/ecma262/#sec-array.prototype.splice
 	// with adding support of @@species
-	$$k({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+	$$i({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
 	  splice: function splice(start, deleteCount /* , ...items */) {
 	    var O = toObject$1(this);
 	    var len = lengthOfArrayLike(O);
@@ -7994,17 +7999,17 @@
 	  return it === ArrayPrototype$1 || (isPrototypeOf$2(ArrayPrototype$1, it) && own === ArrayPrototype$1.splice) ? method : own;
 	};
 
-	var parent$s = splice$5;
+	var parent$t = splice$5;
 
-	var splice$4 = parent$s;
+	var splice$4 = parent$t;
 
-	var parent$r = splice$4;
+	var parent$s = splice$4;
 
-	var splice$3 = parent$r;
+	var splice$3 = parent$s;
 
-	var parent$q = splice$3;
+	var parent$r = splice$3;
 
-	var splice$2 = parent$q;
+	var splice$2 = parent$r;
 
 	var splice$1 = splice$2;
 
@@ -8128,6 +8133,7 @@
 	    key: "onClick",
 	    value: function onClick(e) {
 	      var _this2 = this;
+	      e.stopPropagation();
 	      if (!includeClass(this.icon, 'video-screenshot-animate')) {
 	        addClass(this.icon, ['video-screenshot-animate']);
 	        this.icon.ontransitionend = function (e) {
@@ -8162,8 +8168,8 @@
 	      } catch (_unused) {
 	        // todo
 	      }
-	      var dom = $$p('div.video-screenshot-toast');
-	      var span = $$p('span');
+	      var dom = $$n('div.video-screenshot-toast');
+	      var span = $$n('span');
 	      span.innerText = '截图成功!';
 	      var icon = this.confirmIcon.cloneNode(true);
 	      dom.appendChild(icon);
@@ -8200,13 +8206,13 @@
 	  _createClass(SubsettingItem, [{
 	    key: "init",
 	    value: function init() {
-	      this.el = $$p('div.video-subsettings-item');
-	      this.leftArea = $$p('div.video-subsettings-itemleft');
-	      this.rightArea = $$p('div.video-subsettings-itemright');
-	      this.leftIconBox = $$p('div.video-subsettings-itemleft-icon');
-	      this.leftTextBox = $$p('div.video-subsettings-itemleft-text');
-	      this.rightTipBox = $$p('div.video-subsettings-itemright-tip');
-	      this.rightIcon = $$p('div.video-subsettings-itemright-icon');
+	      this.el = $$n('div.video-subsettings-item');
+	      this.leftArea = $$n('div.video-subsettings-itemleft');
+	      this.rightArea = $$n('div.video-subsettings-itemright');
+	      this.leftIconBox = $$n('div.video-subsettings-itemleft-icon');
+	      this.leftTextBox = $$n('div.video-subsettings-itemleft-text');
+	      this.rightTipBox = $$n('div.video-subsettings-itemright-tip');
+	      this.rightIcon = $$n('div.video-subsettings-itemright-icon');
 	      this.el.append(this.leftArea, this.rightArea);
 	      this.leftArea.append(this.leftIconBox, this.leftTextBox);
 	      this.rightArea.append(this.rightTipBox, this.rightIcon);
@@ -8255,7 +8261,7 @@
 	  _createClass(SubsettingsMain, [{
 	    key: "init",
 	    value: function init() {
-	      this.el = $$p('div.video-subsettings-main');
+	      this.el = $$n('div.video-subsettings-main');
 	      this.el.dataset.width = '200';
 	      this.initSubsettingsItem();
 	      this.initEvent();
@@ -8278,7 +8284,8 @@
 	      var _context2,
 	        _this3 = this;
 	      _forEachInstanceProperty(_context2 = this.SubsettingsItem).call(_context2, function (item, index) {
-	        item.instance.el.addEventListener('click', function () {
+	        item.instance.el.addEventListener('click', function (e) {
+	          e.stopPropagation();
 	          _this3.player.emit('MainSubsettingsItemClick', item, index);
 	        });
 	      });
@@ -8334,7 +8341,7 @@
 	  _createClass(SubsettingsPlayrate, [{
 	    key: "init",
 	    value: function init() {
-	      this.el = $$p('div.video-subsettings-playrate');
+	      this.el = $$n('div.video-subsettings-playrate');
 	      this.el.dataset.width = '170';
 	      this.el.style.display = 'none';
 	      this.initSubsettingsItem();
@@ -8360,7 +8367,8 @@
 	      var _this3 = this;
 	      var _loop = function _loop(i) {
 	        var item = _this3.SubsettingsItem[i];
-	        item.instance.el.addEventListener('click', function () {
+	        item.instance.el.addEventListener('click', function (e) {
+	          e.stopPropagation();
 	          item.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
 	          item.instance.leftIconBox.innerHTML = '';
 	          item.instance.leftIconBox.appendChild(item.leftIcon);
@@ -8377,7 +8385,8 @@
 	      for (var i = 1; i < this.SubsettingsItem.length; i++) {
 	        _loop(i);
 	      }
-	      this.SubsettingsItem[0].instance.el.addEventListener('click', function () {
+	      this.SubsettingsItem[0].instance.el.addEventListener('click', function (e) {
+	        e.stopPropagation();
 	        _this3.player.emit('SubsettingsPlayrateClick', _this3.SubsettingsItem[0], 0);
 	      });
 	    }
@@ -8412,7 +8421,7 @@
 	  _createClass(SubsettingsSubtitle, [{
 	    key: "init",
 	    value: function init() {
-	      this.el = $$p('div.video-subsettings-subtitle');
+	      this.el = $$n('div.video-subsettings-subtitle');
 	      this.el.dataset.width = '180';
 	      this.el.style.display = 'none';
 	      addClass(this.switchOffIcon, ['video-switch-off']);
@@ -8439,7 +8448,8 @@
 	    value: function initEvent() {
 	      var _this2 = this;
 	      var _loop = function _loop(i) {
-	        _this2.SubsettingsItem[i].instance.el.onclick = function () {
+	        _this2.SubsettingsItem[i].instance.el.onclick = function (e) {
+	          e.stopPropagation();
 	          if (i === 1) {
 	            if (_this2.status === 'show') {
 	              _this2.player.emit('HideSubtitle');
@@ -8473,6 +8483,7 @@
 	      item.instance = instance;
 	      this.el.appendChild(instance.el);
 	      instance.el.addEventListener('click', function (e) {
+	        e.stopPropagation();
 	        _this3.player.emit('SubsettingsSubtitleClick', item, _this3.SubsettingsItem.length - 1);
 	        if (item.click) item.click(item);
 	      });
@@ -8543,6 +8554,7 @@
 	      }
 	      this.el.onmouseenter = null;
 	      wrap(this.iconBox).addEventListener(this.clickOrTap, function (e) {
+	        e.stopPropagation();
 	        if (!includeClass(_this2.icon, 'video-subsettings-animate')) {
 	          addClass(_this2.icon, ['video-subsettings-animate']);
 	        } else {
@@ -8732,7 +8744,8 @@
 	    // 当鼠标或者手指按下的时刻开始启动录屏
 	  }, {
 	    key: "onDown",
-	    value: function onDown() {
+	    value: function onDown(e) {
+	      e.stopPropagation();
 	      addClass(this.icon, ['video-videoshot-animate']);
 	      if (this.player.video.played) {
 	        this.videoShot();
@@ -8812,8 +8825,8 @@
 	    key: "createInProgressToast",
 	    value: function createInProgressToast() {
 	      var inProgressIcon = createSvg(countdownPath, '0 0 1024 1024');
-	      var dom = $$p('div.video-videoshot-inprogress-toast');
-	      var span = $$p('span');
+	      var dom = $$n('div.video-videoshot-inprogress-toast');
+	      var span = $$n('span');
 	      span.innerText = "\u5F00\u59CB\u5F55\u5C4F\uFF0C\u6700\u591A\u5F55\u523630\u79D2; \u8FD8\u5269".concat(this.countDown, "\u79D2");
 	      dom.appendChild(inProgressIcon);
 	      dom.appendChild(span);
@@ -8824,8 +8837,8 @@
 	    key: "createSuccessToast",
 	    value: function createSuccessToast() {
 	      var successIcon = createSvg(confirmPath, '0 0 1024 1024');
-	      var dom = $$p('div.video-videoshot-success-toast');
-	      var span = $$p('span');
+	      var dom = $$n('div.video-videoshot-success-toast');
+	      var span = $$n('span');
 	      span.innerText = "\u5F55\u5236\u6210\u529F!";
 	      dom.appendChild(successIcon);
 	      dom.appendChild(span);
@@ -8871,15 +8884,15 @@
 	  trim: createMethod(3)
 	};
 
-	var global$a = global$r;
+	var global$7 = global$o;
 	var fails$7 = fails$x;
 	var uncurryThis$4 = functionUncurryThis;
 	var toString$3 = toString$b;
 	var trim$1 = stringTrim.trim;
 	var whitespaces$1 = whitespaces$3;
 
-	var $parseInt$1 = global$a.parseInt;
-	var Symbol$2 = global$a.Symbol;
+	var $parseInt$1 = global$7.parseInt;
+	var Symbol$2 = global$7.Symbol;
 	var ITERATOR$1 = Symbol$2 && Symbol$2.iterator;
 	var hex = /^[+-]?0x/i;
 	var exec = uncurryThis$4(hex.exec);
@@ -8894,12 +8907,12 @@
 	  return $parseInt$1(S, (radix >>> 0) || (exec(hex, S) ? 16 : 10));
 	} : $parseInt$1;
 
-	var $$j = _export;
+	var $$h = _export;
 	var $parseInt = numberParseInt;
 
 	// `parseInt` method
 	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	$$j({ global: true, forced: parseInt != $parseInt }, {
+	$$h({ global: true, forced: parseInt != $parseInt }, {
 	  parseInt: $parseInt
 	});
 
@@ -8907,17 +8920,17 @@
 
 	var _parseInt$6 = path$7.parseInt;
 
-	var parent$p = _parseInt$6;
+	var parent$q = _parseInt$6;
 
-	var _parseInt$5 = parent$p;
+	var _parseInt$5 = parent$q;
 
-	var parent$o = _parseInt$5;
+	var parent$p = _parseInt$5;
 
-	var _parseInt$4 = parent$o;
+	var _parseInt$4 = parent$p;
 
-	var parent$n = _parseInt$4;
+	var parent$o = _parseInt$4;
 
-	var _parseInt$3 = parent$n;
+	var _parseInt$3 = parent$o;
 
 	var _parseInt$2 = _parseInt$3;
 
@@ -8958,23 +8971,23 @@
 	      addClass(this.el, ['video-volume', 'video-controller']);
 	      this.el['aria-label'] = '音量';
 	      addClass(this.hideBox, ['video-volume-set']);
-	      this.volumeProgress = $$p('div.video-volume-progress', {
+	      this.volumeProgress = $$n('div.video-volume-progress', {
 	        style: {
 	          height: '70px'
 	        }
 	      });
-	      this.volumeShow = $$p('div.video-volume-show');
+	      this.volumeShow = $$n('div.video-volume-show');
 	      this.volumeShow.innerText = (this.volume * 100).toFixed(0);
 	      // this.volumeCompleted = new VolumeCompletedProgress(
 	      //   this.player,
 	      //   this.volumeProgress,
 	      //   'div.video-volume-completed'
 	      // )
-	      this.volumeCompleted = $$p('div.video-volume-completed');
+	      this.volumeCompleted = $$n('div.video-volume-completed');
 	      this.volumeProgress.appendChild(this.volumeCompleted);
 	      this.hideBox.appendChild(this.volumeShow);
 	      this.hideBox.appendChild(this.volumeProgress);
-	      this.volumeDot = $$p('div.video-volume-dot');
+	      this.volumeDot = $$n('div.video-volume-dot');
 	      this.volumeProgress.appendChild(this.volumeDot);
 	      this.icon = createSvg(volumePath$1);
 	      this.iconBox.appendChild(this.icon);
@@ -9004,6 +9017,7 @@
 	        _this2.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, _this2);
 	      };
 	      this.volumeDot.onmousedown = function (e) {
+	        e.stopPropagation();
 	        _this2.mouseY = e.pageY;
 	        var top = _parseInt$1(getComputedStyle(_this2.volumeDot).top);
 	        document.body.onmousemove = function (e) {
@@ -9088,9 +9102,9 @@
 	      // this.leftArea = $('div.video-subplay')
 	      // this.mediumArea = $('div.video-medium')
 	      // this.rightArea = $('div.video-settings')
-	      this.leftArea = $$p('div.video-bottombar-left');
-	      this.mediumArea = $$p('div.video-bottombar-medium');
-	      this.rightArea = $$p('div.video-bottombar-right');
+	      this.leftArea = $$n('div.video-bottombar-left');
+	      this.mediumArea = $$n('div.video-bottombar-medium');
+	      this.rightArea = $$n('div.video-bottombar-right');
 	      this.el.appendChild(this.leftArea);
 	      this.el.appendChild(this.mediumArea);
 	      this.el.appendChild(this.rightArea);
@@ -9124,7 +9138,7 @@
 	  return Controller;
 	}(Component);
 
-	var global$9 = global$r;
+	var global$6 = global$o;
 	var fails$6 = fails$x;
 	var uncurryThis$3 = functionUncurryThis;
 	var toString$2 = toString$b;
@@ -9132,8 +9146,8 @@
 	var whitespaces = whitespaces$3;
 
 	var charAt = uncurryThis$3(''.charAt);
-	var $parseFloat$1 = global$9.parseFloat;
-	var Symbol$1 = global$9.Symbol;
+	var $parseFloat$1 = global$6.parseFloat;
+	var Symbol$1 = global$6.Symbol;
 	var ITERATOR = Symbol$1 && Symbol$1.iterator;
 	var FORCED$1 = 1 / $parseFloat$1(whitespaces + '-0') !== -Infinity
 	  // MS Edge 18- broken with boxed symbols
@@ -9147,12 +9161,12 @@
 	  return result === 0 && charAt(trimmedString, 0) == '-' ? -0 : result;
 	} : $parseFloat$1;
 
-	var $$i = _export;
+	var $$g = _export;
 	var $parseFloat = numberParseFloat;
 
 	// `parseFloat` method
 	// https://tc39.es/ecma262/#sec-parsefloat-string
-	$$i({ global: true, forced: parseFloat != $parseFloat }, {
+	$$g({ global: true, forced: parseFloat != $parseFloat }, {
 	  parseFloat: $parseFloat
 	});
 
@@ -9160,17 +9174,17 @@
 
 	var _parseFloat$6 = path$6.parseFloat;
 
-	var parent$m = _parseFloat$6;
+	var parent$n = _parseFloat$6;
 
-	var _parseFloat$5 = parent$m;
+	var _parseFloat$5 = parent$n;
 
-	var parent$l = _parseFloat$5;
+	var parent$m = _parseFloat$5;
 
-	var _parseFloat$4 = parent$l;
+	var _parseFloat$4 = parent$m;
 
-	var parent$k = _parseFloat$4;
+	var parent$l = _parseFloat$4;
 
-	var _parseFloat$3 = parent$k;
+	var _parseFloat$3 = parent$l;
 
 	var _parseFloat$2 = _parseFloat$3;
 
@@ -9208,9 +9222,9 @@
 	  }, {
 	    key: "initBaseTemplate",
 	    value: function initBaseTemplate() {
-	      this.dot = $$p('div');
-	      this.completedProgress = $$p('div');
-	      this.bufferProgress = $$p('div');
+	      this.dot = $$n('div');
+	      this.completedProgress = $$n('div');
+	      this.bufferProgress = $$n('div');
 	      this.el.append(this.dot, this.completedProgress, this.bufferProgress);
 	    }
 	  }, {
@@ -9256,6 +9270,7 @@
 	        _this3.emit(EVENT.PROGRESS_MOUSE_LEAVE, e, ctx);
 	      };
 	      this.el.onclick = function (e) {
+	        e.stopPropagation();
 	        if (e.target === _this3.dot) return;
 	        _this3.emit(EVENT.PROGRESS_CLICK, e.offsetX, ctx);
 	      };
@@ -9420,9 +9435,9 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      this.leftArea = $$p('div.video-mediumbar-left');
-	      this.mediumArea = $$p('div.video-mediumbar-medium');
-	      this.rightArea = $$p('div.video-mediumbar-right');
+	      this.leftArea = $$n('div.video-mediumbar-left');
+	      this.mediumArea = $$n('div.video-mediumbar-medium');
+	      this.rightArea = $$n('div.video-mediumbar-right');
 	      this.el.append(this.leftArea, this.mediumArea, this.rightArea);
 	    }
 	  }, {
@@ -18232,19 +18247,188 @@
 	  return MediaPlayer;
 	}();
 
-	var $$h = _export;
-	var $includes = arrayIncludes.includes;
+	var $$f = _export;
+	var toObject = toObject$a;
+	var nativeKeys = objectKeys$3;
 	var fails$5 = fails$x;
 
+	var FAILS_ON_PRIMITIVES = fails$5(function () { nativeKeys(1); });
+
+	// `Object.keys` method
+	// https://tc39.es/ecma262/#sec-object.keys
+	$$f({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
+	  keys: function keys(it) {
+	    return nativeKeys(toObject(it));
+	  }
+	});
+
+	var path$5 = path$n;
+
+	var keys$5 = path$5.Object.keys;
+
+	var parent$k = keys$5;
+
+	var keys$4 = parent$k;
+
+	var parent$j = keys$4;
+
+	var keys$3 = parent$j;
+
+	var parent$i = keys$3;
+
+	var keys$2 = parent$i;
+
+	var keys$1 = keys$2;
+
+	var keys = keys$1;
+
+	var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys);
+
+	var path$4 = path$n;
+
+	var getOwnPropertySymbols$5 = path$4.Object.getOwnPropertySymbols;
+
+	var parent$h = getOwnPropertySymbols$5;
+
+	var getOwnPropertySymbols$4 = parent$h;
+
+	var parent$g = getOwnPropertySymbols$4;
+
+	var getOwnPropertySymbols$3 = parent$g;
+
+	var parent$f = getOwnPropertySymbols$3;
+
+	var getOwnPropertySymbols$2 = parent$f;
+
+	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
+
+	var getOwnPropertySymbols = getOwnPropertySymbols$1;
+
+	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
+
+	var getOwnPropertyDescriptor$7 = {exports: {}};
+
+	var $$e = _export;
+	var fails$4 = fails$x;
+	var toIndexedObject$1 = toIndexedObject$a;
+	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
+	var DESCRIPTORS$1 = descriptors;
+
+	var FORCED = !DESCRIPTORS$1 || fails$4(function () { nativeGetOwnPropertyDescriptor(1); });
+
+	// `Object.getOwnPropertyDescriptor` method
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+	$$e({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS$1 }, {
+	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
+	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
+	  }
+	});
+
+	var path$3 = path$n;
+
+	var Object$1 = path$3.Object;
+
+	var getOwnPropertyDescriptor$6 = getOwnPropertyDescriptor$7.exports = function getOwnPropertyDescriptor(it, key) {
+	  return Object$1.getOwnPropertyDescriptor(it, key);
+	};
+
+	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$6.sham = true;
+
+	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$7.exports;
+
+	var parent$e = getOwnPropertyDescriptorExports;
+
+	var getOwnPropertyDescriptor$5 = parent$e;
+
+	var parent$d = getOwnPropertyDescriptor$5;
+
+	var getOwnPropertyDescriptor$4 = parent$d;
+
+	var parent$c = getOwnPropertyDescriptor$4;
+
+	var getOwnPropertyDescriptor$3 = parent$c;
+
+	var getOwnPropertyDescriptor$2 = getOwnPropertyDescriptor$3;
+
+	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
+
+	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$1);
+
+	var getBuiltIn$3 = getBuiltIn$h;
+	var uncurryThis$2 = functionUncurryThis;
+	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
+	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
+	var anObject$2 = anObject$f;
+
+	var concat = uncurryThis$2([].concat);
+
+	// all object keys, includes non-enumerable and symbols
+	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
+	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
+	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
+	};
+
+	var $$d = _export;
+	var DESCRIPTORS = descriptors;
+	var ownKeys$2 = ownKeys$3;
+	var toIndexedObject = toIndexedObject$a;
+	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
+	var createProperty = createProperty$6;
+
+	// `Object.getOwnPropertyDescriptors` method
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
+	$$d({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
+	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
+	    var O = toIndexedObject(object);
+	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
+	    var keys = ownKeys$2(O);
+	    var result = {};
+	    var index = 0;
+	    var key, descriptor;
+	    while (keys.length > index) {
+	      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
+	      if (descriptor !== undefined) createProperty(result, key, descriptor);
+	    }
+	    return result;
+	  }
+	});
+
+	var path$2 = path$n;
+
+	var getOwnPropertyDescriptors$5 = path$2.Object.getOwnPropertyDescriptors;
+
+	var parent$b = getOwnPropertyDescriptors$5;
+
+	var getOwnPropertyDescriptors$4 = parent$b;
+
+	var parent$a = getOwnPropertyDescriptors$4;
+
+	var getOwnPropertyDescriptors$3 = parent$a;
+
+	var parent$9 = getOwnPropertyDescriptors$3;
+
+	var getOwnPropertyDescriptors$2 = parent$9;
+
+	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
+
+	var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
+
+	var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors);
+
+	var $$c = _export;
+	var $includes = arrayIncludes.includes;
+	var fails$3 = fails$x;
+
 	// FF99+ bug
-	var BROKEN_ON_SPARSE = fails$5(function () {
+	var BROKEN_ON_SPARSE = fails$3(function () {
 	  // eslint-disable-next-line es/no-array-prototype-includes -- detection
 	  return !Array(1).includes();
 	});
 
 	// `Array.prototype.includes` method
 	// https://tc39.es/ecma262/#sec-array.prototype.includes
-	$$h({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+	$$c({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
 	  includes: function includes(el /* , fromIndex = 0 */) {
 	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
 	  }
@@ -18293,18 +18477,18 @@
 	  } return false;
 	};
 
-	var $$g = _export;
-	var uncurryThis$2 = functionUncurryThis;
+	var $$b = _export;
+	var uncurryThis$1 = functionUncurryThis;
 	var notARegExp = notARegexp;
 	var requireObjectCoercible = requireObjectCoercible$5;
 	var toString$1 = toString$b;
 	var correctIsRegExpLogic = correctIsRegexpLogic;
 
-	var stringIndexOf = uncurryThis$2(''.indexOf);
+	var stringIndexOf = uncurryThis$1(''.indexOf);
 
 	// `String.prototype.includes` method
 	// https://tc39.es/ecma262/#sec-string.prototype.includes
-	$$g({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+	$$b({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
 	  includes: function includes(searchString /* , position = 0 */) {
 	    return !!~stringIndexOf(
 	      toString$1(requireObjectCoercible(this)),
@@ -18333,17 +18517,17 @@
 	  } return own;
 	};
 
-	var parent$j = includes$5;
+	var parent$8 = includes$5;
 
-	var includes$4 = parent$j;
+	var includes$4 = parent$8;
 
-	var parent$i = includes$4;
+	var parent$7 = includes$4;
 
-	var includes$3 = parent$i;
+	var includes$3 = parent$7;
 
-	var parent$h = includes$3;
+	var parent$6 = includes$3;
 
-	var includes$2 = parent$h;
+	var includes$2 = parent$6;
 
 	var includes$1 = includes$2;
 
@@ -18351,381 +18535,15 @@
 
 	var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes);
 
-	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Loading = /*#__PURE__*/function (_Component) {
-	  _inherits(Loading, _Component);
-	  var _super = _createSuper$8(Loading);
-	  function Loading(player, msg, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, Loading);
-	    _this = _super.call(this, null, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "message", void 0);
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.container = container;
-	    _this.message = msg;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Loading, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-loading']);
-	      this.loadingBox = $$p('div');
-	      this.messageBox = $$p('div.video-loading-msgbox');
-	      this.messageBox.innerText = this.message;
-	      this.el.appendChild(this.loadingBox);
-	      this.el.appendChild(this.messageBox);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {}
-	  }, {
-	    key: "addLoading",
-	    value: function addLoading() {
-	      var _context;
-	      if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
-	        this.container.appendChild(this.el);
-	      }
-	    }
-	  }, {
-	    key: "removeLoading",
-	    value: function removeLoading() {
-	      var _context2;
-	      if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
-	        this.container.removeChild(this.el);
-	      }
-	    }
-	  }]);
-	  return Loading;
-	}(Component);
-
-	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var TimeLoading = /*#__PURE__*/function (_Loading) {
-	  _inherits(TimeLoading, _Loading);
-	  var _super = _createSuper$7(TimeLoading);
-	  // el: div.video-loading
-	  function TimeLoading(player, msg, container) {
-	    var _this;
-	    _classCallCheck(this, TimeLoading);
-	    _this = _super.call(this, player, msg, container);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
-	    addClass(_this.loadingBox, ['video-loading-loadingbox']);
-	    _this.initEvent();
-	    return _this;
-	  }
-	  _createClass(TimeLoading, [{
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      // 在视频由于需要缓冲下一帧而停止时触发
-	      this.player.on(EVENT.WAITING, function () {
-	        _this2.addLoading();
-	      });
-	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function () {
-	        _this2.removeLoading();
-	      });
-	    }
-	  }]);
-	  return TimeLoading;
-	}(Loading);
-
-	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var ErrorLoading = /*#__PURE__*/function (_Loading) {
-	  _inherits(ErrorLoading, _Loading);
-	  var _super = _createSuper$6(ErrorLoading);
-	  // el: div.video-loading
-	  function ErrorLoading(player, msg, container) {
-	    var _this;
-	    _classCallCheck(this, ErrorLoading);
-	    _this = _super.call(this, player, msg, container);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
-	    addClass(_this.loadingBox, ['video-loading-errorloading']);
-	    _this.initEvent();
-	    return _this;
-	  }
-	  _createClass(ErrorLoading, [{
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      // 视频加载发生错误时
-	      this.player.on(EVENT.ERROR, function (e) {
-	        _this2.addLoading();
-	      });
-	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function (e) {
-	        _this2.removeLoading();
-	      });
-	    }
-	  }]);
-	  return ErrorLoading;
-	}(Loading);
-
-	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var TopBar = /*#__PURE__*/function (_Component) {
-	  _inherits(TopBar, _Component);
-	  var _super = _createSuper$5(TopBar);
-	  // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
-	  function TopBar(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, TopBar);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
-	    // el: div.video-topbar.video-topbar-hidden
-	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "timer", null);
-	    _this.player = player;
-	    _this.props = props || {};
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(TopBar, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	    /**
-	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
-	     */
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
-	      this.leftArea = $$p('div.video-topbar-left');
-	      this.rightArea = $$p('div.video-topbar-right');
-	      this.el.appendChild(this.leftArea);
-	      this.el.appendChild(this.rightArea);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
-	        _this2.onShowToolBar();
-	      });
-	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
-	        _this2.onHideToolBar();
-	      });
-	    }
-	  }, {
-	    key: "hideToolBar",
-	    value: function hideToolBar() {
-	      if (!includeClass(this.el, 'video-topbar-hidden')) {
-	        addClass(this.el, ['video-topbar-hidden']);
-	      }
-	    }
-	  }, {
-	    key: "showToolBar",
-	    value: function showToolBar() {
-	      var _this3 = this;
-	      if (includeClass(this.el, 'video-topbar-hidden')) {
-	        removeClass(this.el, ['video-topbar-hidden']);
-	      }
-	      this.timer = window.setTimeout(function () {
-	        _this3.hideToolBar();
-	      }, 3000);
-	    }
-	  }, {
-	    key: "onShowToolBar",
-	    value: function onShowToolBar() {
-	      if (this.timer) {
-	        window.clearTimeout(this.timer);
-	        this.timer = null;
-	      }
-	      this.showToolBar();
-	    }
-	  }, {
-	    key: "onHideToolBar",
-	    value: function onHideToolBar() {
-	      this.hideToolBar();
-	    }
-	  }]);
-	  return TopBar;
-	}(Component);
-
-	var env = window.navigator.userAgent.toLowerCase();
-	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
-	var Env = {
-	  isInWeixin: function isInWeixin() {
-	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
-	  },
-	  isInApp: function isInApp() {
-	    return /(^|;\s)app\//.test(env);
-	  },
-	  isInIOS: function isInIOS() {
-	    return env.match(/(iphone|ipod|ipad);?/i);
-	  },
-	  isInAndroid: function isInAndroid() {
-	    return env.match(/android|adr/i);
-	  },
-	  isInPc: function isInPc() {
-	    return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin());
-	  },
-	  get env() {
-	    return this.isInPc() ? 'PC' : 'Mobile';
-	  }
-	};
-
-	function styleInject(css, ref) {
-	  if ( ref === void 0 ) ref = {};
-	  var insertAt = ref.insertAt;
-
-	  if (!css || typeof document === 'undefined') { return; }
-
-	  var head = document.head || document.getElementsByTagName('head')[0];
-	  var style = document.createElement('style');
-	  style.type = 'text/css';
-
-	  if (insertAt === 'top') {
-	    if (head.firstChild) {
-	      head.insertBefore(style, head.firstChild);
-	    } else {
-	      head.appendChild(style);
-	    }
-	  } else {
-	    head.appendChild(style);
-	  }
-
-	  if (style.styleSheet) {
-	    style.styleSheet.cssText = css;
-	  } else {
-	    style.appendChild(document.createTextNode(css));
-	  }
-	}
-
-	var css_248z$2 = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
-	styleInject(css_248z$2);
-
-	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var MobileVolume = /*#__PURE__*/function (_Component) {
-	  _inherits(MobileVolume, _Component);
-	  var _super = _createSuper$4(MobileVolume);
-	  function MobileVolume(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, MobileVolume);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'MobileVolume');
-	    // el: div.video-mobile-medium-wrapper
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "progressBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "completedBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "icon", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "timer", 0);
-	    _this.player = player;
-	    _this.props = props || {};
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(MobileVolume, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-mobile-medium-wrapper']);
-	      this.el.style.display = 'none';
-	      this.iconBox = $$p('div.video-mobile-medium-iconbox');
-	      this.progressBox = $$p('div.video-mobile-medium-progressbox');
-	      this.completedBox = $$p('div.video-mobile-medium-completed', {
-	        style: {
-	          width: '0px'
-	        }
-	      });
-	      this.icon = createSvg(volumePath$1);
-	      this.iconBox.appendChild(this.icon);
-	      this.progressBox.appendChild(this.completedBox);
-	      this.el.appendChild(this.iconBox);
-	      this.el.appendChild(this.progressBox);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      var width = this.completedBox.clientWidth;
-	      this.player.on(EVENT.MOVE_VERTICAL, function (e) {
-	        // console.log('正在滑动')
-	        if (_this2.timer) {
-	          window.clearInterval(_this2.timer);
-	        }
-	        _this2.timer = null;
-	        _this2.el.style.display = '';
-	        var dy = e.deltaY;
-	        var scale = (width + -dy) / _this2.progressBox.clientWidth;
-	        if (scale < 0) {
-	          scale = 0;
-	        } else if (scale > 1) {
-	          scale = 1;
-	        }
-	        // console.log(scale)
-	        _this2.completedBox.style.width = scale * 100 + '%';
-	        _this2.player.video.volume = scale;
-	      });
-	      this.player.on(EVENT.SLIDE_VERTICAL, function (e) {
-	        // console.log('滑动结束')
-	        width = _this2.completedBox.clientWidth;
-	        _this2.timer = window.setTimeout(function () {
-	          _this2.el.style.display = 'none';
-	        }, 600);
-	      });
-	      this.player.on(EVENT.VIDEO_CLICK, function () {
-	        _this2.el.style.display = 'none';
-	      });
-	    }
-	  }]);
-	  return MobileVolume;
-	}(Component);
-
-	var getBuiltIn$3 = getBuiltIn$h;
-	var uncurryThis$1 = functionUncurryThis;
-	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
-	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
-	var anObject$2 = anObject$f;
-
-	var concat = uncurryThis$1([].concat);
-
-	// all object keys, includes non-enumerable and symbols
-	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
-	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
-	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
-	};
-
 	var hasOwn$1 = hasOwnProperty_1;
-	var ownKeys$2 = ownKeys$3;
-	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
+	var ownKeys$1 = ownKeys$3;
+	var getOwnPropertyDescriptorModule = objectGetOwnPropertyDescriptor;
 	var definePropertyModule = objectDefineProperty;
 
 	var copyConstructorProperties$1 = function (target, source, exceptions) {
-	  var keys = ownKeys$2(source);
+	  var keys = ownKeys$1(source);
 	  var defineProperty = definePropertyModule.f;
-	  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
+	  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
 	  for (var i = 0; i < keys.length; i++) {
 	    var key = keys[i];
 	    if (!hasOwn$1(target, key) && !(exceptions && hasOwn$1(exceptions, key))) {
@@ -18761,10 +18579,10 @@
 	  } return stack;
 	};
 
-	var fails$4 = fails$x;
+	var fails$2 = fails$x;
 	var createPropertyDescriptor$1 = createPropertyDescriptor$8;
 
-	var errorStackInstallable = !fails$4(function () {
+	var errorStackInstallable = !fails$2(function () {
 	  var error = Error('a');
 	  if (!('stack' in error)) return true;
 	  // eslint-disable-next-line es/no-object-defineproperty -- safe
@@ -18792,7 +18610,7 @@
 	  return argument === undefined ? arguments.length < 2 ? '' : $default : toString(argument);
 	};
 
-	var $$f = _export;
+	var $$a = _export;
 	var isPrototypeOf = objectIsPrototypeOf;
 	var getPrototypeOf = objectGetPrototypeOf;
 	var setPrototypeOf = objectSetPrototypeOf;
@@ -18839,7 +18657,7 @@
 
 	// `AggregateError` constructor
 	// https://tc39.es/ecma262/#sec-aggregate-error-constructor
-	$$f({ global: true, constructor: true, arity: 2 }, {
+	$$a({ global: true, constructor: true, arity: 2 }, {
 	  AggregateError: $AggregateError
 	});
 
@@ -18867,40 +18685,40 @@
 	// eslint-disable-next-line redos/no-vulnerable -- safe
 	var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
 
-	var global$8 = global$r;
+	var global$5 = global$o;
 	var apply$1 = functionApply;
 	var bind$2 = functionBindContext;
-	var isCallable$4 = isCallable$q;
+	var isCallable$3 = isCallable$p;
 	var hasOwn = hasOwnProperty_1;
-	var fails$3 = fails$x;
+	var fails$1 = fails$x;
 	var html = html$2;
-	var arraySlice$1 = arraySlice$8;
+	var arraySlice = arraySlice$7;
 	var createElement = documentCreateElement$1;
-	var validateArgumentsLength$1 = validateArgumentsLength$5;
+	var validateArgumentsLength = validateArgumentsLength$4;
 	var IS_IOS$1 = engineIsIos;
 	var IS_NODE$3 = engineIsNode;
 
-	var set = global$8.setImmediate;
-	var clear = global$8.clearImmediate;
-	var process$3 = global$8.process;
-	var Dispatch = global$8.Dispatch;
-	var Function$2 = global$8.Function;
-	var MessageChannel = global$8.MessageChannel;
-	var String$1 = global$8.String;
+	var set = global$5.setImmediate;
+	var clear = global$5.clearImmediate;
+	var process$3 = global$5.process;
+	var Dispatch = global$5.Dispatch;
+	var Function$1 = global$5.Function;
+	var MessageChannel = global$5.MessageChannel;
+	var String$1 = global$5.String;
 	var counter = 0;
-	var queue$3 = {};
+	var queue$2 = {};
 	var ONREADYSTATECHANGE = 'onreadystatechange';
 	var $location, defer, channel, port;
 
-	fails$3(function () {
+	fails$1(function () {
 	  // Deno throws a ReferenceError on `location` access without `--location` flag
-	  $location = global$8.location;
+	  $location = global$5.location;
 	});
 
 	var run = function (id) {
-	  if (hasOwn(queue$3, id)) {
-	    var fn = queue$3[id];
-	    delete queue$3[id];
+	  if (hasOwn(queue$2, id)) {
+	    var fn = queue$2[id];
+	    delete queue$2[id];
 	    fn();
 	  }
 	};
@@ -18917,23 +18735,23 @@
 
 	var globalPostMessageDefer = function (id) {
 	  // old engines have not location.origin
-	  global$8.postMessage(String$1(id), $location.protocol + '//' + $location.host);
+	  global$5.postMessage(String$1(id), $location.protocol + '//' + $location.host);
 	};
 
 	// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
 	if (!set || !clear) {
 	  set = function setImmediate(handler) {
-	    validateArgumentsLength$1(arguments.length, 1);
-	    var fn = isCallable$4(handler) ? handler : Function$2(handler);
-	    var args = arraySlice$1(arguments, 1);
-	    queue$3[++counter] = function () {
+	    validateArgumentsLength(arguments.length, 1);
+	    var fn = isCallable$3(handler) ? handler : Function$1(handler);
+	    var args = arraySlice(arguments, 1);
+	    queue$2[++counter] = function () {
 	      apply$1(fn, undefined, args);
 	    };
 	    defer(counter);
 	    return counter;
 	  };
 	  clear = function clearImmediate(id) {
-	    delete queue$3[id];
+	    delete queue$2[id];
 	  };
 	  // Node.js 0.8-
 	  if (IS_NODE$3) {
@@ -18955,14 +18773,14 @@
 	  // Browsers with postMessage, skip WebWorkers
 	  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
 	  } else if (
-	    global$8.addEventListener &&
-	    isCallable$4(global$8.postMessage) &&
-	    !global$8.importScripts &&
+	    global$5.addEventListener &&
+	    isCallable$3(global$5.postMessage) &&
+	    !global$5.importScripts &&
 	    $location && $location.protocol !== 'file:' &&
-	    !fails$3(globalPostMessageDefer)
+	    !fails$1(globalPostMessageDefer)
 	  ) {
 	    defer = globalPostMessageDefer;
-	    global$8.addEventListener('message', eventListener, false);
+	    global$5.addEventListener('message', eventListener, false);
 	  // IE8-
 	  } else if (ONREADYSTATECHANGE in createElement('script')) {
 	    defer = function (id) {
@@ -19007,7 +18825,7 @@
 	  }
 	};
 
-	var queue$2 = Queue$2;
+	var queue$1 = Queue$2;
 
 	var userAgent$1 = engineUserAgent;
 
@@ -19017,36 +18835,36 @@
 
 	var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
 
-	var global$7 = global$r;
+	var global$4 = global$o;
 	var bind$1 = functionBindContext;
-	var getOwnPropertyDescriptor$7 = objectGetOwnPropertyDescriptor.f;
+	var getOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
 	var macrotask = task$1.set;
-	var Queue$1 = queue$2;
+	var Queue$1 = queue$1;
 	var IS_IOS = engineIsIos;
 	var IS_IOS_PEBBLE = engineIsIosPebble;
 	var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
 	var IS_NODE$2 = engineIsNode;
 
-	var MutationObserver$1 = global$7.MutationObserver || global$7.WebKitMutationObserver;
-	var document$2 = global$7.document;
-	var process$2 = global$7.process;
-	var Promise$1 = global$7.Promise;
+	var MutationObserver$1 = global$4.MutationObserver || global$4.WebKitMutationObserver;
+	var document$2 = global$4.document;
+	var process$2 = global$4.process;
+	var Promise$1 = global$4.Promise;
 	// Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
-	var queueMicrotaskDescriptor = getOwnPropertyDescriptor$7(global$7, 'queueMicrotask');
+	var queueMicrotaskDescriptor = getOwnPropertyDescriptor(global$4, 'queueMicrotask');
 	var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
 	var notify$1, toggle, node, promise$6, then;
 
 	// modern engines have queueMicrotask method
 	if (!microtask$1) {
-	  var queue$1 = new Queue$1();
+	  var queue = new Queue$1();
 
 	  var flush = function () {
 	    var parent, fn;
 	    if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
-	    while (fn = queue$1.get()) try {
+	    while (fn = queue.get()) try {
 	      fn();
 	    } catch (error) {
-	      if (queue$1.head) notify$1();
+	      if (queue.head) notify$1();
 	      throw error;
 	    }
 	    if (parent) parent.enter();
@@ -19084,15 +18902,15 @@
 	  // - setTimeout
 	  } else {
 	    // `webpack` dev server bug on IE global methods - use bind(fn, global)
-	    macrotask = bind$1(macrotask, global$7);
+	    macrotask = bind$1(macrotask, global$4);
 	    notify$1 = function () {
 	      macrotask(flush);
 	    };
 	  }
 
 	  microtask$1 = function (fn) {
-	    if (!queue$1.head) notify$1();
-	    queue$1.add(fn);
+	    if (!queue.head) notify$1();
+	    queue.add(fn);
 	  };
 	}
 
@@ -19113,9 +18931,9 @@
 	  }
 	};
 
-	var global$6 = global$r;
+	var global$3 = global$o;
 
-	var promiseNativeConstructor = global$6.Promise;
+	var promiseNativeConstructor = global$3.Promise;
 
 	/* global Deno -- Deno case */
 
@@ -19128,9 +18946,9 @@
 	  && typeof window == 'object'
 	  && typeof document == 'object';
 
-	var global$5 = global$r;
+	var global$2 = global$o;
 	var NativePromiseConstructor$5 = promiseNativeConstructor;
-	var isCallable$3 = isCallable$q;
+	var isCallable$2 = isCallable$p;
 	var isForced = isForced_1;
 	var inspectSource = inspectSource$2;
 	var wellKnownSymbol = wellKnownSymbol$q;
@@ -19141,7 +18959,7 @@
 	var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
 	var SPECIES = wellKnownSymbol('species');
 	var SUBCLASSING = false;
-	var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$3(global$5.PromiseRejectionEvent);
+	var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$2(global$2.PromiseRejectionEvent);
 
 	var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
 	  var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
@@ -19198,15 +19016,15 @@
 	  return new PromiseCapability(C);
 	};
 
-	var $$e = _export;
+	var $$9 = _export;
 	var IS_NODE = engineIsNode;
-	var global$4 = global$r;
+	var global$1 = global$o;
 	var call$5 = functionCall;
 	var defineBuiltIn = defineBuiltIn$8;
 	var setToStringTag = setToStringTag$9;
 	var setSpecies = setSpecies$2;
 	var aCallable$4 = aCallable$h;
-	var isCallable$2 = isCallable$q;
+	var isCallable$1 = isCallable$p;
 	var isObject$1 = isObject$j;
 	var anInstance = anInstance$5;
 	var speciesConstructor$1 = speciesConstructor$2;
@@ -19214,7 +19032,7 @@
 	var microtask = microtask_1;
 	var hostReportErrors = hostReportErrors$1;
 	var perform$5 = perform$6;
-	var Queue = queue$2;
+	var Queue = queue$1;
 	var InternalStateModule = internalState;
 	var NativePromiseConstructor$4 = promiseNativeConstructor;
 	var PromiseConstructorDetection = promiseConstructorDetection;
@@ -19229,13 +19047,13 @@
 	var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
 	var PromiseConstructor = NativePromiseConstructor$4;
 	var PromisePrototype = NativePromisePrototype$1;
-	var TypeError$1 = global$4.TypeError;
-	var document$1 = global$4.document;
-	var process$1 = global$4.process;
+	var TypeError$1 = global$1.TypeError;
+	var document$1 = global$1.document;
+	var process$1 = global$1.process;
 	var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
 	var newGenericPromiseCapability = newPromiseCapability$1;
 
-	var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$4.dispatchEvent);
+	var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$1.dispatchEvent);
 	var UNHANDLED_REJECTION = 'unhandledrejection';
 	var REJECTION_HANDLED = 'rejectionhandled';
 	var PENDING = 0;
@@ -19249,7 +19067,7 @@
 	// helpers
 	var isThenable = function (it) {
 	  var then;
-	  return isObject$1(it) && isCallable$2(then = it.then) ? then : false;
+	  return isObject$1(it) && isCallable$1(then = it.then) ? then : false;
 	};
 
 	var callReaction = function (reaction, state) {
@@ -19308,14 +19126,14 @@
 	    event.promise = promise;
 	    event.reason = reason;
 	    event.initEvent(name, false, true);
-	    global$4.dispatchEvent(event);
+	    global$1.dispatchEvent(event);
 	  } else event = { promise: promise, reason: reason };
-	  if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$4['on' + name])) handler(event);
+	  if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$1['on' + name])) handler(event);
 	  else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
 	};
 
 	var onUnhandled = function (state) {
-	  call$5(task, global$4, function () {
+	  call$5(task, global$1, function () {
 	    var promise = state.facade;
 	    var value = state.value;
 	    var IS_UNHANDLED = isUnhandled(state);
@@ -19338,7 +19156,7 @@
 	};
 
 	var onHandleUnhandled = function (state) {
-	  call$5(task, global$4, function () {
+	  call$5(task, global$1, function () {
 	    var promise = state.facade;
 	    if (IS_NODE) {
 	      process$1.emit('rejectionHandled', promise);
@@ -19427,8 +19245,8 @@
 	    var state = getInternalPromiseState(this);
 	    var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
 	    state.parent = true;
-	    reaction.ok = isCallable$2(onFulfilled) ? onFulfilled : true;
-	    reaction.fail = isCallable$2(onRejected) && onRejected;
+	    reaction.ok = isCallable$1(onFulfilled) ? onFulfilled : true;
+	    reaction.fail = isCallable$1(onRejected) && onRejected;
 	    reaction.domain = IS_NODE ? process$1.domain : undefined;
 	    if (state.state == PENDING) state.reactions.add(reaction);
 	    else microtask(function () {
@@ -19452,7 +19270,7 @@
 	  };
 	}
 
-	$$e({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+	$$9({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
 	  Promise: PromiseConstructor
 	});
 
@@ -19467,7 +19285,7 @@
 	  NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
 	});
 
-	var $$d = _export;
+	var $$8 = _export;
 	var call$4 = functionCall;
 	var aCallable$3 = aCallable$h;
 	var newPromiseCapabilityModule$5 = newPromiseCapability$2;
@@ -19477,7 +19295,7 @@
 
 	// `Promise.all` method
 	// https://tc39.es/ecma262/#sec-promise.all
-	$$d({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
+	$$8({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
 	  all: function all(iterable) {
 	    var C = this;
 	    var capability = newPromiseCapabilityModule$5.f(C);
@@ -19506,7 +19324,7 @@
 	  }
 	});
 
-	var $$c = _export;
+	var $$7 = _export;
 	var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
 	var NativePromiseConstructor$2 = promiseNativeConstructor;
 
@@ -19514,13 +19332,13 @@
 
 	// `Promise.prototype.catch` method
 	// https://tc39.es/ecma262/#sec-promise.prototype.catch
-	$$c({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+	$$7({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
 	  'catch': function (onRejected) {
 	    return this.then(undefined, onRejected);
 	  }
 	});
 
-	var $$b = _export;
+	var $$6 = _export;
 	var call$3 = functionCall;
 	var aCallable$2 = aCallable$h;
 	var newPromiseCapabilityModule$4 = newPromiseCapability$2;
@@ -19530,7 +19348,7 @@
 
 	// `Promise.race` method
 	// https://tc39.es/ecma262/#sec-promise.race
-	$$b({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
+	$$6({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
 	  race: function race(iterable) {
 	    var C = this;
 	    var capability = newPromiseCapabilityModule$4.f(C);
@@ -19546,14 +19364,14 @@
 	  }
 	});
 
-	var $$a = _export;
+	var $$5 = _export;
 	var call$2 = functionCall;
 	var newPromiseCapabilityModule$3 = newPromiseCapability$2;
 	var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
 
 	// `Promise.reject` method
 	// https://tc39.es/ecma262/#sec-promise.reject
-	$$a({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+	$$5({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
 	  reject: function reject(r) {
 	    var capability = newPromiseCapabilityModule$3.f(this);
 	    call$2(capability.reject, undefined, r);
@@ -19574,7 +19392,7 @@
 	  return promiseCapability.promise;
 	};
 
-	var $$9 = _export;
+	var $$4 = _export;
 	var getBuiltIn$2 = getBuiltIn$h;
 	var IS_PURE = isPure;
 	var NativePromiseConstructor$1 = promiseNativeConstructor;
@@ -19586,13 +19404,13 @@
 
 	// `Promise.resolve` method
 	// https://tc39.es/ecma262/#sec-promise.resolve
-	$$9({ target: 'Promise', stat: true, forced: IS_PURE  }, {
+	$$4({ target: 'Promise', stat: true, forced: IS_PURE  }, {
 	  resolve: function resolve(x) {
 	    return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
 	  }
 	});
 
-	var $$8 = _export;
+	var $$3 = _export;
 	var call$1 = functionCall;
 	var aCallable$1 = aCallable$h;
 	var newPromiseCapabilityModule$2 = newPromiseCapability$2;
@@ -19602,7 +19420,7 @@
 
 	// `Promise.allSettled` method
 	// https://tc39.es/ecma262/#sec-promise.allsettled
-	$$8({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+	$$3({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
 	  allSettled: function allSettled(iterable) {
 	    var C = this;
 	    var capability = newPromiseCapabilityModule$2.f(C);
@@ -19636,7 +19454,7 @@
 	  }
 	});
 
-	var $$7 = _export;
+	var $$2 = _export;
 	var call = functionCall;
 	var aCallable = aCallable$h;
 	var getBuiltIn$1 = getBuiltIn$h;
@@ -19649,7 +19467,7 @@
 
 	// `Promise.any` method
 	// https://tc39.es/ecma262/#sec-promise.any
-	$$7({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+	$$2({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
 	  any: function any(iterable) {
 	    var C = this;
 	    var AggregateError = getBuiltIn$1('AggregateError');
@@ -19684,28 +19502,28 @@
 	  }
 	});
 
-	var $$6 = _export;
+	var $$1 = _export;
 	var NativePromiseConstructor = promiseNativeConstructor;
-	var fails$2 = fails$x;
+	var fails = fails$x;
 	var getBuiltIn = getBuiltIn$h;
-	var isCallable$1 = isCallable$q;
+	var isCallable = isCallable$p;
 	var speciesConstructor = speciesConstructor$2;
 	var promiseResolve = promiseResolve$2;
 
 	var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
 
 	// Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
-	var NON_GENERIC = !!NativePromiseConstructor && fails$2(function () {
+	var NON_GENERIC = !!NativePromiseConstructor && fails(function () {
 	  // eslint-disable-next-line unicorn/no-thenable -- required for testing
 	  NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
 	});
 
 	// `Promise.prototype.finally` method
 	// https://tc39.es/ecma262/#sec-promise.prototype.finally
-	$$6({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+	$$1({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
 	  'finally': function (onFinally) {
 	    var C = speciesConstructor(this, getBuiltIn('Promise'));
-	    var isFunction = isCallable$1(onFinally);
+	    var isFunction = isCallable(onFinally);
 	    return this.then(
 	      isFunction ? function (x) {
 	        return promiseResolve(C, onFinally()).then(function () { return x; });
@@ -19717,27 +19535,27 @@
 	  }
 	});
 
-	var path$5 = path$n;
+	var path$1 = path$n;
 
-	var promise$5 = path$5.Promise;
+	var promise$5 = path$1.Promise;
 
-	var parent$g = promise$5;
+	var parent$5 = promise$5;
 
 
-	var promise$4 = parent$g;
+	var promise$4 = parent$5;
 
-	var parent$f = promise$4;
+	var parent$4 = promise$4;
 
-	var promise$3 = parent$f;
+	var promise$3 = parent$4;
 
 	// TODO: Remove from `core-js@4`
-	var $$5 = _export;
+	var $ = _export;
 	var newPromiseCapabilityModule = newPromiseCapability$2;
 	var perform = perform$6;
 
 	// `Promise.try` method
 	// https://github.com/tc39/proposal-promise-try
-	$$5({ target: 'Promise', stat: true, forced: true }, {
+	$({ target: 'Promise', stat: true, forced: true }, {
 	  'try': function (callbackfn) {
 	    var promiseCapability = newPromiseCapabilityModule.f(this);
 	    var result = perform(callbackfn);
@@ -19746,97 +19564,20 @@
 	  }
 	});
 
-	var parent$e = promise$3;
+	var parent$3 = promise$3;
 
 	// TODO: Remove from `core-js@4`
 
 
 
 
-	var promise$2 = parent$e;
+	var promise$2 = parent$3;
 
 	var promise$1 = promise$2;
 
 	var promise = promise$1;
 
 	var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
-
-	var $$4 = _export;
-	var global$3 = global$r;
-	var clearImmediate = task$1.clear;
-
-	// `clearImmediate` method
-	// http://w3c.github.io/setImmediate/#si-clearImmediate
-	$$4({ global: true, bind: true, enumerable: true, forced: global$3.clearImmediate !== clearImmediate }, {
-	  clearImmediate: clearImmediate
-	});
-
-	/* global Bun -- Deno case */
-
-	var engineIsBun = typeof Bun == 'function' && Bun && typeof Bun.version == 'string';
-
-	var global$2 = global$r;
-	var apply = functionApply;
-	var isCallable = isCallable$q;
-	var ENGINE_IS_BUN = engineIsBun;
-	var USER_AGENT = engineUserAgent;
-	var arraySlice = arraySlice$8;
-	var validateArgumentsLength = validateArgumentsLength$5;
-
-	var Function$1 = global$2.Function;
-	// dirty IE9- and Bun 0.3.0- checks
-	var WRAP = /MSIE .\./.test(USER_AGENT) || ENGINE_IS_BUN && (function () {
-	  var version = global$2.Bun.version.split('.');
-	  return version.length < 3 || version[0] == 0 && (version[1] < 3 || version[1] == 3 && version[2] == 0);
-	})();
-
-	// IE9- / Bun 0.3.0- setTimeout / setInterval / setImmediate additional parameters fix
-	// https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers
-	// https://github.com/oven-sh/bun/issues/1633
-	var schedulersFix$1 = function (scheduler, hasTimeArg) {
-	  var firstParamIndex = hasTimeArg ? 2 : 1;
-	  return WRAP ? function (handler, timeout /* , ...arguments */) {
-	    var boundArgs = validateArgumentsLength(arguments.length, 1) > firstParamIndex;
-	    var fn = isCallable(handler) ? handler : Function$1(handler);
-	    var params = boundArgs ? arraySlice(arguments, firstParamIndex) : [];
-	    var callback = boundArgs ? function () {
-	      apply(fn, this, params);
-	    } : fn;
-	    return hasTimeArg ? scheduler(callback, timeout) : scheduler(callback);
-	  } : scheduler;
-	};
-
-	var $$3 = _export;
-	var global$1 = global$r;
-	var setTask = task$1.set;
-	var schedulersFix = schedulersFix$1;
-
-	// https://github.com/oven-sh/bun/issues/1633
-	var setImmediate$5 = global$1.setImmediate ? schedulersFix(setTask, false) : setTask;
-
-	// `setImmediate` method
-	// http://w3c.github.io/setImmediate/#si-setImmediate
-	$$3({ global: true, bind: true, enumerable: true, forced: global$1.setImmediate !== setImmediate$5 }, {
-	  setImmediate: setImmediate$5
-	});
-
-	var path$4 = path$n;
-
-	var setImmediate$4 = path$4.setImmediate;
-
-	var parent$d = setImmediate$4;
-
-	var setImmediate$3 = parent$d;
-
-	var parent$c = setImmediate$3;
-
-	var setImmediate$2 = parent$c;
-
-	var setImmediate$1 = setImmediate$2;
-
-	var setImmediate = setImmediate$1;
-
-	var _setImmediate = /*@__PURE__*/getDefaultExportFromCjs(setImmediate);
 
 	function isNative(Ctor) {
 	  return typeof Ctor === 'function' && /native code/.test(Ctor.toString());
@@ -19855,16 +19596,1164 @@
 	    });
 	    count++;
 	    node.data = String(count);
-	  } else if (typeof _setImmediate !== 'undefined' && isNative(_setImmediate)) {
-	    _setImmediate(function () {
-	      return cb();
-	    });
 	  } else {
 	    setTimeout(function () {
 	      return cb();
 	    });
 	  }
 	}
+
+	var PriorityQueue = /*#__PURE__*/function () {
+	  function PriorityQueue() {
+	    _classCallCheck(this, PriorityQueue);
+	    _defineProperty(this, "queue", void 0);
+	    _defineProperty(this, "newestTime", 0);
+	    _defineProperty(this, "maxInterval", 5);
+	    this.queue = [];
+	  }
+	  // 清理过期数据
+	  _createClass(PriorityQueue, [{
+	    key: "removeOutTimeData",
+	    value: function removeOutTimeData() {
+	      var _context,
+	        _this = this;
+	      _filterInstanceProperty(_context = this.queue).call(_context, function (value, index) {
+	        return _this.newestTime - value.timestamp <= _this.maxInterval;
+	      });
+	    }
+	    // 添加新的数据
+	  }, {
+	    key: "add",
+	    value: function add(data) {
+	      this.newestTime = data.timestamp;
+	      this.queue.unshift(data);
+	      // 清除过期的数据
+	      this.removeOutTimeData();
+	      return this;
+	    }
+	    // 直接将数据添加到缓冲队列的末尾
+	  }, {
+	    key: "push",
+	    value: function push(data) {
+	      this.queue.push(data);
+	      return this;
+	    }
+	    // 弹出队列的首个数据
+	  }, {
+	    key: "shift",
+	    value: function shift() {
+	      return this.queue.shift();
+	    }
+	  }, {
+	    key: "splice",
+	    value: function splice(index, number) {
+	      var _context2;
+	      _spliceInstanceProperty(_context2 = this.queue).call(_context2, index, number);
+	      return this;
+	    }
+	  }, {
+	    key: "clear",
+	    value: function clear() {
+	      while (this.queue.length) {
+	        this.queue.pop();
+	      }
+	      return this;
+	    }
+	  }, {
+	    key: "forEach",
+	    value: function forEach(cb) {
+	      for (var index = 0; index < this.queue.length; index++) {
+	        cb(this.queue[index], index);
+	      }
+	    }
+	  }, {
+	    key: "length",
+	    get: function get() {
+	      return this.queue.length;
+	    }
+	  }]);
+	  return PriorityQueue;
+	}();
+
+	function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context16, _context17; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context16 = ownKeys(Object(source), !0)).call(_context16, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context17 = ownKeys(Object(source))).call(_context17, function (key) { Object.defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+	/**
+	 * @description 弹幕类，只专注于实现弹幕的基本逻辑，View层
+	 */
+	var flag = false;
+	var Danmaku = /*#__PURE__*/function () {
+	  function Danmaku(container, player) {
+	    _classCallCheck(this, Danmaku);
+	    _defineProperty(this, "queue", void 0);
+	    _defineProperty(this, "moovingQueue", []);
+	    // 正在运动中的弹幕
+	    _defineProperty(this, "container", void 0);
+	    _defineProperty(this, "player", void 0);
+	    _defineProperty(this, "timer", null);
+	    _defineProperty(this, "renderInterval", 100);
+	    // 每一条弹幕轨道的高度默认为10px
+	    _defineProperty(this, "trackHeight", 10);
+	    _defineProperty(this, "isStopped", true);
+	    _defineProperty(this, "isHidden", false);
+	    _defineProperty(this, "tracks", void 0);
+	    _defineProperty(this, "defaultDanma", {
+	      message: 'default message',
+	      fontColor: '#fff',
+	      fontSize: this.trackHeight,
+	      fontFamily: '',
+	      fontWeight: 500
+	    });
+	    this.queue = new PriorityQueue();
+	    this.container = container; // div.video-danmaku-container
+	    this.player = player;
+	    this.tracks = new Array(this.container.clientHeight / this.trackHeight);
+	    this.init();
+	  }
+	  _createClass(Danmaku, [{
+	    key: "init",
+	    value: function init() {
+	      for (var i = 0; i < this.tracks.length; i++) {
+	        if (!this.tracks[i]) {
+	          this.tracks[i] = {
+	            track: {
+	              id: 0,
+	              priority: 0
+	            },
+	            datas: []
+	          };
+	        }
+	        this.tracks[i].track = {
+	          id: i,
+	          priority: 15 - i
+	        };
+	      }
+	    }
+	    // 暂停所有的弹幕
+	  }, {
+	    key: "pause",
+	    value: function pause() {
+	      var _context,
+	        _this = this;
+	      this.isStopped = true;
+	      window.clearTimeout(this.timer);
+	      _forEachInstanceProperty(_context = this.moovingQueue).call(_context, function (data) {
+	        _this.pauseOneData(data);
+	      });
+	    }
+	    // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
+	  }, {
+	    key: "resume",
+	    value: function resume() {
+	      var _this2 = this,
+	        _context2;
+	      this.isStopped = false;
+	      this.timer = window.setTimeout(function () {
+	        _this2.render();
+	      }, this.renderInterval);
+	      _forEachInstanceProperty(_context2 = this.moovingQueue).call(_context2, function (data) {
+	        _this2.resumeOneData(data);
+	      });
+	    }
+	    // 恢复单条弹幕的运动
+	  }, {
+	    key: "resumeOneData",
+	    value: function resumeOneData(data) {
+	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
+	      data.startTime = Date.now();
+	      data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
+	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
+	    }
+	    // 暂停单条弹幕的运动
+	  }, {
+	    key: "pauseOneData",
+	    value: function pauseOneData(data) {
+	      var currentRollDistance = (Date.now() - data.startTime) * data.rollSpeed / 1000;
+	      data.rollDistance = currentRollDistance + (data.rollDistance ? data.rollDistance : 0);
+	      data.dom.style.transition = '';
+	      data.dom.style.transform = "translateX(".concat(-data.rollDistance, "px)");
+	    }
+	  }, {
+	    key: "startDanmaku",
+	    value: function startDanmaku() {
+	      this.render();
+	    }
+	    // 向缓冲区添加正确格式的弹幕
+	  }, {
+	    key: "addData",
+	    value: function addData(data) {
+	      var _this3 = this;
+	      this.queue.push(this.parseData(data));
+	      // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
+	      if (flag) return;
+	      if (this.timer === null) {
+	        nextTick(function () {
+	          _this3.render();
+	        });
+	        flag = true;
+	      }
+	    }
+	  }, {
+	    key: "parseData",
+	    value: function parseData(data) {
+	      if (typeof data === 'string') {
+	        return {
+	          message: data,
+	          fontColor: '#fff',
+	          fontSize: this.trackHeight,
+	          fontFamily: '',
+	          fontWeight: 500,
+	          timestamp: this.player.video.currentTime
+	        };
+	      }
+	      if (_typeof(data) === 'object') {
+	        if (!data.message || data.message === '') {
+	          throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
+	        }
+	        return _Object$assign(_objectSpread(_objectSpread({}, this.defaultDanma), {}, {
+	          timestamp: this.player.video.currentTime
+	        }), data);
+	      }
+	      throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      try {
+	        this.renderToDOM();
+	      } finally {
+	        this.renderEnd();
+	      }
+	    }
+	  }, {
+	    key: "renderEnd",
+	    value: function renderEnd() {
+	      var _this4 = this;
+	      if (this.queue.length === 0) {
+	        window.clearTimeout(this.timer);
+	        this.timer = null;
+	        flag = false;
+	      } else {
+	        this.timer = window.setTimeout(function () {
+	          _this4.render();
+	        }, this.renderInterval);
+	      }
+	    }
+	    // 向指定的DOM元素上渲染一条弹幕
+	  }, {
+	    key: "renderToDOM",
+	    value: function renderToDOM() {
+	      var _this5 = this;
+	      if (this.queue.length === 0) return;
+	      var data = this.queue.shift();
+	      if (!data.dom) {
+	        var dom = $$n('div.video-danmaku-message');
+	        dom.innerText = data.message;
+	        if (data.fontFamily !== '') {
+	          dom.style.fontFamily = data.fontFamily;
+	        }
+	        dom.style.color = data.fontColor;
+	        dom.style.fontSize = data.fontSize + 'px';
+	        dom.style.fontWeight = data.fontWeight + '';
+	        dom.style.position = 'absolute';
+	        dom.style.left = '100%';
+	        dom.style.whiteSpace = 'nowrap';
+	        dom.style.willChange = 'transform';
+	        dom.style.cursor = 'pointer';
+	        dom.style.visibility = this.isHidden ? 'hidden' : '';
+	        data.dom = dom;
+	        this.container.appendChild(dom);
+	      }
+	      data.totalDistance = this.container.clientWidth + data.dom.clientWidth;
+	      data.width = data.dom.clientWidth;
+	      // 弹幕的总的位移时间，用于计算弹幕的速度
+	      data.rollTime = data.rollTime || Math.floor(data.totalDistance * 0.0058 * (Math.random() * 0.3 + 0.7));
+	      data.rollSpeed = _parseFloat$1((data.totalDistance / data.rollTime).toFixed(2));
+	      // useTracks描述的是该弹幕占用了多少个轨道
+	      data.useTracks = Math.ceil(data.dom.clientHeight / this.trackHeight);
+	      // 重点，此处数组y的作用是表明该弹幕占的轨道的id数组
+	      data.y = [];
+	      data.dom.ontransitionstart = function (e) {
+	        data.startTime = Date.now();
+	      };
+	      data.dom.onmouseenter = function () {
+	        if (_this5.isStopped) return;
+	        _this5.pauseOneData(data);
+	      };
+	      data.dom.onmouseleave = function () {
+	        if (_this5.isStopped) return;
+	        _this5.resumeOneData(data);
+	      };
+	      this.addDataToTrack(data);
+	      if (data.y.length === 0) {
+	        var _context3;
+	        if (_includesInstanceProperty(_context3 = _toConsumableArray(this.container.childNodes)).call(_context3, data.dom)) {
+	          this.container.removeChild(data.dom);
+	        }
+	        this.queue.push(data);
+	      } else {
+	        data.dom.style.top = data.y[0] * this.trackHeight + 'px';
+	        this.startAnimate(data);
+	      }
+	    }
+	    // 将指定的data添加到弹幕轨道上
+	  }, {
+	    key: "addDataToTrack",
+	    value: function addDataToTrack(data) {
+	      var _this6 = this;
+	      // console.log(this.tracks)
+	      // [
+	      //   {track: {id:0, priority: 15}, datas: DanmakuData[]},
+	      //   {track: {id:1, priority: 14}, datas: DanmakuData[]},
+	      //   {track: {id:2, priority: 13}, datas: DanmakuData[]},
+	      //   {track: {id:14, priority: 1}, datas: DanmakuData[]},
+	      // ]
+	      var y = [];
+	      for (var i = 0; i < this.tracks.length; i++) {
+	        var track = this.tracks[i];
+	        var datas = track.datas;
+	        if (datas.length === 0) {
+	          y.push(i);
+	        } else {
+	          var lastItem = datas[datas.length - 1];
+	          // diatance代表的就是在该轨道上弹幕lastItem已经行走的距离
+	          var distance = lastItem.rollSpeed * (Date.now() - lastItem.startTime) / 1000;
+	          if (distance > lastItem.width && (data.rollSpeed <= lastItem.rollSpeed || (distance - lastItem.width) / (data.rollSpeed - lastItem.rollSpeed) > (this.container.clientWidth + lastItem.width - distance) / lastItem.rollSpeed)) {
+	            y.push(i);
+	          } else {
+	            y = [];
+	          }
+	        }
+	        if (y.length >= data.useTracks) {
+	          var _context4;
+	          data.y = y;
+	          _forEachInstanceProperty(_context4 = data.y).call(_context4, function (id) {
+	            _this6.tracks[id].datas.push(data);
+	          });
+	          break;
+	        }
+	      }
+	    }
+	  }, {
+	    key: "removeDataFromTrack",
+	    value: function removeDataFromTrack(data) {
+	      var _context5,
+	        _this7 = this;
+	      _forEachInstanceProperty(_context5 = data.y).call(_context5, function (id) {
+	        var datas = _this7.tracks[id].datas;
+	        var index = _indexOfInstanceProperty(datas).call(datas, data);
+	        if (index === -1) return;
+	        _spliceInstanceProperty(datas).call(datas, index, 1);
+	      });
+	    }
+	  }, {
+	    key: "startAnimate",
+	    value: function startAnimate(data) {
+	      var _this8 = this;
+	      this.moovingQueue.push(data);
+	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
+	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
+	      data.dom.ontransitionend = function (e) {
+	        var _context6;
+	        _this8.container.removeChild(data.dom);
+	        _this8.removeDataFromTrack(data);
+	        var index = _indexOfInstanceProperty(_context6 = _this8.moovingQueue).call(_context6, data);
+	        if (index > -1) {
+	          var _context7;
+	          _spliceInstanceProperty(_context7 = _this8.moovingQueue).call(_context7, index, 1);
+	        }
+	      };
+	    }
+	    // 清空所有的弹幕，包括正在运动中的或者还在缓冲区未被释放的
+	  }, {
+	    key: "flush",
+	    value: function flush() {
+	      var _context8,
+	        _context9,
+	        _this9 = this,
+	        _context11;
+	      _forEachInstanceProperty(_context8 = this.moovingQueue).call(_context8, function (data) {
+	        var _data$dom$parentNode;
+	        (_data$dom$parentNode = data.dom.parentNode) === null || _data$dom$parentNode === void 0 ? void 0 : _data$dom$parentNode.removeChild(data.dom);
+	        data.dom.ontransitionstart = null;
+	        data.dom.ontransitionend = null;
+	      });
+	      _forEachInstanceProperty(_context9 = this.queue).call(_context9, function (data) {
+	        var _context10;
+	        if (_includesInstanceProperty(_context10 = _toConsumableArray(_this9.container.children)).call(_context10, data.dom)) {
+	          var _data$dom$parentNode2;
+	          (_data$dom$parentNode2 = data.dom.parentNode) === null || _data$dom$parentNode2 === void 0 ? void 0 : _data$dom$parentNode2.removeChild(data.dom);
+	          data.dom.ontransitionstart = null;
+	          data.dom.ontransitionend = null;
+	        }
+	      });
+	      // 清空轨道上的所有数据
+	      _forEachInstanceProperty(_context11 = this.tracks).call(_context11, function (obj) {
+	        obj.datas = [];
+	      });
+	      this.moovingQueue = [];
+	      this.queue.clear();
+	    }
+	    // 隐藏所有的弹幕
+	  }, {
+	    key: "close",
+	    value: function close() {
+	      var _context12, _context13;
+	      this.isHidden = true;
+	      _forEachInstanceProperty(_context12 = this.moovingQueue).call(_context12, function (data) {
+	        data.dom.style.visibility = 'hidden';
+	      });
+	      _forEachInstanceProperty(_context13 = this.queue).call(_context13, function (data, index) {
+	        if (data.dom) {
+	          data.dom.style.visibility = 'hidden';
+	        }
+	      });
+	    }
+	  }, {
+	    key: "open",
+	    value: function open() {
+	      var _context14, _context15;
+	      this.isHidden = false;
+	      _forEachInstanceProperty(_context14 = this.moovingQueue).call(_context14, function (data) {
+	        data.dom.style.visibility = '';
+	      });
+	      _forEachInstanceProperty(_context15 = this.queue).call(_context15, function (data, index) {
+	        if (data.dom) {
+	          data.dom.style.visibility = '';
+	        }
+	      });
+	    }
+	  }]);
+	  return Danmaku;
+	}();
+
+	var path = path$n;
+	var apply = functionApply;
+
+	// eslint-disable-next-line es/no-json -- safe
+	if (!path.JSON) path.JSON = { stringify: JSON.stringify };
+
+	// eslint-disable-next-line no-unused-vars -- required for `.length`
+	var stringify$5 = function stringify(it, replacer, space) {
+	  return apply(path.JSON.stringify, null, arguments);
+	};
+
+	var parent$2 = stringify$5;
+
+	var stringify$4 = parent$2;
+
+	var parent$1 = stringify$4;
+
+	var stringify$3 = parent$1;
+
+	var parent = stringify$3;
+
+	var stringify$2 = parent;
+
+	var stringify$1 = stringify$2;
+
+	var stringify = stringify$1;
+
+	var _JSON$stringify = /*@__PURE__*/getDefaultExportFromCjs(stringify);
+
+	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Loading = /*#__PURE__*/function (_Component) {
+	  _inherits(Loading, _Component);
+	  var _super = _createSuper$8(Loading);
+	  function Loading(player, msg, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, Loading);
+	    _this = _super.call(this, null, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "message", void 0);
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.container = container;
+	    _this.message = msg;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Loading, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-loading']);
+	      this.loadingBox = $$n('div');
+	      this.messageBox = $$n('div.video-loading-msgbox');
+	      this.messageBox.innerText = this.message;
+	      this.el.appendChild(this.loadingBox);
+	      this.el.appendChild(this.messageBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {}
+	  }, {
+	    key: "addLoading",
+	    value: function addLoading() {
+	      var _context;
+	      if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
+	        this.container.appendChild(this.el);
+	      }
+	    }
+	  }, {
+	    key: "removeLoading",
+	    value: function removeLoading() {
+	      var _context2;
+	      if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
+	        this.container.removeChild(this.el);
+	      }
+	    }
+	  }]);
+	  return Loading;
+	}(Component);
+
+	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var ErrorLoading = /*#__PURE__*/function (_Loading) {
+	  _inherits(ErrorLoading, _Loading);
+	  var _super = _createSuper$7(ErrorLoading);
+	  // el: div.video-loading
+	  function ErrorLoading(player, msg, container) {
+	    var _this;
+	    _classCallCheck(this, ErrorLoading);
+	    _this = _super.call(this, player, msg, container);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
+	    addClass(_this.loadingBox, ['video-loading-errorloading']);
+	    _this.initEvent();
+	    return _this;
+	  }
+	  _createClass(ErrorLoading, [{
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      // 视频加载发生错误时
+	      this.player.on(EVENT.ERROR, function (e) {
+	        _this2.addLoading();
+	      });
+	      // 该视频已准备好开始播放
+	      this.player.on(EVENT.CAN_PLAY, function (e) {
+	        _this2.removeLoading();
+	      });
+	    }
+	  }]);
+	  return ErrorLoading;
+	}(Loading);
+
+	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var TimeLoading = /*#__PURE__*/function (_Loading) {
+	  _inherits(TimeLoading, _Loading);
+	  var _super = _createSuper$6(TimeLoading);
+	  // el: div.video-loading
+	  function TimeLoading(player, msg, container) {
+	    var _this;
+	    _classCallCheck(this, TimeLoading);
+	    _this = _super.call(this, player, msg, container);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
+	    addClass(_this.loadingBox, ['video-loading-loadingbox']);
+	    _this.initEvent();
+	    return _this;
+	  }
+	  _createClass(TimeLoading, [{
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      // 在视频由于需要缓冲下一帧而停止时触发
+	      this.player.on(EVENT.WAITING, function () {
+	        _this2.addLoading();
+	      });
+	      // 该视频已准备好开始播放
+	      this.player.on(EVENT.CAN_PLAY, function () {
+	        _this2.removeLoading();
+	      });
+	    }
+	  }]);
+	  return TimeLoading;
+	}(Loading);
+
+	function styleInject(css, ref) {
+	  if ( ref === void 0 ) ref = {};
+	  var insertAt = ref.insertAt;
+
+	  if (!css || typeof document === 'undefined') { return; }
+
+	  var head = document.head || document.getElementsByTagName('head')[0];
+	  var style = document.createElement('style');
+	  style.type = 'text/css';
+
+	  if (insertAt === 'top') {
+	    if (head.firstChild) {
+	      head.insertBefore(style, head.firstChild);
+	    } else {
+	      head.appendChild(style);
+	    }
+	  } else {
+	    head.appendChild(style);
+	  }
+
+	  if (style.styleSheet) {
+	    style.styleSheet.cssText = css;
+	  } else {
+	    style.appendChild(document.createTextNode(css));
+	  }
+	}
+
+	var css_248z$2 = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
+	styleInject(css_248z$2);
+
+	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var MobileVolume = /*#__PURE__*/function (_Component) {
+	  _inherits(MobileVolume, _Component);
+	  var _super = _createSuper$5(MobileVolume);
+	  function MobileVolume(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, MobileVolume);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'MobileVolume');
+	    // el: div.video-mobile-medium-wrapper
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "progressBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "completedBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "icon", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "timer", 0);
+	    _this.player = player;
+	    _this.props = props || {};
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(MobileVolume, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-mobile-medium-wrapper']);
+	      this.el.style.display = 'none';
+	      this.iconBox = $$n('div.video-mobile-medium-iconbox');
+	      this.progressBox = $$n('div.video-mobile-medium-progressbox');
+	      this.completedBox = $$n('div.video-mobile-medium-completed', {
+	        style: {
+	          width: '0px'
+	        }
+	      });
+	      this.icon = createSvg(volumePath$1);
+	      this.iconBox.appendChild(this.icon);
+	      this.progressBox.appendChild(this.completedBox);
+	      this.el.appendChild(this.iconBox);
+	      this.el.appendChild(this.progressBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      var width = this.completedBox.clientWidth;
+	      this.player.on(EVENT.MOVE_VERTICAL, function (e) {
+	        // console.log('正在滑动')
+	        if (_this2.timer) {
+	          window.clearInterval(_this2.timer);
+	        }
+	        _this2.timer = null;
+	        _this2.el.style.display = '';
+	        var dy = e.deltaY;
+	        var scale = (width + -dy) / _this2.progressBox.clientWidth;
+	        if (scale < 0) {
+	          scale = 0;
+	        } else if (scale > 1) {
+	          scale = 1;
+	        }
+	        // console.log(scale)
+	        _this2.completedBox.style.width = scale * 100 + '%';
+	        _this2.player.video.volume = scale;
+	      });
+	      this.player.on(EVENT.SLIDE_VERTICAL, function (e) {
+	        // console.log('滑动结束')
+	        width = _this2.completedBox.clientWidth;
+	        _this2.timer = window.setTimeout(function () {
+	          _this2.el.style.display = 'none';
+	        }, 600);
+	      });
+	      this.player.on(EVENT.VIDEO_CLICK, function () {
+	        _this2.el.style.display = 'none';
+	      });
+	    }
+	  }]);
+	  return MobileVolume;
+	}(Component);
+
+	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var TopBar = /*#__PURE__*/function (_Component) {
+	  _inherits(TopBar, _Component);
+	  var _super = _createSuper$4(TopBar);
+	  // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
+	  function TopBar(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, TopBar);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
+	    // el: div.video-topbar.video-topbar-hidden
+	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "timer", null);
+	    _this.player = player;
+	    _this.props = props || {};
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(TopBar, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	    /**
+	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
+	     */
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
+	      this.leftArea = $$n('div.video-topbar-left');
+	      this.rightArea = $$n('div.video-topbar-right');
+	      this.el.appendChild(this.leftArea);
+	      this.el.appendChild(this.rightArea);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
+	        _this2.onShowToolBar();
+	      });
+	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
+	        _this2.onHideToolBar();
+	      });
+	    }
+	  }, {
+	    key: "hideToolBar",
+	    value: function hideToolBar() {
+	      if (!includeClass(this.el, 'video-topbar-hidden')) {
+	        addClass(this.el, ['video-topbar-hidden']);
+	      }
+	    }
+	  }, {
+	    key: "showToolBar",
+	    value: function showToolBar() {
+	      var _this3 = this;
+	      if (includeClass(this.el, 'video-topbar-hidden')) {
+	        removeClass(this.el, ['video-topbar-hidden']);
+	      }
+	      this.timer = window.setTimeout(function () {
+	        _this3.hideToolBar();
+	      }, 3000);
+	    }
+	  }, {
+	    key: "onShowToolBar",
+	    value: function onShowToolBar() {
+	      if (this.timer) {
+	        window.clearTimeout(this.timer);
+	        this.timer = null;
+	      }
+	      this.showToolBar();
+	    }
+	  }, {
+	    key: "onHideToolBar",
+	    value: function onHideToolBar() {
+	      this.hideToolBar();
+	    }
+	  }]);
+	  return TopBar;
+	}(Component);
+
+	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var DanmakuOpenClose = /*#__PURE__*/function (_Options) {
+	  _inherits(DanmakuOpenClose, _Options);
+	  var _super = _createSuper$3(DanmakuOpenClose);
+	  function DanmakuOpenClose(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, DanmakuOpenClose);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuOpenClose');
+	    // el: div.video-danmaku-openclose.video-controller
+	    _defineProperty(_assertThisInitialized(_this), "danmakuClosePath", danmakuClosePath);
+	    _defineProperty(_assertThisInitialized(_this), "danmakuOpenPath", danmakuOpenPath);
+	    _defineProperty(_assertThisInitialized(_this), "status", 'open');
+	    _defineProperty(_assertThisInitialized(_this), "msg", '关闭弹幕');
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(DanmakuOpenClose, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-danmaku-openclose', 'video-controller']);
+	      // 设置画布大小为1024 * 1024
+	      this.icon = createSvg(this.danmakuOpenPath, '0 0 1024 1024');
+	      this.iconBox.appendChild(this.icon);
+	      this.hideBox.innerText = this.msg;
+	      this.hideBox.style.fontSize = '13px';
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.iconBox.addEventListener('click', function (e) {
+	        e.stopPropagation();
+	        if (_this2.status === 'open') {
+	          _this2.replaceIcon(createSvg(danmakuClosePath, '0 0 1024 1024'));
+	          _this2.status = 'close';
+	          _this2.player.emit('closeDanmaku');
+	          _this2.msg = '开启弹幕';
+	        } else {
+	          _this2.replaceIcon(createSvg(danmakuOpenPath, '0 0 1024 1024'));
+	          _this2.status = 'open';
+	          _this2.player.emit('openDanmaku');
+	          _this2.msg = '关闭弹幕';
+	        }
+	        _this2.hideBox.innerText = _this2.msg;
+	      });
+	    }
+	  }]);
+	  return DanmakuOpenClose;
+	}(Options);
+
+	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var DanmakuSettings = /*#__PURE__*/function (_Options) {
+	  _inherits(DanmakuSettings, _Options);
+	  var _super = _createSuper$2(DanmakuSettings);
+	  // el: div.video-danmaku-settings.video-controller
+	  function DanmakuSettings(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, DanmakuSettings);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuSettings');
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(DanmakuSettings, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-danmaku-settings', 'video-controller']);
+	      // 设置画布大小为1024 * 1024
+	      this.icon = createSvg(danmakuSettingPath, '0 0 1024 1024');
+	      this.iconBox.appendChild(this.icon);
+	    }
+	  }]);
+	  return DanmakuSettings;
+	}(Options);
+
+	window.global = window;
+
+	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray$1(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+	function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+	/**
+	 * @description 控制弹幕的类 Controller层
+	 */
+	var DanmakuController = /*#__PURE__*/function () {
+	  function DanmakuController(player, options) {
+	    _classCallCheck(this, DanmakuController);
+	    _defineProperty(this, "player", void 0);
+	    _defineProperty(this, "video", void 0);
+	    _defineProperty(this, "container", void 0);
+	    _defineProperty(this, "danmaku", void 0);
+	    _defineProperty(this, "danmakuInput", void 0);
+	    _defineProperty(this, "danmakuSettings", void 0);
+	    _defineProperty(this, "danmakuOpenClose", void 0);
+	    _defineProperty(this, "options", void 0);
+	    // el: div.video-danmaku-container
+	    _defineProperty(this, "el", void 0);
+	    this.player = player;
+	    this.video = player.video;
+	    this.container = player.el; // div.Niplayer_video-wrapper
+	    this.options = _Object$assign({
+	      type: 'http'
+	    }, options);
+	    this.init();
+	  }
+	  _createClass(DanmakuController, [{
+	    key: "init",
+	    value: function init() {
+	      this.el = $$n('div.video-danmaku-container');
+	      this.container.appendChild(this.el);
+	      this.danmaku = new Danmaku(this.el, this.player);
+	      this.initTemplate();
+	      this.initializeEvent();
+	      if (this.options.type === 'websocket') {
+	        this.initWebSocket();
+	      } else {
+	        this.initHTTP();
+	      }
+	    }
+	  }, {
+	    key: "initWebSocket",
+	    value: function initWebSocket() {
+	      var _this = this;
+	      var socket = io(this.options.api, {
+	        transports: ['websocket', 'polling']
+	      });
+	      socket.on('connect', function () {
+	        _this.player.video.addEventListener('timeupdate', function (e) {
+	          socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
+	            time: _this.player.video.currentTime
+	          });
+	        });
+	        socket.on(EVENT.SEND_DANMAKU_DATA, function (data) {
+	          var _context;
+	          console.log(_concatInstanceProperty(_context = "\u63A5\u53D7\u5230\u6570\u636E".concat(_JSON$stringify(data), ",\u5F53\u524D\u65F6\u95F4")).call(_context, _this.player.video.currentTime));
+	          var _iterator = _createForOfIteratorHelper$1(data),
+	            _step;
+	          try {
+	            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	              var item = _step.value;
+	              _this.danmaku.addData(item);
+	            }
+	          } catch (err) {
+	            _iterator.e(err);
+	          } finally {
+	            _iterator.f();
+	          }
+	        });
+	      });
+	      socket.connect();
+	    }
+	  }, {
+	    key: "initHTTP",
+	    value: function initHTTP() {}
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      var ctx = this;
+	      this.danmakuInput = new DanmakuInput(this.player, null, 'div');
+	      this.danmakuSettings = new DanmakuSettings(this.player, null, 'div');
+	      this.danmakuOpenClose = new DanmakuOpenClose(this.player, null, 'div');
+	      this.player.use({
+	        install: function install(player) {
+	          player.mountComponent(ctx.danmakuOpenClose.id, ctx.danmakuOpenClose, {
+	            mode: {
+	              type: 'BottomToolBar',
+	              pos: 'medium'
+	            }
+	          });
+	          player.mountComponent(ctx.danmakuSettings.id, ctx.danmakuSettings, {
+	            mode: {
+	              type: 'BottomToolBar',
+	              pos: 'medium'
+	            }
+	          });
+	          player.mountComponent(ctx.danmakuInput.id, ctx.danmakuInput, {
+	            mode: {
+	              type: 'BottomToolBar',
+	              pos: 'medium'
+	            }
+	          });
+	        }
+	      });
+	    }
+	  }, {
+	    key: "initializeEvent",
+	    value: function initializeEvent() {
+	      var _this2 = this;
+	      // 弹幕功能实现的核心是timeupdate方法！！！！
+	      this.video.addEventListener('timeupdate', function (e) {
+	        _this2.onTimeupdate(e);
+	      });
+	      this.video.addEventListener('seeking', function (e) {
+	        _this2.onSeeking(e);
+	      });
+	      this.video.addEventListener('pause', function () {
+	        // 暂停所有的弹幕
+	        _this2.danmaku.pause();
+	      });
+	      this.video.addEventListener('waiting', function () {
+	        _this2.danmaku.pause();
+	      });
+	      this.video.addEventListener('abort', function () {
+	        _this2.danmaku.flush();
+	      });
+	      this.video.addEventListener('play', function () {
+	        _this2.danmaku.resume();
+	      });
+	      this.danmakuInput.on('sendData', function (data) {
+	        // 此处为发送弹幕的逻辑
+	      });
+	      this.player.on(EVENT.DOT_DRAG, function () {
+	        _this2.danmaku.flush();
+	      });
+	      this.player.on('closeDanmaku', function () {
+	        // 隐藏所有的弹幕
+	        _this2.danmaku.close();
+	      });
+	      this.player.on('openDanmaku', function () {
+	        // 打开所有隐藏的弹幕
+	        _this2.danmaku.open();
+	      });
+	    }
+	  }, {
+	    key: "onTimeupdate",
+	    value: function onTimeupdate(e) {
+	      // 时间更新
+	      // 如果默认请求弹幕数据的方式为http请求，则需要进行轮询
+	      // let video = e.target as HTMLVideoElement
+	      // // console.log(video.currentTime)
+	      // for (let i = 0; i < 10; i++) {
+	      //   this.danmaku.addData(queue[i % queue.length])
+	      // }
+	    }
+	    // start() {
+	    //   this.timer = window.setInterval(() => {
+	    //     this.danmaku.addData(queue[this.index++ % queue.length])
+	    //     // if (this.index >= 250) {
+	    //     //   window.clearInterval(this.timer)
+	    //     //   this.timer = null
+	    //     // }
+	    //   }, 50)
+	    //   // const send = () => {
+	    //   //   if (this.index >= 30) return
+	    //   //   let data = queue[(this.index++) % queue.length]
+	    //   //   this.danmaku.addData(data)
+	    //   //   send()
+	    //   // }
+	    //   // send()
+	    // }
+	    // pause() {
+	    //   window.clearInterval(this.timer)
+	    //   this.timer = null
+	    // }
+	    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+	  }, {
+	    key: "onSeeking",
+	    value: function onSeeking(e) {
+	      this.danmaku.flush();
+	    }
+	  }]);
+	  return DanmakuController;
+	}();
+
+	var css_248z$1 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 40px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 30px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n.video-danmaku-container {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background-color: transparent;\n  left: 0;\n  top: 0;\n  z-index: 1001;\n}\n.video-danmaku-container .video-danmaku-message {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  white-space: pre;\n  pointer-events: none;\n  -webkit-perspective: 500px;\n          perspective: 500px;\n  display: inline-block;\n  will-change: transform;\n  font-weight: normal;\n  line-height: 1.125;\n  font-family: SimHei, \"Microsoft JhengHei\", Arial, Helvetica, sans-serif;\n  text-shadow: #000000 1px 0px 1px, #000000 0px 1px 1px, #000000 0px -1px 1px, #000000 -1px 0px 1px;\n  opacity: 1;\n  margin-left: 0px;\n}\n";
+	styleInject(css_248z$1);
+
+	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var DanmakuInput = /*#__PURE__*/function (_Component) {
+	  _inherits(DanmakuInput, _Component);
+	  var _super = _createSuper$1(DanmakuInput);
+	  function DanmakuInput(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, DanmakuInput);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuInput');
+	    // el: div.danmaku-input-wrapper
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "inputBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "sendBox", void 0);
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(DanmakuInput, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['danmaku-input-wrapper']);
+	      this.inputBox = $$n('input.danmaku-input', {
+	        type: 'text'
+	      });
+	      this.sendBox = $$n('span.danmaku-send');
+	      this.sendBox.innerText = '发送';
+	      this.el.appendChild(this.inputBox);
+	      this.el.appendChild(this.sendBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.sendBox.onclick = function (e) {
+	        e.stopPropagation();
+	        var value = _this2.inputBox.value;
+	        _this2.emit('sendData', value);
+	        _this2.inputBox.value = '';
+	        _this2.inputBox.blur();
+	      };
+	      this.inputBox.addEventListener('focus', function (e) {
+	        e.stopPropagation();
+	        _this2.player.emit(EVENT.DANMAKU_INPUT_FOCUS);
+	      });
+	      this.inputBox.addEventListener('blur', function (e) {
+	        e.stopPropagation();
+	        _this2.player.emit(EVENT.DANMAKU_INPUT_BLUR);
+	      });
+	      this.inputBox.addEventListener('click', function (e) {
+	        e.stopPropagation();
+	      });
+	    }
+	  }]);
+	  return DanmakuInput;
+	}(Component);
+
+	var env = window.navigator.userAgent.toLowerCase();
+	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
+	var Env = {
+	  isInWeixin: function isInWeixin() {
+	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
+	  },
+	  isInApp: function isInApp() {
+	    return /(^|;\s)app\//.test(env);
+	  },
+	  isInIOS: function isInIOS() {
+	    return env.match(/(iphone|ipod|ipad);?/i);
+	  },
+	  isInAndroid: function isInAndroid() {
+	    return env.match(/android|adr/i);
+	  },
+	  isInPc: function isInPc() {
+	    return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin());
+	  },
+	  get env() {
+	    return this.isInPc() ? 'PC' : 'Mobile';
+	  }
+	};
 
 	function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 	function _unsupportedIterableToArray(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -19930,7 +20819,7 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      this.el = $$p('div.video-texttrack-container');
+	      this.el = $$n('div.video-texttrack-container');
 	      this.player.el.appendChild(this.el);
 	    }
 	  }, {
@@ -19990,7 +20879,7 @@
 	            if (!cue) return;
 	            var texts = cue.text.split('\n');
 	            _forEachInstanceProperty(texts).call(texts, function (text) {
-	              var p = $$p('p');
+	              var p = $$n('p');
 	              p.innerText = text;
 	              _this3.el.appendChild(p);
 	            });
@@ -20027,11 +20916,11 @@
 	  return Subtitle;
 	}();
 
-	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Player = /*#__PURE__*/function (_Component) {
 	  _inherits(Player, _Component);
-	  var _super = _createSuper$3(Player);
+	  var _super = _createSuper(Player);
 	  // 视频比例 原始高度/原始宽度，默认16:9
 	  function Player(options) {
 	    var _this;
@@ -20072,7 +20961,7 @@
 	        this.video = this.playerOptions.video;
 	        this.video.parentNode && this.video.parentNode.removeChild(this.video);
 	      } else {
-	        this.video = $$p('video');
+	        this.video = $$n('video');
 	        this.video['playsinline'] = true; // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
 	        this.video['x5-video-player-type'] = 'h5'; // 启用H5播放器,是wechat安卓版特性
 	      }
@@ -20106,7 +20995,9 @@
 	      if (this.playerOptions.subtitles && this.playerOptions.subtitles.length > 0) {
 	        new Subtitle(this, this.playerOptions.subtitles);
 	      }
-	      // new DanmakuController(this)
+	      if (this.playerOptions.danmaku && this.playerOptions.danmaku.open) {
+	        new DanmakuController(this, this.playerOptions.danmaku);
+	      }
 	    }
 	    /**
 	     * @@description 监听视频播放器大小的变化
@@ -20504,891 +21395,6 @@
 	    }
 	  }]);
 	  return Player;
-	}(Component);
-
-	var $$2 = _export;
-	var toObject = toObject$a;
-	var nativeKeys = objectKeys$3;
-	var fails$1 = fails$x;
-
-	var FAILS_ON_PRIMITIVES = fails$1(function () { nativeKeys(1); });
-
-	// `Object.keys` method
-	// https://tc39.es/ecma262/#sec-object.keys
-	$$2({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
-	  keys: function keys(it) {
-	    return nativeKeys(toObject(it));
-	  }
-	});
-
-	var path$3 = path$n;
-
-	var keys$5 = path$3.Object.keys;
-
-	var parent$b = keys$5;
-
-	var keys$4 = parent$b;
-
-	var parent$a = keys$4;
-
-	var keys$3 = parent$a;
-
-	var parent$9 = keys$3;
-
-	var keys$2 = parent$9;
-
-	var keys$1 = keys$2;
-
-	var keys = keys$1;
-
-	var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys);
-
-	var path$2 = path$n;
-
-	var getOwnPropertySymbols$5 = path$2.Object.getOwnPropertySymbols;
-
-	var parent$8 = getOwnPropertySymbols$5;
-
-	var getOwnPropertySymbols$4 = parent$8;
-
-	var parent$7 = getOwnPropertySymbols$4;
-
-	var getOwnPropertySymbols$3 = parent$7;
-
-	var parent$6 = getOwnPropertySymbols$3;
-
-	var getOwnPropertySymbols$2 = parent$6;
-
-	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
-
-	var getOwnPropertySymbols = getOwnPropertySymbols$1;
-
-	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
-
-	var getOwnPropertyDescriptor$6 = {exports: {}};
-
-	var $$1 = _export;
-	var fails = fails$x;
-	var toIndexedObject$1 = toIndexedObject$a;
-	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
-	var DESCRIPTORS$1 = descriptors;
-
-	var FORCED = !DESCRIPTORS$1 || fails(function () { nativeGetOwnPropertyDescriptor(1); });
-
-	// `Object.getOwnPropertyDescriptor` method
-	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-	$$1({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS$1 }, {
-	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
-	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
-	  }
-	});
-
-	var path$1 = path$n;
-
-	var Object$1 = path$1.Object;
-
-	var getOwnPropertyDescriptor$5 = getOwnPropertyDescriptor$6.exports = function getOwnPropertyDescriptor(it, key) {
-	  return Object$1.getOwnPropertyDescriptor(it, key);
-	};
-
-	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$5.sham = true;
-
-	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$6.exports;
-
-	var parent$5 = getOwnPropertyDescriptorExports;
-
-	var getOwnPropertyDescriptor$4 = parent$5;
-
-	var parent$4 = getOwnPropertyDescriptor$4;
-
-	var getOwnPropertyDescriptor$3 = parent$4;
-
-	var parent$3 = getOwnPropertyDescriptor$3;
-
-	var getOwnPropertyDescriptor$2 = parent$3;
-
-	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
-
-	var getOwnPropertyDescriptor = getOwnPropertyDescriptor$1;
-
-	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor);
-
-	var $ = _export;
-	var DESCRIPTORS = descriptors;
-	var ownKeys$1 = ownKeys$3;
-	var toIndexedObject = toIndexedObject$a;
-	var getOwnPropertyDescriptorModule = objectGetOwnPropertyDescriptor;
-	var createProperty = createProperty$6;
-
-	// `Object.getOwnPropertyDescriptors` method
-	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
-	$({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
-	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
-	    var O = toIndexedObject(object);
-	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
-	    var keys = ownKeys$1(O);
-	    var result = {};
-	    var index = 0;
-	    var key, descriptor;
-	    while (keys.length > index) {
-	      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
-	      if (descriptor !== undefined) createProperty(result, key, descriptor);
-	    }
-	    return result;
-	  }
-	});
-
-	var path = path$n;
-
-	var getOwnPropertyDescriptors$5 = path.Object.getOwnPropertyDescriptors;
-
-	var parent$2 = getOwnPropertyDescriptors$5;
-
-	var getOwnPropertyDescriptors$4 = parent$2;
-
-	var parent$1 = getOwnPropertyDescriptors$4;
-
-	var getOwnPropertyDescriptors$3 = parent$1;
-
-	var parent = getOwnPropertyDescriptors$3;
-
-	var getOwnPropertyDescriptors$2 = parent;
-
-	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
-
-	var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
-
-	var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors);
-
-	var PriorityQueue = /*#__PURE__*/function () {
-	  function PriorityQueue() {
-	    _classCallCheck(this, PriorityQueue);
-	    _defineProperty(this, "queue", void 0);
-	    _defineProperty(this, "newestTime", 0);
-	    _defineProperty(this, "maxInterval", 5);
-	    this.queue = [];
-	  }
-	  // 清理过期数据
-	  _createClass(PriorityQueue, [{
-	    key: "removeOutTimeData",
-	    value: function removeOutTimeData() {
-	      var _context,
-	        _this = this;
-	      _filterInstanceProperty(_context = this.queue).call(_context, function (value, index) {
-	        return _this.newestTime - value.timestamp <= _this.maxInterval;
-	      });
-	    }
-	    // 添加新的数据
-	  }, {
-	    key: "add",
-	    value: function add(data) {
-	      this.newestTime = data.timestamp;
-	      this.queue.unshift(data);
-	      // 清除过期的数据
-	      this.removeOutTimeData();
-	      return this;
-	    }
-	    // 直接将数据添加到缓冲队列的末尾
-	  }, {
-	    key: "push",
-	    value: function push(data) {
-	      this.queue.push(data);
-	      return this;
-	    }
-	    // 弹出队列的首个数据
-	  }, {
-	    key: "shift",
-	    value: function shift() {
-	      return this.queue.shift();
-	    }
-	  }, {
-	    key: "splice",
-	    value: function splice(index, number) {
-	      var _context2;
-	      _spliceInstanceProperty(_context2 = this.queue).call(_context2, index, number);
-	      return this;
-	    }
-	  }, {
-	    key: "clear",
-	    value: function clear() {
-	      while (this.queue.length) {
-	        this.queue.pop();
-	      }
-	      return this;
-	    }
-	  }, {
-	    key: "forEach",
-	    value: function forEach(cb) {
-	      for (var index = 0; index < this.queue.length; index++) {
-	        cb(this.queue[index], index);
-	      }
-	    }
-	  }, {
-	    key: "length",
-	    get: function get() {
-	      return this.queue.length;
-	    }
-	  }]);
-	  return PriorityQueue;
-	}();
-
-	function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context16, _context17; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context16 = ownKeys(Object(source), !0)).call(_context16, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context17 = ownKeys(Object(source))).call(_context17, function (key) { Object.defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-	/**
-	 * @description 弹幕类，只专注于实现弹幕的基本逻辑，View层
-	 */
-	var flag = false;
-	var Danmaku = /*#__PURE__*/function () {
-	  function Danmaku(container, player) {
-	    _classCallCheck(this, Danmaku);
-	    _defineProperty(this, "queue", void 0);
-	    _defineProperty(this, "moovingQueue", []);
-	    // 正在运动中的弹幕
-	    _defineProperty(this, "container", void 0);
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "timer", null);
-	    _defineProperty(this, "renderInterval", 100);
-	    // 每一条弹幕轨道的高度默认为20px
-	    _defineProperty(this, "trackHeight", 20);
-	    _defineProperty(this, "isStopped", true);
-	    _defineProperty(this, "isHidden", false);
-	    _defineProperty(this, "tracks", new Array(15));
-	    _defineProperty(this, "defaultDanma", {
-	      message: 'default message',
-	      fontColor: '#fff',
-	      fontSize: this.trackHeight,
-	      fontFamily: '',
-	      fontWeight: 500
-	    });
-	    this.queue = new PriorityQueue();
-	    this.container = container; // div.Niplayer_video-wrapper
-	    this.player = player;
-	    this.init();
-	  }
-	  _createClass(Danmaku, [{
-	    key: "init",
-	    value: function init() {
-	      for (var i = 0; i < this.tracks.length; i++) {
-	        if (!this.tracks[i]) {
-	          this.tracks[i] = {
-	            track: {
-	              id: 0,
-	              priority: 0
-	            },
-	            datas: []
-	          };
-	        }
-	        this.tracks[i].track = {
-	          id: i,
-	          priority: 15 - i
-	        };
-	      }
-	    }
-	    // 暂停所有的弹幕
-	  }, {
-	    key: "pause",
-	    value: function pause() {
-	      var _context,
-	        _this = this;
-	      this.isStopped = true;
-	      window.clearTimeout(this.timer);
-	      _forEachInstanceProperty(_context = this.moovingQueue).call(_context, function (data) {
-	        _this.pauseOneData(data);
-	      });
-	    }
-	    // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
-	  }, {
-	    key: "resume",
-	    value: function resume() {
-	      var _this2 = this,
-	        _context2;
-	      this.isStopped = false;
-	      this.timer = window.setTimeout(function () {
-	        _this2.render();
-	      }, this.renderInterval);
-	      _forEachInstanceProperty(_context2 = this.moovingQueue).call(_context2, function (data) {
-	        _this2.resumeOneData(data);
-	      });
-	    }
-	    // 恢复单条弹幕的运动
-	  }, {
-	    key: "resumeOneData",
-	    value: function resumeOneData(data) {
-	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
-	      data.startTime = Date.now();
-	      data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
-	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
-	    }
-	    // 暂停单条弹幕的运动
-	  }, {
-	    key: "pauseOneData",
-	    value: function pauseOneData(data) {
-	      var currentRollDistance = (Date.now() - data.startTime) * data.rollSpeed / 1000;
-	      data.rollDistance = currentRollDistance + (data.rollDistance ? data.rollDistance : 0);
-	      data.dom.style.transition = '';
-	      data.dom.style.transform = "translateX(".concat(-data.rollDistance, "px)");
-	    }
-	  }, {
-	    key: "startDanmaku",
-	    value: function startDanmaku() {
-	      this.render();
-	    }
-	    // 向缓冲区添加正确格式的弹幕
-	  }, {
-	    key: "addData",
-	    value: function addData(data) {
-	      var _this3 = this;
-	      this.queue.push(this.parseData(data));
-	      // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
-	      if (flag) return;
-	      if (this.timer === null) {
-	        nextTick(function () {
-	          _this3.render();
-	        });
-	        flag = true;
-	      }
-	    }
-	  }, {
-	    key: "parseData",
-	    value: function parseData(data) {
-	      if (typeof data === 'string') {
-	        return {
-	          message: data,
-	          fontColor: '#fff',
-	          fontSize: this.trackHeight,
-	          fontFamily: '',
-	          fontWeight: 500,
-	          timestamp: this.player.video.currentTime
-	        };
-	      }
-	      if (_typeof(data) === 'object') {
-	        if (!data.message || data.message === '') {
-	          throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
-	        }
-	        return _Object$assign(_objectSpread(_objectSpread({}, this.defaultDanma), {}, {
-	          timestamp: this.player.video.currentTime
-	        }), data);
-	      }
-	      throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      try {
-	        this.renderToDOM();
-	      } finally {
-	        this.renderEnd();
-	      }
-	    }
-	  }, {
-	    key: "renderEnd",
-	    value: function renderEnd() {
-	      var _this4 = this;
-	      if (this.queue.length === 0) {
-	        window.clearTimeout(this.timer);
-	        this.timer = null;
-	        flag = false;
-	      } else {
-	        this.timer = window.setTimeout(function () {
-	          _this4.render();
-	        }, this.renderInterval);
-	      }
-	    }
-	    // 向指定的DOM元素上渲染一条弹幕
-	  }, {
-	    key: "renderToDOM",
-	    value: function renderToDOM() {
-	      var _this5 = this;
-	      if (this.queue.length === 0) return;
-	      var data = this.queue.shift();
-	      if (!data.dom) {
-	        var dom = document.createElement('div');
-	        dom.innerText = data.message;
-	        dom.className = 'danmaku-box';
-	        if (data.fontFamily !== '') {
-	          dom.style.fontFamily = data.fontFamily;
-	        }
-	        dom.style.color = data.fontColor;
-	        dom.style.fontSize = data.fontSize + 'px';
-	        dom.style.fontWeight = data.fontWeight + '';
-	        dom.style.position = 'absolute';
-	        dom.style.left = '100%';
-	        dom.style.whiteSpace = 'nowrap';
-	        dom.style.willChange = 'transform';
-	        dom.style.cursor = 'pointer';
-	        dom.style.visibility = this.isHidden ? 'hidden' : '';
-	        data.dom = dom;
-	        this.container.appendChild(dom);
-	      }
-	      data.totalDistance = this.container.clientWidth + data.dom.clientWidth;
-	      data.width = data.dom.clientWidth;
-	      // 弹幕的总的位移时间，用于计算弹幕的速度
-	      data.rollTime = data.rollTime || Math.floor(data.totalDistance * 0.0058 * (Math.random() * 0.3 + 0.7));
-	      data.rollSpeed = _parseFloat$1((data.totalDistance / data.rollTime).toFixed(2));
-	      // useTracks描述的是该弹幕占用了多少个轨道
-	      data.useTracks = Math.ceil(data.dom.clientHeight / this.trackHeight);
-	      // 重点，此处数组y的作用是表明该弹幕占的轨道的id数组
-	      data.y = [];
-	      data.dom.ontransitionstart = function (e) {
-	        data.startTime = Date.now();
-	      };
-	      data.dom.onmouseenter = function () {
-	        if (_this5.isStopped) return;
-	        _this5.pauseOneData(data);
-	      };
-	      data.dom.onmouseleave = function () {
-	        if (_this5.isStopped) return;
-	        _this5.resumeOneData(data);
-	      };
-	      this.addDataToTrack(data);
-	      if (data.y.length === 0) {
-	        var _context3;
-	        if (_includesInstanceProperty(_context3 = _toConsumableArray(this.container.childNodes)).call(_context3, data.dom)) {
-	          this.container.removeChild(data.dom);
-	        }
-	        this.queue.push(data);
-	      } else {
-	        data.dom.style.top = data.y[0] * this.trackHeight + 3 + 'px';
-	        this.startAnimate(data);
-	      }
-	    }
-	    // 将指定的data添加到弹幕轨道上
-	  }, {
-	    key: "addDataToTrack",
-	    value: function addDataToTrack(data) {
-	      var _this6 = this;
-	      // console.log(this.tracks)
-	      // [
-	      //   {track: {id:0, priority: 15}, datas: DanmakuData[]},
-	      //   {track: {id:1, priority: 14}, datas: DanmakuData[]},
-	      //   {track: {id:2, priority: 13}, datas: DanmakuData[]},
-	      //   {track: {id:14, priority: 1}, datas: DanmakuData[]},
-	      // ]
-	      var y = [];
-	      for (var i = 0; i < this.tracks.length; i++) {
-	        var track = this.tracks[i];
-	        var datas = track.datas;
-	        if (datas.length === 0) {
-	          y.push(i);
-	        } else {
-	          var lastItem = datas[datas.length - 1];
-	          // diatance代表的就是在该轨道上弹幕lastItem已经行走的距离
-	          var distance = lastItem.rollSpeed * (Date.now() - lastItem.startTime) / 1000;
-	          if (distance > lastItem.width && (data.rollSpeed <= lastItem.rollSpeed || (distance - lastItem.width) / (data.rollSpeed - lastItem.rollSpeed) > (this.container.clientWidth + lastItem.width - distance) / lastItem.rollSpeed)) {
-	            y.push(i);
-	          } else {
-	            y = [];
-	          }
-	        }
-	        if (y.length >= data.useTracks) {
-	          var _context4;
-	          data.y = y;
-	          _forEachInstanceProperty(_context4 = data.y).call(_context4, function (id) {
-	            _this6.tracks[id].datas.push(data);
-	          });
-	          break;
-	        }
-	      }
-	    }
-	  }, {
-	    key: "removeDataFromTrack",
-	    value: function removeDataFromTrack(data) {
-	      var _context5,
-	        _this7 = this;
-	      _forEachInstanceProperty(_context5 = data.y).call(_context5, function (id) {
-	        var datas = _this7.tracks[id].datas;
-	        var index = _indexOfInstanceProperty(datas).call(datas, data);
-	        if (index === -1) return;
-	        _spliceInstanceProperty(datas).call(datas, index, 1);
-	      });
-	    }
-	  }, {
-	    key: "startAnimate",
-	    value: function startAnimate(data) {
-	      var _this8 = this;
-	      this.moovingQueue.push(data);
-	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
-	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
-	      data.dom.ontransitionend = function (e) {
-	        var _context6;
-	        _this8.container.removeChild(data.dom);
-	        _this8.removeDataFromTrack(data);
-	        var index = _indexOfInstanceProperty(_context6 = _this8.moovingQueue).call(_context6, data);
-	        if (index > -1) {
-	          var _context7;
-	          _spliceInstanceProperty(_context7 = _this8.moovingQueue).call(_context7, index, 1);
-	        }
-	      };
-	    }
-	    // 清空所有的弹幕，包括正在运动中的或者还在缓冲区未被释放的
-	  }, {
-	    key: "flush",
-	    value: function flush() {
-	      var _context8,
-	        _context9,
-	        _this9 = this,
-	        _context11;
-	      _forEachInstanceProperty(_context8 = this.moovingQueue).call(_context8, function (data) {
-	        var _data$dom$parentNode;
-	        (_data$dom$parentNode = data.dom.parentNode) === null || _data$dom$parentNode === void 0 ? void 0 : _data$dom$parentNode.removeChild(data.dom);
-	        data.dom.ontransitionstart = null;
-	        data.dom.ontransitionend = null;
-	      });
-	      _forEachInstanceProperty(_context9 = this.queue).call(_context9, function (data) {
-	        var _context10;
-	        if (_includesInstanceProperty(_context10 = _toConsumableArray(_this9.container.children)).call(_context10, data.dom)) {
-	          var _data$dom$parentNode2;
-	          (_data$dom$parentNode2 = data.dom.parentNode) === null || _data$dom$parentNode2 === void 0 ? void 0 : _data$dom$parentNode2.removeChild(data.dom);
-	          data.dom.ontransitionstart = null;
-	          data.dom.ontransitionend = null;
-	        }
-	      });
-	      // 清空轨道上的所有数据
-	      _forEachInstanceProperty(_context11 = this.tracks).call(_context11, function (obj) {
-	        obj.datas = [];
-	      });
-	      this.moovingQueue = [];
-	      this.queue.clear();
-	    }
-	    // 隐藏所有的弹幕
-	  }, {
-	    key: "close",
-	    value: function close() {
-	      var _context12, _context13;
-	      this.isHidden = true;
-	      _forEachInstanceProperty(_context12 = this.moovingQueue).call(_context12, function (data) {
-	        data.dom.style.visibility = 'hidden';
-	      });
-	      _forEachInstanceProperty(_context13 = this.queue).call(_context13, function (data, index) {
-	        if (data.dom) {
-	          data.dom.style.visibility = 'hidden';
-	        }
-	      });
-	    }
-	  }, {
-	    key: "open",
-	    value: function open() {
-	      var _context14, _context15;
-	      this.isHidden = false;
-	      _forEachInstanceProperty(_context14 = this.moovingQueue).call(_context14, function (data) {
-	        data.dom.style.visibility = '';
-	      });
-	      _forEachInstanceProperty(_context15 = this.queue).call(_context15, function (data, index) {
-	        if (data.dom) {
-	          data.dom.style.visibility = '';
-	        }
-	      });
-	    }
-	  }]);
-	  return Danmaku;
-	}();
-
-	var queue = [{
-	  message: '秋招实在是寒气逼人',
-	  fontSize: 24,
-	  fontColor: 'blue'
-	}, {
-	  message: '任正非表明中国互联网行业进入寒冬！！！',
-	  fontSize: 30
-	}, {
-	  message: '任何邪恶，终将绳之以法11',
-	  fontColor: 'green'
-	}, {
-	  message: 'HHHHHHHHHHHHH'
-	}, {
-	  message: '任何邪恶，终将绳之以法22'
-	}, {
-	  message: '大家好，我是昊京'
-	}, {
-	  message: '2333333333333333333333333333333333'
-	}, {
-	  message: '经纬恒润内推',
-	  fontColor: 'red'
-	}, '111111111111而非武功果然'];
-
-	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var DanmakuOpenClose = /*#__PURE__*/function (_Options) {
-	  _inherits(DanmakuOpenClose, _Options);
-	  var _super = _createSuper$2(DanmakuOpenClose);
-	  function DanmakuOpenClose(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, DanmakuOpenClose);
-	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuOpenClose');
-	    // el: div.video-danmaku-openclose.video-controller
-	    _defineProperty(_assertThisInitialized(_this), "danmakuClosePath", danmakuClosePath);
-	    _defineProperty(_assertThisInitialized(_this), "danmakuOpenPath", danmakuOpenPath);
-	    _defineProperty(_assertThisInitialized(_this), "status", 'open');
-	    _defineProperty(_assertThisInitialized(_this), "msg", '关闭弹幕');
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(DanmakuOpenClose, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-danmaku-openclose', 'video-controller']);
-	      // 设置画布大小为1024 * 1024
-	      this.icon = createSvg(this.danmakuOpenPath, '0 0 1024 1024');
-	      this.iconBox.appendChild(this.icon);
-	      this.hideBox.innerText = this.msg;
-	      this.hideBox.style.fontSize = '13px';
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.iconBox.addEventListener('click', function () {
-	        if (_this2.status === 'open') {
-	          _this2.replaceIcon(createSvg(danmakuClosePath, '0 0 1024 1024'));
-	          _this2.status = 'close';
-	          _this2.player.emit('closeDanmaku');
-	          _this2.msg = '开启弹幕';
-	        } else {
-	          _this2.replaceIcon(createSvg(danmakuOpenPath, '0 0 1024 1024'));
-	          _this2.status = 'open';
-	          _this2.player.emit('openDanmaku');
-	          _this2.msg = '关闭弹幕';
-	        }
-	        _this2.hideBox.innerText = _this2.msg;
-	      });
-	    }
-	  }]);
-	  return DanmakuOpenClose;
-	}(Options);
-
-	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var DanmakuSettings = /*#__PURE__*/function (_Options) {
-	  _inherits(DanmakuSettings, _Options);
-	  var _super = _createSuper$1(DanmakuSettings);
-	  // el: div.video-danmaku-settings.video-controller
-	  function DanmakuSettings(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, DanmakuSettings);
-	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuSettings');
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(DanmakuSettings, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-danmaku-settings', 'video-controller']);
-	      // 设置画布大小为1024 * 1024
-	      this.icon = createSvg(danmakuSettingPath, '0 0 1024 1024');
-	      this.iconBox.appendChild(this.icon);
-	    }
-	  }]);
-	  return DanmakuSettings;
-	}(Options);
-
-	/**
-	 * @description 控制弹幕的类 Controller层
-	 */
-	var DanmakuController = /*#__PURE__*/function () {
-	  function DanmakuController(player) {
-	    _classCallCheck(this, DanmakuController);
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "video", void 0);
-	    _defineProperty(this, "container", void 0);
-	    _defineProperty(this, "danmaku", void 0);
-	    _defineProperty(this, "danmakuInput", void 0);
-	    _defineProperty(this, "danmakuSettings", void 0);
-	    _defineProperty(this, "danmakuOpenClose", void 0);
-	    _defineProperty(this, "index", 0);
-	    _defineProperty(this, "timer", null);
-	    this.player = player;
-	    this.video = player.video;
-	    this.container = player.el; // div.Niplayer_video-wrapper
-	    this.init();
-	  }
-	  _createClass(DanmakuController, [{
-	    key: "init",
-	    value: function init() {
-	      this.danmaku = new Danmaku(this.container, this.player);
-	      this.initTemplate();
-	      this.initializeEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      var ctx = this;
-	      this.danmakuInput = new DanmakuInput(this.player, null, 'div');
-	      this.danmakuSettings = new DanmakuSettings(this.player, null, 'div');
-	      this.danmakuOpenClose = new DanmakuOpenClose(this.player, null, 'div');
-	      this.player.use({
-	        install: function install(player) {
-	          player.mountComponent(ctx.danmakuOpenClose.id, ctx.danmakuOpenClose, {
-	            mode: {
-	              type: 'BottomToolBar',
-	              pos: 'medium'
-	            }
-	          });
-	          player.mountComponent(ctx.danmakuSettings.id, ctx.danmakuSettings, {
-	            mode: {
-	              type: 'BottomToolBar',
-	              pos: 'medium'
-	            }
-	          });
-	          player.mountComponent(ctx.danmakuInput.id, ctx.danmakuInput, {
-	            mode: {
-	              type: 'BottomToolBar',
-	              pos: 'medium'
-	            }
-	          });
-	        }
-	      });
-	    }
-	  }, {
-	    key: "initializeEvent",
-	    value: function initializeEvent() {
-	      var _this = this;
-	      // 弹幕功能实现的核心是timeupdate方法！！！！
-	      this.video.addEventListener('timeupdate', function (e) {
-	        _this.onTimeupdate(e);
-	      });
-	      this.video.addEventListener('seeking', function (e) {
-	        _this.onSeeking(e);
-	      });
-	      this.video.addEventListener('pause', function () {
-	        // 暂停所有的弹幕
-	        _this.danmaku.pause();
-	      });
-	      this.video.addEventListener('play', function () {
-	        _this.danmaku.resume();
-	      });
-	      this.danmakuInput.on('sendData', function (data) {
-	        // 此处为发送弹幕的逻辑
-	        // console.log(data)
-	        queue.push(data);
-	      });
-	      this.player.on(EVENT.DOT_DRAG, function (e) {
-	        _this.danmaku.flush();
-	      });
-	      this.player.on('closeDanmaku', function () {
-	        // 隐藏所有的弹幕
-	        _this.danmaku.close();
-	      });
-	      this.player.on('openDanmaku', function () {
-	        // 打开所有隐藏的弹幕
-	        _this.danmaku.open();
-	      });
-	    }
-	  }, {
-	    key: "onTimeupdate",
-	    value: function onTimeupdate(e) {
-	      e.target;
-	      // console.log(video.currentTime)
-	      for (var i = 0; i < 10; i++) {
-	        this.danmaku.addData(queue[i % queue.length]);
-	      }
-	    }
-	    // start() {
-	    //   this.timer = window.setInterval(() => {
-	    //     this.danmaku.addData(queue[this.index++ % queue.length])
-	    //     // if (this.index >= 250) {
-	    //     //   window.clearInterval(this.timer)
-	    //     //   this.timer = null
-	    //     // }
-	    //   }, 50)
-	    //   // const send = () => {
-	    //   //   if (this.index >= 30) return
-	    //   //   let data = queue[(this.index++) % queue.length]
-	    //   //   this.danmaku.addData(data)
-	    //   //   send()
-	    //   // }
-	    //   // send()
-	    // }
-	    // pause() {
-	    //   window.clearInterval(this.timer)
-	    //   this.timer = null
-	    // }
-	    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
-	  }, {
-	    key: "onSeeking",
-	    value: function onSeeking(e) {
-	      this.danmaku.flush();
-	    }
-	  }]);
-	  return DanmakuController;
-	}();
-
-	var css_248z$1 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 40px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 30px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n";
-	styleInject(css_248z$1);
-
-	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var DanmakuInput = /*#__PURE__*/function (_Component) {
-	  _inherits(DanmakuInput, _Component);
-	  var _super = _createSuper(DanmakuInput);
-	  function DanmakuInput(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, DanmakuInput);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuInput');
-	    // el: div.danmaku-input-wrapper
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "inputBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "sendBox", void 0);
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(DanmakuInput, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['danmaku-input-wrapper']);
-	      this.inputBox = $$p('input.danmaku-input', {
-	        type: 'text'
-	      });
-	      this.sendBox = $$p('span.danmaku-send');
-	      this.sendBox.innerText = '发送';
-	      this.el.appendChild(this.inputBox);
-	      this.el.appendChild(this.sendBox);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.sendBox.onclick = function (e) {
-	        var value = _this2.inputBox.value;
-	        _this2.emit('sendData', value);
-	        _this2.inputBox.value = '';
-	        _this2.inputBox.blur();
-	      };
-	      this.inputBox.addEventListener('focus', function () {
-	        _this2.player.emit(EVENT.DANMAKU_INPUT_FOCUS);
-	      });
-	      this.inputBox.addEventListener('blur', function () {
-	        _this2.player.emit(EVENT.DANMAKU_INPUT_BLUR);
-	      });
-	    }
-	  }]);
-	  return DanmakuInput;
 	}(Component);
 
 	var css_248z = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-texttrack-container-showtoolbar {\n  bottom: calc(50px + 5px) !important;\n}\n.Niplayer_video-wrapper .video-texttrack-container {\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n  position: absolute;\n  bottom: 5px;\n  color: #fe9200;\n  font-size: 20px;\n}\n.Niplayer_video-wrapper .video-texttrack-container p {\n  word-break: break-all;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  margin: 5px 0 0;\n  line-height: 1.2;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #fff;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-controller {\n  margin-left: 5px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.video-switch-on {\n  fill: #007aff !important;\n}\n.video-switch-off {\n  fill: #fff !important;\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";

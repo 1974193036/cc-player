@@ -18,8 +18,6 @@ export function nextTick(cb: (...args) => any) {
     })
     count++
     node.data = String(count)
-  } else if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
-    setImmediate(() => cb())
   } else {
     setTimeout(() => cb())
   }

@@ -69,7 +69,7 @@
           streamPlay: false,
           // video: document.getElementsByTagName('video')[0]
           // rightBottomBarControllers: ['Playrate', 'Volume', 'FullScreen'],
-          subtitles: [
+          subtitles: [ // 字幕
             {
               source: "http://127.0.0.1:8889/subtitle.vtt",
               tip: "Bilingual",
@@ -86,7 +86,12 @@
               tip: "Japanese",
               lang: "jp"
             }
-          ]
+          ],
+          danmaku: { // 弹幕
+            open: true,
+            api: 'http://localhost/',
+            type: 'websocket'
+          }
         })
 
         // player.attachSource('http://localhost:8889/video.mp4')

@@ -1,9 +1,8 @@
 # :100: NiPlayer
 ![NiPlayer (1)](https://user-images.githubusercontent.com/69229785/217262883-d726bfe5-86db-405f-a3f9-90ed80807a76.png)
 
-
 ## :bell: 预览
-![player](https://user-images.githubusercontent.com/69229785/218101718-a21d86f5-4103-4233-8b11-4ab16a368175.jpg)
+![image](https://user-images.githubusercontent.com/69229785/218453758-a594b343-00b3-4480-9b81-39e4993eea35.png)
 
 
 ## :bulb: 基本介绍

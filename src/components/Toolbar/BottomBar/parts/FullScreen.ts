@@ -50,6 +50,7 @@ export class FullScreen extends Options {
   }
 
   onClick(e: Event | SingleTapEvent) {
+    e.stopPropagation()
     // 横屏全屏
     if (!isFull(this.player.container)) {
       // 调用浏览器提供的全屏API接口去请求元素的全屏，原生全屏分为  竖屏全屏 + 横屏全屏

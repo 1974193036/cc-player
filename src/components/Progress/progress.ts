@@ -82,6 +82,7 @@ export class Progress extends Component implements ComponentItem {
     }
 
     this.el.onclick = (e: MouseEvent) => {
+      e.stopPropagation()
       if (e.target === this.dot) return
       this.emit(EVENT.PROGRESS_CLICK, e.offsetX, ctx)
     }

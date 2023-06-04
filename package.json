@@ -31,6 +31,7 @@
     "@rollup/plugin-terser": "^0.4.1",
     "@rollup/plugin-typescript": "^11.1.1",
     "@types/babel__core": "^7.20.0",
+    "@types/node": "^20.2.5",
     "@vitest/coverage-c8": "^0.31.0",
     "autoprefixer": "^10.4.14",
     "core-js": "^3.30.1",
@@ -59,6 +60,7 @@
   "dependencies": {
     "be-full": "^0.1.4",
     "mp4box": "^0.5.2",
-    "ntouch.js": "^1.1.0"
+    "ntouch.js": "^1.1.0",
+    "socket.io-client": "^4.6.2"
   }
 }

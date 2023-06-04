@@ -47,6 +47,7 @@ export class PicInPic extends Options {
   }
 
   onClick(e: Event) {
+    e.stopPropagation()
     // document.pictureInPictureElement: 当前画中画的元素
 
     if (document.pictureInPictureElement) {

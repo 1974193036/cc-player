@@ -1,9 +1,13 @@
 import { Danmaku, DanmakuInput } from '@/danmaku'
-import { queue } from '@/mock/queue'
+// import { queue } from '@/mock/queue'
 import { Player } from '../page/player'
 import { EVENT } from '@/events'
 import { DanmakuOpenClose } from './UI/DanmakuOpenClose'
 import { DanmakuSettings } from './UI/DanmakuSettings'
+import { DanmakuOptions } from '@/types/Player'
+import io from 'socket.io-client/dist/socket.io'
+import '@/utils/polyfill'
+import { $ } from '@/utils/domUtils'
 
 /**
  * @description 控制弹幕的类 Controller层
@@ -16,21 +20,63 @@ export class DanmakuController {
   private danmakuInput: DanmakuInput
   private danmakuSettings: DanmakuSettings
   private danmakuOpenClose: DanmakuOpenClose
-  private index: number = 0
-  private timer: number | null = null
+  private options: DanmakuOptions
+  // el: div.video-danmaku-container
+  private el: HTMLElement
 
-  constructor(player: Player) {
+  constructor(player: Player, options: DanmakuOptions) {
     this.player = player
     this.video = player.video
     this.container = player.el // div.Niplayer_video-wrapper
+
+    this.options = Object.assign(
+      {
+        type: 'http'
+      },
+      options
+    )
+
     this.init()
   }
 
   init() {
-    this.danmaku = new Danmaku(this.container, this.player)
+    this.el = $('div.video-danmaku-container')
+    this.container.appendChild(this.el)
+    this.danmaku = new Danmaku(this.el, this.player)
     this.initTemplate()
     this.initializeEvent()
+    if (this.options.type === 'websocket') {
+      this.initWebSocket()
+    } else {
+      this.initHTTP()
+    }
   }
+
+  initWebSocket() {
+    const socket = io(this.options.api, {
+      transports: ['websocket', 'polling']
+    })
+
+    socket.on('connect', () => {
+      this.player.video.addEventListener('timeupdate', (e) => {
+        socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
+          time: this.player.video.currentTime
+        })
+      })
+
+      socket.on(EVENT.SEND_DANMAKU_DATA, (data: any[]) => {
+        console.log(`接受到数据${JSON.stringify(data)},当前时间${this.player.video.currentTime}`)
+
+        for (let item of data) {
+          this.danmaku.addData(item)
+        }
+      })
+    })
+
+    socket.connect()
+  }
+
+  initHTTP() {}
 
   initTemplate() {
     let ctx = this
@@ -77,17 +123,23 @@ export class DanmakuController {
       this.danmaku.pause()
     })
 
+    this.video.addEventListener('waiting', () => {
+      this.danmaku.pause()
+    })
+
+    this.video.addEventListener('abort', () => {
+      this.danmaku.flush()
+    })
+
     this.video.addEventListener('play', () => {
       this.danmaku.resume()
     })
 
     this.danmakuInput.on('sendData', function (data) {
       // 此处为发送弹幕的逻辑
-      // console.log(data)
-      queue.push(data)
     })
 
-    this.player.on(EVENT.DOT_DRAG, (e) => {
+    this.player.on(EVENT.DOT_DRAG, () => {
       this.danmaku.flush()
     })
 
@@ -103,11 +155,13 @@ export class DanmakuController {
   }
 
   onTimeupdate(e: Event) {
-    let video = e.target as HTMLVideoElement
-    // console.log(video.currentTime)
-    for (let i = 0; i < 10; i++) {
-      this.danmaku.addData(queue[i % queue.length])
-    }
+    // 时间更新
+    // 如果默认请求弹幕数据的方式为http请求，则需要进行轮询
+    // let video = e.target as HTMLVideoElement
+    // // console.log(video.currentTime)
+    // for (let i = 0; i < 10; i++) {
+    //   this.danmaku.addData(queue[i % queue.length])
+    // }
   }
 
   // start() {
