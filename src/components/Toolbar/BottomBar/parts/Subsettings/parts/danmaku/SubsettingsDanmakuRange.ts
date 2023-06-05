@@ -7,7 +7,7 @@ import { SubsettingsBase } from '../SubsettingsBase'
 import { SubsettingsDanmakuMain } from './SubsettingsDanmakuMain'
 
 export class SubsettingsDanmakuRange extends SubsettingsBase {
-  // div.video-subsettings-danamku-range
+  // div.video-subsettings-danmakus-range
   readonly id = 'SubsettingsDanmakuRange'
   readonly SubsettingsItem: SubsettingsItem[] = [
     {
@@ -50,7 +50,7 @@ export class SubsettingsDanmakuRange extends SubsettingsBase {
   }
 
   initTemplate() {
-    this.el = $('div.video-subsettings-danamku-range')
+    this.el = $('div.video-subsettings-danmaku-range')
     this.el.dataset.width = '200'
     this.el.style.display = 'none'
   }
