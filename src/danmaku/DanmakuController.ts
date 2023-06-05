@@ -9,6 +9,7 @@ import io from 'socket.io-client/dist/socket.io'
 import '@/utils/polyfill'
 import { $ } from '@/utils/domUtils'
 
+
 /**
  * @description 控制弹幕的类 Controller层
  */
@@ -53,27 +54,27 @@ export class DanmakuController {
   }
 
   initWebSocket() {
-    const socket = io(this.options.api, {
-      transports: ['websocket', 'polling']
-    })
+    // const socket = io(this.options.api, {
+    //   transports: ['websocket', 'polling']
+    // })
 
-    socket.on('connect', () => {
-      this.player.video.addEventListener('timeupdate', (e) => {
-        socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
-          time: this.player.video.currentTime
-        })
-      })
+    // socket.on('connect', () => {
+    //   this.player.video.addEventListener('timeupdate', (e) => {
+    //     socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
+    //       time: this.player.video.currentTime
+    //     })
+    //   })
 
-      socket.on(EVENT.SEND_DANMAKU_DATA, (data: any[]) => {
-        console.log(`接受到数据${JSON.stringify(data)},当前时间${this.player.video.currentTime}`)
+    //   socket.on(EVENT.SEND_DANMAKU_DATA, (data: any[]) => {
+    //     console.log(`接受到数据${JSON.stringify(data)},当前时间${this.player.video.currentTime}`)
 
-        for (let item of data) {
-          this.danmaku.addData(item)
-        }
-      })
-    })
+    //     for (let item of data) {
+    //       this.danmaku.addData(item)
+    //     }
+    //   })
+    // })
 
-    socket.connect()
+    // socket.connect()
   }
 
   initHTTP() {}

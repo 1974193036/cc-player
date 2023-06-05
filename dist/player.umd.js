@@ -1,10 +1,10 @@
 
 (function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('socket.io-client/dist/socket.io')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'socket.io-client/dist/socket.io'], factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Player = {}, global.io));
-})(this, (function (exports, io) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Player = {}));
+})(this, (function (exports) { 'use strict';
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -47,12 +47,12 @@
 	var NATIVE_BIND$4 = functionBindNative;
 
 	var FunctionPrototype$3 = Function.prototype;
-	var apply$5 = FunctionPrototype$3.apply;
+	var apply$4 = FunctionPrototype$3.apply;
 	var call$q = FunctionPrototype$3.call;
 
 	// eslint-disable-next-line es/no-reflect -- safe
-	var functionApply = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND$4 ? call$q.bind(apply$5) : function () {
-	  return call$q.apply(apply$5, arguments);
+	var functionApply = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND$4 ? call$q.bind(apply$4) : function () {
+	  return call$q.apply(apply$4, arguments);
 	});
 
 	var NATIVE_BIND$3 = functionBindNative;
@@ -204,9 +204,9 @@
 	  return typeof it == 'object' ? it !== null : isCallable$o(it);
 	};
 
-	var path$n = {};
+	var path$m = {};
 
-	var path$m = path$n;
+	var path$l = path$m;
 	var global$n = global$o;
 	var isCallable$n = isCallable$p;
 
@@ -215,8 +215,8 @@
 	};
 
 	var getBuiltIn$h = function (namespace, method) {
-	  return arguments.length < 2 ? aFunction(path$m[namespace]) || aFunction(global$n[namespace])
-	    : path$m[namespace] && path$m[namespace][method] || global$n[namespace] && global$n[namespace][method];
+	  return arguments.length < 2 ? aFunction(path$l[namespace]) || aFunction(global$n[namespace])
+	    : path$l[namespace] && path$l[namespace][method] || global$n[namespace] && global$n[namespace][method];
 	};
 
 	var uncurryThis$u = functionUncurryThis;
@@ -633,12 +633,12 @@
 	};
 
 	var global$g = global$o;
-	var apply$4 = functionApply;
+	var apply$3 = functionApply;
 	var uncurryThis$q = functionUncurryThisClause;
 	var isCallable$i = isCallable$p;
 	var getOwnPropertyDescriptor$a = objectGetOwnPropertyDescriptor.f;
 	var isForced$1 = isForced_1;
-	var path$l = path$n;
+	var path$k = path$m;
 	var bind$q = functionBindContext;
 	var createNonEnumerableProperty$8 = createNonEnumerableProperty$9;
 	var hasOwn$g = hasOwnProperty_1;
@@ -651,7 +651,7 @@
 	        case 1: return new NativeConstructor(a);
 	        case 2: return new NativeConstructor(a, b);
 	      } return new NativeConstructor(a, b, c);
-	    } return apply$4(NativeConstructor, this, arguments);
+	    } return apply$3(NativeConstructor, this, arguments);
 	  };
 	  Wrapper.prototype = NativeConstructor.prototype;
 	  return Wrapper;
@@ -680,7 +680,7 @@
 
 	  var nativeSource = GLOBAL ? global$g : STATIC ? global$g[TARGET] : (global$g[TARGET] || {}).prototype;
 
-	  var target = GLOBAL ? path$l : path$l[TARGET] || createNonEnumerableProperty$8(path$l, TARGET, {})[TARGET];
+	  var target = GLOBAL ? path$k : path$k[TARGET] || createNonEnumerableProperty$8(path$k, TARGET, {})[TARGET];
 	  var targetPrototype = target.prototype;
 
 	  var FORCED, USE_NATIVE, VIRTUAL_PROTOTYPE;
@@ -721,11 +721,11 @@
 
 	    if (PROTO) {
 	      VIRTUAL_PROTOTYPE = TARGET + 'Prototype';
-	      if (!hasOwn$g(path$l, VIRTUAL_PROTOTYPE)) {
-	        createNonEnumerableProperty$8(path$l, VIRTUAL_PROTOTYPE, {});
+	      if (!hasOwn$g(path$k, VIRTUAL_PROTOTYPE)) {
+	        createNonEnumerableProperty$8(path$k, VIRTUAL_PROTOTYPE, {});
 	      }
 	      // export virtual prototype methods
-	      createNonEnumerableProperty$8(path$l[VIRTUAL_PROTOTYPE], key, sourceProperty);
+	      createNonEnumerableProperty$8(path$k[VIRTUAL_PROTOTYPE], key, sourceProperty);
 	      // export real prototype methods
 	      if (options.real && targetPrototype && (FORCED || !targetPrototype[key])) {
 	        createNonEnumerableProperty$8(targetPrototype, key, sourceProperty);
@@ -1142,7 +1142,7 @@
 
 	var $$12 = _export;
 	var getBuiltIn$d = getBuiltIn$h;
-	var apply$3 = functionApply;
+	var apply$2 = functionApply;
 	var bind$p = functionBind;
 	var aConstructor$2 = aConstructor$3;
 	var anObject$b = anObject$f;
@@ -1186,38 +1186,87 @@
 	      }
 	      // w/o altered newTarget, lot of arguments case
 	      var $args = [null];
-	      apply$3(push$9, $args, args);
-	      return new (apply$3(bind$p, Target, $args))();
+	      apply$2(push$9, $args, args);
+	      return new (apply$2(bind$p, Target, $args))();
 	    }
 	    // with altered newTarget, not support built-in constructors
 	    var proto = newTarget.prototype;
 	    var instance = create$c(isObject$d(proto) ? proto : ObjectPrototype$2);
-	    var result = apply$3(Target, instance, args);
+	    var result = apply$2(Target, instance, args);
 	    return isObject$d(result) ? result : instance;
 	  }
 	});
 
-	var path$k = path$n;
+	var path$j = path$m;
 
-	var construct$5 = path$k.Reflect.construct;
+	var construct$5 = path$j.Reflect.construct;
 
-	var parent$1p = construct$5;
+	var parent$1m = construct$5;
 
-	var construct$4 = parent$1p;
+	var construct$4 = parent$1m;
 
-	var parent$1o = construct$4;
+	var parent$1l = construct$4;
 
-	var construct$3 = parent$1o;
+	var construct$3 = parent$1l;
 
-	var parent$1n = construct$3;
+	var parent$1k = construct$3;
 
-	var construct$2 = parent$1n;
+	var construct$2 = parent$1k;
 
 	var construct$1 = construct$2;
 
 	var construct = construct$1;
 
 	var _Reflect$construct = /*@__PURE__*/getDefaultExportFromCjs(construct);
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	}
+
+	var defineProperty$d = {exports: {}};
+
+	var $$11 = _export;
+	var DESCRIPTORS$d = descriptors;
+	var defineProperty$c = objectDefineProperty.f;
+
+	// `Object.defineProperty` method
+	// https://tc39.es/ecma262/#sec-object.defineproperty
+	// eslint-disable-next-line es/no-object-defineproperty -- safe
+	$$11({ target: 'Object', stat: true, forced: Object.defineProperty !== defineProperty$c, sham: !DESCRIPTORS$d }, {
+	  defineProperty: defineProperty$c
+	});
+
+	var path$i = path$m;
+
+	var Object$3 = path$i.Object;
+
+	var defineProperty$b = defineProperty$d.exports = function defineProperty(it, key, desc) {
+	  return Object$3.defineProperty(it, key, desc);
+	};
+
+	if (Object$3.defineProperty.sham) defineProperty$b.sham = true;
+
+	var definePropertyExports = defineProperty$d.exports;
+
+	var parent$1j = definePropertyExports;
+
+	var defineProperty$a = parent$1j;
+
+	var parent$1i = defineProperty$a;
+
+	var defineProperty$9 = parent$1i;
+
+	var parent$1h = defineProperty$9;
+
+	var defineProperty$8 = parent$1h;
+
+	var defineProperty$7 = defineProperty$8;
+
+	var defineProperty$6 = defineProperty$7;
+
+	var _Object$defineProperty = /*@__PURE__*/getDefaultExportFromCjs(defineProperty$6);
 
 	var classof$b = classofRaw$2;
 
@@ -1227,47 +1276,6 @@
 	var isArray$c = Array.isArray || function isArray(argument) {
 	  return classof$b(argument) == 'Array';
 	};
-
-	var $$11 = _export;
-	var isArray$b = isArray$c;
-
-	// `Array.isArray` method
-	// https://tc39.es/ecma262/#sec-array.isarray
-	$$11({ target: 'Array', stat: true }, {
-	  isArray: isArray$b
-	});
-
-	var path$j = path$n;
-
-	var isArray$a = path$j.Array.isArray;
-
-	var parent$1m = isArray$a;
-
-	var isArray$9 = parent$1m;
-
-	var parent$1l = isArray$9;
-
-	var isArray$8 = parent$1l;
-
-	var parent$1k = isArray$8;
-
-	var isArray$7 = parent$1k;
-
-	var isArray$6 = isArray$7;
-
-	var isArray$5 = isArray$6;
-
-	var _Array$isArray = /*@__PURE__*/getDefaultExportFromCjs(isArray$5);
-
-	function _arrayLikeToArray$3(arr, len) {
-	  if (len == null || len > arr.length) len = arr.length;
-	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-	  return arr2;
-	}
-
-	function _arrayWithoutHoles(arr) {
-	  if (_Array$isArray(arr)) return _arrayLikeToArray$3(arr);
-	}
 
 	var $TypeError$c = TypeError;
 	var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF; // 2 ** 53 - 1 == 9007199254740991
@@ -1287,7 +1295,7 @@
 	  else object[propertyKey] = value;
 	};
 
-	var isArray$4 = isArray$c;
+	var isArray$b = isArray$c;
 	var isConstructor$2 = isConstructor$4;
 	var isObject$c = isObject$j;
 	var wellKnownSymbol$m = wellKnownSymbol$q;
@@ -1299,10 +1307,10 @@
 	// https://tc39.es/ecma262/#sec-arrayspeciescreate
 	var arraySpeciesConstructor$1 = function (originalArray) {
 	  var C;
-	  if (isArray$4(originalArray)) {
+	  if (isArray$b(originalArray)) {
 	    C = originalArray.constructor;
 	    // cross-realm fallback
-	    if (isConstructor$2(C) && (C === $Array$3 || isArray$4(C.prototype))) C = undefined;
+	    if (isConstructor$2(C) && (C === $Array$3 || isArray$b(C.prototype))) C = undefined;
 	    else if (isObject$c(C)) {
 	      C = C[SPECIES$5];
 	      if (C === null) C = undefined;
@@ -1340,7 +1348,7 @@
 
 	var $$10 = _export;
 	var fails$m = fails$x;
-	var isArray$3 = isArray$c;
+	var isArray$a = isArray$c;
 	var isObject$b = isObject$j;
 	var toObject$8 = toObject$a;
 	var lengthOfArrayLike$6 = lengthOfArrayLike$8;
@@ -1365,7 +1373,7 @@
 	var isConcatSpreadable = function (O) {
 	  if (!isObject$b(O)) return false;
 	  var spreadable = O[IS_CONCAT_SPREADABLE];
-	  return spreadable !== undefined ? !!spreadable : isArray$3(O);
+	  return spreadable !== undefined ? !!spreadable : isArray$a(O);
 	};
 
 	var FORCED$5 = !IS_CONCAT_SPREADABLE_SUPPORT || !arrayMethodHasSpeciesSupport$3('concat');
@@ -1476,10 +1484,10 @@
 	  return target;
 	};
 
-	var defineProperty$d = objectDefineProperty;
+	var defineProperty$5 = objectDefineProperty;
 
 	var defineBuiltInAccessor$5 = function (target, name, descriptor) {
-	  return defineProperty$d.f(target, name, descriptor);
+	  return defineProperty$5.f(target, name, descriptor);
 	};
 
 	var wellKnownSymbolWrapped = {};
@@ -1488,14 +1496,14 @@
 
 	wellKnownSymbolWrapped.f = wellKnownSymbol$j;
 
-	var path$i = path$n;
+	var path$h = path$m;
 	var hasOwn$d = hasOwnProperty_1;
 	var wrappedWellKnownSymbolModule$1 = wellKnownSymbolWrapped;
-	var defineProperty$c = objectDefineProperty.f;
+	var defineProperty$4 = objectDefineProperty.f;
 
 	var wellKnownSymbolDefine = function (NAME) {
-	  var Symbol = path$i.Symbol || (path$i.Symbol = {});
-	  if (!hasOwn$d(Symbol, NAME)) defineProperty$c(Symbol, NAME, {
+	  var Symbol = path$h.Symbol || (path$h.Symbol = {});
+	  if (!hasOwn$d(Symbol, NAME)) defineProperty$4(Symbol, NAME, {
 	    value: wrappedWellKnownSymbolModule$1.f(NAME)
 	  });
 	};
@@ -1531,7 +1539,7 @@
 	};
 
 	var TO_STRING_TAG_SUPPORT = toStringTagSupport;
-	var defineProperty$b = objectDefineProperty.f;
+	var defineProperty$3 = objectDefineProperty.f;
 	var createNonEnumerableProperty$6 = createNonEnumerableProperty$9;
 	var hasOwn$c = hasOwnProperty_1;
 	var toString$a = objectToString;
@@ -1543,7 +1551,7 @@
 	  if (it) {
 	    var target = STATIC ? it : it.prototype;
 	    if (!hasOwn$c(target, TO_STRING_TAG$2)) {
-	      defineProperty$b(target, TO_STRING_TAG$2, { configurable: true, value: TAG });
+	      defineProperty$3(target, TO_STRING_TAG$2, { configurable: true, value: TAG });
 	    }
 	    if (SET_METHOD && !TO_STRING_TAG_SUPPORT) {
 	      createNonEnumerableProperty$6(target, 'toString', toString$a);
@@ -1707,7 +1715,7 @@
 	var global$d = global$o;
 	var call$j = functionCall;
 	var uncurryThis$j = functionUncurryThis;
-	var DESCRIPTORS$d = descriptors;
+	var DESCRIPTORS$c = descriptors;
 	var NATIVE_SYMBOL$3 = symbolConstructorDetection;
 	var fails$l = fails$x;
 	var hasOwn$a = hasOwnProperty_1;
@@ -1766,7 +1774,7 @@
 	var USE_SETTER = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
 
 	// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
-	var setSymbolDescriptor = DESCRIPTORS$d && fails$l(function () {
+	var setSymbolDescriptor = DESCRIPTORS$c && fails$l(function () {
 	  return nativeObjectCreate(nativeDefineProperty({}, 'a', {
 	    get: function () { return nativeDefineProperty(this, 'a', { value: 7 }).a; }
 	  })).a != 7;
@@ -1786,7 +1794,7 @@
 	    tag: tag,
 	    description: description
 	  });
-	  if (!DESCRIPTORS$d) symbol.description = description;
+	  if (!DESCRIPTORS$c) symbol.description = description;
 	  return symbol;
 	};
 
@@ -1811,7 +1819,7 @@
 	  var properties = toIndexedObject$4(Properties);
 	  var keys = objectKeys$1(properties).concat($getOwnPropertySymbols(properties));
 	  $forEach$1(keys, function (key) {
-	    if (!DESCRIPTORS$d || call$j($propertyIsEnumerable, properties, key)) $defineProperty(O, key, properties[key]);
+	    if (!DESCRIPTORS$c || call$j($propertyIsEnumerable, properties, key)) $defineProperty(O, key, properties[key]);
 	  });
 	  return O;
 	};
@@ -1872,7 +1880,7 @@
 	      if (hasOwn$a(this, HIDDEN) && hasOwn$a(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
 	      setSymbolDescriptor(this, tag, createPropertyDescriptor$4(1, value));
 	    };
-	    if (DESCRIPTORS$d && USE_SETTER) setSymbolDescriptor(ObjectPrototype$1, tag, { configurable: true, set: setter });
+	    if (DESCRIPTORS$c && USE_SETTER) setSymbolDescriptor(ObjectPrototype$1, tag, { configurable: true, set: setter });
 	    return wrap$1(tag, description);
 	  };
 
@@ -1897,7 +1905,7 @@
 	    return wrap$1(wellKnownSymbol$g(name), name);
 	  };
 
-	  if (DESCRIPTORS$d) {
+	  if (DESCRIPTORS$c) {
 	    // https://github.com/tc39/proposal-Symbol-description
 	    defineBuiltInAccessor$4(SymbolPrototype, 'description', {
 	      configurable: true,
@@ -1921,7 +1929,7 @@
 	  useSimple: function () { USE_SETTER = false; }
 	});
 
-	$$$({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3, sham: !DESCRIPTORS$d }, {
+	$$$({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL$3, sham: !DESCRIPTORS$c }, {
 	  // `Object.create` method
 	  // https://tc39.es/ecma262/#sec-object.create
 	  create: $create,
@@ -1999,7 +2007,7 @@
 	});
 
 	var uncurryThis$i = functionUncurryThis;
-	var isArray$2 = isArray$c;
+	var isArray$9 = isArray$c;
 	var isCallable$d = isCallable$p;
 	var classof$7 = classofRaw$2;
 	var toString$8 = toString$b;
@@ -2008,7 +2016,7 @@
 
 	var getJsonReplacerFunction = function (replacer) {
 	  if (isCallable$d(replacer)) return replacer;
-	  if (!isArray$2(replacer)) return;
+	  if (!isArray$9(replacer)) return;
 	  var rawLength = replacer.length;
 	  var keys = [];
 	  for (var i = 0; i < rawLength; i++) {
@@ -2023,14 +2031,14 @@
 	      root = false;
 	      return value;
 	    }
-	    if (isArray$2(this)) return value;
+	    if (isArray$9(this)) return value;
 	    for (var j = 0; j < keysLength; j++) if (keys[j] === key) return value;
 	  };
 	};
 
 	var $$Y = _export;
 	var getBuiltIn$a = getBuiltIn$h;
-	var apply$2 = functionApply;
+	var apply$1 = functionApply;
 	var call$i = functionCall;
 	var uncurryThis$h = functionUncurryThis;
 	var fails$k = fails$x;
@@ -2077,7 +2085,7 @@
 	    if (isCallable$c($replacer)) value = call$i($replacer, this, $String$1(key), value);
 	    if (!isSymbol$1(value)) return value;
 	  };
-	  return apply$2($stringify, null, args);
+	  return apply$1($stringify, null, args);
 	};
 
 	var fixIllFormed = function (match, offset, string) {
@@ -2095,7 +2103,7 @@
 	    // eslint-disable-next-line no-unused-vars -- required for `.length`
 	    stringify: function stringify(it, replacer, space) {
 	      var args = arraySlice$4(arguments);
-	      var result = apply$2(WRONG_SYMBOLS_CONVERSION ? stringifyWithSymbolsFix : $stringify, null, args);
+	      var result = apply$1(WRONG_SYMBOLS_CONVERSION ? stringifyWithSymbolsFix : $stringify, null, args);
 	      return ILL_FORMED_UNICODE && typeof result == 'string' ? replace$5(result, tester, fixIllFormed) : result;
 	    }
 	  });
@@ -2216,23 +2224,23 @@
 	// https://tc39.es/ecma262/#sec-json-@@tostringtag
 	setToStringTag$6(global$c.JSON, 'JSON', true);
 
-	var path$h = path$n;
+	var path$g = path$m;
 
-	var symbol$5 = path$h.Symbol;
+	var symbol$5 = path$g.Symbol;
 
 	var iterators = {};
 
-	var DESCRIPTORS$c = descriptors;
+	var DESCRIPTORS$b = descriptors;
 	var hasOwn$7 = hasOwnProperty_1;
 
 	var FunctionPrototype$1 = Function.prototype;
 	// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-	var getDescriptor = DESCRIPTORS$c && Object.getOwnPropertyDescriptor;
+	var getDescriptor = DESCRIPTORS$b && Object.getOwnPropertyDescriptor;
 
 	var EXISTS = hasOwn$7(FunctionPrototype$1, 'name');
 	// additional protection from minified / mangled / dropped function names
 	var PROPER = EXISTS && (function something() { /* empty */ }).name === 'something';
-	var CONFIGURABLE = EXISTS && (!DESCRIPTORS$c || (DESCRIPTORS$c && getDescriptor(FunctionPrototype$1, 'name').configurable));
+	var CONFIGURABLE = EXISTS && (!DESCRIPTORS$b || (DESCRIPTORS$b && getDescriptor(FunctionPrototype$1, 'name').configurable));
 
 	var functionName = {
 	  EXISTS: EXISTS,
@@ -2578,10 +2586,10 @@
 	  Iterators$2[COLLECTION_NAME] = Iterators$2.Array;
 	}
 
-	var parent$1j = symbol$5;
+	var parent$1g = symbol$5;
 
 
-	var symbol$4 = parent$1j;
+	var symbol$4 = parent$1g;
 
 	var defineWellKnownSymbol$7 = wellKnownSymbolDefine;
 
@@ -2589,11 +2597,11 @@
 	// https://github.com/tc39/proposal-explicit-resource-management
 	defineWellKnownSymbol$7('dispose');
 
-	var parent$1i = symbol$4;
+	var parent$1f = symbol$4;
 
 
 
-	var symbol$3 = parent$1i;
+	var symbol$3 = parent$1f;
 
 	var defineWellKnownSymbol$6 = wellKnownSymbolDefine;
 
@@ -2695,7 +2703,7 @@
 
 	defineWellKnownSymbol('replaceAll');
 
-	var parent$1h = symbol$3;
+	var parent$1e = symbol$3;
 
 
 
@@ -2707,7 +2715,7 @@
 
 
 
-	var symbol$2 = parent$1h;
+	var symbol$2 = parent$1e;
 
 	var symbol$1 = symbol$2;
 
@@ -2783,6 +2791,356 @@
 	  return createIterResultObject$1(point, false);
 	});
 
+	var WrappedWellKnownSymbolModule$1 = wellKnownSymbolWrapped;
+
+	var iterator$5 = WrappedWellKnownSymbolModule$1.f('iterator');
+
+	var parent$1d = iterator$5;
+
+
+	var iterator$4 = parent$1d;
+
+	var parent$1c = iterator$4;
+
+	var iterator$3 = parent$1c;
+
+	var parent$1b = iterator$3;
+
+	var iterator$2 = parent$1b;
+
+	var iterator$1 = iterator$2;
+
+	var iterator = iterator$1;
+
+	var _Symbol$iterator = /*@__PURE__*/getDefaultExportFromCjs(iterator);
+
+	function _typeof(obj) {
+	  "@babel/helpers - typeof";
+
+	  return _typeof = "function" == typeof _Symbol && "symbol" == typeof _Symbol$iterator ? function (obj) {
+	    return typeof obj;
+	  } : function (obj) {
+	    return obj && "function" == typeof _Symbol && obj.constructor === _Symbol && obj !== _Symbol.prototype ? "symbol" : typeof obj;
+	  }, _typeof(obj);
+	}
+
+	var WrappedWellKnownSymbolModule = wellKnownSymbolWrapped;
+
+	var toPrimitive$5 = WrappedWellKnownSymbolModule.f('toPrimitive');
+
+	var parent$1a = toPrimitive$5;
+
+	var toPrimitive$4 = parent$1a;
+
+	var parent$19 = toPrimitive$4;
+
+	var toPrimitive$3 = parent$19;
+
+	var parent$18 = toPrimitive$3;
+
+	var toPrimitive$2 = parent$18;
+
+	var toPrimitive$1 = toPrimitive$2;
+
+	var toPrimitive = toPrimitive$1;
+
+	var _Symbol$toPrimitive = /*@__PURE__*/getDefaultExportFromCjs(toPrimitive);
+
+	function _toPrimitive(input, hint) {
+	  if (_typeof(input) !== "object" || input === null) return input;
+	  var prim = input[_Symbol$toPrimitive];
+	  if (prim !== undefined) {
+	    var res = prim.call(input, hint || "default");
+	    if (_typeof(res) !== "object") return res;
+	    throw new TypeError("@@toPrimitive must return a primitive value.");
+	  }
+	  return (hint === "string" ? String : Number)(input);
+	}
+
+	function _toPropertyKey(arg) {
+	  var key = _toPrimitive(arg, "string");
+	  return _typeof(key) === "symbol" ? key : String(key);
+	}
+
+	function _defineProperties(target, props) {
+	  for (var i = 0; i < props.length; i++) {
+	    var descriptor = props[i];
+	    descriptor.enumerable = descriptor.enumerable || false;
+	    descriptor.configurable = true;
+	    if ("value" in descriptor) descriptor.writable = true;
+	    _Object$defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
+	  }
+	}
+	function _createClass(Constructor, protoProps, staticProps) {
+	  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+	  if (staticProps) _defineProperties(Constructor, staticProps);
+	  _Object$defineProperty(Constructor, "prototype", {
+	    writable: false
+	  });
+	  return Constructor;
+	}
+
+	function _assertThisInitialized(self) {
+	  if (self === void 0) {
+	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	  }
+	  return self;
+	}
+
+	// TODO: Remove from `core-js@4`
+	var $$T = _export;
+	var DESCRIPTORS$a = descriptors;
+	var create$9 = objectCreate;
+
+	// `Object.create` method
+	// https://tc39.es/ecma262/#sec-object.create
+	$$T({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
+	  create: create$9
+	});
+
+	var path$f = path$m;
+
+	var Object$2 = path$f.Object;
+
+	var create$8 = function create(P, D) {
+	  return Object$2.create(P, D);
+	};
+
+	var parent$17 = create$8;
+
+	var create$7 = parent$17;
+
+	var parent$16 = create$7;
+
+	var create$6 = parent$16;
+
+	var parent$15 = create$6;
+
+	var create$5 = parent$15;
+
+	var create$4 = create$5;
+
+	var create$3 = create$4;
+
+	var _Object$create = /*@__PURE__*/getDefaultExportFromCjs(create$3);
+
+	var $$S = _export;
+	var setPrototypeOf$7 = objectSetPrototypeOf;
+
+	// `Object.setPrototypeOf` method
+	// https://tc39.es/ecma262/#sec-object.setprototypeof
+	$$S({ target: 'Object', stat: true }, {
+	  setPrototypeOf: setPrototypeOf$7
+	});
+
+	var path$e = path$m;
+
+	var setPrototypeOf$6 = path$e.Object.setPrototypeOf;
+
+	var parent$14 = setPrototypeOf$6;
+
+	var setPrototypeOf$5 = parent$14;
+
+	var parent$13 = setPrototypeOf$5;
+
+	var setPrototypeOf$4 = parent$13;
+
+	var parent$12 = setPrototypeOf$4;
+
+	var setPrototypeOf$3 = parent$12;
+
+	var setPrototypeOf$2 = setPrototypeOf$3;
+
+	var setPrototypeOf$1 = setPrototypeOf$2;
+
+	var _Object$setPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(setPrototypeOf$1);
+
+	// TODO: Remove from `core-js@4`
+	var $$R = _export;
+	var bind$n = functionBind;
+
+	// `Function.prototype.bind` method
+	// https://tc39.es/ecma262/#sec-function.prototype.bind
+	// eslint-disable-next-line es/no-function-prototype-bind -- detection
+	$$R({ target: 'Function', proto: true, forced: Function.bind !== bind$n }, {
+	  bind: bind$n
+	});
+
+	var path$d = path$m;
+
+	var entryVirtual$9 = function (CONSTRUCTOR) {
+	  return path$d[CONSTRUCTOR + 'Prototype'];
+	};
+
+	var entryVirtual$8 = entryVirtual$9;
+
+	var bind$m = entryVirtual$8('Function').bind;
+
+	var isPrototypeOf$a = objectIsPrototypeOf;
+	var method$6 = bind$m;
+
+	var FunctionPrototype = Function.prototype;
+
+	var bind$l = function (it) {
+	  var own = it.bind;
+	  return it === FunctionPrototype || (isPrototypeOf$a(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$6 : own;
+	};
+
+	var parent$11 = bind$l;
+
+	var bind$k = parent$11;
+
+	var parent$10 = bind$k;
+
+	var bind$j = parent$10;
+
+	var parent$$ = bind$j;
+
+	var bind$i = parent$$;
+
+	var bind$h = bind$i;
+
+	var bind$g = bind$h;
+
+	var _bindInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(bind$g);
+
+	function _setPrototypeOf(o, p) {
+	  var _context;
+	  _setPrototypeOf = _Object$setPrototypeOf ? _bindInstanceProperty(_context = _Object$setPrototypeOf).call(_context) : function _setPrototypeOf(o, p) {
+	    o.__proto__ = p;
+	    return o;
+	  };
+	  return _setPrototypeOf(o, p);
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== "function" && superClass !== null) {
+	    throw new TypeError("Super expression must either be null or a function");
+	  }
+	  subClass.prototype = _Object$create(superClass && superClass.prototype, {
+	    constructor: {
+	      value: subClass,
+	      writable: true,
+	      configurable: true
+	    }
+	  });
+	  _Object$defineProperty(subClass, "prototype", {
+	    writable: false
+	  });
+	  if (superClass) _setPrototypeOf(subClass, superClass);
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+	    return call;
+	  } else if (call !== void 0) {
+	    throw new TypeError("Derived constructors may only return object or undefined");
+	  }
+	  return _assertThisInitialized(self);
+	}
+
+	var $$Q = _export;
+	var fails$g = fails$x;
+	var toObject$4 = toObject$a;
+	var nativeGetPrototypeOf = objectGetPrototypeOf;
+	var CORRECT_PROTOTYPE_GETTER = correctPrototypeGetter;
+
+	var FAILS_ON_PRIMITIVES$2 = fails$g(function () { nativeGetPrototypeOf(1); });
+
+	// `Object.getPrototypeOf` method
+	// https://tc39.es/ecma262/#sec-object.getprototypeof
+	$$Q({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
+	  getPrototypeOf: function getPrototypeOf(it) {
+	    return nativeGetPrototypeOf(toObject$4(it));
+	  }
+	});
+
+	var path$c = path$m;
+
+	var getPrototypeOf$6 = path$c.Object.getPrototypeOf;
+
+	var parent$_ = getPrototypeOf$6;
+
+	var getPrototypeOf$5 = parent$_;
+
+	var parent$Z = getPrototypeOf$5;
+
+	var getPrototypeOf$4 = parent$Z;
+
+	var parent$Y = getPrototypeOf$4;
+
+	var getPrototypeOf$3 = parent$Y;
+
+	var getPrototypeOf$2 = getPrototypeOf$3;
+
+	var getPrototypeOf$1 = getPrototypeOf$2;
+
+	var _Object$getPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(getPrototypeOf$1);
+
+	function _getPrototypeOf(o) {
+	  var _context;
+	  _getPrototypeOf = _Object$setPrototypeOf ? _bindInstanceProperty(_context = _Object$getPrototypeOf).call(_context) : function _getPrototypeOf(o) {
+	    return o.__proto__ || _Object$getPrototypeOf(o);
+	  };
+	  return _getPrototypeOf(o);
+	}
+
+	function _defineProperty(obj, key, value) {
+	  key = _toPropertyKey(key);
+	  if (key in obj) {
+	    _Object$defineProperty(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+	  return obj;
+	}
+
+	var $$P = _export;
+	var isArray$8 = isArray$c;
+
+	// `Array.isArray` method
+	// https://tc39.es/ecma262/#sec-array.isarray
+	$$P({ target: 'Array', stat: true }, {
+	  isArray: isArray$8
+	});
+
+	var path$b = path$m;
+
+	var isArray$7 = path$b.Array.isArray;
+
+	var parent$X = isArray$7;
+
+	var isArray$6 = parent$X;
+
+	var parent$W = isArray$6;
+
+	var isArray$5 = parent$W;
+
+	var parent$V = isArray$5;
+
+	var isArray$4 = parent$V;
+
+	var isArray$3 = isArray$4;
+
+	var isArray$2 = isArray$3;
+
+	var _Array$isArray = /*@__PURE__*/getDefaultExportFromCjs(isArray$2);
+
+	function _arrayLikeToArray$3(arr, len) {
+	  if (len == null || len > arr.length) len = arr.length;
+	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+	  return arr2;
+	}
+
+	function _arrayWithoutHoles(arr) {
+	  if (_Array$isArray(arr)) return _arrayLikeToArray$3(arr);
+	}
+
 	var classof$5 = classof$d;
 	var getMethod$1 = getMethod$3;
 	var isNullOrUndefined$3 = isNullOrUndefined$6;
@@ -2801,18 +3159,18 @@
 
 	var getIteratorMethod_1 = getIteratorMethod$9;
 
-	var parent$1g = getIteratorMethod_1;
+	var parent$U = getIteratorMethod_1;
 
 
-	var getIteratorMethod$8 = parent$1g;
+	var getIteratorMethod$8 = parent$U;
 
-	var parent$1f = getIteratorMethod$8;
+	var parent$T = getIteratorMethod$8;
 
-	var getIteratorMethod$7 = parent$1f;
+	var getIteratorMethod$7 = parent$T;
 
-	var parent$1e = getIteratorMethod$7;
+	var parent$S = getIteratorMethod$7;
 
-	var getIteratorMethod$6 = parent$1e;
+	var getIteratorMethod$6 = parent$S;
 
 	var getIteratorMethod$5 = getIteratorMethod$6;
 
@@ -2881,9 +3239,9 @@
 	  throw $TypeError$a(tryToString$3(argument) + ' is not iterable');
 	};
 
-	var bind$n = functionBindContext;
+	var bind$f = functionBindContext;
 	var call$e = functionCall;
-	var toObject$4 = toObject$a;
+	var toObject$3 = toObject$a;
 	var callWithSafeIterationClosing = callWithSafeIterationClosing$1;
 	var isArrayIteratorMethod$1 = isArrayIteratorMethod$2;
 	var isConstructor$1 = isConstructor$4;
@@ -2897,12 +3255,12 @@
 	// `Array.from` method implementation
 	// https://tc39.es/ecma262/#sec-array.from
 	var arrayFrom$1 = function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
-	  var O = toObject$4(arrayLike);
+	  var O = toObject$3(arrayLike);
 	  var IS_CONSTRUCTOR = isConstructor$1(this);
 	  var argumentsLength = arguments.length;
 	  var mapfn = argumentsLength > 1 ? arguments[1] : undefined;
 	  var mapping = mapfn !== undefined;
-	  if (mapping) mapfn = bind$n(mapfn, argumentsLength > 2 ? arguments[2] : undefined);
+	  if (mapping) mapfn = bind$f(mapfn, argumentsLength > 2 ? arguments[2] : undefined);
 	  var iteratorMethod = getIteratorMethod$2(O);
 	  var index = 0;
 	  var length, result, step, iterator, next, value;
@@ -2966,7 +3324,7 @@
 	  return ITERATION_SUPPORT;
 	};
 
-	var $$T = _export;
+	var $$O = _export;
 	var from$7 = arrayFrom$1;
 	var checkCorrectnessOfIteration$1 = checkCorrectnessOfIteration$2;
 
@@ -2977,25 +3335,25 @@
 
 	// `Array.from` method
 	// https://tc39.es/ecma262/#sec-array.from
-	$$T({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+	$$O({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
 	  from: from$7
 	});
 
-	var path$g = path$n;
+	var path$a = path$m;
 
-	var from$6 = path$g.Array.from;
+	var from$6 = path$a.Array.from;
 
-	var parent$1d = from$6;
+	var parent$R = from$6;
 
-	var from$5 = parent$1d;
+	var from$5 = parent$R;
 
-	var parent$1c = from$5;
+	var parent$Q = from$5;
 
-	var from$4 = parent$1c;
+	var from$4 = parent$Q;
 
-	var parent$1b = from$4;
+	var parent$P = from$4;
 
-	var from$3 = parent$1b;
+	var from$3 = parent$P;
 
 	var from$2 = from$3;
 
@@ -3007,7 +3365,7 @@
 	  if (typeof _Symbol !== "undefined" && _getIteratorMethod(iter) != null || iter["@@iterator"] != null) return _Array$from(iter);
 	}
 
-	var $$S = _export;
+	var $$N = _export;
 	var isArray$1 = isArray$c;
 	var isConstructor = isConstructor$4;
 	var isObject$8 = isObject$j;
@@ -3028,7 +3386,7 @@
 	// `Array.prototype.slice` method
 	// https://tc39.es/ecma262/#sec-array.prototype.slice
 	// fallback for not array-like ES3 strings and DOM objects
-	$$S({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
+	$$N({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 }, {
 	  slice: function slice(start, end) {
 	    var O = toIndexedObject$2(this);
 	    var length = lengthOfArrayLike$2(O);
@@ -3056,37 +3414,31 @@
 	  }
 	});
 
-	var path$f = path$n;
+	var entryVirtual$7 = entryVirtual$9;
 
-	var entryVirtual$9 = function (CONSTRUCTOR) {
-	  return path$f[CONSTRUCTOR + 'Prototype'];
-	};
+	var slice$6 = entryVirtual$7('Array').slice;
 
-	var entryVirtual$8 = entryVirtual$9;
-
-	var slice$6 = entryVirtual$8('Array').slice;
-
-	var isPrototypeOf$a = objectIsPrototypeOf;
-	var method$6 = slice$6;
+	var isPrototypeOf$9 = objectIsPrototypeOf;
+	var method$5 = slice$6;
 
 	var ArrayPrototype$6 = Array.prototype;
 
 	var slice$5 = function (it) {
 	  var own = it.slice;
-	  return it === ArrayPrototype$6 || (isPrototypeOf$a(ArrayPrototype$6, it) && own === ArrayPrototype$6.slice) ? method$6 : own;
+	  return it === ArrayPrototype$6 || (isPrototypeOf$9(ArrayPrototype$6, it) && own === ArrayPrototype$6.slice) ? method$5 : own;
 	};
 
-	var parent$1a = slice$5;
+	var parent$O = slice$5;
 
-	var slice$4 = parent$1a;
+	var slice$4 = parent$O;
 
-	var parent$19 = slice$4;
+	var parent$N = slice$4;
 
-	var slice$3 = parent$19;
+	var slice$3 = parent$N;
 
-	var parent$18 = slice$3;
+	var parent$M = slice$3;
 
-	var slice$2 = parent$18;
+	var slice$2 = parent$M;
 
 	var slice$1 = slice$2;
 
@@ -3112,1681 +3464,37 @@
 	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$3(arr) || _nonIterableSpread();
 	}
 
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError("Cannot call a class as a function");
-	  }
-	}
-
-	var defineProperty$a = {exports: {}};
-
-	var $$R = _export;
-	var DESCRIPTORS$b = descriptors;
-	var defineProperty$9 = objectDefineProperty.f;
-
-	// `Object.defineProperty` method
-	// https://tc39.es/ecma262/#sec-object.defineproperty
-	// eslint-disable-next-line es/no-object-defineproperty -- safe
-	$$R({ target: 'Object', stat: true, forced: Object.defineProperty !== defineProperty$9, sham: !DESCRIPTORS$b }, {
-	  defineProperty: defineProperty$9
-	});
-
-	var path$e = path$n;
-
-	var Object$3 = path$e.Object;
-
-	var defineProperty$8 = defineProperty$a.exports = function defineProperty(it, key, desc) {
-	  return Object$3.defineProperty(it, key, desc);
-	};
-
-	if (Object$3.defineProperty.sham) defineProperty$8.sham = true;
-
-	var definePropertyExports = defineProperty$a.exports;
-
-	var parent$17 = definePropertyExports;
-
-	var defineProperty$7 = parent$17;
-
-	var parent$16 = defineProperty$7;
-
-	var defineProperty$6 = parent$16;
-
-	var parent$15 = defineProperty$6;
-
-	var defineProperty$5 = parent$15;
-
-	var defineProperty$4 = defineProperty$5;
-
-	var defineProperty$3 = defineProperty$4;
-
-	var _Object$defineProperty = /*@__PURE__*/getDefaultExportFromCjs(defineProperty$3);
-
-	var WrappedWellKnownSymbolModule$1 = wellKnownSymbolWrapped;
-
-	var iterator$5 = WrappedWellKnownSymbolModule$1.f('iterator');
-
-	var parent$14 = iterator$5;
-
-
-	var iterator$4 = parent$14;
-
-	var parent$13 = iterator$4;
-
-	var iterator$3 = parent$13;
-
-	var parent$12 = iterator$3;
-
-	var iterator$2 = parent$12;
-
-	var iterator$1 = iterator$2;
-
-	var iterator = iterator$1;
-
-	var _Symbol$iterator = /*@__PURE__*/getDefaultExportFromCjs(iterator);
-
-	function _typeof(obj) {
-	  "@babel/helpers - typeof";
-
-	  return _typeof = "function" == typeof _Symbol && "symbol" == typeof _Symbol$iterator ? function (obj) {
-	    return typeof obj;
-	  } : function (obj) {
-	    return obj && "function" == typeof _Symbol && obj.constructor === _Symbol && obj !== _Symbol.prototype ? "symbol" : typeof obj;
-	  }, _typeof(obj);
-	}
-
-	var WrappedWellKnownSymbolModule = wellKnownSymbolWrapped;
-
-	var toPrimitive$5 = WrappedWellKnownSymbolModule.f('toPrimitive');
-
-	var parent$11 = toPrimitive$5;
-
-	var toPrimitive$4 = parent$11;
-
-	var parent$10 = toPrimitive$4;
-
-	var toPrimitive$3 = parent$10;
-
-	var parent$$ = toPrimitive$3;
-
-	var toPrimitive$2 = parent$$;
-
-	var toPrimitive$1 = toPrimitive$2;
-
-	var toPrimitive = toPrimitive$1;
-
-	var _Symbol$toPrimitive = /*@__PURE__*/getDefaultExportFromCjs(toPrimitive);
-
-	function _toPrimitive(input, hint) {
-	  if (_typeof(input) !== "object" || input === null) return input;
-	  var prim = input[_Symbol$toPrimitive];
-	  if (prim !== undefined) {
-	    var res = prim.call(input, hint || "default");
-	    if (_typeof(res) !== "object") return res;
-	    throw new TypeError("@@toPrimitive must return a primitive value.");
-	  }
-	  return (hint === "string" ? String : Number)(input);
-	}
-
-	function _toPropertyKey(arg) {
-	  var key = _toPrimitive(arg, "string");
-	  return _typeof(key) === "symbol" ? key : String(key);
-	}
-
-	function _defineProperties(target, props) {
-	  for (var i = 0; i < props.length; i++) {
-	    var descriptor = props[i];
-	    descriptor.enumerable = descriptor.enumerable || false;
-	    descriptor.configurable = true;
-	    if ("value" in descriptor) descriptor.writable = true;
-	    _Object$defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
-	  }
-	}
-	function _createClass(Constructor, protoProps, staticProps) {
-	  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-	  if (staticProps) _defineProperties(Constructor, staticProps);
-	  _Object$defineProperty(Constructor, "prototype", {
-	    writable: false
-	  });
-	  return Constructor;
-	}
-
-	function _assertThisInitialized(self) {
-	  if (self === void 0) {
-	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	  }
-	  return self;
-	}
-
-	// TODO: Remove from `core-js@4`
-	var $$Q = _export;
-	var DESCRIPTORS$a = descriptors;
-	var create$9 = objectCreate;
-
-	// `Object.create` method
-	// https://tc39.es/ecma262/#sec-object.create
-	$$Q({ target: 'Object', stat: true, sham: !DESCRIPTORS$a }, {
-	  create: create$9
-	});
-
-	var path$d = path$n;
-
-	var Object$2 = path$d.Object;
-
-	var create$8 = function create(P, D) {
-	  return Object$2.create(P, D);
-	};
-
-	var parent$_ = create$8;
-
-	var create$7 = parent$_;
-
-	var parent$Z = create$7;
-
-	var create$6 = parent$Z;
-
-	var parent$Y = create$6;
-
-	var create$5 = parent$Y;
-
-	var create$4 = create$5;
-
-	var create$3 = create$4;
-
-	var _Object$create = /*@__PURE__*/getDefaultExportFromCjs(create$3);
-
-	var $$P = _export;
-	var setPrototypeOf$7 = objectSetPrototypeOf;
-
-	// `Object.setPrototypeOf` method
-	// https://tc39.es/ecma262/#sec-object.setprototypeof
-	$$P({ target: 'Object', stat: true }, {
-	  setPrototypeOf: setPrototypeOf$7
-	});
-
-	var path$c = path$n;
-
-	var setPrototypeOf$6 = path$c.Object.setPrototypeOf;
-
-	var parent$X = setPrototypeOf$6;
-
-	var setPrototypeOf$5 = parent$X;
-
-	var parent$W = setPrototypeOf$5;
-
-	var setPrototypeOf$4 = parent$W;
-
-	var parent$V = setPrototypeOf$4;
-
-	var setPrototypeOf$3 = parent$V;
-
-	var setPrototypeOf$2 = setPrototypeOf$3;
-
-	var setPrototypeOf$1 = setPrototypeOf$2;
-
-	var _Object$setPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(setPrototypeOf$1);
-
-	// TODO: Remove from `core-js@4`
-	var $$O = _export;
-	var bind$m = functionBind;
-
-	// `Function.prototype.bind` method
-	// https://tc39.es/ecma262/#sec-function.prototype.bind
-	// eslint-disable-next-line es/no-function-prototype-bind -- detection
-	$$O({ target: 'Function', proto: true, forced: Function.bind !== bind$m }, {
-	  bind: bind$m
-	});
-
-	var entryVirtual$7 = entryVirtual$9;
-
-	var bind$l = entryVirtual$7('Function').bind;
-
-	var isPrototypeOf$9 = objectIsPrototypeOf;
-	var method$5 = bind$l;
-
-	var FunctionPrototype = Function.prototype;
-
-	var bind$k = function (it) {
-	  var own = it.bind;
-	  return it === FunctionPrototype || (isPrototypeOf$9(FunctionPrototype, it) && own === FunctionPrototype.bind) ? method$5 : own;
-	};
-
-	var parent$U = bind$k;
-
-	var bind$j = parent$U;
-
-	var parent$T = bind$j;
-
-	var bind$i = parent$T;
-
-	var parent$S = bind$i;
-
-	var bind$h = parent$S;
-
-	var bind$g = bind$h;
-
-	var bind$f = bind$g;
-
-	var _bindInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(bind$f);
-
-	function _setPrototypeOf(o, p) {
-	  var _context;
-	  _setPrototypeOf = _Object$setPrototypeOf ? _bindInstanceProperty(_context = _Object$setPrototypeOf).call(_context) : function _setPrototypeOf(o, p) {
-	    o.__proto__ = p;
-	    return o;
-	  };
-	  return _setPrototypeOf(o, p);
-	}
-
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== "function" && superClass !== null) {
-	    throw new TypeError("Super expression must either be null or a function");
-	  }
-	  subClass.prototype = _Object$create(superClass && superClass.prototype, {
-	    constructor: {
-	      value: subClass,
-	      writable: true,
-	      configurable: true
-	    }
-	  });
-	  _Object$defineProperty(subClass, "prototype", {
-	    writable: false
-	  });
-	  if (superClass) _setPrototypeOf(subClass, superClass);
-	}
-
-	function _possibleConstructorReturn(self, call) {
-	  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-	    return call;
-	  } else if (call !== void 0) {
-	    throw new TypeError("Derived constructors may only return object or undefined");
-	  }
-	  return _assertThisInitialized(self);
-	}
-
-	var $$N = _export;
-	var fails$g = fails$x;
-	var toObject$3 = toObject$a;
-	var nativeGetPrototypeOf = objectGetPrototypeOf;
-	var CORRECT_PROTOTYPE_GETTER = correctPrototypeGetter;
-
-	var FAILS_ON_PRIMITIVES$2 = fails$g(function () { nativeGetPrototypeOf(1); });
-
-	// `Object.getPrototypeOf` method
-	// https://tc39.es/ecma262/#sec-object.getprototypeof
-	$$N({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$2, sham: !CORRECT_PROTOTYPE_GETTER }, {
-	  getPrototypeOf: function getPrototypeOf(it) {
-	    return nativeGetPrototypeOf(toObject$3(it));
-	  }
-	});
-
-	var path$b = path$n;
-
-	var getPrototypeOf$6 = path$b.Object.getPrototypeOf;
-
-	var parent$R = getPrototypeOf$6;
-
-	var getPrototypeOf$5 = parent$R;
-
-	var parent$Q = getPrototypeOf$5;
-
-	var getPrototypeOf$4 = parent$Q;
-
-	var parent$P = getPrototypeOf$4;
-
-	var getPrototypeOf$3 = parent$P;
-
-	var getPrototypeOf$2 = getPrototypeOf$3;
-
-	var getPrototypeOf$1 = getPrototypeOf$2;
-
-	var _Object$getPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(getPrototypeOf$1);
-
-	function _getPrototypeOf(o) {
-	  var _context;
-	  _getPrototypeOf = _Object$setPrototypeOf ? _bindInstanceProperty(_context = _Object$getPrototypeOf).call(_context) : function _getPrototypeOf(o) {
-	    return o.__proto__ || _Object$getPrototypeOf(o);
-	  };
-	  return _getPrototypeOf(o);
-	}
-
-	function _defineProperty(obj, key, value) {
-	  key = _toPropertyKey(key);
-	  if (key in obj) {
-	    _Object$defineProperty(obj, key, {
-	      value: value,
-	      enumerable: true,
-	      configurable: true,
-	      writable: true
-	    });
-	  } else {
-	    obj[key] = value;
-	  }
-	  return obj;
-	}
-
-	var DESCRIPTORS$9 = descriptors;
-	var uncurryThis$c = functionUncurryThis;
-	var call$d = functionCall;
-	var fails$f = fails$x;
-	var objectKeys = objectKeys$3;
-	var getOwnPropertySymbolsModule$1 = objectGetOwnPropertySymbols;
-	var propertyIsEnumerableModule = objectPropertyIsEnumerable;
-	var toObject$2 = toObject$a;
-	var IndexedObject = indexedObject;
-
-	// eslint-disable-next-line es/no-object-assign -- safe
-	var $assign = Object.assign;
-	// eslint-disable-next-line es/no-object-defineproperty -- required for testing
-	var defineProperty$2 = Object.defineProperty;
-	var concat$8 = uncurryThis$c([].concat);
-
-	// `Object.assign` method
-	// https://tc39.es/ecma262/#sec-object.assign
-	var objectAssign = !$assign || fails$f(function () {
-	  // should have correct order of operations (Edge bug)
-	  if (DESCRIPTORS$9 && $assign({ b: 1 }, $assign(defineProperty$2({}, 'a', {
-	    enumerable: true,
-	    get: function () {
-	      defineProperty$2(this, 'b', {
-	        value: 3,
-	        enumerable: false
-	      });
-	    }
-	  }), { b: 2 })).b !== 1) return true;
-	  // should work with symbols and should have deterministic property order (V8 bug)
-	  var A = {};
-	  var B = {};
-	  // eslint-disable-next-line es/no-symbol -- safe
-	  var symbol = Symbol();
-	  var alphabet = 'abcdefghijklmnopqrst';
-	  A[symbol] = 7;
-	  alphabet.split('').forEach(function (chr) { B[chr] = chr; });
-	  return $assign({}, A)[symbol] != 7 || objectKeys($assign({}, B)).join('') != alphabet;
-	}) ? function assign(target, source) { // eslint-disable-line no-unused-vars -- required for `.length`
-	  var T = toObject$2(target);
-	  var argumentsLength = arguments.length;
-	  var index = 1;
-	  var getOwnPropertySymbols = getOwnPropertySymbolsModule$1.f;
-	  var propertyIsEnumerable = propertyIsEnumerableModule.f;
-	  while (argumentsLength > index) {
-	    var S = IndexedObject(arguments[index++]);
-	    var keys = getOwnPropertySymbols ? concat$8(objectKeys(S), getOwnPropertySymbols(S)) : objectKeys(S);
-	    var length = keys.length;
-	    var j = 0;
-	    var key;
-	    while (length > j) {
-	      key = keys[j++];
-	      if (!DESCRIPTORS$9 || call$d(propertyIsEnumerable, S, key)) T[key] = S[key];
-	    }
-	  } return T;
-	} : $assign;
-
-	var $$M = _export;
-	var assign$7 = objectAssign;
-
-	// `Object.assign` method
-	// https://tc39.es/ecma262/#sec-object.assign
-	// eslint-disable-next-line es/no-object-assign -- required for testing
-	$$M({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$7 }, {
-	  assign: assign$7
-	});
-
-	var path$a = path$n;
-
-	var assign$6 = path$a.Object.assign;
-
-	var parent$O = assign$6;
-
-	var assign$5 = parent$O;
-
-	var parent$N = assign$5;
-
-	var assign$4 = parent$N;
-
-	var parent$M = assign$4;
-
-	var assign$3 = parent$M;
-
-	var assign$2 = assign$3;
-
-	var assign$1 = assign$2;
-
-	var _Object$assign = /*@__PURE__*/getDefaultExportFromCjs(assign$1);
-
-	var internalMetadata = {exports: {}};
-
-	// FF26- bug: ArrayBuffers are non-extensible, but Object.isExtensible does not report it
-	var fails$e = fails$x;
-
-	var arrayBufferNonExtensible = fails$e(function () {
-	  if (typeof ArrayBuffer == 'function') {
-	    var buffer = new ArrayBuffer(8);
-	    // eslint-disable-next-line es/no-object-isextensible, es/no-object-defineproperty -- safe
-	    if (Object.isExtensible(buffer)) Object.defineProperty(buffer, 'a', { value: 8 });
-	  }
-	});
-
-	var fails$d = fails$x;
-	var isObject$7 = isObject$j;
-	var classof$4 = classofRaw$2;
-	var ARRAY_BUFFER_NON_EXTENSIBLE = arrayBufferNonExtensible;
-
-	// eslint-disable-next-line es/no-object-isextensible -- safe
-	var $isExtensible = Object.isExtensible;
-	var FAILS_ON_PRIMITIVES$1 = fails$d(function () { $isExtensible(1); });
-
-	// `Object.isExtensible` method
-	// https://tc39.es/ecma262/#sec-object.isextensible
-	var objectIsExtensible = (FAILS_ON_PRIMITIVES$1 || ARRAY_BUFFER_NON_EXTENSIBLE) ? function isExtensible(it) {
-	  if (!isObject$7(it)) return false;
-	  if (ARRAY_BUFFER_NON_EXTENSIBLE && classof$4(it) == 'ArrayBuffer') return false;
-	  return $isExtensible ? $isExtensible(it) : true;
-	} : $isExtensible;
-
-	var fails$c = fails$x;
-
-	var freezing = !fails$c(function () {
-	  // eslint-disable-next-line es/no-object-isextensible, es/no-object-preventextensions -- required for testing
-	  return Object.isExtensible(Object.preventExtensions({}));
-	});
-
-	var $$L = _export;
-	var uncurryThis$b = functionUncurryThis;
-	var hiddenKeys = hiddenKeys$6;
-	var isObject$6 = isObject$j;
-	var hasOwn$5 = hasOwnProperty_1;
-	var defineProperty$1 = objectDefineProperty.f;
-	var getOwnPropertyNamesModule$1 = objectGetOwnPropertyNames;
-	var getOwnPropertyNamesExternalModule = objectGetOwnPropertyNamesExternal;
-	var isExtensible = objectIsExtensible;
-	var uid = uid$4;
-	var FREEZING = freezing;
-
-	var REQUIRED = false;
-	var METADATA = uid('meta');
-	var id = 0;
-
-	var setMetadata = function (it) {
-	  defineProperty$1(it, METADATA, { value: {
-	    objectID: 'O' + id++, // object ID
-	    weakData: {}          // weak collections IDs
-	  } });
-	};
-
-	var fastKey$1 = function (it, create) {
-	  // return a primitive with prefix
-	  if (!isObject$6(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-	  if (!hasOwn$5(it, METADATA)) {
-	    // can't set metadata to uncaught frozen object
-	    if (!isExtensible(it)) return 'F';
-	    // not necessary to add metadata
-	    if (!create) return 'E';
-	    // add missing metadata
-	    setMetadata(it);
-	  // return object ID
-	  } return it[METADATA].objectID;
-	};
-
-	var getWeakData = function (it, create) {
-	  if (!hasOwn$5(it, METADATA)) {
-	    // can't set metadata to uncaught frozen object
-	    if (!isExtensible(it)) return true;
-	    // not necessary to add metadata
-	    if (!create) return false;
-	    // add missing metadata
-	    setMetadata(it);
-	  // return the store of weak collections IDs
-	  } return it[METADATA].weakData;
-	};
-
-	// add metadata on freeze-family methods calling
-	var onFreeze = function (it) {
-	  if (FREEZING && REQUIRED && isExtensible(it) && !hasOwn$5(it, METADATA)) setMetadata(it);
-	  return it;
-	};
-
-	var enable = function () {
-	  meta.enable = function () { /* empty */ };
-	  REQUIRED = true;
-	  var getOwnPropertyNames = getOwnPropertyNamesModule$1.f;
-	  var splice = uncurryThis$b([].splice);
-	  var test = {};
-	  test[METADATA] = 1;
-
-	  // prevent exposing of metadata key
-	  if (getOwnPropertyNames(test).length) {
-	    getOwnPropertyNamesModule$1.f = function (it) {
-	      var result = getOwnPropertyNames(it);
-	      for (var i = 0, length = result.length; i < length; i++) {
-	        if (result[i] === METADATA) {
-	          splice(result, i, 1);
-	          break;
-	        }
-	      } return result;
-	    };
-
-	    $$L({ target: 'Object', stat: true, forced: true }, {
-	      getOwnPropertyNames: getOwnPropertyNamesExternalModule.f
-	    });
-	  }
-	};
-
-	var meta = internalMetadata.exports = {
-	  enable: enable,
-	  fastKey: fastKey$1,
-	  getWeakData: getWeakData,
-	  onFreeze: onFreeze
-	};
-
-	hiddenKeys[METADATA] = true;
-
-	var internalMetadataExports = internalMetadata.exports;
-
-	var bind$e = functionBindContext;
-	var call$c = functionCall;
-	var anObject$5 = anObject$f;
-	var tryToString$2 = tryToString$7;
-	var isArrayIteratorMethod = isArrayIteratorMethod$2;
-	var lengthOfArrayLike$1 = lengthOfArrayLike$8;
-	var isPrototypeOf$8 = objectIsPrototypeOf;
-	var getIterator$1 = getIterator$3;
-	var getIteratorMethod$1 = getIteratorMethod$a;
-	var iteratorClose = iteratorClose$2;
-
-	var $TypeError$9 = TypeError;
-
-	var Result = function (stopped, result) {
-	  this.stopped = stopped;
-	  this.result = result;
-	};
-
-	var ResultPrototype = Result.prototype;
-
-	var iterate$l = function (iterable, unboundFunction, options) {
-	  var that = options && options.that;
-	  var AS_ENTRIES = !!(options && options.AS_ENTRIES);
-	  var IS_RECORD = !!(options && options.IS_RECORD);
-	  var IS_ITERATOR = !!(options && options.IS_ITERATOR);
-	  var INTERRUPTED = !!(options && options.INTERRUPTED);
-	  var fn = bind$e(unboundFunction, that);
-	  var iterator, iterFn, index, length, result, next, step;
-
-	  var stop = function (condition) {
-	    if (iterator) iteratorClose(iterator, 'normal', condition);
-	    return new Result(true, condition);
-	  };
-
-	  var callFn = function (value) {
-	    if (AS_ENTRIES) {
-	      anObject$5(value);
-	      return INTERRUPTED ? fn(value[0], value[1], stop) : fn(value[0], value[1]);
-	    } return INTERRUPTED ? fn(value, stop) : fn(value);
-	  };
-
-	  if (IS_RECORD) {
-	    iterator = iterable.iterator;
-	  } else if (IS_ITERATOR) {
-	    iterator = iterable;
-	  } else {
-	    iterFn = getIteratorMethod$1(iterable);
-	    if (!iterFn) throw $TypeError$9(tryToString$2(iterable) + ' is not iterable');
-	    // optimisation for array iterators
-	    if (isArrayIteratorMethod(iterFn)) {
-	      for (index = 0, length = lengthOfArrayLike$1(iterable); length > index; index++) {
-	        result = callFn(iterable[index]);
-	        if (result && isPrototypeOf$8(ResultPrototype, result)) return result;
-	      } return new Result(false);
-	    }
-	    iterator = getIterator$1(iterable, iterFn);
-	  }
-
-	  next = IS_RECORD ? iterable.next : iterator.next;
-	  while (!(step = call$c(next, iterator)).done) {
-	    try {
-	      result = callFn(step.value);
-	    } catch (error) {
-	      iteratorClose(iterator, 'throw', error);
-	    }
-	    if (typeof result == 'object' && result && isPrototypeOf$8(ResultPrototype, result)) return result;
-	  } return new Result(false);
-	};
-
-	var isPrototypeOf$7 = objectIsPrototypeOf;
-
-	var $TypeError$8 = TypeError;
-
-	var anInstance$5 = function (it, Prototype) {
-	  if (isPrototypeOf$7(Prototype, it)) return it;
-	  throw $TypeError$8('Incorrect invocation');
-	};
-
-	var $$K = _export;
-	var global$a = global$o;
-	var InternalMetadataModule = internalMetadataExports;
-	var fails$b = fails$x;
-	var createNonEnumerableProperty$3 = createNonEnumerableProperty$9;
-	var iterate$k = iterate$l;
-	var anInstance$4 = anInstance$5;
-	var isCallable$8 = isCallable$p;
-	var isObject$5 = isObject$j;
-	var setToStringTag$3 = setToStringTag$9;
-	var defineProperty = objectDefineProperty.f;
-	var forEach$8 = arrayIteration.forEach;
-	var DESCRIPTORS$8 = descriptors;
-	var InternalStateModule$4 = internalState;
-
-	var setInternalState$4 = InternalStateModule$4.set;
-	var internalStateGetterFor$1 = InternalStateModule$4.getterFor;
-
-	var collection$1 = function (CONSTRUCTOR_NAME, wrapper, common) {
-	  var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
-	  var IS_WEAK = CONSTRUCTOR_NAME.indexOf('Weak') !== -1;
-	  var ADDER = IS_MAP ? 'set' : 'add';
-	  var NativeConstructor = global$a[CONSTRUCTOR_NAME];
-	  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
-	  var exported = {};
-	  var Constructor;
-
-	  if (!DESCRIPTORS$8 || !isCallable$8(NativeConstructor)
-	    || !(IS_WEAK || NativePrototype.forEach && !fails$b(function () { new NativeConstructor().entries().next(); }))
-	  ) {
-	    // create collection constructor
-	    Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
-	    InternalMetadataModule.enable();
-	  } else {
-	    Constructor = wrapper(function (target, iterable) {
-	      setInternalState$4(anInstance$4(target, Prototype), {
-	        type: CONSTRUCTOR_NAME,
-	        collection: new NativeConstructor()
-	      });
-	      if (iterable != undefined) iterate$k(iterable, target[ADDER], { that: target, AS_ENTRIES: IS_MAP });
-	    });
-
-	    var Prototype = Constructor.prototype;
-
-	    var getInternalState = internalStateGetterFor$1(CONSTRUCTOR_NAME);
-
-	    forEach$8(['add', 'clear', 'delete', 'forEach', 'get', 'has', 'set', 'keys', 'values', 'entries'], function (KEY) {
-	      var IS_ADDER = KEY == 'add' || KEY == 'set';
-	      if (KEY in NativePrototype && !(IS_WEAK && KEY == 'clear')) {
-	        createNonEnumerableProperty$3(Prototype, KEY, function (a, b) {
-	          var collection = getInternalState(this).collection;
-	          if (!IS_ADDER && IS_WEAK && !isObject$5(a)) return KEY == 'get' ? undefined : false;
-	          var result = collection[KEY](a === 0 ? 0 : a, b);
-	          return IS_ADDER ? this : result;
-	        });
-	      }
-	    });
-
-	    IS_WEAK || defineProperty(Prototype, 'size', {
-	      configurable: true,
-	      get: function () {
-	        return getInternalState(this).collection.size;
-	      }
-	    });
-	  }
-
-	  setToStringTag$3(Constructor, CONSTRUCTOR_NAME, false, true);
-
-	  exported[CONSTRUCTOR_NAME] = Constructor;
-	  $$K({ global: true, forced: true }, exported);
-
-	  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
-
-	  return Constructor;
-	};
-
-	var defineBuiltIn$3 = defineBuiltIn$8;
-
-	var defineBuiltIns$2 = function (target, src, options) {
-	  for (var key in src) {
-	    if (options && options.unsafe && target[key]) target[key] = src[key];
-	    else defineBuiltIn$3(target, key, src[key], options);
-	  } return target;
-	};
-
-	var getBuiltIn$6 = getBuiltIn$h;
-	var defineBuiltInAccessor$3 = defineBuiltInAccessor$5;
-	var wellKnownSymbol$7 = wellKnownSymbol$q;
-	var DESCRIPTORS$7 = descriptors;
-
-	var SPECIES$2 = wellKnownSymbol$7('species');
-
-	var setSpecies$2 = function (CONSTRUCTOR_NAME) {
-	  var Constructor = getBuiltIn$6(CONSTRUCTOR_NAME);
-
-	  if (DESCRIPTORS$7 && Constructor && !Constructor[SPECIES$2]) {
-	    defineBuiltInAccessor$3(Constructor, SPECIES$2, {
-	      configurable: true,
-	      get: function () { return this; }
-	    });
-	  }
-	};
-
-	var create$2 = objectCreate;
-	var defineBuiltInAccessor$2 = defineBuiltInAccessor$5;
-	var defineBuiltIns$1 = defineBuiltIns$2;
-	var bind$d = functionBindContext;
-	var anInstance$3 = anInstance$5;
-	var isNullOrUndefined$2 = isNullOrUndefined$6;
-	var iterate$j = iterate$l;
-	var defineIterator = iteratorDefine;
-	var createIterResultObject = createIterResultObject$3;
-	var setSpecies$1 = setSpecies$2;
-	var DESCRIPTORS$6 = descriptors;
-	var fastKey = internalMetadataExports.fastKey;
-	var InternalStateModule$3 = internalState;
-
-	var setInternalState$3 = InternalStateModule$3.set;
-	var internalStateGetterFor = InternalStateModule$3.getterFor;
-
-	var collectionStrong$1 = {
-	  getConstructor: function (wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
-	    var Constructor = wrapper(function (that, iterable) {
-	      anInstance$3(that, Prototype);
-	      setInternalState$3(that, {
-	        type: CONSTRUCTOR_NAME,
-	        index: create$2(null),
-	        first: undefined,
-	        last: undefined,
-	        size: 0
-	      });
-	      if (!DESCRIPTORS$6) that.size = 0;
-	      if (!isNullOrUndefined$2(iterable)) iterate$j(iterable, that[ADDER], { that: that, AS_ENTRIES: IS_MAP });
-	    });
-
-	    var Prototype = Constructor.prototype;
-
-	    var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
-
-	    var define = function (that, key, value) {
-	      var state = getInternalState(that);
-	      var entry = getEntry(that, key);
-	      var previous, index;
-	      // change existing entry
-	      if (entry) {
-	        entry.value = value;
-	      // create new entry
-	      } else {
-	        state.last = entry = {
-	          index: index = fastKey(key, true),
-	          key: key,
-	          value: value,
-	          previous: previous = state.last,
-	          next: undefined,
-	          removed: false
-	        };
-	        if (!state.first) state.first = entry;
-	        if (previous) previous.next = entry;
-	        if (DESCRIPTORS$6) state.size++;
-	        else that.size++;
-	        // add to index
-	        if (index !== 'F') state.index[index] = entry;
-	      } return that;
-	    };
-
-	    var getEntry = function (that, key) {
-	      var state = getInternalState(that);
-	      // fast case
-	      var index = fastKey(key);
-	      var entry;
-	      if (index !== 'F') return state.index[index];
-	      // frozen object case
-	      for (entry = state.first; entry; entry = entry.next) {
-	        if (entry.key == key) return entry;
-	      }
-	    };
-
-	    defineBuiltIns$1(Prototype, {
-	      // `{ Map, Set }.prototype.clear()` methods
-	      // https://tc39.es/ecma262/#sec-map.prototype.clear
-	      // https://tc39.es/ecma262/#sec-set.prototype.clear
-	      clear: function clear() {
-	        var that = this;
-	        var state = getInternalState(that);
-	        var data = state.index;
-	        var entry = state.first;
-	        while (entry) {
-	          entry.removed = true;
-	          if (entry.previous) entry.previous = entry.previous.next = undefined;
-	          delete data[entry.index];
-	          entry = entry.next;
-	        }
-	        state.first = state.last = undefined;
-	        if (DESCRIPTORS$6) state.size = 0;
-	        else that.size = 0;
-	      },
-	      // `{ Map, Set }.prototype.delete(key)` methods
-	      // https://tc39.es/ecma262/#sec-map.prototype.delete
-	      // https://tc39.es/ecma262/#sec-set.prototype.delete
-	      'delete': function (key) {
-	        var that = this;
-	        var state = getInternalState(that);
-	        var entry = getEntry(that, key);
-	        if (entry) {
-	          var next = entry.next;
-	          var prev = entry.previous;
-	          delete state.index[entry.index];
-	          entry.removed = true;
-	          if (prev) prev.next = next;
-	          if (next) next.previous = prev;
-	          if (state.first == entry) state.first = next;
-	          if (state.last == entry) state.last = prev;
-	          if (DESCRIPTORS$6) state.size--;
-	          else that.size--;
-	        } return !!entry;
-	      },
-	      // `{ Map, Set }.prototype.forEach(callbackfn, thisArg = undefined)` methods
-	      // https://tc39.es/ecma262/#sec-map.prototype.foreach
-	      // https://tc39.es/ecma262/#sec-set.prototype.foreach
-	      forEach: function forEach(callbackfn /* , that = undefined */) {
-	        var state = getInternalState(this);
-	        var boundFunction = bind$d(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	        var entry;
-	        while (entry = entry ? entry.next : state.first) {
-	          boundFunction(entry.value, entry.key, this);
-	          // revert to the last existing entry
-	          while (entry && entry.removed) entry = entry.previous;
-	        }
-	      },
-	      // `{ Map, Set}.prototype.has(key)` methods
-	      // https://tc39.es/ecma262/#sec-map.prototype.has
-	      // https://tc39.es/ecma262/#sec-set.prototype.has
-	      has: function has(key) {
-	        return !!getEntry(this, key);
-	      }
-	    });
-
-	    defineBuiltIns$1(Prototype, IS_MAP ? {
-	      // `Map.prototype.get(key)` method
-	      // https://tc39.es/ecma262/#sec-map.prototype.get
-	      get: function get(key) {
-	        var entry = getEntry(this, key);
-	        return entry && entry.value;
-	      },
-	      // `Map.prototype.set(key, value)` method
-	      // https://tc39.es/ecma262/#sec-map.prototype.set
-	      set: function set(key, value) {
-	        return define(this, key === 0 ? 0 : key, value);
-	      }
-	    } : {
-	      // `Set.prototype.add(value)` method
-	      // https://tc39.es/ecma262/#sec-set.prototype.add
-	      add: function add(value) {
-	        return define(this, value = value === 0 ? 0 : value, value);
-	      }
-	    });
-	    if (DESCRIPTORS$6) defineBuiltInAccessor$2(Prototype, 'size', {
-	      configurable: true,
-	      get: function () {
-	        return getInternalState(this).size;
-	      }
-	    });
-	    return Constructor;
-	  },
-	  setStrong: function (Constructor, CONSTRUCTOR_NAME, IS_MAP) {
-	    var ITERATOR_NAME = CONSTRUCTOR_NAME + ' Iterator';
-	    var getInternalCollectionState = internalStateGetterFor(CONSTRUCTOR_NAME);
-	    var getInternalIteratorState = internalStateGetterFor(ITERATOR_NAME);
-	    // `{ Map, Set }.prototype.{ keys, values, entries, @@iterator }()` methods
-	    // https://tc39.es/ecma262/#sec-map.prototype.entries
-	    // https://tc39.es/ecma262/#sec-map.prototype.keys
-	    // https://tc39.es/ecma262/#sec-map.prototype.values
-	    // https://tc39.es/ecma262/#sec-map.prototype-@@iterator
-	    // https://tc39.es/ecma262/#sec-set.prototype.entries
-	    // https://tc39.es/ecma262/#sec-set.prototype.keys
-	    // https://tc39.es/ecma262/#sec-set.prototype.values
-	    // https://tc39.es/ecma262/#sec-set.prototype-@@iterator
-	    defineIterator(Constructor, CONSTRUCTOR_NAME, function (iterated, kind) {
-	      setInternalState$3(this, {
-	        type: ITERATOR_NAME,
-	        target: iterated,
-	        state: getInternalCollectionState(iterated),
-	        kind: kind,
-	        last: undefined
-	      });
-	    }, function () {
-	      var state = getInternalIteratorState(this);
-	      var kind = state.kind;
-	      var entry = state.last;
-	      // revert to the last existing entry
-	      while (entry && entry.removed) entry = entry.previous;
-	      // get next entry
-	      if (!state.target || !(state.last = entry = entry ? entry.next : state.state.first)) {
-	        // or finish the iteration
-	        state.target = undefined;
-	        return createIterResultObject(undefined, true);
-	      }
-	      // return step by kind
-	      if (kind == 'keys') return createIterResultObject(entry.key, false);
-	      if (kind == 'values') return createIterResultObject(entry.value, false);
-	      return createIterResultObject([entry.key, entry.value], false);
-	    }, IS_MAP ? 'entries' : 'values', !IS_MAP, true);
-
-	    // `{ Map, Set }.prototype[@@species]` accessors
-	    // https://tc39.es/ecma262/#sec-get-map-@@species
-	    // https://tc39.es/ecma262/#sec-get-set-@@species
-	    setSpecies$1(CONSTRUCTOR_NAME);
-	  }
-	};
-
-	var collection = collection$1;
-	var collectionStrong = collectionStrong$1;
-
-	// `Map` constructor
-	// https://tc39.es/ecma262/#sec-map-objects
-	collection('Map', function (init) {
-	  return function Map() { return init(this, arguments.length ? arguments[0] : undefined); };
-	}, collectionStrong);
-
-	var path$9 = path$n;
-
-	var map$5 = path$9.Map;
-
-	var parent$L = map$5;
-
-
-	var map$4 = parent$L;
-
-	var parent$K = map$4;
-
-	var map$3 = parent$K;
-
-	// https://tc39.github.io/proposal-setmap-offrom/
-	var bind$c = functionBindContext;
-	var call$b = functionCall;
-	var aCallable$b = aCallable$h;
-	var aConstructor$1 = aConstructor$3;
-	var isNullOrUndefined$1 = isNullOrUndefined$6;
-	var iterate$i = iterate$l;
-
-	var push$5 = [].push;
-
-	var collectionFrom = function from(source /* , mapFn, thisArg */) {
-	  var length = arguments.length;
-	  var mapFn = length > 1 ? arguments[1] : undefined;
-	  var mapping, array, n, boundFunction;
-	  aConstructor$1(this);
-	  mapping = mapFn !== undefined;
-	  if (mapping) aCallable$b(mapFn);
-	  if (isNullOrUndefined$1(source)) return new this();
-	  array = [];
-	  if (mapping) {
-	    n = 0;
-	    boundFunction = bind$c(mapFn, length > 2 ? arguments[2] : undefined);
-	    iterate$i(source, function (nextItem) {
-	      call$b(push$5, array, boundFunction(nextItem, n++));
-	    });
-	  } else {
-	    iterate$i(source, push$5, { that: array });
-	  }
-	  return new this(array);
-	};
-
-	var $$J = _export;
-	var from = collectionFrom;
-
-	// `Map.from` method
-	// https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
-	$$J({ target: 'Map', stat: true, forced: true }, {
-	  from: from
-	});
-
-	var arraySlice$3 = arraySlice$7;
-
-	// https://tc39.github.io/proposal-setmap-offrom/
-	var collectionOf = function of() {
-	  return new this(arraySlice$3(arguments));
-	};
-
-	var $$I = _export;
-	var of = collectionOf;
-
-	// `Map.of` method
-	// https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
-	$$I({ target: 'Map', stat: true, forced: true }, {
-	  of: of
-	});
-
-	var tryToString$1 = tryToString$7;
-
-	// Perform ? RequireInternalSlot(M, [[MapData]])
-	var aMap$e = function (it) {
-	  if (typeof it == 'object' && 'size' in it && 'has' in it && 'get' in it && 'set' in it && 'delete' in it && 'entries' in it) return it;
-	  throw TypeError(tryToString$1(it) + ' is not a map');
-	};
-
-	var caller$1 = function (methodName, numArgs) {
-	  return numArgs == 1 ? function (object, arg) {
-	    return object[methodName](arg);
-	  } : function (object, arg1, arg2) {
-	    return object[methodName](arg1, arg2);
-	  };
-	};
-
-	var getBuiltIn$5 = getBuiltIn$h;
-	var caller = caller$1;
-
-	var Map$5 = getBuiltIn$5('Map');
-
-	var mapHelpers = {
-	  Map: Map$5,
-	  set: caller('set', 2),
-	  get: caller('get', 1),
-	  has: caller('has', 1),
-	  remove: caller('delete', 1),
-	  proto: Map$5.prototype
-	};
-
-	var $$H = _export;
-	var aMap$d = aMap$e;
-	var remove = mapHelpers.remove;
-
-	// `Map.prototype.deleteAll` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$H({ target: 'Map', proto: true, real: true, forced: true }, {
-	  deleteAll: function deleteAll(/* ...elements */) {
-	    var collection = aMap$d(this);
-	    var allDeleted = true;
-	    var wasDeleted;
-	    for (var k = 0, len = arguments.length; k < len; k++) {
-	      wasDeleted = remove(collection, arguments[k]);
-	      allDeleted = allDeleted && wasDeleted;
-	    } return !!allDeleted;
-	  }
-	});
-
-	var $$G = _export;
-	var aMap$c = aMap$e;
-	var MapHelpers$4 = mapHelpers;
-
-	var get$1 = MapHelpers$4.get;
-	var has$1 = MapHelpers$4.has;
-	var set$6 = MapHelpers$4.set;
-
-	// `Map.prototype.emplace` method
-	// https://github.com/tc39/proposal-upsert
-	$$G({ target: 'Map', proto: true, real: true, forced: true }, {
-	  emplace: function emplace(key, handler) {
-	    var map = aMap$c(this);
-	    var value, inserted;
-	    if (has$1(map, key)) {
-	      value = get$1(map, key);
-	      if ('update' in handler) {
-	        value = handler.update(value, key, map);
-	        set$6(map, key, value);
-	      } return value;
-	    }
-	    inserted = handler.insert(key, map);
-	    set$6(map, key, inserted);
-	    return inserted;
-	  }
-	});
-
-	var call$a = functionCall;
-
-	var iterateSimple$1 = function (iterator, fn, $next) {
-	  var next = $next || iterator.next;
-	  var step, result;
-	  while (!(step = call$a(next, iterator)).done) {
-	    result = fn(step.value);
-	    if (result !== undefined) return result;
-	  }
-	};
-
-	var iterateSimple = iterateSimple$1;
-
-	var mapIterate = function (map, fn, interruptible) {
-	  return interruptible ? iterateSimple(map.entries(), function (entry) {
-	    return fn(entry[1], entry[0]);
-	  }) : map.forEach(fn);
-	};
-
-	var $$F = _export;
-	var bind$b = functionBindContext;
-	var aMap$b = aMap$e;
-	var iterate$h = mapIterate;
-
-	// `Map.prototype.every` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$F({ target: 'Map', proto: true, real: true, forced: true }, {
-	  every: function every(callbackfn /* , thisArg */) {
-	    var map = aMap$b(this);
-	    var boundFunction = bind$b(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	    return iterate$h(map, function (value, key) {
-	      if (!boundFunction(value, key, map)) return false;
-	    }, true) !== false;
-	  }
-	});
-
-	var $$E = _export;
-	var bind$a = functionBindContext;
-	var aMap$a = aMap$e;
-	var MapHelpers$3 = mapHelpers;
-	var iterate$g = mapIterate;
-
-	var Map$4 = MapHelpers$3.Map;
-	var set$5 = MapHelpers$3.set;
-
-	// `Map.prototype.filter` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$E({ target: 'Map', proto: true, real: true, forced: true }, {
-	  filter: function filter(callbackfn /* , thisArg */) {
-	    var map = aMap$a(this);
-	    var boundFunction = bind$a(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	    var newMap = new Map$4();
-	    iterate$g(map, function (value, key) {
-	      if (boundFunction(value, key, map)) set$5(newMap, key, value);
-	    });
-	    return newMap;
-	  }
-	});
-
-	var $$D = _export;
-	var bind$9 = functionBindContext;
-	var aMap$9 = aMap$e;
-	var iterate$f = mapIterate;
-
-	// `Map.prototype.find` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$D({ target: 'Map', proto: true, real: true, forced: true }, {
-	  find: function find(callbackfn /* , thisArg */) {
-	    var map = aMap$9(this);
-	    var boundFunction = bind$9(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	    var result = iterate$f(map, function (value, key) {
-	      if (boundFunction(value, key, map)) return { value: value };
-	    }, true);
-	    return result && result.value;
-	  }
-	});
-
-	var $$C = _export;
-	var bind$8 = functionBindContext;
-	var aMap$8 = aMap$e;
-	var iterate$e = mapIterate;
-
-	// `Map.prototype.findKey` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$C({ target: 'Map', proto: true, real: true, forced: true }, {
-	  findKey: function findKey(callbackfn /* , thisArg */) {
-	    var map = aMap$8(this);
-	    var boundFunction = bind$8(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	    var result = iterate$e(map, function (value, key) {
-	      if (boundFunction(value, key, map)) return { key: key };
-	    }, true);
-	    return result && result.key;
-	  }
-	});
-
-	var $$B = _export;
-	var call$9 = functionCall;
-	var uncurryThis$a = functionUncurryThis;
-	var isCallable$7 = isCallable$p;
-	var aCallable$a = aCallable$h;
-	var iterate$d = iterate$l;
-	var Map$3 = mapHelpers.Map;
-
-	var push$4 = uncurryThis$a([].push);
-
-	// `Map.groupBy` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$B({ target: 'Map', stat: true, forced: true }, {
-	  groupBy: function groupBy(iterable, keyDerivative) {
-	    var C = isCallable$7(this) ? this : Map$3;
-	    var newMap = new C();
-	    aCallable$a(keyDerivative);
-	    var has = aCallable$a(newMap.has);
-	    var get = aCallable$a(newMap.get);
-	    var set = aCallable$a(newMap.set);
-	    iterate$d(iterable, function (element) {
-	      var derivedKey = keyDerivative(element);
-	      if (!call$9(has, newMap, derivedKey)) call$9(set, newMap, derivedKey, [element]);
-	      else push$4(call$9(get, newMap, derivedKey), element);
-	    });
-	    return newMap;
-	  }
-	});
-
-	// `SameValueZero` abstract operation
-	// https://tc39.es/ecma262/#sec-samevaluezero
-	var sameValueZero$1 = function (x, y) {
-	  // eslint-disable-next-line no-self-compare -- NaN check
-	  return x === y || x != x && y != y;
-	};
-
-	var $$A = _export;
-	var sameValueZero = sameValueZero$1;
-	var aMap$7 = aMap$e;
-	var iterate$c = mapIterate;
-
-	// `Map.prototype.includes` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$A({ target: 'Map', proto: true, real: true, forced: true }, {
-	  includes: function includes(searchElement) {
-	    return iterate$c(aMap$7(this), function (value) {
-	      if (sameValueZero(value, searchElement)) return true;
-	    }, true) === true;
-	  }
-	});
-
-	var $$z = _export;
-	var call$8 = functionCall;
-	var iterate$b = iterate$l;
-	var isCallable$6 = isCallable$p;
-	var aCallable$9 = aCallable$h;
-	var Map$2 = mapHelpers.Map;
-
-	// `Map.keyBy` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$z({ target: 'Map', stat: true, forced: true }, {
-	  keyBy: function keyBy(iterable, keyDerivative) {
-	    var C = isCallable$6(this) ? this : Map$2;
-	    var newMap = new C();
-	    aCallable$9(keyDerivative);
-	    var setter = aCallable$9(newMap.set);
-	    iterate$b(iterable, function (element) {
-	      call$8(setter, newMap, keyDerivative(element), element);
-	    });
-	    return newMap;
-	  }
-	});
-
-	var $$y = _export;
-	var aMap$6 = aMap$e;
-	var iterate$a = mapIterate;
-
-	// `Map.prototype.keyOf` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$y({ target: 'Map', proto: true, real: true, forced: true }, {
-	  keyOf: function keyOf(searchElement) {
-	    var result = iterate$a(aMap$6(this), function (value, key) {
-	      if (value === searchElement) return { key: key };
-	    }, true);
-	    return result && result.key;
-	  }
-	});
-
-	var $$x = _export;
-	var bind$7 = functionBindContext;
-	var aMap$5 = aMap$e;
-	var MapHelpers$2 = mapHelpers;
-	var iterate$9 = mapIterate;
-
-	var Map$1 = MapHelpers$2.Map;
-	var set$4 = MapHelpers$2.set;
-
-	// `Map.prototype.mapKeys` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$x({ target: 'Map', proto: true, real: true, forced: true }, {
-	  mapKeys: function mapKeys(callbackfn /* , thisArg */) {
-	    var map = aMap$5(this);
-	    var boundFunction = bind$7(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	    var newMap = new Map$1();
-	    iterate$9(map, function (value, key) {
-	      set$4(newMap, boundFunction(value, key, map), value);
-	    });
-	    return newMap;
-	  }
-	});
-
-	var $$w = _export;
-	var bind$6 = functionBindContext;
-	var aMap$4 = aMap$e;
-	var MapHelpers$1 = mapHelpers;
-	var iterate$8 = mapIterate;
-
-	var Map = MapHelpers$1.Map;
-	var set$3 = MapHelpers$1.set;
-
-	// `Map.prototype.mapValues` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$w({ target: 'Map', proto: true, real: true, forced: true }, {
-	  mapValues: function mapValues(callbackfn /* , thisArg */) {
-	    var map = aMap$4(this);
-	    var boundFunction = bind$6(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	    var newMap = new Map();
-	    iterate$8(map, function (value, key) {
-	      set$3(newMap, key, boundFunction(value, key, map));
-	    });
-	    return newMap;
-	  }
-	});
-
-	var $$v = _export;
-	var aMap$3 = aMap$e;
-	var iterate$7 = iterate$l;
-	var set$2 = mapHelpers.set;
-
-	// `Map.prototype.merge` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$v({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
-	  // eslint-disable-next-line no-unused-vars -- required for `.length`
-	  merge: function merge(iterable /* ...iterables */) {
-	    var map = aMap$3(this);
-	    var argumentsLength = arguments.length;
-	    var i = 0;
-	    while (i < argumentsLength) {
-	      iterate$7(arguments[i++], function (key, value) {
-	        set$2(map, key, value);
-	      }, { AS_ENTRIES: true });
-	    }
-	    return map;
-	  }
-	});
-
-	var $$u = _export;
-	var aCallable$8 = aCallable$h;
-	var aMap$2 = aMap$e;
-	var iterate$6 = mapIterate;
-
-	var $TypeError$7 = TypeError;
-
-	// `Map.prototype.reduce` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$u({ target: 'Map', proto: true, real: true, forced: true }, {
-	  reduce: function reduce(callbackfn /* , initialValue */) {
-	    var map = aMap$2(this);
-	    var noInitial = arguments.length < 2;
-	    var accumulator = noInitial ? undefined : arguments[1];
-	    aCallable$8(callbackfn);
-	    iterate$6(map, function (value, key) {
-	      if (noInitial) {
-	        noInitial = false;
-	        accumulator = value;
-	      } else {
-	        accumulator = callbackfn(accumulator, value, key, map);
-	      }
-	    });
-	    if (noInitial) throw $TypeError$7('Reduce of empty map with no initial value');
-	    return accumulator;
-	  }
-	});
-
-	var $$t = _export;
-	var bind$5 = functionBindContext;
-	var aMap$1 = aMap$e;
-	var iterate$5 = mapIterate;
-
-	// `Map.prototype.some` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$t({ target: 'Map', proto: true, real: true, forced: true }, {
-	  some: function some(callbackfn /* , thisArg */) {
-	    var map = aMap$1(this);
-	    var boundFunction = bind$5(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	    return iterate$5(map, function (value, key) {
-	      if (boundFunction(value, key, map)) return true;
-	    }, true) === true;
-	  }
-	});
-
-	var $$s = _export;
-	var aCallable$7 = aCallable$h;
-	var aMap = aMap$e;
-	var MapHelpers = mapHelpers;
-
-	var $TypeError$6 = TypeError;
-	var get = MapHelpers.get;
-	var has = MapHelpers.has;
-	var set$1 = MapHelpers.set;
-
-	// `Map.prototype.update` method
-	// https://github.com/tc39/proposal-collection-methods
-	$$s({ target: 'Map', proto: true, real: true, forced: true }, {
-	  update: function update(key, callback /* , thunk */) {
-	    var map = aMap(this);
-	    var length = arguments.length;
-	    aCallable$7(callback);
-	    var isPresentInMap = has(map, key);
-	    if (!isPresentInMap && length < 3) {
-	      throw $TypeError$6('Updating absent value');
-	    }
-	    var value = isPresentInMap ? get(map, key) : aCallable$7(length > 2 ? arguments[2] : undefined)(key, map);
-	    set$1(map, key, callback(value, key, map));
-	    return map;
-	  }
-	});
-
-	var call$7 = functionCall;
-	var aCallable$6 = aCallable$h;
-	var isCallable$5 = isCallable$p;
-	var anObject$4 = anObject$f;
-
-	var $TypeError$5 = TypeError;
-
-	// `Map.prototype.upsert` method
-	// https://github.com/tc39/proposal-upsert
-	var mapUpsert = function upsert(key, updateFn /* , insertFn */) {
-	  var map = anObject$4(this);
-	  var get = aCallable$6(map.get);
-	  var has = aCallable$6(map.has);
-	  var set = aCallable$6(map.set);
-	  var insertFn = arguments.length > 2 ? arguments[2] : undefined;
-	  var value;
-	  if (!isCallable$5(updateFn) && !isCallable$5(insertFn)) {
-	    throw $TypeError$5('At least one callback required');
-	  }
-	  if (call$7(has, map, key)) {
-	    value = call$7(get, map, key);
-	    if (isCallable$5(updateFn)) {
-	      value = updateFn(value);
-	      call$7(set, map, key, value);
-	    }
-	  } else if (isCallable$5(insertFn)) {
-	    value = insertFn();
-	    call$7(set, map, key, value);
-	  } return value;
-	};
-
-	// TODO: remove from `core-js@4`
-	var $$r = _export;
-	var upsert$1 = mapUpsert;
-
-	// `Map.prototype.upsert` method (replaced by `Map.prototype.emplace`)
-	// https://github.com/thumbsupep/proposal-upsert
-	$$r({ target: 'Map', proto: true, real: true, forced: true }, {
-	  upsert: upsert$1
-	});
-
-	// TODO: remove from `core-js@4`
-	var $$q = _export;
-	var upsert = mapUpsert;
-
-	// `Map.prototype.updateOrInsert` method (replaced by `Map.prototype.emplace`)
-	// https://github.com/thumbsupep/proposal-upsert
-	$$q({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
-	  updateOrInsert: upsert
-	});
-
-	var parent$J = map$3;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// TODO: remove from `core-js@4`
-
-	// TODO: remove from `core-js@4`
-
-
-	var map$2 = parent$J;
-
-	var map$1 = map$2;
-
-	var map = map$1;
-
-	var _Map = /*@__PURE__*/getDefaultExportFromCjs(map);
-
-	var fails$a = fails$x;
-
-	var arrayMethodIsStrict$2 = function (METHOD_NAME, argument) {
-	  var method = [][METHOD_NAME];
-	  return !!method && fails$a(function () {
-	    // eslint-disable-next-line no-useless-call -- required for testing
-	    method.call(null, argument || function () { return 1; }, 1);
-	  });
-	};
-
-	var $forEach = arrayIteration.forEach;
-	var arrayMethodIsStrict$1 = arrayMethodIsStrict$2;
-
-	var STRICT_METHOD = arrayMethodIsStrict$1('forEach');
-
-	// `Array.prototype.forEach` method implementation
-	// https://tc39.es/ecma262/#sec-array.prototype.foreach
-	var arrayForEach = !STRICT_METHOD ? function forEach(callbackfn /* , thisArg */) {
-	  return $forEach(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	// eslint-disable-next-line es/no-array-prototype-foreach -- safe
-	} : [].forEach;
-
-	var $$p = _export;
-	var forEach$7 = arrayForEach;
-
-	// `Array.prototype.forEach` method
-	// https://tc39.es/ecma262/#sec-array.prototype.foreach
-	// eslint-disable-next-line es/no-array-prototype-foreach -- safe
-	$$p({ target: 'Array', proto: true, forced: [].forEach != forEach$7 }, {
-	  forEach: forEach$7
-	});
-
 	var entryVirtual$6 = entryVirtual$9;
 
-	var forEach$6 = entryVirtual$6('Array').forEach;
+	var concat$8 = entryVirtual$6('Array').concat;
 
-	var parent$I = forEach$6;
-
-	var forEach$5 = parent$I;
-
-	var classof$3 = classof$d;
-	var hasOwn$4 = hasOwnProperty_1;
-	var isPrototypeOf$6 = objectIsPrototypeOf;
-	var method$4 = forEach$5;
+	var isPrototypeOf$8 = objectIsPrototypeOf;
+	var method$4 = concat$8;
 
 	var ArrayPrototype$5 = Array.prototype;
 
-	var DOMIterables = {
-	  DOMTokenList: true,
-	  NodeList: true
-	};
-
-	var forEach$4 = function (it) {
-	  var own = it.forEach;
-	  return it === ArrayPrototype$5 || (isPrototypeOf$6(ArrayPrototype$5, it) && own === ArrayPrototype$5.forEach)
-	    || hasOwn$4(DOMIterables, classof$3(it)) ? method$4 : own;
-	};
-
-	var parent$H = forEach$4;
-
-	var forEach$3 = parent$H;
-
-	var parent$G = forEach$3;
-
-	var forEach$2 = parent$G;
-
-	var forEach$1 = forEach$2;
-
-	var forEach = forEach$1;
-
-	var _forEachInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(forEach);
-
-	/* eslint-disable es/no-array-prototype-indexof -- required for testing */
-	var $$o = _export;
-	var uncurryThis$9 = functionUncurryThisClause;
-	var $indexOf = arrayIncludes.indexOf;
-	var arrayMethodIsStrict = arrayMethodIsStrict$2;
-
-	var nativeIndexOf = uncurryThis$9([].indexOf);
-
-	var NEGATIVE_ZERO = !!nativeIndexOf && 1 / nativeIndexOf([1], 1, -0) < 0;
-	var FORCED$3 = NEGATIVE_ZERO || !arrayMethodIsStrict('indexOf');
-
-	// `Array.prototype.indexOf` method
-	// https://tc39.es/ecma262/#sec-array.prototype.indexof
-	$$o({ target: 'Array', proto: true, forced: FORCED$3 }, {
-	  indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
-	    var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
-	    return NEGATIVE_ZERO
-	      // convert -0 to +0
-	      ? nativeIndexOf(this, searchElement, fromIndex) || 0
-	      : $indexOf(this, searchElement, fromIndex);
-	  }
-	});
-
-	var entryVirtual$5 = entryVirtual$9;
-
-	var indexOf$6 = entryVirtual$5('Array').indexOf;
-
-	var isPrototypeOf$5 = objectIsPrototypeOf;
-	var method$3 = indexOf$6;
-
-	var ArrayPrototype$4 = Array.prototype;
-
-	var indexOf$5 = function (it) {
-	  var own = it.indexOf;
-	  return it === ArrayPrototype$4 || (isPrototypeOf$5(ArrayPrototype$4, it) && own === ArrayPrototype$4.indexOf) ? method$3 : own;
-	};
-
-	var parent$F = indexOf$5;
-
-	var indexOf$4 = parent$F;
-
-	var parent$E = indexOf$4;
-
-	var indexOf$3 = parent$E;
-
-	var parent$D = indexOf$3;
-
-	var indexOf$2 = parent$D;
-
-	var indexOf$1 = indexOf$2;
-
-	var indexOf = indexOf$1;
-
-	var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
-
-	var entryVirtual$4 = entryVirtual$9;
-
-	var concat$7 = entryVirtual$4('Array').concat;
-
-	var isPrototypeOf$4 = objectIsPrototypeOf;
-	var method$2 = concat$7;
-
-	var ArrayPrototype$3 = Array.prototype;
-
-	var concat$6 = function (it) {
+	var concat$7 = function (it) {
 	  var own = it.concat;
-	  return it === ArrayPrototype$3 || (isPrototypeOf$4(ArrayPrototype$3, it) && own === ArrayPrototype$3.concat) ? method$2 : own;
+	  return it === ArrayPrototype$5 || (isPrototypeOf$8(ArrayPrototype$5, it) && own === ArrayPrototype$5.concat) ? method$4 : own;
 	};
 
-	var parent$C = concat$6;
+	var parent$L = concat$7;
 
-	var concat$5 = parent$C;
+	var concat$6 = parent$L;
 
-	var parent$B = concat$5;
+	var parent$K = concat$6;
 
-	var concat$4 = parent$B;
+	var concat$5 = parent$K;
 
-	var parent$A = concat$4;
+	var parent$J = concat$5;
 
-	var concat$3 = parent$A;
+	var concat$4 = parent$J;
+
+	var concat$3 = concat$4;
 
 	var concat$2 = concat$3;
 
-	var concat$1 = concat$2;
-
-	var _concatInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(concat$1);
+	var _concatInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(concat$2);
 
 	function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 	function _unsupportedIterableToArray$2(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
@@ -4840,7 +3548,7 @@
 	 * @param {Node[]} children
 	 * @returns
 	 */
-	function $$n(desc, props, children) {
+	function $$M(desc, props, children) {
 	  var match = [];
 	  var regArray = SELECTOR_REG.exec(desc);
 	  // /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/.exec('div#app.a.b')
@@ -5090,7 +3798,198 @@
 	  return fn.bind(context);
 	}
 
-	var $$m = _export;
+	var $$L = _export;
+	var $includes = arrayIncludes.includes;
+	var fails$f = fails$x;
+
+	// FF99+ bug
+	var BROKEN_ON_SPARSE = fails$f(function () {
+	  // eslint-disable-next-line es/no-array-prototype-includes -- detection
+	  return !Array(1).includes();
+	});
+
+	// `Array.prototype.includes` method
+	// https://tc39.es/ecma262/#sec-array.prototype.includes
+	$$L({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+	  includes: function includes(el /* , fromIndex = 0 */) {
+	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+	  }
+	});
+
+	var entryVirtual$5 = entryVirtual$9;
+
+	var includes$7 = entryVirtual$5('Array').includes;
+
+	var isObject$7 = isObject$j;
+	var classof$4 = classofRaw$2;
+	var wellKnownSymbol$7 = wellKnownSymbol$q;
+
+	var MATCH$1 = wellKnownSymbol$7('match');
+
+	// `IsRegExp` abstract operation
+	// https://tc39.es/ecma262/#sec-isregexp
+	var isRegexp = function (it) {
+	  var isRegExp;
+	  return isObject$7(it) && ((isRegExp = it[MATCH$1]) !== undefined ? !!isRegExp : classof$4(it) == 'RegExp');
+	};
+
+	var isRegExp = isRegexp;
+
+	var $TypeError$9 = TypeError;
+
+	var notARegexp = function (it) {
+	  if (isRegExp(it)) {
+	    throw $TypeError$9("The method doesn't accept regular expressions");
+	  } return it;
+	};
+
+	var wellKnownSymbol$6 = wellKnownSymbol$q;
+
+	var MATCH = wellKnownSymbol$6('match');
+
+	var correctIsRegexpLogic = function (METHOD_NAME) {
+	  var regexp = /./;
+	  try {
+	    '/./'[METHOD_NAME](regexp);
+	  } catch (error1) {
+	    try {
+	      regexp[MATCH] = false;
+	      return '/./'[METHOD_NAME](regexp);
+	    } catch (error2) { /* empty */ }
+	  } return false;
+	};
+
+	var $$K = _export;
+	var uncurryThis$c = functionUncurryThis;
+	var notARegExp = notARegexp;
+	var requireObjectCoercible$1 = requireObjectCoercible$5;
+	var toString$5 = toString$b;
+	var correctIsRegExpLogic = correctIsRegexpLogic;
+
+	var stringIndexOf = uncurryThis$c(''.indexOf);
+
+	// `String.prototype.includes` method
+	// https://tc39.es/ecma262/#sec-string.prototype.includes
+	$$K({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
+	  includes: function includes(searchString /* , position = 0 */) {
+	    return !!~stringIndexOf(
+	      toString$5(requireObjectCoercible$1(this)),
+	      toString$5(notARegExp(searchString)),
+	      arguments.length > 1 ? arguments[1] : undefined
+	    );
+	  }
+	});
+
+	var entryVirtual$4 = entryVirtual$9;
+
+	var includes$6 = entryVirtual$4('String').includes;
+
+	var isPrototypeOf$7 = objectIsPrototypeOf;
+	var arrayMethod = includes$7;
+	var stringMethod = includes$6;
+
+	var ArrayPrototype$4 = Array.prototype;
+	var StringPrototype = String.prototype;
+
+	var includes$5 = function (it) {
+	  var own = it.includes;
+	  if (it === ArrayPrototype$4 || (isPrototypeOf$7(ArrayPrototype$4, it) && own === ArrayPrototype$4.includes)) return arrayMethod;
+	  if (typeof it == 'string' || it === StringPrototype || (isPrototypeOf$7(StringPrototype, it) && own === StringPrototype.includes)) {
+	    return stringMethod;
+	  } return own;
+	};
+
+	var parent$I = includes$5;
+
+	var includes$4 = parent$I;
+
+	var parent$H = includes$4;
+
+	var includes$3 = parent$H;
+
+	var parent$G = includes$3;
+
+	var includes$2 = parent$G;
+
+	var includes$1 = includes$2;
+
+	var includes = includes$1;
+
+	var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes);
+
+	var fails$e = fails$x;
+
+	var arrayMethodIsStrict$2 = function (METHOD_NAME, argument) {
+	  var method = [][METHOD_NAME];
+	  return !!method && fails$e(function () {
+	    // eslint-disable-next-line no-useless-call -- required for testing
+	    method.call(null, argument || function () { return 1; }, 1);
+	  });
+	};
+
+	var $forEach = arrayIteration.forEach;
+	var arrayMethodIsStrict$1 = arrayMethodIsStrict$2;
+
+	var STRICT_METHOD = arrayMethodIsStrict$1('forEach');
+
+	// `Array.prototype.forEach` method implementation
+	// https://tc39.es/ecma262/#sec-array.prototype.foreach
+	var arrayForEach = !STRICT_METHOD ? function forEach(callbackfn /* , thisArg */) {
+	  return $forEach(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	// eslint-disable-next-line es/no-array-prototype-foreach -- safe
+	} : [].forEach;
+
+	var $$J = _export;
+	var forEach$8 = arrayForEach;
+
+	// `Array.prototype.forEach` method
+	// https://tc39.es/ecma262/#sec-array.prototype.foreach
+	// eslint-disable-next-line es/no-array-prototype-foreach -- safe
+	$$J({ target: 'Array', proto: true, forced: [].forEach != forEach$8 }, {
+	  forEach: forEach$8
+	});
+
+	var entryVirtual$3 = entryVirtual$9;
+
+	var forEach$7 = entryVirtual$3('Array').forEach;
+
+	var parent$F = forEach$7;
+
+	var forEach$6 = parent$F;
+
+	var classof$3 = classof$d;
+	var hasOwn$5 = hasOwnProperty_1;
+	var isPrototypeOf$6 = objectIsPrototypeOf;
+	var method$3 = forEach$6;
+
+	var ArrayPrototype$3 = Array.prototype;
+
+	var DOMIterables = {
+	  DOMTokenList: true,
+	  NodeList: true
+	};
+
+	var forEach$5 = function (it) {
+	  var own = it.forEach;
+	  return it === ArrayPrototype$3 || (isPrototypeOf$6(ArrayPrototype$3, it) && own === ArrayPrototype$3.forEach)
+	    || hasOwn$5(DOMIterables, classof$3(it)) ? method$3 : own;
+	};
+
+	var parent$E = forEach$5;
+
+	var forEach$4 = parent$E;
+
+	var parent$D = forEach$4;
+
+	var forEach$3 = parent$D;
+
+	var forEach$2 = forEach$3;
+
+	var forEach$1 = forEach$2;
+
+	var _forEachInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(forEach$1);
+
+	var $$I = _export;
 	var $filter = arrayIteration.filter;
 	var arrayMethodHasSpeciesSupport$1 = arrayMethodHasSpeciesSupport$4;
 
@@ -5099,37 +3998,37 @@
 	// `Array.prototype.filter` method
 	// https://tc39.es/ecma262/#sec-array.prototype.filter
 	// with adding support of @@species
-	$$m({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
+	$$I({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 }, {
 	  filter: function filter(callbackfn /* , thisArg */) {
 	    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	  }
 	});
 
-	var entryVirtual$3 = entryVirtual$9;
+	var entryVirtual$2 = entryVirtual$9;
 
-	var filter$6 = entryVirtual$3('Array').filter;
+	var filter$6 = entryVirtual$2('Array').filter;
 
-	var isPrototypeOf$3 = objectIsPrototypeOf;
-	var method$1 = filter$6;
+	var isPrototypeOf$5 = objectIsPrototypeOf;
+	var method$2 = filter$6;
 
 	var ArrayPrototype$2 = Array.prototype;
 
 	var filter$5 = function (it) {
 	  var own = it.filter;
-	  return it === ArrayPrototype$2 || (isPrototypeOf$3(ArrayPrototype$2, it) && own === ArrayPrototype$2.filter) ? method$1 : own;
+	  return it === ArrayPrototype$2 || (isPrototypeOf$5(ArrayPrototype$2, it) && own === ArrayPrototype$2.filter) ? method$2 : own;
 	};
 
-	var parent$z = filter$5;
+	var parent$C = filter$5;
 
-	var filter$4 = parent$z;
+	var filter$4 = parent$C;
 
-	var parent$y = filter$4;
+	var parent$B = filter$4;
 
-	var filter$3 = parent$y;
+	var filter$3 = parent$B;
 
-	var parent$x = filter$3;
+	var parent$A = filter$3;
 
-	var filter$2 = parent$x;
+	var filter$2 = parent$A;
 
 	var filter$1 = filter$2;
 
@@ -5178,11 +4077,11 @@
 	  return BaseEvent;
 	}();
 
-	function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$t(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$t(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$t() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Component = /*#__PURE__*/function (_BaseEvent) {
 	  _inherits(Component, _BaseEvent);
-	  var _super = _createSuper$r(Component);
+	  var _super = _createSuper$t(Component);
 	  function Component(container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Component);
@@ -5193,7 +4092,7 @@
 	    if (!desc) {
 	      desc = 'div';
 	    }
-	    var dom = $$n(desc, props, children);
+	    var dom = $$M(desc, props, children);
 	    _this.el = dom;
 	    _this.container = container;
 	    // 安装组件成功
@@ -5236,47 +4135,66 @@
 	  return Component;
 	}(BaseEvent);
 
-	// COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件
-	var COMPONENT_STORE = new _Map();
-	// ONCE_COMPONENT_STORE存储的是只要曾经在视图上展示过哪怕已经卸载，都会一直保留在此处，除非通过delete进行彻底删除
-	var ONCE_COMPONENT_STORE = new _Map();
-	// 存储需要隐藏的元素，但不进行卸载
-	var HIDEEN_COMPONENT_STORE = new _Map();
-	// 内置的原子组件
-	var BuiltInControllerComponent = ['DurationShow', 'FullPage', 'FullScreen', 'PicInPic', 'PlayButton', 'Playrate', 'ScreenShot', 'SubSetting', 'VideoShot', 'Toast'];
-	function storeControlComponent(item) {
-	  COMPONENT_STORE.set(item.id, item);
-	  ONCE_COMPONENT_STORE.set(item.id, item);
-	}
-
-	var playPath = "M6 2.914v18.172L20.279 12 6 2.914z";
-	var pausePath = "M14.333 20.133H19V3.8h-4.667M5 20.133h4.667V3.8H5v16.333z";
-	var volumePath$1 = "M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z";
-	var fullscreenPath = "M181.333333 213.333333h661.333334a53.393333 53.393333 0 0 1 53.333333 53.333334v490.666666a53.393333 53.393333 0 0 1-53.333333 53.333334H181.333333a53.393333 53.393333 0 0 1-53.333333-53.333334V266.666667a53.393333 53.393333 0 0 1 53.333333-53.333334z m53.333334 640H96a10.666667 10.666667 0 0 1-10.666667-10.666666v-138.666667a21.333333 21.333333 0 0 0-42.666666 0v138.666667a53.393333 53.393333 0 0 0 53.333333 53.333333h138.666667a21.333333 21.333333 0 0 0 0-42.666667zM64 341.333333a21.333333 21.333333 0 0 0 21.333333-21.333333V181.333333a10.666667 10.666667 0 0 1 10.666667-10.666666h138.666667a21.333333 21.333333 0 0 0 0-42.666667H96a53.393333 53.393333 0 0 0-53.333333 53.333333v138.666667a21.333333 21.333333 0 0 0 21.333333 21.333333z m896 341.333334a21.333333 21.333333 0 0 0-21.333333 21.333333v138.666667a10.666667 10.666667 0 0 1-10.666667 10.666666h-138.666667a21.333333 21.333333 0 0 0 0 42.666667h138.666667a53.393333 53.393333 0 0 0 53.333333-53.333333v-138.666667a21.333333 21.333333 0 0 0-21.333333-21.333333z m-32-554.666667h-138.666667a21.333333 21.333333 0 0 0 0 42.666667h138.666667a10.666667 10.666667 0 0 1 10.666667 10.666666v138.666667a21.333333 21.333333 0 0 0 42.666666 0V181.333333a53.393333 53.393333 0 0 0-53.333333-53.333333z";
-	var fullscreenExitPath = "M768 629.333333a53.393333 53.393333 0 0 1-53.333333 53.333334H309.333333a53.393333 53.393333 0 0 1-53.333333-53.333334V394.666667a53.393333 53.393333 0 0 1 53.333333-53.333334h405.333334a53.393333 53.393333 0 0 1 53.333333 53.333334z m53.333333-288h138.666667a21.333333 21.333333 0 0 0 0-42.666666h-138.666667a10.666667 10.666667 0 0 1-10.666666-10.666667V149.333333a21.333333 21.333333 0 0 0-42.666667 0v138.666667a53.393333 53.393333 0 0 0 53.333333 53.333333zM64 341.333333h138.666667a53.393333 53.393333 0 0 0 53.333333-53.333333V149.333333a21.333333 21.333333 0 0 0-42.666667 0v138.666667a10.666667 10.666667 0 0 1-10.666666 10.666667H64a21.333333 21.333333 0 0 0 0 42.666666z m138.666667 341.333334H64a21.333333 21.333333 0 0 0 0 42.666666h138.666667a10.666667 10.666667 0 0 1 10.666666 10.666667v138.666667a21.333333 21.333333 0 0 0 42.666667 0v-138.666667a53.393333 53.393333 0 0 0-53.333333-53.333333z m757.333333 0h-138.666667a53.393333 53.393333 0 0 0-53.333333 53.333333v138.666667a21.333333 21.333333 0 0 0 42.666667 0v-138.666667a10.666667 10.666667 0 0 1 10.666666-10.666667h138.666667a21.333333 21.333333 0 0 0 0-42.666666z";
-	var subSettingPath = "M920.606667 611.153333A106.153333 106.153333 0 0 1 853.333333 512v-0.593333a106.166667 106.166667 0 0 1 67.106667-99.273334c26.82-10.713333 40.186667-41.426667 29.793333-68.466666a468.233333 468.233333 0 0 0-74.46-128.24A53.226667 53.226667 0 0 0 801.6 207.333333a106.666667 106.666667 0 0 1-119.433333 8.666667 106.253333 106.253333 0 0 1-52.366667-107.253333 53.46 53.46 0 0 0-44.62-60.4 474.34 474.34 0 0 0-147.893333 0.24 52.613333 52.613333 0 0 0-34.546667 21.333333 53.566667 53.566667 0 0 0-9.62 39.173333 106.753333 106.753333 0 0 1-105.493333 121.813334 107.333333 107.333333 0 0 1-66-22.793334 53.233333 53.233333 0 0 0-74.186667 8.286667A468 468 0 0 0 73.333333 344.82c-10.32 27.053333 3.126667 57.733333 30 68.38a106.706667 106.706667 0 0 1 0.166667 198.306667c-26.826667 10.666667-40.22 41.393333-29.853333 68.44A468.086667 468.086667 0 0 0 148 808.253333a52.6 52.6 0 0 0 35.673333 19.22 53.566667 53.566667 0 0 0 38.666667-11.213333 106.706667 106.706667 0 0 1 171.513333 98.893333 53.466667 53.466667 0 0 0 44.58 60.44 474.366667 474.366667 0 0 0 147.566667-0.066666 53.48 53.48 0 0 0 44.533333-60.486667 106.253333 106.253333 0 0 1 52.173334-107.373333 106.226667 106.226667 0 0 1 119.24 8.333333 53.52 53.52 0 0 0 38.706666 11.18 52.606667 52.606667 0 0 0 35.653334-19.253333 468 468 0 0 0 74.22-128.346667c10.34-27.066667-3.08-57.753333-29.92-68.426667zM640 512c0 70.58-57.42 128-128 128s-128-57.42-128-128 57.42-128 128-128 128 57.42 128 128z";
-	var fullPagePath = "M928 128H96a53.393333 53.393333 0 0 0-53.333333 53.333333v661.333334a53.393333 53.393333 0 0 0 53.333333 53.333333h832a53.393333 53.393333 0 0 0 53.333333-53.333333V181.333333a53.393333 53.393333 0 0 0-53.333333-53.333333zM377.753333 591.086667L200.833333 768H320a21.333333 21.333333 0 0 1 0 42.666667H149.206667a21.333333 21.333333 0 0 1-21.206667-21.206667V618.666667a21.333333 21.333333 0 0 1 42.666667 0v119.166666l176.913333-176.92a21.333333 21.333333 0 0 1 30.173333 30.173334zM896 405.333333a21.333333 21.333333 0 0 1-42.666667 0V286.166667l-176.913333 176.92a21.333333 21.333333 0 0 1-30.173333-30.173334L823.166667 256H704a21.333333 21.333333 0 0 1 0-42.666667h170.793333a21.333333 21.333333 0 0 1 21.206667 21.206667V405.333333z";
-	var fullPageExitPath = "M928 128H96a53.393333 53.393333 0 0 0-53.333333 53.333333v661.333334a53.393333 53.393333 0 0 0 53.333333 53.333333h832a53.393333 53.393333 0 0 0 53.333333-53.333333V181.333333a53.393333 53.393333 0 0 0-53.333333-53.333333z m-544 618.666667a21.333333 21.333333 0 0 1-42.666667 0V627.5l-176.913333 176.92a21.333333 21.333333 0 0 1-30.173333-30.173333L311.166667 597.333333H192a21.333333 21.333333 0 0 1 0-42.666666h170.766667A21.333333 21.333333 0 0 1 384 575.9z m505.753333-496.913334L712.833333 426.666667H832a21.333333 21.333333 0 0 1 0 42.666666H661.233333A21.333333 21.333333 0 0 1 640 448.1V277.333333a21.333333 21.333333 0 0 1 42.666667 0v119.166667l176.913333-176.92a21.333333 21.333333 0 1 1 30.173333 30.173333z";
-	var picInPicPath = "M768 213.333333H256a85.333333 85.333333 0 0 0-85.333333 85.333334v426.666666a85.333333 85.333333 0 0 0 85.333333 85.333334h170.666667a42.666667 42.666667 0 1 1 0 85.333333H256a170.666667 170.666667 0 0 1-170.666667-170.666667V298.666667a170.666667 170.666667 0 0 1 170.666667-170.666667h512a170.666667 170.666667 0 0 1 170.666667 170.666667v128a42.666667 42.666667 0 1 1-85.333334 0V298.666667a85.333333 85.333333 0 0 0-85.333333-85.333334z m-128 341.333334a128 128 0 0 0-128 128v85.333333a128 128 0 0 0 128 128h170.666667a128 128 0 0 0 128-128v-85.333333a128 128 0 0 0-128-128h-170.666667z";
-	var screenShotPath = "M981.333333 224v661.333333a53.393333 53.393333 0 0 1-53.333333 53.333334H96a53.393333 53.393333 0 0 1-53.333333-53.333334V224a53.393333 53.393333 0 0 1 53.333333-53.333333h80a10.713333 10.713333 0 0 0 8.533333-4.266667L229.333333 106.666667a53.58 53.58 0 0 1 42.666667-21.333334h138.666667a53.58 53.58 0 0 1 42.666666 21.333334l44.8 59.733333A10.713333 10.713333 0 0 0 506.666667 170.666667h421.333333a53.393333 53.393333 0 0 1 53.333333 53.333333z m-348.666666 451.333333a170.666667 170.666667 0 1 0-120.666667 50 169.553333 169.553333 0 0 0 120.666667-50z m7.333333-120.666666c0 70.58-57.42 128-128 128s-128-57.42-128-128 57.42-128 128-128 128 57.42 128 128z m213.333333-234.666667a21.333333 21.333333 0 0 0-21.333333-21.333333h-85.333333a21.333333 21.333333 0 0 0 0 42.666666h85.333333a21.333333 21.333333 0 0 0 21.333333-21.333333z";
-	var videoShotPath$1 = "M640 266.666667v490.666666a53.393333 53.393333 0 0 1-53.333333 53.333334H53.333333a53.393333 53.393333 0 0 1-53.333333-53.333334V266.666667a53.393333 53.393333 0 0 1 53.333333-53.333334h533.333334a53.393333 53.393333 0 0 1 53.333333 53.333334z m357.053333-46.133334a52.746667 52.746667 0 0 0-53.613333 0.493334l-192 114a53.553333 53.553333 0 0 0-26.106667 45.853333v262.24a53.54 53.54 0 0 0 26.106667 45.853333l192 114a53.333333 53.333333 0 0 0 80.56-45.853333V266.88a52.746667 52.746667 0 0 0-26.946667-46.346667z";
-	var countdownPath = "M449.59694 552.460488c-2.589471 0-5.210911-0.319688-7.800382-0.959063C313.729623 519.308862 224.280976 404.668816 224.280976 272.733659L224.280976 160.842927c0-17.646767 14.322014-31.96878 31.96878-31.96878s31.96878 14.322014 31.96878 31.96878l0 111.890732c0 102.587817 69.564066 191.716777 169.114849 216.748332 17.134267 4.315785 27.52512 21.674833 23.241303 38.778131C476.930248 542.805916 463.886985 552.460488 449.59694 552.460488L449.59694 552.460488zM574.40306 552.460488c-14.290045 0-27.301339-9.654572-30.977748-24.168398-4.315785-17.134267 6.074068-34.493315 23.208336-38.777132C666.217397 464.450435 735.781463 375.321475 735.781463 272.733659L735.781463 160.842927c0-17.646767 14.290045-31.96878 31.96878-31.96878s31.96878 14.322014 31.96878 31.96878l0 111.890732c0 131.935157-89.448648 246.575204-217.483614 278.767766C579.613971 552.1408 576.992531 552.460488 574.40306 552.460488zM767.750244 896.124878c-17.678736 0-31.96878-14.322014-31.96878-31.96878l0-95.906341c0-102.619785-69.564066-191.748745-169.114849-216.748332-17.134267-4.283817-27.52512-21.674833-23.241303-38.778131 4.347754-17.134267 21.930583-27.397245 38.777132-23.208336C710.270377 521.642583 799.719024 636.28263 799.719024 768.249756l0 95.906341C799.719024 881.802864 785.42898 896.124878 767.750244 896.124878zM256.249756 896.124878c-17.646767 0-31.96878-14.322014-31.96878-31.96878l0-95.906341c0-131.967126 89.448648-246.607173 217.516581-278.767766 17.167235-4.18791 34.461346 6.074068 38.777132 23.209335 4.315785 17.134267-6.074068 34.493315-23.241303 38.777132C357.750634 576.501011 288.218537 665.629971 288.218537 768.249756l0 95.906341C288.218537 881.802864 273.896523 896.124878 256.249756 896.124878zM863.656585 192.811707 160.343415 192.811707c-17.646767 0-31.96878-14.322014-31.96878-31.96878L128.374634 32.967805c0-17.646767 14.322014-31.96878 31.96878-31.96878l703.313171 0c17.678736 0 31.96878 14.322014 31.96878 31.96878l0 127.875122C895.625366 178.489694 881.335321 192.811707 863.656585 192.811707zM192.312195 128.874146l639.37561 0L831.687805 64.936585 192.312195 64.936585 192.312195 128.874146zM863.656585 1024 160.343415 1024c-17.646767 0-31.96878-14.322014-31.96878-31.96878L128.374634 864.156098c0-17.646767 14.322014-31.96878 31.96878-31.96878l703.313171 0c17.678736 0 31.96878 14.322014 31.96878 31.96878l0 127.875122C895.625366 1009.677986 881.335321 1024 863.656585 1024zM192.312195 960.062439l639.37561 0 0-63.937561L192.312195 896.124878 192.312195 960.062439z";
-	var danmakuSettingPath = "M226.58 320.39h-48c-35.9 0-65-29.1-65-65s29.1-65 65-65h48c35.9 0 65 29.1 65 65s-29.1 65-65 65zM723.58 320.39h-322c-35.9 0-65-29.1-65-65s29.1-65 65-65h322c35.9 0 65 29.1 65 65s-29.1 65-65 65zM402.58 580.39h-224c-35.9 0-65-29.1-65-65s29.1-65 65-65h224c35.9 0 65 29.1 65 65s-29.1 65-65 65zM251.58 839.39h-73c-35.9 0-65-29.1-65-65s29.1-65 65-65h73c35.9 0 65 29.1 65 65s-29.1 65-65 65zM424.58 839.39h-1c-35.9 0-65-29.1-65-65s29.1-65 65-65h1c35.9 0 65 29.1 65 65s-29.1 65-65 65zM954.82 588.59l-93.4-161.78a59.189 59.189 0 0 0-51.27-29.6h-186.8a59.201 59.201 0 0 0-51.27 29.6l-93.4 161.78a59.225 59.225 0 0 0 0 59.2l93.4 161.78a59.189 59.189 0 0 0 51.27 29.6h186.81c21.15 0 40.69-11.28 51.27-29.6l93.4-161.78a59.2 59.2 0 0 0-0.01-59.2z m-238.07 95.78c-36.55 0-66.18-29.63-66.18-66.18 0-36.55 29.63-66.18 66.18-66.18 36.55 0 66.18 29.63 66.18 66.18 0 36.55-29.63 66.18-66.18 66.18z";
-	var danmakuClosePath = "M217.8 319.89h-48c-35.9 0-65-29.1-65-65s29.1-65 65-65h48c35.9 0 65 29.1 65 65s-29.1 65-65 65zM714.8 319.89h-322c-35.9 0-65-29.1-65-65s29.1-65 65-65h322c35.9 0 65 29.1 65 65s-29.1 65-65 65zM403.8 579.89h-234c-35.9 0-65-29.1-65-65s29.1-65 65-65h234c35.9 0 65 29.1 65 65s-29.1 65-65 65zM252.8 838.89h-83c-35.9 0-65-29.1-65-65s29.1-65 65-65h83c35.9 0 65 29.1 65 65s-29.1 65-65 65zM425.8 838.89h-1c-35.9 0-65-29.1-65-65s29.1-65 65-65h1c35.9 0 65 29.1 65 65s-29.1 65-65 65zM717.73 398.22c-122.04 0-220.97 98.93-220.97 220.97 0 122.04 98.93 220.97 220.97 220.97 122.04 0 220.97-98.93 220.97-220.97 0.01-122.04-98.93-220.97-220.97-220.97zM822 554.48l-165.25 171.2c-5.9 6.12-13.77 9.19-21.65 9.19-7.52 0-15.05-2.8-20.89-8.44-11.95-11.54-12.29-30.58-0.75-42.54l165.25-171.2c11.54-11.96 30.58-12.29 42.54-0.75 11.95 11.55 12.29 30.59 0.75 42.54z";
-	var danmakuOpenPath = "M221.58 319.89h-48c-35.9 0-65-29.1-65-65s29.1-65 65-65h48c35.9 0 65 29.1 65 65s-29.1 65-65 65zM718.58 319.89h-322c-35.9 0-65-29.1-65-65s29.1-65 65-65h322c35.9 0 65 29.1 65 65s-29.1 65-65 65zM407.58 579.89h-234c-35.9 0-65-29.1-65-65s29.1-65 65-65h234c35.9 0 65 29.1 65 65s-29.1 65-65 65zM256.58 838.89h-83c-35.9 0-65-29.1-65-65s29.1-65 65-65h83c35.9 0 65 29.1 65 65s-29.1 65-65 65zM429.58 838.89h-1c-35.9 0-65-29.1-65-65s29.1-65 65-65h1c35.9 0 65 29.1 65 65s-29.1 65-65 65zM713.96 396.72c-122.04 0-220.97 98.93-220.97 220.97s98.93 220.97 220.97 220.97 220.97-98.93 220.97-220.97S836 396.72 713.96 396.72zM837.9 561.91L689.88 715.26a30.078 30.078 0 0 1-21.38 9.19h-0.27c-7.97 0-15.63-3.17-21.27-8.81l-56.57-56.57c-11.75-11.75-11.75-30.79 0-42.54s30.79-11.75 42.54 0l34.92 34.91 126.76-131.32c11.54-11.96 30.58-12.29 42.54-0.75 11.95 11.54 12.29 30.58 0.75 42.54z";
-	var playratePath = "M675.328 117.717333A425.429333 425.429333 0 0 0 512 85.333333C276.352 85.333333 85.333333 276.352 85.333333 512s191.018667 426.666667 426.666667 426.666667 426.666667-191.018667 426.666667-426.666667c0-56.746667-11.093333-112-32.384-163.328a21.333333 21.333333 0 0 0-39.402667 16.341333A382.762667 382.762667 0 0 1 896 512c0 212.074667-171.925333 384-384 384S128 724.074667 128 512 299.925333 128 512 128c51.114667 0 100.8 9.984 146.986667 29.12a21.333333 21.333333 0 0 0 16.341333-39.402667zM456.704 305.92C432.704 289.152 405.333333 303.082667 405.333333 331.797333v360.533334c0 28.586667 27.541333 42.538667 51.370667 25.856l252.352-176.768c21.76-15.253333 21.632-43.541333 0-58.709334l-252.373333-176.768z m-8.597333 366.72V351.466667l229.269333 160.597333-229.269333 160.597333z";
-	var rightarrowPath = "M558.933333 490.666667L384 665.6l59.733333 59.733333 234.666667-234.666666L443.733333 256 384 315.733333l174.933333 174.933334z";
-	var propotionPath$1 = "M117.297548 128.825806h762.483613v172.659613a28.771097 28.771097 0 0 1-57.542193 0V186.401032H174.839742v115.084387a28.771097 28.771097 0 0 1-57.542194 0V128.825806zM117.297548 888.567742h762.483613v-172.626581a28.771097 28.771097 0 1 0-57.542193 0v115.084387H174.839742v-115.084387a28.771097 28.771097 0 1 0-57.542194 0V888.567742z";
-	var leftarrowPath = "M503.466667 490.666667l174.933333 174.933333-59.733333 59.733333L384 490.666667 618.666667 256l59.733333 59.733333-174.933333 174.933334z";
-	var propotionPath$2 = "M392.588387 645.615484h-54.701419v-210.811871l-65.271742 20.248774V410.590968l114.093419-40.860903h5.879742v275.885419zM487.192774 618.727226c0-8.687484 2.906839-15.756387 8.687484-21.173678a31.545806 31.545806 0 0 1 22.131613-8.158967c8.984774 0 16.350968 2.741677 22.131613 8.158967a27.416774 27.416774 0 0 1 8.91871 21.173678c0 8.588387-2.906839 15.591226-8.687484 21.008516-5.813677 5.285161-13.245935 7.927742-22.329807 7.927742a31.545806 31.545806 0 0 1-22.131613-7.927742 27.449806 27.449806 0 0 1-8.720516-21.008516z m0-154.954323c0-8.720516 2.906839-15.756387 8.687484-21.206709a31.545806 31.545806 0 0 1 22.131613-8.125936c8.984774 0 16.350968 2.708645 22.131613 8.125936a27.416774 27.416774 0 0 1 8.91871 21.206709 27.416774 27.416774 0 0 1-8.687484 21.008516c-5.813677 5.285161-13.245935 7.927742-22.329807 7.927742a31.545806 31.545806 0 0 1-22.131613-7.927742 27.416774 27.416774 0 0 1-8.720516-21.008516zM724.463484 645.615484h-54.668387v-210.811871l-65.271742 20.248774V410.590968l114.093419-40.860903h5.84671v275.885419z";
-	var flipPath = "M554.666667 810.666667v85.333333h-85.333334v-85.333333h85.333334zM170.666667 178.005333a42.666667 42.666667 0 0 1 34.986666 18.218667l203.904 291.328a42.666667 42.666667 0 0 1 0 48.896l-203.946666 291.328A42.666667 42.666667 0 0 1 128 803.328V220.672a42.666667 42.666667 0 0 1 42.666667-42.666667z m682.666666 0a42.666667 42.666667 0 0 1 42.368 37.717334l0.298667 4.949333v582.656a42.666667 42.666667 0 0 1-74.24 28.629333l-3.413333-4.181333-203.904-291.328a42.666667 42.666667 0 0 1-3.029334-43.861333l3.029334-5.034667 203.946666-291.328A42.666667 42.666667 0 0 1 853.333333 178.005333zM554.666667 640v85.333333h-85.333334v-85.333333h85.333334zM196.266667 319.104V716.8L335.957333 512 196.309333 319.104zM554.666667 469.333333v85.333334h-85.333334v-85.333334h85.333334z m0-170.666666v85.333333h-85.333334V298.666667h85.333334z m0-170.666667v85.333333h-85.333334V128h85.333334z";
-	var confirmPath = "M456.899566 728.522382c-15.978926 15.977903-40.33873 18.47477-58.932204 7.492648-3.446495-2.039449-9.653871-9.990538-9.653871-9.990538L188.797435 526.509459c-18.938328-18.938328-18.938328-47.148833 0-66.084091 18.934235-18.938328 49.64263-16.442484 68.579935 2.495844l165.227112 165.225065 312.24449-312.24142c18.938328-18.938328 49.6457-21.435195 68.583005-2.495844 18.938328 18.940374 18.939351 47.149856 0 66.085114L456.909799 728.507032c0 0-0.005117 0.00921-0.010233 0.013303l0 0L456.899566 728.522382zM510.742868 64.090691c-246.752894 0-446.786743 200.032826-446.786743 446.786743 0 246.75187 200.033849 446.785719 446.786743 446.785719 246.752894 0 446.787766-200.034872 446.787766-446.785719C957.531658 264.125563 757.495762 64.090691 510.742868 64.090691L510.742868 64.090691 510.742868 64.090691 510.742868 64.090691z";
-	var settingsConfirmPath = "M384 785.67L97.83 499.5l60.34-60.34L384 664.99l439.16-439.16 60.34 60.34z";
-	var subtitlePath$1 = "M803.6 150.498H220.4c-65.286 0-118.4 53.114-118.4 118.4v486.203c0 65.286 53.114 118.4 118.4 118.4h583.2c65.286 0 118.4-53.114 118.4-118.4V268.898c0-65.286-53.114-118.4-118.4-118.4zM862 755.102c0 32.202-26.198 58.4-58.4 58.4H220.4c-32.202 0-58.4-26.198-58.4-58.4V268.898c0-32.202 26.198-58.4 58.4-58.4h583.2c32.202 0 58.4 26.198 58.4 58.4v486.204z";
-	var subtitlePath$2 = "M691.841 322.542H332.159c-16.568 0-30 13.432-30 30s13.432 30 30 30H482v288.917c0 16.568 13.432 30 30 30 16.569 0 30-13.432 30-30V382.542h149.841c16.568 0 30-13.432 30-30s-13.432-30-30-30z";
-	var subtitleShowPath = "M128.512 214.016h768v81.92h-768zM128.512 718.336h768v81.92h-768zM128.512 466.432h486.4v81.92h-486.4zM896.512 507.392l-174.592-133.12v266.24l174.08-133.12";
-	var switchOnPath = "M764 252H260C116.4 252 0 368.4 0 512s116.4 260 260 260h504c143.6 0 260-116.4 260-260S907.6 252 764 252zM260 736C136.3 736 36 635.7 36 512s100.3-224 224-224 224 100.3 224 224-100.3 224-224 224z";
-	var switchOffPath = "M764 252H260C116.4 252 0 368.4 0 512s116.4 260 260 260h504c143.6 0 260-116.4 260-260S907.6 252 764 252z m0 484c-123.7 0-224-100.3-224-224s100.3-224 224-224 224 100.3 224 224-100.3 224-224 224z";
+	function _createSuper$s(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$s(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$s() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Loading = /*#__PURE__*/function (_Component) {
+	  _inherits(Loading, _Component);
+	  var _super = _createSuper$s(Loading);
+	  function Loading(player, msg, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, Loading);
+	    _this = _super.call(this, null, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "message", void 0);
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.container = container;
+	    _this.message = msg;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Loading, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-loading']);
+	      this.loadingBox = $$M('div');
+	      this.messageBox = $$M('div.video-loading-msgbox');
+	      this.messageBox.innerText = this.message;
+	      this.el.appendChild(this.loadingBox);
+	      this.el.appendChild(this.messageBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {}
+	  }, {
+	    key: "addLoading",
+	    value: function addLoading() {
+	      var _context;
+	      if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
+	        this.container.appendChild(this.el);
+	      }
+	    }
+	  }, {
+	    key: "removeLoading",
+	    value: function removeLoading() {
+	      var _context2;
+	      if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
+	        this.container.removeChild(this.el);
+	      }
+	    }
+	  }]);
+	  return Loading;
+	}(Component);
 
 	var EVENT;
 	(function (EVENT) {
@@ -5316,11 +4234,1451 @@
 	  EVENT["SEND_DANMAKU_DATA"] = "SendDanmakuData";
 	})(EVENT || (EVENT = {}));
 
+	function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var ErrorLoading = /*#__PURE__*/function (_Loading) {
+	  _inherits(ErrorLoading, _Loading);
+	  var _super = _createSuper$r(ErrorLoading);
+	  // el: div.video-loading
+	  function ErrorLoading(player, msg, container) {
+	    var _this;
+	    _classCallCheck(this, ErrorLoading);
+	    _this = _super.call(this, player, msg, container);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
+	    addClass(_this.loadingBox, ['video-loading-errorloading']);
+	    _this.initEvent();
+	    return _this;
+	  }
+	  _createClass(ErrorLoading, [{
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      // 视频加载发生错误时
+	      this.player.on(EVENT.ERROR, function (e) {
+	        _this2.addLoading();
+	      });
+	      // 该视频已准备好开始播放
+	      this.player.on(EVENT.CAN_PLAY, function (e) {
+	        _this2.removeLoading();
+	      });
+	    }
+	  }]);
+	  return ErrorLoading;
+	}(Loading);
+
 	function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var TimeLoading = /*#__PURE__*/function (_Loading) {
+	  _inherits(TimeLoading, _Loading);
+	  var _super = _createSuper$q(TimeLoading);
+	  // el: div.video-loading
+	  function TimeLoading(player, msg, container) {
+	    var _this;
+	    _classCallCheck(this, TimeLoading);
+	    _this = _super.call(this, player, msg, container);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
+	    addClass(_this.loadingBox, ['video-loading-loadingbox']);
+	    _this.initEvent();
+	    return _this;
+	  }
+	  _createClass(TimeLoading, [{
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      // 在视频由于需要缓冲下一帧而停止时触发
+	      this.player.on(EVENT.WAITING, function () {
+	        _this2.addLoading();
+	      });
+	      // 该视频已准备好开始播放
+	      this.player.on(EVENT.CAN_PLAY, function () {
+	        _this2.removeLoading();
+	      });
+	    }
+	  }]);
+	  return TimeLoading;
+	}(Loading);
+
+	/* eslint-disable es/no-array-prototype-indexof -- required for testing */
+	var $$H = _export;
+	var uncurryThis$b = functionUncurryThisClause;
+	var $indexOf = arrayIncludes.indexOf;
+	var arrayMethodIsStrict = arrayMethodIsStrict$2;
+
+	var nativeIndexOf = uncurryThis$b([].indexOf);
+
+	var NEGATIVE_ZERO = !!nativeIndexOf && 1 / nativeIndexOf([1], 1, -0) < 0;
+	var FORCED$3 = NEGATIVE_ZERO || !arrayMethodIsStrict('indexOf');
+
+	// `Array.prototype.indexOf` method
+	// https://tc39.es/ecma262/#sec-array.prototype.indexof
+	$$H({ target: 'Array', proto: true, forced: FORCED$3 }, {
+	  indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
+	    var fromIndex = arguments.length > 1 ? arguments[1] : undefined;
+	    return NEGATIVE_ZERO
+	      // convert -0 to +0
+	      ? nativeIndexOf(this, searchElement, fromIndex) || 0
+	      : $indexOf(this, searchElement, fromIndex);
+	  }
+	});
+
+	var entryVirtual$1 = entryVirtual$9;
+
+	var indexOf$6 = entryVirtual$1('Array').indexOf;
+
+	var isPrototypeOf$4 = objectIsPrototypeOf;
+	var method$1 = indexOf$6;
+
+	var ArrayPrototype$1 = Array.prototype;
+
+	var indexOf$5 = function (it) {
+	  var own = it.indexOf;
+	  return it === ArrayPrototype$1 || (isPrototypeOf$4(ArrayPrototype$1, it) && own === ArrayPrototype$1.indexOf) ? method$1 : own;
+	};
+
+	var parent$z = indexOf$5;
+
+	var indexOf$4 = parent$z;
+
+	var parent$y = indexOf$4;
+
+	var indexOf$3 = parent$y;
+
+	var parent$x = indexOf$3;
+
+	var indexOf$2 = parent$x;
+
+	var indexOf$1 = indexOf$2;
+
+	var indexOf = indexOf$1;
+
+	var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf);
+
+	var DESCRIPTORS$9 = descriptors;
+	var isArray = isArray$c;
+
+	var $TypeError$8 = TypeError;
+	// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+	var getOwnPropertyDescriptor$9 = Object.getOwnPropertyDescriptor;
+
+	// Safari < 13 does not throw an error in this case
+	var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS$9 && !function () {
+	  // makes no sense without proper strict mode support
+	  if (this !== undefined) return true;
+	  try {
+	    // eslint-disable-next-line es/no-object-defineproperty -- safe
+	    Object.defineProperty([], 'length', { writable: false }).length = 1;
+	  } catch (error) {
+	    return error instanceof TypeError;
+	  }
+	}();
+
+	var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
+	  if (isArray(O) && !getOwnPropertyDescriptor$9(O, 'length').writable) {
+	    throw $TypeError$8('Cannot set read only .length');
+	  } return O.length = length;
+	} : function (O, length) {
+	  return O.length = length;
+	};
+
+	var tryToString$2 = tryToString$7;
+
+	var $TypeError$7 = TypeError;
+
+	var deletePropertyOrThrow$1 = function (O, P) {
+	  if (!delete O[P]) throw $TypeError$7('Cannot delete property ' + tryToString$2(P) + ' of ' + tryToString$2(O));
+	};
+
+	var $$G = _export;
+	var toObject$2 = toObject$a;
+	var toAbsoluteIndex = toAbsoluteIndex$4;
+	var toIntegerOrInfinity = toIntegerOrInfinity$4;
+	var lengthOfArrayLike$1 = lengthOfArrayLike$8;
+	var setArrayLength = arraySetLength;
+	var doesNotExceedSafeInteger = doesNotExceedSafeInteger$2;
+	var arraySpeciesCreate = arraySpeciesCreate$3;
+	var createProperty$1 = createProperty$6;
+	var deletePropertyOrThrow = deletePropertyOrThrow$1;
+	var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$4;
+
+	var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
+
+	var max = Math.max;
+	var min = Math.min;
+
+	// `Array.prototype.splice` method
+	// https://tc39.es/ecma262/#sec-array.prototype.splice
+	// with adding support of @@species
+	$$G({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+	  splice: function splice(start, deleteCount /* , ...items */) {
+	    var O = toObject$2(this);
+	    var len = lengthOfArrayLike$1(O);
+	    var actualStart = toAbsoluteIndex(start, len);
+	    var argumentsLength = arguments.length;
+	    var insertCount, actualDeleteCount, A, k, from, to;
+	    if (argumentsLength === 0) {
+	      insertCount = actualDeleteCount = 0;
+	    } else if (argumentsLength === 1) {
+	      insertCount = 0;
+	      actualDeleteCount = len - actualStart;
+	    } else {
+	      insertCount = argumentsLength - 2;
+	      actualDeleteCount = min(max(toIntegerOrInfinity(deleteCount), 0), len - actualStart);
+	    }
+	    doesNotExceedSafeInteger(len + insertCount - actualDeleteCount);
+	    A = arraySpeciesCreate(O, actualDeleteCount);
+	    for (k = 0; k < actualDeleteCount; k++) {
+	      from = actualStart + k;
+	      if (from in O) createProperty$1(A, k, O[from]);
+	    }
+	    A.length = actualDeleteCount;
+	    if (insertCount < actualDeleteCount) {
+	      for (k = actualStart; k < len - actualDeleteCount; k++) {
+	        from = k + actualDeleteCount;
+	        to = k + insertCount;
+	        if (from in O) O[to] = O[from];
+	        else deletePropertyOrThrow(O, to);
+	      }
+	      for (k = len; k > len - actualDeleteCount + insertCount; k--) deletePropertyOrThrow(O, k - 1);
+	    } else if (insertCount > actualDeleteCount) {
+	      for (k = len - actualDeleteCount; k > actualStart; k--) {
+	        from = k + actualDeleteCount - 1;
+	        to = k + insertCount - 1;
+	        if (from in O) O[to] = O[from];
+	        else deletePropertyOrThrow(O, to);
+	      }
+	    }
+	    for (k = 0; k < insertCount; k++) {
+	      O[k + actualStart] = arguments[k + 2];
+	    }
+	    setArrayLength(O, len - actualDeleteCount + insertCount);
+	    return A;
+	  }
+	});
+
+	var entryVirtual = entryVirtual$9;
+
+	var splice$7 = entryVirtual('Array').splice;
+
+	var isPrototypeOf$3 = objectIsPrototypeOf;
+	var method = splice$7;
+
+	var ArrayPrototype = Array.prototype;
+
+	var splice$6 = function (it) {
+	  var own = it.splice;
+	  return it === ArrayPrototype || (isPrototypeOf$3(ArrayPrototype, it) && own === ArrayPrototype.splice) ? method : own;
+	};
+
+	var parent$w = splice$6;
+
+	var splice$5 = parent$w;
+
+	var parent$v = splice$5;
+
+	var splice$4 = parent$v;
+
+	var parent$u = splice$4;
+
+	var splice$3 = parent$u;
+
+	var splice$2 = splice$3;
+
+	var splice$1 = splice$2;
+
+	var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice$1);
+
+	function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Toast = /*#__PURE__*/function (_Component) {
+	  _inherits(Toast, _Component);
+	  var _super = _createSuper$p(Toast);
+	  function Toast(player, dom, props) {
+	    var _this;
+	    _classCallCheck(this, Toast);
+	    _this = _super.call(this, null, 'div', props, null);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Toast');
+	    // el: div.video-toast-wrapper.video-toast-animate
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "dom", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _this.player = player;
+	    _this.props = props;
+	    _this.dom = dom || null;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Toast, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      var _this2 = this;
+	      if (this.dom) {
+	        this.el.appendChild(this.dom);
+	      }
+	      addClass(this.el, ['video-toast-wrapper']);
+	      this.player.el.appendChild(this.el);
+	      window.setTimeout(function () {
+	        addClass(_this2.el, ['video-toast-animate']);
+	        var start = 30;
+	        for (var i in Toast.ToastQueue) {
+	          start += Toast.ToastQueue[i].el.clientHeight + 10;
+	        }
+	        _this2.el.style.transform = "translateY(".concat(start, "px)");
+	        Toast.ToastQueue.push(_this2);
+	      });
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {}
+	  }, {
+	    key: "dispose",
+	    value: function dispose() {
+	      var _context, _context2;
+	      var index = _indexOfInstanceProperty(_context = Toast.ToastQueue).call(_context, this);
+	      _spliceInstanceProperty(_context2 = Toast.ToastQueue).call(_context2, index, 1);
+	      this.el.parentElement.removeChild(this.el);
+	      for (var i = index; i < Toast.ToastQueue.length; i++) {
+	        var toast = Toast.ToastQueue[i];
+	        if (i === index) {
+	          toast.el.style.transform = "translateY(".concat(10 + this.el.clientHeight, "px)");
+	        } else {
+	          toast.el.style.transform = "translateY(".concat(10 + Toast.ToastQueue[i - 1].el.clientHeight, "px)");
+	        }
+	      }
+	    }
+	  }]);
+	  return Toast;
+	}(Component);
+	_defineProperty(Toast, "ToastQueue", []);
+
+	var playPath = "M6 2.914v18.172L20.279 12 6 2.914z";
+	var pausePath = "M14.333 20.133H19V3.8h-4.667M5 20.133h4.667V3.8H5v16.333z";
+	var volumePath$1 = "M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z";
+	var fullscreenPath = "M181.333333 213.333333h661.333334a53.393333 53.393333 0 0 1 53.333333 53.333334v490.666666a53.393333 53.393333 0 0 1-53.333333 53.333334H181.333333a53.393333 53.393333 0 0 1-53.333333-53.333334V266.666667a53.393333 53.393333 0 0 1 53.333333-53.333334z m53.333334 640H96a10.666667 10.666667 0 0 1-10.666667-10.666666v-138.666667a21.333333 21.333333 0 0 0-42.666666 0v138.666667a53.393333 53.393333 0 0 0 53.333333 53.333333h138.666667a21.333333 21.333333 0 0 0 0-42.666667zM64 341.333333a21.333333 21.333333 0 0 0 21.333333-21.333333V181.333333a10.666667 10.666667 0 0 1 10.666667-10.666666h138.666667a21.333333 21.333333 0 0 0 0-42.666667H96a53.393333 53.393333 0 0 0-53.333333 53.333333v138.666667a21.333333 21.333333 0 0 0 21.333333 21.333333z m896 341.333334a21.333333 21.333333 0 0 0-21.333333 21.333333v138.666667a10.666667 10.666667 0 0 1-10.666667 10.666666h-138.666667a21.333333 21.333333 0 0 0 0 42.666667h138.666667a53.393333 53.393333 0 0 0 53.333333-53.333333v-138.666667a21.333333 21.333333 0 0 0-21.333333-21.333333z m-32-554.666667h-138.666667a21.333333 21.333333 0 0 0 0 42.666667h138.666667a10.666667 10.666667 0 0 1 10.666667 10.666666v138.666667a21.333333 21.333333 0 0 0 42.666666 0V181.333333a53.393333 53.393333 0 0 0-53.333333-53.333333z";
+	var fullscreenExitPath = "M768 629.333333a53.393333 53.393333 0 0 1-53.333333 53.333334H309.333333a53.393333 53.393333 0 0 1-53.333333-53.333334V394.666667a53.393333 53.393333 0 0 1 53.333333-53.333334h405.333334a53.393333 53.393333 0 0 1 53.333333 53.333334z m53.333333-288h138.666667a21.333333 21.333333 0 0 0 0-42.666666h-138.666667a10.666667 10.666667 0 0 1-10.666666-10.666667V149.333333a21.333333 21.333333 0 0 0-42.666667 0v138.666667a53.393333 53.393333 0 0 0 53.333333 53.333333zM64 341.333333h138.666667a53.393333 53.393333 0 0 0 53.333333-53.333333V149.333333a21.333333 21.333333 0 0 0-42.666667 0v138.666667a10.666667 10.666667 0 0 1-10.666666 10.666667H64a21.333333 21.333333 0 0 0 0 42.666666z m138.666667 341.333334H64a21.333333 21.333333 0 0 0 0 42.666666h138.666667a10.666667 10.666667 0 0 1 10.666666 10.666667v138.666667a21.333333 21.333333 0 0 0 42.666667 0v-138.666667a53.393333 53.393333 0 0 0-53.333333-53.333333z m757.333333 0h-138.666667a53.393333 53.393333 0 0 0-53.333333 53.333333v138.666667a21.333333 21.333333 0 0 0 42.666667 0v-138.666667a10.666667 10.666667 0 0 1 10.666666-10.666667h138.666667a21.333333 21.333333 0 0 0 0-42.666666z";
+	var subSettingPath = "M920.606667 611.153333A106.153333 106.153333 0 0 1 853.333333 512v-0.593333a106.166667 106.166667 0 0 1 67.106667-99.273334c26.82-10.713333 40.186667-41.426667 29.793333-68.466666a468.233333 468.233333 0 0 0-74.46-128.24A53.226667 53.226667 0 0 0 801.6 207.333333a106.666667 106.666667 0 0 1-119.433333 8.666667 106.253333 106.253333 0 0 1-52.366667-107.253333 53.46 53.46 0 0 0-44.62-60.4 474.34 474.34 0 0 0-147.893333 0.24 52.613333 52.613333 0 0 0-34.546667 21.333333 53.566667 53.566667 0 0 0-9.62 39.173333 106.753333 106.753333 0 0 1-105.493333 121.813334 107.333333 107.333333 0 0 1-66-22.793334 53.233333 53.233333 0 0 0-74.186667 8.286667A468 468 0 0 0 73.333333 344.82c-10.32 27.053333 3.126667 57.733333 30 68.38a106.706667 106.706667 0 0 1 0.166667 198.306667c-26.826667 10.666667-40.22 41.393333-29.853333 68.44A468.086667 468.086667 0 0 0 148 808.253333a52.6 52.6 0 0 0 35.673333 19.22 53.566667 53.566667 0 0 0 38.666667-11.213333 106.706667 106.706667 0 0 1 171.513333 98.893333 53.466667 53.466667 0 0 0 44.58 60.44 474.366667 474.366667 0 0 0 147.566667-0.066666 53.48 53.48 0 0 0 44.533333-60.486667 106.253333 106.253333 0 0 1 52.173334-107.373333 106.226667 106.226667 0 0 1 119.24 8.333333 53.52 53.52 0 0 0 38.706666 11.18 52.606667 52.606667 0 0 0 35.653334-19.253333 468 468 0 0 0 74.22-128.346667c10.34-27.066667-3.08-57.753333-29.92-68.426667zM640 512c0 70.58-57.42 128-128 128s-128-57.42-128-128 57.42-128 128-128 128 57.42 128 128z";
+	var fullPagePath = "M928 128H96a53.393333 53.393333 0 0 0-53.333333 53.333333v661.333334a53.393333 53.393333 0 0 0 53.333333 53.333333h832a53.393333 53.393333 0 0 0 53.333333-53.333333V181.333333a53.393333 53.393333 0 0 0-53.333333-53.333333zM377.753333 591.086667L200.833333 768H320a21.333333 21.333333 0 0 1 0 42.666667H149.206667a21.333333 21.333333 0 0 1-21.206667-21.206667V618.666667a21.333333 21.333333 0 0 1 42.666667 0v119.166666l176.913333-176.92a21.333333 21.333333 0 0 1 30.173333 30.173334zM896 405.333333a21.333333 21.333333 0 0 1-42.666667 0V286.166667l-176.913333 176.92a21.333333 21.333333 0 0 1-30.173333-30.173334L823.166667 256H704a21.333333 21.333333 0 0 1 0-42.666667h170.793333a21.333333 21.333333 0 0 1 21.206667 21.206667V405.333333z";
+	var fullPageExitPath = "M928 128H96a53.393333 53.393333 0 0 0-53.333333 53.333333v661.333334a53.393333 53.393333 0 0 0 53.333333 53.333333h832a53.393333 53.393333 0 0 0 53.333333-53.333333V181.333333a53.393333 53.393333 0 0 0-53.333333-53.333333z m-544 618.666667a21.333333 21.333333 0 0 1-42.666667 0V627.5l-176.913333 176.92a21.333333 21.333333 0 0 1-30.173333-30.173333L311.166667 597.333333H192a21.333333 21.333333 0 0 1 0-42.666666h170.766667A21.333333 21.333333 0 0 1 384 575.9z m505.753333-496.913334L712.833333 426.666667H832a21.333333 21.333333 0 0 1 0 42.666666H661.233333A21.333333 21.333333 0 0 1 640 448.1V277.333333a21.333333 21.333333 0 0 1 42.666667 0v119.166667l176.913333-176.92a21.333333 21.333333 0 1 1 30.173333 30.173333z";
+	var picInPicPath = "M768 213.333333H256a85.333333 85.333333 0 0 0-85.333333 85.333334v426.666666a85.333333 85.333333 0 0 0 85.333333 85.333334h170.666667a42.666667 42.666667 0 1 1 0 85.333333H256a170.666667 170.666667 0 0 1-170.666667-170.666667V298.666667a170.666667 170.666667 0 0 1 170.666667-170.666667h512a170.666667 170.666667 0 0 1 170.666667 170.666667v128a42.666667 42.666667 0 1 1-85.333334 0V298.666667a85.333333 85.333333 0 0 0-85.333333-85.333334z m-128 341.333334a128 128 0 0 0-128 128v85.333333a128 128 0 0 0 128 128h170.666667a128 128 0 0 0 128-128v-85.333333a128 128 0 0 0-128-128h-170.666667z";
+	var screenShotPath = "M981.333333 224v661.333333a53.393333 53.393333 0 0 1-53.333333 53.333334H96a53.393333 53.393333 0 0 1-53.333333-53.333334V224a53.393333 53.393333 0 0 1 53.333333-53.333333h80a10.713333 10.713333 0 0 0 8.533333-4.266667L229.333333 106.666667a53.58 53.58 0 0 1 42.666667-21.333334h138.666667a53.58 53.58 0 0 1 42.666666 21.333334l44.8 59.733333A10.713333 10.713333 0 0 0 506.666667 170.666667h421.333333a53.393333 53.393333 0 0 1 53.333333 53.333333z m-348.666666 451.333333a170.666667 170.666667 0 1 0-120.666667 50 169.553333 169.553333 0 0 0 120.666667-50z m7.333333-120.666666c0 70.58-57.42 128-128 128s-128-57.42-128-128 57.42-128 128-128 128 57.42 128 128z m213.333333-234.666667a21.333333 21.333333 0 0 0-21.333333-21.333333h-85.333333a21.333333 21.333333 0 0 0 0 42.666666h85.333333a21.333333 21.333333 0 0 0 21.333333-21.333333z";
+	var videoShotPath$1 = "M640 266.666667v490.666666a53.393333 53.393333 0 0 1-53.333333 53.333334H53.333333a53.393333 53.393333 0 0 1-53.333333-53.333334V266.666667a53.393333 53.393333 0 0 1 53.333333-53.333334h533.333334a53.393333 53.393333 0 0 1 53.333333 53.333334z m357.053333-46.133334a52.746667 52.746667 0 0 0-53.613333 0.493334l-192 114a53.553333 53.553333 0 0 0-26.106667 45.853333v262.24a53.54 53.54 0 0 0 26.106667 45.853333l192 114a53.333333 53.333333 0 0 0 80.56-45.853333V266.88a52.746667 52.746667 0 0 0-26.946667-46.346667z";
+	var countdownPath = "M449.59694 552.460488c-2.589471 0-5.210911-0.319688-7.800382-0.959063C313.729623 519.308862 224.280976 404.668816 224.280976 272.733659L224.280976 160.842927c0-17.646767 14.322014-31.96878 31.96878-31.96878s31.96878 14.322014 31.96878 31.96878l0 111.890732c0 102.587817 69.564066 191.716777 169.114849 216.748332 17.134267 4.315785 27.52512 21.674833 23.241303 38.778131C476.930248 542.805916 463.886985 552.460488 449.59694 552.460488L449.59694 552.460488zM574.40306 552.460488c-14.290045 0-27.301339-9.654572-30.977748-24.168398-4.315785-17.134267 6.074068-34.493315 23.208336-38.777132C666.217397 464.450435 735.781463 375.321475 735.781463 272.733659L735.781463 160.842927c0-17.646767 14.290045-31.96878 31.96878-31.96878s31.96878 14.322014 31.96878 31.96878l0 111.890732c0 131.935157-89.448648 246.575204-217.483614 278.767766C579.613971 552.1408 576.992531 552.460488 574.40306 552.460488zM767.750244 896.124878c-17.678736 0-31.96878-14.322014-31.96878-31.96878l0-95.906341c0-102.619785-69.564066-191.748745-169.114849-216.748332-17.134267-4.283817-27.52512-21.674833-23.241303-38.778131 4.347754-17.134267 21.930583-27.397245 38.777132-23.208336C710.270377 521.642583 799.719024 636.28263 799.719024 768.249756l0 95.906341C799.719024 881.802864 785.42898 896.124878 767.750244 896.124878zM256.249756 896.124878c-17.646767 0-31.96878-14.322014-31.96878-31.96878l0-95.906341c0-131.967126 89.448648-246.607173 217.516581-278.767766 17.167235-4.18791 34.461346 6.074068 38.777132 23.209335 4.315785 17.134267-6.074068 34.493315-23.241303 38.777132C357.750634 576.501011 288.218537 665.629971 288.218537 768.249756l0 95.906341C288.218537 881.802864 273.896523 896.124878 256.249756 896.124878zM863.656585 192.811707 160.343415 192.811707c-17.646767 0-31.96878-14.322014-31.96878-31.96878L128.374634 32.967805c0-17.646767 14.322014-31.96878 31.96878-31.96878l703.313171 0c17.678736 0 31.96878 14.322014 31.96878 31.96878l0 127.875122C895.625366 178.489694 881.335321 192.811707 863.656585 192.811707zM192.312195 128.874146l639.37561 0L831.687805 64.936585 192.312195 64.936585 192.312195 128.874146zM863.656585 1024 160.343415 1024c-17.646767 0-31.96878-14.322014-31.96878-31.96878L128.374634 864.156098c0-17.646767 14.322014-31.96878 31.96878-31.96878l703.313171 0c17.678736 0 31.96878 14.322014 31.96878 31.96878l0 127.875122C895.625366 1009.677986 881.335321 1024 863.656585 1024zM192.312195 960.062439l639.37561 0 0-63.937561L192.312195 896.124878 192.312195 960.062439z";
+	var danmakuSettingPath = "M226.58 320.39h-48c-35.9 0-65-29.1-65-65s29.1-65 65-65h48c35.9 0 65 29.1 65 65s-29.1 65-65 65zM723.58 320.39h-322c-35.9 0-65-29.1-65-65s29.1-65 65-65h322c35.9 0 65 29.1 65 65s-29.1 65-65 65zM402.58 580.39h-224c-35.9 0-65-29.1-65-65s29.1-65 65-65h224c35.9 0 65 29.1 65 65s-29.1 65-65 65zM251.58 839.39h-73c-35.9 0-65-29.1-65-65s29.1-65 65-65h73c35.9 0 65 29.1 65 65s-29.1 65-65 65zM424.58 839.39h-1c-35.9 0-65-29.1-65-65s29.1-65 65-65h1c35.9 0 65 29.1 65 65s-29.1 65-65 65zM954.82 588.59l-93.4-161.78a59.189 59.189 0 0 0-51.27-29.6h-186.8a59.201 59.201 0 0 0-51.27 29.6l-93.4 161.78a59.225 59.225 0 0 0 0 59.2l93.4 161.78a59.189 59.189 0 0 0 51.27 29.6h186.81c21.15 0 40.69-11.28 51.27-29.6l93.4-161.78a59.2 59.2 0 0 0-0.01-59.2z m-238.07 95.78c-36.55 0-66.18-29.63-66.18-66.18 0-36.55 29.63-66.18 66.18-66.18 36.55 0 66.18 29.63 66.18 66.18 0 36.55-29.63 66.18-66.18 66.18z";
+	var danmakuClosePath = "M217.8 319.89h-48c-35.9 0-65-29.1-65-65s29.1-65 65-65h48c35.9 0 65 29.1 65 65s-29.1 65-65 65zM714.8 319.89h-322c-35.9 0-65-29.1-65-65s29.1-65 65-65h322c35.9 0 65 29.1 65 65s-29.1 65-65 65zM403.8 579.89h-234c-35.9 0-65-29.1-65-65s29.1-65 65-65h234c35.9 0 65 29.1 65 65s-29.1 65-65 65zM252.8 838.89h-83c-35.9 0-65-29.1-65-65s29.1-65 65-65h83c35.9 0 65 29.1 65 65s-29.1 65-65 65zM425.8 838.89h-1c-35.9 0-65-29.1-65-65s29.1-65 65-65h1c35.9 0 65 29.1 65 65s-29.1 65-65 65zM717.73 398.22c-122.04 0-220.97 98.93-220.97 220.97 0 122.04 98.93 220.97 220.97 220.97 122.04 0 220.97-98.93 220.97-220.97 0.01-122.04-98.93-220.97-220.97-220.97zM822 554.48l-165.25 171.2c-5.9 6.12-13.77 9.19-21.65 9.19-7.52 0-15.05-2.8-20.89-8.44-11.95-11.54-12.29-30.58-0.75-42.54l165.25-171.2c11.54-11.96 30.58-12.29 42.54-0.75 11.95 11.55 12.29 30.59 0.75 42.54z";
+	var danmakuOpenPath = "M221.58 319.89h-48c-35.9 0-65-29.1-65-65s29.1-65 65-65h48c35.9 0 65 29.1 65 65s-29.1 65-65 65zM718.58 319.89h-322c-35.9 0-65-29.1-65-65s29.1-65 65-65h322c35.9 0 65 29.1 65 65s-29.1 65-65 65zM407.58 579.89h-234c-35.9 0-65-29.1-65-65s29.1-65 65-65h234c35.9 0 65 29.1 65 65s-29.1 65-65 65zM256.58 838.89h-83c-35.9 0-65-29.1-65-65s29.1-65 65-65h83c35.9 0 65 29.1 65 65s-29.1 65-65 65zM429.58 838.89h-1c-35.9 0-65-29.1-65-65s29.1-65 65-65h1c35.9 0 65 29.1 65 65s-29.1 65-65 65zM713.96 396.72c-122.04 0-220.97 98.93-220.97 220.97s98.93 220.97 220.97 220.97 220.97-98.93 220.97-220.97S836 396.72 713.96 396.72zM837.9 561.91L689.88 715.26a30.078 30.078 0 0 1-21.38 9.19h-0.27c-7.97 0-15.63-3.17-21.27-8.81l-56.57-56.57c-11.75-11.75-11.75-30.79 0-42.54s30.79-11.75 42.54 0l34.92 34.91 126.76-131.32c11.54-11.96 30.58-12.29 42.54-0.75 11.95 11.54 12.29 30.58 0.75 42.54z";
+	var playratePath = "M675.328 117.717333A425.429333 425.429333 0 0 0 512 85.333333C276.352 85.333333 85.333333 276.352 85.333333 512s191.018667 426.666667 426.666667 426.666667 426.666667-191.018667 426.666667-426.666667c0-56.746667-11.093333-112-32.384-163.328a21.333333 21.333333 0 0 0-39.402667 16.341333A382.762667 382.762667 0 0 1 896 512c0 212.074667-171.925333 384-384 384S128 724.074667 128 512 299.925333 128 512 128c51.114667 0 100.8 9.984 146.986667 29.12a21.333333 21.333333 0 0 0 16.341333-39.402667zM456.704 305.92C432.704 289.152 405.333333 303.082667 405.333333 331.797333v360.533334c0 28.586667 27.541333 42.538667 51.370667 25.856l252.352-176.768c21.76-15.253333 21.632-43.541333 0-58.709334l-252.373333-176.768z m-8.597333 366.72V351.466667l229.269333 160.597333-229.269333 160.597333z";
+	var rightarrowPath = "M558.933333 490.666667L384 665.6l59.733333 59.733333 234.666667-234.666666L443.733333 256 384 315.733333l174.933333 174.933334z";
+	var propotionPath$1 = "M117.297548 128.825806h762.483613v172.659613a28.771097 28.771097 0 0 1-57.542193 0V186.401032H174.839742v115.084387a28.771097 28.771097 0 0 1-57.542194 0V128.825806zM117.297548 888.567742h762.483613v-172.626581a28.771097 28.771097 0 1 0-57.542193 0v115.084387H174.839742v-115.084387a28.771097 28.771097 0 1 0-57.542194 0V888.567742z";
+	var leftarrowPath = "M503.466667 490.666667l174.933333 174.933333-59.733333 59.733333L384 490.666667 618.666667 256l59.733333 59.733333-174.933333 174.933334z";
+	var propotionPath$2 = "M392.588387 645.615484h-54.701419v-210.811871l-65.271742 20.248774V410.590968l114.093419-40.860903h5.879742v275.885419zM487.192774 618.727226c0-8.687484 2.906839-15.756387 8.687484-21.173678a31.545806 31.545806 0 0 1 22.131613-8.158967c8.984774 0 16.350968 2.741677 22.131613 8.158967a27.416774 27.416774 0 0 1 8.91871 21.173678c0 8.588387-2.906839 15.591226-8.687484 21.008516-5.813677 5.285161-13.245935 7.927742-22.329807 7.927742a31.545806 31.545806 0 0 1-22.131613-7.927742 27.449806 27.449806 0 0 1-8.720516-21.008516z m0-154.954323c0-8.720516 2.906839-15.756387 8.687484-21.206709a31.545806 31.545806 0 0 1 22.131613-8.125936c8.984774 0 16.350968 2.708645 22.131613 8.125936a27.416774 27.416774 0 0 1 8.91871 21.206709 27.416774 27.416774 0 0 1-8.687484 21.008516c-5.813677 5.285161-13.245935 7.927742-22.329807 7.927742a31.545806 31.545806 0 0 1-22.131613-7.927742 27.416774 27.416774 0 0 1-8.720516-21.008516zM724.463484 645.615484h-54.668387v-210.811871l-65.271742 20.248774V410.590968l114.093419-40.860903h5.84671v275.885419z";
+	var flipPath = "M554.666667 810.666667v85.333333h-85.333334v-85.333333h85.333334zM170.666667 178.005333a42.666667 42.666667 0 0 1 34.986666 18.218667l203.904 291.328a42.666667 42.666667 0 0 1 0 48.896l-203.946666 291.328A42.666667 42.666667 0 0 1 128 803.328V220.672a42.666667 42.666667 0 0 1 42.666667-42.666667z m682.666666 0a42.666667 42.666667 0 0 1 42.368 37.717334l0.298667 4.949333v582.656a42.666667 42.666667 0 0 1-74.24 28.629333l-3.413333-4.181333-203.904-291.328a42.666667 42.666667 0 0 1-3.029334-43.861333l3.029334-5.034667 203.946666-291.328A42.666667 42.666667 0 0 1 853.333333 178.005333zM554.666667 640v85.333333h-85.333334v-85.333333h85.333334zM196.266667 319.104V716.8L335.957333 512 196.309333 319.104zM554.666667 469.333333v85.333334h-85.333334v-85.333334h85.333334z m0-170.666666v85.333333h-85.333334V298.666667h85.333334z m0-170.666667v85.333333h-85.333334V128h85.333334z";
+	var confirmPath = "M456.899566 728.522382c-15.978926 15.977903-40.33873 18.47477-58.932204 7.492648-3.446495-2.039449-9.653871-9.990538-9.653871-9.990538L188.797435 526.509459c-18.938328-18.938328-18.938328-47.148833 0-66.084091 18.934235-18.938328 49.64263-16.442484 68.579935 2.495844l165.227112 165.225065 312.24449-312.24142c18.938328-18.938328 49.6457-21.435195 68.583005-2.495844 18.938328 18.940374 18.939351 47.149856 0 66.085114L456.909799 728.507032c0 0-0.005117 0.00921-0.010233 0.013303l0 0L456.899566 728.522382zM510.742868 64.090691c-246.752894 0-446.786743 200.032826-446.786743 446.786743 0 246.75187 200.033849 446.785719 446.786743 446.785719 246.752894 0 446.787766-200.034872 446.787766-446.785719C957.531658 264.125563 757.495762 64.090691 510.742868 64.090691L510.742868 64.090691 510.742868 64.090691 510.742868 64.090691z";
+	var settingsConfirmPath = "M384 785.67L97.83 499.5l60.34-60.34L384 664.99l439.16-439.16 60.34 60.34z";
+	var subtitlePath$1 = "M803.6 150.498H220.4c-65.286 0-118.4 53.114-118.4 118.4v486.203c0 65.286 53.114 118.4 118.4 118.4h583.2c65.286 0 118.4-53.114 118.4-118.4V268.898c0-65.286-53.114-118.4-118.4-118.4zM862 755.102c0 32.202-26.198 58.4-58.4 58.4H220.4c-32.202 0-58.4-26.198-58.4-58.4V268.898c0-32.202 26.198-58.4 58.4-58.4h583.2c32.202 0 58.4 26.198 58.4 58.4v486.204z";
+	var subtitlePath$2 = "M691.841 322.542H332.159c-16.568 0-30 13.432-30 30s13.432 30 30 30H482v288.917c0 16.568 13.432 30 30 30 16.569 0 30-13.432 30-30V382.542h149.841c16.568 0 30-13.432 30-30s-13.432-30-30-30z";
+	var subtitleShowPath = "M128.512 214.016h768v81.92h-768zM128.512 718.336h768v81.92h-768zM128.512 466.432h486.4v81.92h-486.4zM896.512 507.392l-174.592-133.12v266.24l174.08-133.12";
+	var switchOnPath = "M764 252H260C116.4 252 0 368.4 0 512s116.4 260 260 260h504c143.6 0 260-116.4 260-260S907.6 252 764 252zM260 736C136.3 736 36 635.7 36 512s100.3-224 224-224 224 100.3 224 224-100.3 224-224 224z";
+	var switchOffPath = "M764 252H260C116.4 252 0 368.4 0 512s116.4 260 260 260h504c143.6 0 260-116.4 260-260S907.6 252 764 252z m0 484c-123.7 0-224-100.3-224-224s100.3-224 224-224 224 100.3 224 224-100.3 224-224 224z";
+
+	var internalMetadata = {exports: {}};
+
+	// FF26- bug: ArrayBuffers are non-extensible, but Object.isExtensible does not report it
+	var fails$d = fails$x;
+
+	var arrayBufferNonExtensible = fails$d(function () {
+	  if (typeof ArrayBuffer == 'function') {
+	    var buffer = new ArrayBuffer(8);
+	    // eslint-disable-next-line es/no-object-isextensible, es/no-object-defineproperty -- safe
+	    if (Object.isExtensible(buffer)) Object.defineProperty(buffer, 'a', { value: 8 });
+	  }
+	});
+
+	var fails$c = fails$x;
+	var isObject$6 = isObject$j;
+	var classof$2 = classofRaw$2;
+	var ARRAY_BUFFER_NON_EXTENSIBLE = arrayBufferNonExtensible;
+
+	// eslint-disable-next-line es/no-object-isextensible -- safe
+	var $isExtensible = Object.isExtensible;
+	var FAILS_ON_PRIMITIVES$1 = fails$c(function () { $isExtensible(1); });
+
+	// `Object.isExtensible` method
+	// https://tc39.es/ecma262/#sec-object.isextensible
+	var objectIsExtensible = (FAILS_ON_PRIMITIVES$1 || ARRAY_BUFFER_NON_EXTENSIBLE) ? function isExtensible(it) {
+	  if (!isObject$6(it)) return false;
+	  if (ARRAY_BUFFER_NON_EXTENSIBLE && classof$2(it) == 'ArrayBuffer') return false;
+	  return $isExtensible ? $isExtensible(it) : true;
+	} : $isExtensible;
+
+	var fails$b = fails$x;
+
+	var freezing = !fails$b(function () {
+	  // eslint-disable-next-line es/no-object-isextensible, es/no-object-preventextensions -- required for testing
+	  return Object.isExtensible(Object.preventExtensions({}));
+	});
+
+	var $$F = _export;
+	var uncurryThis$a = functionUncurryThis;
+	var hiddenKeys = hiddenKeys$6;
+	var isObject$5 = isObject$j;
+	var hasOwn$4 = hasOwnProperty_1;
+	var defineProperty$2 = objectDefineProperty.f;
+	var getOwnPropertyNamesModule$1 = objectGetOwnPropertyNames;
+	var getOwnPropertyNamesExternalModule = objectGetOwnPropertyNamesExternal;
+	var isExtensible = objectIsExtensible;
+	var uid = uid$4;
+	var FREEZING = freezing;
+
+	var REQUIRED = false;
+	var METADATA = uid('meta');
+	var id = 0;
+
+	var setMetadata = function (it) {
+	  defineProperty$2(it, METADATA, { value: {
+	    objectID: 'O' + id++, // object ID
+	    weakData: {}          // weak collections IDs
+	  } });
+	};
+
+	var fastKey$1 = function (it, create) {
+	  // return a primitive with prefix
+	  if (!isObject$5(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+	  if (!hasOwn$4(it, METADATA)) {
+	    // can't set metadata to uncaught frozen object
+	    if (!isExtensible(it)) return 'F';
+	    // not necessary to add metadata
+	    if (!create) return 'E';
+	    // add missing metadata
+	    setMetadata(it);
+	  // return object ID
+	  } return it[METADATA].objectID;
+	};
+
+	var getWeakData = function (it, create) {
+	  if (!hasOwn$4(it, METADATA)) {
+	    // can't set metadata to uncaught frozen object
+	    if (!isExtensible(it)) return true;
+	    // not necessary to add metadata
+	    if (!create) return false;
+	    // add missing metadata
+	    setMetadata(it);
+	  // return the store of weak collections IDs
+	  } return it[METADATA].weakData;
+	};
+
+	// add metadata on freeze-family methods calling
+	var onFreeze = function (it) {
+	  if (FREEZING && REQUIRED && isExtensible(it) && !hasOwn$4(it, METADATA)) setMetadata(it);
+	  return it;
+	};
+
+	var enable = function () {
+	  meta.enable = function () { /* empty */ };
+	  REQUIRED = true;
+	  var getOwnPropertyNames = getOwnPropertyNamesModule$1.f;
+	  var splice = uncurryThis$a([].splice);
+	  var test = {};
+	  test[METADATA] = 1;
+
+	  // prevent exposing of metadata key
+	  if (getOwnPropertyNames(test).length) {
+	    getOwnPropertyNamesModule$1.f = function (it) {
+	      var result = getOwnPropertyNames(it);
+	      for (var i = 0, length = result.length; i < length; i++) {
+	        if (result[i] === METADATA) {
+	          splice(result, i, 1);
+	          break;
+	        }
+	      } return result;
+	    };
+
+	    $$F({ target: 'Object', stat: true, forced: true }, {
+	      getOwnPropertyNames: getOwnPropertyNamesExternalModule.f
+	    });
+	  }
+	};
+
+	var meta = internalMetadata.exports = {
+	  enable: enable,
+	  fastKey: fastKey$1,
+	  getWeakData: getWeakData,
+	  onFreeze: onFreeze
+	};
+
+	hiddenKeys[METADATA] = true;
+
+	var internalMetadataExports = internalMetadata.exports;
+
+	var bind$e = functionBindContext;
+	var call$d = functionCall;
+	var anObject$5 = anObject$f;
+	var tryToString$1 = tryToString$7;
+	var isArrayIteratorMethod = isArrayIteratorMethod$2;
+	var lengthOfArrayLike = lengthOfArrayLike$8;
+	var isPrototypeOf$2 = objectIsPrototypeOf;
+	var getIterator$1 = getIterator$3;
+	var getIteratorMethod$1 = getIteratorMethod$a;
+	var iteratorClose = iteratorClose$2;
+
+	var $TypeError$6 = TypeError;
+
+	var Result = function (stopped, result) {
+	  this.stopped = stopped;
+	  this.result = result;
+	};
+
+	var ResultPrototype = Result.prototype;
+
+	var iterate$l = function (iterable, unboundFunction, options) {
+	  var that = options && options.that;
+	  var AS_ENTRIES = !!(options && options.AS_ENTRIES);
+	  var IS_RECORD = !!(options && options.IS_RECORD);
+	  var IS_ITERATOR = !!(options && options.IS_ITERATOR);
+	  var INTERRUPTED = !!(options && options.INTERRUPTED);
+	  var fn = bind$e(unboundFunction, that);
+	  var iterator, iterFn, index, length, result, next, step;
+
+	  var stop = function (condition) {
+	    if (iterator) iteratorClose(iterator, 'normal', condition);
+	    return new Result(true, condition);
+	  };
+
+	  var callFn = function (value) {
+	    if (AS_ENTRIES) {
+	      anObject$5(value);
+	      return INTERRUPTED ? fn(value[0], value[1], stop) : fn(value[0], value[1]);
+	    } return INTERRUPTED ? fn(value, stop) : fn(value);
+	  };
+
+	  if (IS_RECORD) {
+	    iterator = iterable.iterator;
+	  } else if (IS_ITERATOR) {
+	    iterator = iterable;
+	  } else {
+	    iterFn = getIteratorMethod$1(iterable);
+	    if (!iterFn) throw $TypeError$6(tryToString$1(iterable) + ' is not iterable');
+	    // optimisation for array iterators
+	    if (isArrayIteratorMethod(iterFn)) {
+	      for (index = 0, length = lengthOfArrayLike(iterable); length > index; index++) {
+	        result = callFn(iterable[index]);
+	        if (result && isPrototypeOf$2(ResultPrototype, result)) return result;
+	      } return new Result(false);
+	    }
+	    iterator = getIterator$1(iterable, iterFn);
+	  }
+
+	  next = IS_RECORD ? iterable.next : iterator.next;
+	  while (!(step = call$d(next, iterator)).done) {
+	    try {
+	      result = callFn(step.value);
+	    } catch (error) {
+	      iteratorClose(iterator, 'throw', error);
+	    }
+	    if (typeof result == 'object' && result && isPrototypeOf$2(ResultPrototype, result)) return result;
+	  } return new Result(false);
+	};
+
+	var isPrototypeOf$1 = objectIsPrototypeOf;
+
+	var $TypeError$5 = TypeError;
+
+	var anInstance$5 = function (it, Prototype) {
+	  if (isPrototypeOf$1(Prototype, it)) return it;
+	  throw $TypeError$5('Incorrect invocation');
+	};
+
+	var $$E = _export;
+	var global$a = global$o;
+	var InternalMetadataModule = internalMetadataExports;
+	var fails$a = fails$x;
+	var createNonEnumerableProperty$3 = createNonEnumerableProperty$9;
+	var iterate$k = iterate$l;
+	var anInstance$4 = anInstance$5;
+	var isCallable$8 = isCallable$p;
+	var isObject$4 = isObject$j;
+	var setToStringTag$3 = setToStringTag$9;
+	var defineProperty$1 = objectDefineProperty.f;
+	var forEach = arrayIteration.forEach;
+	var DESCRIPTORS$8 = descriptors;
+	var InternalStateModule$4 = internalState;
+
+	var setInternalState$4 = InternalStateModule$4.set;
+	var internalStateGetterFor$1 = InternalStateModule$4.getterFor;
+
+	var collection$1 = function (CONSTRUCTOR_NAME, wrapper, common) {
+	  var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
+	  var IS_WEAK = CONSTRUCTOR_NAME.indexOf('Weak') !== -1;
+	  var ADDER = IS_MAP ? 'set' : 'add';
+	  var NativeConstructor = global$a[CONSTRUCTOR_NAME];
+	  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
+	  var exported = {};
+	  var Constructor;
+
+	  if (!DESCRIPTORS$8 || !isCallable$8(NativeConstructor)
+	    || !(IS_WEAK || NativePrototype.forEach && !fails$a(function () { new NativeConstructor().entries().next(); }))
+	  ) {
+	    // create collection constructor
+	    Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
+	    InternalMetadataModule.enable();
+	  } else {
+	    Constructor = wrapper(function (target, iterable) {
+	      setInternalState$4(anInstance$4(target, Prototype), {
+	        type: CONSTRUCTOR_NAME,
+	        collection: new NativeConstructor()
+	      });
+	      if (iterable != undefined) iterate$k(iterable, target[ADDER], { that: target, AS_ENTRIES: IS_MAP });
+	    });
+
+	    var Prototype = Constructor.prototype;
+
+	    var getInternalState = internalStateGetterFor$1(CONSTRUCTOR_NAME);
+
+	    forEach(['add', 'clear', 'delete', 'forEach', 'get', 'has', 'set', 'keys', 'values', 'entries'], function (KEY) {
+	      var IS_ADDER = KEY == 'add' || KEY == 'set';
+	      if (KEY in NativePrototype && !(IS_WEAK && KEY == 'clear')) {
+	        createNonEnumerableProperty$3(Prototype, KEY, function (a, b) {
+	          var collection = getInternalState(this).collection;
+	          if (!IS_ADDER && IS_WEAK && !isObject$4(a)) return KEY == 'get' ? undefined : false;
+	          var result = collection[KEY](a === 0 ? 0 : a, b);
+	          return IS_ADDER ? this : result;
+	        });
+	      }
+	    });
+
+	    IS_WEAK || defineProperty$1(Prototype, 'size', {
+	      configurable: true,
+	      get: function () {
+	        return getInternalState(this).collection.size;
+	      }
+	    });
+	  }
+
+	  setToStringTag$3(Constructor, CONSTRUCTOR_NAME, false, true);
+
+	  exported[CONSTRUCTOR_NAME] = Constructor;
+	  $$E({ global: true, forced: true }, exported);
+
+	  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
+
+	  return Constructor;
+	};
+
+	var defineBuiltIn$3 = defineBuiltIn$8;
+
+	var defineBuiltIns$2 = function (target, src, options) {
+	  for (var key in src) {
+	    if (options && options.unsafe && target[key]) target[key] = src[key];
+	    else defineBuiltIn$3(target, key, src[key], options);
+	  } return target;
+	};
+
+	var getBuiltIn$6 = getBuiltIn$h;
+	var defineBuiltInAccessor$3 = defineBuiltInAccessor$5;
+	var wellKnownSymbol$5 = wellKnownSymbol$q;
+	var DESCRIPTORS$7 = descriptors;
+
+	var SPECIES$2 = wellKnownSymbol$5('species');
+
+	var setSpecies$2 = function (CONSTRUCTOR_NAME) {
+	  var Constructor = getBuiltIn$6(CONSTRUCTOR_NAME);
+
+	  if (DESCRIPTORS$7 && Constructor && !Constructor[SPECIES$2]) {
+	    defineBuiltInAccessor$3(Constructor, SPECIES$2, {
+	      configurable: true,
+	      get: function () { return this; }
+	    });
+	  }
+	};
+
+	var create$2 = objectCreate;
+	var defineBuiltInAccessor$2 = defineBuiltInAccessor$5;
+	var defineBuiltIns$1 = defineBuiltIns$2;
+	var bind$d = functionBindContext;
+	var anInstance$3 = anInstance$5;
+	var isNullOrUndefined$2 = isNullOrUndefined$6;
+	var iterate$j = iterate$l;
+	var defineIterator = iteratorDefine;
+	var createIterResultObject = createIterResultObject$3;
+	var setSpecies$1 = setSpecies$2;
+	var DESCRIPTORS$6 = descriptors;
+	var fastKey = internalMetadataExports.fastKey;
+	var InternalStateModule$3 = internalState;
+
+	var setInternalState$3 = InternalStateModule$3.set;
+	var internalStateGetterFor = InternalStateModule$3.getterFor;
+
+	var collectionStrong$1 = {
+	  getConstructor: function (wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
+	    var Constructor = wrapper(function (that, iterable) {
+	      anInstance$3(that, Prototype);
+	      setInternalState$3(that, {
+	        type: CONSTRUCTOR_NAME,
+	        index: create$2(null),
+	        first: undefined,
+	        last: undefined,
+	        size: 0
+	      });
+	      if (!DESCRIPTORS$6) that.size = 0;
+	      if (!isNullOrUndefined$2(iterable)) iterate$j(iterable, that[ADDER], { that: that, AS_ENTRIES: IS_MAP });
+	    });
+
+	    var Prototype = Constructor.prototype;
+
+	    var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
+
+	    var define = function (that, key, value) {
+	      var state = getInternalState(that);
+	      var entry = getEntry(that, key);
+	      var previous, index;
+	      // change existing entry
+	      if (entry) {
+	        entry.value = value;
+	      // create new entry
+	      } else {
+	        state.last = entry = {
+	          index: index = fastKey(key, true),
+	          key: key,
+	          value: value,
+	          previous: previous = state.last,
+	          next: undefined,
+	          removed: false
+	        };
+	        if (!state.first) state.first = entry;
+	        if (previous) previous.next = entry;
+	        if (DESCRIPTORS$6) state.size++;
+	        else that.size++;
+	        // add to index
+	        if (index !== 'F') state.index[index] = entry;
+	      } return that;
+	    };
+
+	    var getEntry = function (that, key) {
+	      var state = getInternalState(that);
+	      // fast case
+	      var index = fastKey(key);
+	      var entry;
+	      if (index !== 'F') return state.index[index];
+	      // frozen object case
+	      for (entry = state.first; entry; entry = entry.next) {
+	        if (entry.key == key) return entry;
+	      }
+	    };
+
+	    defineBuiltIns$1(Prototype, {
+	      // `{ Map, Set }.prototype.clear()` methods
+	      // https://tc39.es/ecma262/#sec-map.prototype.clear
+	      // https://tc39.es/ecma262/#sec-set.prototype.clear
+	      clear: function clear() {
+	        var that = this;
+	        var state = getInternalState(that);
+	        var data = state.index;
+	        var entry = state.first;
+	        while (entry) {
+	          entry.removed = true;
+	          if (entry.previous) entry.previous = entry.previous.next = undefined;
+	          delete data[entry.index];
+	          entry = entry.next;
+	        }
+	        state.first = state.last = undefined;
+	        if (DESCRIPTORS$6) state.size = 0;
+	        else that.size = 0;
+	      },
+	      // `{ Map, Set }.prototype.delete(key)` methods
+	      // https://tc39.es/ecma262/#sec-map.prototype.delete
+	      // https://tc39.es/ecma262/#sec-set.prototype.delete
+	      'delete': function (key) {
+	        var that = this;
+	        var state = getInternalState(that);
+	        var entry = getEntry(that, key);
+	        if (entry) {
+	          var next = entry.next;
+	          var prev = entry.previous;
+	          delete state.index[entry.index];
+	          entry.removed = true;
+	          if (prev) prev.next = next;
+	          if (next) next.previous = prev;
+	          if (state.first == entry) state.first = next;
+	          if (state.last == entry) state.last = prev;
+	          if (DESCRIPTORS$6) state.size--;
+	          else that.size--;
+	        } return !!entry;
+	      },
+	      // `{ Map, Set }.prototype.forEach(callbackfn, thisArg = undefined)` methods
+	      // https://tc39.es/ecma262/#sec-map.prototype.foreach
+	      // https://tc39.es/ecma262/#sec-set.prototype.foreach
+	      forEach: function forEach(callbackfn /* , that = undefined */) {
+	        var state = getInternalState(this);
+	        var boundFunction = bind$d(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	        var entry;
+	        while (entry = entry ? entry.next : state.first) {
+	          boundFunction(entry.value, entry.key, this);
+	          // revert to the last existing entry
+	          while (entry && entry.removed) entry = entry.previous;
+	        }
+	      },
+	      // `{ Map, Set}.prototype.has(key)` methods
+	      // https://tc39.es/ecma262/#sec-map.prototype.has
+	      // https://tc39.es/ecma262/#sec-set.prototype.has
+	      has: function has(key) {
+	        return !!getEntry(this, key);
+	      }
+	    });
+
+	    defineBuiltIns$1(Prototype, IS_MAP ? {
+	      // `Map.prototype.get(key)` method
+	      // https://tc39.es/ecma262/#sec-map.prototype.get
+	      get: function get(key) {
+	        var entry = getEntry(this, key);
+	        return entry && entry.value;
+	      },
+	      // `Map.prototype.set(key, value)` method
+	      // https://tc39.es/ecma262/#sec-map.prototype.set
+	      set: function set(key, value) {
+	        return define(this, key === 0 ? 0 : key, value);
+	      }
+	    } : {
+	      // `Set.prototype.add(value)` method
+	      // https://tc39.es/ecma262/#sec-set.prototype.add
+	      add: function add(value) {
+	        return define(this, value = value === 0 ? 0 : value, value);
+	      }
+	    });
+	    if (DESCRIPTORS$6) defineBuiltInAccessor$2(Prototype, 'size', {
+	      configurable: true,
+	      get: function () {
+	        return getInternalState(this).size;
+	      }
+	    });
+	    return Constructor;
+	  },
+	  setStrong: function (Constructor, CONSTRUCTOR_NAME, IS_MAP) {
+	    var ITERATOR_NAME = CONSTRUCTOR_NAME + ' Iterator';
+	    var getInternalCollectionState = internalStateGetterFor(CONSTRUCTOR_NAME);
+	    var getInternalIteratorState = internalStateGetterFor(ITERATOR_NAME);
+	    // `{ Map, Set }.prototype.{ keys, values, entries, @@iterator }()` methods
+	    // https://tc39.es/ecma262/#sec-map.prototype.entries
+	    // https://tc39.es/ecma262/#sec-map.prototype.keys
+	    // https://tc39.es/ecma262/#sec-map.prototype.values
+	    // https://tc39.es/ecma262/#sec-map.prototype-@@iterator
+	    // https://tc39.es/ecma262/#sec-set.prototype.entries
+	    // https://tc39.es/ecma262/#sec-set.prototype.keys
+	    // https://tc39.es/ecma262/#sec-set.prototype.values
+	    // https://tc39.es/ecma262/#sec-set.prototype-@@iterator
+	    defineIterator(Constructor, CONSTRUCTOR_NAME, function (iterated, kind) {
+	      setInternalState$3(this, {
+	        type: ITERATOR_NAME,
+	        target: iterated,
+	        state: getInternalCollectionState(iterated),
+	        kind: kind,
+	        last: undefined
+	      });
+	    }, function () {
+	      var state = getInternalIteratorState(this);
+	      var kind = state.kind;
+	      var entry = state.last;
+	      // revert to the last existing entry
+	      while (entry && entry.removed) entry = entry.previous;
+	      // get next entry
+	      if (!state.target || !(state.last = entry = entry ? entry.next : state.state.first)) {
+	        // or finish the iteration
+	        state.target = undefined;
+	        return createIterResultObject(undefined, true);
+	      }
+	      // return step by kind
+	      if (kind == 'keys') return createIterResultObject(entry.key, false);
+	      if (kind == 'values') return createIterResultObject(entry.value, false);
+	      return createIterResultObject([entry.key, entry.value], false);
+	    }, IS_MAP ? 'entries' : 'values', !IS_MAP, true);
+
+	    // `{ Map, Set }.prototype[@@species]` accessors
+	    // https://tc39.es/ecma262/#sec-get-map-@@species
+	    // https://tc39.es/ecma262/#sec-get-set-@@species
+	    setSpecies$1(CONSTRUCTOR_NAME);
+	  }
+	};
+
+	var collection = collection$1;
+	var collectionStrong = collectionStrong$1;
+
+	// `Map` constructor
+	// https://tc39.es/ecma262/#sec-map-objects
+	collection('Map', function (init) {
+	  return function Map() { return init(this, arguments.length ? arguments[0] : undefined); };
+	}, collectionStrong);
+
+	var path$9 = path$m;
+
+	var map$5 = path$9.Map;
+
+	var parent$t = map$5;
+
+
+	var map$4 = parent$t;
+
+	var parent$s = map$4;
+
+	var map$3 = parent$s;
+
+	// https://tc39.github.io/proposal-setmap-offrom/
+	var bind$c = functionBindContext;
+	var call$c = functionCall;
+	var aCallable$b = aCallable$h;
+	var aConstructor$1 = aConstructor$3;
+	var isNullOrUndefined$1 = isNullOrUndefined$6;
+	var iterate$i = iterate$l;
+
+	var push$5 = [].push;
+
+	var collectionFrom = function from(source /* , mapFn, thisArg */) {
+	  var length = arguments.length;
+	  var mapFn = length > 1 ? arguments[1] : undefined;
+	  var mapping, array, n, boundFunction;
+	  aConstructor$1(this);
+	  mapping = mapFn !== undefined;
+	  if (mapping) aCallable$b(mapFn);
+	  if (isNullOrUndefined$1(source)) return new this();
+	  array = [];
+	  if (mapping) {
+	    n = 0;
+	    boundFunction = bind$c(mapFn, length > 2 ? arguments[2] : undefined);
+	    iterate$i(source, function (nextItem) {
+	      call$c(push$5, array, boundFunction(nextItem, n++));
+	    });
+	  } else {
+	    iterate$i(source, push$5, { that: array });
+	  }
+	  return new this(array);
+	};
+
+	var $$D = _export;
+	var from = collectionFrom;
+
+	// `Map.from` method
+	// https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
+	$$D({ target: 'Map', stat: true, forced: true }, {
+	  from: from
+	});
+
+	var arraySlice$3 = arraySlice$7;
+
+	// https://tc39.github.io/proposal-setmap-offrom/
+	var collectionOf = function of() {
+	  return new this(arraySlice$3(arguments));
+	};
+
+	var $$C = _export;
+	var of = collectionOf;
+
+	// `Map.of` method
+	// https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
+	$$C({ target: 'Map', stat: true, forced: true }, {
+	  of: of
+	});
+
+	var tryToString = tryToString$7;
+
+	// Perform ? RequireInternalSlot(M, [[MapData]])
+	var aMap$e = function (it) {
+	  if (typeof it == 'object' && 'size' in it && 'has' in it && 'get' in it && 'set' in it && 'delete' in it && 'entries' in it) return it;
+	  throw TypeError(tryToString(it) + ' is not a map');
+	};
+
+	var caller$1 = function (methodName, numArgs) {
+	  return numArgs == 1 ? function (object, arg) {
+	    return object[methodName](arg);
+	  } : function (object, arg1, arg2) {
+	    return object[methodName](arg1, arg2);
+	  };
+	};
+
+	var getBuiltIn$5 = getBuiltIn$h;
+	var caller = caller$1;
+
+	var Map$5 = getBuiltIn$5('Map');
+
+	var mapHelpers = {
+	  Map: Map$5,
+	  set: caller('set', 2),
+	  get: caller('get', 1),
+	  has: caller('has', 1),
+	  remove: caller('delete', 1),
+	  proto: Map$5.prototype
+	};
+
+	var $$B = _export;
+	var aMap$d = aMap$e;
+	var remove = mapHelpers.remove;
+
+	// `Map.prototype.deleteAll` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$B({ target: 'Map', proto: true, real: true, forced: true }, {
+	  deleteAll: function deleteAll(/* ...elements */) {
+	    var collection = aMap$d(this);
+	    var allDeleted = true;
+	    var wasDeleted;
+	    for (var k = 0, len = arguments.length; k < len; k++) {
+	      wasDeleted = remove(collection, arguments[k]);
+	      allDeleted = allDeleted && wasDeleted;
+	    } return !!allDeleted;
+	  }
+	});
+
+	var $$A = _export;
+	var aMap$c = aMap$e;
+	var MapHelpers$4 = mapHelpers;
+
+	var get$1 = MapHelpers$4.get;
+	var has$1 = MapHelpers$4.has;
+	var set$6 = MapHelpers$4.set;
+
+	// `Map.prototype.emplace` method
+	// https://github.com/tc39/proposal-upsert
+	$$A({ target: 'Map', proto: true, real: true, forced: true }, {
+	  emplace: function emplace(key, handler) {
+	    var map = aMap$c(this);
+	    var value, inserted;
+	    if (has$1(map, key)) {
+	      value = get$1(map, key);
+	      if ('update' in handler) {
+	        value = handler.update(value, key, map);
+	        set$6(map, key, value);
+	      } return value;
+	    }
+	    inserted = handler.insert(key, map);
+	    set$6(map, key, inserted);
+	    return inserted;
+	  }
+	});
+
+	var call$b = functionCall;
+
+	var iterateSimple$1 = function (iterator, fn, $next) {
+	  var next = $next || iterator.next;
+	  var step, result;
+	  while (!(step = call$b(next, iterator)).done) {
+	    result = fn(step.value);
+	    if (result !== undefined) return result;
+	  }
+	};
+
+	var iterateSimple = iterateSimple$1;
+
+	var mapIterate = function (map, fn, interruptible) {
+	  return interruptible ? iterateSimple(map.entries(), function (entry) {
+	    return fn(entry[1], entry[0]);
+	  }) : map.forEach(fn);
+	};
+
+	var $$z = _export;
+	var bind$b = functionBindContext;
+	var aMap$b = aMap$e;
+	var iterate$h = mapIterate;
+
+	// `Map.prototype.every` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$z({ target: 'Map', proto: true, real: true, forced: true }, {
+	  every: function every(callbackfn /* , thisArg */) {
+	    var map = aMap$b(this);
+	    var boundFunction = bind$b(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	    return iterate$h(map, function (value, key) {
+	      if (!boundFunction(value, key, map)) return false;
+	    }, true) !== false;
+	  }
+	});
+
+	var $$y = _export;
+	var bind$a = functionBindContext;
+	var aMap$a = aMap$e;
+	var MapHelpers$3 = mapHelpers;
+	var iterate$g = mapIterate;
+
+	var Map$4 = MapHelpers$3.Map;
+	var set$5 = MapHelpers$3.set;
+
+	// `Map.prototype.filter` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$y({ target: 'Map', proto: true, real: true, forced: true }, {
+	  filter: function filter(callbackfn /* , thisArg */) {
+	    var map = aMap$a(this);
+	    var boundFunction = bind$a(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	    var newMap = new Map$4();
+	    iterate$g(map, function (value, key) {
+	      if (boundFunction(value, key, map)) set$5(newMap, key, value);
+	    });
+	    return newMap;
+	  }
+	});
+
+	var $$x = _export;
+	var bind$9 = functionBindContext;
+	var aMap$9 = aMap$e;
+	var iterate$f = mapIterate;
+
+	// `Map.prototype.find` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$x({ target: 'Map', proto: true, real: true, forced: true }, {
+	  find: function find(callbackfn /* , thisArg */) {
+	    var map = aMap$9(this);
+	    var boundFunction = bind$9(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	    var result = iterate$f(map, function (value, key) {
+	      if (boundFunction(value, key, map)) return { value: value };
+	    }, true);
+	    return result && result.value;
+	  }
+	});
+
+	var $$w = _export;
+	var bind$8 = functionBindContext;
+	var aMap$8 = aMap$e;
+	var iterate$e = mapIterate;
+
+	// `Map.prototype.findKey` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$w({ target: 'Map', proto: true, real: true, forced: true }, {
+	  findKey: function findKey(callbackfn /* , thisArg */) {
+	    var map = aMap$8(this);
+	    var boundFunction = bind$8(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	    var result = iterate$e(map, function (value, key) {
+	      if (boundFunction(value, key, map)) return { key: key };
+	    }, true);
+	    return result && result.key;
+	  }
+	});
+
+	var $$v = _export;
+	var call$a = functionCall;
+	var uncurryThis$9 = functionUncurryThis;
+	var isCallable$7 = isCallable$p;
+	var aCallable$a = aCallable$h;
+	var iterate$d = iterate$l;
+	var Map$3 = mapHelpers.Map;
+
+	var push$4 = uncurryThis$9([].push);
+
+	// `Map.groupBy` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$v({ target: 'Map', stat: true, forced: true }, {
+	  groupBy: function groupBy(iterable, keyDerivative) {
+	    var C = isCallable$7(this) ? this : Map$3;
+	    var newMap = new C();
+	    aCallable$a(keyDerivative);
+	    var has = aCallable$a(newMap.has);
+	    var get = aCallable$a(newMap.get);
+	    var set = aCallable$a(newMap.set);
+	    iterate$d(iterable, function (element) {
+	      var derivedKey = keyDerivative(element);
+	      if (!call$a(has, newMap, derivedKey)) call$a(set, newMap, derivedKey, [element]);
+	      else push$4(call$a(get, newMap, derivedKey), element);
+	    });
+	    return newMap;
+	  }
+	});
+
+	// `SameValueZero` abstract operation
+	// https://tc39.es/ecma262/#sec-samevaluezero
+	var sameValueZero$1 = function (x, y) {
+	  // eslint-disable-next-line no-self-compare -- NaN check
+	  return x === y || x != x && y != y;
+	};
+
+	var $$u = _export;
+	var sameValueZero = sameValueZero$1;
+	var aMap$7 = aMap$e;
+	var iterate$c = mapIterate;
+
+	// `Map.prototype.includes` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$u({ target: 'Map', proto: true, real: true, forced: true }, {
+	  includes: function includes(searchElement) {
+	    return iterate$c(aMap$7(this), function (value) {
+	      if (sameValueZero(value, searchElement)) return true;
+	    }, true) === true;
+	  }
+	});
+
+	var $$t = _export;
+	var call$9 = functionCall;
+	var iterate$b = iterate$l;
+	var isCallable$6 = isCallable$p;
+	var aCallable$9 = aCallable$h;
+	var Map$2 = mapHelpers.Map;
+
+	// `Map.keyBy` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$t({ target: 'Map', stat: true, forced: true }, {
+	  keyBy: function keyBy(iterable, keyDerivative) {
+	    var C = isCallable$6(this) ? this : Map$2;
+	    var newMap = new C();
+	    aCallable$9(keyDerivative);
+	    var setter = aCallable$9(newMap.set);
+	    iterate$b(iterable, function (element) {
+	      call$9(setter, newMap, keyDerivative(element), element);
+	    });
+	    return newMap;
+	  }
+	});
+
+	var $$s = _export;
+	var aMap$6 = aMap$e;
+	var iterate$a = mapIterate;
+
+	// `Map.prototype.keyOf` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$s({ target: 'Map', proto: true, real: true, forced: true }, {
+	  keyOf: function keyOf(searchElement) {
+	    var result = iterate$a(aMap$6(this), function (value, key) {
+	      if (value === searchElement) return { key: key };
+	    }, true);
+	    return result && result.key;
+	  }
+	});
+
+	var $$r = _export;
+	var bind$7 = functionBindContext;
+	var aMap$5 = aMap$e;
+	var MapHelpers$2 = mapHelpers;
+	var iterate$9 = mapIterate;
+
+	var Map$1 = MapHelpers$2.Map;
+	var set$4 = MapHelpers$2.set;
+
+	// `Map.prototype.mapKeys` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$r({ target: 'Map', proto: true, real: true, forced: true }, {
+	  mapKeys: function mapKeys(callbackfn /* , thisArg */) {
+	    var map = aMap$5(this);
+	    var boundFunction = bind$7(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	    var newMap = new Map$1();
+	    iterate$9(map, function (value, key) {
+	      set$4(newMap, boundFunction(value, key, map), value);
+	    });
+	    return newMap;
+	  }
+	});
+
+	var $$q = _export;
+	var bind$6 = functionBindContext;
+	var aMap$4 = aMap$e;
+	var MapHelpers$1 = mapHelpers;
+	var iterate$8 = mapIterate;
+
+	var Map = MapHelpers$1.Map;
+	var set$3 = MapHelpers$1.set;
+
+	// `Map.prototype.mapValues` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$q({ target: 'Map', proto: true, real: true, forced: true }, {
+	  mapValues: function mapValues(callbackfn /* , thisArg */) {
+	    var map = aMap$4(this);
+	    var boundFunction = bind$6(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	    var newMap = new Map();
+	    iterate$8(map, function (value, key) {
+	      set$3(newMap, key, boundFunction(value, key, map));
+	    });
+	    return newMap;
+	  }
+	});
+
+	var $$p = _export;
+	var aMap$3 = aMap$e;
+	var iterate$7 = iterate$l;
+	var set$2 = mapHelpers.set;
+
+	// `Map.prototype.merge` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$p({ target: 'Map', proto: true, real: true, arity: 1, forced: true }, {
+	  // eslint-disable-next-line no-unused-vars -- required for `.length`
+	  merge: function merge(iterable /* ...iterables */) {
+	    var map = aMap$3(this);
+	    var argumentsLength = arguments.length;
+	    var i = 0;
+	    while (i < argumentsLength) {
+	      iterate$7(arguments[i++], function (key, value) {
+	        set$2(map, key, value);
+	      }, { AS_ENTRIES: true });
+	    }
+	    return map;
+	  }
+	});
+
+	var $$o = _export;
+	var aCallable$8 = aCallable$h;
+	var aMap$2 = aMap$e;
+	var iterate$6 = mapIterate;
+
+	var $TypeError$4 = TypeError;
+
+	// `Map.prototype.reduce` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$o({ target: 'Map', proto: true, real: true, forced: true }, {
+	  reduce: function reduce(callbackfn /* , initialValue */) {
+	    var map = aMap$2(this);
+	    var noInitial = arguments.length < 2;
+	    var accumulator = noInitial ? undefined : arguments[1];
+	    aCallable$8(callbackfn);
+	    iterate$6(map, function (value, key) {
+	      if (noInitial) {
+	        noInitial = false;
+	        accumulator = value;
+	      } else {
+	        accumulator = callbackfn(accumulator, value, key, map);
+	      }
+	    });
+	    if (noInitial) throw $TypeError$4('Reduce of empty map with no initial value');
+	    return accumulator;
+	  }
+	});
+
+	var $$n = _export;
+	var bind$5 = functionBindContext;
+	var aMap$1 = aMap$e;
+	var iterate$5 = mapIterate;
+
+	// `Map.prototype.some` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$n({ target: 'Map', proto: true, real: true, forced: true }, {
+	  some: function some(callbackfn /* , thisArg */) {
+	    var map = aMap$1(this);
+	    var boundFunction = bind$5(callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	    return iterate$5(map, function (value, key) {
+	      if (boundFunction(value, key, map)) return true;
+	    }, true) === true;
+	  }
+	});
+
+	var $$m = _export;
+	var aCallable$7 = aCallable$h;
+	var aMap = aMap$e;
+	var MapHelpers = mapHelpers;
+
+	var $TypeError$3 = TypeError;
+	var get = MapHelpers.get;
+	var has = MapHelpers.has;
+	var set$1 = MapHelpers.set;
+
+	// `Map.prototype.update` method
+	// https://github.com/tc39/proposal-collection-methods
+	$$m({ target: 'Map', proto: true, real: true, forced: true }, {
+	  update: function update(key, callback /* , thunk */) {
+	    var map = aMap(this);
+	    var length = arguments.length;
+	    aCallable$7(callback);
+	    var isPresentInMap = has(map, key);
+	    if (!isPresentInMap && length < 3) {
+	      throw $TypeError$3('Updating absent value');
+	    }
+	    var value = isPresentInMap ? get(map, key) : aCallable$7(length > 2 ? arguments[2] : undefined)(key, map);
+	    set$1(map, key, callback(value, key, map));
+	    return map;
+	  }
+	});
+
+	var call$8 = functionCall;
+	var aCallable$6 = aCallable$h;
+	var isCallable$5 = isCallable$p;
+	var anObject$4 = anObject$f;
+
+	var $TypeError$2 = TypeError;
+
+	// `Map.prototype.upsert` method
+	// https://github.com/tc39/proposal-upsert
+	var mapUpsert = function upsert(key, updateFn /* , insertFn */) {
+	  var map = anObject$4(this);
+	  var get = aCallable$6(map.get);
+	  var has = aCallable$6(map.has);
+	  var set = aCallable$6(map.set);
+	  var insertFn = arguments.length > 2 ? arguments[2] : undefined;
+	  var value;
+	  if (!isCallable$5(updateFn) && !isCallable$5(insertFn)) {
+	    throw $TypeError$2('At least one callback required');
+	  }
+	  if (call$8(has, map, key)) {
+	    value = call$8(get, map, key);
+	    if (isCallable$5(updateFn)) {
+	      value = updateFn(value);
+	      call$8(set, map, key, value);
+	    }
+	  } else if (isCallable$5(insertFn)) {
+	    value = insertFn();
+	    call$8(set, map, key, value);
+	  } return value;
+	};
+
+	// TODO: remove from `core-js@4`
+	var $$l = _export;
+	var upsert$1 = mapUpsert;
+
+	// `Map.prototype.upsert` method (replaced by `Map.prototype.emplace`)
+	// https://github.com/thumbsupep/proposal-upsert
+	$$l({ target: 'Map', proto: true, real: true, forced: true }, {
+	  upsert: upsert$1
+	});
+
+	// TODO: remove from `core-js@4`
+	var $$k = _export;
+	var upsert = mapUpsert;
+
+	// `Map.prototype.updateOrInsert` method (replaced by `Map.prototype.emplace`)
+	// https://github.com/thumbsupep/proposal-upsert
+	$$k({ target: 'Map', proto: true, real: true, name: 'upsert', forced: true }, {
+	  updateOrInsert: upsert
+	});
+
+	var parent$r = map$3;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// TODO: remove from `core-js@4`
+
+	// TODO: remove from `core-js@4`
+
+
+	var map$2 = parent$r;
+
+	var map$1 = map$2;
+
+	var map = map$1;
+
+	var _Map = /*@__PURE__*/getDefaultExportFromCjs(map);
+
+	// COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件
+	var COMPONENT_STORE = new _Map();
+	// ONCE_COMPONENT_STORE存储的是只要曾经在视图上展示过哪怕已经卸载，都会一直保留在此处，除非通过delete进行彻底删除
+	var ONCE_COMPONENT_STORE = new _Map();
+	// 存储需要隐藏的元素，但不进行卸载
+	var HIDEEN_COMPONENT_STORE = new _Map();
+	// 内置的原子组件
+	var BuiltInControllerComponent = ['DurationShow', 'FullPage', 'FullScreen', 'PicInPic', 'PlayButton', 'Playrate', 'ScreenShot', 'SubSetting', 'VideoShot', 'Toast'];
+	function storeControlComponent(item) {
+	  COMPONENT_STORE.set(item.id, item);
+	  ONCE_COMPONENT_STORE.set(item.id, item);
+	}
+
+	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Options = /*#__PURE__*/function (_Component) {
 	  _inherits(Options, _Component);
-	  var _super = _createSuper$q(Options);
+	  var _super = _createSuper$o(Options);
 	  function Options(player, container, hideWidth, hideHeight, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Options);
@@ -5350,7 +5708,7 @@
 	  }, {
 	    key: "initBaseTemplate",
 	    value: function initBaseTemplate() {
-	      this.hideBox = $$n('div');
+	      this.hideBox = $$M('div');
 	      addClass(this.hideBox, ['video-set', 'video-set-hidden']);
 	      if (this.hideHeight && this.hideHeight > 0) {
 	        this.hideBox.style.height = this.hideHeight + 'px';
@@ -5359,7 +5717,7 @@
 	        this.hideBox.style.width = this.hideWidth + 'px';
 	      }
 	      this.el.appendChild(this.hideBox);
-	      this.iconBox = $$n('div');
+	      this.iconBox = $$M('div');
 	      addClass(this.iconBox, ['video-icon']);
 	      this.el.appendChild(this.iconBox);
 	    }
@@ -5407,6 +5765,12 @@
 	  }]);
 	  return Options;
 	}(Component);
+
+	var main_min = {};
+
+	(function (exports) {
+	Object.defineProperty(exports,"__esModule",{value:!0}),exports.toggleFull=exports.isFull=exports.exitFull=exports.beFull=void 0;var e=document.documentElement,l=e.querySelector("head"),n=document.createElement("style"),t="requestFullscreen",u="exitFullscreen",r="fullscreenElement";if("webkitRequestFullScreen"in e)t="webkitRequestFullScreen",u="webkitExitFullscreen",r="webkitFullscreenElement";else if("msRequestFullscreen"in e)t="msRequestFullscreen",u="msExitFullscreen",r="msFullscreenElement";else if("mozRequestFullScreen"in e)t="mozRequestFullScreen",u="mozCancelFullScreen",r="mozFullScreenElement";else if(!("requestFullscreen"in e))throw "当前浏览器不支持Fullscreen API !";function c(l){return l instanceof HTMLElement?l:e}function o(e,u){return u&&(null===l&&(l=document.createElement("head")),n.innerHTML=":fullscreen{background-color:"+u+";}",l.appendChild(n)),c(e)[t]()}function i(){return e.contains(n)&&(null==l||l.removeChild(n)),document[u]()}function F(e){return c(e)===document[r]}function m(e,l){return F(e)?(i(),!1):(o(e,l),!0)}exports.beFull=o,exports.exitFull=i,exports.isFull=F,exports.toggleFull=m; 
+	} (main_min));
 
 	let fn1 = Document.prototype.createElement;
 	// 此函数为重载实现
@@ -5867,79 +6231,11 @@
 	document$3.getElementsByTagName = getElementsByTagName;
 	Object.setPrototypeOf(document$3, Document.prototype);
 
-	function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var FullPage = /*#__PURE__*/function (_Options) {
-	  _inherits(FullPage, _Options);
-	  var _super = _createSuper$p(FullPage);
-	  function FullPage(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, FullPage);
-	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'FullPage');
-	    // el: div.video-fullpage.video-controller
-	    _defineProperty(_assertThisInitialized(_this), "isFullPage", false);
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(FullPage, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-fullpage', 'video-controller']);
-	      this.icon = createSvg(fullPagePath, '0 0 1024 1024');
-	      this.iconBox.appendChild(this.icon);
-	      this.hideBox.innerText = '网页全屏';
-	      this.hideBox.style.fontSize = '13px';
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      this.onClick = this.onClick.bind(this);
-	      if (this.player.env === 'Mobile') {
-	        wrap(this.el).addEventListener('singleTap', this.onClick);
-	      } else {
-	        this.el.onclick = this.onClick;
-	      }
-	    }
-	  }, {
-	    key: "onClick",
-	    value: function onClick(e) {
-	      e.stopPropagation();
-	      if (!this.isFullPage) {
-	        addClass(this.player.el, ['video-wrapper-fullpage']);
-	        this.iconBox.removeChild(this.icon);
-	        this.icon = createSvg(fullPageExitPath, '0 0 1024 1024');
-	        this.iconBox.appendChild(this.icon);
-	      } else {
-	        removeClass(this.player.el, ['video-wrapper-fullpage']);
-	        this.iconBox.removeChild(this.icon);
-	        this.icon = createSvg(fullPagePath, '0 0 1024 1024');
-	        this.iconBox.appendChild(this.icon);
-	      }
-	      this.isFullPage = !this.isFullPage;
-	    }
-	  }]);
-	  return FullPage;
-	}(Options);
-
-	var main_min = {};
-
-	(function (exports) {
-	Object.defineProperty(exports,"__esModule",{value:!0}),exports.toggleFull=exports.isFull=exports.exitFull=exports.beFull=void 0;var e=document.documentElement,l=e.querySelector("head"),n=document.createElement("style"),t="requestFullscreen",u="exitFullscreen",r="fullscreenElement";if("webkitRequestFullScreen"in e)t="webkitRequestFullScreen",u="webkitExitFullscreen",r="webkitFullscreenElement";else if("msRequestFullscreen"in e)t="msRequestFullscreen",u="msExitFullscreen",r="msFullscreenElement";else if("mozRequestFullScreen"in e)t="mozRequestFullScreen",u="mozCancelFullScreen",r="mozFullScreenElement";else if(!("requestFullscreen"in e))throw "当前浏览器不支持Fullscreen API !";function c(l){return l instanceof HTMLElement?l:e}function o(e,u){return u&&(null===l&&(l=document.createElement("head")),n.innerHTML=":fullscreen{background-color:"+u+";}",l.appendChild(n)),c(e)[t]()}function i(){return e.contains(n)&&(null==l||l.removeChild(n)),document[u]()}function F(e){return c(e)===document[r]}function m(e,l){return F(e)?(i(),!1):(o(e,l),!0)}exports.beFull=o,exports.exitFull=i,exports.isFull=F,exports.toggleFull=m; 
-	} (main_min));
-
-	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullScreen = /*#__PURE__*/function (_Options) {
 	  _inherits(FullScreen, _Options);
-	  var _super = _createSuper$o(FullScreen);
+	  var _super = _createSuper$n(FullScreen);
 	  function FullScreen(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, FullScreen);
@@ -6004,63 +6300,6 @@
 	  return FullScreen;
 	}(Options);
 
-	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var PicInPic = /*#__PURE__*/function (_Options) {
-	  _inherits(PicInPic, _Options);
-	  var _super = _createSuper$n(PicInPic);
-	  // el: div.video-picInpic.video-controller
-	  function PicInPic(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, PicInPic);
-	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'PicInPic');
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(PicInPic, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-picInpic', 'video-controller']);
-	      this.icon = createSvg(picInPicPath, '0 0 1024 1024');
-	      this.iconBox.appendChild(this.icon);
-	      this.hideBox.innerText = '画中画';
-	      this.hideBox.style.fontSize = '13px';
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      this.onClick = this.onClick.bind(this);
-	      if (this.player.env === 'Mobile') {
-	        wrap(this.el).addEventListener('singleTap', this.onClick);
-	      } else {
-	        this.el.onclick = this.onClick;
-	      }
-	    }
-	  }, {
-	    key: "onClick",
-	    value: function onClick(e) {
-	      e.stopPropagation();
-	      // document.pictureInPictureElement: 当前画中画的元素
-	      if (document.pictureInPictureElement) {
-	        // 当前存在画中画的元素，则退出画中画
-	        document.exitPictureInPicture();
-	      } else {
-	        // 当前不存在画中画的元素，则开启画中画
-	        this.player.video.requestPictureInPicture(); // 返回 Promise，里面是 pipWindow
-	      }
-	    }
-	  }]);
-	  return PicInPic;
-	}(Options);
-
 	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PlayButton = /*#__PURE__*/function (_Component) {
@@ -6094,7 +6333,7 @@
 	    key: "initTemplate",
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-start-pause', 'video-controller']);
-	      this.iconBox = $$n('div.video-icon');
+	      this.iconBox = $$M('div.video-icon');
 	      this.el.appendChild(this.iconBox);
 	      this.pauseIcon = createSvg(pausePath);
 	      this.playIcon = createSvg(playPath);
@@ -6153,14 +6392,407 @@
 	  return PlayButton;
 	}(Component);
 
+	// a string of all valid unicode whitespaces
+	var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
+	  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+	var uncurryThis$8 = functionUncurryThis;
+	var requireObjectCoercible = requireObjectCoercible$5;
+	var toString$4 = toString$b;
+	var whitespaces$2 = whitespaces$3;
+
+	var replace$4 = uncurryThis$8(''.replace);
+	var ltrim = RegExp('^[' + whitespaces$2 + ']+');
+	var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
+
+	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+	var createMethod = function (TYPE) {
+	  return function ($this) {
+	    var string = toString$4(requireObjectCoercible($this));
+	    if (TYPE & 1) string = replace$4(string, ltrim, '');
+	    if (TYPE & 2) string = replace$4(string, rtrim, '$1');
+	    return string;
+	  };
+	};
+
+	var stringTrim = {
+	  // `String.prototype.{ trimLeft, trimStart }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+	  start: createMethod(1),
+	  // `String.prototype.{ trimRight, trimEnd }` methods
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
+	  end: createMethod(2),
+	  // `String.prototype.trim` method
+	  // https://tc39.es/ecma262/#sec-string.prototype.trim
+	  trim: createMethod(3)
+	};
+
+	var global$9 = global$o;
 	var fails$9 = fails$x;
-	var wellKnownSymbol$6 = wellKnownSymbol$q;
+	var uncurryThis$7 = functionUncurryThis;
+	var toString$3 = toString$b;
+	var trim$1 = stringTrim.trim;
+	var whitespaces$1 = whitespaces$3;
+
+	var $parseInt$1 = global$9.parseInt;
+	var Symbol$2 = global$9.Symbol;
+	var ITERATOR$3 = Symbol$2 && Symbol$2.iterator;
+	var hex = /^[+-]?0x/i;
+	var exec$2 = uncurryThis$7(hex.exec);
+	var FORCED$2 = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
+	  // MS Edge 18- broken with boxed symbols
+	  || (ITERATOR$3 && !fails$9(function () { $parseInt$1(Object(ITERATOR$3)); }));
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
+	  var S = trim$1(toString$3(string));
+	  return $parseInt$1(S, (radix >>> 0) || (exec$2(hex, S) ? 16 : 10));
+	} : $parseInt$1;
+
+	var $$j = _export;
+	var $parseInt = numberParseInt;
+
+	// `parseInt` method
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
+	$$j({ global: true, forced: parseInt != $parseInt }, {
+	  parseInt: $parseInt
+	});
+
+	var path$8 = path$m;
+
+	var _parseInt$6 = path$8.parseInt;
+
+	var parent$q = _parseInt$6;
+
+	var _parseInt$5 = parent$q;
+
+	var parent$p = _parseInt$5;
+
+	var _parseInt$4 = parent$p;
+
+	var parent$o = _parseInt$4;
+
+	var _parseInt$3 = parent$o;
+
+	var _parseInt$2 = _parseInt$3;
+
+	var _parseInt = _parseInt$2;
+
+	var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
+
+	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var Volume = /*#__PURE__*/function (_Options) {
+	  _inherits(Volume, _Options);
+	  var _super = _createSuper$l(Volume);
+	  function Volume(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, Volume);
+	    _this = _super.call(this, player, container, 0, 0, desc);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'Volume');
+	    // el: div.video-volume video-controller
+	    _defineProperty(_assertThisInitialized(_this), "volumeProgress", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "volumeShow", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "volume", 0.5);
+	    _defineProperty(_assertThisInitialized(_this), "volumeDot", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mouseY", 0);
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(Volume, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-volume', 'video-controller']);
+	      this.el['aria-label'] = '音量';
+	      addClass(this.hideBox, ['video-volume-set']);
+	      this.volumeProgress = $$M('div.video-volume-progress', {
+	        style: {
+	          height: '70px'
+	        }
+	      });
+	      this.volumeShow = $$M('div.video-volume-show');
+	      this.volumeShow.innerText = (this.volume * 100).toFixed(0);
+	      // this.volumeCompleted = new VolumeCompletedProgress(
+	      //   this.player,
+	      //   this.volumeProgress,
+	      //   'div.video-volume-completed'
+	      // )
+	      this.volumeCompleted = $$M('div.video-volume-completed');
+	      this.volumeProgress.appendChild(this.volumeCompleted);
+	      this.hideBox.appendChild(this.volumeShow);
+	      this.hideBox.appendChild(this.volumeProgress);
+	      this.volumeDot = $$M('div.video-volume-dot');
+	      this.volumeProgress.appendChild(this.volumeDot);
+	      this.icon = createSvg(volumePath$1);
+	      this.iconBox.appendChild(this.icon);
+	      this.player.video.volume = this.volume;
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.VOLUME_PROGRESS_CLICK, function (e, ctx) {
+	        var eoffsetY = e.clientY - getDOMPoint(_this2.volumeProgress).y;
+	        var offsetY = _this2.volumeProgress.clientHeight - eoffsetY;
+	        var scale = offsetY / _this2.volumeProgress.clientHeight;
+	        if (scale < 0) {
+	          scale = 0;
+	        } else if (scale > 1) {
+	          scale = 1;
+	        }
+	        _this2.volumeCompleted.style.height = scale * 100 + '%';
+	        _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
+	        _this2.volume = scale;
+	        _this2.volumeShow.innerText = Math.round(_this2.volume * 100) + '';
+	        _this2.player.video.volume = _this2.volume;
+	      });
+	      this.volumeProgress.onclick = function (e) {
+	        e.stopPropagation();
+	        _this2.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, _this2);
+	      };
+	      this.volumeDot.onmousedown = function (e) {
+	        e.stopPropagation();
+	        _this2.mouseY = e.pageY;
+	        var top = _parseInt$1(getComputedStyle(_this2.volumeDot).top);
+	        document.body.onmousemove = function (e) {
+	          e.preventDefault();
+	          var dy = top + e.pageY - _this2.mouseY;
+	          // console.log(dy)
+	          var scale = (_this2.volumeProgress.clientHeight - dy) / _this2.volumeProgress.clientHeight;
+	          if (scale < 0) {
+	            scale = 0;
+	          } else if (scale > 1) {
+	            scale = 1;
+	          }
+	          _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
+	          _this2.volumeCompleted.style.height = scale * 100 + '%';
+	          _this2.volumeShow.innerText = Math.round(scale * 100) + '';
+	          _this2.player.video.volume = scale;
+	          _this2.volume = scale;
+	        };
+	        document.body.onmouseup = function (e) {
+	          document.body.onmousemove = null;
+	          document.body.onmouseup = null;
+	        };
+	      };
+	    }
+	  }]);
+	  return Volume;
+	}(Options);
+
+	function addZero(num) {
+	  return num > 9 ? '' + num : '0' + num;
+	}
+	function formatTime(seconds) {
+	  seconds = Math.floor(seconds);
+	  var minute = Math.floor(seconds / 60);
+	  var second = seconds % 60;
+	  return addZero(minute) + ':' + addZero(second);
+	}
+	function computeAngle(dx, dy) {
+	  if (dx === 0) return 90;
+	  if (dy === 0) return 0;
+	  return Math.round(Math.atan(Math.abs(dy) / Math.abs(dx)) * 180 / Math.PI);
+	}
+
+	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var DutaionShow = /*#__PURE__*/function (_Component) {
+	  _inherits(DutaionShow, _Component);
+	  var _super = _createSuper$k(DutaionShow);
+	  function DutaionShow(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, DutaionShow);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'DurationShow');
+	    // el: div.video-duration-time.video-controller
+	    _defineProperty(_assertThisInitialized(_this), "currentTime", '00:00');
+	    _defineProperty(_assertThisInitialized(_this), "totalTime", '00:00');
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _this.player = player;
+	    _this.props = props;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(DutaionShow, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      var _context;
+	      addClass(this.el, ['video-duration-time', 'video-controller']);
+	      this.el.innerText = _concatInstanceProperty(_context = "".concat(this.currentTime, "/")).call(_context, this.totalTime);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.LOADED_META_DATA, function (e) {
+	        var _context2;
+	        var video = e.target;
+	        // console.log(video.duration) // 12.612
+	        _this2.totalTime = formatTime(video.duration);
+	        // console.log(this.totalTime) // 00:12
+	        _this2.el.innerText = _concatInstanceProperty(_context2 = "".concat(_this2.currentTime, "/")).call(_context2, _this2.totalTime);
+	      });
+	      this.player.on(EVENT.TIME_UPDATE, function (e) {
+	        var _context3;
+	        var video = e.target;
+	        _this2.currentTime = formatTime(video.currentTime);
+	        _this2.el.innerText = _concatInstanceProperty(_context3 = "".concat(_this2.currentTime, "/")).call(_context3, _this2.totalTime);
+	      });
+	      this.player.on(EVENT.VIDEO_DOT_DRAG, function (scale, e) {
+	        var _context4;
+	        _this2.currentTime = formatTime(_this2.player.video.duration * scale);
+	        _this2.el.innerText = _concatInstanceProperty(_context4 = "".concat(_this2.currentTime, "/")).call(_context4, _this2.totalTime);
+	      });
+	    }
+	  }]);
+	  return DutaionShow;
+	}(Component);
+
+	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var FullPage = /*#__PURE__*/function (_Options) {
+	  _inherits(FullPage, _Options);
+	  var _super = _createSuper$j(FullPage);
+	  function FullPage(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, FullPage);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'FullPage');
+	    // el: div.video-fullpage.video-controller
+	    _defineProperty(_assertThisInitialized(_this), "isFullPage", false);
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(FullPage, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-fullpage', 'video-controller']);
+	      this.icon = createSvg(fullPagePath, '0 0 1024 1024');
+	      this.iconBox.appendChild(this.icon);
+	      this.hideBox.innerText = '网页全屏';
+	      this.hideBox.style.fontSize = '13px';
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      this.onClick = this.onClick.bind(this);
+	      if (this.player.env === 'Mobile') {
+	        wrap(this.el).addEventListener('singleTap', this.onClick);
+	      } else {
+	        this.el.onclick = this.onClick;
+	      }
+	    }
+	  }, {
+	    key: "onClick",
+	    value: function onClick(e) {
+	      e.stopPropagation();
+	      if (!this.isFullPage) {
+	        addClass(this.player.el, ['video-wrapper-fullpage']);
+	        this.iconBox.removeChild(this.icon);
+	        this.icon = createSvg(fullPageExitPath, '0 0 1024 1024');
+	        this.iconBox.appendChild(this.icon);
+	      } else {
+	        removeClass(this.player.el, ['video-wrapper-fullpage']);
+	        this.iconBox.removeChild(this.icon);
+	        this.icon = createSvg(fullPagePath, '0 0 1024 1024');
+	        this.iconBox.appendChild(this.icon);
+	      }
+	      this.isFullPage = !this.isFullPage;
+	    }
+	  }]);
+	  return FullPage;
+	}(Options);
+
+	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var PicInPic = /*#__PURE__*/function (_Options) {
+	  _inherits(PicInPic, _Options);
+	  var _super = _createSuper$i(PicInPic);
+	  // el: div.video-picInpic.video-controller
+	  function PicInPic(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, PicInPic);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'PicInPic');
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(PicInPic, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-picInpic', 'video-controller']);
+	      this.icon = createSvg(picInPicPath, '0 0 1024 1024');
+	      this.iconBox.appendChild(this.icon);
+	      this.hideBox.innerText = '画中画';
+	      this.hideBox.style.fontSize = '13px';
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      this.onClick = this.onClick.bind(this);
+	      if (this.player.env === 'Mobile') {
+	        wrap(this.el).addEventListener('singleTap', this.onClick);
+	      } else {
+	        this.el.onclick = this.onClick;
+	      }
+	    }
+	  }, {
+	    key: "onClick",
+	    value: function onClick(e) {
+	      e.stopPropagation();
+	      // document.pictureInPictureElement: 当前画中画的元素
+	      if (document.pictureInPictureElement) {
+	        // 当前存在画中画的元素，则退出画中画
+	        document.exitPictureInPicture();
+	      } else {
+	        // 当前不存在画中画的元素，则开启画中画
+	        this.player.video.requestPictureInPicture(); // 返回 Promise，里面是 pipWindow
+	      }
+	    }
+	  }]);
+	  return PicInPic;
+	}(Options);
+
+	var fails$8 = fails$x;
+	var wellKnownSymbol$4 = wellKnownSymbol$q;
 	var DESCRIPTORS$5 = descriptors;
 	var IS_PURE$1 = isPure;
 
-	var ITERATOR$3 = wellKnownSymbol$6('iterator');
+	var ITERATOR$2 = wellKnownSymbol$4('iterator');
 
-	var urlConstructorDetection = !fails$9(function () {
+	var urlConstructorDetection = !fails$8(function () {
 	  // eslint-disable-next-line unicorn/relative-url-style -- required for testing
 	  var url = new URL('b?a=1&b=2&c=3', 'http://a');
 	  var searchParams = url.searchParams;
@@ -6176,7 +6808,7 @@
 	    || url.href !== 'http://a/c%20d?a=1&c=3'
 	    || searchParams.get('c') !== '3'
 	    || String(new URLSearchParams('?a=1')) !== 'a=1'
-	    || !searchParams[ITERATOR$3]
+	    || !searchParams[ITERATOR$2]
 	    // throws in Edge
 	    || new URL('https://a@b').username !== 'a'
 	    || new URLSearchParams(new URLSearchParams('a=b')).get('a') !== 'b'
@@ -6190,8 +6822,65 @@
 	    || new URL('http://x', undefined).host !== 'x';
 	});
 
+	var DESCRIPTORS$4 = descriptors;
+	var uncurryThis$6 = functionUncurryThis;
+	var call$7 = functionCall;
+	var fails$7 = fails$x;
+	var objectKeys = objectKeys$3;
+	var getOwnPropertySymbolsModule$1 = objectGetOwnPropertySymbols;
+	var propertyIsEnumerableModule = objectPropertyIsEnumerable;
+	var toObject$1 = toObject$a;
+	var IndexedObject = indexedObject;
+
+	// eslint-disable-next-line es/no-object-assign -- safe
+	var $assign = Object.assign;
+	// eslint-disable-next-line es/no-object-defineproperty -- required for testing
+	var defineProperty = Object.defineProperty;
+	var concat$1 = uncurryThis$6([].concat);
+
+	// `Object.assign` method
+	// https://tc39.es/ecma262/#sec-object.assign
+	var objectAssign = !$assign || fails$7(function () {
+	  // should have correct order of operations (Edge bug)
+	  if (DESCRIPTORS$4 && $assign({ b: 1 }, $assign(defineProperty({}, 'a', {
+	    enumerable: true,
+	    get: function () {
+	      defineProperty(this, 'b', {
+	        value: 3,
+	        enumerable: false
+	      });
+	    }
+	  }), { b: 2 })).b !== 1) return true;
+	  // should work with symbols and should have deterministic property order (V8 bug)
+	  var A = {};
+	  var B = {};
+	  // eslint-disable-next-line es/no-symbol -- safe
+	  var symbol = Symbol();
+	  var alphabet = 'abcdefghijklmnopqrst';
+	  A[symbol] = 7;
+	  alphabet.split('').forEach(function (chr) { B[chr] = chr; });
+	  return $assign({}, A)[symbol] != 7 || objectKeys($assign({}, B)).join('') != alphabet;
+	}) ? function assign(target, source) { // eslint-disable-line no-unused-vars -- required for `.length`
+	  var T = toObject$1(target);
+	  var argumentsLength = arguments.length;
+	  var index = 1;
+	  var getOwnPropertySymbols = getOwnPropertySymbolsModule$1.f;
+	  var propertyIsEnumerable = propertyIsEnumerableModule.f;
+	  while (argumentsLength > index) {
+	    var S = IndexedObject(arguments[index++]);
+	    var keys = getOwnPropertySymbols ? concat$1(objectKeys(S), getOwnPropertySymbols(S)) : objectKeys(S);
+	    var length = keys.length;
+	    var j = 0;
+	    var key;
+	    while (length > j) {
+	      key = keys[j++];
+	      if (!DESCRIPTORS$4 || call$7(propertyIsEnumerable, S, key)) T[key] = S[key];
+	    }
+	  } return T;
+	} : $assign;
+
 	// based on https://github.com/bestiejs/punycode.js/blob/master/punycode.js
-	var uncurryThis$8 = functionUncurryThis;
+	var uncurryThis$5 = functionUncurryThis;
 
 	var maxInt = 2147483647; // aka. 0x7FFFFFFF or 2^31-1
 	var base = 36;
@@ -6208,15 +6897,15 @@
 	var baseMinusTMin = base - tMin;
 
 	var $RangeError = RangeError;
-	var exec$2 = uncurryThis$8(regexSeparators.exec);
+	var exec$1 = uncurryThis$5(regexSeparators.exec);
 	var floor$2 = Math.floor;
 	var fromCharCode = String.fromCharCode;
-	var charCodeAt = uncurryThis$8(''.charCodeAt);
-	var join$2 = uncurryThis$8([].join);
-	var push$3 = uncurryThis$8([].push);
-	var replace$4 = uncurryThis$8(''.replace);
-	var split$2 = uncurryThis$8(''.split);
-	var toLowerCase$1 = uncurryThis$8(''.toLowerCase);
+	var charCodeAt = uncurryThis$5(''.charCodeAt);
+	var join$2 = uncurryThis$5([].join);
+	var push$3 = uncurryThis$5([].push);
+	var replace$3 = uncurryThis$5(''.replace);
+	var split$2 = uncurryThis$5(''.split);
+	var toLowerCase$1 = uncurryThis$5(''.toLowerCase);
 
 	/**
 	 * Creates an array containing the numeric code points of each Unicode
@@ -6362,19 +7051,19 @@
 
 	var stringPunycodeToAscii = function (input) {
 	  var encoded = [];
-	  var labels = split$2(replace$4(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
+	  var labels = split$2(replace$3(toLowerCase$1(input), regexSeparators, '\u002E'), '.');
 	  var i, label;
 	  for (i = 0; i < labels.length; i++) {
 	    label = labels[i];
-	    push$3(encoded, exec$2(regexNonASCII, label) ? 'xn--' + encode(label) : label);
+	    push$3(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode(label) : label);
 	  }
 	  return join$2(encoded, '.');
 	};
 
-	var $TypeError$4 = TypeError;
+	var $TypeError$1 = TypeError;
 
 	var validateArgumentsLength$4 = function (passed, required) {
-	  if (passed < required) throw $TypeError$4('Not enough arguments');
+	  if (passed < required) throw $TypeError$1('Not enough arguments');
 	  return passed;
 	};
 
@@ -6425,11 +7114,11 @@
 
 	// TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-	var $$l = _export;
-	var global$9 = global$o;
+	var $$i = _export;
+	var global$8 = global$o;
 	var call$6 = functionCall;
-	var uncurryThis$7 = functionUncurryThis;
-	var DESCRIPTORS$4 = descriptors;
+	var uncurryThis$4 = functionUncurryThis;
+	var DESCRIPTORS$3 = descriptors;
 	var USE_NATIVE_URL$2 = urlConstructorDetection;
 	var defineBuiltIn$2 = defineBuiltIn$8;
 	var defineBuiltInAccessor$1 = defineBuiltInAccessor$5;
@@ -6441,31 +7130,31 @@
 	var isCallable$4 = isCallable$p;
 	var hasOwn$3 = hasOwnProperty_1;
 	var bind$4 = functionBindContext;
-	var classof$2 = classof$d;
+	var classof$1 = classof$d;
 	var anObject$3 = anObject$f;
-	var isObject$4 = isObject$j;
+	var isObject$3 = isObject$j;
 	var $toString$1 = toString$b;
 	var create$1 = objectCreate;
 	var createPropertyDescriptor$2 = createPropertyDescriptor$8;
 	var getIterator = getIterator$3;
 	var getIteratorMethod = getIteratorMethod$a;
 	var validateArgumentsLength$3 = validateArgumentsLength$4;
-	var wellKnownSymbol$5 = wellKnownSymbol$q;
+	var wellKnownSymbol$3 = wellKnownSymbol$q;
 	var arraySort = arraySort$1;
 
-	var ITERATOR$2 = wellKnownSymbol$5('iterator');
+	var ITERATOR$1 = wellKnownSymbol$3('iterator');
 	var URL_SEARCH_PARAMS = 'URLSearchParams';
 	var URL_SEARCH_PARAMS_ITERATOR = URL_SEARCH_PARAMS + 'Iterator';
 	var setInternalState$2 = InternalStateModule$2.set;
 	var getInternalParamsState = InternalStateModule$2.getterFor(URL_SEARCH_PARAMS);
 	var getInternalIteratorState = InternalStateModule$2.getterFor(URL_SEARCH_PARAMS_ITERATOR);
 	// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-	var getOwnPropertyDescriptor$9 = Object.getOwnPropertyDescriptor;
+	var getOwnPropertyDescriptor$8 = Object.getOwnPropertyDescriptor;
 
 	// Avoid NodeJS experimental warning
 	var safeGetBuiltIn = function (name) {
-	  if (!DESCRIPTORS$4) return global$9[name];
-	  var descriptor = getOwnPropertyDescriptor$9(global$9, name);
+	  if (!DESCRIPTORS$3) return global$8[name];
+	  var descriptor = getOwnPropertyDescriptor$8(global$8, name);
 	  return descriptor && descriptor.value;
 	};
 
@@ -6474,18 +7163,18 @@
 	var Headers = safeGetBuiltIn('Headers');
 	var RequestPrototype = NativeRequest && NativeRequest.prototype;
 	var HeadersPrototype = Headers && Headers.prototype;
-	var RegExp$1 = global$9.RegExp;
-	var TypeError$3 = global$9.TypeError;
-	var decodeURIComponent = global$9.decodeURIComponent;
-	var encodeURIComponent$1 = global$9.encodeURIComponent;
-	var charAt$2 = uncurryThis$7(''.charAt);
-	var join$1 = uncurryThis$7([].join);
-	var push$2 = uncurryThis$7([].push);
-	var replace$3 = uncurryThis$7(''.replace);
-	var shift$1 = uncurryThis$7([].shift);
-	var splice$7 = uncurryThis$7([].splice);
-	var split$1 = uncurryThis$7(''.split);
-	var stringSlice$1 = uncurryThis$7(''.slice);
+	var RegExp$1 = global$8.RegExp;
+	var TypeError$3 = global$8.TypeError;
+	var decodeURIComponent = global$8.decodeURIComponent;
+	var encodeURIComponent$1 = global$8.encodeURIComponent;
+	var charAt$2 = uncurryThis$4(''.charAt);
+	var join$1 = uncurryThis$4([].join);
+	var push$2 = uncurryThis$4([].push);
+	var replace$2 = uncurryThis$4(''.replace);
+	var shift$1 = uncurryThis$4([].shift);
+	var splice = uncurryThis$4([].splice);
+	var split$1 = uncurryThis$4(''.split);
+	var stringSlice$1 = uncurryThis$4(''.slice);
 
 	var plus = /\+/g;
 	var sequences = Array(4);
@@ -6503,13 +7192,13 @@
 	};
 
 	var deserialize = function (it) {
-	  var result = replace$3(it, plus, ' ');
+	  var result = replace$2(it, plus, ' ');
 	  var bytes = 4;
 	  try {
 	    return decodeURIComponent(result);
 	  } catch (error) {
 	    while (bytes) {
-	      result = replace$3(result, percentSequence(bytes--), percentDecode);
+	      result = replace$2(result, percentSequence(bytes--), percentDecode);
 	    }
 	    return result;
 	  }
@@ -6531,7 +7220,7 @@
 	};
 
 	var serialize = function (it) {
-	  return replace$3(encodeURIComponent$1(it), find, replacer);
+	  return replace$2(encodeURIComponent$1(it), find, replacer);
 	};
 
 	var URLSearchParamsIterator = createIteratorConstructor(function Iterator(params, kind) {
@@ -6555,7 +7244,7 @@
 	  this.url = null;
 
 	  if (init !== undefined) {
-	    if (isObject$4(init)) this.parseObject(init);
+	    if (isObject$3(init)) this.parseObject(init);
 	    else this.parseQuery(typeof init == 'string' ? charAt$2(init, 0) === '?' ? stringSlice$1(init, 1) : init : $toString$1(init));
 	  }
 	};
@@ -6629,7 +7318,7 @@
 	  anInstance$2(this, URLSearchParamsPrototype);
 	  var init = arguments.length > 0 ? arguments[0] : undefined;
 	  var state = setInternalState$2(this, new URLSearchParamsState(init));
-	  if (!DESCRIPTORS$4) this.length = state.entries.length;
+	  if (!DESCRIPTORS$3) this.length = state.entries.length;
 	};
 
 	var URLSearchParamsPrototype = URLSearchParamsConstructor.prototype;
@@ -6641,7 +7330,7 @@
 	    validateArgumentsLength$3(arguments.length, 2);
 	    var state = getInternalParamsState(this);
 	    push$2(state.entries, { key: $toString$1(name), value: $toString$1(value) });
-	    if (!DESCRIPTORS$4) this.length++;
+	    if (!DESCRIPTORS$3) this.length++;
 	    state.updateURL();
 	  },
 	  // `URLSearchParams.prototype.delete` method
@@ -6653,10 +7342,10 @@
 	    var key = $toString$1(name);
 	    var index = 0;
 	    while (index < entries.length) {
-	      if (entries[index].key === key) splice$7(entries, index, 1);
+	      if (entries[index].key === key) splice(entries, index, 1);
 	      else index++;
 	    }
-	    if (!DESCRIPTORS$4) this.length = entries.length;
+	    if (!DESCRIPTORS$3) this.length = entries.length;
 	    state.updateURL();
 	  },
 	  // `URLSearchParams.prototype.get` method
@@ -6710,7 +7399,7 @@
 	    for (; index < entries.length; index++) {
 	      entry = entries[index];
 	      if (entry.key === key) {
-	        if (found) splice$7(entries, index--, 1);
+	        if (found) splice(entries, index--, 1);
 	        else {
 	          found = true;
 	          entry.value = val;
@@ -6718,7 +7407,7 @@
 	      }
 	    }
 	    if (!found) push$2(entries, { key: key, value: val });
-	    if (!DESCRIPTORS$4) this.length = entries.length;
+	    if (!DESCRIPTORS$3) this.length = entries.length;
 	    state.updateURL();
 	  },
 	  // `URLSearchParams.prototype.sort` method
@@ -6756,7 +7445,7 @@
 	}, { enumerable: true });
 
 	// `URLSearchParams.prototype[@@iterator]` method
-	defineBuiltIn$2(URLSearchParamsPrototype, ITERATOR$2, URLSearchParamsPrototype.entries, { name: 'entries' });
+	defineBuiltIn$2(URLSearchParamsPrototype, ITERATOR$1, URLSearchParamsPrototype.entries, { name: 'entries' });
 
 	// `URLSearchParams.prototype.toString` method
 	// https://url.spec.whatwg.org/#urlsearchparams-stringification-behavior
@@ -6766,7 +7455,7 @@
 
 	// `URLSearchParams.prototype.size` getter
 	// https://github.com/whatwg/url/pull/734
-	if (DESCRIPTORS$4) defineBuiltInAccessor$1(URLSearchParamsPrototype, 'size', {
+	if (DESCRIPTORS$3) defineBuiltInAccessor$1(URLSearchParamsPrototype, 'size', {
 	  get: function size() {
 	    return getInternalParamsState(this).entries.length;
 	  },
@@ -6776,20 +7465,20 @@
 
 	setToStringTag$2(URLSearchParamsConstructor, URL_SEARCH_PARAMS);
 
-	$$l({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
+	$$i({ global: true, constructor: true, forced: !USE_NATIVE_URL$2 }, {
 	  URLSearchParams: URLSearchParamsConstructor
 	});
 
 	// Wrap `fetch` and `Request` for correct work with polyfilled `URLSearchParams`
 	if (!USE_NATIVE_URL$2 && isCallable$4(Headers)) {
-	  var headersHas = uncurryThis$7(HeadersPrototype.has);
-	  var headersSet = uncurryThis$7(HeadersPrototype.set);
+	  var headersHas = uncurryThis$4(HeadersPrototype.has);
+	  var headersSet = uncurryThis$4(HeadersPrototype.set);
 
 	  var wrapRequestOptions = function (init) {
-	    if (isObject$4(init)) {
+	    if (isObject$3(init)) {
 	      var body = init.body;
 	      var headers;
-	      if (classof$2(body) === URL_SEARCH_PARAMS) {
+	      if (classof$1(body) === URL_SEARCH_PARAMS) {
 	        headers = init.headers ? new Headers(init.headers) : new Headers();
 	        if (!headersHas(headers, 'content-type')) {
 	          headersSet(headers, 'content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
@@ -6803,7 +7492,7 @@
 	  };
 
 	  if (isCallable$4(nativeFetch)) {
-	    $$l({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
+	    $$i({ global: true, enumerable: true, dontCallGetSet: true, forced: true }, {
 	      fetch: function fetch(input /* , init */) {
 	        return nativeFetch(input, arguments.length > 1 ? wrapRequestOptions(arguments[1]) : {});
 	      }
@@ -6819,7 +7508,7 @@
 	    RequestPrototype.constructor = RequestConstructor;
 	    RequestConstructor.prototype = RequestPrototype;
 
-	    $$l({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
+	    $$i({ global: true, constructor: true, dontCallGetSet: true, forced: true }, {
 	      Request: RequestConstructor
 	    });
 	  }
@@ -6832,17 +7521,17 @@
 
 	// TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 
-	var $$k = _export;
-	var DESCRIPTORS$3 = descriptors;
+	var $$h = _export;
+	var DESCRIPTORS$2 = descriptors;
 	var USE_NATIVE_URL$1 = urlConstructorDetection;
-	var global$8 = global$o;
+	var global$7 = global$o;
 	var bind$3 = functionBindContext;
-	var uncurryThis$6 = functionUncurryThis;
+	var uncurryThis$3 = functionUncurryThis;
 	var defineBuiltIn$1 = defineBuiltIn$8;
 	var defineBuiltInAccessor = defineBuiltInAccessor$5;
 	var anInstance$1 = anInstance$5;
 	var hasOwn$2 = hasOwnProperty_1;
-	var assign = objectAssign;
+	var assign$7 = objectAssign;
 	var arrayFrom = arrayFrom$1;
 	var arraySlice$1 = arraySliceSimple;
 	var codeAt = stringMultibyte.codeAt;
@@ -6858,23 +7547,23 @@
 	var URLSearchParams$1 = URLSearchParamsModule.URLSearchParams;
 	var getInternalSearchParamsState = URLSearchParamsModule.getState;
 
-	var NativeURL = global$8.URL;
-	var TypeError$2 = global$8.TypeError;
-	var parseInt$1 = global$8.parseInt;
+	var NativeURL = global$7.URL;
+	var TypeError$2 = global$7.TypeError;
+	var parseInt$1 = global$7.parseInt;
 	var floor = Math.floor;
 	var pow = Math.pow;
-	var charAt$1 = uncurryThis$6(''.charAt);
-	var exec$1 = uncurryThis$6(/./.exec);
-	var join = uncurryThis$6([].join);
-	var numberToString = uncurryThis$6(1.0.toString);
-	var pop = uncurryThis$6([].pop);
-	var push$1 = uncurryThis$6([].push);
-	var replace$2 = uncurryThis$6(''.replace);
-	var shift = uncurryThis$6([].shift);
-	var split = uncurryThis$6(''.split);
-	var stringSlice = uncurryThis$6(''.slice);
-	var toLowerCase = uncurryThis$6(''.toLowerCase);
-	var unshift = uncurryThis$6([].unshift);
+	var charAt$1 = uncurryThis$3(''.charAt);
+	var exec = uncurryThis$3(/./.exec);
+	var join = uncurryThis$3([].join);
+	var numberToString = uncurryThis$3(1.0.toString);
+	var pop = uncurryThis$3([].pop);
+	var push$1 = uncurryThis$3([].push);
+	var replace$1 = uncurryThis$3(''.replace);
+	var shift = uncurryThis$3([].shift);
+	var split = uncurryThis$3(''.split);
+	var stringSlice = uncurryThis$3(''.slice);
+	var toLowerCase = uncurryThis$3(''.toLowerCase);
+	var unshift = uncurryThis$3([].unshift);
 
 	var INVALID_AUTHORITY = 'Invalid authority';
 	var INVALID_SCHEME = 'Invalid scheme';
@@ -6913,13 +7602,13 @@
 	    if (part == '') return input;
 	    radix = 10;
 	    if (part.length > 1 && charAt$1(part, 0) == '0') {
-	      radix = exec$1(HEX_START, part) ? 16 : 8;
+	      radix = exec(HEX_START, part) ? 16 : 8;
 	      part = stringSlice(part, radix == 8 ? 1 : 2);
 	    }
 	    if (part === '') {
 	      number = 0;
 	    } else {
-	      if (!exec$1(radix == 10 ? DEC : radix == 8 ? OCT : HEX, part)) return input;
+	      if (!exec(radix == 10 ? DEC : radix == 8 ? OCT : HEX, part)) return input;
 	      number = parseInt$1(part, radix);
 	    }
 	    push$1(numbers, number);
@@ -6966,7 +7655,7 @@
 	      continue;
 	    }
 	    value = length = 0;
-	    while (length < 4 && exec$1(HEX, chr())) {
+	    while (length < 4 && exec(HEX, chr())) {
 	      value = value * 16 + parseInt$1(chr(), 16);
 	      pointer++;
 	      length++;
@@ -6982,8 +7671,8 @@
 	          if (chr() == '.' && numbersSeen < 4) pointer++;
 	          else return;
 	        }
-	        if (!exec$1(DIGIT, chr())) return;
-	        while (exec$1(DIGIT, chr())) {
+	        if (!exec(DIGIT, chr())) return;
+	        while (exec(DIGIT, chr())) {
 	          number = parseInt$1(chr(), 10);
 	          if (ipv4Piece === null) ipv4Piece = number;
 	          else if (ipv4Piece == 0) return;
@@ -7071,13 +7760,13 @@
 	};
 
 	var C0ControlPercentEncodeSet = {};
-	var fragmentPercentEncodeSet = assign({}, C0ControlPercentEncodeSet, {
+	var fragmentPercentEncodeSet = assign$7({}, C0ControlPercentEncodeSet, {
 	  ' ': 1, '"': 1, '<': 1, '>': 1, '`': 1
 	});
-	var pathPercentEncodeSet = assign({}, fragmentPercentEncodeSet, {
+	var pathPercentEncodeSet = assign$7({}, fragmentPercentEncodeSet, {
 	  '#': 1, '?': 1, '{': 1, '}': 1
 	});
-	var userinfoPercentEncodeSet = assign({}, pathPercentEncodeSet, {
+	var userinfoPercentEncodeSet = assign$7({}, pathPercentEncodeSet, {
 	  '/': 1, ':': 1, ';': 1, '=': 1, '@': 1, '[': 1, '\\': 1, ']': 1, '^': 1, '|': 1
 	});
 
@@ -7099,7 +7788,7 @@
 	// https://url.spec.whatwg.org/#windows-drive-letter
 	var isWindowsDriveLetter = function (string, normalized) {
 	  var second;
-	  return string.length == 2 && exec$1(ALPHA, charAt$1(string, 0))
+	  return string.length == 2 && exec(ALPHA, charAt$1(string, 0))
 	    && ((second = charAt$1(string, 1)) == ':' || (!normalized && second == '|'));
 	};
 
@@ -7189,11 +7878,11 @@
 	      url.query = null;
 	      url.fragment = null;
 	      url.cannotBeABaseURL = false;
-	      input = replace$2(input, LEADING_C0_CONTROL_OR_SPACE, '');
-	      input = replace$2(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
+	      input = replace$1(input, LEADING_C0_CONTROL_OR_SPACE, '');
+	      input = replace$1(input, TRAILING_C0_CONTROL_OR_SPACE, '$1');
 	    }
 
-	    input = replace$2(input, TAB_AND_NEW_LINE, '');
+	    input = replace$1(input, TAB_AND_NEW_LINE, '');
 
 	    codePoints = arrayFrom(input);
 
@@ -7201,7 +7890,7 @@
 	      chr = codePoints[pointer];
 	      switch (state) {
 	        case SCHEME_START:
-	          if (chr && exec$1(ALPHA, chr)) {
+	          if (chr && exec(ALPHA, chr)) {
 	            buffer += toLowerCase(chr);
 	            state = SCHEME;
 	          } else if (!stateOverride) {
@@ -7211,7 +7900,7 @@
 	          break;
 
 	        case SCHEME:
-	          if (chr && (exec$1(ALPHANUMERIC, chr) || chr == '+' || chr == '-' || chr == '.')) {
+	          if (chr && (exec(ALPHANUMERIC, chr) || chr == '+' || chr == '-' || chr == '.')) {
 	            buffer += toLowerCase(chr);
 	          } else if (chr == ':') {
 	            if (stateOverride && (
@@ -7402,7 +8091,7 @@
 	          } break;
 
 	        case PORT:
-	          if (exec$1(DIGIT, chr)) {
+	          if (exec(DIGIT, chr)) {
 	            buffer += chr;
 	          } else if (
 	            chr == EOF || chr == '/' || chr == '?' || chr == '#' ||
@@ -7578,7 +8267,7 @@
 	      this.host = result;
 	    // opaque host
 	    } else if (!this.isSpecial()) {
-	      if (exec$1(FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT, input)) return INVALID_HOST;
+	      if (exec(FORBIDDEN_HOST_CODE_POINT_EXCLUDING_PERCENT, input)) return INVALID_HOST;
 	      result = '';
 	      codePoints = arrayFrom(input);
 	      for (index = 0; index < codePoints.length; index++) {
@@ -7587,7 +8276,7 @@
 	      this.host = result;
 	    } else {
 	      input = toASCII(input);
-	      if (exec$1(FORBIDDEN_HOST_CODE_POINT, input)) return INVALID_HOST;
+	      if (exec(FORBIDDEN_HOST_CODE_POINT, input)) return INVALID_HOST;
 	      result = parseIPv4(input);
 	      if (result === null) return INVALID_HOST;
 	      this.host = result;
@@ -7775,7 +8464,7 @@
 	  var that = anInstance$1(this, URLPrototype);
 	  var base = validateArgumentsLength$2(arguments.length, 1) > 1 ? arguments[1] : undefined;
 	  var state = setInternalState$1(that, new URLState(url, false, base));
-	  if (!DESCRIPTORS$3) {
+	  if (!DESCRIPTORS$2) {
 	    that.href = state.serialize();
 	    that.origin = state.getOrigin();
 	    that.protocol = state.getProtocol();
@@ -7806,7 +8495,7 @@
 	  };
 	};
 
-	if (DESCRIPTORS$3) {
+	if (DESCRIPTORS$2) {
 	  // `URL.prototype.href` accessors pair
 	  // https://url.spec.whatwg.org/#dom-url-href
 	  defineBuiltInAccessor(URLPrototype, 'href', accessorDescriptor('serialize', 'setHref'));
@@ -7870,32 +8559,32 @@
 
 	setToStringTag$1(URLConstructor, 'URL');
 
-	$$k({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$3 }, {
+	$$h({ global: true, constructor: true, forced: !USE_NATIVE_URL$1, sham: !DESCRIPTORS$2 }, {
 	  URL: URLConstructor
 	});
 
-	var $$j = _export;
+	var $$g = _export;
 	var getBuiltIn$4 = getBuiltIn$h;
-	var fails$8 = fails$x;
+	var fails$6 = fails$x;
 	var validateArgumentsLength$1 = validateArgumentsLength$4;
-	var toString$5 = toString$b;
+	var toString$2 = toString$b;
 	var USE_NATIVE_URL = urlConstructorDetection;
 
 	var URL$1 = getBuiltIn$4('URL');
 
 	// https://github.com/nodejs/node/issues/47505
 	// https://github.com/denoland/deno/issues/18893
-	var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$8(function () {
+	var THROWS_WITHOUT_ARGUMENTS = USE_NATIVE_URL && fails$6(function () {
 	  URL$1.canParse();
 	});
 
 	// `URL.canParse` method
 	// https://url.spec.whatwg.org/#dom-url-canparse
-	$$j({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
+	$$g({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
 	  canParse: function canParse(url) {
 	    var length = validateArgumentsLength$1(arguments.length, 1);
-	    var urlString = toString$5(url);
-	    var base = length < 2 || arguments[1] === undefined ? undefined : toString$5(arguments[1]);
+	    var urlString = toString$2(url);
+	    var base = length < 2 || arguments[1] === undefined ? undefined : toString$2(arguments[1]);
 	    try {
 	      return !!new URL$1(urlString, base);
 	    } catch (error) {
@@ -7904,21 +8593,21 @@
 	  }
 	});
 
-	var path$8 = path$n;
+	var path$7 = path$m;
 
-	var url$5 = path$8.URL;
+	var url$5 = path$7.URL;
 
-	var parent$w = url$5;
+	var parent$n = url$5;
 
-	var url$4 = parent$w;
+	var url$4 = parent$n;
 
-	var parent$v = url$4;
+	var parent$m = url$4;
 
-	var url$3 = parent$v;
+	var url$3 = parent$m;
 
-	var parent$u = url$3;
+	var parent$l = url$3;
 
-	var url$2 = parent$u;
+	var url$2 = parent$l;
 
 	var url$1 = url$2;
 
@@ -7926,214 +8615,11 @@
 
 	var _URL = /*@__PURE__*/getDefaultExportFromCjs(url);
 
-	var DESCRIPTORS$2 = descriptors;
-	var isArray = isArray$c;
-
-	var $TypeError$3 = TypeError;
-	// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-	var getOwnPropertyDescriptor$8 = Object.getOwnPropertyDescriptor;
-
-	// Safari < 13 does not throw an error in this case
-	var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS$2 && !function () {
-	  // makes no sense without proper strict mode support
-	  if (this !== undefined) return true;
-	  try {
-	    // eslint-disable-next-line es/no-object-defineproperty -- safe
-	    Object.defineProperty([], 'length', { writable: false }).length = 1;
-	  } catch (error) {
-	    return error instanceof TypeError;
-	  }
-	}();
-
-	var arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
-	  if (isArray(O) && !getOwnPropertyDescriptor$8(O, 'length').writable) {
-	    throw $TypeError$3('Cannot set read only .length');
-	  } return O.length = length;
-	} : function (O, length) {
-	  return O.length = length;
-	};
-
-	var tryToString = tryToString$7;
-
-	var $TypeError$2 = TypeError;
-
-	var deletePropertyOrThrow$1 = function (O, P) {
-	  if (!delete O[P]) throw $TypeError$2('Cannot delete property ' + tryToString(P) + ' of ' + tryToString(O));
-	};
-
-	var $$i = _export;
-	var toObject$1 = toObject$a;
-	var toAbsoluteIndex = toAbsoluteIndex$4;
-	var toIntegerOrInfinity = toIntegerOrInfinity$4;
-	var lengthOfArrayLike = lengthOfArrayLike$8;
-	var setArrayLength = arraySetLength;
-	var doesNotExceedSafeInteger = doesNotExceedSafeInteger$2;
-	var arraySpeciesCreate = arraySpeciesCreate$3;
-	var createProperty$1 = createProperty$6;
-	var deletePropertyOrThrow = deletePropertyOrThrow$1;
-	var arrayMethodHasSpeciesSupport = arrayMethodHasSpeciesSupport$4;
-
-	var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('splice');
-
-	var max = Math.max;
-	var min = Math.min;
-
-	// `Array.prototype.splice` method
-	// https://tc39.es/ecma262/#sec-array.prototype.splice
-	// with adding support of @@species
-	$$i({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
-	  splice: function splice(start, deleteCount /* , ...items */) {
-	    var O = toObject$1(this);
-	    var len = lengthOfArrayLike(O);
-	    var actualStart = toAbsoluteIndex(start, len);
-	    var argumentsLength = arguments.length;
-	    var insertCount, actualDeleteCount, A, k, from, to;
-	    if (argumentsLength === 0) {
-	      insertCount = actualDeleteCount = 0;
-	    } else if (argumentsLength === 1) {
-	      insertCount = 0;
-	      actualDeleteCount = len - actualStart;
-	    } else {
-	      insertCount = argumentsLength - 2;
-	      actualDeleteCount = min(max(toIntegerOrInfinity(deleteCount), 0), len - actualStart);
-	    }
-	    doesNotExceedSafeInteger(len + insertCount - actualDeleteCount);
-	    A = arraySpeciesCreate(O, actualDeleteCount);
-	    for (k = 0; k < actualDeleteCount; k++) {
-	      from = actualStart + k;
-	      if (from in O) createProperty$1(A, k, O[from]);
-	    }
-	    A.length = actualDeleteCount;
-	    if (insertCount < actualDeleteCount) {
-	      for (k = actualStart; k < len - actualDeleteCount; k++) {
-	        from = k + actualDeleteCount;
-	        to = k + insertCount;
-	        if (from in O) O[to] = O[from];
-	        else deletePropertyOrThrow(O, to);
-	      }
-	      for (k = len; k > len - actualDeleteCount + insertCount; k--) deletePropertyOrThrow(O, k - 1);
-	    } else if (insertCount > actualDeleteCount) {
-	      for (k = len - actualDeleteCount; k > actualStart; k--) {
-	        from = k + actualDeleteCount - 1;
-	        to = k + insertCount - 1;
-	        if (from in O) O[to] = O[from];
-	        else deletePropertyOrThrow(O, to);
-	      }
-	    }
-	    for (k = 0; k < insertCount; k++) {
-	      O[k + actualStart] = arguments[k + 2];
-	    }
-	    setArrayLength(O, len - actualDeleteCount + insertCount);
-	    return A;
-	  }
-	});
-
-	var entryVirtual$2 = entryVirtual$9;
-
-	var splice$6 = entryVirtual$2('Array').splice;
-
-	var isPrototypeOf$2 = objectIsPrototypeOf;
-	var method = splice$6;
-
-	var ArrayPrototype$1 = Array.prototype;
-
-	var splice$5 = function (it) {
-	  var own = it.splice;
-	  return it === ArrayPrototype$1 || (isPrototypeOf$2(ArrayPrototype$1, it) && own === ArrayPrototype$1.splice) ? method : own;
-	};
-
-	var parent$t = splice$5;
-
-	var splice$4 = parent$t;
-
-	var parent$s = splice$4;
-
-	var splice$3 = parent$s;
-
-	var parent$r = splice$3;
-
-	var splice$2 = parent$r;
-
-	var splice$1 = splice$2;
-
-	var splice = splice$1;
-
-	var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice);
-
-	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Toast = /*#__PURE__*/function (_Component) {
-	  _inherits(Toast, _Component);
-	  var _super = _createSuper$l(Toast);
-	  function Toast(player, dom, props) {
-	    var _this;
-	    _classCallCheck(this, Toast);
-	    _this = _super.call(this, null, 'div', props, null);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Toast');
-	    // el: div.video-toast-wrapper.video-toast-animate
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "dom", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _this.player = player;
-	    _this.props = props;
-	    _this.dom = dom || null;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Toast, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      var _this2 = this;
-	      if (this.dom) {
-	        this.el.appendChild(this.dom);
-	      }
-	      addClass(this.el, ['video-toast-wrapper']);
-	      this.player.el.appendChild(this.el);
-	      window.setTimeout(function () {
-	        addClass(_this2.el, ['video-toast-animate']);
-	        var start = 30;
-	        for (var i in Toast.ToastQueue) {
-	          start += Toast.ToastQueue[i].el.clientHeight + 10;
-	        }
-	        _this2.el.style.transform = "translateY(".concat(start, "px)");
-	        Toast.ToastQueue.push(_this2);
-	      });
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {}
-	  }, {
-	    key: "dispose",
-	    value: function dispose() {
-	      var _context, _context2;
-	      var index = _indexOfInstanceProperty(_context = Toast.ToastQueue).call(_context, this);
-	      _spliceInstanceProperty(_context2 = Toast.ToastQueue).call(_context2, index, 1);
-	      this.el.parentElement.removeChild(this.el);
-	      for (var i = index; i < Toast.ToastQueue.length; i++) {
-	        var toast = Toast.ToastQueue[i];
-	        if (i === index) {
-	          toast.el.style.transform = "translateY(".concat(10 + this.el.clientHeight, "px)");
-	        } else {
-	          toast.el.style.transform = "translateY(".concat(10 + Toast.ToastQueue[i - 1].el.clientHeight, "px)");
-	        }
-	      }
-	    }
-	  }]);
-	  return Toast;
-	}(Component);
-	_defineProperty(Toast, "ToastQueue", []);
-
-	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ScreenShot = /*#__PURE__*/function (_Options) {
 	  _inherits(ScreenShot, _Options);
-	  var _super = _createSuper$k(ScreenShot);
+	  var _super = _createSuper$h(ScreenShot);
 	  function ScreenShot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, ScreenShot);
@@ -8210,8 +8696,8 @@
 	      } catch (_unused) {
 	        // todo
 	      }
-	      var dom = $$n('div.video-screenshot-toast');
-	      var span = $$n('span');
+	      var dom = $$M('div.video-screenshot-toast');
+	      var span = $$M('span');
 	      span.innerText = '截图成功!';
 	      var icon = this.confirmIcon.cloneNode(true);
 	      dom.appendChild(icon);
@@ -8226,522 +8712,11 @@
 	  return ScreenShot;
 	}(Options);
 
-	var SubsettingItem = /*#__PURE__*/function () {
-	  function SubsettingItem(player, leftIcon, leftText, rightTip, rightIcon) {
-	    _classCallCheck(this, SubsettingItem);
-	    _defineProperty(this, "el", void 0);
-	    // el: div.video-subsettings-item
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "leftArea", void 0);
-	    _defineProperty(this, "rightArea", void 0);
-	    _defineProperty(this, "leftIconBox", void 0);
-	    _defineProperty(this, "leftTextBox", void 0);
-	    _defineProperty(this, "rightTipBox", void 0);
-	    _defineProperty(this, "rightIcon", void 0);
-	    this.player = player;
-	    this.init();
-	    if (leftIcon) this.leftIconBox.appendChild(leftIcon);
-	    if (leftText) this.leftTextBox.innerText = leftText;
-	    if (rightTip) this.rightTipBox.innerText = rightTip;
-	    if (rightIcon) this.rightIcon.appendChild(rightIcon);
-	  }
-	  _createClass(SubsettingItem, [{
-	    key: "init",
-	    value: function init() {
-	      this.el = $$n('div.video-subsettings-item');
-	      this.leftArea = $$n('div.video-subsettings-itemleft');
-	      this.rightArea = $$n('div.video-subsettings-itemright');
-	      this.leftIconBox = $$n('div.video-subsettings-itemleft-icon');
-	      this.leftTextBox = $$n('div.video-subsettings-itemleft-text');
-	      this.rightTipBox = $$n('div.video-subsettings-itemright-tip');
-	      this.rightIcon = $$n('div.video-subsettings-itemright-icon');
-	      this.el.append(this.leftArea, this.rightArea);
-	      this.leftArea.append(this.leftIconBox, this.leftTextBox);
-	      this.rightArea.append(this.rightTipBox, this.rightIcon);
-	    }
-	  }]);
-	  return SubsettingItem;
-	}();
-
-	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var SubsettingsMain = /*#__PURE__*/function (_BaseEvent) {
-	  _inherits(SubsettingsMain, _BaseEvent);
-	  var _super = _createSuper$j(SubsettingsMain);
-	  function SubsettingsMain(player) {
-	    var _this;
-	    _classCallCheck(this, SubsettingsMain);
-	    _this = _super.call(this);
-	    _defineProperty(_assertThisInitialized(_this), "el", void 0);
-	    // el: div.video-subsettings-main
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", [{
-	      leftIcon: createSvg(playratePath, '0 0 1024 1024'),
-	      leftText: '播放速度',
-	      rightTip: '正常',
-	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024')
-	    }, {
-	      leftIcon: createSvgs([propotionPath$1, propotionPath$2], '0 0 1024 1024'),
-	      leftText: '画面比例',
-	      rightTip: '默认',
-	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024')
-	    }, {
-	      leftIcon: createSvg(flipPath, '0 0 1024 1024'),
-	      leftText: '画面翻转',
-	      rightTip: '正常',
-	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024')
-	    }, {
-	      leftIcon: createSvgs([subtitlePath$1, subtitlePath$2], '0 0 1024 1024'),
-	      leftText: '字幕设置',
-	      rightTip: '默认',
-	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024')
-	    }]);
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(SubsettingsMain, [{
-	    key: "init",
-	    value: function init() {
-	      this.el = $$n('div.video-subsettings-main');
-	      this.el.dataset.width = '200';
-	      this.initSubsettingsItem();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initSubsettingsItem",
-	    value: function initSubsettingsItem() {
-	      var _context,
-	        _this2 = this;
-	      _forEachInstanceProperty(_context = this.SubsettingsItem).call(_context, function (item) {
-	        var instance = new SubsettingItem(_this2.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
-	        _this2.el.appendChild(instance.el);
-	        item.instance = instance;
-	        instance.el.dataset.SubsettingsMainType = item.leftText;
-	      });
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _context2,
-	        _this3 = this;
-	      _forEachInstanceProperty(_context2 = this.SubsettingsItem).call(_context2, function (item, index) {
-	        item.instance.el.addEventListener('click', function (e) {
-	          e.stopPropagation();
-	          _this3.player.emit('MainSubsettingsItemClick', item, index);
-	        });
-	      });
-	      this.player.on('SubsettingsPlayrateClick', function (item, index) {
-	        var playrate = item.instance.el.dataset.SubsettingsPlayrate;
-	        if (playrate === '0') return;
-	        if (playrate === '1') {
-	          _this3.SubsettingsItem[0].instance.rightTipBox.innerText = '正常';
-	        } else {
-	          _this3.SubsettingsItem[0].instance.rightTipBox.innerText = playrate;
-	        }
-	      });
-	      this.player.on('SubsettingsSubtitleChange', function (item) {
-	        // this.SubsettingsItem[3].instance.rightTipBox.innerText = item.leftText
-	      });
-	    }
-	  }]);
-	  return SubsettingsMain;
-	}(BaseEvent);
-
-	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var SubsettingsPlayrate = /*#__PURE__*/function (_BaseEvent) {
-	  _inherits(SubsettingsPlayrate, _BaseEvent);
-	  var _super = _createSuper$i(SubsettingsPlayrate);
-	  function SubsettingsPlayrate(player) {
-	    var _this;
-	    _classCallCheck(this, SubsettingsPlayrate);
-	    _this = _super.call(this);
-	    _defineProperty(_assertThisInitialized(_this), "el", void 0);
-	    // el: div.video-subsettings-playrate
-	    _defineProperty(_assertThisInitialized(_this), "leadItem", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", [{
-	      leftIcon: createSvg(leftarrowPath, '0 0 1024 1024'),
-	      leftText: '播放速度'
-	    }, {
-	      leftText: '0.5'
-	    }, {
-	      leftText: '0.75'
-	    }, {
-	      leftIcon: createSvg(settingsConfirmPath, '0 0 1024 1024'),
-	      leftText: '正常'
-	    }, {
-	      leftText: '1.5'
-	    }, {
-	      leftText: '2'
-	    }]);
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(SubsettingsPlayrate, [{
-	    key: "init",
-	    value: function init() {
-	      this.el = $$n('div.video-subsettings-playrate');
-	      this.el.dataset.width = '170';
-	      this.el.style.display = 'none';
-	      this.initSubsettingsItem();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initSubsettingsItem",
-	    value: function initSubsettingsItem() {
-	      var _context,
-	        _this2 = this;
-	      _forEachInstanceProperty(_context = this.SubsettingsItem).call(_context, function (item) {
-	        var instance = new SubsettingItem(_this2.player, item.leftIcon, item.leftText);
-	        item.instance = instance;
-	        if (item.leftText === '播放速度') instance.el.dataset.SubsettingsPlayrate = '0';else if (item.leftText === '正常') instance.el.dataset.SubsettingsPlayrate = '1';else {
-	          instance.el.dataset.SubsettingsPlayrate = item.leftText;
-	        }
-	        _this2.el.append(instance.el);
-	      });
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this3 = this;
-	      var _loop = function _loop(i) {
-	        var item = _this3.SubsettingsItem[i];
-	        item.instance.el.addEventListener('click', function (e) {
-	          e.stopPropagation();
-	          item.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
-	          item.instance.leftIconBox.innerHTML = '';
-	          item.instance.leftIconBox.appendChild(item.leftIcon);
-	          for (var index in _this3.SubsettingsItem) {
-	            // console.log(index)
-	            if (index !== '0' && _this3.SubsettingsItem[index] !== item && _this3.SubsettingsItem[index].leftIcon) {
-	              _this3.SubsettingsItem[index].instance.leftIconBox.removeChild(_this3.SubsettingsItem[index].leftIcon);
-	              delete _this3.SubsettingsItem[index].leftIcon;
-	            }
-	          }
-	          _this3.player.emit('SubsettingsPlayrateClick', item, i);
-	        });
-	      };
-	      for (var i = 1; i < this.SubsettingsItem.length; i++) {
-	        _loop(i);
-	      }
-	      this.SubsettingsItem[0].instance.el.addEventListener('click', function (e) {
-	        e.stopPropagation();
-	        _this3.player.emit('SubsettingsPlayrateClick', _this3.SubsettingsItem[0], 0);
-	      });
-	    }
-	  }]);
-	  return SubsettingsPlayrate;
-	}(BaseEvent);
-
-	var SubsettingsSubtitle = /*#__PURE__*/function () {
-	  function SubsettingsSubtitle(player) {
-	    _classCallCheck(this, SubsettingsSubtitle);
-	    _defineProperty(this, "id", 'SubsettingsSubtitle');
-	    _defineProperty(this, "el", void 0);
-	    // el: div.video-subsettings-subtitle
-	    _defineProperty(this, "leadItem", void 0);
-	    _defineProperty(this, "switchOnIcon", createSvg(switchOffPath, '0 0 1024 1024'));
-	    _defineProperty(this, "switchOffIcon", createSvg(switchOnPath, '0 0 1024 1024'));
-	    _defineProperty(this, "status", 'show');
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "SubsettingsItem", [{
-	      leftIcon: createSvg(leftarrowPath, '0 0 1024 1024'),
-	      leftText: '字幕设置'
-	    }, {
-	      leftIcon: createSvg(subtitleShowPath, '0 0 1024 1024'),
-	      leftText: '字幕显示',
-	      rightTip: 'Show',
-	      rightIcon: this.switchOnIcon
-	    }]);
-	    this.player = player;
-	    this.init();
-	    storeControlComponent(this);
-	  }
-	  _createClass(SubsettingsSubtitle, [{
-	    key: "init",
-	    value: function init() {
-	      this.el = $$n('div.video-subsettings-subtitle');
-	      this.el.dataset.width = '180';
-	      this.el.style.display = 'none';
-	      addClass(this.switchOffIcon, ['video-switch-off']);
-	      addClass(this.switchOnIcon, ['video-switch-on']);
-	      this.initSubsettingsItem();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initSubsettingsItem",
-	    value: function initSubsettingsItem() {
-	      var _context,
-	        _this = this;
-	      _forEachInstanceProperty(_context = this.SubsettingsItem).call(_context, function (item) {
-	        var instance = new SubsettingItem(_this.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
-	        _this.el.appendChild(instance.el);
-	        item.instance = instance;
-	        instance.el.dataset.SubsettingsSubtitleType = item.leftText;
-	      });
-	      this.SubsettingsItem[1].instance.rightIcon.appendChild(this.switchOffIcon);
-	      this.switchOffIcon.style.display = 'none';
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      var _loop = function _loop(i) {
-	        _this2.SubsettingsItem[i].instance.el.onclick = function (e) {
-	          e.stopPropagation();
-	          if (i === 1) {
-	            if (_this2.status === 'show') {
-	              _this2.player.emit('HideSubtitle');
-	              _this2.switchOffIcon.style.display = 'block';
-	              _this2.switchOnIcon.style.display = 'none';
-	              _this2.status = 'hide';
-	              _this2.SubsettingsItem[i].instance.rightTipBox.innerText = 'Hide';
-	            } else {
-	              _this2.player.emit('ShowSubtitle');
-	              _this2.switchOffIcon.style.display = 'none';
-	              _this2.switchOnIcon.style.display = 'block';
-	              _this2.status = 'show';
-	              _this2.SubsettingsItem[i].instance.rightTipBox.innerText = 'Show';
-	            }
-	            return;
-	          }
-	          _this2.player.emit('SubsettingsSubtitleClick', _this2.SubsettingsItem[i], i);
-	        };
-	      };
-	      for (var i = 0; i < this.SubsettingsItem.length; i++) {
-	        _loop(i);
-	      }
-	    }
-	    // 在Subtitle设置中注册一个选项
-	  }, {
-	    key: "registerSubsettingsItem",
-	    value: function registerSubsettingsItem(item) {
-	      var _this3 = this;
-	      this.SubsettingsItem.push(item);
-	      var instance = new SubsettingItem(this.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
-	      item.instance = instance;
-	      this.el.appendChild(instance.el);
-	      instance.el.addEventListener('click', function (e) {
-	        e.stopPropagation();
-	        _this3.player.emit('SubsettingsSubtitleClick', item, _this3.SubsettingsItem.length - 1);
-	        if (item.click) item.click(item);
-	      });
-	      return item;
-	    }
-	  }]);
-	  return SubsettingsSubtitle;
-	}();
-
-	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var SubSetting = /*#__PURE__*/function (_Options) {
-	  _inherits(SubSetting, _Options);
-	  var _super = _createSuper$h(SubSetting);
-	  function SubSetting(player, container, desc) {
-	    var _this;
-	    _classCallCheck(this, SubSetting);
-	    _this = _super.call(this, player, container, 0, 0, desc);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'SubSetting');
-	    // el: div.video-subsettings.video-controllert
-	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "subsettingsMain", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "subsettingsPlayrate", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "subsettingsSubtitle", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "currentShow", void 0);
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(SubSetting, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-subsettings', 'video-controller']);
-	      addClass(this.hideBox, ['video-subsettings-set']);
-	      this.el['aria-label'] = '设置';
-	      this.icon = createSvg(subSettingPath, '0 0 1024 1024');
-	      this.iconBox.appendChild(this.icon);
-	      this.el.appendChild(this.iconBox);
-	      this.el.appendChild(this.hideBox);
-	      this.initSubSettingTemplate();
-	    }
-	  }, {
-	    key: "initSubSettingTemplate",
-	    value: function initSubSettingTemplate() {
-	      this.subsettingsMain = new SubsettingsMain(this.player);
-	      this.subsettingsPlayrate = new SubsettingsPlayrate(this.player);
-	      this.subsettingsSubtitle = new SubsettingsSubtitle(this.player);
-	      this.hideBox.appendChild(this.subsettingsMain.el);
-	      this.hideBox.appendChild(this.subsettingsPlayrate.el);
-	      this.hideBox.appendChild(this.subsettingsSubtitle.el);
-	      this.currentShow = this.subsettingsMain.el;
-	      this.hideBox.style.width = this.subsettingsMain.el.dataset.width + 'px';
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      if (this.player.env === 'PC') {
-	        this.initPCEvent();
-	      } else {
-	        this.initMobileEvent();
-	      }
-	      this.el.onmouseenter = null;
-	      wrap(this.iconBox).addEventListener(this.clickOrTap, function (e) {
-	        e.stopPropagation();
-	        if (!includeClass(_this2.icon, 'video-subsettings-animate')) {
-	          addClass(_this2.icon, ['video-subsettings-animate']);
-	        } else {
-	          removeClass(_this2.icon, ['video-subsettings-animate']);
-	        }
-	        if (!includeClass(_this2.hideBox, 'video-set-hidden')) {
-	          addClass(_this2.hideBox, ['video-set-hidden']);
-	        } else {
-	          removeClass(_this2.hideBox, ['video-set-hidden']);
-	        }
-	        _this2.player.emit('oneControllerHover', _this2);
-	      });
-	      this.player.on('MainSubsettingsItemClick', function (item, index) {
-	        // console.log(item, index)
-	        if (item.instance.el.dataset.SubsettingsMainType === '播放速度') {
-	          // 展示播放速率的设置界面
-	          _this2.currentShow.style.display = 'none';
-	          _this2.subsettingsPlayrate.el.style.display = 'block';
-	          _this2.subsettingsPlayrate.leadItem = item;
-	          _this2.hideBox.style.width = _this2.subsettingsPlayrate.el.dataset.width + 'px';
-	          _this2.currentShow = _this2.subsettingsPlayrate.el;
-	        } else if (item.instance.el.dataset.SubsettingsMainType === '画面比例') ; else if (item.instance.el.dataset.SubsettingsMainType === '字幕设置') {
-	          _this2.currentShow.style.display = 'none';
-	          _this2.subsettingsSubtitle.el.style.display = 'block';
-	          _this2.subsettingsSubtitle.leadItem = item;
-	          _this2.hideBox.style.width = _this2.subsettingsSubtitle.el.dataset.width + 'px';
-	          _this2.currentShow = _this2.subsettingsSubtitle.el;
-	        }
-	      });
-	      // 点击播放速度
-	      this.player.on('SubsettingsPlayrateClick', function (item, index) {
-	        // console.log(item, index)
-	        _this2.currentShow.style.display = 'none';
-	        _this2.currentShow = _this2.subsettingsMain.el;
-	        _this2.currentShow.style.display = 'block';
-	        _this2.hideBox.style.width = _this2.currentShow.dataset.width + 'px';
-	        if (item.instance.el.dataset.SubsettingsPlayrate !== '0') {
-	          // 设置播放器的播放速度
-	          _this2.player.video.playbackRate = Number(item.instance.el.dataset.SubsettingsPlayrate);
-	        }
-	      });
-	      // 点击字幕
-	      this.player.on('SubsettingsSubtitleClick', function (item, index) {
-	        _this2.currentShow.style.display = 'none';
-	        _this2.currentShow = _this2.subsettingsMain.el;
-	        _this2.currentShow.style.display = 'block';
-	        _this2.hideBox.style.width = _this2.currentShow.dataset.width + 'px';
-	      });
-	    }
-	  }, {
-	    key: "initPCEvent",
-	    value: function initPCEvent() {
-	      this.clickOrTap = 'click';
-	    }
-	  }, {
-	    key: "initMobileEvent",
-	    value: function initMobileEvent() {
-	      this.clickOrTap = 'singleTap';
-	    }
-	  }]);
-	  return SubSetting;
-	}(Options);
-
-	function addZero(num) {
-	  return num > 9 ? '' + num : '0' + num;
-	}
-	function formatTime(seconds) {
-	  seconds = Math.floor(seconds);
-	  var minute = Math.floor(seconds / 60);
-	  var second = seconds % 60;
-	  return addZero(minute) + ':' + addZero(second);
-	}
-	function computeAngle(dx, dy) {
-	  if (dx === 0) return 90;
-	  if (dy === 0) return 0;
-	  return Math.round(Math.atan(Math.abs(dy) / Math.abs(dx)) * 180 / Math.PI);
-	}
-
 	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var DutaionShow = /*#__PURE__*/function (_Component) {
-	  _inherits(DutaionShow, _Component);
-	  var _super = _createSuper$g(DutaionShow);
-	  function DutaionShow(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, DutaionShow);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'DurationShow');
-	    // el: div.video-duration-time.video-controller
-	    _defineProperty(_assertThisInitialized(_this), "currentTime", '00:00');
-	    _defineProperty(_assertThisInitialized(_this), "totalTime", '00:00');
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _this.player = player;
-	    _this.props = props;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(DutaionShow, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      var _context;
-	      addClass(this.el, ['video-duration-time', 'video-controller']);
-	      this.el.innerText = _concatInstanceProperty(_context = "".concat(this.currentTime, "/")).call(_context, this.totalTime);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.player.on(EVENT.LOADED_META_DATA, function (e) {
-	        var _context2;
-	        var video = e.target;
-	        // console.log(video.duration) // 12.612
-	        _this2.totalTime = formatTime(video.duration);
-	        // console.log(this.totalTime) // 00:12
-	        _this2.el.innerText = _concatInstanceProperty(_context2 = "".concat(_this2.currentTime, "/")).call(_context2, _this2.totalTime);
-	      });
-	      this.player.on(EVENT.TIME_UPDATE, function (e) {
-	        var _context3;
-	        var video = e.target;
-	        _this2.currentTime = formatTime(video.currentTime);
-	        _this2.el.innerText = _concatInstanceProperty(_context3 = "".concat(_this2.currentTime, "/")).call(_context3, _this2.totalTime);
-	      });
-	      this.player.on(EVENT.VIDEO_DOT_DRAG, function (scale, e) {
-	        var _context4;
-	        _this2.currentTime = formatTime(_this2.player.video.duration * scale);
-	        _this2.el.innerText = _concatInstanceProperty(_context4 = "".concat(_this2.currentTime, "/")).call(_context4, _this2.totalTime);
-	      });
-	    }
-	  }]);
-	  return DutaionShow;
-	}(Component);
-
-	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var VideoShot = /*#__PURE__*/function (_Options) {
 	  _inherits(VideoShot, _Options);
-	  var _super = _createSuper$f(VideoShot);
+	  var _super = _createSuper$g(VideoShot);
 	  function VideoShot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, VideoShot);
@@ -8866,8 +8841,8 @@
 	    key: "createInProgressToast",
 	    value: function createInProgressToast() {
 	      var inProgressIcon = createSvg(countdownPath, '0 0 1024 1024');
-	      var dom = $$n('div.video-videoshot-inprogress-toast');
-	      var span = $$n('span');
+	      var dom = $$M('div.video-videoshot-inprogress-toast');
+	      var span = $$M('span');
 	      span.innerText = "\u5F00\u59CB\u5F55\u5C4F\uFF0C\u6700\u591A\u5F55\u523630\u79D2; \u8FD8\u5269".concat(this.countDown, "\u79D2");
 	      dom.appendChild(inProgressIcon);
 	      dom.appendChild(span);
@@ -8878,8 +8853,8 @@
 	    key: "createSuccessToast",
 	    value: function createSuccessToast() {
 	      var successIcon = createSvg(confirmPath, '0 0 1024 1024');
-	      var dom = $$n('div.video-videoshot-success-toast');
-	      var span = $$n('span');
+	      var dom = $$M('div.video-videoshot-success-toast');
+	      var span = $$M('span');
 	      span.innerText = "\u5F55\u5236\u6210\u529F!";
 	      dom.appendChild(successIcon);
 	      dom.appendChild(span);
@@ -8890,116 +8865,290 @@
 	  return VideoShot;
 	}(Options);
 
-	// a string of all valid unicode whitespaces
-	var whitespaces$3 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
-	  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+	var SubsettingItem = /*#__PURE__*/function () {
+	  function SubsettingItem(player, leftIcon, leftText, rightTip, rightIcon) {
+	    _classCallCheck(this, SubsettingItem);
+	    _defineProperty(this, "el", void 0);
+	    // el: div.video-subsettings-item
+	    _defineProperty(this, "player", void 0);
+	    _defineProperty(this, "leftArea", void 0);
+	    _defineProperty(this, "rightArea", void 0);
+	    _defineProperty(this, "leftIconBox", void 0);
+	    _defineProperty(this, "leftTextBox", void 0);
+	    _defineProperty(this, "rightTipBox", void 0);
+	    _defineProperty(this, "rightIcon", void 0);
+	    this.player = player;
+	    this.init();
+	    if (leftIcon) this.leftIconBox.appendChild(leftIcon);
+	    if (leftText) this.leftTextBox.innerText = leftText;
+	    if (rightTip) this.rightTipBox.innerText = rightTip;
+	    if (rightIcon) this.rightIcon.appendChild(rightIcon);
+	  }
+	  _createClass(SubsettingItem, [{
+	    key: "init",
+	    value: function init() {
+	      this.el = $$M('div.video-subsettings-item');
+	      this.leftArea = $$M('div.video-subsettings-itemleft');
+	      this.rightArea = $$M('div.video-subsettings-itemright');
+	      this.leftIconBox = $$M('div.video-subsettings-itemleft-icon');
+	      this.leftTextBox = $$M('div.video-subsettings-itemleft-text');
+	      this.rightTipBox = $$M('div.video-subsettings-itemright-tip');
+	      this.rightIcon = $$M('div.video-subsettings-itemright-icon');
+	      this.el.append(this.leftArea, this.rightArea);
+	      this.leftArea.append(this.leftIconBox, this.leftTextBox);
+	      this.rightArea.append(this.rightTipBox, this.rightIcon);
+	    }
+	  }]);
+	  return SubsettingItem;
+	}();
 
-	var uncurryThis$5 = functionUncurryThis;
-	var requireObjectCoercible$1 = requireObjectCoercible$5;
-	var toString$4 = toString$b;
-	var whitespaces$2 = whitespaces$3;
+	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var SubsettingsBase = /*#__PURE__*/function (_BaseEvent) {
+	  _inherits(SubsettingsBase, _BaseEvent);
+	  var _super = _createSuper$f(SubsettingsBase);
+	  function SubsettingsBase(subsetting, player) {
+	    var _this;
+	    _classCallCheck(this, SubsettingsBase);
+	    _this = _super.call(this);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'SubsettingsBase');
+	    _defineProperty(_assertThisInitialized(_this), "el", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "subsetting", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", void 0);
+	    _this.player = player;
+	    _this.subsetting = subsetting;
+	    _this.__proto__.constructor.instance = _assertThisInitialized(_this);
+	    return _this;
+	  }
+	  _createClass(SubsettingsBase, [{
+	    key: "initBaseSubsettingsItem",
+	    value: function initBaseSubsettingsItem() {
+	      var _context,
+	        _this2 = this;
+	      _forEachInstanceProperty(_context = this.SubsettingsItem).call(_context, function (item) {
+	        _this2.registerSubsettingsItem(item);
+	        item.instance.el.dataset.SubsettingsSubtitleType = item.leftText;
+	      });
+	    }
+	    // target表示点击你这个item，需要跳转到哪一个SubsettingsBase
+	  }, {
+	    key: "registerSubsettingsItem",
+	    value: function registerSubsettingsItem(item) {
+	      var _this3 = this;
+	      var base = null;
+	      if (item.target) {
+	        if (item.target instanceof SubsettingsBase) {
+	          // 如果是个实例对象
+	          base = item.target;
+	        } else {
+	          if (item.target.instance) {
+	            base = item.target.instance;
+	          } else {
+	            base = new item.target(this.subsetting, this.player);
+	          }
+	        }
+	        this.subsetting.registerSubsettingsBase(base);
+	        if (!this.subsetting.subsettingsBaseGraph.has(this)) {
+	          this.subsetting.subsettingsBaseGraph.set(this, [base]);
+	        } else {
+	          var res = this.subsetting.subsettingsBaseGraph.get(this);
+	          !_includesInstanceProperty(res).call(res, base) && res.push(base);
+	          this.subsetting.subsettingsBaseGraph.set(this, res);
+	        }
+	      }
+	      //this.SubsettingsItem.push(item)
+	      var instance = new SubsettingItem(this.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
+	      item.instance = instance;
+	      this.el.appendChild(instance.el);
+	      instance.el.addEventListener('click', function (e) {
+	        e.stopPropagation();
+	        if (item.target) {
+	          _this3.el.style.display = 'none';
+	          base.el.style.display = '';
+	          _this3.subsetting.hideBox.style.width = base.el.dataset.width ? base.el.dataset.width + 'px' : '200px';
+	        }
+	        if (item.click) item.click(item);
+	      });
+	      return item;
+	    }
+	  }]);
+	  return SubsettingsBase;
+	}(BaseEvent);
 
-	var replace$1 = uncurryThis$5(''.replace);
-	var ltrim = RegExp('^[' + whitespaces$2 + ']+');
-	var rtrim = RegExp('(^|[^' + whitespaces$2 + '])[' + whitespaces$2 + ']+$');
-
-	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
-	var createMethod = function (TYPE) {
-	  return function ($this) {
-	    var string = toString$4(requireObjectCoercible$1($this));
-	    if (TYPE & 1) string = replace$1(string, ltrim, '');
-	    if (TYPE & 2) string = replace$1(string, rtrim, '$1');
-	    return string;
-	  };
-	};
-
-	var stringTrim = {
-	  // `String.prototype.{ trimLeft, trimStart }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
-	  start: createMethod(1),
-	  // `String.prototype.{ trimRight, trimEnd }` methods
-	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
-	  end: createMethod(2),
-	  // `String.prototype.trim` method
-	  // https://tc39.es/ecma262/#sec-string.prototype.trim
-	  trim: createMethod(3)
-	};
-
-	var global$7 = global$o;
-	var fails$7 = fails$x;
-	var uncurryThis$4 = functionUncurryThis;
-	var toString$3 = toString$b;
-	var trim$1 = stringTrim.trim;
-	var whitespaces$1 = whitespaces$3;
-
-	var $parseInt$1 = global$7.parseInt;
-	var Symbol$2 = global$7.Symbol;
-	var ITERATOR$1 = Symbol$2 && Symbol$2.iterator;
-	var hex = /^[+-]?0x/i;
-	var exec = uncurryThis$4(hex.exec);
-	var FORCED$2 = $parseInt$1(whitespaces$1 + '08') !== 8 || $parseInt$1(whitespaces$1 + '0x16') !== 22
-	  // MS Edge 18- broken with boxed symbols
-	  || (ITERATOR$1 && !fails$7(function () { $parseInt$1(Object(ITERATOR$1)); }));
-
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
-	  var S = trim$1(toString$3(string));
-	  return $parseInt$1(S, (radix >>> 0) || (exec(hex, S) ? 16 : 10));
-	} : $parseInt$1;
-
-	var $$h = _export;
-	var $parseInt = numberParseInt;
-
-	// `parseInt` method
-	// https://tc39.es/ecma262/#sec-parseint-string-radix
-	$$h({ global: true, forced: parseInt != $parseInt }, {
-	  parseInt: $parseInt
-	});
-
-	var path$7 = path$n;
-
-	var _parseInt$6 = path$7.parseInt;
-
-	var parent$q = _parseInt$6;
-
-	var _parseInt$5 = parent$q;
-
-	var parent$p = _parseInt$5;
-
-	var _parseInt$4 = parent$p;
-
-	var parent$o = _parseInt$4;
-
-	var _parseInt$3 = parent$o;
-
-	var _parseInt$2 = _parseInt$3;
-
-	var _parseInt = _parseInt$2;
-
-	var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
-
+	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray$1(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+	function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Volume = /*#__PURE__*/function (_Options) {
-	  _inherits(Volume, _Options);
-	  var _super = _createSuper$e(Volume);
-	  function Volume(player, container, desc, props, children) {
+	// import { SubsettingItem } from '../SubsettingItem'
+	// import { BaseEvent } from '@/class/BaseEvent'
+	var SubsettingsPlayrate = /*#__PURE__*/function (_SubsettingsBase) {
+	  _inherits(SubsettingsPlayrate, _SubsettingsBase);
+	  var _super = _createSuper$e(SubsettingsPlayrate);
+	  function SubsettingsPlayrate(subsetting, player) {
 	    var _this;
-	    _classCallCheck(this, Volume);
-	    _this = _super.call(this, player, container, 0, 0, desc);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Volume');
-	    // el: div.video-volume video-controller
-	    _defineProperty(_assertThisInitialized(_this), "volumeProgress", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "volumeShow", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "volume", 0.5);
-	    _defineProperty(_assertThisInitialized(_this), "volumeDot", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mouseY", 0);
+	    _classCallCheck(this, SubsettingsPlayrate);
+	    _this = _super.call(this, subsetting, player);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'SubsettingsPlayrate');
+	    // el: div.video-subsettings-playrate
+	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", [{
+	      leftIcon: createSvg(leftarrowPath, '0 0 1024 1024'),
+	      leftText: '播放速度',
+	      target: SubsettingsMain
+	    }, {
+	      leftText: '0.5',
+	      target: SubsettingsMain
+	    }, {
+	      leftText: '0.75',
+	      target: SubsettingsMain
+	    }, {
+	      leftIcon: createSvg(settingsConfirmPath, '0 0 1024 1024'),
+	      leftText: '正常',
+	      target: SubsettingsMain
+	    }, {
+	      leftText: '1.5',
+	      target: SubsettingsMain
+	    }, {
+	      leftText: '2',
+	      target: SubsettingsMain
+	    }]);
 	    _this.init();
 	    return _this;
 	  }
-	  _createClass(Volume, [{
+	  _createClass(SubsettingsPlayrate, [{
+	    key: "init",
+	    value: function init() {
+	      this.el = $$M('div.video-subsettings-playrate');
+	      this.el.dataset.width = '170';
+	      this.el.style.display = 'none';
+	      this.initSubsettingsItem();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initSubsettingsItem",
+	    value: function initSubsettingsItem() {
+	      this.initBaseSubsettingsItem();
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _context,
+	        _this2 = this;
+	      _forEachInstanceProperty(_context = this.SubsettingsItem).call(_context, function (item, index) {
+	        item.instance.el.onclick = function (e) {
+	          e.stopPropagation();
+	          if (item.leftText === '播放速度') {
+	            _this2.el.style.display = 'none';
+	            var instance = _this2.subsetting.subsettingsBaseGraph.get(_this2)[0];
+	            instance.el.style.display = '';
+	            return;
+	          } else {
+	            if (item.leftText === '正常') {
+	              // playbackRate: 设置video的播放速度
+	              _this2.player.video.playbackRate = 1;
+	            } else {
+	              _this2.player.video.playbackRate = Number(item.leftText);
+	            }
+	          }
+	          item.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
+	          item.instance.leftIconBox.innerHTML = '';
+	          item.instance.leftIconBox.appendChild(item.leftIcon);
+	          var _iterator = _createForOfIteratorHelper$1(_this2.SubsettingsItem),
+	            _step;
+	          try {
+	            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	              var another = _step.value;
+	              if (another !== item) {
+	                another.instance.leftIconBox.innerHTML = '';
+	              }
+	            }
+	          } catch (err) {
+	            _iterator.e(err);
+	          } finally {
+	            _iterator.f();
+	          }
+	        };
+	      });
+	    }
+	  }]);
+	  return SubsettingsPlayrate;
+	}(SubsettingsBase);
+
+	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var SubsettingsMain = /*#__PURE__*/function (_SubsettingsBase) {
+	  _inherits(SubsettingsMain, _SubsettingsBase);
+	  var _super = _createSuper$d(SubsettingsMain);
+	  function SubsettingsMain(subsetting, player) {
+	    var _this;
+	    _classCallCheck(this, SubsettingsMain);
+	    _this = _super.call(this, subsetting, player);
+	    // el: div.video-subsettings-main
+	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", [{
+	      leftIcon: createSvg(playratePath, '0 0 1024 1024'),
+	      leftText: '播放速度',
+	      rightTip: '正常',
+	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024'),
+	      target: SubsettingsPlayrate
+	    }, {
+	      leftIcon: createSvgs([propotionPath$1, propotionPath$2], '0 0 1024 1024'),
+	      leftText: '画面比例',
+	      rightTip: '默认',
+	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024')
+	    }, {
+	      leftIcon: createSvg(flipPath, '0 0 1024 1024'),
+	      leftText: '画面翻转',
+	      rightTip: '正常',
+	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024')
+	    }]);
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(SubsettingsMain, [{
+	    key: "init",
+	    value: function init() {
+	      this.el = $$M('div.video-subsettings-main');
+	      this.el.dataset.width = '200';
+	      this.subsetting.hideBox.style.width = this.el.dataset.width + 'px';
+	      this.initSubsettingsItem();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initSubsettingsItem",
+	    value: function initSubsettingsItem() {
+	      this.initBaseSubsettingsItem();
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {}
+	  }]);
+	  return SubsettingsMain;
+	}(SubsettingsBase);
+
+	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var SubSetting = /*#__PURE__*/function (_Options) {
+	  _inherits(SubSetting, _Options);
+	  var _super = _createSuper$c(SubSetting);
+	  // subsettingsMain: SubsettingsMain
+	  // subsettingsPlayrate: SubsettingsPlayrate
+	  // subsettingsSubtitle: SubsettingsSubtitle
+	  // currentShow: HTMLElement
+	  function SubSetting(player, container, desc) {
+	    var _this;
+	    _classCallCheck(this, SubSetting);
+	    _this = _super.call(this, player, container, 0, 0, desc);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'SubSetting');
+	    // el: div.video-subsettings.video-controllert
+	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "mask", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "subsettingsBaseGraph", new _Map());
+	    _defineProperty(_assertThisInitialized(_this), "subsettingsMain", void 0);
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(SubSetting, [{
 	    key: "init",
 	    value: function init() {
 	      this.initTemplate();
@@ -9009,89 +9158,157 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      addClass(this.el, ['video-volume', 'video-controller']);
-	      this.el['aria-label'] = '音量';
-	      addClass(this.hideBox, ['video-volume-set']);
-	      this.volumeProgress = $$n('div.video-volume-progress', {
-	        style: {
-	          height: '70px'
-	        }
-	      });
-	      this.volumeShow = $$n('div.video-volume-show');
-	      this.volumeShow.innerText = (this.volume * 100).toFixed(0);
-	      // this.volumeCompleted = new VolumeCompletedProgress(
-	      //   this.player,
-	      //   this.volumeProgress,
-	      //   'div.video-volume-completed'
-	      // )
-	      this.volumeCompleted = $$n('div.video-volume-completed');
-	      this.volumeProgress.appendChild(this.volumeCompleted);
-	      this.hideBox.appendChild(this.volumeShow);
-	      this.hideBox.appendChild(this.volumeProgress);
-	      this.volumeDot = $$n('div.video-volume-dot');
-	      this.volumeProgress.appendChild(this.volumeDot);
-	      this.icon = createSvg(volumePath$1);
+	      addClass(this.el, ['video-subsettings', 'video-controller']);
+	      addClass(this.hideBox, ['video-subsettings-set']);
+	      this.el['aria-label'] = '设置';
+	      this.icon = createSvg(subSettingPath, '0 0 1024 1024');
 	      this.iconBox.appendChild(this.icon);
-	      this.player.video.volume = this.volume;
+	      this.el.appendChild(this.iconBox);
+	      this.el.appendChild(this.hideBox);
+	      this.initSubSettingBase();
+	    }
+	  }, {
+	    key: "initSubSettingBase",
+	    value: function initSubSettingBase() {
+	      this.subsettingsMain = new SubsettingsMain(this, this.player);
+	      this.registerSubsettingsBase(this.subsettingsMain);
 	    }
 	  }, {
 	    key: "initEvent",
 	    value: function initEvent() {
 	      var _this2 = this;
-	      this.player.on(EVENT.VOLUME_PROGRESS_CLICK, function (e, ctx) {
-	        var eoffsetY = e.clientY - getDOMPoint(_this2.volumeProgress).y;
-	        var offsetY = _this2.volumeProgress.clientHeight - eoffsetY;
-	        var scale = offsetY / _this2.volumeProgress.clientHeight;
-	        if (scale < 0) {
-	          scale = 0;
-	        } else if (scale > 1) {
-	          scale = 1;
+	      if (this.player.env === 'PC') {
+	        this.initPCEvent();
+	      } else {
+	        this.initMobileEvent();
+	      }
+	      this.el.onmouseenter = null;
+	      wrap(this.iconBox).addEventListener(this.clickOrTap, function (e) {
+	        e.stopPropagation();
+	        if (!includeClass(_this2.icon, 'video-subsettings-animate')) {
+	          addClass(_this2.icon, ['video-subsettings-animate']);
+	        } else {
+	          removeClass(_this2.icon, ['video-subsettings-animate']);
 	        }
-	        _this2.volumeCompleted.style.height = scale * 100 + '%';
-	        _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
-	        _this2.volume = scale;
-	        _this2.volumeShow.innerText = Math.round(_this2.volume * 100) + '';
-	        _this2.player.video.volume = _this2.volume;
+	        if (!includeClass(_this2.hideBox, 'video-set-hidden')) {
+	          addClass(_this2.hideBox, ['video-set-hidden']);
+	        } else {
+	          removeClass(_this2.hideBox, ['video-set-hidden']);
+	        }
+	        _this2.player.emit('oneControllerHover', _this2);
 	      });
-	      this.volumeProgress.onclick = function (e) {
-	        e.stopPropagation();
-	        _this2.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, _this2);
-	      };
-	      this.volumeDot.onmousedown = function (e) {
-	        e.stopPropagation();
-	        _this2.mouseY = e.pageY;
-	        var top = _parseInt$1(getComputedStyle(_this2.volumeDot).top);
-	        document.body.onmousemove = function (e) {
-	          e.preventDefault();
-	          var dy = top + e.pageY - _this2.mouseY;
-	          // console.log(dy)
-	          var scale = (_this2.volumeProgress.clientHeight - dy) / _this2.volumeProgress.clientHeight;
-	          if (scale < 0) {
-	            scale = 0;
-	          } else if (scale > 1) {
-	            scale = 1;
-	          }
-	          _this2.volumeDot.style.top = (1 - scale) * _this2.volumeProgress.clientHeight + 'px';
-	          _this2.volumeCompleted.style.height = scale * 100 + '%';
-	          _this2.volumeShow.innerText = Math.round(scale * 100) + '';
-	          _this2.player.video.volume = scale;
-	          _this2.volume = scale;
-	        };
-	        document.body.onmouseup = function (e) {
-	          document.body.onmousemove = null;
-	          document.body.onmouseup = null;
-	        };
-	      };
+	    }
+	  }, {
+	    key: "initPCEvent",
+	    value: function initPCEvent() {
+	      this.clickOrTap = 'click';
+	    }
+	  }, {
+	    key: "initMobileEvent",
+	    value: function initMobileEvent() {
+	      this.clickOrTap = 'singleTap';
+	    }
+	    // 注册基础的子设置项
+	  }, {
+	    key: "registerSubsettingsBase",
+	    value: function registerSubsettingsBase(baseCons) {
+	      if (baseCons instanceof SubsettingsBase) {
+	        this.hideBox.appendChild(baseCons.el);
+	      } else {
+	        var base = new baseCons(this, this.player);
+	        this.hideBox.appendChild(base.el);
+	      }
 	    }
 	  }]);
-	  return Volume;
+	  return SubSetting;
 	}(Options);
 
-	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var SubsettingsSubtitle = /*#__PURE__*/function (_SubsettingsBase) {
+	  _inherits(SubsettingsSubtitle, _SubsettingsBase);
+	  var _super = _createSuper$b(SubsettingsSubtitle);
+	  function SubsettingsSubtitle(subsetting, player) {
+	    var _this;
+	    _classCallCheck(this, SubsettingsSubtitle);
+	    _this = _super.call(this, subsetting, player);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'SubsettingsSubtitle');
+	    // el: div.video-subsettings-subtitle
+	    _defineProperty(_assertThisInitialized(_this), "leadItem", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "switchOnIcon", createSvg(switchOffPath, '0 0 1024 1024'));
+	    _defineProperty(_assertThisInitialized(_this), "switchOffIcon", createSvg(switchOnPath, '0 0 1024 1024'));
+	    _defineProperty(_assertThisInitialized(_this), "status", 'show');
+	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", [{
+	      leftIcon: createSvg(leftarrowPath, '0 0 1024 1024'),
+	      leftText: '字幕设置',
+	      target: SubsettingsMain
+	    }, {
+	      leftIcon: createSvg(subtitleShowPath, '0 0 1024 1024'),
+	      leftText: '字幕显示',
+	      rightTip: 'Show',
+	      rightIcon: _this.switchOnIcon
+	    }]);
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(SubsettingsSubtitle, [{
+	    key: "init",
+	    value: function init() {
+	      this.el = $$M('div.video-subsettings-subtitle');
+	      this.el.dataset.width = '180';
+	      this.el.style.display = 'none';
+	      addClass(this.switchOffIcon, ['video-switch-off']);
+	      addClass(this.switchOnIcon, ['video-switch-on']);
+	      this.initSubsettingsItem();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initSubsettingsItem",
+	    value: function initSubsettingsItem() {
+	      this.initBaseSubsettingsItem();
+	      this.SubsettingsItem[1].instance.rightIcon.appendChild(this.switchOffIcon);
+	      this.switchOffIcon.style.display = 'none';
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      var _loop = function _loop(i) {
+	        _this2.SubsettingsItem[i].instance.el.onclick = function (e) {
+	          e.stopPropagation();
+	          if (i === 1) {
+	            if (_this2.status === 'show') {
+	              _this2.player.emit('HideSubtitle');
+	              _this2.switchOffIcon.style.display = 'block';
+	              _this2.switchOnIcon.style.display = 'none';
+	              _this2.status = 'hide';
+	              _this2.SubsettingsItem[i].instance.rightTipBox.innerText = 'Hide';
+	            } else {
+	              _this2.player.emit('ShowSubtitle');
+	              _this2.switchOffIcon.style.display = 'none';
+	              _this2.switchOnIcon.style.display = 'block';
+	              _this2.status = 'show';
+	              _this2.SubsettingsItem[i].instance.rightTipBox.innerText = 'Show';
+	            }
+	            return;
+	          }
+	          _this2.player.emit('SubsettingsSubtitleClick', _this2.SubsettingsItem[i], i);
+	        };
+	      };
+	      for (var i = 0; i < this.SubsettingsItem.length; i++) {
+	        _loop(i);
+	      }
+	    }
+	  }]);
+	  return SubsettingsSubtitle;
+	}(SubsettingsBase);
+
+	function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Controller = /*#__PURE__*/function (_Component) {
 	  _inherits(Controller, _Component);
-	  var _super = _createSuper$d(Controller);
+	  var _super = _createSuper$a(Controller);
 	  //代表最右侧的区域
 	  function Controller(player, container, desc) {
 	    var _this;
@@ -9143,9 +9360,9 @@
 	      // this.leftArea = $('div.video-subplay')
 	      // this.mediumArea = $('div.video-medium')
 	      // this.rightArea = $('div.video-settings')
-	      this.leftArea = $$n('div.video-bottombar-left');
-	      this.mediumArea = $$n('div.video-bottombar-medium');
-	      this.rightArea = $$n('div.video-bottombar-right');
+	      this.leftArea = $$M('div.video-bottombar-left');
+	      this.mediumArea = $$M('div.video-bottombar-medium');
+	      this.rightArea = $$M('div.video-bottombar-right');
 	      this.el.appendChild(this.leftArea);
 	      this.el.appendChild(this.mediumArea);
 	      this.el.appendChild(this.rightArea);
@@ -9182,52 +9399,52 @@
 	}(Component);
 
 	var global$6 = global$o;
-	var fails$6 = fails$x;
-	var uncurryThis$3 = functionUncurryThis;
-	var toString$2 = toString$b;
+	var fails$5 = fails$x;
+	var uncurryThis$2 = functionUncurryThis;
+	var toString$1 = toString$b;
 	var trim = stringTrim.trim;
 	var whitespaces = whitespaces$3;
 
-	var charAt = uncurryThis$3(''.charAt);
+	var charAt = uncurryThis$2(''.charAt);
 	var $parseFloat$1 = global$6.parseFloat;
 	var Symbol$1 = global$6.Symbol;
 	var ITERATOR = Symbol$1 && Symbol$1.iterator;
 	var FORCED$1 = 1 / $parseFloat$1(whitespaces + '-0') !== -Infinity
 	  // MS Edge 18- broken with boxed symbols
-	  || (ITERATOR && !fails$6(function () { $parseFloat$1(Object(ITERATOR)); }));
+	  || (ITERATOR && !fails$5(function () { $parseFloat$1(Object(ITERATOR)); }));
 
 	// `parseFloat` method
 	// https://tc39.es/ecma262/#sec-parsefloat-string
 	var numberParseFloat = FORCED$1 ? function parseFloat(string) {
-	  var trimmedString = trim(toString$2(string));
+	  var trimmedString = trim(toString$1(string));
 	  var result = $parseFloat$1(trimmedString);
 	  return result === 0 && charAt(trimmedString, 0) == '-' ? -0 : result;
 	} : $parseFloat$1;
 
-	var $$g = _export;
+	var $$f = _export;
 	var $parseFloat = numberParseFloat;
 
 	// `parseFloat` method
 	// https://tc39.es/ecma262/#sec-parsefloat-string
-	$$g({ global: true, forced: parseFloat != $parseFloat }, {
+	$$f({ global: true, forced: parseFloat != $parseFloat }, {
 	  parseFloat: $parseFloat
 	});
 
-	var path$6 = path$n;
+	var path$6 = path$m;
 
 	var _parseFloat$6 = path$6.parseFloat;
 
-	var parent$n = _parseFloat$6;
+	var parent$k = _parseFloat$6;
 
-	var _parseFloat$5 = parent$n;
+	var _parseFloat$5 = parent$k;
 
-	var parent$m = _parseFloat$5;
+	var parent$j = _parseFloat$5;
 
-	var _parseFloat$4 = parent$m;
+	var _parseFloat$4 = parent$j;
 
-	var parent$l = _parseFloat$4;
+	var parent$i = _parseFloat$4;
 
-	var _parseFloat$3 = parent$l;
+	var _parseFloat$3 = parent$i;
 
 	var _parseFloat$2 = _parseFloat$3;
 
@@ -9235,11 +9452,11 @@
 
 	var _parseFloat$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseFloat);
 
-	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Progress = /*#__PURE__*/function (_Component) {
 	  _inherits(Progress, _Component);
-	  var _super = _createSuper$c(Progress);
+	  var _super = _createSuper$9(Progress);
 	  function Progress(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, Progress);
@@ -9265,9 +9482,9 @@
 	  }, {
 	    key: "initBaseTemplate",
 	    value: function initBaseTemplate() {
-	      this.dot = $$n('div');
-	      this.completedProgress = $$n('div');
-	      this.bufferProgress = $$n('div');
+	      this.dot = $$M('div');
+	      this.completedProgress = $$M('div');
+	      this.bufferProgress = $$M('div');
 	      this.el.append(this.dot, this.completedProgress, this.bufferProgress);
 	    }
 	  }, {
@@ -9371,11 +9588,11 @@
 	  return Progress;
 	}(Component);
 
-	function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var VideoProgress = /*#__PURE__*/function (_Progress) {
 	  _inherits(VideoProgress, _Progress);
-	  var _super = _createSuper$b(VideoProgress);
+	  var _super = _createSuper$8(VideoProgress);
 	  // el: div.video-progress
 	  function VideoProgress(player, container, desc) {
 	    var _this;
@@ -9448,11 +9665,11 @@
 	  return VideoProgress;
 	}(Progress);
 
-	function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var MediumBar = /*#__PURE__*/function (_Component) {
 	  _inherits(MediumBar, _Component);
-	  var _super = _createSuper$a(MediumBar);
+	  var _super = _createSuper$7(MediumBar);
 	  function MediumBar(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, MediumBar);
@@ -9478,9 +9695,9 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      this.leftArea = $$n('div.video-mediumbar-left');
-	      this.mediumArea = $$n('div.video-mediumbar-medium');
-	      this.rightArea = $$n('div.video-mediumbar-right');
+	      this.leftArea = $$M('div.video-mediumbar-left');
+	      this.mediumArea = $$M('div.video-mediumbar-medium');
+	      this.rightArea = $$M('div.video-mediumbar-right');
 	      this.el.append(this.leftArea, this.mediumArea, this.rightArea);
 	    }
 	  }, {
@@ -9493,11 +9710,11 @@
 	  return MediumBar;
 	}(Component);
 
-	function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ToolBar = /*#__PURE__*/function (_Component) {
 	  _inherits(ToolBar, _Component);
-	  var _super = _createSuper$9(ToolBar);
+	  var _super = _createSuper$6(ToolBar);
 	  function ToolBar(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, ToolBar);
@@ -9584,6 +9801,2174 @@
 	  }]);
 	  return ToolBar;
 	}(Component);
+
+	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var TopBar = /*#__PURE__*/function (_Component) {
+	  _inherits(TopBar, _Component);
+	  var _super = _createSuper$5(TopBar);
+	  // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
+	  function TopBar(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, TopBar);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
+	    // el: div.video-topbar.video-topbar-hidden
+	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "timer", null);
+	    _this.player = player;
+	    _this.props = props || {};
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(TopBar, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	      storeControlComponent(this);
+	    }
+	    /**
+	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
+	     */
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
+	      this.leftArea = $$M('div.video-topbar-left');
+	      this.rightArea = $$M('div.video-topbar-right');
+	      this.el.appendChild(this.leftArea);
+	      this.el.appendChild(this.rightArea);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
+	        _this2.onShowToolBar();
+	      });
+	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
+	        _this2.onHideToolBar();
+	      });
+	    }
+	  }, {
+	    key: "hideToolBar",
+	    value: function hideToolBar() {
+	      if (!includeClass(this.el, 'video-topbar-hidden')) {
+	        addClass(this.el, ['video-topbar-hidden']);
+	      }
+	    }
+	  }, {
+	    key: "showToolBar",
+	    value: function showToolBar() {
+	      var _this3 = this;
+	      if (includeClass(this.el, 'video-topbar-hidden')) {
+	        removeClass(this.el, ['video-topbar-hidden']);
+	      }
+	      this.timer = window.setTimeout(function () {
+	        _this3.hideToolBar();
+	      }, 3000);
+	    }
+	  }, {
+	    key: "onShowToolBar",
+	    value: function onShowToolBar() {
+	      if (this.timer) {
+	        window.clearTimeout(this.timer);
+	        this.timer = null;
+	      }
+	      this.showToolBar();
+	    }
+	  }, {
+	    key: "onHideToolBar",
+	    value: function onHideToolBar() {
+	      this.hideToolBar();
+	    }
+	  }]);
+	  return TopBar;
+	}(Component);
+
+	var env = window.navigator.userAgent.toLowerCase();
+	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
+	var Env = {
+	  isInWeixin: function isInWeixin() {
+	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
+	  },
+	  isInApp: function isInApp() {
+	    return /(^|;\s)app\//.test(env);
+	  },
+	  isInIOS: function isInIOS() {
+	    return env.match(/(iphone|ipod|ipad);?/i);
+	  },
+	  isInAndroid: function isInAndroid() {
+	    return env.match(/android|adr/i);
+	  },
+	  isInPc: function isInPc() {
+	    return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin());
+	  },
+	  get env() {
+	    return this.isInPc() ? 'PC' : 'Mobile';
+	  }
+	};
+
+	var getBuiltIn$3 = getBuiltIn$h;
+	var uncurryThis$1 = functionUncurryThis;
+	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
+	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
+	var anObject$2 = anObject$f;
+
+	var concat = uncurryThis$1([].concat);
+
+	// all object keys, includes non-enumerable and symbols
+	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
+	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
+	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
+	};
+
+	var hasOwn$1 = hasOwnProperty_1;
+	var ownKeys$2 = ownKeys$3;
+	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
+	var definePropertyModule = objectDefineProperty;
+
+	var copyConstructorProperties$1 = function (target, source, exceptions) {
+	  var keys = ownKeys$2(source);
+	  var defineProperty = definePropertyModule.f;
+	  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
+	  for (var i = 0; i < keys.length; i++) {
+	    var key = keys[i];
+	    if (!hasOwn$1(target, key) && !(exceptions && hasOwn$1(exceptions, key))) {
+	      defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+	    }
+	  }
+	};
+
+	var isObject$2 = isObject$j;
+	var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
+
+	// `InstallErrorCause` abstract operation
+	// https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
+	var installErrorCause$1 = function (O, options) {
+	  if (isObject$2(options) && 'cause' in options) {
+	    createNonEnumerableProperty$2(O, 'cause', options.cause);
+	  }
+	};
+
+	var uncurryThis = functionUncurryThis;
+
+	var $Error$1 = Error;
+	var replace = uncurryThis(''.replace);
+
+	var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
+	// eslint-disable-next-line redos/no-vulnerable -- safe
+	var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
+	var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
+
+	var errorStackClear = function (stack, dropEntries) {
+	  if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error$1.prepareStackTrace) {
+	    while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
+	  } return stack;
+	};
+
+	var fails$4 = fails$x;
+	var createPropertyDescriptor$1 = createPropertyDescriptor$8;
+
+	var errorStackInstallable = !fails$4(function () {
+	  var error = Error('a');
+	  if (!('stack' in error)) return true;
+	  // eslint-disable-next-line es/no-object-defineproperty -- safe
+	  Object.defineProperty(error, 'stack', createPropertyDescriptor$1(1, 7));
+	  return error.stack !== 7;
+	});
+
+	var createNonEnumerableProperty$1 = createNonEnumerableProperty$9;
+	var clearErrorStack = errorStackClear;
+	var ERROR_STACK_INSTALLABLE = errorStackInstallable;
+
+	// non-standard V8
+	var captureStackTrace = Error.captureStackTrace;
+
+	var errorStackInstall = function (error, C, stack, dropEntries) {
+	  if (ERROR_STACK_INSTALLABLE) {
+	    if (captureStackTrace) captureStackTrace(error, C);
+	    else createNonEnumerableProperty$1(error, 'stack', clearErrorStack(stack, dropEntries));
+	  }
+	};
+
+	var toString = toString$b;
+
+	var normalizeStringArgument$1 = function (argument, $default) {
+	  return argument === undefined ? arguments.length < 2 ? '' : $default : toString(argument);
+	};
+
+	var $$e = _export;
+	var isPrototypeOf = objectIsPrototypeOf;
+	var getPrototypeOf = objectGetPrototypeOf;
+	var setPrototypeOf = objectSetPrototypeOf;
+	var copyConstructorProperties = copyConstructorProperties$1;
+	var create = objectCreate;
+	var createNonEnumerableProperty = createNonEnumerableProperty$9;
+	var createPropertyDescriptor = createPropertyDescriptor$8;
+	var installErrorCause = installErrorCause$1;
+	var installErrorStack = errorStackInstall;
+	var iterate$4 = iterate$l;
+	var normalizeStringArgument = normalizeStringArgument$1;
+	var wellKnownSymbol$2 = wellKnownSymbol$q;
+
+	var TO_STRING_TAG = wellKnownSymbol$2('toStringTag');
+	var $Error = Error;
+	var push = [].push;
+
+	var $AggregateError = function AggregateError(errors, message /* , options */) {
+	  var isInstance = isPrototypeOf(AggregateErrorPrototype, this);
+	  var that;
+	  if (setPrototypeOf) {
+	    that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
+	  } else {
+	    that = isInstance ? this : create(AggregateErrorPrototype);
+	    createNonEnumerableProperty(that, TO_STRING_TAG, 'Error');
+	  }
+	  if (message !== undefined) createNonEnumerableProperty(that, 'message', normalizeStringArgument(message));
+	  installErrorStack(that, $AggregateError, that.stack, 1);
+	  if (arguments.length > 2) installErrorCause(that, arguments[2]);
+	  var errorsArray = [];
+	  iterate$4(errors, push, { that: errorsArray });
+	  createNonEnumerableProperty(that, 'errors', errorsArray);
+	  return that;
+	};
+
+	if (setPrototypeOf) setPrototypeOf($AggregateError, $Error);
+	else copyConstructorProperties($AggregateError, $Error, { name: true });
+
+	var AggregateErrorPrototype = $AggregateError.prototype = create($Error.prototype, {
+	  constructor: createPropertyDescriptor(1, $AggregateError),
+	  message: createPropertyDescriptor(1, ''),
+	  name: createPropertyDescriptor(1, 'AggregateError')
+	});
+
+	// `AggregateError` constructor
+	// https://tc39.es/ecma262/#sec-aggregate-error-constructor
+	$$e({ global: true, constructor: true, arity: 2 }, {
+	  AggregateError: $AggregateError
+	});
+
+	var classof = classofRaw$2;
+
+	var engineIsNode = typeof process != 'undefined' && classof(process) == 'process';
+
+	var anObject$1 = anObject$f;
+	var aConstructor = aConstructor$3;
+	var isNullOrUndefined = isNullOrUndefined$6;
+	var wellKnownSymbol$1 = wellKnownSymbol$q;
+
+	var SPECIES$1 = wellKnownSymbol$1('species');
+
+	// `SpeciesConstructor` abstract operation
+	// https://tc39.es/ecma262/#sec-speciesconstructor
+	var speciesConstructor$2 = function (O, defaultConstructor) {
+	  var C = anObject$1(O).constructor;
+	  var S;
+	  return C === undefined || isNullOrUndefined(S = anObject$1(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
+	};
+
+	var userAgent$2 = engineUserAgent;
+
+	// eslint-disable-next-line redos/no-vulnerable -- safe
+	var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
+
+	var global$5 = global$o;
+	var apply = functionApply;
+	var bind$2 = functionBindContext;
+	var isCallable$3 = isCallable$p;
+	var hasOwn = hasOwnProperty_1;
+	var fails$3 = fails$x;
+	var html = html$2;
+	var arraySlice = arraySlice$7;
+	var createElement = documentCreateElement$1;
+	var validateArgumentsLength = validateArgumentsLength$4;
+	var IS_IOS$1 = engineIsIos;
+	var IS_NODE$3 = engineIsNode;
+
+	var set = global$5.setImmediate;
+	var clear = global$5.clearImmediate;
+	var process$3 = global$5.process;
+	var Dispatch = global$5.Dispatch;
+	var Function$1 = global$5.Function;
+	var MessageChannel = global$5.MessageChannel;
+	var String$1 = global$5.String;
+	var counter = 0;
+	var queue$2 = {};
+	var ONREADYSTATECHANGE = 'onreadystatechange';
+	var $location, defer, channel, port;
+
+	fails$3(function () {
+	  // Deno throws a ReferenceError on `location` access without `--location` flag
+	  $location = global$5.location;
+	});
+
+	var run = function (id) {
+	  if (hasOwn(queue$2, id)) {
+	    var fn = queue$2[id];
+	    delete queue$2[id];
+	    fn();
+	  }
+	};
+
+	var runner = function (id) {
+	  return function () {
+	    run(id);
+	  };
+	};
+
+	var eventListener = function (event) {
+	  run(event.data);
+	};
+
+	var globalPostMessageDefer = function (id) {
+	  // old engines have not location.origin
+	  global$5.postMessage(String$1(id), $location.protocol + '//' + $location.host);
+	};
+
+	// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+	if (!set || !clear) {
+	  set = function setImmediate(handler) {
+	    validateArgumentsLength(arguments.length, 1);
+	    var fn = isCallable$3(handler) ? handler : Function$1(handler);
+	    var args = arraySlice(arguments, 1);
+	    queue$2[++counter] = function () {
+	      apply(fn, undefined, args);
+	    };
+	    defer(counter);
+	    return counter;
+	  };
+	  clear = function clearImmediate(id) {
+	    delete queue$2[id];
+	  };
+	  // Node.js 0.8-
+	  if (IS_NODE$3) {
+	    defer = function (id) {
+	      process$3.nextTick(runner(id));
+	    };
+	  // Sphere (JS game engine) Dispatch API
+	  } else if (Dispatch && Dispatch.now) {
+	    defer = function (id) {
+	      Dispatch.now(runner(id));
+	    };
+	  // Browsers with MessageChannel, includes WebWorkers
+	  // except iOS - https://github.com/zloirock/core-js/issues/624
+	  } else if (MessageChannel && !IS_IOS$1) {
+	    channel = new MessageChannel();
+	    port = channel.port2;
+	    channel.port1.onmessage = eventListener;
+	    defer = bind$2(port.postMessage, port);
+	  // Browsers with postMessage, skip WebWorkers
+	  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
+	  } else if (
+	    global$5.addEventListener &&
+	    isCallable$3(global$5.postMessage) &&
+	    !global$5.importScripts &&
+	    $location && $location.protocol !== 'file:' &&
+	    !fails$3(globalPostMessageDefer)
+	  ) {
+	    defer = globalPostMessageDefer;
+	    global$5.addEventListener('message', eventListener, false);
+	  // IE8-
+	  } else if (ONREADYSTATECHANGE in createElement('script')) {
+	    defer = function (id) {
+	      html.appendChild(createElement('script'))[ONREADYSTATECHANGE] = function () {
+	        html.removeChild(this);
+	        run(id);
+	      };
+	    };
+	  // Rest old browsers
+	  } else {
+	    defer = function (id) {
+	      setTimeout(runner(id), 0);
+	    };
+	  }
+	}
+
+	var task$1 = {
+	  set: set,
+	  clear: clear
+	};
+
+	var Queue$2 = function () {
+	  this.head = null;
+	  this.tail = null;
+	};
+
+	Queue$2.prototype = {
+	  add: function (item) {
+	    var entry = { item: item, next: null };
+	    var tail = this.tail;
+	    if (tail) tail.next = entry;
+	    else this.head = entry;
+	    this.tail = entry;
+	  },
+	  get: function () {
+	    var entry = this.head;
+	    if (entry) {
+	      var next = this.head = entry.next;
+	      if (next === null) this.tail = null;
+	      return entry.item;
+	    }
+	  }
+	};
+
+	var queue$1 = Queue$2;
+
+	var userAgent$1 = engineUserAgent;
+
+	var engineIsIosPebble = /ipad|iphone|ipod/i.test(userAgent$1) && typeof Pebble != 'undefined';
+
+	var userAgent = engineUserAgent;
+
+	var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
+
+	var global$4 = global$o;
+	var bind$1 = functionBindContext;
+	var getOwnPropertyDescriptor$7 = objectGetOwnPropertyDescriptor.f;
+	var macrotask = task$1.set;
+	var Queue$1 = queue$1;
+	var IS_IOS = engineIsIos;
+	var IS_IOS_PEBBLE = engineIsIosPebble;
+	var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
+	var IS_NODE$2 = engineIsNode;
+
+	var MutationObserver$1 = global$4.MutationObserver || global$4.WebKitMutationObserver;
+	var document$2 = global$4.document;
+	var process$2 = global$4.process;
+	var Promise$1 = global$4.Promise;
+	// Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
+	var queueMicrotaskDescriptor = getOwnPropertyDescriptor$7(global$4, 'queueMicrotask');
+	var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
+	var notify$1, toggle, node, promise$6, then;
+
+	// modern engines have queueMicrotask method
+	if (!microtask$1) {
+	  var queue = new Queue$1();
+
+	  var flush = function () {
+	    var parent, fn;
+	    if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
+	    while (fn = queue.get()) try {
+	      fn();
+	    } catch (error) {
+	      if (queue.head) notify$1();
+	      throw error;
+	    }
+	    if (parent) parent.enter();
+	  };
+
+	  // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
+	  // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
+	  if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$2) {
+	    toggle = true;
+	    node = document$2.createTextNode('');
+	    new MutationObserver$1(flush).observe(node, { characterData: true });
+	    notify$1 = function () {
+	      node.data = toggle = !toggle;
+	    };
+	  // environments with maybe non-completely correct, but existent Promise
+	  } else if (!IS_IOS_PEBBLE && Promise$1 && Promise$1.resolve) {
+	    // Promise.resolve without an argument throws an error in LG WebOS 2
+	    promise$6 = Promise$1.resolve(undefined);
+	    // workaround of WebKit ~ iOS Safari 10.1 bug
+	    promise$6.constructor = Promise$1;
+	    then = bind$1(promise$6.then, promise$6);
+	    notify$1 = function () {
+	      then(flush);
+	    };
+	  // Node.js without promises
+	  } else if (IS_NODE$2) {
+	    notify$1 = function () {
+	      process$2.nextTick(flush);
+	    };
+	  // for other environments - macrotask based on:
+	  // - setImmediate
+	  // - MessageChannel
+	  // - window.postMessage
+	  // - onreadystatechange
+	  // - setTimeout
+	  } else {
+	    // `webpack` dev server bug on IE global methods - use bind(fn, global)
+	    macrotask = bind$1(macrotask, global$4);
+	    notify$1 = function () {
+	      macrotask(flush);
+	    };
+	  }
+
+	  microtask$1 = function (fn) {
+	    if (!queue.head) notify$1();
+	    queue.add(fn);
+	  };
+	}
+
+	var microtask_1 = microtask$1;
+
+	var hostReportErrors$1 = function (a, b) {
+	  try {
+	    // eslint-disable-next-line no-console -- safe
+	    arguments.length == 1 ? console.error(a) : console.error(a, b);
+	  } catch (error) { /* empty */ }
+	};
+
+	var perform$6 = function (exec) {
+	  try {
+	    return { error: false, value: exec() };
+	  } catch (error) {
+	    return { error: true, value: error };
+	  }
+	};
+
+	var global$3 = global$o;
+
+	var promiseNativeConstructor = global$3.Promise;
+
+	/* global Deno -- Deno case */
+
+	var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
+
+	var IS_DENO$1 = engineIsDeno;
+	var IS_NODE$1 = engineIsNode;
+
+	var engineIsBrowser = !IS_DENO$1 && !IS_NODE$1
+	  && typeof window == 'object'
+	  && typeof document == 'object';
+
+	var global$2 = global$o;
+	var NativePromiseConstructor$5 = promiseNativeConstructor;
+	var isCallable$2 = isCallable$p;
+	var isForced = isForced_1;
+	var inspectSource = inspectSource$2;
+	var wellKnownSymbol = wellKnownSymbol$q;
+	var IS_BROWSER = engineIsBrowser;
+	var IS_DENO = engineIsDeno;
+	var V8_VERSION = engineV8Version;
+
+	var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
+	var SPECIES = wellKnownSymbol('species');
+	var SUBCLASSING = false;
+	var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$2(global$2.PromiseRejectionEvent);
+
+	var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
+	  var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
+	  var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(NativePromiseConstructor$5);
+	  // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
+	  // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
+	  // We can't detect it synchronously, so just check versions
+	  if (!GLOBAL_CORE_JS_PROMISE && V8_VERSION === 66) return true;
+	  // We need Promise#{ catch, finally } in the pure version for preventing prototype pollution
+	  if (!(NativePromisePrototype$2['catch'] && NativePromisePrototype$2['finally'])) return true;
+	  // We can't use @@species feature detection in V8 since it causes
+	  // deoptimization and performance degradation
+	  // https://github.com/zloirock/core-js/issues/679
+	  if (!V8_VERSION || V8_VERSION < 51 || !/native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) {
+	    // Detect correctness of subclassing with @@species support
+	    var promise = new NativePromiseConstructor$5(function (resolve) { resolve(1); });
+	    var FakePromise = function (exec) {
+	      exec(function () { /* empty */ }, function () { /* empty */ });
+	    };
+	    var constructor = promise.constructor = {};
+	    constructor[SPECIES] = FakePromise;
+	    SUBCLASSING = promise.then(function () { /* empty */ }) instanceof FakePromise;
+	    if (!SUBCLASSING) return true;
+	  // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
+	  } return !GLOBAL_CORE_JS_PROMISE && (IS_BROWSER || IS_DENO) && !NATIVE_PROMISE_REJECTION_EVENT$1;
+	});
+
+	var promiseConstructorDetection = {
+	  CONSTRUCTOR: FORCED_PROMISE_CONSTRUCTOR$5,
+	  REJECTION_EVENT: NATIVE_PROMISE_REJECTION_EVENT$1,
+	  SUBCLASSING: SUBCLASSING
+	};
+
+	var newPromiseCapability$2 = {};
+
+	var aCallable$5 = aCallable$h;
+
+	var $TypeError = TypeError;
+
+	var PromiseCapability = function (C) {
+	  var resolve, reject;
+	  this.promise = new C(function ($$resolve, $$reject) {
+	    if (resolve !== undefined || reject !== undefined) throw $TypeError('Bad Promise constructor');
+	    resolve = $$resolve;
+	    reject = $$reject;
+	  });
+	  this.resolve = aCallable$5(resolve);
+	  this.reject = aCallable$5(reject);
+	};
+
+	// `NewPromiseCapability` abstract operation
+	// https://tc39.es/ecma262/#sec-newpromisecapability
+	newPromiseCapability$2.f = function (C) {
+	  return new PromiseCapability(C);
+	};
+
+	var $$d = _export;
+	var IS_NODE = engineIsNode;
+	var global$1 = global$o;
+	var call$5 = functionCall;
+	var defineBuiltIn = defineBuiltIn$8;
+	var setToStringTag = setToStringTag$9;
+	var setSpecies = setSpecies$2;
+	var aCallable$4 = aCallable$h;
+	var isCallable$1 = isCallable$p;
+	var isObject$1 = isObject$j;
+	var anInstance = anInstance$5;
+	var speciesConstructor$1 = speciesConstructor$2;
+	var task = task$1.set;
+	var microtask = microtask_1;
+	var hostReportErrors = hostReportErrors$1;
+	var perform$5 = perform$6;
+	var Queue = queue$1;
+	var InternalStateModule = internalState;
+	var NativePromiseConstructor$4 = promiseNativeConstructor;
+	var PromiseConstructorDetection = promiseConstructorDetection;
+	var newPromiseCapabilityModule$6 = newPromiseCapability$2;
+
+	var PROMISE = 'Promise';
+	var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
+	var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
+	PromiseConstructorDetection.SUBCLASSING;
+	var getInternalPromiseState = InternalStateModule.getterFor(PROMISE);
+	var setInternalState = InternalStateModule.set;
+	var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
+	var PromiseConstructor = NativePromiseConstructor$4;
+	var PromisePrototype = NativePromisePrototype$1;
+	var TypeError$1 = global$1.TypeError;
+	var document$1 = global$1.document;
+	var process$1 = global$1.process;
+	var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
+	var newGenericPromiseCapability = newPromiseCapability$1;
+
+	var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$1.dispatchEvent);
+	var UNHANDLED_REJECTION = 'unhandledrejection';
+	var REJECTION_HANDLED = 'rejectionhandled';
+	var PENDING = 0;
+	var FULFILLED = 1;
+	var REJECTED = 2;
+	var HANDLED = 1;
+	var UNHANDLED = 2;
+
+	var Internal, OwnPromiseCapability, PromiseWrapper;
+
+	// helpers
+	var isThenable = function (it) {
+	  var then;
+	  return isObject$1(it) && isCallable$1(then = it.then) ? then : false;
+	};
+
+	var callReaction = function (reaction, state) {
+	  var value = state.value;
+	  var ok = state.state == FULFILLED;
+	  var handler = ok ? reaction.ok : reaction.fail;
+	  var resolve = reaction.resolve;
+	  var reject = reaction.reject;
+	  var domain = reaction.domain;
+	  var result, then, exited;
+	  try {
+	    if (handler) {
+	      if (!ok) {
+	        if (state.rejection === UNHANDLED) onHandleUnhandled(state);
+	        state.rejection = HANDLED;
+	      }
+	      if (handler === true) result = value;
+	      else {
+	        if (domain) domain.enter();
+	        result = handler(value); // can throw
+	        if (domain) {
+	          domain.exit();
+	          exited = true;
+	        }
+	      }
+	      if (result === reaction.promise) {
+	        reject(TypeError$1('Promise-chain cycle'));
+	      } else if (then = isThenable(result)) {
+	        call$5(then, result, resolve, reject);
+	      } else resolve(result);
+	    } else reject(value);
+	  } catch (error) {
+	    if (domain && !exited) domain.exit();
+	    reject(error);
+	  }
+	};
+
+	var notify = function (state, isReject) {
+	  if (state.notified) return;
+	  state.notified = true;
+	  microtask(function () {
+	    var reactions = state.reactions;
+	    var reaction;
+	    while (reaction = reactions.get()) {
+	      callReaction(reaction, state);
+	    }
+	    state.notified = false;
+	    if (isReject && !state.rejection) onUnhandled(state);
+	  });
+	};
+
+	var dispatchEvent = function (name, promise, reason) {
+	  var event, handler;
+	  if (DISPATCH_EVENT) {
+	    event = document$1.createEvent('Event');
+	    event.promise = promise;
+	    event.reason = reason;
+	    event.initEvent(name, false, true);
+	    global$1.dispatchEvent(event);
+	  } else event = { promise: promise, reason: reason };
+	  if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$1['on' + name])) handler(event);
+	  else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
+	};
+
+	var onUnhandled = function (state) {
+	  call$5(task, global$1, function () {
+	    var promise = state.facade;
+	    var value = state.value;
+	    var IS_UNHANDLED = isUnhandled(state);
+	    var result;
+	    if (IS_UNHANDLED) {
+	      result = perform$5(function () {
+	        if (IS_NODE) {
+	          process$1.emit('unhandledRejection', value, promise);
+	        } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
+	      });
+	      // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
+	      state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
+	      if (result.error) throw result.value;
+	    }
+	  });
+	};
+
+	var isUnhandled = function (state) {
+	  return state.rejection !== HANDLED && !state.parent;
+	};
+
+	var onHandleUnhandled = function (state) {
+	  call$5(task, global$1, function () {
+	    var promise = state.facade;
+	    if (IS_NODE) {
+	      process$1.emit('rejectionHandled', promise);
+	    } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
+	  });
+	};
+
+	var bind = function (fn, state, unwrap) {
+	  return function (value) {
+	    fn(state, value, unwrap);
+	  };
+	};
+
+	var internalReject = function (state, value, unwrap) {
+	  if (state.done) return;
+	  state.done = true;
+	  if (unwrap) state = unwrap;
+	  state.value = value;
+	  state.state = REJECTED;
+	  notify(state, true);
+	};
+
+	var internalResolve = function (state, value, unwrap) {
+	  if (state.done) return;
+	  state.done = true;
+	  if (unwrap) state = unwrap;
+	  try {
+	    if (state.facade === value) throw TypeError$1("Promise can't be resolved itself");
+	    var then = isThenable(value);
+	    if (then) {
+	      microtask(function () {
+	        var wrapper = { done: false };
+	        try {
+	          call$5(then, value,
+	            bind(internalResolve, wrapper, state),
+	            bind(internalReject, wrapper, state)
+	          );
+	        } catch (error) {
+	          internalReject(wrapper, error, state);
+	        }
+	      });
+	    } else {
+	      state.value = value;
+	      state.state = FULFILLED;
+	      notify(state, false);
+	    }
+	  } catch (error) {
+	    internalReject({ done: false }, error, state);
+	  }
+	};
+
+	// constructor polyfill
+	if (FORCED_PROMISE_CONSTRUCTOR$4) {
+	  // 25.4.3.1 Promise(executor)
+	  PromiseConstructor = function Promise(executor) {
+	    anInstance(this, PromisePrototype);
+	    aCallable$4(executor);
+	    call$5(Internal, this);
+	    var state = getInternalPromiseState(this);
+	    try {
+	      executor(bind(internalResolve, state), bind(internalReject, state));
+	    } catch (error) {
+	      internalReject(state, error);
+	    }
+	  };
+
+	  PromisePrototype = PromiseConstructor.prototype;
+
+	  // eslint-disable-next-line no-unused-vars -- required for `.length`
+	  Internal = function Promise(executor) {
+	    setInternalState(this, {
+	      type: PROMISE,
+	      done: false,
+	      notified: false,
+	      parent: false,
+	      reactions: new Queue(),
+	      rejection: false,
+	      state: PENDING,
+	      value: undefined
+	    });
+	  };
+
+	  // `Promise.prototype.then` method
+	  // https://tc39.es/ecma262/#sec-promise.prototype.then
+	  Internal.prototype = defineBuiltIn(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
+	    var state = getInternalPromiseState(this);
+	    var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
+	    state.parent = true;
+	    reaction.ok = isCallable$1(onFulfilled) ? onFulfilled : true;
+	    reaction.fail = isCallable$1(onRejected) && onRejected;
+	    reaction.domain = IS_NODE ? process$1.domain : undefined;
+	    if (state.state == PENDING) state.reactions.add(reaction);
+	    else microtask(function () {
+	      callReaction(reaction, state);
+	    });
+	    return reaction.promise;
+	  });
+
+	  OwnPromiseCapability = function () {
+	    var promise = new Internal();
+	    var state = getInternalPromiseState(promise);
+	    this.promise = promise;
+	    this.resolve = bind(internalResolve, state);
+	    this.reject = bind(internalReject, state);
+	  };
+
+	  newPromiseCapabilityModule$6.f = newPromiseCapability$1 = function (C) {
+	    return C === PromiseConstructor || C === PromiseWrapper
+	      ? new OwnPromiseCapability(C)
+	      : newGenericPromiseCapability(C);
+	  };
+	}
+
+	$$d({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+	  Promise: PromiseConstructor
+	});
+
+	setToStringTag(PromiseConstructor, PROMISE, false, true);
+	setSpecies(PROMISE);
+
+	var NativePromiseConstructor$3 = promiseNativeConstructor;
+	var checkCorrectnessOfIteration = checkCorrectnessOfIteration$2;
+	var FORCED_PROMISE_CONSTRUCTOR$3 = promiseConstructorDetection.CONSTRUCTOR;
+
+	var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCorrectnessOfIteration(function (iterable) {
+	  NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
+	});
+
+	var $$c = _export;
+	var call$4 = functionCall;
+	var aCallable$3 = aCallable$h;
+	var newPromiseCapabilityModule$5 = newPromiseCapability$2;
+	var perform$4 = perform$6;
+	var iterate$3 = iterate$l;
+	var PROMISE_STATICS_INCORRECT_ITERATION$3 = promiseStaticsIncorrectIteration;
+
+	// `Promise.all` method
+	// https://tc39.es/ecma262/#sec-promise.all
+	$$c({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
+	  all: function all(iterable) {
+	    var C = this;
+	    var capability = newPromiseCapabilityModule$5.f(C);
+	    var resolve = capability.resolve;
+	    var reject = capability.reject;
+	    var result = perform$4(function () {
+	      var $promiseResolve = aCallable$3(C.resolve);
+	      var values = [];
+	      var counter = 0;
+	      var remaining = 1;
+	      iterate$3(iterable, function (promise) {
+	        var index = counter++;
+	        var alreadyCalled = false;
+	        remaining++;
+	        call$4($promiseResolve, C, promise).then(function (value) {
+	          if (alreadyCalled) return;
+	          alreadyCalled = true;
+	          values[index] = value;
+	          --remaining || resolve(values);
+	        }, reject);
+	      });
+	      --remaining || resolve(values);
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  }
+	});
+
+	var $$b = _export;
+	var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
+	var NativePromiseConstructor$2 = promiseNativeConstructor;
+
+	NativePromiseConstructor$2 && NativePromiseConstructor$2.prototype;
+
+	// `Promise.prototype.catch` method
+	// https://tc39.es/ecma262/#sec-promise.prototype.catch
+	$$b({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+	  'catch': function (onRejected) {
+	    return this.then(undefined, onRejected);
+	  }
+	});
+
+	var $$a = _export;
+	var call$3 = functionCall;
+	var aCallable$2 = aCallable$h;
+	var newPromiseCapabilityModule$4 = newPromiseCapability$2;
+	var perform$3 = perform$6;
+	var iterate$2 = iterate$l;
+	var PROMISE_STATICS_INCORRECT_ITERATION$2 = promiseStaticsIncorrectIteration;
+
+	// `Promise.race` method
+	// https://tc39.es/ecma262/#sec-promise.race
+	$$a({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
+	  race: function race(iterable) {
+	    var C = this;
+	    var capability = newPromiseCapabilityModule$4.f(C);
+	    var reject = capability.reject;
+	    var result = perform$3(function () {
+	      var $promiseResolve = aCallable$2(C.resolve);
+	      iterate$2(iterable, function (promise) {
+	        call$3($promiseResolve, C, promise).then(capability.resolve, reject);
+	      });
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  }
+	});
+
+	var $$9 = _export;
+	var call$2 = functionCall;
+	var newPromiseCapabilityModule$3 = newPromiseCapability$2;
+	var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
+
+	// `Promise.reject` method
+	// https://tc39.es/ecma262/#sec-promise.reject
+	$$9({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+	  reject: function reject(r) {
+	    var capability = newPromiseCapabilityModule$3.f(this);
+	    call$2(capability.reject, undefined, r);
+	    return capability.promise;
+	  }
+	});
+
+	var anObject = anObject$f;
+	var isObject = isObject$j;
+	var newPromiseCapability = newPromiseCapability$2;
+
+	var promiseResolve$2 = function (C, x) {
+	  anObject(C);
+	  if (isObject(x) && x.constructor === C) return x;
+	  var promiseCapability = newPromiseCapability.f(C);
+	  var resolve = promiseCapability.resolve;
+	  resolve(x);
+	  return promiseCapability.promise;
+	};
+
+	var $$8 = _export;
+	var getBuiltIn$2 = getBuiltIn$h;
+	var IS_PURE = isPure;
+	var NativePromiseConstructor$1 = promiseNativeConstructor;
+	var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
+	var promiseResolve$1 = promiseResolve$2;
+
+	var PromiseConstructorWrapper = getBuiltIn$2('Promise');
+	var CHECK_WRAPPER = !FORCED_PROMISE_CONSTRUCTOR;
+
+	// `Promise.resolve` method
+	// https://tc39.es/ecma262/#sec-promise.resolve
+	$$8({ target: 'Promise', stat: true, forced: IS_PURE  }, {
+	  resolve: function resolve(x) {
+	    return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
+	  }
+	});
+
+	var $$7 = _export;
+	var call$1 = functionCall;
+	var aCallable$1 = aCallable$h;
+	var newPromiseCapabilityModule$2 = newPromiseCapability$2;
+	var perform$2 = perform$6;
+	var iterate$1 = iterate$l;
+	var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
+
+	// `Promise.allSettled` method
+	// https://tc39.es/ecma262/#sec-promise.allsettled
+	$$7({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+	  allSettled: function allSettled(iterable) {
+	    var C = this;
+	    var capability = newPromiseCapabilityModule$2.f(C);
+	    var resolve = capability.resolve;
+	    var reject = capability.reject;
+	    var result = perform$2(function () {
+	      var promiseResolve = aCallable$1(C.resolve);
+	      var values = [];
+	      var counter = 0;
+	      var remaining = 1;
+	      iterate$1(iterable, function (promise) {
+	        var index = counter++;
+	        var alreadyCalled = false;
+	        remaining++;
+	        call$1(promiseResolve, C, promise).then(function (value) {
+	          if (alreadyCalled) return;
+	          alreadyCalled = true;
+	          values[index] = { status: 'fulfilled', value: value };
+	          --remaining || resolve(values);
+	        }, function (error) {
+	          if (alreadyCalled) return;
+	          alreadyCalled = true;
+	          values[index] = { status: 'rejected', reason: error };
+	          --remaining || resolve(values);
+	        });
+	      });
+	      --remaining || resolve(values);
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  }
+	});
+
+	var $$6 = _export;
+	var call = functionCall;
+	var aCallable = aCallable$h;
+	var getBuiltIn$1 = getBuiltIn$h;
+	var newPromiseCapabilityModule$1 = newPromiseCapability$2;
+	var perform$1 = perform$6;
+	var iterate = iterate$l;
+	var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
+
+	var PROMISE_ANY_ERROR = 'No one promise resolved';
+
+	// `Promise.any` method
+	// https://tc39.es/ecma262/#sec-promise.any
+	$$6({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+	  any: function any(iterable) {
+	    var C = this;
+	    var AggregateError = getBuiltIn$1('AggregateError');
+	    var capability = newPromiseCapabilityModule$1.f(C);
+	    var resolve = capability.resolve;
+	    var reject = capability.reject;
+	    var result = perform$1(function () {
+	      var promiseResolve = aCallable(C.resolve);
+	      var errors = [];
+	      var counter = 0;
+	      var remaining = 1;
+	      var alreadyResolved = false;
+	      iterate(iterable, function (promise) {
+	        var index = counter++;
+	        var alreadyRejected = false;
+	        remaining++;
+	        call(promiseResolve, C, promise).then(function (value) {
+	          if (alreadyRejected || alreadyResolved) return;
+	          alreadyResolved = true;
+	          resolve(value);
+	        }, function (error) {
+	          if (alreadyRejected || alreadyResolved) return;
+	          alreadyRejected = true;
+	          errors[index] = error;
+	          --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
+	        });
+	      });
+	      --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  }
+	});
+
+	var $$5 = _export;
+	var NativePromiseConstructor = promiseNativeConstructor;
+	var fails$2 = fails$x;
+	var getBuiltIn = getBuiltIn$h;
+	var isCallable = isCallable$p;
+	var speciesConstructor = speciesConstructor$2;
+	var promiseResolve = promiseResolve$2;
+
+	var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
+
+	// Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
+	var NON_GENERIC = !!NativePromiseConstructor && fails$2(function () {
+	  // eslint-disable-next-line unicorn/no-thenable -- required for testing
+	  NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
+	});
+
+	// `Promise.prototype.finally` method
+	// https://tc39.es/ecma262/#sec-promise.prototype.finally
+	$$5({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+	  'finally': function (onFinally) {
+	    var C = speciesConstructor(this, getBuiltIn('Promise'));
+	    var isFunction = isCallable(onFinally);
+	    return this.then(
+	      isFunction ? function (x) {
+	        return promiseResolve(C, onFinally()).then(function () { return x; });
+	      } : onFinally,
+	      isFunction ? function (e) {
+	        return promiseResolve(C, onFinally()).then(function () { throw e; });
+	      } : onFinally
+	    );
+	  }
+	});
+
+	var path$5 = path$m;
+
+	var promise$5 = path$5.Promise;
+
+	var parent$h = promise$5;
+
+
+	var promise$4 = parent$h;
+
+	var parent$g = promise$4;
+
+	var promise$3 = parent$g;
+
+	// TODO: Remove from `core-js@4`
+	var $$4 = _export;
+	var newPromiseCapabilityModule = newPromiseCapability$2;
+	var perform = perform$6;
+
+	// `Promise.try` method
+	// https://github.com/tc39/proposal-promise-try
+	$$4({ target: 'Promise', stat: true, forced: true }, {
+	  'try': function (callbackfn) {
+	    var promiseCapability = newPromiseCapabilityModule.f(this);
+	    var result = perform(callbackfn);
+	    (result.error ? promiseCapability.reject : promiseCapability.resolve)(result.value);
+	    return promiseCapability.promise;
+	  }
+	});
+
+	var parent$f = promise$3;
+
+	// TODO: Remove from `core-js@4`
+
+
+
+
+	var promise$2 = parent$f;
+
+	var promise$1 = promise$2;
+
+	var promise = promise$1;
+
+	var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
+
+	function isNative(Ctor) {
+	  return typeof Ctor === 'function' && /native code/.test(Ctor.toString());
+	}
+	function nextTick(cb) {
+	  if (typeof _Promise !== 'undefined' && isNative(_Promise)) {
+	    _Promise.resolve().then(function () {
+	      return cb();
+	    });
+	  } else if (typeof MutationObserver !== 'undefined' && isNative(MutationObserver) && MutationObserver.toString() === '[object MutationObserverConstructor]') {
+	    var observer = new MutationObserver(cb);
+	    var count = 1;
+	    var node = document.createTextNode(String(count));
+	    observer.observe(node, {
+	      characterData: true
+	    });
+	    count++;
+	    node.data = String(count);
+	  } else {
+	    setTimeout(function () {
+	      return cb();
+	    });
+	  }
+	}
+
+	var $$3 = _export;
+	var toObject = toObject$a;
+	var nativeKeys = objectKeys$3;
+	var fails$1 = fails$x;
+
+	var FAILS_ON_PRIMITIVES = fails$1(function () { nativeKeys(1); });
+
+	// `Object.keys` method
+	// https://tc39.es/ecma262/#sec-object.keys
+	$$3({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
+	  keys: function keys(it) {
+	    return nativeKeys(toObject(it));
+	  }
+	});
+
+	var path$4 = path$m;
+
+	var keys$5 = path$4.Object.keys;
+
+	var parent$e = keys$5;
+
+	var keys$4 = parent$e;
+
+	var parent$d = keys$4;
+
+	var keys$3 = parent$d;
+
+	var parent$c = keys$3;
+
+	var keys$2 = parent$c;
+
+	var keys$1 = keys$2;
+
+	var keys = keys$1;
+
+	var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys);
+
+	var path$3 = path$m;
+
+	var getOwnPropertySymbols$5 = path$3.Object.getOwnPropertySymbols;
+
+	var parent$b = getOwnPropertySymbols$5;
+
+	var getOwnPropertySymbols$4 = parent$b;
+
+	var parent$a = getOwnPropertySymbols$4;
+
+	var getOwnPropertySymbols$3 = parent$a;
+
+	var parent$9 = getOwnPropertySymbols$3;
+
+	var getOwnPropertySymbols$2 = parent$9;
+
+	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
+
+	var getOwnPropertySymbols = getOwnPropertySymbols$1;
+
+	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
+
+	var getOwnPropertyDescriptor$6 = {exports: {}};
+
+	var $$2 = _export;
+	var fails = fails$x;
+	var toIndexedObject$1 = toIndexedObject$a;
+	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
+	var DESCRIPTORS$1 = descriptors;
+
+	var FORCED = !DESCRIPTORS$1 || fails(function () { nativeGetOwnPropertyDescriptor(1); });
+
+	// `Object.getOwnPropertyDescriptor` method
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+	$$2({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS$1 }, {
+	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
+	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
+	  }
+	});
+
+	var path$2 = path$m;
+
+	var Object$1 = path$2.Object;
+
+	var getOwnPropertyDescriptor$5 = getOwnPropertyDescriptor$6.exports = function getOwnPropertyDescriptor(it, key) {
+	  return Object$1.getOwnPropertyDescriptor(it, key);
+	};
+
+	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$5.sham = true;
+
+	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$6.exports;
+
+	var parent$8 = getOwnPropertyDescriptorExports;
+
+	var getOwnPropertyDescriptor$4 = parent$8;
+
+	var parent$7 = getOwnPropertyDescriptor$4;
+
+	var getOwnPropertyDescriptor$3 = parent$7;
+
+	var parent$6 = getOwnPropertyDescriptor$3;
+
+	var getOwnPropertyDescriptor$2 = parent$6;
+
+	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
+
+	var getOwnPropertyDescriptor = getOwnPropertyDescriptor$1;
+
+	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor);
+
+	var $$1 = _export;
+	var DESCRIPTORS = descriptors;
+	var ownKeys$1 = ownKeys$3;
+	var toIndexedObject = toIndexedObject$a;
+	var getOwnPropertyDescriptorModule = objectGetOwnPropertyDescriptor;
+	var createProperty = createProperty$6;
+
+	// `Object.getOwnPropertyDescriptors` method
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
+	$$1({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
+	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
+	    var O = toIndexedObject(object);
+	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+	    var keys = ownKeys$1(O);
+	    var result = {};
+	    var index = 0;
+	    var key, descriptor;
+	    while (keys.length > index) {
+	      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
+	      if (descriptor !== undefined) createProperty(result, key, descriptor);
+	    }
+	    return result;
+	  }
+	});
+
+	var path$1 = path$m;
+
+	var getOwnPropertyDescriptors$5 = path$1.Object.getOwnPropertyDescriptors;
+
+	var parent$5 = getOwnPropertyDescriptors$5;
+
+	var getOwnPropertyDescriptors$4 = parent$5;
+
+	var parent$4 = getOwnPropertyDescriptors$4;
+
+	var getOwnPropertyDescriptors$3 = parent$4;
+
+	var parent$3 = getOwnPropertyDescriptors$3;
+
+	var getOwnPropertyDescriptors$2 = parent$3;
+
+	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
+
+	var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
+
+	var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors);
+
+	var $ = _export;
+	var assign$6 = objectAssign;
+
+	// `Object.assign` method
+	// https://tc39.es/ecma262/#sec-object.assign
+	// eslint-disable-next-line es/no-object-assign -- required for testing
+	$({ target: 'Object', stat: true, arity: 2, forced: Object.assign !== assign$6 }, {
+	  assign: assign$6
+	});
+
+	var path = path$m;
+
+	var assign$5 = path.Object.assign;
+
+	var parent$2 = assign$5;
+
+	var assign$4 = parent$2;
+
+	var parent$1 = assign$4;
+
+	var assign$3 = parent$1;
+
+	var parent = assign$3;
+
+	var assign$2 = parent;
+
+	var assign$1 = assign$2;
+
+	var assign = assign$1;
+
+	var _Object$assign = /*@__PURE__*/getDefaultExportFromCjs(assign);
+
+	var PriorityQueue = /*#__PURE__*/function () {
+	  function PriorityQueue() {
+	    _classCallCheck(this, PriorityQueue);
+	    _defineProperty(this, "queue", void 0);
+	    _defineProperty(this, "newestTime", 0);
+	    _defineProperty(this, "maxInterval", 5);
+	    this.queue = [];
+	  }
+	  // 清理过期数据
+	  _createClass(PriorityQueue, [{
+	    key: "removeOutTimeData",
+	    value: function removeOutTimeData() {
+	      var _context,
+	        _this = this;
+	      _filterInstanceProperty(_context = this.queue).call(_context, function (value, index) {
+	        return _this.newestTime - value.timestamp <= _this.maxInterval;
+	      });
+	    }
+	    // 添加新的数据
+	  }, {
+	    key: "add",
+	    value: function add(data) {
+	      this.newestTime = data.timestamp;
+	      this.queue.unshift(data);
+	      // 清除过期的数据
+	      this.removeOutTimeData();
+	      return this;
+	    }
+	    // 直接将数据添加到缓冲队列的末尾
+	  }, {
+	    key: "push",
+	    value: function push(data) {
+	      this.queue.push(data);
+	      return this;
+	    }
+	    // 弹出队列的首个数据
+	  }, {
+	    key: "shift",
+	    value: function shift() {
+	      return this.queue.shift();
+	    }
+	  }, {
+	    key: "splice",
+	    value: function splice(index, number) {
+	      var _context2;
+	      _spliceInstanceProperty(_context2 = this.queue).call(_context2, index, number);
+	      return this;
+	    }
+	  }, {
+	    key: "clear",
+	    value: function clear() {
+	      while (this.queue.length) {
+	        this.queue.pop();
+	      }
+	      return this;
+	    }
+	  }, {
+	    key: "forEach",
+	    value: function forEach(cb) {
+	      for (var index = 0; index < this.queue.length; index++) {
+	        cb(this.queue[index], index);
+	      }
+	    }
+	  }, {
+	    key: "length",
+	    get: function get() {
+	      return this.queue.length;
+	    }
+	  }]);
+	  return PriorityQueue;
+	}();
+
+	function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context16, _context17; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context16 = ownKeys(Object(source), !0)).call(_context16, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context17 = ownKeys(Object(source))).call(_context17, function (key) { Object.defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+	/**
+	 * @description 弹幕类，只专注于实现弹幕的基本逻辑，View层
+	 */
+	var flag = false;
+	var Danmaku = /*#__PURE__*/function () {
+	  function Danmaku(container, player) {
+	    _classCallCheck(this, Danmaku);
+	    _defineProperty(this, "queue", void 0);
+	    _defineProperty(this, "moovingQueue", []);
+	    // 正在运动中的弹幕
+	    _defineProperty(this, "container", void 0);
+	    _defineProperty(this, "player", void 0);
+	    _defineProperty(this, "timer", null);
+	    _defineProperty(this, "renderInterval", 100);
+	    // 每一条弹幕轨道的高度默认为10px
+	    _defineProperty(this, "trackHeight", 10);
+	    _defineProperty(this, "isStopped", true);
+	    _defineProperty(this, "isHidden", false);
+	    _defineProperty(this, "tracks", void 0);
+	    _defineProperty(this, "defaultDanma", {
+	      message: 'default message',
+	      fontColor: '#fff',
+	      fontSize: this.trackHeight,
+	      fontFamily: '',
+	      fontWeight: 500
+	    });
+	    this.queue = new PriorityQueue();
+	    this.container = container; // div.video-danmaku-container
+	    this.player = player;
+	    this.tracks = new Array(this.container.clientHeight / this.trackHeight);
+	    this.init();
+	  }
+	  _createClass(Danmaku, [{
+	    key: "init",
+	    value: function init() {
+	      for (var i = 0; i < this.tracks.length; i++) {
+	        if (!this.tracks[i]) {
+	          this.tracks[i] = {
+	            track: {
+	              id: 0,
+	              priority: 0
+	            },
+	            datas: []
+	          };
+	        }
+	        this.tracks[i].track = {
+	          id: i,
+	          priority: 15 - i
+	        };
+	      }
+	    }
+	    // 暂停所有的弹幕
+	  }, {
+	    key: "pause",
+	    value: function pause() {
+	      var _context,
+	        _this = this;
+	      this.isStopped = true;
+	      window.clearTimeout(this.timer);
+	      _forEachInstanceProperty(_context = this.moovingQueue).call(_context, function (data) {
+	        _this.pauseOneData(data);
+	      });
+	    }
+	    // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
+	  }, {
+	    key: "resume",
+	    value: function resume() {
+	      var _this2 = this,
+	        _context2;
+	      this.isStopped = false;
+	      this.timer = window.setTimeout(function () {
+	        _this2.render();
+	      }, this.renderInterval);
+	      _forEachInstanceProperty(_context2 = this.moovingQueue).call(_context2, function (data) {
+	        _this2.resumeOneData(data);
+	      });
+	    }
+	    // 恢复单条弹幕的运动
+	  }, {
+	    key: "resumeOneData",
+	    value: function resumeOneData(data) {
+	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
+	      data.startTime = Date.now();
+	      data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
+	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
+	    }
+	    // 暂停单条弹幕的运动
+	  }, {
+	    key: "pauseOneData",
+	    value: function pauseOneData(data) {
+	      var currentRollDistance = (Date.now() - data.startTime) * data.rollSpeed / 1000;
+	      data.rollDistance = currentRollDistance + (data.rollDistance ? data.rollDistance : 0);
+	      data.dom.style.transition = '';
+	      data.dom.style.transform = "translateX(".concat(-data.rollDistance, "px)");
+	    }
+	  }, {
+	    key: "startDanmaku",
+	    value: function startDanmaku() {
+	      this.render();
+	    }
+	    // 向缓冲区添加正确格式的弹幕
+	  }, {
+	    key: "addData",
+	    value: function addData(data) {
+	      var _this3 = this;
+	      this.queue.push(this.parseData(data));
+	      // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
+	      if (flag) return;
+	      if (this.timer === null) {
+	        nextTick(function () {
+	          _this3.render();
+	        });
+	        flag = true;
+	      }
+	    }
+	  }, {
+	    key: "parseData",
+	    value: function parseData(data) {
+	      if (typeof data === 'string') {
+	        return {
+	          message: data,
+	          fontColor: '#fff',
+	          fontSize: this.trackHeight,
+	          fontFamily: '',
+	          fontWeight: 500,
+	          timestamp: this.player.video.currentTime
+	        };
+	      }
+	      if (_typeof(data) === 'object') {
+	        if (!data.message || data.message === '') {
+	          throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
+	        }
+	        return _Object$assign(_objectSpread(_objectSpread({}, this.defaultDanma), {}, {
+	          timestamp: this.player.video.currentTime
+	        }), data);
+	      }
+	      throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      try {
+	        this.renderToDOM();
+	      } finally {
+	        this.renderEnd();
+	      }
+	    }
+	  }, {
+	    key: "renderEnd",
+	    value: function renderEnd() {
+	      var _this4 = this;
+	      if (this.queue.length === 0) {
+	        window.clearTimeout(this.timer);
+	        this.timer = null;
+	        flag = false;
+	      } else {
+	        this.timer = window.setTimeout(function () {
+	          _this4.render();
+	        }, this.renderInterval);
+	      }
+	    }
+	    // 向指定的DOM元素上渲染一条弹幕
+	  }, {
+	    key: "renderToDOM",
+	    value: function renderToDOM() {
+	      var _this5 = this;
+	      if (this.queue.length === 0) return;
+	      var data = this.queue.shift();
+	      if (!data.dom) {
+	        var dom = $$M('div.video-danmaku-message');
+	        dom.innerText = data.message;
+	        if (data.fontFamily !== '') {
+	          dom.style.fontFamily = data.fontFamily;
+	        }
+	        dom.style.color = data.fontColor;
+	        dom.style.fontSize = data.fontSize + 'px';
+	        dom.style.fontWeight = data.fontWeight + '';
+	        dom.style.position = 'absolute';
+	        dom.style.left = '100%';
+	        dom.style.whiteSpace = 'nowrap';
+	        dom.style.willChange = 'transform';
+	        dom.style.cursor = 'pointer';
+	        dom.style.visibility = this.isHidden ? 'hidden' : '';
+	        data.dom = dom;
+	        this.container.appendChild(dom);
+	      }
+	      data.totalDistance = this.container.clientWidth + data.dom.clientWidth;
+	      data.width = data.dom.clientWidth;
+	      // 弹幕的总的位移时间，用于计算弹幕的速度
+	      data.rollTime = data.rollTime || Math.floor(data.totalDistance * 0.0058 * (Math.random() * 0.3 + 0.7));
+	      data.rollSpeed = _parseFloat$1((data.totalDistance / data.rollTime).toFixed(2));
+	      // useTracks描述的是该弹幕占用了多少个轨道
+	      data.useTracks = Math.ceil(data.dom.clientHeight / this.trackHeight);
+	      // 重点，此处数组y的作用是表明该弹幕占的轨道的id数组
+	      data.y = [];
+	      data.dom.ontransitionstart = function (e) {
+	        data.startTime = Date.now();
+	      };
+	      data.dom.onmouseenter = function () {
+	        if (_this5.isStopped) return;
+	        _this5.pauseOneData(data);
+	      };
+	      data.dom.onmouseleave = function () {
+	        if (_this5.isStopped) return;
+	        _this5.resumeOneData(data);
+	      };
+	      this.addDataToTrack(data);
+	      if (data.y.length === 0) {
+	        var _context3;
+	        if (_includesInstanceProperty(_context3 = _toConsumableArray(this.container.childNodes)).call(_context3, data.dom)) {
+	          this.container.removeChild(data.dom);
+	        }
+	        this.queue.push(data);
+	      } else {
+	        data.dom.style.top = data.y[0] * this.trackHeight + 'px';
+	        this.startAnimate(data);
+	      }
+	    }
+	    // 将指定的data添加到弹幕轨道上
+	  }, {
+	    key: "addDataToTrack",
+	    value: function addDataToTrack(data) {
+	      var _this6 = this;
+	      // console.log(this.tracks)
+	      // [
+	      //   {track: {id:0, priority: 15}, datas: DanmakuData[]},
+	      //   {track: {id:1, priority: 14}, datas: DanmakuData[]},
+	      //   {track: {id:2, priority: 13}, datas: DanmakuData[]},
+	      //   {track: {id:14, priority: 1}, datas: DanmakuData[]},
+	      // ]
+	      var y = [];
+	      for (var i = 0; i < this.tracks.length; i++) {
+	        var track = this.tracks[i];
+	        var datas = track.datas;
+	        if (datas.length === 0) {
+	          y.push(i);
+	        } else {
+	          var lastItem = datas[datas.length - 1];
+	          // diatance代表的就是在该轨道上弹幕lastItem已经行走的距离
+	          var distance = lastItem.rollSpeed * (Date.now() - lastItem.startTime) / 1000;
+	          if (distance > lastItem.width && (data.rollSpeed <= lastItem.rollSpeed || (distance - lastItem.width) / (data.rollSpeed - lastItem.rollSpeed) > (this.container.clientWidth + lastItem.width - distance) / lastItem.rollSpeed)) {
+	            y.push(i);
+	          } else {
+	            y = [];
+	          }
+	        }
+	        if (y.length >= data.useTracks) {
+	          var _context4;
+	          data.y = y;
+	          _forEachInstanceProperty(_context4 = data.y).call(_context4, function (id) {
+	            _this6.tracks[id].datas.push(data);
+	          });
+	          break;
+	        }
+	      }
+	    }
+	  }, {
+	    key: "removeDataFromTrack",
+	    value: function removeDataFromTrack(data) {
+	      var _context5,
+	        _this7 = this;
+	      _forEachInstanceProperty(_context5 = data.y).call(_context5, function (id) {
+	        var datas = _this7.tracks[id].datas;
+	        var index = _indexOfInstanceProperty(datas).call(datas, data);
+	        if (index === -1) return;
+	        _spliceInstanceProperty(datas).call(datas, index, 1);
+	      });
+	    }
+	  }, {
+	    key: "startAnimate",
+	    value: function startAnimate(data) {
+	      var _this8 = this;
+	      this.moovingQueue.push(data);
+	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
+	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
+	      data.dom.ontransitionend = function (e) {
+	        var _context6;
+	        _this8.container.removeChild(data.dom);
+	        _this8.removeDataFromTrack(data);
+	        var index = _indexOfInstanceProperty(_context6 = _this8.moovingQueue).call(_context6, data);
+	        if (index > -1) {
+	          var _context7;
+	          _spliceInstanceProperty(_context7 = _this8.moovingQueue).call(_context7, index, 1);
+	        }
+	      };
+	    }
+	    // 清空所有的弹幕，包括正在运动中的或者还在缓冲区未被释放的
+	  }, {
+	    key: "flush",
+	    value: function flush() {
+	      var _context8,
+	        _context9,
+	        _this9 = this,
+	        _context11;
+	      _forEachInstanceProperty(_context8 = this.moovingQueue).call(_context8, function (data) {
+	        var _data$dom$parentNode;
+	        (_data$dom$parentNode = data.dom.parentNode) === null || _data$dom$parentNode === void 0 ? void 0 : _data$dom$parentNode.removeChild(data.dom);
+	        data.dom.ontransitionstart = null;
+	        data.dom.ontransitionend = null;
+	      });
+	      _forEachInstanceProperty(_context9 = this.queue).call(_context9, function (data) {
+	        var _context10;
+	        if (_includesInstanceProperty(_context10 = _toConsumableArray(_this9.container.children)).call(_context10, data.dom)) {
+	          var _data$dom$parentNode2;
+	          (_data$dom$parentNode2 = data.dom.parentNode) === null || _data$dom$parentNode2 === void 0 ? void 0 : _data$dom$parentNode2.removeChild(data.dom);
+	          data.dom.ontransitionstart = null;
+	          data.dom.ontransitionend = null;
+	        }
+	      });
+	      // 清空轨道上的所有数据
+	      _forEachInstanceProperty(_context11 = this.tracks).call(_context11, function (obj) {
+	        obj.datas = [];
+	      });
+	      this.moovingQueue = [];
+	      this.queue.clear();
+	    }
+	    // 隐藏所有的弹幕
+	  }, {
+	    key: "close",
+	    value: function close() {
+	      var _context12, _context13;
+	      this.isHidden = true;
+	      _forEachInstanceProperty(_context12 = this.moovingQueue).call(_context12, function (data) {
+	        data.dom.style.visibility = 'hidden';
+	      });
+	      _forEachInstanceProperty(_context13 = this.queue).call(_context13, function (data, index) {
+	        if (data.dom) {
+	          data.dom.style.visibility = 'hidden';
+	        }
+	      });
+	    }
+	  }, {
+	    key: "open",
+	    value: function open() {
+	      var _context14, _context15;
+	      this.isHidden = false;
+	      _forEachInstanceProperty(_context14 = this.moovingQueue).call(_context14, function (data) {
+	        data.dom.style.visibility = '';
+	      });
+	      _forEachInstanceProperty(_context15 = this.queue).call(_context15, function (data, index) {
+	        if (data.dom) {
+	          data.dom.style.visibility = '';
+	        }
+	      });
+	    }
+	  }]);
+	  return Danmaku;
+	}();
+
+	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var DanmakuOpenClose = /*#__PURE__*/function (_Options) {
+	  _inherits(DanmakuOpenClose, _Options);
+	  var _super = _createSuper$4(DanmakuOpenClose);
+	  function DanmakuOpenClose(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, DanmakuOpenClose);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuOpenClose');
+	    // el: div.video-danmaku-openclose.video-controller
+	    _defineProperty(_assertThisInitialized(_this), "danmakuClosePath", danmakuClosePath);
+	    _defineProperty(_assertThisInitialized(_this), "danmakuOpenPath", danmakuOpenPath);
+	    _defineProperty(_assertThisInitialized(_this), "status", 'open');
+	    _defineProperty(_assertThisInitialized(_this), "msg", '关闭弹幕');
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(DanmakuOpenClose, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-danmaku-openclose', 'video-controller']);
+	      // 设置画布大小为1024 * 1024
+	      this.icon = createSvg(this.danmakuOpenPath, '0 0 1024 1024');
+	      this.iconBox.appendChild(this.icon);
+	      this.hideBox.innerText = this.msg;
+	      this.hideBox.style.fontSize = '13px';
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.iconBox.addEventListener('click', function (e) {
+	        e.stopPropagation();
+	        if (_this2.status === 'open') {
+	          _this2.replaceIcon(createSvg(danmakuClosePath, '0 0 1024 1024'));
+	          _this2.status = 'close';
+	          _this2.player.emit('closeDanmaku');
+	          _this2.msg = '开启弹幕';
+	        } else {
+	          _this2.replaceIcon(createSvg(danmakuOpenPath, '0 0 1024 1024'));
+	          _this2.status = 'open';
+	          _this2.player.emit('openDanmaku');
+	          _this2.msg = '关闭弹幕';
+	        }
+	        _this2.hideBox.innerText = _this2.msg;
+	      });
+	    }
+	  }]);
+	  return DanmakuOpenClose;
+	}(Options);
+
+	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var DanmakuSettings = /*#__PURE__*/function (_Options) {
+	  _inherits(DanmakuSettings, _Options);
+	  var _super = _createSuper$3(DanmakuSettings);
+	  // el: div.video-danmaku-settings.video-controller
+	  function DanmakuSettings(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, DanmakuSettings);
+	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuSettings');
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(DanmakuSettings, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-danmaku-settings', 'video-controller']);
+	      // 设置画布大小为1024 * 1024
+	      this.icon = createSvg(danmakuSettingPath, '0 0 1024 1024');
+	      this.iconBox.appendChild(this.icon);
+	    }
+	  }]);
+	  return DanmakuSettings;
+	}(Options);
+
+	window.global = window;
+
+	/**
+	 * @description 控制弹幕的类 Controller层
+	 */
+	var DanmakuController = /*#__PURE__*/function () {
+	  function DanmakuController(player, options) {
+	    _classCallCheck(this, DanmakuController);
+	    _defineProperty(this, "player", void 0);
+	    _defineProperty(this, "video", void 0);
+	    _defineProperty(this, "container", void 0);
+	    _defineProperty(this, "danmaku", void 0);
+	    _defineProperty(this, "danmakuInput", void 0);
+	    _defineProperty(this, "danmakuSettings", void 0);
+	    _defineProperty(this, "danmakuOpenClose", void 0);
+	    _defineProperty(this, "options", void 0);
+	    // el: div.video-danmaku-container
+	    _defineProperty(this, "el", void 0);
+	    this.player = player;
+	    this.video = player.video;
+	    this.container = player.el; // div.Niplayer_video-wrapper
+	    this.options = _Object$assign({
+	      type: 'http'
+	    }, options);
+	    this.init();
+	  }
+	  _createClass(DanmakuController, [{
+	    key: "init",
+	    value: function init() {
+	      this.el = $$M('div.video-danmaku-container');
+	      this.container.appendChild(this.el);
+	      this.danmaku = new Danmaku(this.el, this.player);
+	      this.initTemplate();
+	      this.initializeEvent();
+	      if (this.options.type === 'websocket') {
+	        this.initWebSocket();
+	      } else {
+	        this.initHTTP();
+	      }
+	    }
+	  }, {
+	    key: "initWebSocket",
+	    value: function initWebSocket() {
+	      // const socket = io(this.options.api, {
+	      //   transports: ['websocket', 'polling']
+	      // })
+	      // socket.on('connect', () => {
+	      //   this.player.video.addEventListener('timeupdate', (e) => {
+	      //     socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
+	      //       time: this.player.video.currentTime
+	      //     })
+	      //   })
+	      //   socket.on(EVENT.SEND_DANMAKU_DATA, (data: any[]) => {
+	      //     console.log(`接受到数据${JSON.stringify(data)},当前时间${this.player.video.currentTime}`)
+	      //     for (let item of data) {
+	      //       this.danmaku.addData(item)
+	      //     }
+	      //   })
+	      // })
+	      // socket.connect()
+	    }
+	  }, {
+	    key: "initHTTP",
+	    value: function initHTTP() {}
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      var ctx = this;
+	      this.danmakuInput = new DanmakuInput(this.player, null, 'div');
+	      this.danmakuSettings = new DanmakuSettings(this.player, null, 'div');
+	      this.danmakuOpenClose = new DanmakuOpenClose(this.player, null, 'div');
+	      this.player.use({
+	        install: function install(player) {
+	          player.mountComponent(ctx.danmakuOpenClose.id, ctx.danmakuOpenClose, {
+	            mode: {
+	              type: 'BottomToolBar',
+	              pos: 'medium'
+	            }
+	          });
+	          player.mountComponent(ctx.danmakuSettings.id, ctx.danmakuSettings, {
+	            mode: {
+	              type: 'BottomToolBar',
+	              pos: 'medium'
+	            }
+	          });
+	          player.mountComponent(ctx.danmakuInput.id, ctx.danmakuInput, {
+	            mode: {
+	              type: 'BottomToolBar',
+	              pos: 'medium'
+	            }
+	          });
+	        }
+	      });
+	    }
+	  }, {
+	    key: "initializeEvent",
+	    value: function initializeEvent() {
+	      var _this = this;
+	      // 弹幕功能实现的核心是timeupdate方法！！！！
+	      this.video.addEventListener('timeupdate', function (e) {
+	        _this.onTimeupdate(e);
+	      });
+	      this.video.addEventListener('seeking', function (e) {
+	        _this.onSeeking(e);
+	      });
+	      this.video.addEventListener('pause', function () {
+	        // 暂停所有的弹幕
+	        _this.danmaku.pause();
+	      });
+	      this.video.addEventListener('waiting', function () {
+	        _this.danmaku.pause();
+	      });
+	      this.video.addEventListener('abort', function () {
+	        _this.danmaku.flush();
+	      });
+	      this.video.addEventListener('play', function () {
+	        _this.danmaku.resume();
+	      });
+	      this.danmakuInput.on('sendData', function (data) {
+	        // 此处为发送弹幕的逻辑
+	      });
+	      this.player.on(EVENT.DOT_DRAG, function () {
+	        _this.danmaku.flush();
+	      });
+	      this.player.on('closeDanmaku', function () {
+	        // 隐藏所有的弹幕
+	        _this.danmaku.close();
+	      });
+	      this.player.on('openDanmaku', function () {
+	        // 打开所有隐藏的弹幕
+	        _this.danmaku.open();
+	      });
+	    }
+	  }, {
+	    key: "onTimeupdate",
+	    value: function onTimeupdate(e) {
+	      // 时间更新
+	      // 如果默认请求弹幕数据的方式为http请求，则需要进行轮询
+	      // let video = e.target as HTMLVideoElement
+	      // // console.log(video.currentTime)
+	      // for (let i = 0; i < 10; i++) {
+	      //   this.danmaku.addData(queue[i % queue.length])
+	      // }
+	    }
+	    // start() {
+	    //   this.timer = window.setInterval(() => {
+	    //     this.danmaku.addData(queue[this.index++ % queue.length])
+	    //     // if (this.index >= 250) {
+	    //     //   window.clearInterval(this.timer)
+	    //     //   this.timer = null
+	    //     // }
+	    //   }, 50)
+	    //   // const send = () => {
+	    //   //   if (this.index >= 30) return
+	    //   //   let data = queue[(this.index++) % queue.length]
+	    //   //   this.danmaku.addData(data)
+	    //   //   send()
+	    //   // }
+	    //   // send()
+	    // }
+	    // pause() {
+	    //   window.clearInterval(this.timer)
+	    //   this.timer = null
+	    // }
+	    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+	  }, {
+	    key: "onSeeking",
+	    value: function onSeeking(e) {
+	      this.danmaku.flush();
+	    }
+	  }]);
+	  return DanmakuController;
+	}();
+
+	function styleInject(css, ref) {
+	  if ( ref === void 0 ) ref = {};
+	  var insertAt = ref.insertAt;
+
+	  if (!css || typeof document === 'undefined') { return; }
+
+	  var head = document.head || document.getElementsByTagName('head')[0];
+	  var style = document.createElement('style');
+	  style.type = 'text/css';
+
+	  if (insertAt === 'top') {
+	    if (head.firstChild) {
+	      head.insertBefore(style, head.firstChild);
+	    } else {
+	      head.appendChild(style);
+	    }
+	  } else {
+	    head.appendChild(style);
+	  }
+
+	  if (style.styleSheet) {
+	    style.styleSheet.cssText = css;
+	  } else {
+	    style.appendChild(document.createTextNode(css));
+	  }
+	}
+
+	var css_248z$2 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 40px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 30px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n.video-danmaku-container {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background-color: transparent;\n  left: 0;\n  top: 0;\n  z-index: 1001;\n}\n.video-danmaku-container .video-danmaku-message {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  white-space: pre;\n  pointer-events: none;\n  -webkit-perspective: 500px;\n          perspective: 500px;\n  display: inline-block;\n  will-change: transform;\n  font-weight: normal;\n  line-height: 1.125;\n  font-family: SimHei, \"Microsoft JhengHei\", Arial, Helvetica, sans-serif;\n  text-shadow: #000000 1px 0px 1px, #000000 0px 1px 1px, #000000 0px -1px 1px, #000000 -1px 0px 1px;\n  opacity: 1;\n  margin-left: 0px;\n}\n";
+	styleInject(css_248z$2);
+
+	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	var DanmakuInput = /*#__PURE__*/function (_Component) {
+	  _inherits(DanmakuInput, _Component);
+	  var _super = _createSuper$2(DanmakuInput);
+	  function DanmakuInput(player, container, desc, props, children) {
+	    var _this;
+	    _classCallCheck(this, DanmakuInput);
+	    _this = _super.call(this, container, desc, props, children);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuInput');
+	    // el: div.danmaku-input-wrapper
+	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "inputBox", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "sendBox", void 0);
+	    _this.props = props || {};
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(DanmakuInput, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['danmaku-input-wrapper']);
+	      this.inputBox = $$M('input.danmaku-input', {
+	        type: 'text'
+	      });
+	      this.sendBox = $$M('span.danmaku-send');
+	      this.sendBox.innerText = '发送';
+	      this.el.appendChild(this.inputBox);
+	      this.el.appendChild(this.sendBox);
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.sendBox.onclick = function (e) {
+	        e.stopPropagation();
+	        var value = _this2.inputBox.value;
+	        _this2.emit('sendData', value);
+	        _this2.inputBox.value = '';
+	        _this2.inputBox.blur();
+	      };
+	      this.inputBox.addEventListener('focus', function (e) {
+	        e.stopPropagation();
+	        _this2.player.emit(EVENT.DANMAKU_INPUT_FOCUS);
+	      });
+	      this.inputBox.addEventListener('blur', function (e) {
+	        e.stopPropagation();
+	        _this2.player.emit(EVENT.DANMAKU_INPUT_BLUR);
+	      });
+	      this.inputBox.addEventListener('click', function (e) {
+	        e.stopPropagation();
+	      });
+	    }
+	  }]);
+	  return DanmakuInput;
+	}(Component);
+
+	var css_248z$1 = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-texttrack-container-showtoolbar {\n  bottom: calc(50px + 5px) !important;\n}\n.Niplayer_video-wrapper .video-texttrack-container {\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n  position: absolute;\n  bottom: 5px;\n  color: #fe9200;\n  font-size: 20px;\n}\n.Niplayer_video-wrapper .video-texttrack-container p {\n  word-break: break-all;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  margin: 5px 0 0;\n  line-height: 1.2;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #f00;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #f00;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-controller {\n  margin-left: 5px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.video-switch-on {\n  fill: #007aff !important;\n}\n.video-switch-off {\n  fill: #fff !important;\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
+	styleInject(css_248z$1);
 
 	var mp4box_all = {};
 
@@ -18290,2428 +20675,8 @@
 	  return MediaPlayer;
 	}();
 
-	var $$f = _export;
-	var toObject = toObject$a;
-	var nativeKeys = objectKeys$3;
-	var fails$5 = fails$x;
-
-	var FAILS_ON_PRIMITIVES = fails$5(function () { nativeKeys(1); });
-
-	// `Object.keys` method
-	// https://tc39.es/ecma262/#sec-object.keys
-	$$f({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
-	  keys: function keys(it) {
-	    return nativeKeys(toObject(it));
-	  }
-	});
-
-	var path$5 = path$n;
-
-	var keys$5 = path$5.Object.keys;
-
-	var parent$k = keys$5;
-
-	var keys$4 = parent$k;
-
-	var parent$j = keys$4;
-
-	var keys$3 = parent$j;
-
-	var parent$i = keys$3;
-
-	var keys$2 = parent$i;
-
-	var keys$1 = keys$2;
-
-	var keys = keys$1;
-
-	var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys);
-
-	var path$4 = path$n;
-
-	var getOwnPropertySymbols$5 = path$4.Object.getOwnPropertySymbols;
-
-	var parent$h = getOwnPropertySymbols$5;
-
-	var getOwnPropertySymbols$4 = parent$h;
-
-	var parent$g = getOwnPropertySymbols$4;
-
-	var getOwnPropertySymbols$3 = parent$g;
-
-	var parent$f = getOwnPropertySymbols$3;
-
-	var getOwnPropertySymbols$2 = parent$f;
-
-	var getOwnPropertySymbols$1 = getOwnPropertySymbols$2;
-
-	var getOwnPropertySymbols = getOwnPropertySymbols$1;
-
-	var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols);
-
-	var getOwnPropertyDescriptor$7 = {exports: {}};
-
-	var $$e = _export;
-	var fails$4 = fails$x;
-	var toIndexedObject$1 = toIndexedObject$a;
-	var nativeGetOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
-	var DESCRIPTORS$1 = descriptors;
-
-	var FORCED = !DESCRIPTORS$1 || fails$4(function () { nativeGetOwnPropertyDescriptor(1); });
-
-	// `Object.getOwnPropertyDescriptor` method
-	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
-	$$e({ target: 'Object', stat: true, forced: FORCED, sham: !DESCRIPTORS$1 }, {
-	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
-	    return nativeGetOwnPropertyDescriptor(toIndexedObject$1(it), key);
-	  }
-	});
-
-	var path$3 = path$n;
-
-	var Object$1 = path$3.Object;
-
-	var getOwnPropertyDescriptor$6 = getOwnPropertyDescriptor$7.exports = function getOwnPropertyDescriptor(it, key) {
-	  return Object$1.getOwnPropertyDescriptor(it, key);
-	};
-
-	if (Object$1.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$6.sham = true;
-
-	var getOwnPropertyDescriptorExports = getOwnPropertyDescriptor$7.exports;
-
-	var parent$e = getOwnPropertyDescriptorExports;
-
-	var getOwnPropertyDescriptor$5 = parent$e;
-
-	var parent$d = getOwnPropertyDescriptor$5;
-
-	var getOwnPropertyDescriptor$4 = parent$d;
-
-	var parent$c = getOwnPropertyDescriptor$4;
-
-	var getOwnPropertyDescriptor$3 = parent$c;
-
-	var getOwnPropertyDescriptor$2 = getOwnPropertyDescriptor$3;
-
-	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$2;
-
-	var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$1);
-
-	var getBuiltIn$3 = getBuiltIn$h;
-	var uncurryThis$2 = functionUncurryThis;
-	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
-	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
-	var anObject$2 = anObject$f;
-
-	var concat = uncurryThis$2([].concat);
-
-	// all object keys, includes non-enumerable and symbols
-	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
-	  var keys = getOwnPropertyNamesModule.f(anObject$2(it));
-	  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
-	  return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
-	};
-
-	var $$d = _export;
-	var DESCRIPTORS = descriptors;
-	var ownKeys$2 = ownKeys$3;
-	var toIndexedObject = toIndexedObject$a;
-	var getOwnPropertyDescriptorModule$1 = objectGetOwnPropertyDescriptor;
-	var createProperty = createProperty$6;
-
-	// `Object.getOwnPropertyDescriptors` method
-	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
-	$$d({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
-	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
-	    var O = toIndexedObject(object);
-	    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule$1.f;
-	    var keys = ownKeys$2(O);
-	    var result = {};
-	    var index = 0;
-	    var key, descriptor;
-	    while (keys.length > index) {
-	      descriptor = getOwnPropertyDescriptor(O, key = keys[index++]);
-	      if (descriptor !== undefined) createProperty(result, key, descriptor);
-	    }
-	    return result;
-	  }
-	});
-
-	var path$2 = path$n;
-
-	var getOwnPropertyDescriptors$5 = path$2.Object.getOwnPropertyDescriptors;
-
-	var parent$b = getOwnPropertyDescriptors$5;
-
-	var getOwnPropertyDescriptors$4 = parent$b;
-
-	var parent$a = getOwnPropertyDescriptors$4;
-
-	var getOwnPropertyDescriptors$3 = parent$a;
-
-	var parent$9 = getOwnPropertyDescriptors$3;
-
-	var getOwnPropertyDescriptors$2 = parent$9;
-
-	var getOwnPropertyDescriptors$1 = getOwnPropertyDescriptors$2;
-
-	var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
-
-	var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors);
-
-	var $$c = _export;
-	var $includes = arrayIncludes.includes;
-	var fails$3 = fails$x;
-
-	// FF99+ bug
-	var BROKEN_ON_SPARSE = fails$3(function () {
-	  // eslint-disable-next-line es/no-array-prototype-includes -- detection
-	  return !Array(1).includes();
-	});
-
-	// `Array.prototype.includes` method
-	// https://tc39.es/ecma262/#sec-array.prototype.includes
-	$$c({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
-	  includes: function includes(el /* , fromIndex = 0 */) {
-	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
-	  }
-	});
-
-	var entryVirtual$1 = entryVirtual$9;
-
-	var includes$7 = entryVirtual$1('Array').includes;
-
-	var isObject$3 = isObject$j;
-	var classof$1 = classofRaw$2;
-	var wellKnownSymbol$4 = wellKnownSymbol$q;
-
-	var MATCH$1 = wellKnownSymbol$4('match');
-
-	// `IsRegExp` abstract operation
-	// https://tc39.es/ecma262/#sec-isregexp
-	var isRegexp = function (it) {
-	  var isRegExp;
-	  return isObject$3(it) && ((isRegExp = it[MATCH$1]) !== undefined ? !!isRegExp : classof$1(it) == 'RegExp');
-	};
-
-	var isRegExp = isRegexp;
-
-	var $TypeError$1 = TypeError;
-
-	var notARegexp = function (it) {
-	  if (isRegExp(it)) {
-	    throw $TypeError$1("The method doesn't accept regular expressions");
-	  } return it;
-	};
-
-	var wellKnownSymbol$3 = wellKnownSymbol$q;
-
-	var MATCH = wellKnownSymbol$3('match');
-
-	var correctIsRegexpLogic = function (METHOD_NAME) {
-	  var regexp = /./;
-	  try {
-	    '/./'[METHOD_NAME](regexp);
-	  } catch (error1) {
-	    try {
-	      regexp[MATCH] = false;
-	      return '/./'[METHOD_NAME](regexp);
-	    } catch (error2) { /* empty */ }
-	  } return false;
-	};
-
-	var $$b = _export;
-	var uncurryThis$1 = functionUncurryThis;
-	var notARegExp = notARegexp;
-	var requireObjectCoercible = requireObjectCoercible$5;
-	var toString$1 = toString$b;
-	var correctIsRegExpLogic = correctIsRegexpLogic;
-
-	var stringIndexOf = uncurryThis$1(''.indexOf);
-
-	// `String.prototype.includes` method
-	// https://tc39.es/ecma262/#sec-string.prototype.includes
-	$$b({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
-	  includes: function includes(searchString /* , position = 0 */) {
-	    return !!~stringIndexOf(
-	      toString$1(requireObjectCoercible(this)),
-	      toString$1(notARegExp(searchString)),
-	      arguments.length > 1 ? arguments[1] : undefined
-	    );
-	  }
-	});
-
-	var entryVirtual = entryVirtual$9;
-
-	var includes$6 = entryVirtual('String').includes;
-
-	var isPrototypeOf$1 = objectIsPrototypeOf;
-	var arrayMethod = includes$7;
-	var stringMethod = includes$6;
-
-	var ArrayPrototype = Array.prototype;
-	var StringPrototype = String.prototype;
-
-	var includes$5 = function (it) {
-	  var own = it.includes;
-	  if (it === ArrayPrototype || (isPrototypeOf$1(ArrayPrototype, it) && own === ArrayPrototype.includes)) return arrayMethod;
-	  if (typeof it == 'string' || it === StringPrototype || (isPrototypeOf$1(StringPrototype, it) && own === StringPrototype.includes)) {
-	    return stringMethod;
-	  } return own;
-	};
-
-	var parent$8 = includes$5;
-
-	var includes$4 = parent$8;
-
-	var parent$7 = includes$4;
-
-	var includes$3 = parent$7;
-
-	var parent$6 = includes$3;
-
-	var includes$2 = parent$6;
-
-	var includes$1 = includes$2;
-
-	var includes = includes$1;
-
-	var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes);
-
-	var hasOwn$1 = hasOwnProperty_1;
-	var ownKeys$1 = ownKeys$3;
-	var getOwnPropertyDescriptorModule = objectGetOwnPropertyDescriptor;
-	var definePropertyModule = objectDefineProperty;
-
-	var copyConstructorProperties$1 = function (target, source, exceptions) {
-	  var keys = ownKeys$1(source);
-	  var defineProperty = definePropertyModule.f;
-	  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
-	  for (var i = 0; i < keys.length; i++) {
-	    var key = keys[i];
-	    if (!hasOwn$1(target, key) && !(exceptions && hasOwn$1(exceptions, key))) {
-	      defineProperty(target, key, getOwnPropertyDescriptor(source, key));
-	    }
-	  }
-	};
-
-	var isObject$2 = isObject$j;
-	var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
-
-	// `InstallErrorCause` abstract operation
-	// https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
-	var installErrorCause$1 = function (O, options) {
-	  if (isObject$2(options) && 'cause' in options) {
-	    createNonEnumerableProperty$2(O, 'cause', options.cause);
-	  }
-	};
-
-	var uncurryThis = functionUncurryThis;
-
-	var $Error$1 = Error;
-	var replace = uncurryThis(''.replace);
-
-	var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
-	// eslint-disable-next-line redos/no-vulnerable -- safe
-	var V8_OR_CHAKRA_STACK_ENTRY = /\n\s*at [^:]*:[^\n]*/;
-	var IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);
-
-	var errorStackClear = function (stack, dropEntries) {
-	  if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error$1.prepareStackTrace) {
-	    while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');
-	  } return stack;
-	};
-
-	var fails$2 = fails$x;
-	var createPropertyDescriptor$1 = createPropertyDescriptor$8;
-
-	var errorStackInstallable = !fails$2(function () {
-	  var error = Error('a');
-	  if (!('stack' in error)) return true;
-	  // eslint-disable-next-line es/no-object-defineproperty -- safe
-	  Object.defineProperty(error, 'stack', createPropertyDescriptor$1(1, 7));
-	  return error.stack !== 7;
-	});
-
-	var createNonEnumerableProperty$1 = createNonEnumerableProperty$9;
-	var clearErrorStack = errorStackClear;
-	var ERROR_STACK_INSTALLABLE = errorStackInstallable;
-
-	// non-standard V8
-	var captureStackTrace = Error.captureStackTrace;
-
-	var errorStackInstall = function (error, C, stack, dropEntries) {
-	  if (ERROR_STACK_INSTALLABLE) {
-	    if (captureStackTrace) captureStackTrace(error, C);
-	    else createNonEnumerableProperty$1(error, 'stack', clearErrorStack(stack, dropEntries));
-	  }
-	};
-
-	var toString = toString$b;
-
-	var normalizeStringArgument$1 = function (argument, $default) {
-	  return argument === undefined ? arguments.length < 2 ? '' : $default : toString(argument);
-	};
-
-	var $$a = _export;
-	var isPrototypeOf = objectIsPrototypeOf;
-	var getPrototypeOf = objectGetPrototypeOf;
-	var setPrototypeOf = objectSetPrototypeOf;
-	var copyConstructorProperties = copyConstructorProperties$1;
-	var create = objectCreate;
-	var createNonEnumerableProperty = createNonEnumerableProperty$9;
-	var createPropertyDescriptor = createPropertyDescriptor$8;
-	var installErrorCause = installErrorCause$1;
-	var installErrorStack = errorStackInstall;
-	var iterate$4 = iterate$l;
-	var normalizeStringArgument = normalizeStringArgument$1;
-	var wellKnownSymbol$2 = wellKnownSymbol$q;
-
-	var TO_STRING_TAG = wellKnownSymbol$2('toStringTag');
-	var $Error = Error;
-	var push = [].push;
-
-	var $AggregateError = function AggregateError(errors, message /* , options */) {
-	  var isInstance = isPrototypeOf(AggregateErrorPrototype, this);
-	  var that;
-	  if (setPrototypeOf) {
-	    that = setPrototypeOf($Error(), isInstance ? getPrototypeOf(this) : AggregateErrorPrototype);
-	  } else {
-	    that = isInstance ? this : create(AggregateErrorPrototype);
-	    createNonEnumerableProperty(that, TO_STRING_TAG, 'Error');
-	  }
-	  if (message !== undefined) createNonEnumerableProperty(that, 'message', normalizeStringArgument(message));
-	  installErrorStack(that, $AggregateError, that.stack, 1);
-	  if (arguments.length > 2) installErrorCause(that, arguments[2]);
-	  var errorsArray = [];
-	  iterate$4(errors, push, { that: errorsArray });
-	  createNonEnumerableProperty(that, 'errors', errorsArray);
-	  return that;
-	};
-
-	if (setPrototypeOf) setPrototypeOf($AggregateError, $Error);
-	else copyConstructorProperties($AggregateError, $Error, { name: true });
-
-	var AggregateErrorPrototype = $AggregateError.prototype = create($Error.prototype, {
-	  constructor: createPropertyDescriptor(1, $AggregateError),
-	  message: createPropertyDescriptor(1, ''),
-	  name: createPropertyDescriptor(1, 'AggregateError')
-	});
-
-	// `AggregateError` constructor
-	// https://tc39.es/ecma262/#sec-aggregate-error-constructor
-	$$a({ global: true, constructor: true, arity: 2 }, {
-	  AggregateError: $AggregateError
-	});
-
-	var classof = classofRaw$2;
-
-	var engineIsNode = typeof process != 'undefined' && classof(process) == 'process';
-
-	var anObject$1 = anObject$f;
-	var aConstructor = aConstructor$3;
-	var isNullOrUndefined = isNullOrUndefined$6;
-	var wellKnownSymbol$1 = wellKnownSymbol$q;
-
-	var SPECIES$1 = wellKnownSymbol$1('species');
-
-	// `SpeciesConstructor` abstract operation
-	// https://tc39.es/ecma262/#sec-speciesconstructor
-	var speciesConstructor$2 = function (O, defaultConstructor) {
-	  var C = anObject$1(O).constructor;
-	  var S;
-	  return C === undefined || isNullOrUndefined(S = anObject$1(C)[SPECIES$1]) ? defaultConstructor : aConstructor(S);
-	};
-
-	var userAgent$2 = engineUserAgent;
-
-	// eslint-disable-next-line redos/no-vulnerable -- safe
-	var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
-
-	var global$5 = global$o;
-	var apply$1 = functionApply;
-	var bind$2 = functionBindContext;
-	var isCallable$3 = isCallable$p;
-	var hasOwn = hasOwnProperty_1;
-	var fails$1 = fails$x;
-	var html = html$2;
-	var arraySlice = arraySlice$7;
-	var createElement = documentCreateElement$1;
-	var validateArgumentsLength = validateArgumentsLength$4;
-	var IS_IOS$1 = engineIsIos;
-	var IS_NODE$3 = engineIsNode;
-
-	var set = global$5.setImmediate;
-	var clear = global$5.clearImmediate;
-	var process$3 = global$5.process;
-	var Dispatch = global$5.Dispatch;
-	var Function$1 = global$5.Function;
-	var MessageChannel = global$5.MessageChannel;
-	var String$1 = global$5.String;
-	var counter = 0;
-	var queue$2 = {};
-	var ONREADYSTATECHANGE = 'onreadystatechange';
-	var $location, defer, channel, port;
-
-	fails$1(function () {
-	  // Deno throws a ReferenceError on `location` access without `--location` flag
-	  $location = global$5.location;
-	});
-
-	var run = function (id) {
-	  if (hasOwn(queue$2, id)) {
-	    var fn = queue$2[id];
-	    delete queue$2[id];
-	    fn();
-	  }
-	};
-
-	var runner = function (id) {
-	  return function () {
-	    run(id);
-	  };
-	};
-
-	var eventListener = function (event) {
-	  run(event.data);
-	};
-
-	var globalPostMessageDefer = function (id) {
-	  // old engines have not location.origin
-	  global$5.postMessage(String$1(id), $location.protocol + '//' + $location.host);
-	};
-
-	// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
-	if (!set || !clear) {
-	  set = function setImmediate(handler) {
-	    validateArgumentsLength(arguments.length, 1);
-	    var fn = isCallable$3(handler) ? handler : Function$1(handler);
-	    var args = arraySlice(arguments, 1);
-	    queue$2[++counter] = function () {
-	      apply$1(fn, undefined, args);
-	    };
-	    defer(counter);
-	    return counter;
-	  };
-	  clear = function clearImmediate(id) {
-	    delete queue$2[id];
-	  };
-	  // Node.js 0.8-
-	  if (IS_NODE$3) {
-	    defer = function (id) {
-	      process$3.nextTick(runner(id));
-	    };
-	  // Sphere (JS game engine) Dispatch API
-	  } else if (Dispatch && Dispatch.now) {
-	    defer = function (id) {
-	      Dispatch.now(runner(id));
-	    };
-	  // Browsers with MessageChannel, includes WebWorkers
-	  // except iOS - https://github.com/zloirock/core-js/issues/624
-	  } else if (MessageChannel && !IS_IOS$1) {
-	    channel = new MessageChannel();
-	    port = channel.port2;
-	    channel.port1.onmessage = eventListener;
-	    defer = bind$2(port.postMessage, port);
-	  // Browsers with postMessage, skip WebWorkers
-	  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
-	  } else if (
-	    global$5.addEventListener &&
-	    isCallable$3(global$5.postMessage) &&
-	    !global$5.importScripts &&
-	    $location && $location.protocol !== 'file:' &&
-	    !fails$1(globalPostMessageDefer)
-	  ) {
-	    defer = globalPostMessageDefer;
-	    global$5.addEventListener('message', eventListener, false);
-	  // IE8-
-	  } else if (ONREADYSTATECHANGE in createElement('script')) {
-	    defer = function (id) {
-	      html.appendChild(createElement('script'))[ONREADYSTATECHANGE] = function () {
-	        html.removeChild(this);
-	        run(id);
-	      };
-	    };
-	  // Rest old browsers
-	  } else {
-	    defer = function (id) {
-	      setTimeout(runner(id), 0);
-	    };
-	  }
-	}
-
-	var task$1 = {
-	  set: set,
-	  clear: clear
-	};
-
-	var Queue$2 = function () {
-	  this.head = null;
-	  this.tail = null;
-	};
-
-	Queue$2.prototype = {
-	  add: function (item) {
-	    var entry = { item: item, next: null };
-	    var tail = this.tail;
-	    if (tail) tail.next = entry;
-	    else this.head = entry;
-	    this.tail = entry;
-	  },
-	  get: function () {
-	    var entry = this.head;
-	    if (entry) {
-	      var next = this.head = entry.next;
-	      if (next === null) this.tail = null;
-	      return entry.item;
-	    }
-	  }
-	};
-
-	var queue$1 = Queue$2;
-
-	var userAgent$1 = engineUserAgent;
-
-	var engineIsIosPebble = /ipad|iphone|ipod/i.test(userAgent$1) && typeof Pebble != 'undefined';
-
-	var userAgent = engineUserAgent;
-
-	var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
-
-	var global$4 = global$o;
-	var bind$1 = functionBindContext;
-	var getOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
-	var macrotask = task$1.set;
-	var Queue$1 = queue$1;
-	var IS_IOS = engineIsIos;
-	var IS_IOS_PEBBLE = engineIsIosPebble;
-	var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
-	var IS_NODE$2 = engineIsNode;
-
-	var MutationObserver$1 = global$4.MutationObserver || global$4.WebKitMutationObserver;
-	var document$2 = global$4.document;
-	var process$2 = global$4.process;
-	var Promise$1 = global$4.Promise;
-	// Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
-	var queueMicrotaskDescriptor = getOwnPropertyDescriptor(global$4, 'queueMicrotask');
-	var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
-	var notify$1, toggle, node, promise$6, then;
-
-	// modern engines have queueMicrotask method
-	if (!microtask$1) {
-	  var queue = new Queue$1();
-
-	  var flush = function () {
-	    var parent, fn;
-	    if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
-	    while (fn = queue.get()) try {
-	      fn();
-	    } catch (error) {
-	      if (queue.head) notify$1();
-	      throw error;
-	    }
-	    if (parent) parent.enter();
-	  };
-
-	  // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
-	  // also except WebOS Webkit https://github.com/zloirock/core-js/issues/898
-	  if (!IS_IOS && !IS_NODE$2 && !IS_WEBOS_WEBKIT && MutationObserver$1 && document$2) {
-	    toggle = true;
-	    node = document$2.createTextNode('');
-	    new MutationObserver$1(flush).observe(node, { characterData: true });
-	    notify$1 = function () {
-	      node.data = toggle = !toggle;
-	    };
-	  // environments with maybe non-completely correct, but existent Promise
-	  } else if (!IS_IOS_PEBBLE && Promise$1 && Promise$1.resolve) {
-	    // Promise.resolve without an argument throws an error in LG WebOS 2
-	    promise$6 = Promise$1.resolve(undefined);
-	    // workaround of WebKit ~ iOS Safari 10.1 bug
-	    promise$6.constructor = Promise$1;
-	    then = bind$1(promise$6.then, promise$6);
-	    notify$1 = function () {
-	      then(flush);
-	    };
-	  // Node.js without promises
-	  } else if (IS_NODE$2) {
-	    notify$1 = function () {
-	      process$2.nextTick(flush);
-	    };
-	  // for other environments - macrotask based on:
-	  // - setImmediate
-	  // - MessageChannel
-	  // - window.postMessage
-	  // - onreadystatechange
-	  // - setTimeout
-	  } else {
-	    // `webpack` dev server bug on IE global methods - use bind(fn, global)
-	    macrotask = bind$1(macrotask, global$4);
-	    notify$1 = function () {
-	      macrotask(flush);
-	    };
-	  }
-
-	  microtask$1 = function (fn) {
-	    if (!queue.head) notify$1();
-	    queue.add(fn);
-	  };
-	}
-
-	var microtask_1 = microtask$1;
-
-	var hostReportErrors$1 = function (a, b) {
-	  try {
-	    // eslint-disable-next-line no-console -- safe
-	    arguments.length == 1 ? console.error(a) : console.error(a, b);
-	  } catch (error) { /* empty */ }
-	};
-
-	var perform$6 = function (exec) {
-	  try {
-	    return { error: false, value: exec() };
-	  } catch (error) {
-	    return { error: true, value: error };
-	  }
-	};
-
-	var global$3 = global$o;
-
-	var promiseNativeConstructor = global$3.Promise;
-
-	/* global Deno -- Deno case */
-
-	var engineIsDeno = typeof Deno == 'object' && Deno && typeof Deno.version == 'object';
-
-	var IS_DENO$1 = engineIsDeno;
-	var IS_NODE$1 = engineIsNode;
-
-	var engineIsBrowser = !IS_DENO$1 && !IS_NODE$1
-	  && typeof window == 'object'
-	  && typeof document == 'object';
-
-	var global$2 = global$o;
-	var NativePromiseConstructor$5 = promiseNativeConstructor;
-	var isCallable$2 = isCallable$p;
-	var isForced = isForced_1;
-	var inspectSource = inspectSource$2;
-	var wellKnownSymbol = wellKnownSymbol$q;
-	var IS_BROWSER = engineIsBrowser;
-	var IS_DENO = engineIsDeno;
-	var V8_VERSION = engineV8Version;
-
-	var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
-	var SPECIES = wellKnownSymbol('species');
-	var SUBCLASSING = false;
-	var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$2(global$2.PromiseRejectionEvent);
-
-	var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
-	  var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
-	  var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(NativePromiseConstructor$5);
-	  // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
-	  // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
-	  // We can't detect it synchronously, so just check versions
-	  if (!GLOBAL_CORE_JS_PROMISE && V8_VERSION === 66) return true;
-	  // We need Promise#{ catch, finally } in the pure version for preventing prototype pollution
-	  if (!(NativePromisePrototype$2['catch'] && NativePromisePrototype$2['finally'])) return true;
-	  // We can't use @@species feature detection in V8 since it causes
-	  // deoptimization and performance degradation
-	  // https://github.com/zloirock/core-js/issues/679
-	  if (!V8_VERSION || V8_VERSION < 51 || !/native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) {
-	    // Detect correctness of subclassing with @@species support
-	    var promise = new NativePromiseConstructor$5(function (resolve) { resolve(1); });
-	    var FakePromise = function (exec) {
-	      exec(function () { /* empty */ }, function () { /* empty */ });
-	    };
-	    var constructor = promise.constructor = {};
-	    constructor[SPECIES] = FakePromise;
-	    SUBCLASSING = promise.then(function () { /* empty */ }) instanceof FakePromise;
-	    if (!SUBCLASSING) return true;
-	  // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
-	  } return !GLOBAL_CORE_JS_PROMISE && (IS_BROWSER || IS_DENO) && !NATIVE_PROMISE_REJECTION_EVENT$1;
-	});
-
-	var promiseConstructorDetection = {
-	  CONSTRUCTOR: FORCED_PROMISE_CONSTRUCTOR$5,
-	  REJECTION_EVENT: NATIVE_PROMISE_REJECTION_EVENT$1,
-	  SUBCLASSING: SUBCLASSING
-	};
-
-	var newPromiseCapability$2 = {};
-
-	var aCallable$5 = aCallable$h;
-
-	var $TypeError = TypeError;
-
-	var PromiseCapability = function (C) {
-	  var resolve, reject;
-	  this.promise = new C(function ($$resolve, $$reject) {
-	    if (resolve !== undefined || reject !== undefined) throw $TypeError('Bad Promise constructor');
-	    resolve = $$resolve;
-	    reject = $$reject;
-	  });
-	  this.resolve = aCallable$5(resolve);
-	  this.reject = aCallable$5(reject);
-	};
-
-	// `NewPromiseCapability` abstract operation
-	// https://tc39.es/ecma262/#sec-newpromisecapability
-	newPromiseCapability$2.f = function (C) {
-	  return new PromiseCapability(C);
-	};
-
-	var $$9 = _export;
-	var IS_NODE = engineIsNode;
-	var global$1 = global$o;
-	var call$5 = functionCall;
-	var defineBuiltIn = defineBuiltIn$8;
-	var setToStringTag = setToStringTag$9;
-	var setSpecies = setSpecies$2;
-	var aCallable$4 = aCallable$h;
-	var isCallable$1 = isCallable$p;
-	var isObject$1 = isObject$j;
-	var anInstance = anInstance$5;
-	var speciesConstructor$1 = speciesConstructor$2;
-	var task = task$1.set;
-	var microtask = microtask_1;
-	var hostReportErrors = hostReportErrors$1;
-	var perform$5 = perform$6;
-	var Queue = queue$1;
-	var InternalStateModule = internalState;
-	var NativePromiseConstructor$4 = promiseNativeConstructor;
-	var PromiseConstructorDetection = promiseConstructorDetection;
-	var newPromiseCapabilityModule$6 = newPromiseCapability$2;
-
-	var PROMISE = 'Promise';
-	var FORCED_PROMISE_CONSTRUCTOR$4 = PromiseConstructorDetection.CONSTRUCTOR;
-	var NATIVE_PROMISE_REJECTION_EVENT = PromiseConstructorDetection.REJECTION_EVENT;
-	PromiseConstructorDetection.SUBCLASSING;
-	var getInternalPromiseState = InternalStateModule.getterFor(PROMISE);
-	var setInternalState = InternalStateModule.set;
-	var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
-	var PromiseConstructor = NativePromiseConstructor$4;
-	var PromisePrototype = NativePromisePrototype$1;
-	var TypeError$1 = global$1.TypeError;
-	var document$1 = global$1.document;
-	var process$1 = global$1.process;
-	var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
-	var newGenericPromiseCapability = newPromiseCapability$1;
-
-	var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$1.dispatchEvent);
-	var UNHANDLED_REJECTION = 'unhandledrejection';
-	var REJECTION_HANDLED = 'rejectionhandled';
-	var PENDING = 0;
-	var FULFILLED = 1;
-	var REJECTED = 2;
-	var HANDLED = 1;
-	var UNHANDLED = 2;
-
-	var Internal, OwnPromiseCapability, PromiseWrapper;
-
-	// helpers
-	var isThenable = function (it) {
-	  var then;
-	  return isObject$1(it) && isCallable$1(then = it.then) ? then : false;
-	};
-
-	var callReaction = function (reaction, state) {
-	  var value = state.value;
-	  var ok = state.state == FULFILLED;
-	  var handler = ok ? reaction.ok : reaction.fail;
-	  var resolve = reaction.resolve;
-	  var reject = reaction.reject;
-	  var domain = reaction.domain;
-	  var result, then, exited;
-	  try {
-	    if (handler) {
-	      if (!ok) {
-	        if (state.rejection === UNHANDLED) onHandleUnhandled(state);
-	        state.rejection = HANDLED;
-	      }
-	      if (handler === true) result = value;
-	      else {
-	        if (domain) domain.enter();
-	        result = handler(value); // can throw
-	        if (domain) {
-	          domain.exit();
-	          exited = true;
-	        }
-	      }
-	      if (result === reaction.promise) {
-	        reject(TypeError$1('Promise-chain cycle'));
-	      } else if (then = isThenable(result)) {
-	        call$5(then, result, resolve, reject);
-	      } else resolve(result);
-	    } else reject(value);
-	  } catch (error) {
-	    if (domain && !exited) domain.exit();
-	    reject(error);
-	  }
-	};
-
-	var notify = function (state, isReject) {
-	  if (state.notified) return;
-	  state.notified = true;
-	  microtask(function () {
-	    var reactions = state.reactions;
-	    var reaction;
-	    while (reaction = reactions.get()) {
-	      callReaction(reaction, state);
-	    }
-	    state.notified = false;
-	    if (isReject && !state.rejection) onUnhandled(state);
-	  });
-	};
-
-	var dispatchEvent = function (name, promise, reason) {
-	  var event, handler;
-	  if (DISPATCH_EVENT) {
-	    event = document$1.createEvent('Event');
-	    event.promise = promise;
-	    event.reason = reason;
-	    event.initEvent(name, false, true);
-	    global$1.dispatchEvent(event);
-	  } else event = { promise: promise, reason: reason };
-	  if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$1['on' + name])) handler(event);
-	  else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
-	};
-
-	var onUnhandled = function (state) {
-	  call$5(task, global$1, function () {
-	    var promise = state.facade;
-	    var value = state.value;
-	    var IS_UNHANDLED = isUnhandled(state);
-	    var result;
-	    if (IS_UNHANDLED) {
-	      result = perform$5(function () {
-	        if (IS_NODE) {
-	          process$1.emit('unhandledRejection', value, promise);
-	        } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
-	      });
-	      // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
-	      state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
-	      if (result.error) throw result.value;
-	    }
-	  });
-	};
-
-	var isUnhandled = function (state) {
-	  return state.rejection !== HANDLED && !state.parent;
-	};
-
-	var onHandleUnhandled = function (state) {
-	  call$5(task, global$1, function () {
-	    var promise = state.facade;
-	    if (IS_NODE) {
-	      process$1.emit('rejectionHandled', promise);
-	    } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
-	  });
-	};
-
-	var bind = function (fn, state, unwrap) {
-	  return function (value) {
-	    fn(state, value, unwrap);
-	  };
-	};
-
-	var internalReject = function (state, value, unwrap) {
-	  if (state.done) return;
-	  state.done = true;
-	  if (unwrap) state = unwrap;
-	  state.value = value;
-	  state.state = REJECTED;
-	  notify(state, true);
-	};
-
-	var internalResolve = function (state, value, unwrap) {
-	  if (state.done) return;
-	  state.done = true;
-	  if (unwrap) state = unwrap;
-	  try {
-	    if (state.facade === value) throw TypeError$1("Promise can't be resolved itself");
-	    var then = isThenable(value);
-	    if (then) {
-	      microtask(function () {
-	        var wrapper = { done: false };
-	        try {
-	          call$5(then, value,
-	            bind(internalResolve, wrapper, state),
-	            bind(internalReject, wrapper, state)
-	          );
-	        } catch (error) {
-	          internalReject(wrapper, error, state);
-	        }
-	      });
-	    } else {
-	      state.value = value;
-	      state.state = FULFILLED;
-	      notify(state, false);
-	    }
-	  } catch (error) {
-	    internalReject({ done: false }, error, state);
-	  }
-	};
-
-	// constructor polyfill
-	if (FORCED_PROMISE_CONSTRUCTOR$4) {
-	  // 25.4.3.1 Promise(executor)
-	  PromiseConstructor = function Promise(executor) {
-	    anInstance(this, PromisePrototype);
-	    aCallable$4(executor);
-	    call$5(Internal, this);
-	    var state = getInternalPromiseState(this);
-	    try {
-	      executor(bind(internalResolve, state), bind(internalReject, state));
-	    } catch (error) {
-	      internalReject(state, error);
-	    }
-	  };
-
-	  PromisePrototype = PromiseConstructor.prototype;
-
-	  // eslint-disable-next-line no-unused-vars -- required for `.length`
-	  Internal = function Promise(executor) {
-	    setInternalState(this, {
-	      type: PROMISE,
-	      done: false,
-	      notified: false,
-	      parent: false,
-	      reactions: new Queue(),
-	      rejection: false,
-	      state: PENDING,
-	      value: undefined
-	    });
-	  };
-
-	  // `Promise.prototype.then` method
-	  // https://tc39.es/ecma262/#sec-promise.prototype.then
-	  Internal.prototype = defineBuiltIn(PromisePrototype, 'then', function then(onFulfilled, onRejected) {
-	    var state = getInternalPromiseState(this);
-	    var reaction = newPromiseCapability$1(speciesConstructor$1(this, PromiseConstructor));
-	    state.parent = true;
-	    reaction.ok = isCallable$1(onFulfilled) ? onFulfilled : true;
-	    reaction.fail = isCallable$1(onRejected) && onRejected;
-	    reaction.domain = IS_NODE ? process$1.domain : undefined;
-	    if (state.state == PENDING) state.reactions.add(reaction);
-	    else microtask(function () {
-	      callReaction(reaction, state);
-	    });
-	    return reaction.promise;
-	  });
-
-	  OwnPromiseCapability = function () {
-	    var promise = new Internal();
-	    var state = getInternalPromiseState(promise);
-	    this.promise = promise;
-	    this.resolve = bind(internalResolve, state);
-	    this.reject = bind(internalReject, state);
-	  };
-
-	  newPromiseCapabilityModule$6.f = newPromiseCapability$1 = function (C) {
-	    return C === PromiseConstructor || C === PromiseWrapper
-	      ? new OwnPromiseCapability(C)
-	      : newGenericPromiseCapability(C);
-	  };
-	}
-
-	$$9({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
-	  Promise: PromiseConstructor
-	});
-
-	setToStringTag(PromiseConstructor, PROMISE, false, true);
-	setSpecies(PROMISE);
-
-	var NativePromiseConstructor$3 = promiseNativeConstructor;
-	var checkCorrectnessOfIteration = checkCorrectnessOfIteration$2;
-	var FORCED_PROMISE_CONSTRUCTOR$3 = promiseConstructorDetection.CONSTRUCTOR;
-
-	var promiseStaticsIncorrectIteration = FORCED_PROMISE_CONSTRUCTOR$3 || !checkCorrectnessOfIteration(function (iterable) {
-	  NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
-	});
-
-	var $$8 = _export;
-	var call$4 = functionCall;
-	var aCallable$3 = aCallable$h;
-	var newPromiseCapabilityModule$5 = newPromiseCapability$2;
-	var perform$4 = perform$6;
-	var iterate$3 = iterate$l;
-	var PROMISE_STATICS_INCORRECT_ITERATION$3 = promiseStaticsIncorrectIteration;
-
-	// `Promise.all` method
-	// https://tc39.es/ecma262/#sec-promise.all
-	$$8({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
-	  all: function all(iterable) {
-	    var C = this;
-	    var capability = newPromiseCapabilityModule$5.f(C);
-	    var resolve = capability.resolve;
-	    var reject = capability.reject;
-	    var result = perform$4(function () {
-	      var $promiseResolve = aCallable$3(C.resolve);
-	      var values = [];
-	      var counter = 0;
-	      var remaining = 1;
-	      iterate$3(iterable, function (promise) {
-	        var index = counter++;
-	        var alreadyCalled = false;
-	        remaining++;
-	        call$4($promiseResolve, C, promise).then(function (value) {
-	          if (alreadyCalled) return;
-	          alreadyCalled = true;
-	          values[index] = value;
-	          --remaining || resolve(values);
-	        }, reject);
-	      });
-	      --remaining || resolve(values);
-	    });
-	    if (result.error) reject(result.value);
-	    return capability.promise;
-	  }
-	});
-
-	var $$7 = _export;
-	var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
-	var NativePromiseConstructor$2 = promiseNativeConstructor;
-
-	NativePromiseConstructor$2 && NativePromiseConstructor$2.prototype;
-
-	// `Promise.prototype.catch` method
-	// https://tc39.es/ecma262/#sec-promise.prototype.catch
-	$$7({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
-	  'catch': function (onRejected) {
-	    return this.then(undefined, onRejected);
-	  }
-	});
-
-	var $$6 = _export;
-	var call$3 = functionCall;
-	var aCallable$2 = aCallable$h;
-	var newPromiseCapabilityModule$4 = newPromiseCapability$2;
-	var perform$3 = perform$6;
-	var iterate$2 = iterate$l;
-	var PROMISE_STATICS_INCORRECT_ITERATION$2 = promiseStaticsIncorrectIteration;
-
-	// `Promise.race` method
-	// https://tc39.es/ecma262/#sec-promise.race
-	$$6({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
-	  race: function race(iterable) {
-	    var C = this;
-	    var capability = newPromiseCapabilityModule$4.f(C);
-	    var reject = capability.reject;
-	    var result = perform$3(function () {
-	      var $promiseResolve = aCallable$2(C.resolve);
-	      iterate$2(iterable, function (promise) {
-	        call$3($promiseResolve, C, promise).then(capability.resolve, reject);
-	      });
-	    });
-	    if (result.error) reject(result.value);
-	    return capability.promise;
-	  }
-	});
-
-	var $$5 = _export;
-	var call$2 = functionCall;
-	var newPromiseCapabilityModule$3 = newPromiseCapability$2;
-	var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
-
-	// `Promise.reject` method
-	// https://tc39.es/ecma262/#sec-promise.reject
-	$$5({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
-	  reject: function reject(r) {
-	    var capability = newPromiseCapabilityModule$3.f(this);
-	    call$2(capability.reject, undefined, r);
-	    return capability.promise;
-	  }
-	});
-
-	var anObject = anObject$f;
-	var isObject = isObject$j;
-	var newPromiseCapability = newPromiseCapability$2;
-
-	var promiseResolve$2 = function (C, x) {
-	  anObject(C);
-	  if (isObject(x) && x.constructor === C) return x;
-	  var promiseCapability = newPromiseCapability.f(C);
-	  var resolve = promiseCapability.resolve;
-	  resolve(x);
-	  return promiseCapability.promise;
-	};
-
-	var $$4 = _export;
-	var getBuiltIn$2 = getBuiltIn$h;
-	var IS_PURE = isPure;
-	var NativePromiseConstructor$1 = promiseNativeConstructor;
-	var FORCED_PROMISE_CONSTRUCTOR = promiseConstructorDetection.CONSTRUCTOR;
-	var promiseResolve$1 = promiseResolve$2;
-
-	var PromiseConstructorWrapper = getBuiltIn$2('Promise');
-	var CHECK_WRAPPER = !FORCED_PROMISE_CONSTRUCTOR;
-
-	// `Promise.resolve` method
-	// https://tc39.es/ecma262/#sec-promise.resolve
-	$$4({ target: 'Promise', stat: true, forced: IS_PURE  }, {
-	  resolve: function resolve(x) {
-	    return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
-	  }
-	});
-
-	var $$3 = _export;
-	var call$1 = functionCall;
-	var aCallable$1 = aCallable$h;
-	var newPromiseCapabilityModule$2 = newPromiseCapability$2;
-	var perform$2 = perform$6;
-	var iterate$1 = iterate$l;
-	var PROMISE_STATICS_INCORRECT_ITERATION$1 = promiseStaticsIncorrectIteration;
-
-	// `Promise.allSettled` method
-	// https://tc39.es/ecma262/#sec-promise.allsettled
-	$$3({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
-	  allSettled: function allSettled(iterable) {
-	    var C = this;
-	    var capability = newPromiseCapabilityModule$2.f(C);
-	    var resolve = capability.resolve;
-	    var reject = capability.reject;
-	    var result = perform$2(function () {
-	      var promiseResolve = aCallable$1(C.resolve);
-	      var values = [];
-	      var counter = 0;
-	      var remaining = 1;
-	      iterate$1(iterable, function (promise) {
-	        var index = counter++;
-	        var alreadyCalled = false;
-	        remaining++;
-	        call$1(promiseResolve, C, promise).then(function (value) {
-	          if (alreadyCalled) return;
-	          alreadyCalled = true;
-	          values[index] = { status: 'fulfilled', value: value };
-	          --remaining || resolve(values);
-	        }, function (error) {
-	          if (alreadyCalled) return;
-	          alreadyCalled = true;
-	          values[index] = { status: 'rejected', reason: error };
-	          --remaining || resolve(values);
-	        });
-	      });
-	      --remaining || resolve(values);
-	    });
-	    if (result.error) reject(result.value);
-	    return capability.promise;
-	  }
-	});
-
-	var $$2 = _export;
-	var call = functionCall;
-	var aCallable = aCallable$h;
-	var getBuiltIn$1 = getBuiltIn$h;
-	var newPromiseCapabilityModule$1 = newPromiseCapability$2;
-	var perform$1 = perform$6;
-	var iterate = iterate$l;
-	var PROMISE_STATICS_INCORRECT_ITERATION = promiseStaticsIncorrectIteration;
-
-	var PROMISE_ANY_ERROR = 'No one promise resolved';
-
-	// `Promise.any` method
-	// https://tc39.es/ecma262/#sec-promise.any
-	$$2({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
-	  any: function any(iterable) {
-	    var C = this;
-	    var AggregateError = getBuiltIn$1('AggregateError');
-	    var capability = newPromiseCapabilityModule$1.f(C);
-	    var resolve = capability.resolve;
-	    var reject = capability.reject;
-	    var result = perform$1(function () {
-	      var promiseResolve = aCallable(C.resolve);
-	      var errors = [];
-	      var counter = 0;
-	      var remaining = 1;
-	      var alreadyResolved = false;
-	      iterate(iterable, function (promise) {
-	        var index = counter++;
-	        var alreadyRejected = false;
-	        remaining++;
-	        call(promiseResolve, C, promise).then(function (value) {
-	          if (alreadyRejected || alreadyResolved) return;
-	          alreadyResolved = true;
-	          resolve(value);
-	        }, function (error) {
-	          if (alreadyRejected || alreadyResolved) return;
-	          alreadyRejected = true;
-	          errors[index] = error;
-	          --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
-	        });
-	      });
-	      --remaining || reject(new AggregateError(errors, PROMISE_ANY_ERROR));
-	    });
-	    if (result.error) reject(result.value);
-	    return capability.promise;
-	  }
-	});
-
-	var $$1 = _export;
-	var NativePromiseConstructor = promiseNativeConstructor;
-	var fails = fails$x;
-	var getBuiltIn = getBuiltIn$h;
-	var isCallable = isCallable$p;
-	var speciesConstructor = speciesConstructor$2;
-	var promiseResolve = promiseResolve$2;
-
-	var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
-
-	// Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
-	var NON_GENERIC = !!NativePromiseConstructor && fails(function () {
-	  // eslint-disable-next-line unicorn/no-thenable -- required for testing
-	  NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
-	});
-
-	// `Promise.prototype.finally` method
-	// https://tc39.es/ecma262/#sec-promise.prototype.finally
-	$$1({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
-	  'finally': function (onFinally) {
-	    var C = speciesConstructor(this, getBuiltIn('Promise'));
-	    var isFunction = isCallable(onFinally);
-	    return this.then(
-	      isFunction ? function (x) {
-	        return promiseResolve(C, onFinally()).then(function () { return x; });
-	      } : onFinally,
-	      isFunction ? function (e) {
-	        return promiseResolve(C, onFinally()).then(function () { throw e; });
-	      } : onFinally
-	    );
-	  }
-	});
-
-	var path$1 = path$n;
-
-	var promise$5 = path$1.Promise;
-
-	var parent$5 = promise$5;
-
-
-	var promise$4 = parent$5;
-
-	var parent$4 = promise$4;
-
-	var promise$3 = parent$4;
-
-	// TODO: Remove from `core-js@4`
-	var $ = _export;
-	var newPromiseCapabilityModule = newPromiseCapability$2;
-	var perform = perform$6;
-
-	// `Promise.try` method
-	// https://github.com/tc39/proposal-promise-try
-	$({ target: 'Promise', stat: true, forced: true }, {
-	  'try': function (callbackfn) {
-	    var promiseCapability = newPromiseCapabilityModule.f(this);
-	    var result = perform(callbackfn);
-	    (result.error ? promiseCapability.reject : promiseCapability.resolve)(result.value);
-	    return promiseCapability.promise;
-	  }
-	});
-
-	var parent$3 = promise$3;
-
-	// TODO: Remove from `core-js@4`
-
-
-
-
-	var promise$2 = parent$3;
-
-	var promise$1 = promise$2;
-
-	var promise = promise$1;
-
-	var _Promise = /*@__PURE__*/getDefaultExportFromCjs(promise);
-
-	function isNative(Ctor) {
-	  return typeof Ctor === 'function' && /native code/.test(Ctor.toString());
-	}
-	function nextTick(cb) {
-	  if (typeof _Promise !== 'undefined' && isNative(_Promise)) {
-	    _Promise.resolve().then(function () {
-	      return cb();
-	    });
-	  } else if (typeof MutationObserver !== 'undefined' && isNative(MutationObserver) && MutationObserver.toString() === '[object MutationObserverConstructor]') {
-	    var observer = new MutationObserver(cb);
-	    var count = 1;
-	    var node = document.createTextNode(String(count));
-	    observer.observe(node, {
-	      characterData: true
-	    });
-	    count++;
-	    node.data = String(count);
-	  } else {
-	    setTimeout(function () {
-	      return cb();
-	    });
-	  }
-	}
-
-	var PriorityQueue = /*#__PURE__*/function () {
-	  function PriorityQueue() {
-	    _classCallCheck(this, PriorityQueue);
-	    _defineProperty(this, "queue", void 0);
-	    _defineProperty(this, "newestTime", 0);
-	    _defineProperty(this, "maxInterval", 5);
-	    this.queue = [];
-	  }
-	  // 清理过期数据
-	  _createClass(PriorityQueue, [{
-	    key: "removeOutTimeData",
-	    value: function removeOutTimeData() {
-	      var _context,
-	        _this = this;
-	      _filterInstanceProperty(_context = this.queue).call(_context, function (value, index) {
-	        return _this.newestTime - value.timestamp <= _this.maxInterval;
-	      });
-	    }
-	    // 添加新的数据
-	  }, {
-	    key: "add",
-	    value: function add(data) {
-	      this.newestTime = data.timestamp;
-	      this.queue.unshift(data);
-	      // 清除过期的数据
-	      this.removeOutTimeData();
-	      return this;
-	    }
-	    // 直接将数据添加到缓冲队列的末尾
-	  }, {
-	    key: "push",
-	    value: function push(data) {
-	      this.queue.push(data);
-	      return this;
-	    }
-	    // 弹出队列的首个数据
-	  }, {
-	    key: "shift",
-	    value: function shift() {
-	      return this.queue.shift();
-	    }
-	  }, {
-	    key: "splice",
-	    value: function splice(index, number) {
-	      var _context2;
-	      _spliceInstanceProperty(_context2 = this.queue).call(_context2, index, number);
-	      return this;
-	    }
-	  }, {
-	    key: "clear",
-	    value: function clear() {
-	      while (this.queue.length) {
-	        this.queue.pop();
-	      }
-	      return this;
-	    }
-	  }, {
-	    key: "forEach",
-	    value: function forEach(cb) {
-	      for (var index = 0; index < this.queue.length; index++) {
-	        cb(this.queue[index], index);
-	      }
-	    }
-	  }, {
-	    key: "length",
-	    get: function get() {
-	      return this.queue.length;
-	    }
-	  }]);
-	  return PriorityQueue;
-	}();
-
-	function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context16, _context17; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context16 = ownKeys(Object(source), !0)).call(_context16, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? Object.defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context17 = ownKeys(Object(source))).call(_context17, function (key) { Object.defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-	/**
-	 * @description 弹幕类，只专注于实现弹幕的基本逻辑，View层
-	 */
-	var flag = false;
-	var Danmaku = /*#__PURE__*/function () {
-	  function Danmaku(container, player) {
-	    _classCallCheck(this, Danmaku);
-	    _defineProperty(this, "queue", void 0);
-	    _defineProperty(this, "moovingQueue", []);
-	    // 正在运动中的弹幕
-	    _defineProperty(this, "container", void 0);
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "timer", null);
-	    _defineProperty(this, "renderInterval", 100);
-	    // 每一条弹幕轨道的高度默认为10px
-	    _defineProperty(this, "trackHeight", 10);
-	    _defineProperty(this, "isStopped", true);
-	    _defineProperty(this, "isHidden", false);
-	    _defineProperty(this, "tracks", void 0);
-	    _defineProperty(this, "defaultDanma", {
-	      message: 'default message',
-	      fontColor: '#fff',
-	      fontSize: this.trackHeight,
-	      fontFamily: '',
-	      fontWeight: 500
-	    });
-	    this.queue = new PriorityQueue();
-	    this.container = container; // div.video-danmaku-container
-	    this.player = player;
-	    this.tracks = new Array(this.container.clientHeight / this.trackHeight);
-	    this.init();
-	  }
-	  _createClass(Danmaku, [{
-	    key: "init",
-	    value: function init() {
-	      for (var i = 0; i < this.tracks.length; i++) {
-	        if (!this.tracks[i]) {
-	          this.tracks[i] = {
-	            track: {
-	              id: 0,
-	              priority: 0
-	            },
-	            datas: []
-	          };
-	        }
-	        this.tracks[i].track = {
-	          id: i,
-	          priority: 15 - i
-	        };
-	      }
-	    }
-	    // 暂停所有的弹幕
-	  }, {
-	    key: "pause",
-	    value: function pause() {
-	      var _context,
-	        _this = this;
-	      this.isStopped = true;
-	      window.clearTimeout(this.timer);
-	      _forEachInstanceProperty(_context = this.moovingQueue).call(_context, function (data) {
-	        _this.pauseOneData(data);
-	      });
-	    }
-	    // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
-	  }, {
-	    key: "resume",
-	    value: function resume() {
-	      var _this2 = this,
-	        _context2;
-	      this.isStopped = false;
-	      this.timer = window.setTimeout(function () {
-	        _this2.render();
-	      }, this.renderInterval);
-	      _forEachInstanceProperty(_context2 = this.moovingQueue).call(_context2, function (data) {
-	        _this2.resumeOneData(data);
-	      });
-	    }
-	    // 恢复单条弹幕的运动
-	  }, {
-	    key: "resumeOneData",
-	    value: function resumeOneData(data) {
-	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
-	      data.startTime = Date.now();
-	      data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
-	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
-	    }
-	    // 暂停单条弹幕的运动
-	  }, {
-	    key: "pauseOneData",
-	    value: function pauseOneData(data) {
-	      var currentRollDistance = (Date.now() - data.startTime) * data.rollSpeed / 1000;
-	      data.rollDistance = currentRollDistance + (data.rollDistance ? data.rollDistance : 0);
-	      data.dom.style.transition = '';
-	      data.dom.style.transform = "translateX(".concat(-data.rollDistance, "px)");
-	    }
-	  }, {
-	    key: "startDanmaku",
-	    value: function startDanmaku() {
-	      this.render();
-	    }
-	    // 向缓冲区添加正确格式的弹幕
-	  }, {
-	    key: "addData",
-	    value: function addData(data) {
-	      var _this3 = this;
-	      this.queue.push(this.parseData(data));
-	      // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
-	      if (flag) return;
-	      if (this.timer === null) {
-	        nextTick(function () {
-	          _this3.render();
-	        });
-	        flag = true;
-	      }
-	    }
-	  }, {
-	    key: "parseData",
-	    value: function parseData(data) {
-	      if (typeof data === 'string') {
-	        return {
-	          message: data,
-	          fontColor: '#fff',
-	          fontSize: this.trackHeight,
-	          fontFamily: '',
-	          fontWeight: 500,
-	          timestamp: this.player.video.currentTime
-	        };
-	      }
-	      if (_typeof(data) === 'object') {
-	        if (!data.message || data.message === '') {
-	          throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
-	        }
-	        return _Object$assign(_objectSpread(_objectSpread({}, this.defaultDanma), {}, {
-	          timestamp: this.player.video.currentTime
-	        }), data);
-	      }
-	      throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      try {
-	        this.renderToDOM();
-	      } finally {
-	        this.renderEnd();
-	      }
-	    }
-	  }, {
-	    key: "renderEnd",
-	    value: function renderEnd() {
-	      var _this4 = this;
-	      if (this.queue.length === 0) {
-	        window.clearTimeout(this.timer);
-	        this.timer = null;
-	        flag = false;
-	      } else {
-	        this.timer = window.setTimeout(function () {
-	          _this4.render();
-	        }, this.renderInterval);
-	      }
-	    }
-	    // 向指定的DOM元素上渲染一条弹幕
-	  }, {
-	    key: "renderToDOM",
-	    value: function renderToDOM() {
-	      var _this5 = this;
-	      if (this.queue.length === 0) return;
-	      var data = this.queue.shift();
-	      if (!data.dom) {
-	        var dom = $$n('div.video-danmaku-message');
-	        dom.innerText = data.message;
-	        if (data.fontFamily !== '') {
-	          dom.style.fontFamily = data.fontFamily;
-	        }
-	        dom.style.color = data.fontColor;
-	        dom.style.fontSize = data.fontSize + 'px';
-	        dom.style.fontWeight = data.fontWeight + '';
-	        dom.style.position = 'absolute';
-	        dom.style.left = '100%';
-	        dom.style.whiteSpace = 'nowrap';
-	        dom.style.willChange = 'transform';
-	        dom.style.cursor = 'pointer';
-	        dom.style.visibility = this.isHidden ? 'hidden' : '';
-	        data.dom = dom;
-	        this.container.appendChild(dom);
-	      }
-	      data.totalDistance = this.container.clientWidth + data.dom.clientWidth;
-	      data.width = data.dom.clientWidth;
-	      // 弹幕的总的位移时间，用于计算弹幕的速度
-	      data.rollTime = data.rollTime || Math.floor(data.totalDistance * 0.0058 * (Math.random() * 0.3 + 0.7));
-	      data.rollSpeed = _parseFloat$1((data.totalDistance / data.rollTime).toFixed(2));
-	      // useTracks描述的是该弹幕占用了多少个轨道
-	      data.useTracks = Math.ceil(data.dom.clientHeight / this.trackHeight);
-	      // 重点，此处数组y的作用是表明该弹幕占的轨道的id数组
-	      data.y = [];
-	      data.dom.ontransitionstart = function (e) {
-	        data.startTime = Date.now();
-	      };
-	      data.dom.onmouseenter = function () {
-	        if (_this5.isStopped) return;
-	        _this5.pauseOneData(data);
-	      };
-	      data.dom.onmouseleave = function () {
-	        if (_this5.isStopped) return;
-	        _this5.resumeOneData(data);
-	      };
-	      this.addDataToTrack(data);
-	      if (data.y.length === 0) {
-	        var _context3;
-	        if (_includesInstanceProperty(_context3 = _toConsumableArray(this.container.childNodes)).call(_context3, data.dom)) {
-	          this.container.removeChild(data.dom);
-	        }
-	        this.queue.push(data);
-	      } else {
-	        data.dom.style.top = data.y[0] * this.trackHeight + 'px';
-	        this.startAnimate(data);
-	      }
-	    }
-	    // 将指定的data添加到弹幕轨道上
-	  }, {
-	    key: "addDataToTrack",
-	    value: function addDataToTrack(data) {
-	      var _this6 = this;
-	      // console.log(this.tracks)
-	      // [
-	      //   {track: {id:0, priority: 15}, datas: DanmakuData[]},
-	      //   {track: {id:1, priority: 14}, datas: DanmakuData[]},
-	      //   {track: {id:2, priority: 13}, datas: DanmakuData[]},
-	      //   {track: {id:14, priority: 1}, datas: DanmakuData[]},
-	      // ]
-	      var y = [];
-	      for (var i = 0; i < this.tracks.length; i++) {
-	        var track = this.tracks[i];
-	        var datas = track.datas;
-	        if (datas.length === 0) {
-	          y.push(i);
-	        } else {
-	          var lastItem = datas[datas.length - 1];
-	          // diatance代表的就是在该轨道上弹幕lastItem已经行走的距离
-	          var distance = lastItem.rollSpeed * (Date.now() - lastItem.startTime) / 1000;
-	          if (distance > lastItem.width && (data.rollSpeed <= lastItem.rollSpeed || (distance - lastItem.width) / (data.rollSpeed - lastItem.rollSpeed) > (this.container.clientWidth + lastItem.width - distance) / lastItem.rollSpeed)) {
-	            y.push(i);
-	          } else {
-	            y = [];
-	          }
-	        }
-	        if (y.length >= data.useTracks) {
-	          var _context4;
-	          data.y = y;
-	          _forEachInstanceProperty(_context4 = data.y).call(_context4, function (id) {
-	            _this6.tracks[id].datas.push(data);
-	          });
-	          break;
-	        }
-	      }
-	    }
-	  }, {
-	    key: "removeDataFromTrack",
-	    value: function removeDataFromTrack(data) {
-	      var _context5,
-	        _this7 = this;
-	      _forEachInstanceProperty(_context5 = data.y).call(_context5, function (id) {
-	        var datas = _this7.tracks[id].datas;
-	        var index = _indexOfInstanceProperty(datas).call(datas, data);
-	        if (index === -1) return;
-	        _spliceInstanceProperty(datas).call(datas, index, 1);
-	      });
-	    }
-	  }, {
-	    key: "startAnimate",
-	    value: function startAnimate(data) {
-	      var _this8 = this;
-	      this.moovingQueue.push(data);
-	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
-	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
-	      data.dom.ontransitionend = function (e) {
-	        var _context6;
-	        _this8.container.removeChild(data.dom);
-	        _this8.removeDataFromTrack(data);
-	        var index = _indexOfInstanceProperty(_context6 = _this8.moovingQueue).call(_context6, data);
-	        if (index > -1) {
-	          var _context7;
-	          _spliceInstanceProperty(_context7 = _this8.moovingQueue).call(_context7, index, 1);
-	        }
-	      };
-	    }
-	    // 清空所有的弹幕，包括正在运动中的或者还在缓冲区未被释放的
-	  }, {
-	    key: "flush",
-	    value: function flush() {
-	      var _context8,
-	        _context9,
-	        _this9 = this,
-	        _context11;
-	      _forEachInstanceProperty(_context8 = this.moovingQueue).call(_context8, function (data) {
-	        var _data$dom$parentNode;
-	        (_data$dom$parentNode = data.dom.parentNode) === null || _data$dom$parentNode === void 0 ? void 0 : _data$dom$parentNode.removeChild(data.dom);
-	        data.dom.ontransitionstart = null;
-	        data.dom.ontransitionend = null;
-	      });
-	      _forEachInstanceProperty(_context9 = this.queue).call(_context9, function (data) {
-	        var _context10;
-	        if (_includesInstanceProperty(_context10 = _toConsumableArray(_this9.container.children)).call(_context10, data.dom)) {
-	          var _data$dom$parentNode2;
-	          (_data$dom$parentNode2 = data.dom.parentNode) === null || _data$dom$parentNode2 === void 0 ? void 0 : _data$dom$parentNode2.removeChild(data.dom);
-	          data.dom.ontransitionstart = null;
-	          data.dom.ontransitionend = null;
-	        }
-	      });
-	      // 清空轨道上的所有数据
-	      _forEachInstanceProperty(_context11 = this.tracks).call(_context11, function (obj) {
-	        obj.datas = [];
-	      });
-	      this.moovingQueue = [];
-	      this.queue.clear();
-	    }
-	    // 隐藏所有的弹幕
-	  }, {
-	    key: "close",
-	    value: function close() {
-	      var _context12, _context13;
-	      this.isHidden = true;
-	      _forEachInstanceProperty(_context12 = this.moovingQueue).call(_context12, function (data) {
-	        data.dom.style.visibility = 'hidden';
-	      });
-	      _forEachInstanceProperty(_context13 = this.queue).call(_context13, function (data, index) {
-	        if (data.dom) {
-	          data.dom.style.visibility = 'hidden';
-	        }
-	      });
-	    }
-	  }, {
-	    key: "open",
-	    value: function open() {
-	      var _context14, _context15;
-	      this.isHidden = false;
-	      _forEachInstanceProperty(_context14 = this.moovingQueue).call(_context14, function (data) {
-	        data.dom.style.visibility = '';
-	      });
-	      _forEachInstanceProperty(_context15 = this.queue).call(_context15, function (data, index) {
-	        if (data.dom) {
-	          data.dom.style.visibility = '';
-	        }
-	      });
-	    }
-	  }]);
-	  return Danmaku;
-	}();
-
-	var path = path$n;
-	var apply = functionApply;
-
-	// eslint-disable-next-line es/no-json -- safe
-	if (!path.JSON) path.JSON = { stringify: JSON.stringify };
-
-	// eslint-disable-next-line no-unused-vars -- required for `.length`
-	var stringify$5 = function stringify(it, replacer, space) {
-	  return apply(path.JSON.stringify, null, arguments);
-	};
-
-	var parent$2 = stringify$5;
-
-	var stringify$4 = parent$2;
-
-	var parent$1 = stringify$4;
-
-	var stringify$3 = parent$1;
-
-	var parent = stringify$3;
-
-	var stringify$2 = parent;
-
-	var stringify$1 = stringify$2;
-
-	var stringify = stringify$1;
-
-	var _JSON$stringify = /*@__PURE__*/getDefaultExportFromCjs(stringify);
-
-	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var Loading = /*#__PURE__*/function (_Component) {
-	  _inherits(Loading, _Component);
-	  var _super = _createSuper$8(Loading);
-	  function Loading(player, msg, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, Loading);
-	    _this = _super.call(this, null, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "message", void 0);
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.container = container;
-	    _this.message = msg;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(Loading, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-loading']);
-	      this.loadingBox = $$n('div');
-	      this.messageBox = $$n('div.video-loading-msgbox');
-	      this.messageBox.innerText = this.message;
-	      this.el.appendChild(this.loadingBox);
-	      this.el.appendChild(this.messageBox);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {}
-	  }, {
-	    key: "addLoading",
-	    value: function addLoading() {
-	      var _context;
-	      if (!_includesInstanceProperty(_context = _toConsumableArray(this.container.childNodes)).call(_context, this.el)) {
-	        this.container.appendChild(this.el);
-	      }
-	    }
-	  }, {
-	    key: "removeLoading",
-	    value: function removeLoading() {
-	      var _context2;
-	      if (_includesInstanceProperty(_context2 = _toConsumableArray(this.container.childNodes)).call(_context2, this.el)) {
-	        this.container.removeChild(this.el);
-	      }
-	    }
-	  }]);
-	  return Loading;
-	}(Component);
-
-	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var ErrorLoading = /*#__PURE__*/function (_Loading) {
-	  _inherits(ErrorLoading, _Loading);
-	  var _super = _createSuper$7(ErrorLoading);
-	  // el: div.video-loading
-	  function ErrorLoading(player, msg, container) {
-	    var _this;
-	    _classCallCheck(this, ErrorLoading);
-	    _this = _super.call(this, player, msg, container);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'errorloading');
-	    addClass(_this.loadingBox, ['video-loading-errorloading']);
-	    _this.initEvent();
-	    return _this;
-	  }
-	  _createClass(ErrorLoading, [{
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      // 视频加载发生错误时
-	      this.player.on(EVENT.ERROR, function (e) {
-	        _this2.addLoading();
-	      });
-	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function (e) {
-	        _this2.removeLoading();
-	      });
-	    }
-	  }]);
-	  return ErrorLoading;
-	}(Loading);
-
-	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var TimeLoading = /*#__PURE__*/function (_Loading) {
-	  _inherits(TimeLoading, _Loading);
-	  var _super = _createSuper$6(TimeLoading);
-	  // el: div.video-loading
-	  function TimeLoading(player, msg, container) {
-	    var _this;
-	    _classCallCheck(this, TimeLoading);
-	    _this = _super.call(this, player, msg, container);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'timeloading');
-	    addClass(_this.loadingBox, ['video-loading-loadingbox']);
-	    _this.initEvent();
-	    return _this;
-	  }
-	  _createClass(TimeLoading, [{
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      // 在视频由于需要缓冲下一帧而停止时触发
-	      this.player.on(EVENT.WAITING, function () {
-	        _this2.addLoading();
-	      });
-	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function () {
-	        _this2.removeLoading();
-	      });
-	    }
-	  }]);
-	  return TimeLoading;
-	}(Loading);
-
-	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var TopBar = /*#__PURE__*/function (_Component) {
-	  _inherits(TopBar, _Component);
-	  var _super = _createSuper$5(TopBar);
-	  // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
-	  function TopBar(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, TopBar);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
-	    // el: div.video-topbar.video-topbar-hidden
-	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "timer", null);
-	    _this.player = player;
-	    _this.props = props || {};
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(TopBar, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	      storeControlComponent(this);
-	    }
-	    /**
-	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
-	     */
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-topbar', 'video-topbar-hidden']);
-	      this.leftArea = $$n('div.video-topbar-left');
-	      this.rightArea = $$n('div.video-topbar-right');
-	      this.el.appendChild(this.leftArea);
-	      this.el.appendChild(this.rightArea);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
-	        _this2.onShowToolBar();
-	      });
-	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
-	        _this2.onHideToolBar();
-	      });
-	    }
-	  }, {
-	    key: "hideToolBar",
-	    value: function hideToolBar() {
-	      if (!includeClass(this.el, 'video-topbar-hidden')) {
-	        addClass(this.el, ['video-topbar-hidden']);
-	      }
-	    }
-	  }, {
-	    key: "showToolBar",
-	    value: function showToolBar() {
-	      var _this3 = this;
-	      if (includeClass(this.el, 'video-topbar-hidden')) {
-	        removeClass(this.el, ['video-topbar-hidden']);
-	      }
-	      this.timer = window.setTimeout(function () {
-	        _this3.hideToolBar();
-	      }, 3000);
-	    }
-	  }, {
-	    key: "onShowToolBar",
-	    value: function onShowToolBar() {
-	      if (this.timer) {
-	        window.clearTimeout(this.timer);
-	        this.timer = null;
-	      }
-	      this.showToolBar();
-	    }
-	  }, {
-	    key: "onHideToolBar",
-	    value: function onHideToolBar() {
-	      this.hideToolBar();
-	    }
-	  }]);
-	  return TopBar;
-	}(Component);
-
-	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var DanmakuOpenClose = /*#__PURE__*/function (_Options) {
-	  _inherits(DanmakuOpenClose, _Options);
-	  var _super = _createSuper$4(DanmakuOpenClose);
-	  function DanmakuOpenClose(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, DanmakuOpenClose);
-	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuOpenClose');
-	    // el: div.video-danmaku-openclose.video-controller
-	    _defineProperty(_assertThisInitialized(_this), "danmakuClosePath", danmakuClosePath);
-	    _defineProperty(_assertThisInitialized(_this), "danmakuOpenPath", danmakuOpenPath);
-	    _defineProperty(_assertThisInitialized(_this), "status", 'open');
-	    _defineProperty(_assertThisInitialized(_this), "msg", '关闭弹幕');
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(DanmakuOpenClose, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-danmaku-openclose', 'video-controller']);
-	      // 设置画布大小为1024 * 1024
-	      this.icon = createSvg(this.danmakuOpenPath, '0 0 1024 1024');
-	      this.iconBox.appendChild(this.icon);
-	      this.hideBox.innerText = this.msg;
-	      this.hideBox.style.fontSize = '13px';
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.iconBox.addEventListener('click', function (e) {
-	        e.stopPropagation();
-	        if (_this2.status === 'open') {
-	          _this2.replaceIcon(createSvg(danmakuClosePath, '0 0 1024 1024'));
-	          _this2.status = 'close';
-	          _this2.player.emit('closeDanmaku');
-	          _this2.msg = '开启弹幕';
-	        } else {
-	          _this2.replaceIcon(createSvg(danmakuOpenPath, '0 0 1024 1024'));
-	          _this2.status = 'open';
-	          _this2.player.emit('openDanmaku');
-	          _this2.msg = '关闭弹幕';
-	        }
-	        _this2.hideBox.innerText = _this2.msg;
-	      });
-	    }
-	  }]);
-	  return DanmakuOpenClose;
-	}(Options);
-
-	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var DanmakuSettings = /*#__PURE__*/function (_Options) {
-	  _inherits(DanmakuSettings, _Options);
-	  var _super = _createSuper$3(DanmakuSettings);
-	  // el: div.video-danmaku-settings.video-controller
-	  function DanmakuSettings(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, DanmakuSettings);
-	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuSettings');
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(DanmakuSettings, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['video-danmaku-settings', 'video-controller']);
-	      // 设置画布大小为1024 * 1024
-	      this.icon = createSvg(danmakuSettingPath, '0 0 1024 1024');
-	      this.iconBox.appendChild(this.icon);
-	    }
-	  }]);
-	  return DanmakuSettings;
-	}(Options);
-
-	window.global = window;
-
-	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-	function _unsupportedIterableToArray$1(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
-	function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-	/**
-	 * @description 控制弹幕的类 Controller层
-	 */
-	var DanmakuController = /*#__PURE__*/function () {
-	  function DanmakuController(player, options) {
-	    _classCallCheck(this, DanmakuController);
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "video", void 0);
-	    _defineProperty(this, "container", void 0);
-	    _defineProperty(this, "danmaku", void 0);
-	    _defineProperty(this, "danmakuInput", void 0);
-	    _defineProperty(this, "danmakuSettings", void 0);
-	    _defineProperty(this, "danmakuOpenClose", void 0);
-	    _defineProperty(this, "options", void 0);
-	    // el: div.video-danmaku-container
-	    _defineProperty(this, "el", void 0);
-	    this.player = player;
-	    this.video = player.video;
-	    this.container = player.el; // div.Niplayer_video-wrapper
-	    this.options = _Object$assign({
-	      type: 'http'
-	    }, options);
-	    this.init();
-	  }
-	  _createClass(DanmakuController, [{
-	    key: "init",
-	    value: function init() {
-	      this.el = $$n('div.video-danmaku-container');
-	      this.container.appendChild(this.el);
-	      this.danmaku = new Danmaku(this.el, this.player);
-	      this.initTemplate();
-	      this.initializeEvent();
-	      if (this.options.type === 'websocket') {
-	        this.initWebSocket();
-	      } else {
-	        this.initHTTP();
-	      }
-	    }
-	  }, {
-	    key: "initWebSocket",
-	    value: function initWebSocket() {
-	      var _this = this;
-	      var socket = io(this.options.api, {
-	        transports: ['websocket', 'polling']
-	      });
-	      socket.on('connect', function () {
-	        _this.player.video.addEventListener('timeupdate', function (e) {
-	          socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
-	            time: _this.player.video.currentTime
-	          });
-	        });
-	        socket.on(EVENT.SEND_DANMAKU_DATA, function (data) {
-	          var _context;
-	          console.log(_concatInstanceProperty(_context = "\u63A5\u53D7\u5230\u6570\u636E".concat(_JSON$stringify(data), ",\u5F53\u524D\u65F6\u95F4")).call(_context, _this.player.video.currentTime));
-	          var _iterator = _createForOfIteratorHelper$1(data),
-	            _step;
-	          try {
-	            for (_iterator.s(); !(_step = _iterator.n()).done;) {
-	              var item = _step.value;
-	              _this.danmaku.addData(item);
-	            }
-	          } catch (err) {
-	            _iterator.e(err);
-	          } finally {
-	            _iterator.f();
-	          }
-	        });
-	      });
-	      socket.connect();
-	    }
-	  }, {
-	    key: "initHTTP",
-	    value: function initHTTP() {}
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      var ctx = this;
-	      this.danmakuInput = new DanmakuInput(this.player, null, 'div');
-	      this.danmakuSettings = new DanmakuSettings(this.player, null, 'div');
-	      this.danmakuOpenClose = new DanmakuOpenClose(this.player, null, 'div');
-	      this.player.use({
-	        install: function install(player) {
-	          player.mountComponent(ctx.danmakuOpenClose.id, ctx.danmakuOpenClose, {
-	            mode: {
-	              type: 'BottomToolBar',
-	              pos: 'medium'
-	            }
-	          });
-	          player.mountComponent(ctx.danmakuSettings.id, ctx.danmakuSettings, {
-	            mode: {
-	              type: 'BottomToolBar',
-	              pos: 'medium'
-	            }
-	          });
-	          player.mountComponent(ctx.danmakuInput.id, ctx.danmakuInput, {
-	            mode: {
-	              type: 'BottomToolBar',
-	              pos: 'medium'
-	            }
-	          });
-	        }
-	      });
-	    }
-	  }, {
-	    key: "initializeEvent",
-	    value: function initializeEvent() {
-	      var _this2 = this;
-	      // 弹幕功能实现的核心是timeupdate方法！！！！
-	      this.video.addEventListener('timeupdate', function (e) {
-	        _this2.onTimeupdate(e);
-	      });
-	      this.video.addEventListener('seeking', function (e) {
-	        _this2.onSeeking(e);
-	      });
-	      this.video.addEventListener('pause', function () {
-	        // 暂停所有的弹幕
-	        _this2.danmaku.pause();
-	      });
-	      this.video.addEventListener('waiting', function () {
-	        _this2.danmaku.pause();
-	      });
-	      this.video.addEventListener('abort', function () {
-	        _this2.danmaku.flush();
-	      });
-	      this.video.addEventListener('play', function () {
-	        _this2.danmaku.resume();
-	      });
-	      this.danmakuInput.on('sendData', function (data) {
-	        // 此处为发送弹幕的逻辑
-	      });
-	      this.player.on(EVENT.DOT_DRAG, function () {
-	        _this2.danmaku.flush();
-	      });
-	      this.player.on('closeDanmaku', function () {
-	        // 隐藏所有的弹幕
-	        _this2.danmaku.close();
-	      });
-	      this.player.on('openDanmaku', function () {
-	        // 打开所有隐藏的弹幕
-	        _this2.danmaku.open();
-	      });
-	    }
-	  }, {
-	    key: "onTimeupdate",
-	    value: function onTimeupdate(e) {
-	      // 时间更新
-	      // 如果默认请求弹幕数据的方式为http请求，则需要进行轮询
-	      // let video = e.target as HTMLVideoElement
-	      // // console.log(video.currentTime)
-	      // for (let i = 0; i < 10; i++) {
-	      //   this.danmaku.addData(queue[i % queue.length])
-	      // }
-	    }
-	    // start() {
-	    //   this.timer = window.setInterval(() => {
-	    //     this.danmaku.addData(queue[this.index++ % queue.length])
-	    //     // if (this.index >= 250) {
-	    //     //   window.clearInterval(this.timer)
-	    //     //   this.timer = null
-	    //     // }
-	    //   }, 50)
-	    //   // const send = () => {
-	    //   //   if (this.index >= 30) return
-	    //   //   let data = queue[(this.index++) % queue.length]
-	    //   //   this.danmaku.addData(data)
-	    //   //   send()
-	    //   // }
-	    //   // send()
-	    // }
-	    // pause() {
-	    //   window.clearInterval(this.timer)
-	    //   this.timer = null
-	    // }
-	    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
-	  }, {
-	    key: "onSeeking",
-	    value: function onSeeking(e) {
-	      this.danmaku.flush();
-	    }
-	  }]);
-	  return DanmakuController;
-	}();
-
-	function styleInject(css, ref) {
-	  if ( ref === void 0 ) ref = {};
-	  var insertAt = ref.insertAt;
-
-	  if (!css || typeof document === 'undefined') { return; }
-
-	  var head = document.head || document.getElementsByTagName('head')[0];
-	  var style = document.createElement('style');
-	  style.type = 'text/css';
-
-	  if (insertAt === 'top') {
-	    if (head.firstChild) {
-	      head.insertBefore(style, head.firstChild);
-	    } else {
-	      head.appendChild(style);
-	    }
-	  } else {
-	    head.appendChild(style);
-	  }
-
-	  if (style.styleSheet) {
-	    style.styleSheet.cssText = css;
-	  } else {
-	    style.appendChild(document.createTextNode(css));
-	  }
-	}
-
-	var css_248z$2 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 40px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 30px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n.video-danmaku-container {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background-color: transparent;\n  left: 0;\n  top: 0;\n  z-index: 1001;\n}\n.video-danmaku-container .video-danmaku-message {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  white-space: pre;\n  pointer-events: none;\n  -webkit-perspective: 500px;\n          perspective: 500px;\n  display: inline-block;\n  will-change: transform;\n  font-weight: normal;\n  line-height: 1.125;\n  font-family: SimHei, \"Microsoft JhengHei\", Arial, Helvetica, sans-serif;\n  text-shadow: #000000 1px 0px 1px, #000000 0px 1px 1px, #000000 0px -1px 1px, #000000 -1px 0px 1px;\n  opacity: 1;\n  margin-left: 0px;\n}\n";
-	styleInject(css_248z$2);
-
-	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-	var DanmakuInput = /*#__PURE__*/function (_Component) {
-	  _inherits(DanmakuInput, _Component);
-	  var _super = _createSuper$2(DanmakuInput);
-	  function DanmakuInput(player, container, desc, props, children) {
-	    var _this;
-	    _classCallCheck(this, DanmakuInput);
-	    _this = _super.call(this, container, desc, props, children);
-	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuInput');
-	    // el: div.danmaku-input-wrapper
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "inputBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "sendBox", void 0);
-	    _this.props = props || {};
-	    _this.player = player;
-	    _this.init();
-	    return _this;
-	  }
-	  _createClass(DanmakuInput, [{
-	    key: "init",
-	    value: function init() {
-	      this.initTemplate();
-	      this.initEvent();
-	    }
-	  }, {
-	    key: "initTemplate",
-	    value: function initTemplate() {
-	      addClass(this.el, ['danmaku-input-wrapper']);
-	      this.inputBox = $$n('input.danmaku-input', {
-	        type: 'text'
-	      });
-	      this.sendBox = $$n('span.danmaku-send');
-	      this.sendBox.innerText = '发送';
-	      this.el.appendChild(this.inputBox);
-	      this.el.appendChild(this.sendBox);
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this2 = this;
-	      this.sendBox.onclick = function (e) {
-	        e.stopPropagation();
-	        var value = _this2.inputBox.value;
-	        _this2.emit('sendData', value);
-	        _this2.inputBox.value = '';
-	        _this2.inputBox.blur();
-	      };
-	      this.inputBox.addEventListener('focus', function (e) {
-	        e.stopPropagation();
-	        _this2.player.emit(EVENT.DANMAKU_INPUT_FOCUS);
-	      });
-	      this.inputBox.addEventListener('blur', function (e) {
-	        e.stopPropagation();
-	        _this2.player.emit(EVENT.DANMAKU_INPUT_BLUR);
-	      });
-	      this.inputBox.addEventListener('click', function (e) {
-	        e.stopPropagation();
-	      });
-	    }
-	  }]);
-	  return DanmakuInput;
-	}(Component);
-
-	var env = window.navigator.userAgent.toLowerCase();
-	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
-	var Env = {
-	  isInWeixin: function isInWeixin() {
-	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
-	  },
-	  isInApp: function isInApp() {
-	    return /(^|;\s)app\//.test(env);
-	  },
-	  isInIOS: function isInIOS() {
-	    return env.match(/(iphone|ipod|ipad);?/i);
-	  },
-	  isInAndroid: function isInAndroid() {
-	    return env.match(/android|adr/i);
-	  },
-	  isInPc: function isInPc() {
-	    return !(Env.isInAndroid() || Env.isInApp() || Env.isInIOS() || Env.isInWeixin());
-	  },
-	  get env() {
-	    return this.isInPc() ? 'PC' : 'Mobile';
-	  }
-	};
-
-	var css_248z$1 = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
-	styleInject(css_248z$1);
+	var css_248z = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
+	styleInject(css_248z);
 
 	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -20747,9 +20712,9 @@
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-mobile-medium-wrapper']);
 	      this.el.style.display = 'none';
-	      this.iconBox = $$n('div.video-mobile-medium-iconbox');
-	      this.progressBox = $$n('div.video-mobile-medium-progressbox');
-	      this.completedBox = $$n('div.video-mobile-medium-completed', {
+	      this.iconBox = $$M('div.video-mobile-medium-iconbox');
+	      this.progressBox = $$M('div.video-mobile-medium-progressbox');
+	      this.completedBox = $$M('div.video-mobile-medium-completed', {
 	        style: {
 	          width: '0px'
 	        }
@@ -20804,7 +20769,7 @@
 	var Subtitle = /*#__PURE__*/function () {
 	  function Subtitle(player, subtitles) {
 	    _classCallCheck(this, Subtitle);
-	    _defineProperty(this, "id", 'Subtitle');
+	    // readonly id = 'Subtitle'
 	    // el: div.video-texttrack-container
 	    _defineProperty(this, "el", void 0);
 	    _defineProperty(this, "player", void 0);
@@ -20815,6 +20780,8 @@
 	    // 一个textTrack对应一个字幕文件
 	    _defineProperty(this, "xhrLoader", void 0);
 	    _defineProperty(this, "subsettingsSubtitle", void 0);
+	    _defineProperty(this, "subsettingsMain", void 0);
+	    _defineProperty(this, "leadItem", void 0);
 	    _defineProperty(this, "currentSource", void 0);
 	    this.player = player;
 	    this.subtitles = subtitles;
@@ -20827,11 +20794,10 @@
 	      this.initTemplate();
 	      this.initTextTrack();
 	      this.initEvent();
-	      storeControlComponent(this);
 	      nextTick(function () {
 	        var _context;
 	        var ctx = _this;
-	        _this.subsettingsSubtitle = ONCE_COMPONENT_STORE.get('SubsettingsSubtitle');
+	        _this.subsettingsSubtitle = SubsettingsSubtitle.instance;
 	        _forEachInstanceProperty(_context = _this.subtitles).call(_context, function (item) {
 	          var leftIcon = null;
 	          if (item === _this.defaultSubtitle) {
@@ -20840,10 +20806,10 @@
 	          var subsettingsItem = _this.subsettingsSubtitle.registerSubsettingsItem({
 	            leftIcon: leftIcon,
 	            leftText: item.tip,
+	            target: SubsettingsMain,
 	            click: function click(value) {
-	              console.log(value);
-	              ctx.player.emit('SubsettingsSubtitleChange', value);
-	              ctx.subsettingsSubtitle.leadItem.instance.rightTipBox.innerText = item.tip;
+	              // console.log(value)
+	              ctx.leadItem.instance.rightTipBox.innerText = value.leftText;
 	              ctx.trackElement.src = item.source;
 	              for (var index in ctx.subtitles) {
 	                ctx.subtitles[index].instance.leftIconBox.innerHTML = '';
@@ -20862,8 +20828,16 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      this.el = $$n('div.video-texttrack-container');
+	      this.el = $$M('div.video-texttrack-container');
 	      this.player.el.appendChild(this.el);
+	      this.subsettingsMain = SubsettingsMain.instance;
+	      this.leadItem = this.subsettingsMain.registerSubsettingsItem({
+	        leftIcon: createSvgs([subtitlePath$1, subtitlePath$2], '0 0 1024 1024'),
+	        leftText: '字幕设置',
+	        rightTip: '默认',
+	        rightIcon: createSvg(rightarrowPath, '0 0 1024 1024'),
+	        target: SubsettingsSubtitle
+	      });
 	    }
 	  }, {
 	    key: "initTextTrack",
@@ -20922,7 +20896,7 @@
 	            if (!cue) return;
 	            var texts = cue.text.split('\n');
 	            _forEachInstanceProperty(texts).call(texts, function (text) {
-	              var p = $$n('p');
+	              var p = $$M('p');
 	              p.innerText = text;
 	              _this3.el.appendChild(p);
 	            });
@@ -20964,7 +20938,6 @@
 	var Player = /*#__PURE__*/function (_Component) {
 	  _inherits(Player, _Component);
 	  var _super = _createSuper(Player);
-	  // 视频比例 原始高度/原始宽度，默认16:9
 	  function Player(options) {
 	    var _this;
 	    _classCallCheck(this, Player);
@@ -21004,13 +20977,14 @@
 	        this.video = this.playerOptions.video;
 	        this.video.parentNode && this.video.parentNode.removeChild(this.video);
 	      } else {
-	        this.video = $$n('video');
+	        this.video = $$M('video');
 	        this.video['playsinline'] = true; // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
 	        this.video['x5-video-player-type'] = 'h5'; // 启用H5播放器,是wechat安卓版特性
 	      }
 
 	      this.video.crossOrigin = 'anonymous';
 	      this.el.appendChild(this.video);
+	      // 初始化媒体的播放源
 	      ((_this$playerOptions = this.playerOptions) === null || _this$playerOptions === void 0 ? void 0 : _this$playerOptions.url) && this.attachSource(this.playerOptions.url);
 	      this.initComponent();
 	      this.initTemplate();
@@ -21038,8 +21012,187 @@
 	      if (this.playerOptions.subtitles && this.playerOptions.subtitles.length > 0) {
 	        new Subtitle(this, this.playerOptions.subtitles);
 	      }
-	      if (this.playerOptions.danmaku && this.playerOptions.danmaku.open) {
-	        new DanmakuController(this, this.playerOptions.danmaku);
+	      if (this.playerOptions.danmaku && this.playerOptions.danmaku.open) ;
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this2 = this;
+	      if (this.env === 'Mobile') {
+	        this.initMobileEvent();
+	      } else {
+	        this.initPCEvent();
+	      }
+	      this.video.addEventListener('loadedmetadata', function (e) {
+	        _this2.emit(EVENT.LOADED_META_DATA, e);
+	        // videoWidth: 视频原始宽度
+	        // videoHeight: 视频原始高度
+	        _this2.mediaProportion = _this2.video.videoHeight / _this2.video.videoWidth;
+	        _this2.adjustMediaSize();
+	      });
+	      this.video.addEventListener('timeupdate', function (e) {
+	        _this2.emit(EVENT.TIME_UPDATE, e);
+	      });
+	      this.video.addEventListener('play', function (e) {
+	        _this2.emit(EVENT.PLAY, e);
+	      });
+	      this.video.addEventListener('pause', function (e) {
+	        _this2.emit(EVENT.PAUSE, e);
+	      });
+	      // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
+	      this.video.addEventListener('seeking', function (e) {
+	        // 防抖效果：针对Dot按下并且拖动时不触发seeking，拖完鼠标抬起时再触发seeking
+	        if (_this2.enableSeek) {
+	          _this2.emit(EVENT.SEEKING, e);
+	        }
+	      });
+	      // waiting 事件在视频由于需要缓冲下一帧而停止时触发
+	      this.video.addEventListener('waiting', function (e) {
+	        _this2.emit(EVENT.WAITING, e);
+	      });
+	      // canplay 该视频已准备好开始播放
+	      this.video.addEventListener('canplay', function (e) {
+	        _this2.emit(EVENT.CAN_PLAY, e);
+	      });
+	      // error 视频加载发生错误时
+	      this.video.addEventListener('error', function (e) {
+	        _this2.emit(EVENT.ERROR);
+	      });
+	      // abort 视频终止加载时
+	      this.video.addEventListener('abort', function (e) {
+	        _this2.emit(EVENT.ERROR);
+	      });
+	      // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
+	      this.video.addEventListener('ratechange', function (e) {
+	        _this2.emit(EVENT.RATE_CHANGE);
+	      });
+	      this.on(EVENT.DANMAKU_INPUT_FOCUS, function () {
+	        _this2.el.onmouseleave = null;
+	      });
+	      this.on(EVENT.DANMAKU_INPUT_BLUR, function () {
+	        _this2.el.onmouseleave = function (e) {
+	          _this2.emit(EVENT.HIDE_TOOLBAR, e);
+	        };
+	      });
+	      this.on(EVENT.DOT_DOWN, function () {
+	        // console.log('dotdown')
+	        _this2.enableSeek = false;
+	      });
+	      this.on(EVENT.DOT_UP, function () {
+	        // console.log('dotup')
+	        _this2.enableSeek = true;
+	      });
+	      this.on(EVENT.VIDEO_DOT_DRAG, function (val, e) {
+	        _this2.emit(EVENT.SHOW_TOOLBAR, e);
+	      });
+	      this.on(EVENT.ENTER_FULLSCREEN, function () {
+	        var _context, _context2;
+	        _forEachInstanceProperty(_context = document.querySelectorAll('.video-controller')).call(_context, function (el) {
+	          el.style.marginRight = '15px';
+	        });
+	        _forEachInstanceProperty(_context2 = document.querySelectorAll('.video-topbar-controller')).call(_context2, function (el) {
+	          el.style.marginRight = '15px';
+	        });
+	      });
+	      this.on(EVENT.LEAVE_FULLSCREEN, function () {
+	        var _context3, _context4;
+	        _forEachInstanceProperty(_context3 = document.querySelectorAll('.video-controller')).call(_context3, function (el) {
+	          el.style.marginRight = '';
+	        });
+	        _forEachInstanceProperty(_context4 = document.querySelectorAll('.video-topbar-controller')).call(_context4, function (el) {
+	          el.style.marginRight = '';
+	        });
+	      });
+	    }
+	  }, {
+	    key: "initPCEvent",
+	    value: function initPCEvent() {
+	      var _this3 = this;
+	      this.video.onclick = function (e) {
+	        if (_this3.video.paused) {
+	          _this3.video.play();
+	        } else if (_this3.video.played) {
+	          _this3.video.pause();
+	        }
+	      };
+	      this.el.onmouseenter = function (e) {
+	        _this3.emit(EVENT.SHOW_TOOLBAR, e);
+	      };
+	      this.el.onmousemove = function (e) {
+	        _this3.emit(EVENT.SHOW_TOOLBAR, e);
+	      };
+	      this.el.onmouseleave = function (e) {
+	        _this3.emit(EVENT.HIDE_TOOLBAR, e);
+	      };
+	    }
+	  }, {
+	    key: "initMobileEvent",
+	    value: function initMobileEvent() {
+	      var _this4 = this;
+	      // 单击
+	      wrap(this.video).addEventListener('singleTap', function (e) {
+	        // console.log(e, 'singletap')
+	        if (_this4.toolBar.status === 'hidden') {
+	          _this4.emit(EVENT.SHOW_TOOLBAR, e);
+	        } else {
+	          _this4.emit(EVENT.HIDE_TOOLBAR, e);
+	        }
+	        _this4.emit(EVENT.VIDEO_CLICK);
+	      });
+	      // 双击
+	      wrap(this.video).addEventListener('doubleTap', function (e) {
+	        // console.log(e, 'doubleTap')
+	        if (_this4.video.paused) {
+	          _this4.video.play();
+	        } else if (_this4.video.played) {
+	          _this4.video.pause();
+	        }
+	      });
+	      // 手势上下处于滑动中
+	      wrap(this.video).addEventListener('move', function (e) {
+	        // console.log(e, 'move')
+	        var dx = e.deltaX;
+	        var dy = e.deltaY;
+	        if (computeAngle(dx, dy) >= 75) {
+	          _this4.emit(EVENT.MOVE_VERTICAL, e);
+	        } else if (computeAngle(dx, dy) <= 15) {
+	          _this4.emit(EVENT.MOVE_HORIZONTAL, e);
+	        }
+	      });
+	      // 手势上下滑动结束
+	      wrap(this.video).addEventListener('swipe', function (e) {
+	        // console.log(e, 'swipe')
+	        var dx = e.endPos.x - e.startPos.x;
+	        var dy = e.endPos.y - e.startPos.y;
+	        // if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
+	        //   this.emit('slideVertical', e)
+	        // }
+	        if (computeAngle(dx, dy) >= 75) {
+	          _this4.emit(EVENT.SLIDE_VERTICAL, e);
+	        } else if (computeAngle(dx, dy) <= 15) {
+	          _this4.emit(EVENT.SLIDE_HORIZONTAL, e);
+	        }
+	      });
+	    }
+	  }, {
+	    key: "initPlugin",
+	    value: function initPlugin() {
+	      var _this5 = this;
+	      if (this.playerOptions.plugins) {
+	        var _context5;
+	        _forEachInstanceProperty(_context5 = this.playerOptions.plugins).call(_context5, function (plugin) {
+	          _this5.use(plugin);
+	        });
+	      }
+	    }
+	  }, {
+	    key: "attachSource",
+	    value: function attachSource(url) {
+	      // 是否启动流式播放
+	      if (this.playerOptions.streamPlay) {
+	        new MediaPlayer(url, this);
+	      } else {
+	        this.video.src = url;
 	      }
 	    }
 	    /**
@@ -21048,7 +21201,7 @@
 	  }, {
 	    key: "initResizeObserver",
 	    value: function initResizeObserver() {
-	      var _this2 = this;
+	      var _this6 = this;
 	      /**
 	        window.resize弊端
 	          reize事件会在一秒内触发将近60次，所以很容易在改变窗口大小时导致性能问题
@@ -21062,25 +21215,25 @@
 	      var resizeObserver = new ResizeObserver(function (entries) {
 	        // console.log('监听到了尺寸变化了...')
 	        // 触发尺寸变化事件
-	        _this2.emit(EVENT.RESIZE, entries);
-	        _this2.adjustMediaSize();
+	        _this6.emit(EVENT.RESIZE, entries);
+	        _this6.adjustMediaSize();
 	        var width = entries[0].contentRect.width;
 	        var subsetting;
 	        // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
 	        if (width <= 600) {
 	          // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
 	          _forEachInstanceProperty(_STORE).call(_STORE, function (value, key) {
-	            var _context, _context2;
-	            if (_indexOfInstanceProperty(_context = ['SubSetting']).call(_context, key) !== -1) {
+	            var _context6, _context7;
+	            if (_indexOfInstanceProperty(_context6 = ['SubSetting']).call(_context6, key) !== -1) {
 	              subsetting = ONCE_COMPONENT_STORE.get(key);
-	              _this2.unmountComponent(key);
-	            } else if (_indexOfInstanceProperty(_context2 = ['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot']).call(_context2, key) !== -1) {
+	              _this6.unmountComponent(key);
+	            } else if (_indexOfInstanceProperty(_context7 = ['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot']).call(_context7, key) !== -1) {
 	              if (!HIDEEN_COMPONENT_STORE.get(key)) {
-	                _this2.hideComponent(key);
+	                _this6.hideComponent(key);
 	              }
 	            }
 	          });
-	          _this2.mountComponent(subsetting.id, subsetting, {
+	          _this6.mountComponent(subsetting.id, subsetting, {
 	            mode: {
 	              type: 'TopToolBar',
 	              pos: 'right'
@@ -21091,14 +21244,14 @@
 	          // 展示之前隐藏的组件
 	          var _HIDDEN_STORE = new _Map(HIDEEN_COMPONENT_STORE);
 	          _forEachInstanceProperty(_HIDDEN_STORE).call(_HIDDEN_STORE, function (value, key) {
-	            _this2.showComponent(key);
+	            _this6.showComponent(key);
 	          });
 	          if (COMPONENT_STORE.has('SubSetting')) {
 	            var key = 'SubSetting';
 	            var component = ONCE_COMPONENT_STORE.get(key);
 	            // 如果SubSetting已经挂载到视图上，需要先卸载
-	            _this2.unmountComponent(key);
-	            _this2.mountComponent(key, component, {
+	            _this6.unmountComponent(key);
+	            _this6.mountComponent(key, component, {
 	              mode: {
 	                type: 'BottomToolBar',
 	                pos: 'right'
@@ -21127,187 +21280,6 @@
 	          this.video.style.height = '100%';
 	          this.video.style.width = this.el.clientHeight / this.mediaProportion + 'px';
 	        }
-	      }
-	    }
-	  }, {
-	    key: "initEvent",
-	    value: function initEvent() {
-	      var _this3 = this;
-	      if (this.env === 'Mobile') {
-	        this.initMobileEvent();
-	      } else {
-	        this.initPCEvent();
-	      }
-	      this.video.addEventListener('loadedmetadata', function (e) {
-	        _this3.emit(EVENT.LOADED_META_DATA, e);
-	        // videoWidth: 视频原始宽度
-	        // videoHeight: 视频原始高度
-	        _this3.mediaProportion = _this3.video.videoHeight / _this3.video.videoWidth;
-	        _this3.adjustMediaSize();
-	      });
-	      this.video.addEventListener('timeupdate', function (e) {
-	        _this3.emit(EVENT.TIME_UPDATE, e);
-	      });
-	      this.video.addEventListener('play', function (e) {
-	        _this3.emit(EVENT.PLAY, e);
-	      });
-	      this.video.addEventListener('pause', function (e) {
-	        _this3.emit(EVENT.PAUSE, e);
-	      });
-	      // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
-	      this.video.addEventListener('seeking', function (e) {
-	        // 防抖效果：针对Dot按下并且拖动时不触发seeking，拖完鼠标抬起时再触发seeking
-	        if (_this3.enableSeek) {
-	          _this3.emit(EVENT.SEEKING, e);
-	        }
-	      });
-	      // waiting 事件在视频由于需要缓冲下一帧而停止时触发
-	      this.video.addEventListener('waiting', function (e) {
-	        _this3.emit(EVENT.WAITING, e);
-	      });
-	      // canplay 该视频已准备好开始播放
-	      this.video.addEventListener('canplay', function (e) {
-	        _this3.emit(EVENT.CAN_PLAY, e);
-	      });
-	      // error 视频加载发生错误时
-	      this.video.addEventListener('error', function (e) {
-	        _this3.emit(EVENT.ERROR);
-	      });
-	      // abort 视频终止加载时
-	      this.video.addEventListener('abort', function (e) {
-	        _this3.emit(EVENT.ERROR);
-	      });
-	      // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
-	      this.video.addEventListener('ratechange', function (e) {
-	        _this3.emit(EVENT.RATE_CHANGE);
-	      });
-	      this.on(EVENT.DANMAKU_INPUT_FOCUS, function () {
-	        _this3.el.onmouseleave = null;
-	      });
-	      this.on(EVENT.DANMAKU_INPUT_BLUR, function () {
-	        _this3.el.onmouseleave = function (e) {
-	          _this3.emit(EVENT.HIDE_TOOLBAR, e);
-	        };
-	      });
-	      this.on(EVENT.DOT_DOWN, function () {
-	        // console.log('dotdown')
-	        _this3.enableSeek = false;
-	      });
-	      this.on(EVENT.DOT_UP, function () {
-	        // console.log('dotup')
-	        _this3.enableSeek = true;
-	      });
-	      this.on(EVENT.VIDEO_DOT_DRAG, function (val, e) {
-	        _this3.emit(EVENT.SHOW_TOOLBAR, e);
-	      });
-	      this.on(EVENT.ENTER_FULLSCREEN, function () {
-	        var _context3, _context4;
-	        _forEachInstanceProperty(_context3 = document.querySelectorAll('.video-controller')).call(_context3, function (el) {
-	          el.style.marginRight = '15px';
-	        });
-	        _forEachInstanceProperty(_context4 = document.querySelectorAll('.video-topbar-controller')).call(_context4, function (el) {
-	          el.style.marginRight = '15px';
-	        });
-	      });
-	      this.on(EVENT.LEAVE_FULLSCREEN, function () {
-	        var _context5, _context6;
-	        _forEachInstanceProperty(_context5 = document.querySelectorAll('.video-controller')).call(_context5, function (el) {
-	          el.style.marginRight = '';
-	        });
-	        _forEachInstanceProperty(_context6 = document.querySelectorAll('.video-topbar-controller')).call(_context6, function (el) {
-	          el.style.marginRight = '';
-	        });
-	      });
-	    }
-	  }, {
-	    key: "initPCEvent",
-	    value: function initPCEvent() {
-	      var _this4 = this;
-	      this.video.onclick = function (e) {
-	        if (_this4.video.paused) {
-	          _this4.video.play();
-	        } else if (_this4.video.played) {
-	          _this4.video.pause();
-	        }
-	      };
-	      this.el.onmouseenter = function (e) {
-	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
-	      };
-	      this.el.onmousemove = function (e) {
-	        _this4.emit(EVENT.SHOW_TOOLBAR, e);
-	      };
-	      this.el.onmouseleave = function (e) {
-	        _this4.emit(EVENT.HIDE_TOOLBAR, e);
-	      };
-	    }
-	  }, {
-	    key: "initMobileEvent",
-	    value: function initMobileEvent() {
-	      var _this5 = this;
-	      // 单击
-	      wrap(this.video).addEventListener('singleTap', function (e) {
-	        // console.log(e, 'singletap')
-	        if (_this5.toolBar.status === 'hidden') {
-	          _this5.emit(EVENT.SHOW_TOOLBAR, e);
-	        } else {
-	          _this5.emit(EVENT.HIDE_TOOLBAR, e);
-	        }
-	        _this5.emit(EVENT.VIDEO_CLICK);
-	      });
-	      // 双击
-	      wrap(this.video).addEventListener('doubleTap', function (e) {
-	        // console.log(e, 'doubleTap')
-	        if (_this5.video.paused) {
-	          _this5.video.play();
-	        } else if (_this5.video.played) {
-	          _this5.video.pause();
-	        }
-	      });
-	      // 手势上下处于滑动中
-	      wrap(this.video).addEventListener('move', function (e) {
-	        // console.log(e, 'move')
-	        var dx = e.deltaX;
-	        var dy = e.deltaY;
-	        if (computeAngle(dx, dy) >= 75) {
-	          _this5.emit(EVENT.MOVE_VERTICAL, e);
-	        } else if (computeAngle(dx, dy) <= 15) {
-	          _this5.emit(EVENT.MOVE_HORIZONTAL, e);
-	        }
-	      });
-	      // 手势上下滑动结束
-	      wrap(this.video).addEventListener('swipe', function (e) {
-	        // console.log(e, 'swipe')
-	        var dx = e.endPos.x - e.startPos.x;
-	        var dy = e.endPos.y - e.startPos.y;
-	        // if (Math.abs(dx) <= 20 && Math.abs(dx) < Math.abs(dy)) {
-	        //   this.emit('slideVertical', e)
-	        // }
-	        if (computeAngle(dx, dy) >= 75) {
-	          _this5.emit(EVENT.SLIDE_VERTICAL, e);
-	        } else if (computeAngle(dx, dy) <= 15) {
-	          _this5.emit(EVENT.SLIDE_HORIZONTAL, e);
-	        }
-	      });
-	    }
-	  }, {
-	    key: "initPlugin",
-	    value: function initPlugin() {
-	      var _this6 = this;
-	      if (this.playerOptions.plugins) {
-	        var _context7;
-	        _forEachInstanceProperty(_context7 = this.playerOptions.plugins).call(_context7, function (plugin) {
-	          _this6.use(plugin);
-	        });
-	      }
-	    }
-	  }, {
-	    key: "attachSource",
-	    value: function attachSource(url) {
-	      // 是否启动流式播放
-	      if (this.playerOptions.streamPlay) {
-	        new MediaPlayer(url, this);
-	      } else {
-	        this.video.src = url;
 	      }
 	    }
 	  }, {
@@ -21439,11 +21411,10 @@
 	  }]);
 	  return Player;
 	}(Component);
+	// 视频比例 原始高度/原始宽度，默认16:9
+	_defineProperty(Player, "player", Player);
 
-	var css_248z = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-texttrack-container-showtoolbar {\n  bottom: calc(50px + 5px) !important;\n}\n.Niplayer_video-wrapper .video-texttrack-container {\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n  position: absolute;\n  bottom: 5px;\n  color: #fe9200;\n  font-size: 20px;\n}\n.Niplayer_video-wrapper .video-texttrack-container p {\n  word-break: break-all;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  margin: 5px 0 0;\n  line-height: 1.2;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #007aff;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #fff;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #00a1d6;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-controller {\n  margin-left: 5px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.video-switch-on {\n  fill: #007aff !important;\n}\n.video-switch-off {\n  fill: #fff !important;\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #00a1d6;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
-	styleInject(css_248z);
-
-	exports.$ = $$n;
+	exports.$ = $$M;
 	exports.BuiltInControllerComponent = BuiltInControllerComponent;
 	exports.COMPONENT_STORE = COMPONENT_STORE;
 	exports.Controller = Controller;
@@ -21464,7 +21435,6 @@
 	exports.Options = Options;
 	exports.PicInPic = PicInPic;
 	exports.PlayButton = PlayButton;
-	exports.Player = Player;
 	exports.ScreenShot = ScreenShot;
 	exports.SubSetting = SubSetting;
 	exports.SubsettingItem = SubsettingItem;

@@ -41,6 +41,7 @@ class Player extends Component implements ComponentItem {
   containerWidth: number
   containerHeight: number
   mediaProportion: number = 9 / 16 // 视频比例 原始高度/原始宽度，默认16:9
+  static player = this
 
   constructor(options: PlayerOptions) {
     super(options.container, 'div.Niplayer_video-wrapper')
@@ -69,7 +70,10 @@ class Player extends Component implements ComponentItem {
     this.video.crossOrigin = 'anonymous'
 
     this.el.appendChild(this.video)
+
+    // 初始化媒体的播放源
     this.playerOptions?.url && this.attachSource(this.playerOptions.url)
+
     this.initComponent()
     this.initTemplate()
     this.initEvent()
@@ -97,93 +101,7 @@ class Player extends Component implements ComponentItem {
     }
 
     if (this.playerOptions.danmaku && this.playerOptions.danmaku.open) {
-      new DanmakuController(this, this.playerOptions.danmaku)
-    }
-  }
-
-  /**
-   * @@description 监听视频播放器大小的变化
-   */
-  initResizeObserver() {
-    /**
-      window.resize弊端
-        reize事件会在一秒内触发将近60次，所以很容易在改变窗口大小时导致性能问题
-        它会监听每个元素的大小变化，而不是具体到某个元素的变化
-        只有window对象才有resize事件，而不是具体某个元素有resize事件
-      ResizeObserver
-        可以监听到 Element 的内容区域或SVGElement的边界框改变
-     */
-
-    // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
-    let _STORE = new Map(COMPONENT_STORE)
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      // console.log('监听到了尺寸变化了...')
-      // 触发尺寸变化事件
-      this.emit(EVENT.RESIZE, entries)
-      this.adjustMediaSize()
-      let width = entries[0].contentRect.width
-      let subsetting
-      // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
-      if (width <= 600) {
-        // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
-        _STORE.forEach((value, key) => {
-          if (['SubSetting'].indexOf(key) !== -1) {
-            subsetting = ONCE_COMPONENT_STORE.get(key)
-            this.unmountComponent(key)
-          } else if (['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot'].indexOf(key) !== -1) {
-            if (!HIDEEN_COMPONENT_STORE.get(key)) {
-              this.hideComponent(key)
-            }
-          }
-        })
-        this.mountComponent(subsetting.id, subsetting, {
-          mode: {
-            type: 'TopToolBar',
-            pos: 'right'
-          }
-        })
-        addClass(subsetting.el, ['video-subsettings', 'video-topbar-controller'])
-      } else {
-        // 展示之前隐藏的组件
-        let _HIDDEN_STORE = new Map(HIDEEN_COMPONENT_STORE)
-        _HIDDEN_STORE.forEach((value, key) => {
-          this.showComponent(key)
-        })
-        if (COMPONENT_STORE.has('SubSetting')) {
-          let key = 'SubSetting'
-          let component = ONCE_COMPONENT_STORE.get(key)
-          // 如果SubSetting已经挂载到视图上，需要先卸载
-          this.unmountComponent(key)
-          this.mountComponent(key, component, {
-            mode: {
-              type: 'BottomToolBar',
-              pos: 'right'
-            },
-            index: 1
-          })
-          addClass(component.el, ['video-subsettings', 'video-controller'])
-        }
-      }
-    })
-    // 开始观察
-    resizeObserver.observe(this.el)
-  }
-
-  // 调整video的尺寸
-  adjustMediaSize() {
-    // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
-    if (this.mediaProportion !== 0) {
-      // 容器宽度偏小，高度偏大
-      if (this.el.clientHeight / this.el.clientWidth > this.mediaProportion) {
-        this.video.style.width = '100%'
-        this.video.style.height =
-          this.el.clientWidth * this.mediaProportion + 0.05 * this.el.clientWidth + 'px'
-      } else {
-        // 容器宽度偏大，高度偏小（类似带鱼屏）
-        this.video.style.height = '100%'
-        this.video.style.width = this.el.clientHeight / this.mediaProportion + 'px'
-      }
+      // new DanmakuController(this, this.playerOptions.danmaku)
     }
   }
 
@@ -374,6 +292,92 @@ class Player extends Component implements ComponentItem {
       new Mp4MediaPlayer(url, this)
     } else {
       this.video.src = url
+    }
+  }
+
+  /**
+   * @@description 监听视频播放器大小的变化
+   */
+  initResizeObserver() {
+    /**
+      window.resize弊端
+        reize事件会在一秒内触发将近60次，所以很容易在改变窗口大小时导致性能问题
+        它会监听每个元素的大小变化，而不是具体到某个元素的变化
+        只有window对象才有resize事件，而不是具体某个元素有resize事件
+      ResizeObserver
+        可以监听到 Element 的内容区域或SVGElement的边界框改变
+     */
+
+    // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
+    let _STORE = new Map(COMPONENT_STORE)
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      // console.log('监听到了尺寸变化了...')
+      // 触发尺寸变化事件
+      this.emit(EVENT.RESIZE, entries)
+      this.adjustMediaSize()
+      let width = entries[0].contentRect.width
+      let subsetting
+      // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
+      if (width <= 600) {
+        // 默认在小屏幕的情况下只将SubSetting移动到上端，其余在底部注册的控件需要隐藏
+        _STORE.forEach((value, key) => {
+          if (['SubSetting'].indexOf(key) !== -1) {
+            subsetting = ONCE_COMPONENT_STORE.get(key)
+            this.unmountComponent(key)
+          } else if (['PicInPic', 'Playrate', 'ScreenShot', 'VideoShot'].indexOf(key) !== -1) {
+            if (!HIDEEN_COMPONENT_STORE.get(key)) {
+              this.hideComponent(key)
+            }
+          }
+        })
+        this.mountComponent(subsetting.id, subsetting, {
+          mode: {
+            type: 'TopToolBar',
+            pos: 'right'
+          }
+        })
+        addClass(subsetting.el, ['video-subsettings', 'video-topbar-controller'])
+      } else {
+        // 展示之前隐藏的组件
+        let _HIDDEN_STORE = new Map(HIDEEN_COMPONENT_STORE)
+        _HIDDEN_STORE.forEach((value, key) => {
+          this.showComponent(key)
+        })
+        if (COMPONENT_STORE.has('SubSetting')) {
+          let key = 'SubSetting'
+          let component = ONCE_COMPONENT_STORE.get(key)
+          // 如果SubSetting已经挂载到视图上，需要先卸载
+          this.unmountComponent(key)
+          this.mountComponent(key, component, {
+            mode: {
+              type: 'BottomToolBar',
+              pos: 'right'
+            },
+            index: 1
+          })
+          addClass(component.el, ['video-subsettings', 'video-controller'])
+        }
+      }
+    })
+    // 开始观察
+    resizeObserver.observe(this.el)
+  }
+
+  // 调整video的尺寸
+  adjustMediaSize() {
+    // console.log(this.container, this.container.clientWidth, this.container.clientHeight)
+    if (this.mediaProportion !== 0) {
+      // 容器宽度偏小，高度偏大
+      if (this.el.clientHeight / this.el.clientWidth > this.mediaProportion) {
+        this.video.style.width = '100%'
+        this.video.style.height =
+          this.el.clientWidth * this.mediaProportion + 0.05 * this.el.clientWidth + 'px'
+      } else {
+        // 容器宽度偏大，高度偏小（类似带鱼屏）
+        this.video.style.height = '100%'
+        this.video.style.width = this.el.clientHeight / this.mediaProportion + 'px'
+      }
     }
   }
 

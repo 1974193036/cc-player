@@ -1,23 +1,24 @@
 import { Player } from '@/page/player'
 import { leftarrowPath, subtitleShowPath, switchOffPath, switchOnPath } from '@/svg'
 import { SubsettingsItem } from '@/types/Player'
-import { $, addClass, createSvg } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
-import { SubsettingItem } from '../SubsettingItem'
+import { $, addClass, createSvg } from '@/utils/domUtils'
+import { SubSetting } from '../SubSetting'
+import { SubsettingsBase } from './SubsettingsBase'
+import { SubsettingsMain } from './SubsettingsMain'
 
-export class SubsettingsSubtitle {
+export class SubsettingsSubtitle extends SubsettingsBase {
   readonly id = 'SubsettingsSubtitle'
-  el: HTMLElement
   // el: div.video-subsettings-subtitle
   leadItem: SubsettingsItem
   switchOnIcon: SVGSVGElement = createSvg(switchOffPath, '0 0 1024 1024')
   switchOffIcon: SVGSVGElement = createSvg(switchOnPath, '0 0 1024 1024')
   status: 'show' | 'hide' = 'show'
-  readonly player: Player
   SubsettingsItem: SubsettingsItem[] = [
     {
       leftIcon: createSvg(leftarrowPath, '0 0 1024 1024'),
-      leftText: '字幕设置'
+      leftText: '字幕设置',
+      target: SubsettingsMain
     },
     {
       leftIcon: createSvg(subtitleShowPath, '0 0 1024 1024'),
@@ -27,11 +28,9 @@ export class SubsettingsSubtitle {
     }
   ]
 
-  constructor(player: Player) {
-    this.player = player
+  constructor(subsetting: SubSetting, player: Player) {
+    super(subsetting, player)
     this.init()
-
-    storeControlComponent(this)
   }
 
   init() {
@@ -42,21 +41,13 @@ export class SubsettingsSubtitle {
     addClass(this.switchOnIcon, ['video-switch-on'])
     this.initSubsettingsItem()
     this.initEvent()
+
+    storeControlComponent(this)
   }
 
   initSubsettingsItem() {
-    this.SubsettingsItem.forEach((item) => {
-      let instance = new SubsettingItem(
-        this.player,
-        item.leftIcon,
-        item.leftText,
-        item.rightTip,
-        item.rightIcon
-      )
-      this.el.appendChild(instance.el)
-      item.instance = instance
-      instance.el.dataset.SubsettingsSubtitleType = item.leftText
-    })
+    this.initBaseSubsettingsItem()
+
     this.SubsettingsItem[1].instance.rightIcon.appendChild(this.switchOffIcon)
     this.switchOffIcon.style.display = 'none'
   }
@@ -84,34 +75,5 @@ export class SubsettingsSubtitle {
         this.player.emit('SubsettingsSubtitleClick', this.SubsettingsItem[i], i)
       }
     }
-  }
-
-  // 在Subtitle设置中注册一个选项
-  registerSubsettingsItem(
-    item: SubsettingsItem & {
-      click?: (item: SubsettingsItem) => any
-    }
-  ): SubsettingsItem {
-    this.SubsettingsItem.push(item)
-
-    let instance = new SubsettingItem(
-      this.player,
-      item.leftIcon,
-      item.leftText,
-      item.rightTip,
-      item.rightIcon
-    )
-    item.instance = instance
-    this.el.appendChild(instance.el)
-
-    instance.el.addEventListener('click', (e) => {
-      e.stopPropagation()
-
-      this.player.emit('SubsettingsSubtitleClick', item, this.SubsettingsItem.length - 1)
-
-      if (item.click) item.click(item)
-    })
-
-    return item
   }
 }
