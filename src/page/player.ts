@@ -40,6 +40,7 @@ class Player extends Component implements ComponentItem {
   mask: HTMLElement
   containerWidth: number
   containerHeight: number
+  danmakuController: DanmakuController
   mediaProportion: number = 9 / 16 // 视频比例 原始高度/原始宽度，默认16:9
   static player = this
 
@@ -101,7 +102,7 @@ class Player extends Component implements ComponentItem {
     }
 
     if (this.playerOptions.danmaku && this.playerOptions.danmaku.open) {
-      // new DanmakuController(this, this.playerOptions.danmaku)
+      this.danmakuController = new DanmakuController(this, this.playerOptions.danmaku)
     }
   }
 
@@ -207,7 +208,10 @@ class Player extends Component implements ComponentItem {
   }
 
   initPCEvent(): void {
-    this.video.onclick = (e) => {
+    this.el.onclick = (e) => {
+      if (e.target === this.toolBar.el || e.target === this.toolBar.controller.el) {
+        return
+      }
       if (this.video.paused) {
         this.video.play()
       } else if (this.video.played) {

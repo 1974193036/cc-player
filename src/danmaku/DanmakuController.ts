@@ -1,5 +1,5 @@
 import { Danmaku, DanmakuInput } from '@/danmaku'
-// import { queue } from '@/mock/queue'
+import { queue } from '@/mock/queue'
 import { Player } from '../page/player'
 import { EVENT } from '@/events'
 import { DanmakuOpenClose } from './UI/DanmakuOpenClose'
@@ -19,11 +19,11 @@ export class DanmakuController {
   private container: HTMLElement
   private danmaku: Danmaku
   private danmakuInput: DanmakuInput
-  private danmakuSettings: DanmakuSettings
   private danmakuOpenClose: DanmakuOpenClose
   private options: DanmakuOptions
   // el: div.video-danmaku-container
   private el: HTMLElement
+  danmakuSettings: DanmakuSettings
 
   constructor(player: Player, options: DanmakuOptions) {
     this.player = player
@@ -82,7 +82,7 @@ export class DanmakuController {
   initTemplate() {
     let ctx = this
     this.danmakuInput = new DanmakuInput(this.player, null, 'div')
-    this.danmakuSettings = new DanmakuSettings(this.player, null, 'div')
+    this.danmakuSettings = new DanmakuSettings(this.player)
     this.danmakuOpenClose = new DanmakuOpenClose(this.player, null, 'div')
 
     this.player.use({
@@ -93,12 +93,12 @@ export class DanmakuController {
             pos: 'medium'
           }
         })
-        player.mountComponent(ctx.danmakuSettings.id, ctx.danmakuSettings, {
-          mode: {
-            type: 'BottomToolBar',
-            pos: 'medium'
-          }
-        })
+        // player.mountComponent(ctx.danmakuSettings.id, ctx.danmakuSettings, {
+        //   mode: {
+        //     type: 'BottomToolBar',
+        //     pos: 'medium'
+        //   }
+        // })
         player.mountComponent(ctx.danmakuInput.id, ctx.danmakuInput, {
           mode: {
             type: 'BottomToolBar',
@@ -160,9 +160,9 @@ export class DanmakuController {
     // 如果默认请求弹幕数据的方式为http请求，则需要进行轮询
     // let video = e.target as HTMLVideoElement
     // // console.log(video.currentTime)
-    // for (let i = 0; i < 10; i++) {
-    //   this.danmaku.addData(queue[i % queue.length])
-    // }
+    for (let i = 0; i < 10; i++) {
+      this.danmaku.addData(queue[i % queue.length])
+    }
   }
 
   // start() {
@@ -190,5 +190,13 @@ export class DanmakuController {
   // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
   onSeeking(e: Event) {
     this.danmaku.flush()
+  }
+
+  setTrackNumber(num: number) {
+    this.danmaku.setTrackNumber(num)
+  }
+
+  setOpacity(opacity: number) {
+    this.danmaku.setOpacity(opacity)
   }
 }
