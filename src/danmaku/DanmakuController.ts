@@ -5,10 +5,10 @@ import { EVENT } from '@/events'
 import { DanmakuOpenClose } from './UI/DanmakuOpenClose'
 import { DanmakuSettings } from './UI/DanmakuSettings'
 import { DanmakuOptions } from '@/types/Player'
-import io from 'socket.io-client/dist/socket.io'
+// import io from 'socket.io-client/dist/socket.io'
+import * as io from "socket.io-client"
 import '@/utils/polyfill'
 import { $ } from '@/utils/domUtils'
-
 
 /**
  * @description 控制弹幕的类 Controller层
@@ -54,26 +54,22 @@ export class DanmakuController {
   }
 
   initWebSocket() {
-    // const socket = io(this.options.api, {
+    // const socket = io.io(this.options.api, {
     //   transports: ['websocket', 'polling']
     // })
-
     // socket.on('connect', () => {
     //   this.player.video.addEventListener('timeupdate', (e) => {
     //     socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
     //       time: this.player.video.currentTime
     //     })
     //   })
-
     //   socket.on(EVENT.SEND_DANMAKU_DATA, (data: any[]) => {
     //     console.log(`接受到数据${JSON.stringify(data)},当前时间${this.player.video.currentTime}`)
-
     //     for (let item of data) {
     //       this.danmaku.addData(item)
     //     }
     //   })
     // })
-
     // socket.connect()
   }
 
@@ -197,6 +193,11 @@ export class DanmakuController {
   }
 
   setOpacity(opacity: number) {
+    // 1/2 3/4
     this.danmaku.setOpacity(opacity)
+  }
+
+  setFontSize(scale: number) {
+    this.danmaku.setFontSize(scale)
   }
 }
