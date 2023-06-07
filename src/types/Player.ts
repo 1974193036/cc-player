@@ -3,6 +3,7 @@ import { Component } from '../class/Component'
 import { SubsettingItem } from '@/components/ToolBar/BottomBar/parts/Subsettings/SubsettingItem'
 import { SubSetting } from '../components'
 import { SubsettingsBase } from '../components/ToolBar/BottomBar/parts/Subsettings/parts/SubsettingsBase'
+import { RequestHeader } from './mp4'
 
 export type PlayerOptions = {
   url: string
@@ -138,4 +139,15 @@ export type RegisterComponentOptions = {
 // 更新组件时的选项
 export type UpdateComponentOptions = {
   replaceElType?: 'replaceOuterHTMLOfComponent' | 'replaceInnerHTMLOfComponent'
+}
+
+export type AxiosConfig = {
+  baseURL?: string
+  header?: RequestHeader
+  timeout?: number
+}
+
+export type AxiosOptions = {
+  header?: RequestHeader
+  query?: { [props: string]: any }
 }

@@ -196,11 +196,13 @@ export class Danmaku {
     data.y = []
 
     this.addDataToTrack(data)
+
+    console.log(data)
     if (data.y.length === 0) {
       if ([...this.container.childNodes].includes(data.dom)) {
         this.container.removeChild(data.dom)
       }
-      this.queue.push(data)
+      // this.queue.push(data)
     } else {
       data.dom.style.top = data.y[0] * this.trackHeight + 'px'
       this.startAnimate(data) // 开启弹幕的动画

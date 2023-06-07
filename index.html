@@ -57,14 +57,13 @@
       console.log(Player)
       window.onload = function() {
         let player = new Player.default({
-          // url: './video.mp4',
-          // url: 'http://localhost:8889/video.mp4',
-          // url: 'http://localhost:8889/video2.mp4',
+          // url: 'http://localhost:3000/video.mp4',
           // url: 'https://novaex.cc/monster.mp4',
           // url: 'https://novaex.cc/demo.mp4',
           // url: 'https://novaex.cc/OnePiece.mp4',
           // url: 'https://novaex.cc/Summer.mp4',
-          url: 'https://novaex.cc/fireworks.mp4',
+          // url: 'https://novaex.cc/fireworks.mp4',
+          url: 'http://localhost:3000/fireworks.mp4',
           // url: 'https://a0.muscache.com/airbnb/static/Paris-P1-1.mp4', // 支持流式
           container: document.getElementById('video'),
           // width: '640px',
@@ -75,26 +74,32 @@
           // rightBottomBarControllers: ['Playrate', 'Volume', 'FullScreen'],
           subtitles: [ // 字幕
             {
-              source: "http://127.0.0.1:8889/subtitle.vtt",
+              source: "http://127.0.0.1:3000/subtitle.vtt",
               tip: "Bilingual",
               lang: "en"
             },
             {
-              source: "http://127.0.0.1:8889/subtitle.zn.vtt",
+              source: "http://127.0.0.1:3000/subtitle.zn.vtt",
               tip: "Chinese",
               lang: "zh",
               default: true
             },
             {
-              source: "http://127.0.0.1:8889/subtitle.jp.vtt",
+              source: "http://127.0.0.1:3000/subtitle.jp.vtt",
               tip: "Japanese",
               lang: "jp"
             }
           ],
           danmaku: { // 弹幕
+            // socket:
+            // open: true,
+            // api: 'http://localhost:3000',
+            // type: 'websocket'
+
+            // http:
             open: true,
-            api: 'http://localhost/',
-            type: 'websocket'
+            api: 'http://localhost:3000/danmaku',
+            type: 'http'
           }
         })
 

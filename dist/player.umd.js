@@ -69,11 +69,11 @@
 
 	var uncurryThis$x = functionUncurryThis;
 
-	var toString$d = uncurryThis$x({}.toString);
+	var toString$e = uncurryThis$x({}.toString);
 	var stringSlice$3 = uncurryThis$x(''.slice);
 
 	var classofRaw$2 = function (it) {
-	  return stringSlice$3(toString$d(it), 8, -1);
+	  return stringSlice$3(toString$e(it), 8, -1);
 	};
 
 	var classofRaw$1 = classofRaw$2;
@@ -198,7 +198,7 @@
 
 	var documentAll = $documentAll.all;
 
-	var isObject$j = $documentAll.IS_HTMLDDA ? function (it) {
+	var isObject$k = $documentAll.IS_HTMLDDA ? function (it) {
 	  return typeof it == 'object' ? it !== null : isCallable$o(it) || it === documentAll;
 	} : function (it) {
 	  return typeof it == 'object' ? it !== null : isCallable$o(it);
@@ -328,7 +328,7 @@
 
 	var call$n = functionCall;
 	var isCallable$k = isCallable$p;
-	var isObject$i = isObject$j;
+	var isObject$j = isObject$k;
 
 	var $TypeError$h = TypeError;
 
@@ -336,9 +336,9 @@
 	// https://tc39.es/ecma262/#sec-ordinarytoprimitive
 	var ordinaryToPrimitive$1 = function (input, pref) {
 	  var fn, val;
-	  if (pref === 'string' && isCallable$k(fn = input.toString) && !isObject$i(val = call$n(fn, input))) return val;
-	  if (isCallable$k(fn = input.valueOf) && !isObject$i(val = call$n(fn, input))) return val;
-	  if (pref !== 'string' && isCallable$k(fn = input.toString) && !isObject$i(val = call$n(fn, input))) return val;
+	  if (pref === 'string' && isCallable$k(fn = input.toString) && !isObject$j(val = call$n(fn, input))) return val;
+	  if (isCallable$k(fn = input.valueOf) && !isObject$j(val = call$n(fn, input))) return val;
+	  if (pref !== 'string' && isCallable$k(fn = input.toString) && !isObject$j(val = call$n(fn, input))) return val;
 	  throw $TypeError$h("Can't convert object to primitive value");
 	};
 
@@ -407,10 +407,10 @@
 
 	var id$1 = 0;
 	var postfix = Math.random();
-	var toString$c = uncurryThis$s(1.0.toString);
+	var toString$d = uncurryThis$s(1.0.toString);
 
 	var uid$4 = function (key) {
-	  return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString$c(++id$1 + postfix, 36);
+	  return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString$d(++id$1 + postfix, 36);
 	};
 
 	var global$i = global$o;
@@ -433,7 +433,7 @@
 	};
 
 	var call$m = functionCall;
-	var isObject$h = isObject$j;
+	var isObject$i = isObject$k;
 	var isSymbol$4 = isSymbol$5;
 	var getMethod$2 = getMethod$3;
 	var ordinaryToPrimitive = ordinaryToPrimitive$1;
@@ -445,13 +445,13 @@
 	// `ToPrimitive` abstract operation
 	// https://tc39.es/ecma262/#sec-toprimitive
 	var toPrimitive$7 = function (input, pref) {
-	  if (!isObject$h(input) || isSymbol$4(input)) return input;
+	  if (!isObject$i(input) || isSymbol$4(input)) return input;
 	  var exoticToPrim = getMethod$2(input, TO_PRIMITIVE);
 	  var result;
 	  if (exoticToPrim) {
 	    if (pref === undefined) pref = 'default';
 	    result = call$m(exoticToPrim, input, pref);
-	    if (!isObject$h(result) || isSymbol$4(result)) return result;
+	    if (!isObject$i(result) || isSymbol$4(result)) return result;
 	    throw $TypeError$g("Can't convert object to primitive value");
 	  }
 	  if (pref === undefined) pref = 'number';
@@ -469,11 +469,11 @@
 	};
 
 	var global$h = global$o;
-	var isObject$g = isObject$j;
+	var isObject$h = isObject$k;
 
 	var document$4 = global$h.document;
 	// typeof document.createElement is 'object' in old IE
-	var EXISTS$1 = isObject$g(document$4) && isObject$g(document$4.createElement);
+	var EXISTS$1 = isObject$h(document$4) && isObject$h(document$4.createElement);
 
 	var documentCreateElement$1 = function (it) {
 	  return EXISTS$1 ? document$4.createElement(it) : {};
@@ -566,14 +566,14 @@
 	  }).prototype != 42;
 	});
 
-	var isObject$f = isObject$j;
+	var isObject$g = isObject$k;
 
 	var $String$3 = String;
 	var $TypeError$f = TypeError;
 
 	// `Assert: Type(argument) is Object`
 	var anObject$f = function (argument) {
-	  if (isObject$f(argument)) return argument;
+	  if (isObject$g(argument)) return argument;
 	  throw $TypeError$f($String$3(argument) + ' is not an object');
 	};
 
@@ -740,7 +740,7 @@
 
 	var uncurryThis$o = functionUncurryThis;
 	var aCallable$e = aCallable$h;
-	var isObject$e = isObject$j;
+	var isObject$f = isObject$k;
 	var hasOwn$f = hasOwnProperty_1;
 	var arraySlice$6 = arraySlice$7;
 	var NATIVE_BIND = functionBindNative;
@@ -768,7 +768,7 @@
 	    var args = concat$9(partArgs, arraySlice$6(arguments));
 	    return this instanceof boundFunction ? construct$7(F, args.length, args) : F.apply(that, args);
 	  };
-	  if (isObject$e(Prototype)) boundFunction.prototype = Prototype;
+	  if (isObject$f(Prototype)) boundFunction.prototype = Prototype;
 	  return boundFunction;
 	};
 
@@ -834,7 +834,7 @@
 	var inspectSource$1 = inspectSource$2;
 
 	var noop = function () { /* empty */ };
-	var empty = [];
+	var empty$1 = [];
 	var construct$6 = getBuiltIn$f('Reflect', 'construct');
 	var constructorRegExp = /^\s*(?:class|function)\b/;
 	var exec$4 = uncurryThis$m(constructorRegExp.exec);
@@ -843,7 +843,7 @@
 	var isConstructorModern = function isConstructor(argument) {
 	  if (!isCallable$f(argument)) return false;
 	  try {
-	    construct$6(noop, empty, argument);
+	    construct$6(noop, empty$1, argument);
 	    return true;
 	  } catch (error) {
 	    return false;
@@ -1146,7 +1146,7 @@
 	var bind$p = functionBind;
 	var aConstructor$2 = aConstructor$3;
 	var anObject$b = anObject$f;
-	var isObject$d = isObject$j;
+	var isObject$e = isObject$k;
 	var create$c = objectCreate;
 	var fails$o = fails$x;
 
@@ -1191,9 +1191,9 @@
 	    }
 	    // with altered newTarget, not support built-in constructors
 	    var proto = newTarget.prototype;
-	    var instance = create$c(isObject$d(proto) ? proto : ObjectPrototype$2);
+	    var instance = create$c(isObject$e(proto) ? proto : ObjectPrototype$2);
 	    var result = apply$2(Target, instance, args);
-	    return isObject$d(result) ? result : instance;
+	    return isObject$e(result) ? result : instance;
 	  }
 	});
 
@@ -1297,7 +1297,7 @@
 
 	var isArray$b = isArray$c;
 	var isConstructor$2 = isConstructor$4;
-	var isObject$c = isObject$j;
+	var isObject$d = isObject$k;
 	var wellKnownSymbol$m = wellKnownSymbol$q;
 
 	var SPECIES$5 = wellKnownSymbol$m('species');
@@ -1311,7 +1311,7 @@
 	    C = originalArray.constructor;
 	    // cross-realm fallback
 	    if (isConstructor$2(C) && (C === $Array$3 || isArray$b(C.prototype))) C = undefined;
-	    else if (isObject$c(C)) {
+	    else if (isObject$d(C)) {
 	      C = C[SPECIES$5];
 	      if (C === null) C = undefined;
 	    }
@@ -1349,7 +1349,7 @@
 	var $$10 = _export;
 	var fails$m = fails$x;
 	var isArray$a = isArray$c;
-	var isObject$b = isObject$j;
+	var isObject$c = isObject$k;
 	var toObject$8 = toObject$a;
 	var lengthOfArrayLike$6 = lengthOfArrayLike$8;
 	var doesNotExceedSafeInteger$1 = doesNotExceedSafeInteger$2;
@@ -1371,7 +1371,7 @@
 	});
 
 	var isConcatSpreadable = function (O) {
-	  if (!isObject$b(O)) return false;
+	  if (!isObject$c(O)) return false;
 	  var spreadable = O[IS_CONCAT_SPREADABLE];
 	  return spreadable !== undefined ? !!spreadable : isArray$a(O);
 	};
@@ -1408,7 +1408,7 @@
 
 	var $String$2 = String;
 
-	var toString$b = function (argument) {
+	var toString$c = function (argument) {
 	  if (classof$a(argument) === 'Symbol') throw TypeError('Cannot convert a Symbol value to a string');
 	  return $String$2(argument);
 	};
@@ -1542,7 +1542,7 @@
 	var defineProperty$3 = objectDefineProperty.f;
 	var createNonEnumerableProperty$6 = createNonEnumerableProperty$9;
 	var hasOwn$c = hasOwnProperty_1;
-	var toString$a = objectToString;
+	var toString$b = objectToString;
 	var wellKnownSymbol$h = wellKnownSymbol$q;
 
 	var TO_STRING_TAG$2 = wellKnownSymbol$h('toStringTag');
@@ -1554,7 +1554,7 @@
 	      defineProperty$3(target, TO_STRING_TAG$2, { configurable: true, value: TAG });
 	    }
 	    if (SET_METHOD && !TO_STRING_TAG_SUPPORT) {
-	      createNonEnumerableProperty$6(target, 'toString', toString$a);
+	      createNonEnumerableProperty$6(target, 'toString', toString$b);
 	    }
 	  }
 	};
@@ -1568,7 +1568,7 @@
 
 	var NATIVE_WEAK_MAP = weakMapBasicDetection;
 	var global$e = global$o;
-	var isObject$a = isObject$j;
+	var isObject$b = isObject$k;
 	var createNonEnumerableProperty$5 = createNonEnumerableProperty$9;
 	var hasOwn$b = hasOwnProperty_1;
 	var shared$4 = sharedStore;
@@ -1587,7 +1587,7 @@
 	var getterFor = function (TYPE) {
 	  return function (it) {
 	    var state;
-	    if (!isObject$a(it) || (state = get$2(it)).type !== TYPE) {
+	    if (!isObject$b(it) || (state = get$2(it)).type !== TYPE) {
 	      throw TypeError$5('Incompatible receiver, ' + TYPE + ' required');
 	    } return state;
 	  };
@@ -1723,7 +1723,7 @@
 	var anObject$a = anObject$f;
 	var toIndexedObject$4 = toIndexedObject$a;
 	var toPropertyKey = toPropertyKey$4;
-	var $toString$2 = toString$b;
+	var $toString$2 = toString$c;
 	var createPropertyDescriptor$4 = createPropertyDescriptor$8;
 	var nativeObjectCreate = objectCreate;
 	var objectKeys$1 = objectKeys$3;
@@ -1968,7 +1968,7 @@
 	var $$_ = _export;
 	var getBuiltIn$b = getBuiltIn$h;
 	var hasOwn$9 = hasOwnProperty_1;
-	var toString$9 = toString$b;
+	var toString$a = toString$c;
 	var shared$2 = sharedExports;
 	var NATIVE_SYMBOL_REGISTRY$1 = symbolRegistryDetection;
 
@@ -1979,7 +1979,7 @@
 	// https://tc39.es/ecma262/#sec-symbol.for
 	$$_({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY$1 }, {
 	  'for': function (key) {
-	    var string = toString$9(key);
+	    var string = toString$a(key);
 	    if (hasOwn$9(StringToSymbolRegistry, string)) return StringToSymbolRegistry[string];
 	    var symbol = getBuiltIn$b('Symbol')(string);
 	    StringToSymbolRegistry[string] = symbol;
@@ -2010,7 +2010,7 @@
 	var isArray$9 = isArray$c;
 	var isCallable$d = isCallable$p;
 	var classof$7 = classofRaw$2;
-	var toString$8 = toString$b;
+	var toString$9 = toString$c;
 
 	var push$6 = uncurryThis$i([].push);
 
@@ -2022,7 +2022,7 @@
 	  for (var i = 0; i < rawLength; i++) {
 	    var element = replacer[i];
 	    if (typeof element == 'string') push$6(keys, element);
-	    else if (typeof element == 'number' || classof$7(element) == 'Number' || classof$7(element) == 'String') push$6(keys, toString$8(element));
+	    else if (typeof element == 'number' || classof$7(element) == 'Number' || classof$7(element) == 'String') push$6(keys, toString$9(element));
 	  }
 	  var keysLength = keys.length;
 	  var root = true;
@@ -2281,7 +2281,7 @@
 
 	var fails$h = fails$x;
 	var isCallable$a = isCallable$p;
-	var isObject$9 = isObject$j;
+	var isObject$a = isObject$k;
 	var create$b = objectCreate;
 	var getPrototypeOf$8 = objectGetPrototypeOf;
 	var defineBuiltIn$5 = defineBuiltIn$8;
@@ -2305,7 +2305,7 @@
 	  }
 	}
 
-	var NEW_ITERATOR_PROTOTYPE = !isObject$9(IteratorPrototype$1) || fails$h(function () {
+	var NEW_ITERATOR_PROTOTYPE = !isObject$a(IteratorPrototype$1) || fails$h(function () {
 	  var test = {};
 	  // FF44- legacy iterators case
 	  return IteratorPrototype$1[ITERATOR$8].call(test) !== test;
@@ -2642,10 +2642,10 @@
 	var thisSymbolValue = uncurryThis$e(Symbol$3.prototype.valueOf);
 	var WellKnownSymbolsStore = shared('wks');
 
-	for (var i = 0, symbolKeys = getOwnPropertyNames(Symbol$3), symbolKeysLength = symbolKeys.length; i < symbolKeysLength; i++) {
+	for (var i$1 = 0, symbolKeys = getOwnPropertyNames(Symbol$3), symbolKeysLength = symbolKeys.length; i$1 < symbolKeysLength; i$1++) {
 	  // some old engines throws on access to some keys like `arguments` or `caller`
 	  try {
-	    var symbolKey = symbolKeys[i];
+	    var symbolKey = symbolKeys[i$1];
 	    if (isSymbol(Symbol$3[symbolKey])) wellKnownSymbol$c(symbolKey);
 	  } catch (error) { /* empty */ }
 	}
@@ -2725,7 +2725,7 @@
 
 	var uncurryThis$d = functionUncurryThis;
 	var toIntegerOrInfinity$1 = toIntegerOrInfinity$4;
-	var toString$7 = toString$b;
+	var toString$8 = toString$c;
 	var requireObjectCoercible$2 = requireObjectCoercible$5;
 
 	var charAt$4 = uncurryThis$d(''.charAt);
@@ -2734,7 +2734,7 @@
 
 	var createMethod$1 = function (CONVERT_TO_STRING) {
 	  return function ($this, pos) {
-	    var S = toString$7(requireObjectCoercible$2($this));
+	    var S = toString$8(requireObjectCoercible$2($this));
 	    var position = toIntegerOrInfinity$1(pos);
 	    var size = S.length;
 	    var first, second;
@@ -2761,7 +2761,7 @@
 	};
 
 	var charAt$3 = stringMultibyte.charAt;
-	var toString$6 = toString$b;
+	var toString$7 = toString$c;
 	var InternalStateModule$5 = internalState;
 	var defineIterator$1 = iteratorDefine;
 	var createIterResultObject$1 = createIterResultObject$3;
@@ -2775,7 +2775,7 @@
 	defineIterator$1(String, 'String', function (iterated) {
 	  setInternalState$5(this, {
 	    type: STRING_ITERATOR,
-	    string: toString$6(iterated),
+	    string: toString$7(iterated),
 	    index: 0
 	  });
 	// `%StringIteratorPrototype%.next` method
@@ -3131,14 +3131,14 @@
 
 	var _Array$isArray = /*@__PURE__*/getDefaultExportFromCjs(isArray$2);
 
-	function _arrayLikeToArray$3(arr, len) {
+	function _arrayLikeToArray$4(arr, len) {
 	  if (len == null || len > arr.length) len = arr.length;
 	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
 	  return arr2;
 	}
 
 	function _arrayWithoutHoles(arr) {
-	  if (_Array$isArray(arr)) return _arrayLikeToArray$3(arr);
+	  if (_Array$isArray(arr)) return _arrayLikeToArray$4(arr);
 	}
 
 	var classof$5 = classof$d;
@@ -3368,7 +3368,7 @@
 	var $$N = _export;
 	var isArray$1 = isArray$c;
 	var isConstructor = isConstructor$4;
-	var isObject$8 = isObject$j;
+	var isObject$9 = isObject$k;
 	var toAbsoluteIndex$1 = toAbsoluteIndex$4;
 	var lengthOfArrayLike$2 = lengthOfArrayLike$8;
 	var toIndexedObject$2 = toIndexedObject$a;
@@ -3399,7 +3399,7 @@
 	      // cross-realm fallback
 	      if (isConstructor(Constructor) && (Constructor === $Array || isArray$1(Constructor.prototype))) {
 	        Constructor = undefined;
-	      } else if (isObject$8(Constructor)) {
+	      } else if (isObject$9(Constructor)) {
 	        Constructor = Constructor[SPECIES$3];
 	        if (Constructor === null) Constructor = undefined;
 	      }
@@ -3446,14 +3446,14 @@
 
 	var _sliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(slice);
 
-	function _unsupportedIterableToArray$3(o, minLen) {
+	function _unsupportedIterableToArray$4(o, minLen) {
 	  var _context;
 	  if (!o) return;
-	  if (typeof o === "string") return _arrayLikeToArray$3(o, minLen);
+	  if (typeof o === "string") return _arrayLikeToArray$4(o, minLen);
 	  var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
 	  if (n === "Object" && o.constructor) n = o.constructor.name;
 	  if (n === "Map" || n === "Set") return _Array$from(o);
-	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen);
+	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen);
 	}
 
 	function _nonIterableSpread() {
@@ -3461,7 +3461,7 @@
 	}
 
 	function _toConsumableArray(arr) {
-	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$3(arr) || _nonIterableSpread();
+	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$4(arr) || _nonIterableSpread();
 	}
 
 	var entryVirtual$6 = entryVirtual$9;
@@ -3496,9 +3496,9 @@
 
 	var _concatInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(concat$2);
 
-	function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-	function _unsupportedIterableToArray$2(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
-	function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+	function _createForOfIteratorHelper$3(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$3(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray$3(o, minLen) { var _context5; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$3(o, minLen); var n = _sliceInstanceProperty(_context5 = Object.prototype.toString.call(o)).call(_context5, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen); }
+	function _arrayLikeToArray$3(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	function getDOMPoint(dom) {
 	  var rect = dom.getBoundingClientRect();
 	  return {
@@ -3579,7 +3579,7 @@
 	  if (typeof children === 'string') {
 	    el.innerHTML += children;
 	  } else if (children) {
-	    var _iterator = _createForOfIteratorHelper$2(children),
+	    var _iterator = _createForOfIteratorHelper$3(children),
 	      _step;
 	    try {
 	      for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -3608,7 +3608,7 @@
 	}
 	function addClass(dom, classNames) {
 	  var classList = dom.classList;
-	  var _iterator2 = _createForOfIteratorHelper$2(classNames),
+	  var _iterator2 = _createForOfIteratorHelper$3(classNames),
 	    _step2;
 	  try {
 	    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -3682,7 +3682,7 @@
 	  var viewBox = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0 0 24 24';
 	  var svg = document.createElementNS(svgNS, 'svg');
 	  svg.setAttribute('viewBox', viewBox);
-	  var _iterator3 = _createForOfIteratorHelper$2(d),
+	  var _iterator3 = _createForOfIteratorHelper$3(d),
 	    _step3;
 	  try {
 	    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
@@ -3714,7 +3714,7 @@
 	        if (replaceElementType === 'replaceOuterHTMLOfComponent') {
 	          target.el = another.el;
 	        } else {
-	          var _iterator4 = _createForOfIteratorHelper$2(target.el.childNodes),
+	          var _iterator4 = _createForOfIteratorHelper$3(target.el.childNodes),
 	            _step4;
 	          try {
 	            for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
@@ -3820,7 +3820,7 @@
 
 	var includes$7 = entryVirtual$5('Array').includes;
 
-	var isObject$7 = isObject$j;
+	var isObject$8 = isObject$k;
 	var classof$4 = classofRaw$2;
 	var wellKnownSymbol$7 = wellKnownSymbol$q;
 
@@ -3830,7 +3830,7 @@
 	// https://tc39.es/ecma262/#sec-isregexp
 	var isRegexp = function (it) {
 	  var isRegExp;
-	  return isObject$7(it) && ((isRegExp = it[MATCH$1]) !== undefined ? !!isRegExp : classof$4(it) == 'RegExp');
+	  return isObject$8(it) && ((isRegExp = it[MATCH$1]) !== undefined ? !!isRegExp : classof$4(it) == 'RegExp');
 	};
 
 	var isRegExp = isRegexp;
@@ -3863,7 +3863,7 @@
 	var uncurryThis$c = functionUncurryThis;
 	var notARegExp = notARegexp;
 	var requireObjectCoercible$1 = requireObjectCoercible$5;
-	var toString$5 = toString$b;
+	var toString$6 = toString$c;
 	var correctIsRegExpLogic = correctIsRegexpLogic;
 
 	var stringIndexOf = uncurryThis$c(''.indexOf);
@@ -3873,8 +3873,8 @@
 	$$K({ target: 'String', proto: true, forced: !correctIsRegExpLogic('includes') }, {
 	  includes: function includes(searchString /* , position = 0 */) {
 	    return !!~stringIndexOf(
-	      toString$5(requireObjectCoercible$1(this)),
-	      toString$5(notARegExp(searchString)),
+	      toString$6(requireObjectCoercible$1(this)),
+	      toString$6(notARegExp(searchString)),
 	      arguments.length > 1 ? arguments[1] : undefined
 	    );
 	  }
@@ -4600,7 +4600,7 @@
 	});
 
 	var fails$c = fails$x;
-	var isObject$6 = isObject$j;
+	var isObject$7 = isObject$k;
 	var classof$2 = classofRaw$2;
 	var ARRAY_BUFFER_NON_EXTENSIBLE = arrayBufferNonExtensible;
 
@@ -4611,7 +4611,7 @@
 	// `Object.isExtensible` method
 	// https://tc39.es/ecma262/#sec-object.isextensible
 	var objectIsExtensible = (FAILS_ON_PRIMITIVES$1 || ARRAY_BUFFER_NON_EXTENSIBLE) ? function isExtensible(it) {
-	  if (!isObject$6(it)) return false;
+	  if (!isObject$7(it)) return false;
 	  if (ARRAY_BUFFER_NON_EXTENSIBLE && classof$2(it) == 'ArrayBuffer') return false;
 	  return $isExtensible ? $isExtensible(it) : true;
 	} : $isExtensible;
@@ -4626,7 +4626,7 @@
 	var $$F = _export;
 	var uncurryThis$a = functionUncurryThis;
 	var hiddenKeys = hiddenKeys$6;
-	var isObject$5 = isObject$j;
+	var isObject$6 = isObject$k;
 	var hasOwn$4 = hasOwnProperty_1;
 	var defineProperty$2 = objectDefineProperty.f;
 	var getOwnPropertyNamesModule$1 = objectGetOwnPropertyNames;
@@ -4648,7 +4648,7 @@
 
 	var fastKey$1 = function (it, create) {
 	  // return a primitive with prefix
-	  if (!isObject$5(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+	  if (!isObject$6(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
 	  if (!hasOwn$4(it, METADATA)) {
 	    // can't set metadata to uncaught frozen object
 	    if (!isExtensible(it)) return 'F';
@@ -4801,7 +4801,7 @@
 	var iterate$k = iterate$l;
 	var anInstance$4 = anInstance$5;
 	var isCallable$8 = isCallable$p;
-	var isObject$4 = isObject$j;
+	var isObject$5 = isObject$k;
 	var setToStringTag$3 = setToStringTag$9;
 	var defineProperty$1 = objectDefineProperty.f;
 	var forEach = arrayIteration.forEach;
@@ -4844,7 +4844,7 @@
 	      if (KEY in NativePrototype && !(IS_WEAK && KEY == 'clear')) {
 	        createNonEnumerableProperty$3(Prototype, KEY, function (a, b) {
 	          var collection = getInternalState(this).collection;
-	          if (!IS_ADDER && IS_WEAK && !isObject$4(a)) return KEY == 'get' ? undefined : false;
+	          if (!IS_ADDER && IS_WEAK && !isObject$5(a)) return KEY == 'get' ? undefined : false;
 	          var result = collection[KEY](a === 0 ? 0 : a, b);
 	          return IS_ADDER ? this : result;
 	        });
@@ -5114,16 +5114,16 @@
 
 	var path$9 = path$m;
 
-	var map$5 = path$9.Map;
+	var map$6 = path$9.Map;
 
-	var parent$t = map$5;
+	var parent$t = map$6;
 
 
-	var map$4 = parent$t;
+	var map$5 = parent$t;
 
-	var parent$s = map$4;
+	var parent$s = map$5;
 
-	var map$3 = parent$s;
+	var map$4 = parent$s;
 
 	// https://tc39.github.io/proposal-setmap-offrom/
 	var bind$c = functionBindContext;
@@ -5630,7 +5630,7 @@
 	  updateOrInsert: upsert
 	});
 
-	var parent$r = map$3;
+	var parent$r = map$4;
 
 
 
@@ -5654,13 +5654,13 @@
 	// TODO: remove from `core-js@4`
 
 
-	var map$2 = parent$r;
+	var map$3 = parent$r;
+
+	var map$2 = map$3;
 
 	var map$1 = map$2;
 
-	var map = map$1;
-
-	var _Map = /*@__PURE__*/getDefaultExportFromCjs(map);
+	var _Map = /*@__PURE__*/getDefaultExportFromCjs(map$1);
 
 	// COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件
 	var COMPONENT_STORE = new _Map();
@@ -5779,7 +5779,7 @@
 	    let dom = fn1.call(window.document, tagName, options);
 	    let prototype = dom.__proto__;
 	    let proto = Object.create(prototype);
-	    proto.addEventListener = addEventListener;
+	    proto.addEventListener = addEventListener$1;
 	    Object.setPrototypeOf(dom, proto);
 	    Object.setPrototypeOf(proto, prototype);
 	    return dom;
@@ -5791,7 +5791,7 @@
 	    doms.forEach(dom => {
 	        if (dom.__proto__ instanceof HTMLElement) {
 	            let proto = Object.create(dom.__proto__);
-	            proto.addEventListener = addEventListener;
+	            proto.addEventListener = addEventListener$1;
 	            Object.setPrototypeOf(dom, proto);
 	        }
 	    });
@@ -5805,7 +5805,7 @@
 	        return null;
 	    if (dom.__proto__ instanceof HTMLElement) {
 	        let proto = Object.create(dom.__proto__);
-	        proto.addEventListener = addEventListener;
+	        proto.addEventListener = addEventListener$1;
 	        Object.setPrototypeOf(dom, proto);
 	    }
 	    return dom;
@@ -5817,7 +5817,7 @@
 	    doms.forEach(dom => {
 	        if (dom.__proto__ instanceof HTMLElement) {
 	            let proto = Object.create(dom.__proto__);
-	            proto.addEventListener = addEventListener;
+	            proto.addEventListener = addEventListener$1;
 	            Object.setPrototypeOf(dom, proto);
 	        }
 	    });
@@ -6170,19 +6170,19 @@
 	}
 
 	function wrap(dom) {
-	    if (dom.__proto__.addEventListener === addEventListener) {
+	    if (dom.__proto__.addEventListener === addEventListener$1) {
 	        return dom;
 	    }
 	    let prototype = dom.__proto__;
 	    let proto = Object.create(prototype);
-	    proto.addEventListener = addEventListener;
+	    proto.addEventListener = addEventListener$1;
 	    Object.setPrototypeOf(dom, proto);
 	    Object.setPrototypeOf(proto, prototype);
 	    return dom;
 	}
 
 	const fn = HTMLElement.prototype.addEventListener;
-	function addEventListener(event, listener, options) {
+	function addEventListener$1(event, listener, options) {
 	    let ctx = this;
 	    switch (event) {
 	        case "singleTap":
@@ -6224,7 +6224,7 @@
 	    }
 	}
 	let body = Object.create(window.document.body);
-	body.addEventListener = addEventListener;
+	body.addEventListener = addEventListener$1;
 	let document$3 = { body: body };
 	document$3.createElement = createElement$1;
 	document$3.getElementById = getElementById;
@@ -6399,7 +6399,7 @@
 
 	var uncurryThis$8 = functionUncurryThis;
 	var requireObjectCoercible = requireObjectCoercible$5;
-	var toString$4 = toString$b;
+	var toString$5 = toString$c;
 	var whitespaces$2 = whitespaces$3;
 
 	var replace$4 = uncurryThis$8(''.replace);
@@ -6409,7 +6409,7 @@
 	// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
 	var createMethod = function (TYPE) {
 	  return function ($this) {
-	    var string = toString$4(requireObjectCoercible($this));
+	    var string = toString$5(requireObjectCoercible($this));
 	    if (TYPE & 1) string = replace$4(string, ltrim, '');
 	    if (TYPE & 2) string = replace$4(string, rtrim, '$1');
 	    return string;
@@ -6431,7 +6431,7 @@
 	var global$9 = global$o;
 	var fails$9 = fails$x;
 	var uncurryThis$7 = functionUncurryThis;
-	var toString$3 = toString$b;
+	var toString$4 = toString$c;
 	var trim$1 = stringTrim.trim;
 	var whitespaces$1 = whitespaces$3;
 
@@ -6447,7 +6447,7 @@
 	// `parseInt` method
 	// https://tc39.es/ecma262/#sec-parseint-string-radix
 	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
-	  var S = trim$1(toString$3(string));
+	  var S = trim$1(toString$4(string));
 	  return $parseInt$1(S, (radix >>> 0) || (exec$2(hex, S) ? 16 : 10));
 	} : $parseInt$1;
 
@@ -6967,7 +6967,7 @@
 	 * Converts a string of Unicode symbols (e.g. a domain name label) to a
 	 * Punycode string of ASCII-only symbols.
 	 */
-	var encode = function (input) {
+	var encode$2 = function (input) {
 	  var output = [];
 
 	  // Convert the input in UCS-2 to an array of Unicode code points.
@@ -7056,7 +7056,7 @@
 	  var i, label;
 	  for (i = 0; i < labels.length; i++) {
 	    label = labels[i];
-	    push$3(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode(label) : label);
+	    push$3(encoded, exec$1(regexNonASCII, label) ? 'xn--' + encode$2(label) : label);
 	  }
 	  return join$2(encoded, '.');
 	};
@@ -7133,8 +7133,8 @@
 	var bind$4 = functionBindContext;
 	var classof$1 = classof$d;
 	var anObject$3 = anObject$f;
-	var isObject$3 = isObject$j;
-	var $toString$1 = toString$b;
+	var isObject$4 = isObject$k;
+	var $toString$1 = toString$c;
 	var create$1 = objectCreate;
 	var createPropertyDescriptor$2 = createPropertyDescriptor$8;
 	var getIterator = getIterator$3;
@@ -7166,7 +7166,7 @@
 	var HeadersPrototype = Headers && Headers.prototype;
 	var RegExp$1 = global$8.RegExp;
 	var TypeError$3 = global$8.TypeError;
-	var decodeURIComponent = global$8.decodeURIComponent;
+	var decodeURIComponent$1 = global$8.decodeURIComponent;
 	var encodeURIComponent$1 = global$8.encodeURIComponent;
 	var charAt$2 = uncurryThis$4(''.charAt);
 	var join$1 = uncurryThis$4([].join);
@@ -7186,7 +7186,7 @@
 
 	var percentDecode = function (sequence) {
 	  try {
-	    return decodeURIComponent(sequence);
+	    return decodeURIComponent$1(sequence);
 	  } catch (error) {
 	    return sequence;
 	  }
@@ -7196,7 +7196,7 @@
 	  var result = replace$2(it, plus, ' ');
 	  var bytes = 4;
 	  try {
-	    return decodeURIComponent(result);
+	    return decodeURIComponent$1(result);
 	  } catch (error) {
 	    while (bytes) {
 	      result = replace$2(result, percentSequence(bytes--), percentDecode);
@@ -7245,7 +7245,7 @@
 	  this.url = null;
 
 	  if (init !== undefined) {
-	    if (isObject$3(init)) this.parseObject(init);
+	    if (isObject$4(init)) this.parseObject(init);
 	    else this.parseQuery(typeof init == 'string' ? charAt$2(init, 0) === '?' ? stringSlice$1(init, 1) : init : $toString$1(init));
 	  }
 	};
@@ -7476,7 +7476,7 @@
 	  var headersSet = uncurryThis$4(HeadersPrototype.set);
 
 	  var wrapRequestOptions = function (init) {
-	    if (isObject$3(init)) {
+	    if (isObject$4(init)) {
 	      var body = init.body;
 	      var headers;
 	      if (classof$1(body) === URL_SEARCH_PARAMS) {
@@ -7537,7 +7537,7 @@
 	var arraySlice$1 = arraySliceSimple;
 	var codeAt = stringMultibyte.codeAt;
 	var toASCII = stringPunycodeToAscii;
-	var $toString = toString$b;
+	var $toString = toString$c;
 	var setToStringTag$1 = setToStringTag$9;
 	var validateArgumentsLength$2 = validateArgumentsLength$4;
 	var URLSearchParamsModule = web_urlSearchParams_constructor;
@@ -8568,7 +8568,7 @@
 	var getBuiltIn$4 = getBuiltIn$h;
 	var fails$6 = fails$x;
 	var validateArgumentsLength$1 = validateArgumentsLength$4;
-	var toString$2 = toString$b;
+	var toString$3 = toString$c;
 	var USE_NATIVE_URL = urlConstructorDetection;
 
 	var URL$1 = getBuiltIn$4('URL');
@@ -8584,8 +8584,8 @@
 	$$g({ target: 'URL', stat: true, forced: !THROWS_WITHOUT_ARGUMENTS }, {
 	  canParse: function canParse(url) {
 	    var length = validateArgumentsLength$1(arguments.length, 1);
-	    var urlString = toString$2(url);
-	    var base = length < 2 || arguments[1] === undefined ? undefined : toString$2(arguments[1]);
+	    var urlString = toString$3(url);
+	    var base = length < 2 || arguments[1] === undefined ? undefined : toString$3(arguments[1]);
 	    try {
 	      return !!new URL$1(urlString, base);
 	    } catch (error) {
@@ -8596,25 +8596,25 @@
 
 	var path$7 = path$m;
 
-	var url$5 = path$7.URL;
+	var url$6 = path$7.URL;
 
-	var parent$n = url$5;
+	var parent$n = url$6;
 
-	var url$4 = parent$n;
+	var url$5 = parent$n;
 
-	var parent$m = url$4;
+	var parent$m = url$5;
 
-	var url$3 = parent$m;
+	var url$4 = parent$m;
 
-	var parent$l = url$3;
+	var parent$l = url$4;
 
-	var url$2 = parent$l;
+	var url$3 = parent$l;
+
+	var url$2 = url$3;
 
 	var url$1 = url$2;
 
-	var url = url$1;
-
-	var _URL = /*@__PURE__*/getDefaultExportFromCjs(url);
+	var _URL = /*@__PURE__*/getDefaultExportFromCjs(url$1);
 
 	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -8977,9 +8977,9 @@
 	  return SubsettingsBase;
 	}(BaseEvent);
 
-	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-	function _unsupportedIterableToArray$1(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
-	function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+	function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray$2(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = _sliceInstanceProperty(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
+	function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	// import { SubsettingItem } from '../SubsettingItem'
@@ -9055,7 +9055,7 @@
 	          item.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
 	          item.instance.leftIconBox.innerHTML = '';
 	          item.instance.leftIconBox.appendChild(item.leftIcon);
-	          var _iterator = _createForOfIteratorHelper$1(_this2.SubsettingsItem),
+	          var _iterator = _createForOfIteratorHelper$2(_this2.SubsettingsItem),
 	            _step;
 	          try {
 	            for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -9402,7 +9402,7 @@
 	var global$6 = global$o;
 	var fails$5 = fails$x;
 	var uncurryThis$2 = functionUncurryThis;
-	var toString$1 = toString$b;
+	var toString$2 = toString$c;
 	var trim = stringTrim.trim;
 	var whitespaces = whitespaces$3;
 
@@ -9417,7 +9417,7 @@
 	// `parseFloat` method
 	// https://tc39.es/ecma262/#sec-parsefloat-string
 	var numberParseFloat = FORCED$1 ? function parseFloat(string) {
-	  var trimmedString = trim(toString$1(string));
+	  var trimmedString = trim(toString$2(string));
 	  var result = $parseFloat$1(trimmedString);
 	  return result === 0 && charAt(trimmedString, 0) == '-' ? -0 : result;
 	} : $parseFloat$1;
@@ -9744,7 +9744,7 @@
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
-	      addClass(this.el, ['video-toolbar', 'video-toolbar-hidden']);
+	      addClass(this.el, ['video-toolbar']);
 	    }
 	  }, {
 	    key: "initComponent",
@@ -9788,13 +9788,13 @@
 	        this.status = 'show';
 	      }
 	      this.timer = window.setTimeout(function () {
-	        _this3.hideToolBar();
+	        if (!_this3.player.video.paused) _this3.hideToolBar();
 	      }, 3000);
 	    }
 	  }, {
 	    key: "hideToolBar",
 	    value: function hideToolBar() {
-	      if (!includeClass(this.el, 'video-toolbar-hidden')) {
+	      if (!includeClass(this.el, 'video-toolbar-hidden') && !this.player.video.paused) {
 	        addClass(this.el, ['video-toolbar-hidden']);
 	        this.status = 'hidden';
 	      }
@@ -9946,13 +9946,13 @@
 	  }
 	};
 
-	var isObject$2 = isObject$j;
+	var isObject$3 = isObject$k;
 	var createNonEnumerableProperty$2 = createNonEnumerableProperty$9;
 
 	// `InstallErrorCause` abstract operation
 	// https://tc39.es/proposal-error-cause/#sec-errorobjects-install-error-cause
 	var installErrorCause$1 = function (O, options) {
-	  if (isObject$2(options) && 'cause' in options) {
+	  if (isObject$3(options) && 'cause' in options) {
 	    createNonEnumerableProperty$2(O, 'cause', options.cause);
 	  }
 	};
@@ -9998,10 +9998,10 @@
 	  }
 	};
 
-	var toString = toString$b;
+	var toString$1 = toString$c;
 
 	var normalizeStringArgument$1 = function (argument, $default) {
-	  return argument === undefined ? arguments.length < 2 ? '' : $default : toString(argument);
+	  return argument === undefined ? arguments.length < 2 ? '' : $default : toString$1(argument);
 	};
 
 	var $$e = _export;
@@ -10100,7 +10100,7 @@
 	var MessageChannel = global$5.MessageChannel;
 	var String$1 = global$5.String;
 	var counter = 0;
-	var queue$3 = {};
+	var queue$2 = {};
 	var ONREADYSTATECHANGE = 'onreadystatechange';
 	var $location, defer, channel, port;
 
@@ -10110,9 +10110,9 @@
 	});
 
 	var run = function (id) {
-	  if (hasOwn(queue$3, id)) {
-	    var fn = queue$3[id];
-	    delete queue$3[id];
+	  if (hasOwn(queue$2, id)) {
+	    var fn = queue$2[id];
+	    delete queue$2[id];
 	    fn();
 	  }
 	};
@@ -10138,14 +10138,14 @@
 	    validateArgumentsLength(arguments.length, 1);
 	    var fn = isCallable$3(handler) ? handler : Function$1(handler);
 	    var args = arraySlice(arguments, 1);
-	    queue$3[++counter] = function () {
+	    queue$2[++counter] = function () {
 	      apply(fn, undefined, args);
 	    };
 	    defer(counter);
 	    return counter;
 	  };
 	  clear = function clearImmediate(id) {
-	    delete queue$3[id];
+	    delete queue$2[id];
 	  };
 	  // Node.js 0.8-
 	  if (IS_NODE$3) {
@@ -10219,7 +10219,7 @@
 	  }
 	};
 
-	var queue$2 = Queue$2;
+	var queue$1 = Queue$2;
 
 	var userAgent$1 = engineUserAgent;
 
@@ -10233,7 +10233,7 @@
 	var bind$1 = functionBindContext;
 	var getOwnPropertyDescriptor$7 = objectGetOwnPropertyDescriptor.f;
 	var macrotask = task$1.set;
-	var Queue$1 = queue$2;
+	var Queue$1 = queue$1;
 	var IS_IOS = engineIsIos;
 	var IS_IOS_PEBBLE = engineIsIosPebble;
 	var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
@@ -10250,15 +10250,15 @@
 
 	// modern engines have queueMicrotask method
 	if (!microtask$1) {
-	  var queue$1 = new Queue$1();
+	  var queue = new Queue$1();
 
 	  var flush = function () {
 	    var parent, fn;
 	    if (IS_NODE$2 && (parent = process$2.domain)) parent.exit();
-	    while (fn = queue$1.get()) try {
+	    while (fn = queue.get()) try {
 	      fn();
 	    } catch (error) {
-	      if (queue$1.head) notify$1();
+	      if (queue.head) notify$1();
 	      throw error;
 	    }
 	    if (parent) parent.enter();
@@ -10303,8 +10303,8 @@
 	  }
 
 	  microtask$1 = function (fn) {
-	    if (!queue$1.head) notify$1();
-	    queue$1.add(fn);
+	    if (!queue.head) notify$1();
+	    queue.add(fn);
 	  };
 	}
 
@@ -10419,14 +10419,14 @@
 	var setSpecies = setSpecies$2;
 	var aCallable$4 = aCallable$h;
 	var isCallable$1 = isCallable$p;
-	var isObject$1 = isObject$j;
+	var isObject$2 = isObject$k;
 	var anInstance = anInstance$5;
 	var speciesConstructor$1 = speciesConstructor$2;
 	var task = task$1.set;
 	var microtask = microtask_1;
 	var hostReportErrors = hostReportErrors$1;
 	var perform$5 = perform$6;
-	var Queue = queue$2;
+	var Queue = queue$1;
 	var InternalStateModule = internalState;
 	var NativePromiseConstructor$4 = promiseNativeConstructor;
 	var PromiseConstructorDetection = promiseConstructorDetection;
@@ -10461,7 +10461,7 @@
 	// helpers
 	var isThenable = function (it) {
 	  var then;
-	  return isObject$1(it) && isCallable$1(then = it.then) ? then : false;
+	  return isObject$2(it) && isCallable$1(then = it.then) ? then : false;
 	};
 
 	var callReaction = function (reaction, state) {
@@ -10774,12 +10774,12 @@
 	});
 
 	var anObject = anObject$f;
-	var isObject = isObject$j;
+	var isObject$1 = isObject$k;
 	var newPromiseCapability = newPromiseCapability$2;
 
 	var promiseResolve$2 = function (C, x) {
 	  anObject(C);
-	  if (isObject(x) && x.constructor === C) return x;
+	  if (isObject$1(x) && x.constructor === C) return x;
 	  var promiseCapability = newPromiseCapability.f(C);
 	  var resolve = promiseCapability.resolve;
 	  resolve(x);
@@ -10976,7 +10976,7 @@
 	function isNative(Ctor) {
 	  return typeof Ctor === 'function' && /native code/.test(Ctor.toString());
 	}
-	function nextTick(cb) {
+	function nextTick$1(cb) {
 	  if (typeof _Promise !== 'undefined' && isNative(_Promise)) {
 	    _Promise.resolve().then(function () {
 	      return cb();
@@ -11367,7 +11367,7 @@
 	      // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
 	      // if (flag) return
 	      if (this.timer === null) {
-	        nextTick(function () {
+	        nextTick$1(function () {
 	          _this3.render();
 	        });
 	        // flag = true
@@ -11457,12 +11457,13 @@
 	      // 重点，此处数组y的作用是表明该弹幕占的轨道的id数组
 	      data.y = [];
 	      this.addDataToTrack(data);
+	      console.log(data);
 	      if (data.y.length === 0) {
 	        var _context3;
 	        if (_includesInstanceProperty(_context3 = _toConsumableArray(this.container.childNodes)).call(_context3, data.dom)) {
 	          this.container.removeChild(data.dom);
 	        }
-	        this.queue.push(data);
+	        // this.queue.push(data)
 	      } else {
 	        data.dom.style.top = data.y[0] * this.trackHeight + 'px';
 	        this.startAnimate(data); // 开启弹幕的动画
@@ -11639,29 +11640,6 @@
 	  }]);
 	  return Danmaku;
 	}();
-
-	var queue = [{
-	  message: '秋招实在是寒气逼人',
-	  fontSize: 24,
-	  fontColor: 'blue'
-	}, {
-	  message: '任正非表明中国互联网行业进入寒冬！！！',
-	  fontSize: 30
-	}, {
-	  message: '任何邪恶，终将绳之以法11',
-	  fontColor: 'green'
-	}, {
-	  message: 'HHHHHHHHHHHHH'
-	}, {
-	  message: '任何邪恶，终将绳之以法22'
-	}, {
-	  message: '大家好，我是昊京'
-	}, {
-	  message: '2333333333333333333333333333333333'
-	}, {
-	  message: '经纬恒润内推',
-	  fontColor: 'red'
-	}, '111111111111而非武功果然'];
 
 	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -12057,8 +12035,3661 @@
 	  return DanmakuSettings;
 	}();
 
+	const PACKET_TYPES = Object.create(null); // no Map = no polyfill
+	PACKET_TYPES["open"] = "0";
+	PACKET_TYPES["close"] = "1";
+	PACKET_TYPES["ping"] = "2";
+	PACKET_TYPES["pong"] = "3";
+	PACKET_TYPES["message"] = "4";
+	PACKET_TYPES["upgrade"] = "5";
+	PACKET_TYPES["noop"] = "6";
+	const PACKET_TYPES_REVERSE = Object.create(null);
+	Object.keys(PACKET_TYPES).forEach(key => {
+	    PACKET_TYPES_REVERSE[PACKET_TYPES[key]] = key;
+	});
+	const ERROR_PACKET = { type: "error", data: "parser error" };
+
+	const withNativeBlob$1 = typeof Blob === "function" ||
+	    (typeof Blob !== "undefined" &&
+	        Object.prototype.toString.call(Blob) === "[object BlobConstructor]");
+	const withNativeArrayBuffer$2 = typeof ArrayBuffer === "function";
+	// ArrayBuffer.isView method is not defined in IE10
+	const isView$1 = obj => {
+	    return typeof ArrayBuffer.isView === "function"
+	        ? ArrayBuffer.isView(obj)
+	        : obj && obj.buffer instanceof ArrayBuffer;
+	};
+	const encodePacket = ({ type, data }, supportsBinary, callback) => {
+	    if (withNativeBlob$1 && data instanceof Blob) {
+	        if (supportsBinary) {
+	            return callback(data);
+	        }
+	        else {
+	            return encodeBlobAsBase64(data, callback);
+	        }
+	    }
+	    else if (withNativeArrayBuffer$2 &&
+	        (data instanceof ArrayBuffer || isView$1(data))) {
+	        if (supportsBinary) {
+	            return callback(data);
+	        }
+	        else {
+	            return encodeBlobAsBase64(new Blob([data]), callback);
+	        }
+	    }
+	    // plain string
+	    return callback(PACKET_TYPES[type] + (data || ""));
+	};
+	const encodeBlobAsBase64 = (data, callback) => {
+	    const fileReader = new FileReader();
+	    fileReader.onload = function () {
+	        const content = fileReader.result.split(",")[1];
+	        callback("b" + (content || ""));
+	    };
+	    return fileReader.readAsDataURL(data);
+	};
+
+	// imported from https://github.com/socketio/base64-arraybuffer
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+	// Use a lookup table to find the index.
+	const lookup$1 = typeof Uint8Array === 'undefined' ? [] : new Uint8Array(256);
+	for (let i = 0; i < chars.length; i++) {
+	    lookup$1[chars.charCodeAt(i)] = i;
+	}
+	const decode$1 = (base64) => {
+	    let bufferLength = base64.length * 0.75, len = base64.length, i, p = 0, encoded1, encoded2, encoded3, encoded4;
+	    if (base64[base64.length - 1] === '=') {
+	        bufferLength--;
+	        if (base64[base64.length - 2] === '=') {
+	            bufferLength--;
+	        }
+	    }
+	    const arraybuffer = new ArrayBuffer(bufferLength), bytes = new Uint8Array(arraybuffer);
+	    for (i = 0; i < len; i += 4) {
+	        encoded1 = lookup$1[base64.charCodeAt(i)];
+	        encoded2 = lookup$1[base64.charCodeAt(i + 1)];
+	        encoded3 = lookup$1[base64.charCodeAt(i + 2)];
+	        encoded4 = lookup$1[base64.charCodeAt(i + 3)];
+	        bytes[p++] = (encoded1 << 2) | (encoded2 >> 4);
+	        bytes[p++] = ((encoded2 & 15) << 4) | (encoded3 >> 2);
+	        bytes[p++] = ((encoded3 & 3) << 6) | (encoded4 & 63);
+	    }
+	    return arraybuffer;
+	};
+
+	const withNativeArrayBuffer$1 = typeof ArrayBuffer === "function";
+	const decodePacket = (encodedPacket, binaryType) => {
+	    if (typeof encodedPacket !== "string") {
+	        return {
+	            type: "message",
+	            data: mapBinary(encodedPacket, binaryType)
+	        };
+	    }
+	    const type = encodedPacket.charAt(0);
+	    if (type === "b") {
+	        return {
+	            type: "message",
+	            data: decodeBase64Packet(encodedPacket.substring(1), binaryType)
+	        };
+	    }
+	    const packetType = PACKET_TYPES_REVERSE[type];
+	    if (!packetType) {
+	        return ERROR_PACKET;
+	    }
+	    return encodedPacket.length > 1
+	        ? {
+	            type: PACKET_TYPES_REVERSE[type],
+	            data: encodedPacket.substring(1)
+	        }
+	        : {
+	            type: PACKET_TYPES_REVERSE[type]
+	        };
+	};
+	const decodeBase64Packet = (data, binaryType) => {
+	    if (withNativeArrayBuffer$1) {
+	        const decoded = decode$1(data);
+	        return mapBinary(decoded, binaryType);
+	    }
+	    else {
+	        return { base64: true, data }; // fallback for old browsers
+	    }
+	};
+	const mapBinary = (data, binaryType) => {
+	    switch (binaryType) {
+	        case "blob":
+	            return data instanceof ArrayBuffer ? new Blob([data]) : data;
+	        case "arraybuffer":
+	        default:
+	            return data; // assuming the data is already an ArrayBuffer
+	    }
+	};
+
+	const SEPARATOR = String.fromCharCode(30); // see https://en.wikipedia.org/wiki/Delimiter#ASCII_delimited_text
+	const encodePayload = (packets, callback) => {
+	    // some packets may be added to the array while encoding, so the initial length must be saved
+	    const length = packets.length;
+	    const encodedPackets = new Array(length);
+	    let count = 0;
+	    packets.forEach((packet, i) => {
+	        // force base64 encoding for binary packets
+	        encodePacket(packet, false, encodedPacket => {
+	            encodedPackets[i] = encodedPacket;
+	            if (++count === length) {
+	                callback(encodedPackets.join(SEPARATOR));
+	            }
+	        });
+	    });
+	};
+	const decodePayload = (encodedPayload, binaryType) => {
+	    const encodedPackets = encodedPayload.split(SEPARATOR);
+	    const packets = [];
+	    for (let i = 0; i < encodedPackets.length; i++) {
+	        const decodedPacket = decodePacket(encodedPackets[i], binaryType);
+	        packets.push(decodedPacket);
+	        if (decodedPacket.type === "error") {
+	            break;
+	        }
+	    }
+	    return packets;
+	};
+	const protocol$1 = 4;
+
+	/**
+	 * Initialize a new `Emitter`.
+	 *
+	 * @api public
+	 */
+
+	function Emitter(obj) {
+	  if (obj) return mixin(obj);
+	}
+
+	/**
+	 * Mixin the emitter properties.
+	 *
+	 * @param {Object} obj
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function mixin(obj) {
+	  for (var key in Emitter.prototype) {
+	    obj[key] = Emitter.prototype[key];
+	  }
+	  return obj;
+	}
+
+	/**
+	 * Listen on the given `event` with `fn`.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.on =
+	Emitter.prototype.addEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+	  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+	    .push(fn);
+	  return this;
+	};
+
+	/**
+	 * Adds an `event` listener that will be invoked a single
+	 * time then automatically removed.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.once = function(event, fn){
+	  function on() {
+	    this.off(event, on);
+	    fn.apply(this, arguments);
+	  }
+
+	  on.fn = fn;
+	  this.on(event, on);
+	  return this;
+	};
+
+	/**
+	 * Remove the given callback for `event` or all
+	 * registered callbacks.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.off =
+	Emitter.prototype.removeListener =
+	Emitter.prototype.removeAllListeners =
+	Emitter.prototype.removeEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+
+	  // all
+	  if (0 == arguments.length) {
+	    this._callbacks = {};
+	    return this;
+	  }
+
+	  // specific event
+	  var callbacks = this._callbacks['$' + event];
+	  if (!callbacks) return this;
+
+	  // remove all handlers
+	  if (1 == arguments.length) {
+	    delete this._callbacks['$' + event];
+	    return this;
+	  }
+
+	  // remove specific handler
+	  var cb;
+	  for (var i = 0; i < callbacks.length; i++) {
+	    cb = callbacks[i];
+	    if (cb === fn || cb.fn === fn) {
+	      callbacks.splice(i, 1);
+	      break;
+	    }
+	  }
+
+	  // Remove event specific arrays for event types that no
+	  // one is subscribed for to avoid memory leak.
+	  if (callbacks.length === 0) {
+	    delete this._callbacks['$' + event];
+	  }
+
+	  return this;
+	};
+
+	/**
+	 * Emit `event` with the given args.
+	 *
+	 * @param {String} event
+	 * @param {Mixed} ...
+	 * @return {Emitter}
+	 */
+
+	Emitter.prototype.emit = function(event){
+	  this._callbacks = this._callbacks || {};
+
+	  var args = new Array(arguments.length - 1)
+	    , callbacks = this._callbacks['$' + event];
+
+	  for (var i = 1; i < arguments.length; i++) {
+	    args[i - 1] = arguments[i];
+	  }
+
+	  if (callbacks) {
+	    callbacks = callbacks.slice(0);
+	    for (var i = 0, len = callbacks.length; i < len; ++i) {
+	      callbacks[i].apply(this, args);
+	    }
+	  }
+
+	  return this;
+	};
+
+	// alias used for reserved events (protected method)
+	Emitter.prototype.emitReserved = Emitter.prototype.emit;
+
+	/**
+	 * Return array of callbacks for `event`.
+	 *
+	 * @param {String} event
+	 * @return {Array}
+	 * @api public
+	 */
+
+	Emitter.prototype.listeners = function(event){
+	  this._callbacks = this._callbacks || {};
+	  return this._callbacks['$' + event] || [];
+	};
+
+	/**
+	 * Check if this emitter has `event` handlers.
+	 *
+	 * @param {String} event
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	Emitter.prototype.hasListeners = function(event){
+	  return !! this.listeners(event).length;
+	};
+
+	const globalThisShim = (() => {
+	    if (typeof self !== "undefined") {
+	        return self;
+	    }
+	    else if (typeof window !== "undefined") {
+	        return window;
+	    }
+	    else {
+	        return Function("return this")();
+	    }
+	})();
+
+	function pick(obj, ...attr) {
+	    return attr.reduce((acc, k) => {
+	        if (obj.hasOwnProperty(k)) {
+	            acc[k] = obj[k];
+	        }
+	        return acc;
+	    }, {});
+	}
+	// Keep a reference to the real timeout functions so they can be used when overridden
+	const NATIVE_SET_TIMEOUT = globalThisShim.setTimeout;
+	const NATIVE_CLEAR_TIMEOUT = globalThisShim.clearTimeout;
+	function installTimerFunctions(obj, opts) {
+	    if (opts.useNativeTimers) {
+	        obj.setTimeoutFn = NATIVE_SET_TIMEOUT.bind(globalThisShim);
+	        obj.clearTimeoutFn = NATIVE_CLEAR_TIMEOUT.bind(globalThisShim);
+	    }
+	    else {
+	        obj.setTimeoutFn = globalThisShim.setTimeout.bind(globalThisShim);
+	        obj.clearTimeoutFn = globalThisShim.clearTimeout.bind(globalThisShim);
+	    }
+	}
+	// base64 encoded buffers are about 33% bigger (https://en.wikipedia.org/wiki/Base64)
+	const BASE64_OVERHEAD = 1.33;
+	// we could also have used `new Blob([obj]).size`, but it isn't supported in IE9
+	function byteLength(obj) {
+	    if (typeof obj === "string") {
+	        return utf8Length(obj);
+	    }
+	    // arraybuffer or blob
+	    return Math.ceil((obj.byteLength || obj.size) * BASE64_OVERHEAD);
+	}
+	function utf8Length(str) {
+	    let c = 0, length = 0;
+	    for (let i = 0, l = str.length; i < l; i++) {
+	        c = str.charCodeAt(i);
+	        if (c < 0x80) {
+	            length += 1;
+	        }
+	        else if (c < 0x800) {
+	            length += 2;
+	        }
+	        else if (c < 0xd800 || c >= 0xe000) {
+	            length += 3;
+	        }
+	        else {
+	            i++;
+	            length += 4;
+	        }
+	    }
+	    return length;
+	}
+
+	class TransportError extends Error {
+	    constructor(reason, description, context) {
+	        super(reason);
+	        this.description = description;
+	        this.context = context;
+	        this.type = "TransportError";
+	    }
+	}
+	class Transport extends Emitter {
+	    /**
+	     * Transport abstract constructor.
+	     *
+	     * @param {Object} opts - options
+	     * @protected
+	     */
+	    constructor(opts) {
+	        super();
+	        this.writable = false;
+	        installTimerFunctions(this, opts);
+	        this.opts = opts;
+	        this.query = opts.query;
+	        this.socket = opts.socket;
+	    }
+	    /**
+	     * Emits an error.
+	     *
+	     * @param {String} reason
+	     * @param description
+	     * @param context - the error context
+	     * @return {Transport} for chaining
+	     * @protected
+	     */
+	    onError(reason, description, context) {
+	        super.emitReserved("error", new TransportError(reason, description, context));
+	        return this;
+	    }
+	    /**
+	     * Opens the transport.
+	     */
+	    open() {
+	        this.readyState = "opening";
+	        this.doOpen();
+	        return this;
+	    }
+	    /**
+	     * Closes the transport.
+	     */
+	    close() {
+	        if (this.readyState === "opening" || this.readyState === "open") {
+	            this.doClose();
+	            this.onClose();
+	        }
+	        return this;
+	    }
+	    /**
+	     * Sends multiple packets.
+	     *
+	     * @param {Array} packets
+	     */
+	    send(packets) {
+	        if (this.readyState === "open") {
+	            this.write(packets);
+	        }
+	    }
+	    /**
+	     * Called upon open
+	     *
+	     * @protected
+	     */
+	    onOpen() {
+	        this.readyState = "open";
+	        this.writable = true;
+	        super.emitReserved("open");
+	    }
+	    /**
+	     * Called with data.
+	     *
+	     * @param {String} data
+	     * @protected
+	     */
+	    onData(data) {
+	        const packet = decodePacket(data, this.socket.binaryType);
+	        this.onPacket(packet);
+	    }
+	    /**
+	     * Called with a decoded packet.
+	     *
+	     * @protected
+	     */
+	    onPacket(packet) {
+	        super.emitReserved("packet", packet);
+	    }
+	    /**
+	     * Called upon close.
+	     *
+	     * @protected
+	     */
+	    onClose(details) {
+	        this.readyState = "closed";
+	        super.emitReserved("close", details);
+	    }
+	    /**
+	     * Pauses the transport, in order not to lose packets during an upgrade.
+	     *
+	     * @param onPause
+	     */
+	    pause(onPause) { }
+	}
+
+	// imported from https://github.com/unshiftio/yeast
+	const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'.split(''), length = 64, map = {};
+	let seed = 0, i = 0, prev;
+	/**
+	 * Return a string representing the specified number.
+	 *
+	 * @param {Number} num The number to convert.
+	 * @returns {String} The string representation of the number.
+	 * @api public
+	 */
+	function encode$1(num) {
+	    let encoded = '';
+	    do {
+	        encoded = alphabet[num % length] + encoded;
+	        num = Math.floor(num / length);
+	    } while (num > 0);
+	    return encoded;
+	}
+	/**
+	 * Yeast: A tiny growing id generator.
+	 *
+	 * @returns {String} A unique id.
+	 * @api public
+	 */
+	function yeast() {
+	    const now = encode$1(+new Date());
+	    if (now !== prev)
+	        return seed = 0, prev = now;
+	    return now + '.' + encode$1(seed++);
+	}
+	//
+	// Map each character to its index.
+	//
+	for (; i < length; i++)
+	    map[alphabet[i]] = i;
+
+	// imported from https://github.com/galkn/querystring
+	/**
+	 * Compiles a querystring
+	 * Returns string representation of the object
+	 *
+	 * @param {Object}
+	 * @api private
+	 */
+	function encode(obj) {
+	    let str = '';
+	    for (let i in obj) {
+	        if (obj.hasOwnProperty(i)) {
+	            if (str.length)
+	                str += '&';
+	            str += encodeURIComponent(i) + '=' + encodeURIComponent(obj[i]);
+	        }
+	    }
+	    return str;
+	}
+	/**
+	 * Parses a simple querystring into an object
+	 *
+	 * @param {String} qs
+	 * @api private
+	 */
+	function decode(qs) {
+	    let qry = {};
+	    let pairs = qs.split('&');
+	    for (let i = 0, l = pairs.length; i < l; i++) {
+	        let pair = pairs[i].split('=');
+	        qry[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+	    }
+	    return qry;
+	}
+
+	// imported from https://github.com/component/has-cors
+	let value = false;
+	try {
+	    value = typeof XMLHttpRequest !== 'undefined' &&
+	        'withCredentials' in new XMLHttpRequest();
+	}
+	catch (err) {
+	    // if XMLHttp support is disabled in IE then it will throw
+	    // when trying to create
+	}
+	const hasCORS = value;
+
+	// browser shim for xmlhttprequest module
+	function XHR(opts) {
+	    const xdomain = opts.xdomain;
+	    // XMLHttpRequest can be disabled on IE
+	    try {
+	        if ("undefined" !== typeof XMLHttpRequest && (!xdomain || hasCORS)) {
+	            return new XMLHttpRequest();
+	        }
+	    }
+	    catch (e) { }
+	    if (!xdomain) {
+	        try {
+	            return new globalThisShim[["Active"].concat("Object").join("X")]("Microsoft.XMLHTTP");
+	        }
+	        catch (e) { }
+	    }
+	}
+
+	function empty() { }
+	const hasXHR2 = (function () {
+	    const xhr = new XHR({
+	        xdomain: false,
+	    });
+	    return null != xhr.responseType;
+	})();
+	class Polling extends Transport {
+	    /**
+	     * XHR Polling constructor.
+	     *
+	     * @param {Object} opts
+	     * @package
+	     */
+	    constructor(opts) {
+	        super(opts);
+	        this.polling = false;
+	        if (typeof location !== "undefined") {
+	            const isSSL = "https:" === location.protocol;
+	            let port = location.port;
+	            // some user agents have empty `location.port`
+	            if (!port) {
+	                port = isSSL ? "443" : "80";
+	            }
+	            this.xd =
+	                (typeof location !== "undefined" &&
+	                    opts.hostname !== location.hostname) ||
+	                    port !== opts.port;
+	            this.xs = opts.secure !== isSSL;
+	        }
+	        /**
+	         * XHR supports binary
+	         */
+	        const forceBase64 = opts && opts.forceBase64;
+	        this.supportsBinary = hasXHR2 && !forceBase64;
+	    }
+	    get name() {
+	        return "polling";
+	    }
+	    /**
+	     * Opens the socket (triggers polling). We write a PING message to determine
+	     * when the transport is open.
+	     *
+	     * @protected
+	     */
+	    doOpen() {
+	        this.poll();
+	    }
+	    /**
+	     * Pauses polling.
+	     *
+	     * @param {Function} onPause - callback upon buffers are flushed and transport is paused
+	     * @package
+	     */
+	    pause(onPause) {
+	        this.readyState = "pausing";
+	        const pause = () => {
+	            this.readyState = "paused";
+	            onPause();
+	        };
+	        if (this.polling || !this.writable) {
+	            let total = 0;
+	            if (this.polling) {
+	                total++;
+	                this.once("pollComplete", function () {
+	                    --total || pause();
+	                });
+	            }
+	            if (!this.writable) {
+	                total++;
+	                this.once("drain", function () {
+	                    --total || pause();
+	                });
+	            }
+	        }
+	        else {
+	            pause();
+	        }
+	    }
+	    /**
+	     * Starts polling cycle.
+	     *
+	     * @private
+	     */
+	    poll() {
+	        this.polling = true;
+	        this.doPoll();
+	        this.emitReserved("poll");
+	    }
+	    /**
+	     * Overloads onData to detect payloads.
+	     *
+	     * @protected
+	     */
+	    onData(data) {
+	        const callback = (packet) => {
+	            // if its the first message we consider the transport open
+	            if ("opening" === this.readyState && packet.type === "open") {
+	                this.onOpen();
+	            }
+	            // if its a close packet, we close the ongoing requests
+	            if ("close" === packet.type) {
+	                this.onClose({ description: "transport closed by the server" });
+	                return false;
+	            }
+	            // otherwise bypass onData and handle the message
+	            this.onPacket(packet);
+	        };
+	        // decode payload
+	        decodePayload(data, this.socket.binaryType).forEach(callback);
+	        // if an event did not trigger closing
+	        if ("closed" !== this.readyState) {
+	            // if we got data we're not polling
+	            this.polling = false;
+	            this.emitReserved("pollComplete");
+	            if ("open" === this.readyState) {
+	                this.poll();
+	            }
+	        }
+	    }
+	    /**
+	     * For polling, send a close packet.
+	     *
+	     * @protected
+	     */
+	    doClose() {
+	        const close = () => {
+	            this.write([{ type: "close" }]);
+	        };
+	        if ("open" === this.readyState) {
+	            close();
+	        }
+	        else {
+	            // in case we're trying to close while
+	            // handshaking is in progress (GH-164)
+	            this.once("open", close);
+	        }
+	    }
+	    /**
+	     * Writes a packets payload.
+	     *
+	     * @param {Array} packets - data packets
+	     * @protected
+	     */
+	    write(packets) {
+	        this.writable = false;
+	        encodePayload(packets, (data) => {
+	            this.doWrite(data, () => {
+	                this.writable = true;
+	                this.emitReserved("drain");
+	            });
+	        });
+	    }
+	    /**
+	     * Generates uri for connection.
+	     *
+	     * @private
+	     */
+	    uri() {
+	        let query = this.query || {};
+	        const schema = this.opts.secure ? "https" : "http";
+	        let port = "";
+	        // cache busting is forced
+	        if (false !== this.opts.timestampRequests) {
+	            query[this.opts.timestampParam] = yeast();
+	        }
+	        if (!this.supportsBinary && !query.sid) {
+	            query.b64 = 1;
+	        }
+	        // avoid port if default for schema
+	        if (this.opts.port &&
+	            (("https" === schema && Number(this.opts.port) !== 443) ||
+	                ("http" === schema && Number(this.opts.port) !== 80))) {
+	            port = ":" + this.opts.port;
+	        }
+	        const encodedQuery = encode(query);
+	        const ipv6 = this.opts.hostname.indexOf(":") !== -1;
+	        return (schema +
+	            "://" +
+	            (ipv6 ? "[" + this.opts.hostname + "]" : this.opts.hostname) +
+	            port +
+	            this.opts.path +
+	            (encodedQuery.length ? "?" + encodedQuery : ""));
+	    }
+	    /**
+	     * Creates a request.
+	     *
+	     * @param {String} method
+	     * @private
+	     */
+	    request(opts = {}) {
+	        Object.assign(opts, { xd: this.xd, xs: this.xs }, this.opts);
+	        return new Request(this.uri(), opts);
+	    }
+	    /**
+	     * Sends data.
+	     *
+	     * @param {String} data to send.
+	     * @param {Function} called upon flush.
+	     * @private
+	     */
+	    doWrite(data, fn) {
+	        const req = this.request({
+	            method: "POST",
+	            data: data,
+	        });
+	        req.on("success", fn);
+	        req.on("error", (xhrStatus, context) => {
+	            this.onError("xhr post error", xhrStatus, context);
+	        });
+	    }
+	    /**
+	     * Starts a poll cycle.
+	     *
+	     * @private
+	     */
+	    doPoll() {
+	        const req = this.request();
+	        req.on("data", this.onData.bind(this));
+	        req.on("error", (xhrStatus, context) => {
+	            this.onError("xhr poll error", xhrStatus, context);
+	        });
+	        this.pollXhr = req;
+	    }
+	}
+	class Request extends Emitter {
+	    /**
+	     * Request constructor
+	     *
+	     * @param {Object} options
+	     * @package
+	     */
+	    constructor(uri, opts) {
+	        super();
+	        installTimerFunctions(this, opts);
+	        this.opts = opts;
+	        this.method = opts.method || "GET";
+	        this.uri = uri;
+	        this.async = false !== opts.async;
+	        this.data = undefined !== opts.data ? opts.data : null;
+	        this.create();
+	    }
+	    /**
+	     * Creates the XHR object and sends the request.
+	     *
+	     * @private
+	     */
+	    create() {
+	        const opts = pick(this.opts, "agent", "pfx", "key", "passphrase", "cert", "ca", "ciphers", "rejectUnauthorized", "autoUnref");
+	        opts.xdomain = !!this.opts.xd;
+	        opts.xscheme = !!this.opts.xs;
+	        const xhr = (this.xhr = new XHR(opts));
+	        try {
+	            xhr.open(this.method, this.uri, this.async);
+	            try {
+	                if (this.opts.extraHeaders) {
+	                    xhr.setDisableHeaderCheck && xhr.setDisableHeaderCheck(true);
+	                    for (let i in this.opts.extraHeaders) {
+	                        if (this.opts.extraHeaders.hasOwnProperty(i)) {
+	                            xhr.setRequestHeader(i, this.opts.extraHeaders[i]);
+	                        }
+	                    }
+	                }
+	            }
+	            catch (e) { }
+	            if ("POST" === this.method) {
+	                try {
+	                    xhr.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
+	                }
+	                catch (e) { }
+	            }
+	            try {
+	                xhr.setRequestHeader("Accept", "*/*");
+	            }
+	            catch (e) { }
+	            // ie6 check
+	            if ("withCredentials" in xhr) {
+	                xhr.withCredentials = this.opts.withCredentials;
+	            }
+	            if (this.opts.requestTimeout) {
+	                xhr.timeout = this.opts.requestTimeout;
+	            }
+	            xhr.onreadystatechange = () => {
+	                if (4 !== xhr.readyState)
+	                    return;
+	                if (200 === xhr.status || 1223 === xhr.status) {
+	                    this.onLoad();
+	                }
+	                else {
+	                    // make sure the `error` event handler that's user-set
+	                    // does not throw in the same tick and gets caught here
+	                    this.setTimeoutFn(() => {
+	                        this.onError(typeof xhr.status === "number" ? xhr.status : 0);
+	                    }, 0);
+	                }
+	            };
+	            xhr.send(this.data);
+	        }
+	        catch (e) {
+	            // Need to defer since .create() is called directly from the constructor
+	            // and thus the 'error' event can only be only bound *after* this exception
+	            // occurs.  Therefore, also, we cannot throw here at all.
+	            this.setTimeoutFn(() => {
+	                this.onError(e);
+	            }, 0);
+	            return;
+	        }
+	        if (typeof document !== "undefined") {
+	            this.index = Request.requestsCount++;
+	            Request.requests[this.index] = this;
+	        }
+	    }
+	    /**
+	     * Called upon error.
+	     *
+	     * @private
+	     */
+	    onError(err) {
+	        this.emitReserved("error", err, this.xhr);
+	        this.cleanup(true);
+	    }
+	    /**
+	     * Cleans up house.
+	     *
+	     * @private
+	     */
+	    cleanup(fromError) {
+	        if ("undefined" === typeof this.xhr || null === this.xhr) {
+	            return;
+	        }
+	        this.xhr.onreadystatechange = empty;
+	        if (fromError) {
+	            try {
+	                this.xhr.abort();
+	            }
+	            catch (e) { }
+	        }
+	        if (typeof document !== "undefined") {
+	            delete Request.requests[this.index];
+	        }
+	        this.xhr = null;
+	    }
+	    /**
+	     * Called upon load.
+	     *
+	     * @private
+	     */
+	    onLoad() {
+	        const data = this.xhr.responseText;
+	        if (data !== null) {
+	            this.emitReserved("data", data);
+	            this.emitReserved("success");
+	            this.cleanup();
+	        }
+	    }
+	    /**
+	     * Aborts the request.
+	     *
+	     * @package
+	     */
+	    abort() {
+	        this.cleanup();
+	    }
+	}
+	Request.requestsCount = 0;
+	Request.requests = {};
+	/**
+	 * Aborts pending requests when unloading the window. This is needed to prevent
+	 * memory leaks (e.g. when using IE) and to ensure that no spurious error is
+	 * emitted.
+	 */
+	if (typeof document !== "undefined") {
+	    // @ts-ignore
+	    if (typeof attachEvent === "function") {
+	        // @ts-ignore
+	        attachEvent("onunload", unloadHandler);
+	    }
+	    else if (typeof addEventListener === "function") {
+	        const terminationEvent = "onpagehide" in globalThisShim ? "pagehide" : "unload";
+	        addEventListener(terminationEvent, unloadHandler, false);
+	    }
+	}
+	function unloadHandler() {
+	    for (let i in Request.requests) {
+	        if (Request.requests.hasOwnProperty(i)) {
+	            Request.requests[i].abort();
+	        }
+	    }
+	}
+
+	const nextTick = (() => {
+	    const isPromiseAvailable = typeof Promise === "function" && typeof Promise.resolve === "function";
+	    if (isPromiseAvailable) {
+	        return (cb) => Promise.resolve().then(cb);
+	    }
+	    else {
+	        return (cb, setTimeoutFn) => setTimeoutFn(cb, 0);
+	    }
+	})();
+	const WebSocket = globalThisShim.WebSocket || globalThisShim.MozWebSocket;
+	const usingBrowserWebSocket = true;
+	const defaultBinaryType = "arraybuffer";
+
+	// detect ReactNative environment
+	const isReactNative = typeof navigator !== "undefined" &&
+	    typeof navigator.product === "string" &&
+	    navigator.product.toLowerCase() === "reactnative";
+	class WS extends Transport {
+	    /**
+	     * WebSocket transport constructor.
+	     *
+	     * @param {Object} opts - connection options
+	     * @protected
+	     */
+	    constructor(opts) {
+	        super(opts);
+	        this.supportsBinary = !opts.forceBase64;
+	    }
+	    get name() {
+	        return "websocket";
+	    }
+	    doOpen() {
+	        if (!this.check()) {
+	            // let probe timeout
+	            return;
+	        }
+	        const uri = this.uri();
+	        const protocols = this.opts.protocols;
+	        // React Native only supports the 'headers' option, and will print a warning if anything else is passed
+	        const opts = isReactNative
+	            ? {}
+	            : pick(this.opts, "agent", "perMessageDeflate", "pfx", "key", "passphrase", "cert", "ca", "ciphers", "rejectUnauthorized", "localAddress", "protocolVersion", "origin", "maxPayload", "family", "checkServerIdentity");
+	        if (this.opts.extraHeaders) {
+	            opts.headers = this.opts.extraHeaders;
+	        }
+	        try {
+	            this.ws =
+	                usingBrowserWebSocket && !isReactNative
+	                    ? protocols
+	                        ? new WebSocket(uri, protocols)
+	                        : new WebSocket(uri)
+	                    : new WebSocket(uri, protocols, opts);
+	        }
+	        catch (err) {
+	            return this.emitReserved("error", err);
+	        }
+	        this.ws.binaryType = this.socket.binaryType || defaultBinaryType;
+	        this.addEventListeners();
+	    }
+	    /**
+	     * Adds event listeners to the socket
+	     *
+	     * @private
+	     */
+	    addEventListeners() {
+	        this.ws.onopen = () => {
+	            if (this.opts.autoUnref) {
+	                this.ws._socket.unref();
+	            }
+	            this.onOpen();
+	        };
+	        this.ws.onclose = (closeEvent) => this.onClose({
+	            description: "websocket connection closed",
+	            context: closeEvent,
+	        });
+	        this.ws.onmessage = (ev) => this.onData(ev.data);
+	        this.ws.onerror = (e) => this.onError("websocket error", e);
+	    }
+	    write(packets) {
+	        this.writable = false;
+	        // encodePacket efficient as it uses WS framing
+	        // no need for encodePayload
+	        for (let i = 0; i < packets.length; i++) {
+	            const packet = packets[i];
+	            const lastPacket = i === packets.length - 1;
+	            encodePacket(packet, this.supportsBinary, (data) => {
+	                // always create a new object (GH-437)
+	                const opts = {};
+	                // Sometimes the websocket has already been closed but the browser didn't
+	                // have a chance of informing us about it yet, in that case send will
+	                // throw an error
+	                try {
+	                    if (usingBrowserWebSocket) {
+	                        // TypeError is thrown when passing the second argument on Safari
+	                        this.ws.send(data);
+	                    }
+	                }
+	                catch (e) {
+	                }
+	                if (lastPacket) {
+	                    // fake drain
+	                    // defer to next tick to allow Socket to clear writeBuffer
+	                    nextTick(() => {
+	                        this.writable = true;
+	                        this.emitReserved("drain");
+	                    }, this.setTimeoutFn);
+	                }
+	            });
+	        }
+	    }
+	    doClose() {
+	        if (typeof this.ws !== "undefined") {
+	            this.ws.close();
+	            this.ws = null;
+	        }
+	    }
+	    /**
+	     * Generates uri for connection.
+	     *
+	     * @private
+	     */
+	    uri() {
+	        let query = this.query || {};
+	        const schema = this.opts.secure ? "wss" : "ws";
+	        let port = "";
+	        // avoid port if default for schema
+	        if (this.opts.port &&
+	            (("wss" === schema && Number(this.opts.port) !== 443) ||
+	                ("ws" === schema && Number(this.opts.port) !== 80))) {
+	            port = ":" + this.opts.port;
+	        }
+	        // append timestamp to URI
+	        if (this.opts.timestampRequests) {
+	            query[this.opts.timestampParam] = yeast();
+	        }
+	        // communicate binary support capabilities
+	        if (!this.supportsBinary) {
+	            query.b64 = 1;
+	        }
+	        const encodedQuery = encode(query);
+	        const ipv6 = this.opts.hostname.indexOf(":") !== -1;
+	        return (schema +
+	            "://" +
+	            (ipv6 ? "[" + this.opts.hostname + "]" : this.opts.hostname) +
+	            port +
+	            this.opts.path +
+	            (encodedQuery.length ? "?" + encodedQuery : ""));
+	    }
+	    /**
+	     * Feature detection for WebSocket.
+	     *
+	     * @return {Boolean} whether this transport is available.
+	     * @private
+	     */
+	    check() {
+	        return !!WebSocket;
+	    }
+	}
+
+	const transports = {
+	    websocket: WS,
+	    polling: Polling,
+	};
+
+	// imported from https://github.com/galkn/parseuri
+	/**
+	 * Parses a URI
+	 *
+	 * Note: we could also have used the built-in URL object, but it isn't supported on all platforms.
+	 *
+	 * See:
+	 * - https://developer.mozilla.org/en-US/docs/Web/API/URL
+	 * - https://caniuse.com/url
+	 * - https://www.rfc-editor.org/rfc/rfc3986#appendix-B
+	 *
+	 * History of the parse() method:
+	 * - first commit: https://github.com/socketio/socket.io-client/commit/4ee1d5d94b3906a9c052b459f1a818b15f38f91c
+	 * - export into its own module: https://github.com/socketio/engine.io-client/commit/de2c561e4564efeb78f1bdb1ba39ef81b2822cb3
+	 * - reimport: https://github.com/socketio/engine.io-client/commit/df32277c3f6d622eec5ed09f493cae3f3391d242
+	 *
+	 * @author Steven Levithan <stevenlevithan.com> (MIT license)
+	 * @api private
+	 */
+	const re = /^(?:(?![^:@\/?#]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@\/?#]*)(?::([^:@\/?#]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
+	const parts = [
+	    'source', 'protocol', 'authority', 'userInfo', 'user', 'password', 'host', 'port', 'relative', 'path', 'directory', 'file', 'query', 'anchor'
+	];
+	function parse(str) {
+	    const src = str, b = str.indexOf('['), e = str.indexOf(']');
+	    if (b != -1 && e != -1) {
+	        str = str.substring(0, b) + str.substring(b, e).replace(/:/g, ';') + str.substring(e, str.length);
+	    }
+	    let m = re.exec(str || ''), uri = {}, i = 14;
+	    while (i--) {
+	        uri[parts[i]] = m[i] || '';
+	    }
+	    if (b != -1 && e != -1) {
+	        uri.source = src;
+	        uri.host = uri.host.substring(1, uri.host.length - 1).replace(/;/g, ':');
+	        uri.authority = uri.authority.replace('[', '').replace(']', '').replace(/;/g, ':');
+	        uri.ipv6uri = true;
+	    }
+	    uri.pathNames = pathNames(uri, uri['path']);
+	    uri.queryKey = queryKey(uri, uri['query']);
+	    return uri;
+	}
+	function pathNames(obj, path) {
+	    const regx = /\/{2,9}/g, names = path.replace(regx, "/").split("/");
+	    if (path.slice(0, 1) == '/' || path.length === 0) {
+	        names.splice(0, 1);
+	    }
+	    if (path.slice(-1) == '/') {
+	        names.splice(names.length - 1, 1);
+	    }
+	    return names;
+	}
+	function queryKey(uri, query) {
+	    const data = {};
+	    query.replace(/(?:^|&)([^&=]*)=?([^&]*)/g, function ($0, $1, $2) {
+	        if ($1) {
+	            data[$1] = $2;
+	        }
+	    });
+	    return data;
+	}
+
+	let Socket$1 = class Socket extends Emitter {
+	    /**
+	     * Socket constructor.
+	     *
+	     * @param {String|Object} uri - uri or options
+	     * @param {Object} opts - options
+	     */
+	    constructor(uri, opts = {}) {
+	        super();
+	        this.writeBuffer = [];
+	        if (uri && "object" === typeof uri) {
+	            opts = uri;
+	            uri = null;
+	        }
+	        if (uri) {
+	            uri = parse(uri);
+	            opts.hostname = uri.host;
+	            opts.secure = uri.protocol === "https" || uri.protocol === "wss";
+	            opts.port = uri.port;
+	            if (uri.query)
+	                opts.query = uri.query;
+	        }
+	        else if (opts.host) {
+	            opts.hostname = parse(opts.host).host;
+	        }
+	        installTimerFunctions(this, opts);
+	        this.secure =
+	            null != opts.secure
+	                ? opts.secure
+	                : typeof location !== "undefined" && "https:" === location.protocol;
+	        if (opts.hostname && !opts.port) {
+	            // if no port is specified manually, use the protocol default
+	            opts.port = this.secure ? "443" : "80";
+	        }
+	        this.hostname =
+	            opts.hostname ||
+	                (typeof location !== "undefined" ? location.hostname : "localhost");
+	        this.port =
+	            opts.port ||
+	                (typeof location !== "undefined" && location.port
+	                    ? location.port
+	                    : this.secure
+	                        ? "443"
+	                        : "80");
+	        this.transports = opts.transports || ["polling", "websocket"];
+	        this.writeBuffer = [];
+	        this.prevBufferLen = 0;
+	        this.opts = Object.assign({
+	            path: "/engine.io",
+	            agent: false,
+	            withCredentials: false,
+	            upgrade: true,
+	            timestampParam: "t",
+	            rememberUpgrade: false,
+	            addTrailingSlash: true,
+	            rejectUnauthorized: true,
+	            perMessageDeflate: {
+	                threshold: 1024,
+	            },
+	            transportOptions: {},
+	            closeOnBeforeunload: true,
+	        }, opts);
+	        this.opts.path =
+	            this.opts.path.replace(/\/$/, "") +
+	                (this.opts.addTrailingSlash ? "/" : "");
+	        if (typeof this.opts.query === "string") {
+	            this.opts.query = decode(this.opts.query);
+	        }
+	        // set on handshake
+	        this.id = null;
+	        this.upgrades = null;
+	        this.pingInterval = null;
+	        this.pingTimeout = null;
+	        // set on heartbeat
+	        this.pingTimeoutTimer = null;
+	        if (typeof addEventListener === "function") {
+	            if (this.opts.closeOnBeforeunload) {
+	                // Firefox closes the connection when the "beforeunload" event is emitted but not Chrome. This event listener
+	                // ensures every browser behaves the same (no "disconnect" event at the Socket.IO level when the page is
+	                // closed/reloaded)
+	                this.beforeunloadEventListener = () => {
+	                    if (this.transport) {
+	                        // silently close the transport
+	                        this.transport.removeAllListeners();
+	                        this.transport.close();
+	                    }
+	                };
+	                addEventListener("beforeunload", this.beforeunloadEventListener, false);
+	            }
+	            if (this.hostname !== "localhost") {
+	                this.offlineEventListener = () => {
+	                    this.onClose("transport close", {
+	                        description: "network connection lost",
+	                    });
+	                };
+	                addEventListener("offline", this.offlineEventListener, false);
+	            }
+	        }
+	        this.open();
+	    }
+	    /**
+	     * Creates transport of the given type.
+	     *
+	     * @param {String} name - transport name
+	     * @return {Transport}
+	     * @private
+	     */
+	    createTransport(name) {
+	        const query = Object.assign({}, this.opts.query);
+	        // append engine.io protocol identifier
+	        query.EIO = protocol$1;
+	        // transport name
+	        query.transport = name;
+	        // session id if we already have one
+	        if (this.id)
+	            query.sid = this.id;
+	        const opts = Object.assign({}, this.opts.transportOptions[name], this.opts, {
+	            query,
+	            socket: this,
+	            hostname: this.hostname,
+	            secure: this.secure,
+	            port: this.port,
+	        });
+	        return new transports[name](opts);
+	    }
+	    /**
+	     * Initializes transport to use and starts probe.
+	     *
+	     * @private
+	     */
+	    open() {
+	        let transport;
+	        if (this.opts.rememberUpgrade &&
+	            Socket.priorWebsocketSuccess &&
+	            this.transports.indexOf("websocket") !== -1) {
+	            transport = "websocket";
+	        }
+	        else if (0 === this.transports.length) {
+	            // Emit error on next tick so it can be listened to
+	            this.setTimeoutFn(() => {
+	                this.emitReserved("error", "No transports available");
+	            }, 0);
+	            return;
+	        }
+	        else {
+	            transport = this.transports[0];
+	        }
+	        this.readyState = "opening";
+	        // Retry with the next transport if the transport is disabled (jsonp: false)
+	        try {
+	            transport = this.createTransport(transport);
+	        }
+	        catch (e) {
+	            this.transports.shift();
+	            this.open();
+	            return;
+	        }
+	        transport.open();
+	        this.setTransport(transport);
+	    }
+	    /**
+	     * Sets the current transport. Disables the existing one (if any).
+	     *
+	     * @private
+	     */
+	    setTransport(transport) {
+	        if (this.transport) {
+	            this.transport.removeAllListeners();
+	        }
+	        // set up transport
+	        this.transport = transport;
+	        // set up transport listeners
+	        transport
+	            .on("drain", this.onDrain.bind(this))
+	            .on("packet", this.onPacket.bind(this))
+	            .on("error", this.onError.bind(this))
+	            .on("close", (reason) => this.onClose("transport close", reason));
+	    }
+	    /**
+	     * Probes a transport.
+	     *
+	     * @param {String} name - transport name
+	     * @private
+	     */
+	    probe(name) {
+	        let transport = this.createTransport(name);
+	        let failed = false;
+	        Socket.priorWebsocketSuccess = false;
+	        const onTransportOpen = () => {
+	            if (failed)
+	                return;
+	            transport.send([{ type: "ping", data: "probe" }]);
+	            transport.once("packet", (msg) => {
+	                if (failed)
+	                    return;
+	                if ("pong" === msg.type && "probe" === msg.data) {
+	                    this.upgrading = true;
+	                    this.emitReserved("upgrading", transport);
+	                    if (!transport)
+	                        return;
+	                    Socket.priorWebsocketSuccess = "websocket" === transport.name;
+	                    this.transport.pause(() => {
+	                        if (failed)
+	                            return;
+	                        if ("closed" === this.readyState)
+	                            return;
+	                        cleanup();
+	                        this.setTransport(transport);
+	                        transport.send([{ type: "upgrade" }]);
+	                        this.emitReserved("upgrade", transport);
+	                        transport = null;
+	                        this.upgrading = false;
+	                        this.flush();
+	                    });
+	                }
+	                else {
+	                    const err = new Error("probe error");
+	                    // @ts-ignore
+	                    err.transport = transport.name;
+	                    this.emitReserved("upgradeError", err);
+	                }
+	            });
+	        };
+	        function freezeTransport() {
+	            if (failed)
+	                return;
+	            // Any callback called by transport should be ignored since now
+	            failed = true;
+	            cleanup();
+	            transport.close();
+	            transport = null;
+	        }
+	        // Handle any error that happens while probing
+	        const onerror = (err) => {
+	            const error = new Error("probe error: " + err);
+	            // @ts-ignore
+	            error.transport = transport.name;
+	            freezeTransport();
+	            this.emitReserved("upgradeError", error);
+	        };
+	        function onTransportClose() {
+	            onerror("transport closed");
+	        }
+	        // When the socket is closed while we're probing
+	        function onclose() {
+	            onerror("socket closed");
+	        }
+	        // When the socket is upgraded while we're probing
+	        function onupgrade(to) {
+	            if (transport && to.name !== transport.name) {
+	                freezeTransport();
+	            }
+	        }
+	        // Remove all listeners on the transport and on self
+	        const cleanup = () => {
+	            transport.removeListener("open", onTransportOpen);
+	            transport.removeListener("error", onerror);
+	            transport.removeListener("close", onTransportClose);
+	            this.off("close", onclose);
+	            this.off("upgrading", onupgrade);
+	        };
+	        transport.once("open", onTransportOpen);
+	        transport.once("error", onerror);
+	        transport.once("close", onTransportClose);
+	        this.once("close", onclose);
+	        this.once("upgrading", onupgrade);
+	        transport.open();
+	    }
+	    /**
+	     * Called when connection is deemed open.
+	     *
+	     * @private
+	     */
+	    onOpen() {
+	        this.readyState = "open";
+	        Socket.priorWebsocketSuccess = "websocket" === this.transport.name;
+	        this.emitReserved("open");
+	        this.flush();
+	        // we check for `readyState` in case an `open`
+	        // listener already closed the socket
+	        if ("open" === this.readyState && this.opts.upgrade) {
+	            let i = 0;
+	            const l = this.upgrades.length;
+	            for (; i < l; i++) {
+	                this.probe(this.upgrades[i]);
+	            }
+	        }
+	    }
+	    /**
+	     * Handles a packet.
+	     *
+	     * @private
+	     */
+	    onPacket(packet) {
+	        if ("opening" === this.readyState ||
+	            "open" === this.readyState ||
+	            "closing" === this.readyState) {
+	            this.emitReserved("packet", packet);
+	            // Socket is live - any packet counts
+	            this.emitReserved("heartbeat");
+	            switch (packet.type) {
+	                case "open":
+	                    this.onHandshake(JSON.parse(packet.data));
+	                    break;
+	                case "ping":
+	                    this.resetPingTimeout();
+	                    this.sendPacket("pong");
+	                    this.emitReserved("ping");
+	                    this.emitReserved("pong");
+	                    break;
+	                case "error":
+	                    const err = new Error("server error");
+	                    // @ts-ignore
+	                    err.code = packet.data;
+	                    this.onError(err);
+	                    break;
+	                case "message":
+	                    this.emitReserved("data", packet.data);
+	                    this.emitReserved("message", packet.data);
+	                    break;
+	            }
+	        }
+	    }
+	    /**
+	     * Called upon handshake completion.
+	     *
+	     * @param {Object} data - handshake obj
+	     * @private
+	     */
+	    onHandshake(data) {
+	        this.emitReserved("handshake", data);
+	        this.id = data.sid;
+	        this.transport.query.sid = data.sid;
+	        this.upgrades = this.filterUpgrades(data.upgrades);
+	        this.pingInterval = data.pingInterval;
+	        this.pingTimeout = data.pingTimeout;
+	        this.maxPayload = data.maxPayload;
+	        this.onOpen();
+	        // In case open handler closes socket
+	        if ("closed" === this.readyState)
+	            return;
+	        this.resetPingTimeout();
+	    }
+	    /**
+	     * Sets and resets ping timeout timer based on server pings.
+	     *
+	     * @private
+	     */
+	    resetPingTimeout() {
+	        this.clearTimeoutFn(this.pingTimeoutTimer);
+	        this.pingTimeoutTimer = this.setTimeoutFn(() => {
+	            this.onClose("ping timeout");
+	        }, this.pingInterval + this.pingTimeout);
+	        if (this.opts.autoUnref) {
+	            this.pingTimeoutTimer.unref();
+	        }
+	    }
+	    /**
+	     * Called on `drain` event
+	     *
+	     * @private
+	     */
+	    onDrain() {
+	        this.writeBuffer.splice(0, this.prevBufferLen);
+	        // setting prevBufferLen = 0 is very important
+	        // for example, when upgrading, upgrade packet is sent over,
+	        // and a nonzero prevBufferLen could cause problems on `drain`
+	        this.prevBufferLen = 0;
+	        if (0 === this.writeBuffer.length) {
+	            this.emitReserved("drain");
+	        }
+	        else {
+	            this.flush();
+	        }
+	    }
+	    /**
+	     * Flush write buffers.
+	     *
+	     * @private
+	     */
+	    flush() {
+	        if ("closed" !== this.readyState &&
+	            this.transport.writable &&
+	            !this.upgrading &&
+	            this.writeBuffer.length) {
+	            const packets = this.getWritablePackets();
+	            this.transport.send(packets);
+	            // keep track of current length of writeBuffer
+	            // splice writeBuffer and callbackBuffer on `drain`
+	            this.prevBufferLen = packets.length;
+	            this.emitReserved("flush");
+	        }
+	    }
+	    /**
+	     * Ensure the encoded size of the writeBuffer is below the maxPayload value sent by the server (only for HTTP
+	     * long-polling)
+	     *
+	     * @private
+	     */
+	    getWritablePackets() {
+	        const shouldCheckPayloadSize = this.maxPayload &&
+	            this.transport.name === "polling" &&
+	            this.writeBuffer.length > 1;
+	        if (!shouldCheckPayloadSize) {
+	            return this.writeBuffer;
+	        }
+	        let payloadSize = 1; // first packet type
+	        for (let i = 0; i < this.writeBuffer.length; i++) {
+	            const data = this.writeBuffer[i].data;
+	            if (data) {
+	                payloadSize += byteLength(data);
+	            }
+	            if (i > 0 && payloadSize > this.maxPayload) {
+	                return this.writeBuffer.slice(0, i);
+	            }
+	            payloadSize += 2; // separator + packet type
+	        }
+	        return this.writeBuffer;
+	    }
+	    /**
+	     * Sends a message.
+	     *
+	     * @param {String} msg - message.
+	     * @param {Object} options.
+	     * @param {Function} callback function.
+	     * @return {Socket} for chaining.
+	     */
+	    write(msg, options, fn) {
+	        this.sendPacket("message", msg, options, fn);
+	        return this;
+	    }
+	    send(msg, options, fn) {
+	        this.sendPacket("message", msg, options, fn);
+	        return this;
+	    }
+	    /**
+	     * Sends a packet.
+	     *
+	     * @param {String} type: packet type.
+	     * @param {String} data.
+	     * @param {Object} options.
+	     * @param {Function} fn - callback function.
+	     * @private
+	     */
+	    sendPacket(type, data, options, fn) {
+	        if ("function" === typeof data) {
+	            fn = data;
+	            data = undefined;
+	        }
+	        if ("function" === typeof options) {
+	            fn = options;
+	            options = null;
+	        }
+	        if ("closing" === this.readyState || "closed" === this.readyState) {
+	            return;
+	        }
+	        options = options || {};
+	        options.compress = false !== options.compress;
+	        const packet = {
+	            type: type,
+	            data: data,
+	            options: options,
+	        };
+	        this.emitReserved("packetCreate", packet);
+	        this.writeBuffer.push(packet);
+	        if (fn)
+	            this.once("flush", fn);
+	        this.flush();
+	    }
+	    /**
+	     * Closes the connection.
+	     */
+	    close() {
+	        const close = () => {
+	            this.onClose("forced close");
+	            this.transport.close();
+	        };
+	        const cleanupAndClose = () => {
+	            this.off("upgrade", cleanupAndClose);
+	            this.off("upgradeError", cleanupAndClose);
+	            close();
+	        };
+	        const waitForUpgrade = () => {
+	            // wait for upgrade to finish since we can't send packets while pausing a transport
+	            this.once("upgrade", cleanupAndClose);
+	            this.once("upgradeError", cleanupAndClose);
+	        };
+	        if ("opening" === this.readyState || "open" === this.readyState) {
+	            this.readyState = "closing";
+	            if (this.writeBuffer.length) {
+	                this.once("drain", () => {
+	                    if (this.upgrading) {
+	                        waitForUpgrade();
+	                    }
+	                    else {
+	                        close();
+	                    }
+	                });
+	            }
+	            else if (this.upgrading) {
+	                waitForUpgrade();
+	            }
+	            else {
+	                close();
+	            }
+	        }
+	        return this;
+	    }
+	    /**
+	     * Called upon transport error
+	     *
+	     * @private
+	     */
+	    onError(err) {
+	        Socket.priorWebsocketSuccess = false;
+	        this.emitReserved("error", err);
+	        this.onClose("transport error", err);
+	    }
+	    /**
+	     * Called upon transport close.
+	     *
+	     * @private
+	     */
+	    onClose(reason, description) {
+	        if ("opening" === this.readyState ||
+	            "open" === this.readyState ||
+	            "closing" === this.readyState) {
+	            // clear timers
+	            this.clearTimeoutFn(this.pingTimeoutTimer);
+	            // stop event from firing again for transport
+	            this.transport.removeAllListeners("close");
+	            // ensure transport won't stay open
+	            this.transport.close();
+	            // ignore further transport communication
+	            this.transport.removeAllListeners();
+	            if (typeof removeEventListener === "function") {
+	                removeEventListener("beforeunload", this.beforeunloadEventListener, false);
+	                removeEventListener("offline", this.offlineEventListener, false);
+	            }
+	            // set ready state
+	            this.readyState = "closed";
+	            // clear session id
+	            this.id = null;
+	            // emit close event
+	            this.emitReserved("close", reason, description);
+	            // clean buffers after, so users can still
+	            // grab the buffers on `close` event
+	            this.writeBuffer = [];
+	            this.prevBufferLen = 0;
+	        }
+	    }
+	    /**
+	     * Filters upgrades, returning only those matching client transports.
+	     *
+	     * @param {Array} upgrades - server upgrades
+	     * @private
+	     */
+	    filterUpgrades(upgrades) {
+	        const filteredUpgrades = [];
+	        let i = 0;
+	        const j = upgrades.length;
+	        for (; i < j; i++) {
+	            if (~this.transports.indexOf(upgrades[i]))
+	                filteredUpgrades.push(upgrades[i]);
+	        }
+	        return filteredUpgrades;
+	    }
+	};
+	Socket$1.protocol = protocol$1;
+
+	/**
+	 * URL parser.
+	 *
+	 * @param uri - url
+	 * @param path - the request path of the connection
+	 * @param loc - An object meant to mimic window.location.
+	 *        Defaults to window.location.
+	 * @public
+	 */
+	function url(uri, path = "", loc) {
+	    let obj = uri;
+	    // default to window.location
+	    loc = loc || (typeof location !== "undefined" && location);
+	    if (null == uri)
+	        uri = loc.protocol + "//" + loc.host;
+	    // relative path support
+	    if (typeof uri === "string") {
+	        if ("/" === uri.charAt(0)) {
+	            if ("/" === uri.charAt(1)) {
+	                uri = loc.protocol + uri;
+	            }
+	            else {
+	                uri = loc.host + uri;
+	            }
+	        }
+	        if (!/^(https?|wss?):\/\//.test(uri)) {
+	            if ("undefined" !== typeof loc) {
+	                uri = loc.protocol + "//" + uri;
+	            }
+	            else {
+	                uri = "https://" + uri;
+	            }
+	        }
+	        // parse
+	        obj = parse(uri);
+	    }
+	    // make sure we treat `localhost:80` and `localhost` equally
+	    if (!obj.port) {
+	        if (/^(http|ws)$/.test(obj.protocol)) {
+	            obj.port = "80";
+	        }
+	        else if (/^(http|ws)s$/.test(obj.protocol)) {
+	            obj.port = "443";
+	        }
+	    }
+	    obj.path = obj.path || "/";
+	    const ipv6 = obj.host.indexOf(":") !== -1;
+	    const host = ipv6 ? "[" + obj.host + "]" : obj.host;
+	    // define unique id
+	    obj.id = obj.protocol + "://" + host + ":" + obj.port + path;
+	    // define href
+	    obj.href =
+	        obj.protocol +
+	            "://" +
+	            host +
+	            (loc && loc.port === obj.port ? "" : ":" + obj.port);
+	    return obj;
+	}
+
+	const withNativeArrayBuffer = typeof ArrayBuffer === "function";
+	const isView = (obj) => {
+	    return typeof ArrayBuffer.isView === "function"
+	        ? ArrayBuffer.isView(obj)
+	        : obj.buffer instanceof ArrayBuffer;
+	};
+	const toString = Object.prototype.toString;
+	const withNativeBlob = typeof Blob === "function" ||
+	    (typeof Blob !== "undefined" &&
+	        toString.call(Blob) === "[object BlobConstructor]");
+	const withNativeFile = typeof File === "function" ||
+	    (typeof File !== "undefined" &&
+	        toString.call(File) === "[object FileConstructor]");
+	/**
+	 * Returns true if obj is a Buffer, an ArrayBuffer, a Blob or a File.
+	 *
+	 * @private
+	 */
+	function isBinary(obj) {
+	    return ((withNativeArrayBuffer && (obj instanceof ArrayBuffer || isView(obj))) ||
+	        (withNativeBlob && obj instanceof Blob) ||
+	        (withNativeFile && obj instanceof File));
+	}
+	function hasBinary(obj, toJSON) {
+	    if (!obj || typeof obj !== "object") {
+	        return false;
+	    }
+	    if (Array.isArray(obj)) {
+	        for (let i = 0, l = obj.length; i < l; i++) {
+	            if (hasBinary(obj[i])) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	    if (isBinary(obj)) {
+	        return true;
+	    }
+	    if (obj.toJSON &&
+	        typeof obj.toJSON === "function" &&
+	        arguments.length === 1) {
+	        return hasBinary(obj.toJSON(), true);
+	    }
+	    for (const key in obj) {
+	        if (Object.prototype.hasOwnProperty.call(obj, key) && hasBinary(obj[key])) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+
+	/**
+	 * Replaces every Buffer | ArrayBuffer | Blob | File in packet with a numbered placeholder.
+	 *
+	 * @param {Object} packet - socket.io event packet
+	 * @return {Object} with deconstructed packet and list of buffers
+	 * @public
+	 */
+	function deconstructPacket(packet) {
+	    const buffers = [];
+	    const packetData = packet.data;
+	    const pack = packet;
+	    pack.data = _deconstructPacket(packetData, buffers);
+	    pack.attachments = buffers.length; // number of binary 'attachments'
+	    return { packet: pack, buffers: buffers };
+	}
+	function _deconstructPacket(data, buffers) {
+	    if (!data)
+	        return data;
+	    if (isBinary(data)) {
+	        const placeholder = { _placeholder: true, num: buffers.length };
+	        buffers.push(data);
+	        return placeholder;
+	    }
+	    else if (Array.isArray(data)) {
+	        const newData = new Array(data.length);
+	        for (let i = 0; i < data.length; i++) {
+	            newData[i] = _deconstructPacket(data[i], buffers);
+	        }
+	        return newData;
+	    }
+	    else if (typeof data === "object" && !(data instanceof Date)) {
+	        const newData = {};
+	        for (const key in data) {
+	            if (Object.prototype.hasOwnProperty.call(data, key)) {
+	                newData[key] = _deconstructPacket(data[key], buffers);
+	            }
+	        }
+	        return newData;
+	    }
+	    return data;
+	}
+	/**
+	 * Reconstructs a binary packet from its placeholder packet and buffers
+	 *
+	 * @param {Object} packet - event packet with placeholders
+	 * @param {Array} buffers - binary buffers to put in placeholder positions
+	 * @return {Object} reconstructed packet
+	 * @public
+	 */
+	function reconstructPacket(packet, buffers) {
+	    packet.data = _reconstructPacket(packet.data, buffers);
+	    delete packet.attachments; // no longer useful
+	    return packet;
+	}
+	function _reconstructPacket(data, buffers) {
+	    if (!data)
+	        return data;
+	    if (data && data._placeholder === true) {
+	        const isIndexValid = typeof data.num === "number" &&
+	            data.num >= 0 &&
+	            data.num < buffers.length;
+	        if (isIndexValid) {
+	            return buffers[data.num]; // appropriate buffer (should be natural order anyway)
+	        }
+	        else {
+	            throw new Error("illegal attachments");
+	        }
+	    }
+	    else if (Array.isArray(data)) {
+	        for (let i = 0; i < data.length; i++) {
+	            data[i] = _reconstructPacket(data[i], buffers);
+	        }
+	    }
+	    else if (typeof data === "object") {
+	        for (const key in data) {
+	            if (Object.prototype.hasOwnProperty.call(data, key)) {
+	                data[key] = _reconstructPacket(data[key], buffers);
+	            }
+	        }
+	    }
+	    return data;
+	}
+
+	/**
+	 * These strings must not be used as event names, as they have a special meaning.
+	 */
+	const RESERVED_EVENTS$1 = [
+	    "connect",
+	    "connect_error",
+	    "disconnect",
+	    "disconnecting",
+	    "newListener",
+	    "removeListener", // used by the Node.js EventEmitter
+	];
+	/**
+	 * Protocol version.
+	 *
+	 * @public
+	 */
+	const protocol = 5;
+	var PacketType;
+	(function (PacketType) {
+	    PacketType[PacketType["CONNECT"] = 0] = "CONNECT";
+	    PacketType[PacketType["DISCONNECT"] = 1] = "DISCONNECT";
+	    PacketType[PacketType["EVENT"] = 2] = "EVENT";
+	    PacketType[PacketType["ACK"] = 3] = "ACK";
+	    PacketType[PacketType["CONNECT_ERROR"] = 4] = "CONNECT_ERROR";
+	    PacketType[PacketType["BINARY_EVENT"] = 5] = "BINARY_EVENT";
+	    PacketType[PacketType["BINARY_ACK"] = 6] = "BINARY_ACK";
+	})(PacketType || (PacketType = {}));
+	/**
+	 * A socket.io Encoder instance
+	 */
+	class Encoder {
+	    /**
+	     * Encoder constructor
+	     *
+	     * @param {function} replacer - custom replacer to pass down to JSON.parse
+	     */
+	    constructor(replacer) {
+	        this.replacer = replacer;
+	    }
+	    /**
+	     * Encode a packet as a single string if non-binary, or as a
+	     * buffer sequence, depending on packet type.
+	     *
+	     * @param {Object} obj - packet object
+	     */
+	    encode(obj) {
+	        if (obj.type === PacketType.EVENT || obj.type === PacketType.ACK) {
+	            if (hasBinary(obj)) {
+	                return this.encodeAsBinary({
+	                    type: obj.type === PacketType.EVENT
+	                        ? PacketType.BINARY_EVENT
+	                        : PacketType.BINARY_ACK,
+	                    nsp: obj.nsp,
+	                    data: obj.data,
+	                    id: obj.id,
+	                });
+	            }
+	        }
+	        return [this.encodeAsString(obj)];
+	    }
+	    /**
+	     * Encode packet as string.
+	     */
+	    encodeAsString(obj) {
+	        // first is type
+	        let str = "" + obj.type;
+	        // attachments if we have them
+	        if (obj.type === PacketType.BINARY_EVENT ||
+	            obj.type === PacketType.BINARY_ACK) {
+	            str += obj.attachments + "-";
+	        }
+	        // if we have a namespace other than `/`
+	        // we append it followed by a comma `,`
+	        if (obj.nsp && "/" !== obj.nsp) {
+	            str += obj.nsp + ",";
+	        }
+	        // immediately followed by the id
+	        if (null != obj.id) {
+	            str += obj.id;
+	        }
+	        // json data
+	        if (null != obj.data) {
+	            str += JSON.stringify(obj.data, this.replacer);
+	        }
+	        return str;
+	    }
+	    /**
+	     * Encode packet as 'buffer sequence' by removing blobs, and
+	     * deconstructing packet into object with placeholders and
+	     * a list of buffers.
+	     */
+	    encodeAsBinary(obj) {
+	        const deconstruction = deconstructPacket(obj);
+	        const pack = this.encodeAsString(deconstruction.packet);
+	        const buffers = deconstruction.buffers;
+	        buffers.unshift(pack); // add packet info to beginning of data list
+	        return buffers; // write all the buffers
+	    }
+	}
+	// see https://stackoverflow.com/questions/8511281/check-if-a-value-is-an-object-in-javascript
+	function isObject(value) {
+	    return Object.prototype.toString.call(value) === "[object Object]";
+	}
+	/**
+	 * A socket.io Decoder instance
+	 *
+	 * @return {Object} decoder
+	 */
+	class Decoder extends Emitter {
+	    /**
+	     * Decoder constructor
+	     *
+	     * @param {function} reviver - custom reviver to pass down to JSON.stringify
+	     */
+	    constructor(reviver) {
+	        super();
+	        this.reviver = reviver;
+	    }
+	    /**
+	     * Decodes an encoded packet string into packet JSON.
+	     *
+	     * @param {String} obj - encoded packet
+	     */
+	    add(obj) {
+	        let packet;
+	        if (typeof obj === "string") {
+	            if (this.reconstructor) {
+	                throw new Error("got plaintext data when reconstructing a packet");
+	            }
+	            packet = this.decodeString(obj);
+	            const isBinaryEvent = packet.type === PacketType.BINARY_EVENT;
+	            if (isBinaryEvent || packet.type === PacketType.BINARY_ACK) {
+	                packet.type = isBinaryEvent ? PacketType.EVENT : PacketType.ACK;
+	                // binary packet's json
+	                this.reconstructor = new BinaryReconstructor(packet);
+	                // no attachments, labeled binary but no binary data to follow
+	                if (packet.attachments === 0) {
+	                    super.emitReserved("decoded", packet);
+	                }
+	            }
+	            else {
+	                // non-binary full packet
+	                super.emitReserved("decoded", packet);
+	            }
+	        }
+	        else if (isBinary(obj) || obj.base64) {
+	            // raw binary data
+	            if (!this.reconstructor) {
+	                throw new Error("got binary data when not reconstructing a packet");
+	            }
+	            else {
+	                packet = this.reconstructor.takeBinaryData(obj);
+	                if (packet) {
+	                    // received final buffer
+	                    this.reconstructor = null;
+	                    super.emitReserved("decoded", packet);
+	                }
+	            }
+	        }
+	        else {
+	            throw new Error("Unknown type: " + obj);
+	        }
+	    }
+	    /**
+	     * Decode a packet String (JSON data)
+	     *
+	     * @param {String} str
+	     * @return {Object} packet
+	     */
+	    decodeString(str) {
+	        let i = 0;
+	        // look up type
+	        const p = {
+	            type: Number(str.charAt(0)),
+	        };
+	        if (PacketType[p.type] === undefined) {
+	            throw new Error("unknown packet type " + p.type);
+	        }
+	        // look up attachments if type binary
+	        if (p.type === PacketType.BINARY_EVENT ||
+	            p.type === PacketType.BINARY_ACK) {
+	            const start = i + 1;
+	            while (str.charAt(++i) !== "-" && i != str.length) { }
+	            const buf = str.substring(start, i);
+	            if (buf != Number(buf) || str.charAt(i) !== "-") {
+	                throw new Error("Illegal attachments");
+	            }
+	            p.attachments = Number(buf);
+	        }
+	        // look up namespace (if any)
+	        if ("/" === str.charAt(i + 1)) {
+	            const start = i + 1;
+	            while (++i) {
+	                const c = str.charAt(i);
+	                if ("," === c)
+	                    break;
+	                if (i === str.length)
+	                    break;
+	            }
+	            p.nsp = str.substring(start, i);
+	        }
+	        else {
+	            p.nsp = "/";
+	        }
+	        // look up id
+	        const next = str.charAt(i + 1);
+	        if ("" !== next && Number(next) == next) {
+	            const start = i + 1;
+	            while (++i) {
+	                const c = str.charAt(i);
+	                if (null == c || Number(c) != c) {
+	                    --i;
+	                    break;
+	                }
+	                if (i === str.length)
+	                    break;
+	            }
+	            p.id = Number(str.substring(start, i + 1));
+	        }
+	        // look up json data
+	        if (str.charAt(++i)) {
+	            const payload = this.tryParse(str.substr(i));
+	            if (Decoder.isPayloadValid(p.type, payload)) {
+	                p.data = payload;
+	            }
+	            else {
+	                throw new Error("invalid payload");
+	            }
+	        }
+	        return p;
+	    }
+	    tryParse(str) {
+	        try {
+	            return JSON.parse(str, this.reviver);
+	        }
+	        catch (e) {
+	            return false;
+	        }
+	    }
+	    static isPayloadValid(type, payload) {
+	        switch (type) {
+	            case PacketType.CONNECT:
+	                return isObject(payload);
+	            case PacketType.DISCONNECT:
+	                return payload === undefined;
+	            case PacketType.CONNECT_ERROR:
+	                return typeof payload === "string" || isObject(payload);
+	            case PacketType.EVENT:
+	            case PacketType.BINARY_EVENT:
+	                return (Array.isArray(payload) &&
+	                    (typeof payload[0] === "number" ||
+	                        (typeof payload[0] === "string" &&
+	                            RESERVED_EVENTS$1.indexOf(payload[0]) === -1)));
+	            case PacketType.ACK:
+	            case PacketType.BINARY_ACK:
+	                return Array.isArray(payload);
+	        }
+	    }
+	    /**
+	     * Deallocates a parser's resources
+	     */
+	    destroy() {
+	        if (this.reconstructor) {
+	            this.reconstructor.finishedReconstruction();
+	            this.reconstructor = null;
+	        }
+	    }
+	}
+	/**
+	 * A manager of a binary event's 'buffer sequence'. Should
+	 * be constructed whenever a packet of type BINARY_EVENT is
+	 * decoded.
+	 *
+	 * @param {Object} packet
+	 * @return {BinaryReconstructor} initialized reconstructor
+	 */
+	class BinaryReconstructor {
+	    constructor(packet) {
+	        this.packet = packet;
+	        this.buffers = [];
+	        this.reconPack = packet;
+	    }
+	    /**
+	     * Method to be called when binary data received from connection
+	     * after a BINARY_EVENT packet.
+	     *
+	     * @param {Buffer | ArrayBuffer} binData - the raw binary data received
+	     * @return {null | Object} returns null if more binary data is expected or
+	     *   a reconstructed packet object if all buffers have been received.
+	     */
+	    takeBinaryData(binData) {
+	        this.buffers.push(binData);
+	        if (this.buffers.length === this.reconPack.attachments) {
+	            // done with buffer list
+	            const packet = reconstructPacket(this.reconPack, this.buffers);
+	            this.finishedReconstruction();
+	            return packet;
+	        }
+	        return null;
+	    }
+	    /**
+	     * Cleans up binary packet reconstruction variables.
+	     */
+	    finishedReconstruction() {
+	        this.reconPack = null;
+	        this.buffers = [];
+	    }
+	}
+
+	var parser = /*#__PURE__*/Object.freeze({
+		__proto__: null,
+		Decoder: Decoder,
+		Encoder: Encoder,
+		get PacketType () { return PacketType; },
+		protocol: protocol
+	});
+
+	function on(obj, ev, fn) {
+	    obj.on(ev, fn);
+	    return function subDestroy() {
+	        obj.off(ev, fn);
+	    };
+	}
+
+	/**
+	 * Internal events.
+	 * These events can't be emitted by the user.
+	 */
+	const RESERVED_EVENTS = Object.freeze({
+	    connect: 1,
+	    connect_error: 1,
+	    disconnect: 1,
+	    disconnecting: 1,
+	    // EventEmitter reserved events: https://nodejs.org/api/events.html#events_event_newlistener
+	    newListener: 1,
+	    removeListener: 1,
+	});
+	/**
+	 * A Socket is the fundamental class for interacting with the server.
+	 *
+	 * A Socket belongs to a certain Namespace (by default /) and uses an underlying {@link Manager} to communicate.
+	 *
+	 * @example
+	 * const socket = io();
+	 *
+	 * socket.on("connect", () => {
+	 *   console.log("connected");
+	 * });
+	 *
+	 * // send an event to the server
+	 * socket.emit("foo", "bar");
+	 *
+	 * socket.on("foobar", () => {
+	 *   // an event was received from the server
+	 * });
+	 *
+	 * // upon disconnection
+	 * socket.on("disconnect", (reason) => {
+	 *   console.log(`disconnected due to ${reason}`);
+	 * });
+	 */
+	class Socket extends Emitter {
+	    /**
+	     * `Socket` constructor.
+	     */
+	    constructor(io, nsp, opts) {
+	        super();
+	        /**
+	         * Whether the socket is currently connected to the server.
+	         *
+	         * @example
+	         * const socket = io();
+	         *
+	         * socket.on("connect", () => {
+	         *   console.log(socket.connected); // true
+	         * });
+	         *
+	         * socket.on("disconnect", () => {
+	         *   console.log(socket.connected); // false
+	         * });
+	         */
+	        this.connected = false;
+	        /**
+	         * Whether the connection state was recovered after a temporary disconnection. In that case, any missed packets will
+	         * be transmitted by the server.
+	         */
+	        this.recovered = false;
+	        /**
+	         * Buffer for packets received before the CONNECT packet
+	         */
+	        this.receiveBuffer = [];
+	        /**
+	         * Buffer for packets that will be sent once the socket is connected
+	         */
+	        this.sendBuffer = [];
+	        /**
+	         * The queue of packets to be sent with retry in case of failure.
+	         *
+	         * Packets are sent one by one, each waiting for the server acknowledgement, in order to guarantee the delivery order.
+	         * @private
+	         */
+	        this._queue = [];
+	        /**
+	         * A sequence to generate the ID of the {@link QueuedPacket}.
+	         * @private
+	         */
+	        this._queueSeq = 0;
+	        this.ids = 0;
+	        this.acks = {};
+	        this.flags = {};
+	        this.io = io;
+	        this.nsp = nsp;
+	        if (opts && opts.auth) {
+	            this.auth = opts.auth;
+	        }
+	        this._opts = Object.assign({}, opts);
+	        if (this.io._autoConnect)
+	            this.open();
+	    }
+	    /**
+	     * Whether the socket is currently disconnected
+	     *
+	     * @example
+	     * const socket = io();
+	     *
+	     * socket.on("connect", () => {
+	     *   console.log(socket.disconnected); // false
+	     * });
+	     *
+	     * socket.on("disconnect", () => {
+	     *   console.log(socket.disconnected); // true
+	     * });
+	     */
+	    get disconnected() {
+	        return !this.connected;
+	    }
+	    /**
+	     * Subscribe to open, close and packet events
+	     *
+	     * @private
+	     */
+	    subEvents() {
+	        if (this.subs)
+	            return;
+	        const io = this.io;
+	        this.subs = [
+	            on(io, "open", this.onopen.bind(this)),
+	            on(io, "packet", this.onpacket.bind(this)),
+	            on(io, "error", this.onerror.bind(this)),
+	            on(io, "close", this.onclose.bind(this)),
+	        ];
+	    }
+	    /**
+	     * Whether the Socket will try to reconnect when its Manager connects or reconnects.
+	     *
+	     * @example
+	     * const socket = io();
+	     *
+	     * console.log(socket.active); // true
+	     *
+	     * socket.on("disconnect", (reason) => {
+	     *   if (reason === "io server disconnect") {
+	     *     // the disconnection was initiated by the server, you need to manually reconnect
+	     *     console.log(socket.active); // false
+	     *   }
+	     *   // else the socket will automatically try to reconnect
+	     *   console.log(socket.active); // true
+	     * });
+	     */
+	    get active() {
+	        return !!this.subs;
+	    }
+	    /**
+	     * "Opens" the socket.
+	     *
+	     * @example
+	     * const socket = io({
+	     *   autoConnect: false
+	     * });
+	     *
+	     * socket.connect();
+	     */
+	    connect() {
+	        if (this.connected)
+	            return this;
+	        this.subEvents();
+	        if (!this.io["_reconnecting"])
+	            this.io.open(); // ensure open
+	        if ("open" === this.io._readyState)
+	            this.onopen();
+	        return this;
+	    }
+	    /**
+	     * Alias for {@link connect()}.
+	     */
+	    open() {
+	        return this.connect();
+	    }
+	    /**
+	     * Sends a `message` event.
+	     *
+	     * This method mimics the WebSocket.send() method.
+	     *
+	     * @see https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/send
+	     *
+	     * @example
+	     * socket.send("hello");
+	     *
+	     * // this is equivalent to
+	     * socket.emit("message", "hello");
+	     *
+	     * @return self
+	     */
+	    send(...args) {
+	        args.unshift("message");
+	        this.emit.apply(this, args);
+	        return this;
+	    }
+	    /**
+	     * Override `emit`.
+	     * If the event is in `events`, it's emitted normally.
+	     *
+	     * @example
+	     * socket.emit("hello", "world");
+	     *
+	     * // all serializable datastructures are supported (no need to call JSON.stringify)
+	     * socket.emit("hello", 1, "2", { 3: ["4"], 5: Uint8Array.from([6]) });
+	     *
+	     * // with an acknowledgement from the server
+	     * socket.emit("hello", "world", (val) => {
+	     *   // ...
+	     * });
+	     *
+	     * @return self
+	     */
+	    emit(ev, ...args) {
+	        if (RESERVED_EVENTS.hasOwnProperty(ev)) {
+	            throw new Error('"' + ev.toString() + '" is a reserved event name');
+	        }
+	        args.unshift(ev);
+	        if (this._opts.retries && !this.flags.fromQueue && !this.flags.volatile) {
+	            this._addToQueue(args);
+	            return this;
+	        }
+	        const packet = {
+	            type: PacketType.EVENT,
+	            data: args,
+	        };
+	        packet.options = {};
+	        packet.options.compress = this.flags.compress !== false;
+	        // event ack callback
+	        if ("function" === typeof args[args.length - 1]) {
+	            const id = this.ids++;
+	            const ack = args.pop();
+	            this._registerAckCallback(id, ack);
+	            packet.id = id;
+	        }
+	        const isTransportWritable = this.io.engine &&
+	            this.io.engine.transport &&
+	            this.io.engine.transport.writable;
+	        const discardPacket = this.flags.volatile && (!isTransportWritable || !this.connected);
+	        if (discardPacket) ;
+	        else if (this.connected) {
+	            this.notifyOutgoingListeners(packet);
+	            this.packet(packet);
+	        }
+	        else {
+	            this.sendBuffer.push(packet);
+	        }
+	        this.flags = {};
+	        return this;
+	    }
+	    /**
+	     * @private
+	     */
+	    _registerAckCallback(id, ack) {
+	        var _a;
+	        const timeout = (_a = this.flags.timeout) !== null && _a !== void 0 ? _a : this._opts.ackTimeout;
+	        if (timeout === undefined) {
+	            this.acks[id] = ack;
+	            return;
+	        }
+	        // @ts-ignore
+	        const timer = this.io.setTimeoutFn(() => {
+	            delete this.acks[id];
+	            for (let i = 0; i < this.sendBuffer.length; i++) {
+	                if (this.sendBuffer[i].id === id) {
+	                    this.sendBuffer.splice(i, 1);
+	                }
+	            }
+	            ack.call(this, new Error("operation has timed out"));
+	        }, timeout);
+	        this.acks[id] = (...args) => {
+	            // @ts-ignore
+	            this.io.clearTimeoutFn(timer);
+	            ack.apply(this, [null, ...args]);
+	        };
+	    }
+	    /**
+	     * Emits an event and waits for an acknowledgement
+	     *
+	     * @example
+	     * // without timeout
+	     * const response = await socket.emitWithAck("hello", "world");
+	     *
+	     * // with a specific timeout
+	     * try {
+	     *   const response = await socket.timeout(1000).emitWithAck("hello", "world");
+	     * } catch (err) {
+	     *   // the server did not acknowledge the event in the given delay
+	     * }
+	     *
+	     * @return a Promise that will be fulfilled when the server acknowledges the event
+	     */
+	    emitWithAck(ev, ...args) {
+	        // the timeout flag is optional
+	        const withErr = this.flags.timeout !== undefined || this._opts.ackTimeout !== undefined;
+	        return new Promise((resolve, reject) => {
+	            args.push((arg1, arg2) => {
+	                if (withErr) {
+	                    return arg1 ? reject(arg1) : resolve(arg2);
+	                }
+	                else {
+	                    return resolve(arg1);
+	                }
+	            });
+	            this.emit(ev, ...args);
+	        });
+	    }
+	    /**
+	     * Add the packet to the queue.
+	     * @param args
+	     * @private
+	     */
+	    _addToQueue(args) {
+	        let ack;
+	        if (typeof args[args.length - 1] === "function") {
+	            ack = args.pop();
+	        }
+	        const packet = {
+	            id: this._queueSeq++,
+	            tryCount: 0,
+	            pending: false,
+	            args,
+	            flags: Object.assign({ fromQueue: true }, this.flags),
+	        };
+	        args.push((err, ...responseArgs) => {
+	            if (packet !== this._queue[0]) {
+	                // the packet has already been acknowledged
+	                return;
+	            }
+	            const hasError = err !== null;
+	            if (hasError) {
+	                if (packet.tryCount > this._opts.retries) {
+	                    this._queue.shift();
+	                    if (ack) {
+	                        ack(err);
+	                    }
+	                }
+	            }
+	            else {
+	                this._queue.shift();
+	                if (ack) {
+	                    ack(null, ...responseArgs);
+	                }
+	            }
+	            packet.pending = false;
+	            return this._drainQueue();
+	        });
+	        this._queue.push(packet);
+	        this._drainQueue();
+	    }
+	    /**
+	     * Send the first packet of the queue, and wait for an acknowledgement from the server.
+	     * @param force - whether to resend a packet that has not been acknowledged yet
+	     *
+	     * @private
+	     */
+	    _drainQueue(force = false) {
+	        if (!this.connected || this._queue.length === 0) {
+	            return;
+	        }
+	        const packet = this._queue[0];
+	        if (packet.pending && !force) {
+	            return;
+	        }
+	        packet.pending = true;
+	        packet.tryCount++;
+	        this.flags = packet.flags;
+	        this.emit.apply(this, packet.args);
+	    }
+	    /**
+	     * Sends a packet.
+	     *
+	     * @param packet
+	     * @private
+	     */
+	    packet(packet) {
+	        packet.nsp = this.nsp;
+	        this.io._packet(packet);
+	    }
+	    /**
+	     * Called upon engine `open`.
+	     *
+	     * @private
+	     */
+	    onopen() {
+	        if (typeof this.auth == "function") {
+	            this.auth((data) => {
+	                this._sendConnectPacket(data);
+	            });
+	        }
+	        else {
+	            this._sendConnectPacket(this.auth);
+	        }
+	    }
+	    /**
+	     * Sends a CONNECT packet to initiate the Socket.IO session.
+	     *
+	     * @param data
+	     * @private
+	     */
+	    _sendConnectPacket(data) {
+	        this.packet({
+	            type: PacketType.CONNECT,
+	            data: this._pid
+	                ? Object.assign({ pid: this._pid, offset: this._lastOffset }, data)
+	                : data,
+	        });
+	    }
+	    /**
+	     * Called upon engine or manager `error`.
+	     *
+	     * @param err
+	     * @private
+	     */
+	    onerror(err) {
+	        if (!this.connected) {
+	            this.emitReserved("connect_error", err);
+	        }
+	    }
+	    /**
+	     * Called upon engine `close`.
+	     *
+	     * @param reason
+	     * @param description
+	     * @private
+	     */
+	    onclose(reason, description) {
+	        this.connected = false;
+	        delete this.id;
+	        this.emitReserved("disconnect", reason, description);
+	    }
+	    /**
+	     * Called with socket packet.
+	     *
+	     * @param packet
+	     * @private
+	     */
+	    onpacket(packet) {
+	        const sameNamespace = packet.nsp === this.nsp;
+	        if (!sameNamespace)
+	            return;
+	        switch (packet.type) {
+	            case PacketType.CONNECT:
+	                if (packet.data && packet.data.sid) {
+	                    this.onconnect(packet.data.sid, packet.data.pid);
+	                }
+	                else {
+	                    this.emitReserved("connect_error", new Error("It seems you are trying to reach a Socket.IO server in v2.x with a v3.x client, but they are not compatible (more information here: https://socket.io/docs/v3/migrating-from-2-x-to-3-0/)"));
+	                }
+	                break;
+	            case PacketType.EVENT:
+	            case PacketType.BINARY_EVENT:
+	                this.onevent(packet);
+	                break;
+	            case PacketType.ACK:
+	            case PacketType.BINARY_ACK:
+	                this.onack(packet);
+	                break;
+	            case PacketType.DISCONNECT:
+	                this.ondisconnect();
+	                break;
+	            case PacketType.CONNECT_ERROR:
+	                this.destroy();
+	                const err = new Error(packet.data.message);
+	                // @ts-ignore
+	                err.data = packet.data.data;
+	                this.emitReserved("connect_error", err);
+	                break;
+	        }
+	    }
+	    /**
+	     * Called upon a server event.
+	     *
+	     * @param packet
+	     * @private
+	     */
+	    onevent(packet) {
+	        const args = packet.data || [];
+	        if (null != packet.id) {
+	            args.push(this.ack(packet.id));
+	        }
+	        if (this.connected) {
+	            this.emitEvent(args);
+	        }
+	        else {
+	            this.receiveBuffer.push(Object.freeze(args));
+	        }
+	    }
+	    emitEvent(args) {
+	        if (this._anyListeners && this._anyListeners.length) {
+	            const listeners = this._anyListeners.slice();
+	            for (const listener of listeners) {
+	                listener.apply(this, args);
+	            }
+	        }
+	        super.emit.apply(this, args);
+	        if (this._pid && args.length && typeof args[args.length - 1] === "string") {
+	            this._lastOffset = args[args.length - 1];
+	        }
+	    }
+	    /**
+	     * Produces an ack callback to emit with an event.
+	     *
+	     * @private
+	     */
+	    ack(id) {
+	        const self = this;
+	        let sent = false;
+	        return function (...args) {
+	            // prevent double callbacks
+	            if (sent)
+	                return;
+	            sent = true;
+	            self.packet({
+	                type: PacketType.ACK,
+	                id: id,
+	                data: args,
+	            });
+	        };
+	    }
+	    /**
+	     * Called upon a server acknowlegement.
+	     *
+	     * @param packet
+	     * @private
+	     */
+	    onack(packet) {
+	        const ack = this.acks[packet.id];
+	        if ("function" === typeof ack) {
+	            ack.apply(this, packet.data);
+	            delete this.acks[packet.id];
+	        }
+	    }
+	    /**
+	     * Called upon server connect.
+	     *
+	     * @private
+	     */
+	    onconnect(id, pid) {
+	        this.id = id;
+	        this.recovered = pid && this._pid === pid;
+	        this._pid = pid; // defined only if connection state recovery is enabled
+	        this.connected = true;
+	        this.emitBuffered();
+	        this.emitReserved("connect");
+	        this._drainQueue(true);
+	    }
+	    /**
+	     * Emit buffered events (received and emitted).
+	     *
+	     * @private
+	     */
+	    emitBuffered() {
+	        this.receiveBuffer.forEach((args) => this.emitEvent(args));
+	        this.receiveBuffer = [];
+	        this.sendBuffer.forEach((packet) => {
+	            this.notifyOutgoingListeners(packet);
+	            this.packet(packet);
+	        });
+	        this.sendBuffer = [];
+	    }
+	    /**
+	     * Called upon server disconnect.
+	     *
+	     * @private
+	     */
+	    ondisconnect() {
+	        this.destroy();
+	        this.onclose("io server disconnect");
+	    }
+	    /**
+	     * Called upon forced client/server side disconnections,
+	     * this method ensures the manager stops tracking us and
+	     * that reconnections don't get triggered for this.
+	     *
+	     * @private
+	     */
+	    destroy() {
+	        if (this.subs) {
+	            // clean subscriptions to avoid reconnections
+	            this.subs.forEach((subDestroy) => subDestroy());
+	            this.subs = undefined;
+	        }
+	        this.io["_destroy"](this);
+	    }
+	    /**
+	     * Disconnects the socket manually. In that case, the socket will not try to reconnect.
+	     *
+	     * If this is the last active Socket instance of the {@link Manager}, the low-level connection will be closed.
+	     *
+	     * @example
+	     * const socket = io();
+	     *
+	     * socket.on("disconnect", (reason) => {
+	     *   // console.log(reason); prints "io client disconnect"
+	     * });
+	     *
+	     * socket.disconnect();
+	     *
+	     * @return self
+	     */
+	    disconnect() {
+	        if (this.connected) {
+	            this.packet({ type: PacketType.DISCONNECT });
+	        }
+	        // remove socket from pool
+	        this.destroy();
+	        if (this.connected) {
+	            // fire events
+	            this.onclose("io client disconnect");
+	        }
+	        return this;
+	    }
+	    /**
+	     * Alias for {@link disconnect()}.
+	     *
+	     * @return self
+	     */
+	    close() {
+	        return this.disconnect();
+	    }
+	    /**
+	     * Sets the compress flag.
+	     *
+	     * @example
+	     * socket.compress(false).emit("hello");
+	     *
+	     * @param compress - if `true`, compresses the sending data
+	     * @return self
+	     */
+	    compress(compress) {
+	        this.flags.compress = compress;
+	        return this;
+	    }
+	    /**
+	     * Sets a modifier for a subsequent event emission that the event message will be dropped when this socket is not
+	     * ready to send messages.
+	     *
+	     * @example
+	     * socket.volatile.emit("hello"); // the server may or may not receive it
+	     *
+	     * @returns self
+	     */
+	    get volatile() {
+	        this.flags.volatile = true;
+	        return this;
+	    }
+	    /**
+	     * Sets a modifier for a subsequent event emission that the callback will be called with an error when the
+	     * given number of milliseconds have elapsed without an acknowledgement from the server:
+	     *
+	     * @example
+	     * socket.timeout(5000).emit("my-event", (err) => {
+	     *   if (err) {
+	     *     // the server did not acknowledge the event in the given delay
+	     *   }
+	     * });
+	     *
+	     * @returns self
+	     */
+	    timeout(timeout) {
+	        this.flags.timeout = timeout;
+	        return this;
+	    }
+	    /**
+	     * Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the
+	     * callback.
+	     *
+	     * @example
+	     * socket.onAny((event, ...args) => {
+	     *   console.log(`got ${event}`);
+	     * });
+	     *
+	     * @param listener
+	     */
+	    onAny(listener) {
+	        this._anyListeners = this._anyListeners || [];
+	        this._anyListeners.push(listener);
+	        return this;
+	    }
+	    /**
+	     * Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the
+	     * callback. The listener is added to the beginning of the listeners array.
+	     *
+	     * @example
+	     * socket.prependAny((event, ...args) => {
+	     *   console.log(`got event ${event}`);
+	     * });
+	     *
+	     * @param listener
+	     */
+	    prependAny(listener) {
+	        this._anyListeners = this._anyListeners || [];
+	        this._anyListeners.unshift(listener);
+	        return this;
+	    }
+	    /**
+	     * Removes the listener that will be fired when any event is emitted.
+	     *
+	     * @example
+	     * const catchAllListener = (event, ...args) => {
+	     *   console.log(`got event ${event}`);
+	     * }
+	     *
+	     * socket.onAny(catchAllListener);
+	     *
+	     * // remove a specific listener
+	     * socket.offAny(catchAllListener);
+	     *
+	     * // or remove all listeners
+	     * socket.offAny();
+	     *
+	     * @param listener
+	     */
+	    offAny(listener) {
+	        if (!this._anyListeners) {
+	            return this;
+	        }
+	        if (listener) {
+	            const listeners = this._anyListeners;
+	            for (let i = 0; i < listeners.length; i++) {
+	                if (listener === listeners[i]) {
+	                    listeners.splice(i, 1);
+	                    return this;
+	                }
+	            }
+	        }
+	        else {
+	            this._anyListeners = [];
+	        }
+	        return this;
+	    }
+	    /**
+	     * Returns an array of listeners that are listening for any event that is specified. This array can be manipulated,
+	     * e.g. to remove listeners.
+	     */
+	    listenersAny() {
+	        return this._anyListeners || [];
+	    }
+	    /**
+	     * Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the
+	     * callback.
+	     *
+	     * Note: acknowledgements sent to the server are not included.
+	     *
+	     * @example
+	     * socket.onAnyOutgoing((event, ...args) => {
+	     *   console.log(`sent event ${event}`);
+	     * });
+	     *
+	     * @param listener
+	     */
+	    onAnyOutgoing(listener) {
+	        this._anyOutgoingListeners = this._anyOutgoingListeners || [];
+	        this._anyOutgoingListeners.push(listener);
+	        return this;
+	    }
+	    /**
+	     * Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the
+	     * callback. The listener is added to the beginning of the listeners array.
+	     *
+	     * Note: acknowledgements sent to the server are not included.
+	     *
+	     * @example
+	     * socket.prependAnyOutgoing((event, ...args) => {
+	     *   console.log(`sent event ${event}`);
+	     * });
+	     *
+	     * @param listener
+	     */
+	    prependAnyOutgoing(listener) {
+	        this._anyOutgoingListeners = this._anyOutgoingListeners || [];
+	        this._anyOutgoingListeners.unshift(listener);
+	        return this;
+	    }
+	    /**
+	     * Removes the listener that will be fired when any event is emitted.
+	     *
+	     * @example
+	     * const catchAllListener = (event, ...args) => {
+	     *   console.log(`sent event ${event}`);
+	     * }
+	     *
+	     * socket.onAnyOutgoing(catchAllListener);
+	     *
+	     * // remove a specific listener
+	     * socket.offAnyOutgoing(catchAllListener);
+	     *
+	     * // or remove all listeners
+	     * socket.offAnyOutgoing();
+	     *
+	     * @param [listener] - the catch-all listener (optional)
+	     */
+	    offAnyOutgoing(listener) {
+	        if (!this._anyOutgoingListeners) {
+	            return this;
+	        }
+	        if (listener) {
+	            const listeners = this._anyOutgoingListeners;
+	            for (let i = 0; i < listeners.length; i++) {
+	                if (listener === listeners[i]) {
+	                    listeners.splice(i, 1);
+	                    return this;
+	                }
+	            }
+	        }
+	        else {
+	            this._anyOutgoingListeners = [];
+	        }
+	        return this;
+	    }
+	    /**
+	     * Returns an array of listeners that are listening for any event that is specified. This array can be manipulated,
+	     * e.g. to remove listeners.
+	     */
+	    listenersAnyOutgoing() {
+	        return this._anyOutgoingListeners || [];
+	    }
+	    /**
+	     * Notify the listeners for each packet sent
+	     *
+	     * @param packet
+	     *
+	     * @private
+	     */
+	    notifyOutgoingListeners(packet) {
+	        if (this._anyOutgoingListeners && this._anyOutgoingListeners.length) {
+	            const listeners = this._anyOutgoingListeners.slice();
+	            for (const listener of listeners) {
+	                listener.apply(this, packet.data);
+	            }
+	        }
+	    }
+	}
+
+	/**
+	 * Initialize backoff timer with `opts`.
+	 *
+	 * - `min` initial timeout in milliseconds [100]
+	 * - `max` max timeout [10000]
+	 * - `jitter` [0]
+	 * - `factor` [2]
+	 *
+	 * @param {Object} opts
+	 * @api public
+	 */
+	function Backoff(opts) {
+	    opts = opts || {};
+	    this.ms = opts.min || 100;
+	    this.max = opts.max || 10000;
+	    this.factor = opts.factor || 2;
+	    this.jitter = opts.jitter > 0 && opts.jitter <= 1 ? opts.jitter : 0;
+	    this.attempts = 0;
+	}
+	/**
+	 * Return the backoff duration.
+	 *
+	 * @return {Number}
+	 * @api public
+	 */
+	Backoff.prototype.duration = function () {
+	    var ms = this.ms * Math.pow(this.factor, this.attempts++);
+	    if (this.jitter) {
+	        var rand = Math.random();
+	        var deviation = Math.floor(rand * this.jitter * ms);
+	        ms = (Math.floor(rand * 10) & 1) == 0 ? ms - deviation : ms + deviation;
+	    }
+	    return Math.min(ms, this.max) | 0;
+	};
+	/**
+	 * Reset the number of attempts.
+	 *
+	 * @api public
+	 */
+	Backoff.prototype.reset = function () {
+	    this.attempts = 0;
+	};
+	/**
+	 * Set the minimum duration
+	 *
+	 * @api public
+	 */
+	Backoff.prototype.setMin = function (min) {
+	    this.ms = min;
+	};
+	/**
+	 * Set the maximum duration
+	 *
+	 * @api public
+	 */
+	Backoff.prototype.setMax = function (max) {
+	    this.max = max;
+	};
+	/**
+	 * Set the jitter
+	 *
+	 * @api public
+	 */
+	Backoff.prototype.setJitter = function (jitter) {
+	    this.jitter = jitter;
+	};
+
+	class Manager extends Emitter {
+	    constructor(uri, opts) {
+	        var _a;
+	        super();
+	        this.nsps = {};
+	        this.subs = [];
+	        if (uri && "object" === typeof uri) {
+	            opts = uri;
+	            uri = undefined;
+	        }
+	        opts = opts || {};
+	        opts.path = opts.path || "/socket.io";
+	        this.opts = opts;
+	        installTimerFunctions(this, opts);
+	        this.reconnection(opts.reconnection !== false);
+	        this.reconnectionAttempts(opts.reconnectionAttempts || Infinity);
+	        this.reconnectionDelay(opts.reconnectionDelay || 1000);
+	        this.reconnectionDelayMax(opts.reconnectionDelayMax || 5000);
+	        this.randomizationFactor((_a = opts.randomizationFactor) !== null && _a !== void 0 ? _a : 0.5);
+	        this.backoff = new Backoff({
+	            min: this.reconnectionDelay(),
+	            max: this.reconnectionDelayMax(),
+	            jitter: this.randomizationFactor(),
+	        });
+	        this.timeout(null == opts.timeout ? 20000 : opts.timeout);
+	        this._readyState = "closed";
+	        this.uri = uri;
+	        const _parser = opts.parser || parser;
+	        this.encoder = new _parser.Encoder();
+	        this.decoder = new _parser.Decoder();
+	        this._autoConnect = opts.autoConnect !== false;
+	        if (this._autoConnect)
+	            this.open();
+	    }
+	    reconnection(v) {
+	        if (!arguments.length)
+	            return this._reconnection;
+	        this._reconnection = !!v;
+	        return this;
+	    }
+	    reconnectionAttempts(v) {
+	        if (v === undefined)
+	            return this._reconnectionAttempts;
+	        this._reconnectionAttempts = v;
+	        return this;
+	    }
+	    reconnectionDelay(v) {
+	        var _a;
+	        if (v === undefined)
+	            return this._reconnectionDelay;
+	        this._reconnectionDelay = v;
+	        (_a = this.backoff) === null || _a === void 0 ? void 0 : _a.setMin(v);
+	        return this;
+	    }
+	    randomizationFactor(v) {
+	        var _a;
+	        if (v === undefined)
+	            return this._randomizationFactor;
+	        this._randomizationFactor = v;
+	        (_a = this.backoff) === null || _a === void 0 ? void 0 : _a.setJitter(v);
+	        return this;
+	    }
+	    reconnectionDelayMax(v) {
+	        var _a;
+	        if (v === undefined)
+	            return this._reconnectionDelayMax;
+	        this._reconnectionDelayMax = v;
+	        (_a = this.backoff) === null || _a === void 0 ? void 0 : _a.setMax(v);
+	        return this;
+	    }
+	    timeout(v) {
+	        if (!arguments.length)
+	            return this._timeout;
+	        this._timeout = v;
+	        return this;
+	    }
+	    /**
+	     * Starts trying to reconnect if reconnection is enabled and we have not
+	     * started reconnecting yet
+	     *
+	     * @private
+	     */
+	    maybeReconnectOnOpen() {
+	        // Only try to reconnect if it's the first time we're connecting
+	        if (!this._reconnecting &&
+	            this._reconnection &&
+	            this.backoff.attempts === 0) {
+	            // keeps reconnection from firing twice for the same reconnection loop
+	            this.reconnect();
+	        }
+	    }
+	    /**
+	     * Sets the current transport `socket`.
+	     *
+	     * @param {Function} fn - optional, callback
+	     * @return self
+	     * @public
+	     */
+	    open(fn) {
+	        if (~this._readyState.indexOf("open"))
+	            return this;
+	        this.engine = new Socket$1(this.uri, this.opts);
+	        const socket = this.engine;
+	        const self = this;
+	        this._readyState = "opening";
+	        this.skipReconnect = false;
+	        // emit `open`
+	        const openSubDestroy = on(socket, "open", function () {
+	            self.onopen();
+	            fn && fn();
+	        });
+	        // emit `error`
+	        const errorSub = on(socket, "error", (err) => {
+	            self.cleanup();
+	            self._readyState = "closed";
+	            this.emitReserved("error", err);
+	            if (fn) {
+	                fn(err);
+	            }
+	            else {
+	                // Only do this if there is no fn to handle the error
+	                self.maybeReconnectOnOpen();
+	            }
+	        });
+	        if (false !== this._timeout) {
+	            const timeout = this._timeout;
+	            if (timeout === 0) {
+	                openSubDestroy(); // prevents a race condition with the 'open' event
+	            }
+	            // set timer
+	            const timer = this.setTimeoutFn(() => {
+	                openSubDestroy();
+	                socket.close();
+	                // @ts-ignore
+	                socket.emit("error", new Error("timeout"));
+	            }, timeout);
+	            if (this.opts.autoUnref) {
+	                timer.unref();
+	            }
+	            this.subs.push(function subDestroy() {
+	                clearTimeout(timer);
+	            });
+	        }
+	        this.subs.push(openSubDestroy);
+	        this.subs.push(errorSub);
+	        return this;
+	    }
+	    /**
+	     * Alias for open()
+	     *
+	     * @return self
+	     * @public
+	     */
+	    connect(fn) {
+	        return this.open(fn);
+	    }
+	    /**
+	     * Called upon transport open.
+	     *
+	     * @private
+	     */
+	    onopen() {
+	        // clear old subs
+	        this.cleanup();
+	        // mark as open
+	        this._readyState = "open";
+	        this.emitReserved("open");
+	        // add new subs
+	        const socket = this.engine;
+	        this.subs.push(on(socket, "ping", this.onping.bind(this)), on(socket, "data", this.ondata.bind(this)), on(socket, "error", this.onerror.bind(this)), on(socket, "close", this.onclose.bind(this)), on(this.decoder, "decoded", this.ondecoded.bind(this)));
+	    }
+	    /**
+	     * Called upon a ping.
+	     *
+	     * @private
+	     */
+	    onping() {
+	        this.emitReserved("ping");
+	    }
+	    /**
+	     * Called with data.
+	     *
+	     * @private
+	     */
+	    ondata(data) {
+	        try {
+	            this.decoder.add(data);
+	        }
+	        catch (e) {
+	            this.onclose("parse error", e);
+	        }
+	    }
+	    /**
+	     * Called when parser fully decodes a packet.
+	     *
+	     * @private
+	     */
+	    ondecoded(packet) {
+	        // the nextTick call prevents an exception in a user-provided event listener from triggering a disconnection due to a "parse error"
+	        nextTick(() => {
+	            this.emitReserved("packet", packet);
+	        }, this.setTimeoutFn);
+	    }
+	    /**
+	     * Called upon socket error.
+	     *
+	     * @private
+	     */
+	    onerror(err) {
+	        this.emitReserved("error", err);
+	    }
+	    /**
+	     * Creates a new socket for the given `nsp`.
+	     *
+	     * @return {Socket}
+	     * @public
+	     */
+	    socket(nsp, opts) {
+	        let socket = this.nsps[nsp];
+	        if (!socket) {
+	            socket = new Socket(this, nsp, opts);
+	            this.nsps[nsp] = socket;
+	        }
+	        else if (this._autoConnect && !socket.active) {
+	            socket.connect();
+	        }
+	        return socket;
+	    }
+	    /**
+	     * Called upon a socket close.
+	     *
+	     * @param socket
+	     * @private
+	     */
+	    _destroy(socket) {
+	        const nsps = Object.keys(this.nsps);
+	        for (const nsp of nsps) {
+	            const socket = this.nsps[nsp];
+	            if (socket.active) {
+	                return;
+	            }
+	        }
+	        this._close();
+	    }
+	    /**
+	     * Writes a packet.
+	     *
+	     * @param packet
+	     * @private
+	     */
+	    _packet(packet) {
+	        const encodedPackets = this.encoder.encode(packet);
+	        for (let i = 0; i < encodedPackets.length; i++) {
+	            this.engine.write(encodedPackets[i], packet.options);
+	        }
+	    }
+	    /**
+	     * Clean up transport subscriptions and packet buffer.
+	     *
+	     * @private
+	     */
+	    cleanup() {
+	        this.subs.forEach((subDestroy) => subDestroy());
+	        this.subs.length = 0;
+	        this.decoder.destroy();
+	    }
+	    /**
+	     * Close the current socket.
+	     *
+	     * @private
+	     */
+	    _close() {
+	        this.skipReconnect = true;
+	        this._reconnecting = false;
+	        this.onclose("forced close");
+	        if (this.engine)
+	            this.engine.close();
+	    }
+	    /**
+	     * Alias for close()
+	     *
+	     * @private
+	     */
+	    disconnect() {
+	        return this._close();
+	    }
+	    /**
+	     * Called upon engine close.
+	     *
+	     * @private
+	     */
+	    onclose(reason, description) {
+	        this.cleanup();
+	        this.backoff.reset();
+	        this._readyState = "closed";
+	        this.emitReserved("close", reason, description);
+	        if (this._reconnection && !this.skipReconnect) {
+	            this.reconnect();
+	        }
+	    }
+	    /**
+	     * Attempt a reconnection.
+	     *
+	     * @private
+	     */
+	    reconnect() {
+	        if (this._reconnecting || this.skipReconnect)
+	            return this;
+	        const self = this;
+	        if (this.backoff.attempts >= this._reconnectionAttempts) {
+	            this.backoff.reset();
+	            this.emitReserved("reconnect_failed");
+	            this._reconnecting = false;
+	        }
+	        else {
+	            const delay = this.backoff.duration();
+	            this._reconnecting = true;
+	            const timer = this.setTimeoutFn(() => {
+	                if (self.skipReconnect)
+	                    return;
+	                this.emitReserved("reconnect_attempt", self.backoff.attempts);
+	                // check again for the case socket closed in above events
+	                if (self.skipReconnect)
+	                    return;
+	                self.open((err) => {
+	                    if (err) {
+	                        self._reconnecting = false;
+	                        self.reconnect();
+	                        this.emitReserved("reconnect_error", err);
+	                    }
+	                    else {
+	                        self.onreconnect();
+	                    }
+	                });
+	            }, delay);
+	            if (this.opts.autoUnref) {
+	                timer.unref();
+	            }
+	            this.subs.push(function subDestroy() {
+	                clearTimeout(timer);
+	            });
+	        }
+	    }
+	    /**
+	     * Called upon successful reconnect.
+	     *
+	     * @private
+	     */
+	    onreconnect() {
+	        const attempt = this.backoff.attempts;
+	        this._reconnecting = false;
+	        this.backoff.reset();
+	        this.emitReserved("reconnect", attempt);
+	    }
+	}
+
+	/**
+	 * Managers cache.
+	 */
+	const cache = {};
+	function lookup(uri, opts) {
+	    if (typeof uri === "object") {
+	        opts = uri;
+	        uri = undefined;
+	    }
+	    opts = opts || {};
+	    const parsed = url(uri, opts.path || "/socket.io");
+	    const source = parsed.source;
+	    const id = parsed.id;
+	    const path = parsed.path;
+	    const sameNamespace = cache[id] && path in cache[id]["nsps"];
+	    const newConnection = opts.forceNew ||
+	        opts["force new connection"] ||
+	        false === opts.multiplex ||
+	        sameNamespace;
+	    let io;
+	    if (newConnection) {
+	        io = new Manager(source, opts);
+	    }
+	    else {
+	        if (!cache[id]) {
+	            cache[id] = new Manager(source, opts);
+	        }
+	        io = cache[id];
+	    }
+	    if (parsed.query && !opts.query) {
+	        opts.query = parsed.queryKey;
+	    }
+	    return io.socket(parsed.path, opts);
+	}
+	// so that "lookup" can be used both as a function (e.g. `io(...)`) and as a
+	// namespace (e.g. `io.connect(...)`), for backward compatibility
+	Object.assign(lookup, {
+	    Manager,
+	    Socket,
+	    io: lookup,
+	    connect: lookup,
+	});
+
 	window.global = window;
 
+	var Axios = /*#__PURE__*/function () {
+	  function Axios(config) {
+	    _classCallCheck(this, Axios);
+	    _defineProperty(this, "config", void 0);
+	    this.config = _Object$assign({
+	      baseURL: 'https://loaclhost:3000/',
+	      timeout: 10000,
+	      header: {}
+	    }, config);
+	  }
+	  _createClass(Axios, [{
+	    key: "get",
+	    value: function get(url, options) {
+	      var _this = this;
+	      return new _Promise(function (res, rej) {
+	        var _context;
+	        var path = _concatInstanceProperty(_context = "".concat(_this.config.baseURL)).call(_context, url);
+	        if (options.query) {
+	          path += '?';
+	          for (var key in options.query) {
+	            var _context2;
+	            path += _concatInstanceProperty(_context2 = "".concat(key, "=")).call(_context2, options.query[key], "&");
+	          }
+	          path = _sliceInstanceProperty(path).call(path, 0, path.length - 1);
+	        }
+	        fetch(path, {
+	          method: 'GET',
+	          mode: 'cors',
+	          headers: _this.config.header
+	        }).then(function (response) {
+	          if (response.ok === false) rej('fail');
+	          return response.json();
+	        }, function (err) {
+	          rej('fail');
+	        }).then(function (value) {
+	          res(value);
+	        }, function (err) {
+	          rej('fail');
+	        });
+	      });
+	    }
+	  }]);
+	  return Axios;
+	}();
+
+	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _unsupportedIterableToArray$1(o, minLen) { var _context; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context = Object.prototype.toString.call(o)).call(_context, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+	function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	/**
 	 * @description 控制弹幕的类 Controller层
 	 */
@@ -12074,6 +15705,8 @@
 	    _defineProperty(this, "options", void 0);
 	    // el: div.video-danmaku-container
 	    _defineProperty(this, "el", void 0);
+	    _defineProperty(this, "danmakuLoading", void 0);
+	    _defineProperty(this, "instance", void 0);
 	    _defineProperty(this, "danmakuSettings", void 0);
 	    this.player = player;
 	    this.video = player.video;
@@ -12081,13 +15714,22 @@
 	    this.options = _Object$assign({
 	      type: 'http'
 	    }, options);
+	    this.instance = new Axios({
+	      baseURL: ''
+	    });
 	    this.init();
 	  }
 	  _createClass(DanmakuController, [{
 	    key: "init",
 	    value: function init() {
+	      this.onTimeupdate = this.onTimeupdate.bind(this);
 	      this.el = $$M('div.video-danmaku-container');
+	      this.el.style.backgroundColor = '#000';
+	      this.danmakuLoading = $$M('div');
+	      addClass(this.danmakuLoading, ['video-danmaku-loading-base', 'video-danmaku-loading', 'video-danmaku-shaking']);
+	      this.danmakuLoading.innerHTML = '<span>弹幕数据加载中...</span>';
 	      this.container.appendChild(this.el);
+	      this.el.appendChild(this.danmakuLoading);
 	      this.danmaku = new Danmaku(this.el, this.player);
 	      this.initTemplate();
 	      this.initializeEvent();
@@ -12097,30 +15739,82 @@
 	        this.initHTTP();
 	      }
 	    }
+	    //TODO 初始化websocket连接
 	  }, {
 	    key: "initWebSocket",
 	    value: function initWebSocket() {
-	      // const socket = io.io(this.options.api, {
-	      //   transports: ['websocket', 'polling']
-	      // })
-	      // socket.on('connect', () => {
-	      //   this.player.video.addEventListener('timeupdate', (e) => {
-	      //     socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
-	      //       time: this.player.video.currentTime
-	      //     })
-	      //   })
-	      //   socket.on(EVENT.SEND_DANMAKU_DATA, (data: any[]) => {
-	      //     console.log(`接受到数据${JSON.stringify(data)},当前时间${this.player.video.currentTime}`)
-	      //     for (let item of data) {
-	      //       this.danmaku.addData(item)
-	      //     }
-	      //   })
-	      // })
-	      // socket.connect()
+	      var _this = this;
+	      var socket = lookup(this.options.api, {
+	        transports: ['websocket', 'polling']
+	      });
+	      socket.on('connect', function () {
+	        _this.setDanmakuSuccess();
+	        //* 当播放器时间更新时需要请求新的弹幕数据
+	        _this.player.video.addEventListener('timeupdate', function (e) {
+	          // console.log(this.player.video.currentTime)
+	          socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
+	            time: _this.player.video.currentTime
+	          });
+	        });
+	        socket.on(EVENT.SEND_DANMAKU_DATA, function (data) {
+	          // console.log(`接受到数据${JSON.stringify(data)},当前时间${this.player.video.currentTime}`)
+	          var _iterator = _createForOfIteratorHelper$1(data),
+	            _step;
+	          try {
+	            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	              var item = _step.value;
+	              _this.danmaku.addData(item);
+	            }
+	          } catch (err) {
+	            _iterator.e(err);
+	          } finally {
+	            _iterator.f();
+	          }
+	        });
+	      });
+	      socket.io.on('error', function () {
+	        _this.setDanmakuFail();
+	      });
+	      socket.connect();
 	    }
 	  }, {
 	    key: "initHTTP",
-	    value: function initHTTP() {}
+	    value: function initHTTP() {
+	      var _this2 = this;
+	      // TODO  初始化http轮询连接
+	      this.instance.get(this.options.api, {
+	        query: {
+	          time: 0
+	        }
+	      }).then(function (value) {
+	        _this2.setDanmakuSuccess();
+	        _this2.player.video.addEventListener('timeupdate', _this2.onTimeupdate);
+	      }, function (err) {
+	        _this2.setDanmakuFail();
+	      });
+	    }
+	  }, {
+	    key: "setDanmakuSuccess",
+	    value: function setDanmakuSuccess() {
+	      var _this3 = this;
+	      this.el.style.backgroundColor = '';
+	      this.danmakuLoading.childNodes[0].innerText = '弹幕加载成功';
+	      removeClass(this.danmakuLoading, ['video-danmaku-loading', 'video-danmaku-shaking']);
+	      setTimeout(function () {
+	        addClass(_this3.danmakuLoading, ['video-danmaku-loading-hide']);
+	      }, 3000);
+	    }
+	  }, {
+	    key: "setDanmakuFail",
+	    value: function setDanmakuFail() {
+	      var _this4 = this;
+	      this.el.style.backgroundColor = '';
+	      this.danmakuLoading.childNodes[0].innerText = '弹幕加载失败';
+	      removeClass(this.danmakuLoading, ['video-danmaku-loading', 'video-danmaku-shaking']);
+	      setTimeout(function () {
+	        addClass(_this4.danmakuLoading, ['video-danmaku-loading-hide']);
+	      }, 3000);
+	    }
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
@@ -12154,52 +15848,69 @@
 	  }, {
 	    key: "initializeEvent",
 	    value: function initializeEvent() {
-	      var _this = this;
-	      // 弹幕功能实现的核心是timeupdate方法！！！！
-	      this.video.addEventListener('timeupdate', function (e) {
-	        _this.onTimeupdate(e);
-	      });
+	      var _this5 = this;
 	      this.video.addEventListener('seeking', function (e) {
-	        _this.onSeeking(e);
+	        _this5.onSeeking(e);
 	      });
 	      this.video.addEventListener('pause', function () {
 	        // 暂停所有的弹幕
-	        _this.danmaku.pause();
+	        _this5.danmaku.pause();
 	      });
 	      this.video.addEventListener('waiting', function () {
-	        _this.danmaku.pause();
+	        _this5.danmaku.pause();
 	      });
 	      this.video.addEventListener('abort', function () {
-	        _this.danmaku.flush();
+	        _this5.danmaku.flush();
 	      });
 	      this.video.addEventListener('play', function () {
-	        _this.danmaku.resume();
+	        _this5.danmaku.resume();
 	      });
 	      this.danmakuInput.on('sendData', function (data) {
 	        // 此处为发送弹幕的逻辑
 	      });
 	      this.player.on(EVENT.DOT_DRAG, function () {
-	        _this.danmaku.flush();
+	        _this5.danmaku.flush();
 	      });
 	      this.player.on('closeDanmaku', function () {
 	        // 隐藏所有的弹幕
-	        _this.danmaku.close();
+	        _this5.danmaku.close();
 	      });
 	      this.player.on('openDanmaku', function () {
 	        // 打开所有隐藏的弹幕
-	        _this.danmaku.open();
+	        _this5.danmaku.open();
 	      });
 	    }
 	  }, {
 	    key: "onTimeupdate",
 	    value: function onTimeupdate(e) {
+	      var _this6 = this;
 	      // 时间更新
 	      // 如果默认请求弹幕数据的方式为http请求，则需要进行轮询
 	      // let video = e.target as HTMLVideoElement
 	      // // console.log(video.currentTime)
-	      for (var i = 0; i < 10; i++) {
-	        this.danmaku.addData(queue[i % queue.length]);
-	      }
+	      // for (let i = 0; i < 10; i++) {
+	      //   this.danmaku.addData(queue[i % queue.length])
+	      // }
+	      // TODO 时间更新
+	      // TODO 如果默认请求弹幕数据的方式为http请求，则需要进行轮询
+	      this.instance.get(this.options.api, {
+	        query: {
+	          time: this.player.video.currentTime
+	        }
+	      }).then(function (value) {
+	        var _iterator2 = _createForOfIteratorHelper$1(value),
+	          _step2;
+	        try {
+	          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+	            var data = _step2.value;
+	            _this6.danmaku.addData(data);
+	          }
+	        } catch (err) {
+	          _iterator2.e(err);
+	        } finally {
+	          _iterator2.f();
+	        }
+	      });
 	    }
 	    // start() {
 	    //   this.timer = window.setInterval(() => {
@@ -12274,7 +15985,7 @@
 	  }
 	}
 
-	var css_248z$2 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 40px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 30px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n.video-danmaku-container {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background-color: transparent;\n  left: 0;\n  top: 0;\n  z-index: 1001;\n}\n.video-danmaku-container .video-danmaku-message {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  white-space: pre;\n  pointer-events: none;\n  -webkit-perspective: 500px;\n          perspective: 500px;\n  display: inline-block;\n  will-change: transform;\n  font-weight: normal;\n  line-height: 1.125;\n  font-family: SimHei, \"Microsoft JhengHei\", Arial, Helvetica, sans-serif;\n  text-shadow: #000000 1px 0px 1px, #000000 0px 1px 1px, #000000 0px -1px 1px, #000000 -1px 0px 1px;\n  opacity: 1;\n  margin-left: 0px;\n}\n";
+	var css_248z$2 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 40px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 30px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n.video-danmaku-container {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background-color: transparent;\n  left: 0;\n  top: 0;\n  z-index: 3001;\n}\n.video-danmaku-container .video-danmaku-message {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  white-space: pre;\n  pointer-events: none;\n  -webkit-perspective: 500px;\n          perspective: 500px;\n  display: inline-block;\n  will-change: transform;\n  font-weight: normal;\n  line-height: 1.125;\n  font-family: SimHei, \"Microsoft JhengHei\", Arial, Helvetica, sans-serif;\n  text-shadow: #000000 1px 0px 1px, #000000 0px 1px 1px, #000000 0px -1px 1px, #000000 -1px 0px 1px;\n  opacity: 1;\n  margin-left: 0px;\n}\n.video-danmaku-container .video-danmaku-loading-base {\n  position: absolute;\n  z-index: 3001;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  padding: 10px 10px;\n  -webkit-box-sizing: content-box;\n          box-sizing: content-box;\n  color: #fff;\n  border-radius: 5px;\n  left: 5px;\n  bottom: 60px;\n  overflow: hidden;\n  -webkit-transition: all 1.5s ease;\n  transition: all 1.5s ease;\n  font-size: 14px;\n}\n.video-danmaku-container .video-danmaku-loading {\n  left: 50%;\n  bottom: 50%;\n  -webkit-transform: translate(-50%, 50%);\n          transform: translate(-50%, 50%);\n}\n.video-danmaku-container .video-danmaku-shaking {\n  -webkit-animation: shake 2.5s 0.15s linear infinite;\n          animation: shake 2.5s 0.15s linear infinite;\n}\n.video-danmaku-container .video-danmaku-loading-hide {\n  -webkit-transform: scale(0);\n          transform: scale(0);\n  opacity: 0;\n}\n@-webkit-keyframes shake {\n  10% {\n    -webkit-transform: rotate(15deg) translate(-50%, 50%);\n            transform: rotate(15deg) translate(-50%, 50%);\n  }\n  20% {\n    -webkit-transform: rotate(-10deg) translate(-50%, 50%);\n            transform: rotate(-10deg) translate(-50%, 50%);\n  }\n  30% {\n    -webkit-transform: rotate(5deg) translate(-50%, 50%);\n            transform: rotate(5deg) translate(-50%, 50%);\n  }\n  40% {\n    -webkit-transform: rotate(-5deg) translate(-50%, 50%);\n            transform: rotate(-5deg) translate(-50%, 50%);\n  }\n  50% {\n    -webkit-transform: rotate(10deg) translate(-50%, 50%);\n            transform: rotate(10deg) translate(-50%, 50%);\n  }\n  60% {\n    -webkit-transform: rotate(-15deg) translate(-50%, 50%);\n            transform: rotate(-15deg) translate(-50%, 50%);\n  }\n  70% {\n    -webkit-transform: rotate(10deg) translate(-50%, 50%);\n            transform: rotate(10deg) translate(-50%, 50%);\n  }\n  80% {\n    -webkit-transform: rotate(-5deg) translate(-50%, 50%);\n            transform: rotate(-5deg) translate(-50%, 50%);\n  }\n  90%,\n  100% {\n    -webkit-transform: rotate(0deg) translate(-50%, 50%);\n            transform: rotate(0deg) translate(-50%, 50%);\n  }\n}\n@keyframes shake {\n  10% {\n    -webkit-transform: rotate(15deg) translate(-50%, 50%);\n            transform: rotate(15deg) translate(-50%, 50%);\n  }\n  20% {\n    -webkit-transform: rotate(-10deg) translate(-50%, 50%);\n            transform: rotate(-10deg) translate(-50%, 50%);\n  }\n  30% {\n    -webkit-transform: rotate(5deg) translate(-50%, 50%);\n            transform: rotate(5deg) translate(-50%, 50%);\n  }\n  40% {\n    -webkit-transform: rotate(-5deg) translate(-50%, 50%);\n            transform: rotate(-5deg) translate(-50%, 50%);\n  }\n  50% {\n    -webkit-transform: rotate(10deg) translate(-50%, 50%);\n            transform: rotate(10deg) translate(-50%, 50%);\n  }\n  60% {\n    -webkit-transform: rotate(-15deg) translate(-50%, 50%);\n            transform: rotate(-15deg) translate(-50%, 50%);\n  }\n  70% {\n    -webkit-transform: rotate(10deg) translate(-50%, 50%);\n            transform: rotate(10deg) translate(-50%, 50%);\n  }\n  80% {\n    -webkit-transform: rotate(-5deg) translate(-50%, 50%);\n            transform: rotate(-5deg) translate(-50%, 50%);\n  }\n  90%,\n  100% {\n    -webkit-transform: rotate(0deg) translate(-50%, 50%);\n            transform: rotate(0deg) translate(-50%, 50%);\n  }\n}\n";
 	styleInject(css_248z$2);
 
 	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -12342,7 +16053,7 @@
 	  return DanmakuInput;
 	}(Component);
 
-	var css_248z$1 = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-texttrack-container-showtoolbar {\n  bottom: calc(50px + 5px) !important;\n}\n.Niplayer_video-wrapper .video-texttrack-container {\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n  position: absolute;\n  bottom: 5px;\n  color: #fe9200;\n  font-size: 20px;\n}\n.Niplayer_video-wrapper .video-texttrack-container p {\n  word-break: break-all;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  margin: 5px 0 0;\n  line-height: 1.2;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #f00;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #f00;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #f00;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #f00;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-controller {\n  margin-left: 5px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.video-switch-on {\n  fill: #007aff !important;\n}\n.video-switch-off {\n  fill: #fff !important;\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
+	var css_248z$1 = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-texttrack-container-showtoolbar {\n  bottom: calc(50px + 5px) !important;\n}\n.Niplayer_video-wrapper .video-texttrack-container {\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n  position: absolute;\n  bottom: 5px;\n  color: #fe9200;\n  font-size: 20px;\n}\n.Niplayer_video-wrapper .video-texttrack-container p {\n  word-break: break-all;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  margin: 5px 0 0;\n  line-height: 1.2;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 2001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 4001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -18px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #f00;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #f00;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #f00;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #f00;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-controller {\n  margin-left: 5px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.video-switch-on {\n  fill: #007aff !important;\n}\n.video-switch-off {\n  fill: #fff !important;\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
 	styleInject(css_248z$1);
 
 	var mp4box_all = {};
@@ -21169,7 +24880,7 @@
 	      this.initTemplate();
 	      this.initTextTrack();
 	      this.initEvent();
-	      nextTick(function () {
+	      nextTick$1(function () {
 	        var _context;
 	        var ctx = _this;
 	        _this.subsettingsSubtitle = SubsettingsSubtitle.instance;
@@ -21843,7 +25554,7 @@
 	exports.getEl = getEl;
 	exports.getElementSize = getElementSize;
 	exports.includeClass = includeClass;
-	exports.nextTick = nextTick;
+	exports.nextTick = nextTick$1;
 	exports.patchComponent = patchComponent;
 	exports.patchDOMProps = patchDOMProps;
 	exports.patchFn = patchFn;
