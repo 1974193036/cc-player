@@ -37,7 +37,7 @@ export class SubsettingsDanmakuMain extends SubsettingsBase {
     },
     {
       leftText: '显示范围',
-      rightTip: '1/2',
+      rightTip: '半屏',
       rightIcon: createSvg(rightarrowPath, '0 0 1024 1024'),
       target: SubsettingsDanmakuRange
     }

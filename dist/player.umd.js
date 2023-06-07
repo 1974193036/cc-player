@@ -4577,7 +4577,7 @@
 	var propotionPath$2 = "M392.588387 645.615484h-54.701419v-210.811871l-65.271742 20.248774V410.590968l114.093419-40.860903h5.879742v275.885419zM487.192774 618.727226c0-8.687484 2.906839-15.756387 8.687484-21.173678a31.545806 31.545806 0 0 1 22.131613-8.158967c8.984774 0 16.350968 2.741677 22.131613 8.158967a27.416774 27.416774 0 0 1 8.91871 21.173678c0 8.588387-2.906839 15.591226-8.687484 21.008516-5.813677 5.285161-13.245935 7.927742-22.329807 7.927742a31.545806 31.545806 0 0 1-22.131613-7.927742 27.449806 27.449806 0 0 1-8.720516-21.008516z m0-154.954323c0-8.720516 2.906839-15.756387 8.687484-21.206709a31.545806 31.545806 0 0 1 22.131613-8.125936c8.984774 0 16.350968 2.708645 22.131613 8.125936a27.416774 27.416774 0 0 1 8.91871 21.206709 27.416774 27.416774 0 0 1-8.687484 21.008516c-5.813677 5.285161-13.245935 7.927742-22.329807 7.927742a31.545806 31.545806 0 0 1-22.131613-7.927742 27.416774 27.416774 0 0 1-8.720516-21.008516zM724.463484 645.615484h-54.668387v-210.811871l-65.271742 20.248774V410.590968l114.093419-40.860903h5.84671v275.885419z";
 	var flipPath = "M554.666667 810.666667v85.333333h-85.333334v-85.333333h85.333334zM170.666667 178.005333a42.666667 42.666667 0 0 1 34.986666 18.218667l203.904 291.328a42.666667 42.666667 0 0 1 0 48.896l-203.946666 291.328A42.666667 42.666667 0 0 1 128 803.328V220.672a42.666667 42.666667 0 0 1 42.666667-42.666667z m682.666666 0a42.666667 42.666667 0 0 1 42.368 37.717334l0.298667 4.949333v582.656a42.666667 42.666667 0 0 1-74.24 28.629333l-3.413333-4.181333-203.904-291.328a42.666667 42.666667 0 0 1-3.029334-43.861333l3.029334-5.034667 203.946666-291.328A42.666667 42.666667 0 0 1 853.333333 178.005333zM554.666667 640v85.333333h-85.333334v-85.333333h85.333334zM196.266667 319.104V716.8L335.957333 512 196.309333 319.104zM554.666667 469.333333v85.333334h-85.333334v-85.333334h85.333334z m0-170.666666v85.333333h-85.333334V298.666667h85.333334z m0-170.666667v85.333333h-85.333334V128h85.333334z";
 	var confirmPath = "M456.899566 728.522382c-15.978926 15.977903-40.33873 18.47477-58.932204 7.492648-3.446495-2.039449-9.653871-9.990538-9.653871-9.990538L188.797435 526.509459c-18.938328-18.938328-18.938328-47.148833 0-66.084091 18.934235-18.938328 49.64263-16.442484 68.579935 2.495844l165.227112 165.225065 312.24449-312.24142c18.938328-18.938328 49.6457-21.435195 68.583005-2.495844 18.938328 18.940374 18.939351 47.149856 0 66.085114L456.909799 728.507032c0 0-0.005117 0.00921-0.010233 0.013303l0 0L456.899566 728.522382zM510.742868 64.090691c-246.752894 0-446.786743 200.032826-446.786743 446.786743 0 246.75187 200.033849 446.785719 446.786743 446.785719 246.752894 0 446.787766-200.034872 446.787766-446.785719C957.531658 264.125563 757.495762 64.090691 510.742868 64.090691L510.742868 64.090691 510.742868 64.090691 510.742868 64.090691z";
-	var settingsConfirmPath = "M384 785.67L97.83 499.5l60.34-60.34L384 664.99l439.16-439.16 60.34 60.34z";
+	var settingsConfirmPath = "M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z";
 	var subtitlePath$1 = "M803.6 150.498H220.4c-65.286 0-118.4 53.114-118.4 118.4v486.203c0 65.286 53.114 118.4 118.4 118.4h583.2c65.286 0 118.4-53.114 118.4-118.4V268.898c0-65.286-53.114-118.4-118.4-118.4zM862 755.102c0 32.202-26.198 58.4-58.4 58.4H220.4c-32.202 0-58.4-26.198-58.4-58.4V268.898c0-32.202 26.198-58.4 58.4-58.4h583.2c32.202 0 58.4 26.198 58.4 58.4v486.204z";
 	var subtitlePath$2 = "M691.841 322.542H332.159c-16.568 0-30 13.432-30 30s13.432 30 30 30H482v288.917c0 16.568 13.432 30 30 30 16.569 0 30-13.432 30-30V382.542h149.841c16.568 0 30-13.432 30-30s-13.432-30-30-30z";
 	var subtitleShowPath = "M128.512 214.016h768v81.92h-768zM128.512 718.336h768v81.92h-768zM128.512 466.432h486.4v81.92h-486.4zM896.512 507.392l-174.592-133.12v266.24l174.08-133.12";
@@ -9004,7 +9004,7 @@
 	      leftText: '0.75',
 	      target: SubsettingsMain
 	    }, {
-	      leftIcon: createSvg(settingsConfirmPath, '0 0 1024 1024'),
+	      leftIcon: createSvg(settingsConfirmPath),
 	      leftText: '正常',
 	      target: SubsettingsMain
 	    }, {
@@ -9052,7 +9052,7 @@
 	              _this2.player.video.playbackRate = Number(item.leftText);
 	            }
 	          }
-	          item.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
+	          item.leftIcon = createSvg(settingsConfirmPath);
 	          item.instance.leftIconBox.innerHTML = '';
 	          item.instance.leftIconBox.appendChild(item.leftIcon);
 	          var _iterator = _createForOfIteratorHelper$2(_this2.SubsettingsItem),
@@ -9244,7 +9244,7 @@
 	      leftText: '字幕设置',
 	      target: SubsettingsMain
 	    }, {
-	      leftIcon: createSvg(subtitleShowPath, '0 0 1024 1024'),
+	      leftIcon: createSvg(subtitleShowPath),
 	      leftText: '字幕显示',
 	      rightTip: 'Show',
 	      rightIcon: _this.switchOnIcon
@@ -11457,7 +11457,6 @@
 	      // 重点，此处数组y的作用是表明该弹幕占的轨道的id数组
 	      data.y = [];
 	      this.addDataToTrack(data);
-	      console.log(data);
 	      if (data.y.length === 0) {
 	        var _context3;
 	        if (_includesInstanceProperty(_context3 = _toConsumableArray(this.container.childNodes)).call(_context3, data.dom)) {
@@ -11718,7 +11717,7 @@
 	      target: SubsettingsDanmakuMain
 	    }, {
 	      leftText: '100%',
-	      leftIcon: createSvg(settingsConfirmPath, '0 0 1024 1024'),
+	      leftIcon: createSvg(settingsConfirmPath),
 	      target: SubsettingsDanmakuMain
 	    }, {
 	      leftText: '75%',
@@ -11761,6 +11760,14 @@
 	        if (index === 0) return;
 	        item.instance.el.onclick = function () {
 	          _this2.subsetting.emit('OpacityChange', _parseFloat$1(item.leftText) * 0.01);
+	          item.instance.leftIconBox.innerHTML = '';
+	          item.instance.leftIconBox.appendChild(createSvg(settingsConfirmPath));
+	          for (var i = 1; i < _this2.SubsettingsItem.length; i++) {
+	            var another = _this2.SubsettingsItem[i];
+	            if (another !== item) {
+	              another.instance.leftIconBox.innerHTML = '';
+	            }
+	          }
 	        };
 	      });
 	    }
@@ -11785,10 +11792,10 @@
 	      target: SubsettingsDanmakuMain
 	    }, {
 	      leftText: '1/4',
-	      leftIcon: createSvg(settingsConfirmPath, '0 0 1024 1024'),
 	      target: SubsettingsDanmakuMain
 	    }, {
 	      leftText: '半屏',
+	      leftIcon: createSvg(settingsConfirmPath),
 	      target: SubsettingsDanmakuMain
 	    }, {
 	      leftText: '3/4',
@@ -11828,6 +11835,14 @@
 	        if (index === 0) return;
 	        item.instance.el.onclick = function () {
 	          _this2.subsetting.emit('RangeChange', item.leftText);
+	          item.instance.leftIconBox.innerHTML = '';
+	          item.instance.leftIconBox.appendChild(createSvg(settingsConfirmPath));
+	          for (var i = 1; i < _this2.SubsettingsItem.length; i++) {
+	            var another = _this2.SubsettingsItem[i];
+	            if (another !== item) {
+	              another.instance.leftIconBox.innerHTML = '';
+	            }
+	          }
 	        };
 	      });
 	    }
@@ -11852,13 +11867,13 @@
 	      target: SubsettingsDanmakuMain
 	    }, {
 	      leftText: '极小',
-	      leftIcon: createSvg(settingsConfirmPath, '0 0 1024 1024'),
 	      target: SubsettingsDanmakuMain
 	    }, {
 	      leftText: '小',
 	      target: SubsettingsDanmakuMain
 	    }, {
 	      leftText: '适中',
+	      leftIcon: createSvg(settingsConfirmPath),
 	      target: SubsettingsDanmakuMain
 	    }, {
 	      leftText: '大',
@@ -11898,6 +11913,14 @@
 	        if (index === 0) return;
 	        item.instance.el.onclick = function () {
 	          _this2.subsetting.emit('SizeChange', item.leftText);
+	          item.instance.leftIconBox.innerHTML = '';
+	          item.instance.leftIconBox.appendChild(createSvg(settingsConfirmPath));
+	          for (var i = 1; i < _this2.SubsettingsItem.length; i++) {
+	            var another = _this2.SubsettingsItem[i];
+	            if (another !== item) {
+	              another.instance.leftIconBox.innerHTML = '';
+	            }
+	          }
 	        };
 	      });
 	    }
@@ -11936,7 +11959,7 @@
 	      target: SubsettingsDanmakuSize
 	    }, {
 	      leftText: '显示范围',
-	      rightTip: '1/2',
+	      rightTip: '半屏',
 	      rightIcon: createSvg(rightarrowPath, '0 0 1024 1024'),
 	      target: SubsettingsDanmakuRange
 	    }]);

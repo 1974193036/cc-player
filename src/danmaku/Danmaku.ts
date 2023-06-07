@@ -197,7 +197,6 @@ export class Danmaku {
 
     this.addDataToTrack(data)
 
-    console.log(data)
     if (data.y.length === 0) {
       if ([...this.container.childNodes].includes(data.dom)) {
         this.container.removeChild(data.dom)

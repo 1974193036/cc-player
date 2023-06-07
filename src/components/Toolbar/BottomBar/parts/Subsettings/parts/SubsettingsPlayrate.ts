@@ -26,7 +26,7 @@ export class SubsettingsPlayrate extends SubsettingsBase {
       target: SubsettingsMain
     },
     {
-      leftIcon: createSvg(settingsConfirmPath, '0 0 1024 1024'),
+      leftIcon: createSvg(settingsConfirmPath),
       leftText: '正常',
       target: SubsettingsMain
     },
@@ -78,7 +78,7 @@ export class SubsettingsPlayrate extends SubsettingsBase {
           }
         }
 
-        item.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024')
+        item.leftIcon = createSvg(settingsConfirmPath)
         item.instance.leftIconBox.innerHTML = ''
         item.instance.leftIconBox.appendChild(item.leftIcon)
 
