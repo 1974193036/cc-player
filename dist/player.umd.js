@@ -24901,44 +24901,15 @@
 	  _createClass(Subtitle, [{
 	    key: "init",
 	    value: function init() {
-	      var _this = this;
 	      this.initTemplate();
 	      this.initTextTrack();
+	      this.adjustSubtitleStyle(this.defaultSubtitle);
 	      this.initEvent();
-	      nextTick$1(function () {
-	        var _context;
-	        var ctx = _this;
-	        _this.subsettingsSubtitle = SubsettingsSubtitle.instance;
-	        _forEachInstanceProperty(_context = _this.subtitles).call(_context, function (item) {
-	          var leftIcon = null;
-	          if (item === _this.defaultSubtitle) {
-	            leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
-	          }
-	          var subsettingsItem = _this.subsettingsSubtitle.registerSubsettingsItem({
-	            leftIcon: leftIcon,
-	            leftText: item.tip,
-	            target: SubsettingsMain,
-	            click: function click(value) {
-	              // console.log(value)
-	              ctx.leadItem.instance.rightTipBox.innerText = value.leftText;
-	              ctx.trackElement.src = item.source;
-	              for (var index in ctx.subtitles) {
-	                ctx.subtitles[index].instance.leftIconBox.innerHTML = '';
-	                if (value.leftIcon) delete value.leftIcon;
-	                if (ctx.subtitles[index].instance === value.instance) {
-	                  value.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
-	                  ctx.subtitles[index].instance.leftIconBox.appendChild(value.leftIcon);
-	                }
-	              }
-	            }
-	          });
-	          item.instance = subsettingsItem.instance;
-	        });
-	      });
 	    }
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
+	      // 设置字幕的样式
 	      this.el = $$M('div.video-texttrack-container');
 	      this.player.el.appendChild(this.el);
 	      this.subsettingsMain = SubsettingsMain.instance;
@@ -24950,10 +24921,24 @@
 	        target: SubsettingsSubtitle
 	      });
 	    }
+	    // 调整字幕的样式
+	  }, {
+	    key: "adjustSubtitleStyle",
+	    value: function adjustSubtitleStyle(subtitle) {
+	      // console.log(subtitle.style)
+	      for (var key in this.defaultSubtitle.style) {
+	        this.el.style[key] = '';
+	      }
+	      if (subtitle.style) {
+	        for (var _key in subtitle.style) {
+	          this.el.style[_key] = subtitle.style[_key];
+	        }
+	      }
+	    }
 	  }, {
 	    key: "initTextTrack",
 	    value: function initTextTrack() {
-	      var _this2 = this;
+	      var _this = this;
 	      this.xhrLoader = new XHRLoader();
 	      this.onsuccess = this.onsuccess.bind(this);
 	      this.defaultSubtitle = this.subtitles[0];
@@ -24975,24 +24960,56 @@
 	      this.trackElement = document.createElement('track');
 	      this.player.video.appendChild(this.trackElement);
 	      this.player.on('HideSubtitle', function () {
-	        _this2.currentSource = _this2.trackElement.src;
-	        _this2.trackElement.src = '';
-	        _this2.el.innerHTML = '';
+	        _this.currentSource = _this.trackElement.src;
+	        _this.trackElement.src = '';
+	        _this.el.innerHTML = '';
 	      });
 	      this.player.on('ShowSubtitle', function () {
-	        _this2.trackElement.src = _this2.currentSource;
+	        _this.trackElement.src = _this.currentSource;
+	      });
+	      // 初始化设置栏中的字幕设置选项
+	      nextTick$1(function () {
+	        var _context;
+	        var ctx = _this;
+	        _this.subsettingsSubtitle = SubsettingsSubtitle.instance;
+	        _forEachInstanceProperty(_context = _this.subtitles).call(_context, function (item) {
+	          var leftIcon = null;
+	          if (item === _this.defaultSubtitle) {
+	            leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
+	          }
+	          var subsettingsItem = _this.subsettingsSubtitle.registerSubsettingsItem({
+	            leftIcon: leftIcon,
+	            leftText: item.tip,
+	            target: SubsettingsMain,
+	            click: function click(value) {
+	              ctx.leadItem.instance.rightTipBox.innerText = value.leftText;
+	              ctx.trackElement.src = item.source; //改变字幕，就是修改字幕的源文件
+	              ctx.adjustSubtitleStyle(item); //每次修改字幕时都需要调整其字幕样式
+	              ctx.defaultSubtitle = item;
+	              for (var index in ctx.subtitles) {
+	                ctx.subtitles[index].instance.leftIconBox.innerHTML = '';
+	                if (value.leftIcon) delete value.leftIcon;
+	                if (ctx.subtitles[index].instance === value.instance) {
+	                  value.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
+	                  ctx.subtitles[index].instance.leftIconBox.appendChild(value.leftIcon);
+	                }
+	              }
+	            }
+	          });
+	          item.instance = subsettingsItem.instance;
+	        });
 	      });
 	      this.loadVTTFile(this.defaultSubtitle.source);
 	    }
 	  }, {
 	    key: "initEvent",
 	    value: function initEvent() {
-	      var _this3 = this;
+	      var _this2 = this;
 	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
-	        addClass(_this3.el, ['video-texttrack-container-showtoolbar']);
+	        addClass(_this2.el, ['video-texttrack-container-showtoolbar']);
 	      });
 	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
-	        removeClass(_this3.el, ['video-texttrack-container-showtoolbar']);
+	        removeClass(_this2.el, ['video-texttrack-container-showtoolbar']);
 	      });
 	      // textTracks 属性返回 TextTrackList 对象。TextTrackList 对象代表视频的可用文本轨道。
 	      // 每个可用的文本轨道都由一个 TextTrack 对象表示。
@@ -25000,16 +25017,16 @@
 	      this.textTrack.mode = 'hidden'; // 默认隐藏字幕，使用我们自己的样式
 	      this.textTrack.addEventListener('cuechange', function (e) {
 	        // 设置mode: hidden, 每次加载字幕会触发这个回调
-	        _this3.el.innerHTML = '';
-	        if (_this3.textTrack.activeCues.length > 0) {
+	        _this2.el.innerHTML = '';
+	        if (_this2.textTrack.activeCues.length > 0) {
 	          var _context2;
-	          _forEachInstanceProperty(_context2 = _toConsumableArray(_this3.textTrack.activeCues)).call(_context2, function (cue) {
+	          _forEachInstanceProperty(_context2 = _toConsumableArray(_this2.textTrack.activeCues)).call(_context2, function (cue) {
 	            if (!cue) return;
 	            var texts = cue.text.split('\n');
 	            _forEachInstanceProperty(texts).call(texts, function (text) {
 	              var p = $$M('p');
 	              p.innerText = text;
-	              _this3.el.appendChild(p);
+	              _this2.el.appendChild(p);
 	            });
 	          });
 	        }
@@ -25019,7 +25036,7 @@
 	  }, {
 	    key: "loadVTTFile",
 	    value: function loadVTTFile(source) {
-	      var _this4 = this;
+	      var _this3 = this;
 	      var request = new HTTPRequest({
 	        url: source,
 	        method: 'get'
@@ -25027,7 +25044,7 @@
 	      this.xhrLoader.load({
 	        request: request,
 	        success: function success(response) {
-	          _this4.onsuccess(response);
+	          _this3.onsuccess(response);
 	        } //指定成功加载的回调
 	      });
 	    }
