@@ -11273,6 +11273,9 @@
 	    _defineProperty(this, "opacity", 1);
 	    _defineProperty(this, "fontSizeScale", 1);
 	    _defineProperty(this, "isHidden", false);
+	    _defineProperty(this, "isPaused", true);
+	    // 弹幕占据屏幕的尺寸，默认占据一半屏幕
+	    _defineProperty(this, "showScale", 1 / 2);
 	    _defineProperty(this, "tracks", void 0);
 	    _defineProperty(this, "defaultDanma", {
 	      message: 'default message',
@@ -11284,6 +11287,7 @@
 	    this.queue = new PriorityQueue();
 	    this.container = container; // div.video-danmaku-container
 	    this.player = player;
+	    // 默认的轨道数目占据屏幕的一半
 	    this.trackNumber = this.container.clientHeight / 2 / this.trackHeight;
 	    this.tracks = new Array(this.container.clientHeight / this.trackHeight);
 	    this.init();
@@ -11313,6 +11317,7 @@
 	    value: function pause() {
 	      var _context,
 	        _this = this;
+	      this.setPaused(true);
 	      _forEachInstanceProperty(_context = this.moovingQueue).call(_context, function (data) {
 	        _this.pauseOneData(data);
 	      });
@@ -11323,6 +11328,7 @@
 	    value: function resume() {
 	      var _this2 = this,
 	        _context2;
+	      this.setPaused(false);
 	      this.timer = window.setTimeout(function () {
 	        _this2.render();
 	      }, this.renderInterval);
@@ -11529,10 +11535,16 @@
 	    key: "startAnimate",
 	    value: function startAnimate(data) {
 	      var _this6 = this;
-	      if (this.player.video.paused) {
+	      // 如果当前是暂停的话则该弹幕不应该开启动画
+	      if (this.isPaused || this.player.video.paused) {
 	        this.queue.add(data);
+	        this.removeDataFromTrack(data);
 	        return;
 	      }
+	      // if (this.player.video.paused) {
+	      //   this.queue.add(data)
+	      //   return
+	      // }
 	      // moovingQueue中存储的都是在运动中的弹幕
 	      this.moovingQueue.push(data);
 	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
@@ -11557,6 +11569,8 @@
 	        _this7 = this,
 	        _context11;
 	      console.log('flush');
+	      window.clearTimeout(this.timer);
+	      this.timer = null;
 	      _forEachInstanceProperty(_context8 = this.moovingQueue).call(_context8, function (data) {
 	        var _data$dom$parentNode;
 	        (_data$dom$parentNode = data.dom.parentNode) === null || _data$dom$parentNode === void 0 ? void 0 : _data$dom$parentNode.removeChild(data.dom);
@@ -11578,8 +11592,6 @@
 	      });
 	      this.moovingQueue = [];
 	      this.queue.clear();
-	      window.clearTimeout(this.timer);
-	      this.timer = null;
 	    }
 	    // 隐藏所有的弹幕
 	  }, {
@@ -11624,7 +11636,12 @@
 	  }, {
 	    key: "setTrackNumber",
 	    value: function setTrackNumber(num) {
-	      this.trackNumber = this.container.clientHeight / this.trackHeight * num;
+	      if (!num) {
+	        this.trackNumber = this.container.clientHeight / this.trackHeight * this.showScale;
+	        return;
+	      }
+	      this.showScale = num;
+	      this.trackNumber = this.container.clientHeight / this.trackHeight * this.showScale;
 	    }
 	  }, {
 	    key: "setFontSize",
@@ -11635,6 +11652,11 @@
 	      _forEachInstanceProperty(_context17 = this.moovingQueue).call(_context17, function (data) {
 	        data.dom.style.fontSize = data.fontSize * _this8.fontSizeScale + 'px';
 	      });
+	    }
+	  }, {
+	    key: "setPaused",
+	    value: function setPaused(val) {
+	      this.isPaused = val;
 	    }
 	  }]);
 	  return Danmaku;
@@ -15875,9 +15897,10 @@
 	      // seeking 事件在每次用户开始移动/跳跃视频音频（ audio/video）到新的位置时触发。
 	      // seeked 事件在用户完成移动/跳跃视频音频（ audio/video）到新的位置时触发。
 	      this.video.addEventListener('seeked', function (e) {
-	        _this5.onSeeking(e);
+	        _this5.onSeeked(e);
 	      });
 	      this.video.addEventListener('pause', function () {
+	        console.log('pause');
 	        // 暂停所有的弹幕
 	        _this5.danmaku.pause();
 	      });
@@ -15888,14 +15911,23 @@
 	        _this5.danmaku.flush();
 	      });
 	      this.video.addEventListener('play', function () {
+	        console.log('play');
 	        _this5.danmaku.resume();
+	      });
+	      this.video.addEventListener('canplay', function () {
+	        console.log('canplay');
+	        _this5.danmaku.resume();
+	      });
+	      this.video.addEventListener('timeupdate', function () {
+	        console.log('timeupdate');
+	        _this5.danmaku.setPaused(false);
 	      });
 	      this.danmakuInput.on('sendData', function (data) {
 	        // 此处为发送弹幕的逻辑
 	      });
-	      this.player.on(EVENT.DOT_DRAG, function () {
-	        _this5.danmaku.flush();
-	      });
+	      // this.player.on(EVENT.DOT_DRAG, () => {
+	      //   this.danmaku.flush()
+	      // })
 	      this.player.on('closeDanmaku', function () {
 	        // 隐藏所有的弹幕
 	        _this5.danmaku.close();
@@ -15903,6 +15935,9 @@
 	      this.player.on('openDanmaku', function () {
 	        // 打开所有隐藏的弹幕
 	        _this5.danmaku.open();
+	      });
+	      this.player.on(EVENT.RESIZE, function () {
+	        _this5.setTrackNumber();
 	      });
 	    }
 	  }, {
@@ -15959,14 +15994,14 @@
 	    // }
 	    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
 	  }, {
-	    key: "onSeeking",
-	    value: function onSeeking(e) {
+	    key: "onSeeked",
+	    value: function onSeeked(e) {
 	      this.danmaku.flush();
 	    }
 	  }, {
 	    key: "setTrackNumber",
 	    value: function setTrackNumber(num) {
-	      this.danmaku.setTrackNumber(num);
+	      this.danmaku.setTrackNumber(num || null);
 	    }
 	  }, {
 	    key: "setOpacity",
@@ -25349,7 +25384,10 @@
 	      var resizeObserver = new ResizeObserver(function (entries) {
 	        // console.log('监听到了尺寸变化了...')
 	        // 触发尺寸变化事件
-	        _this6.emit(EVENT.RESIZE, entries);
+	        _this6.emit(EVENT.RESIZE, {
+	          width: entries[0].contentRect.width,
+	          height: entries[0].contentRect.height
+	        });
 	        _this6.adjustMediaSize();
 	        var width = entries[0].contentRect.width;
 	        var subsetting;

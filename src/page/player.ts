@@ -318,7 +318,10 @@ class Player extends Component implements ComponentItem {
     const resizeObserver = new ResizeObserver((entries) => {
       // console.log('监听到了尺寸变化了...')
       // 触发尺寸变化事件
-      this.emit(EVENT.RESIZE, entries)
+      this.emit(EVENT.RESIZE, {
+        width: entries[0].contentRect.width,
+        height: entries[0].contentRect.height
+      })
       this.adjustMediaSize()
       let width = entries[0].contentRect.width
       let subsetting

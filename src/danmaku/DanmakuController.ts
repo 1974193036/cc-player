@@ -172,10 +172,11 @@ export class DanmakuController {
     // seeking 事件在每次用户开始移动/跳跃视频音频（ audio/video）到新的位置时触发。
     // seeked 事件在用户完成移动/跳跃视频音频（ audio/video）到新的位置时触发。
     this.video.addEventListener('seeked', (e: Event) => {
-      this.onSeeking(e)
+      this.onSeeked(e)
     })
 
     this.video.addEventListener('pause', () => {
+      console.log('pause')
       // 暂停所有的弹幕
       this.danmaku.pause()
     })
@@ -189,16 +190,27 @@ export class DanmakuController {
     })
 
     this.video.addEventListener('play', () => {
+      console.log('play')
       this.danmaku.resume()
+    })
+
+    this.video.addEventListener('canplay', () => {
+      console.log('canplay')
+      this.danmaku.resume()
+    })
+
+    this.video.addEventListener('timeupdate', () => {
+      console.log('timeupdate')
+      this.danmaku.setPaused(false)
     })
 
     this.danmakuInput.on('sendData', function (data) {
       // 此处为发送弹幕的逻辑
     })
 
-    this.player.on(EVENT.DOT_DRAG, () => {
-      this.danmaku.flush()
-    })
+    // this.player.on(EVENT.DOT_DRAG, () => {
+    //   this.danmaku.flush()
+    // })
 
     this.player.on('closeDanmaku', () => {
       // 隐藏所有的弹幕
@@ -208,6 +220,10 @@ export class DanmakuController {
     this.player.on('openDanmaku', () => {
       // 打开所有隐藏的弹幕
       this.danmaku.open()
+    })
+
+    this.player.on(EVENT.RESIZE, () => {
+      this.setTrackNumber()
     })
   }
 
@@ -258,12 +274,12 @@ export class DanmakuController {
   // }
 
   // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
-  onSeeking(e: Event) {
+  onSeeked(e: Event) {
     this.danmaku.flush()
   }
 
-  setTrackNumber(num: number) {
-    this.danmaku.setTrackNumber(num)
+  setTrackNumber(num?: number) {
+    this.danmaku.setTrackNumber(num || null)
   }
 
   setOpacity(opacity: number) {

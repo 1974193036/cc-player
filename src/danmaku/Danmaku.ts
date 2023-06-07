@@ -24,6 +24,12 @@ export class Danmaku {
   private opacity: number = 1
   private fontSizeScale: number = 1
   private isHidden = false
+
+  private isPaused = true
+
+  // 弹幕占据屏幕的尺寸，默认占据一半屏幕
+  private showScale = 1 / 2
+
   private tracks: Array<{
     track: Track
     datas: DanmakuData[]
@@ -40,6 +46,7 @@ export class Danmaku {
     this.queue = new PriorityQueue<DanmakuData>()
     this.container = container // div.video-danmaku-container
     this.player = player
+    // 默认的轨道数目占据屏幕的一半
     this.trackNumber = this.container.clientHeight / 2 / this.trackHeight
     this.tracks = new Array(this.container.clientHeight / this.trackHeight)
     this.init()
@@ -65,6 +72,7 @@ export class Danmaku {
 
   // 暂停所有的弹幕
   pause() {
+    this.setPaused(true)
     this.moovingQueue.forEach((data) => {
       this.pauseOneData(data)
     })
@@ -72,6 +80,7 @@ export class Danmaku {
 
   // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
   resume() {
+    this.setPaused(false)
     this.timer = window.setTimeout(() => {
       this.render()
     }, this.renderInterval)
@@ -271,10 +280,16 @@ export class Danmaku {
   }
 
   startAnimate(data: DanmakuData) {
-    if (this.player.video.paused) {
+    // 如果当前是暂停的话则该弹幕不应该开启动画
+    if (this.isPaused || this.player.video.paused) {
       this.queue.add(data)
+      this.removeDataFromTrack(data)
       return
     }
+    // if (this.player.video.paused) {
+    //   this.queue.add(data)
+    //   return
+    // }
     // moovingQueue中存储的都是在运动中的弹幕
     this.moovingQueue.push(data)
     data.dom.style.transform = `translateX(-${data.totalDistance}px)`
@@ -292,6 +307,9 @@ export class Danmaku {
   // 清空所有的弹幕，包括正在运动中的或者还在缓冲区未被释放的
   flush() {
     console.log('flush')
+    window.clearTimeout(this.timer)
+    this.timer = null
+
     this.moovingQueue.forEach((data) => {
       data.dom.parentNode?.removeChild(data.dom)
       data.dom.ontransitionstart = null
@@ -310,9 +328,6 @@ export class Danmaku {
     })
     this.moovingQueue = []
     this.queue.clear()
-
-    window.clearTimeout(this.timer)
-    this.timer = null
   }
 
   // 隐藏所有的弹幕
@@ -351,8 +366,13 @@ export class Danmaku {
   }
 
   //* 设置弹幕轨道是数目
-  setTrackNumber(num: number) {
-    this.trackNumber = (this.container.clientHeight / this.trackHeight) * num
+  setTrackNumber(num?: number) {
+    if (!num) {
+      this.trackNumber = (this.container.clientHeight / this.trackHeight) * this.showScale
+      return
+    }
+    this.showScale = num
+    this.trackNumber = (this.container.clientHeight / this.trackHeight) * this.showScale
   }
 
   setFontSize(scale: number) {
@@ -360,6 +380,10 @@ export class Danmaku {
     this.moovingQueue.forEach((data) => {
       data.dom.style.fontSize = data.fontSize * this.fontSizeScale + 'px'
     })
+  }
+
+  setPaused(val: boolean) {
+    this.isPaused = val
   }
 
   // // 丢弃一部分没用或者过时的弹幕
