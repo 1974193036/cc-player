@@ -9536,7 +9536,6 @@
 	        _this3.emit(EVENT.PROGRESS_CLICK, e.offsetX, ctx);
 	      };
 	      this.dot.addEventListener('mousedown', function (e) {
-	        e.preventDefault();
 	        e.stopPropagation();
 	        _this3.emit(EVENT.DOT_DOWN);
 	        _this3.mouseX = e.pageX;
@@ -11273,7 +11272,6 @@
 	    _defineProperty(this, "trackNumber", void 0);
 	    _defineProperty(this, "opacity", 1);
 	    _defineProperty(this, "fontSizeScale", 1);
-	    _defineProperty(this, "isStopped", true);
 	    _defineProperty(this, "isHidden", false);
 	    _defineProperty(this, "tracks", void 0);
 	    _defineProperty(this, "defaultDanma", {
@@ -11315,8 +11313,6 @@
 	    value: function pause() {
 	      var _context,
 	        _this = this;
-	      this.isStopped = true;
-	      window.clearTimeout(this.timer);
 	      _forEachInstanceProperty(_context = this.moovingQueue).call(_context, function (data) {
 	        _this.pauseOneData(data);
 	      });
@@ -11327,7 +11323,6 @@
 	    value: function resume() {
 	      var _this2 = this,
 	        _context2;
-	      this.isStopped = false;
 	      this.timer = window.setTimeout(function () {
 	        _this2.render();
 	      }, this.renderInterval);
@@ -11362,14 +11357,14 @@
 	  }, {
 	    key: "addData",
 	    value: function addData(data) {
-	      var _this3 = this;
 	      this.queue.push(this.parseData(data));
 	      // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
 	      // if (flag) return
 	      if (this.timer === null) {
-	        nextTick$1(function () {
-	          _this3.render();
-	        });
+	        this.render();
+	        // nextTick(() => {
+	        //   this.render()
+	        // })
 	        // flag = true
 	      }
 	    }
@@ -11408,13 +11403,13 @@
 	  }, {
 	    key: "renderEnd",
 	    value: function renderEnd() {
-	      var _this4 = this;
+	      var _this3 = this;
 	      if (this.queue.length === 0) {
 	        window.clearTimeout(this.timer);
 	        this.timer = null;
 	      } else {
 	        this.timer = window.setTimeout(function () {
-	          _this4.render();
+	          _this3.render();
 	        }, this.renderInterval);
 	      }
 	    }
@@ -11422,7 +11417,6 @@
 	  }, {
 	    key: "renderToDOM",
 	    value: function renderToDOM() {
-	      var _this5 = this;
 	      if (this.queue.length === 0) return;
 	      var data = this.queue.shift();
 	      if (!data.dom) {
@@ -11462,7 +11456,7 @@
 	        if (_includesInstanceProperty(_context3 = _toConsumableArray(this.container.childNodes)).call(_context3, data.dom)) {
 	          this.container.removeChild(data.dom);
 	        }
-	        // this.queue.push(data)
+	        this.queue.push(data);
 	      } else {
 	        data.dom.style.top = data.y[0] * this.trackHeight + 'px';
 	        this.startAnimate(data); // 开启弹幕的动画
@@ -11471,20 +11465,20 @@
 	      data.dom.ontransitionstart = function (e) {
 	        data.startTime = Date.now();
 	      };
-	      data.dom.onmouseenter = function () {
-	        if (_this5.isStopped) return;
-	        _this5.pauseOneData(data);
-	      };
-	      data.dom.onmouseleave = function () {
-	        if (_this5.isStopped) return;
-	        _this5.resumeOneData(data);
-	      };
+	      // data.dom.onmouseenter = () => {
+	      //   if (this.isStopped) return
+	      //   this.pauseOneData(data)
+	      // }
+	      // data.dom.onmouseleave = () => {
+	      //   if (this.isStopped) return
+	      //   this.resumeOneData(data)
+	      // }
 	    }
 	    // 将指定的data添加到弹幕轨道上
 	  }, {
 	    key: "addDataToTrack",
 	    value: function addDataToTrack(data) {
-	      var _this6 = this;
+	      var _this4 = this;
 	      // console.log(this.tracks)
 	      // [
 	      //   {track: {id:0, priority: 15}, datas: DanmakuData[]},
@@ -11513,7 +11507,7 @@
 	          var _context4;
 	          data.y = y;
 	          _forEachInstanceProperty(_context4 = data.y).call(_context4, function (id) {
-	            _this6.tracks[id].datas.push(data);
+	            _this4.tracks[id].datas.push(data);
 	          });
 	          break;
 	        }
@@ -11523,9 +11517,9 @@
 	    key: "removeDataFromTrack",
 	    value: function removeDataFromTrack(data) {
 	      var _context5,
-	        _this7 = this;
+	        _this5 = this;
 	      _forEachInstanceProperty(_context5 = data.y).call(_context5, function (id) {
-	        var datas = _this7.tracks[id].datas;
+	        var datas = _this5.tracks[id].datas;
 	        var index = _indexOfInstanceProperty(datas).call(datas, data);
 	        if (index === -1) return;
 	        _spliceInstanceProperty(datas).call(datas, index, 1);
@@ -11534,20 +11528,23 @@
 	  }, {
 	    key: "startAnimate",
 	    value: function startAnimate(data) {
-	      var _this8 = this;
-	      if (this.isStopped) return;
+	      var _this6 = this;
+	      if (this.player.video.paused) {
+	        this.queue.add(data);
+	        return;
+	      }
 	      // moovingQueue中存储的都是在运动中的弹幕
 	      this.moovingQueue.push(data);
 	      data.dom.style.transform = "translateX(-".concat(data.totalDistance, "px)");
 	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
 	      data.dom.ontransitionend = function (e) {
 	        var _context6;
-	        _this8.container.removeChild(data.dom);
-	        _this8.removeDataFromTrack(data);
-	        var index = _indexOfInstanceProperty(_context6 = _this8.moovingQueue).call(_context6, data);
+	        _this6.container.removeChild(data.dom);
+	        _this6.removeDataFromTrack(data);
+	        var index = _indexOfInstanceProperty(_context6 = _this6.moovingQueue).call(_context6, data);
 	        if (index > -1) {
 	          var _context7;
-	          _spliceInstanceProperty(_context7 = _this8.moovingQueue).call(_context7, index, 1);
+	          _spliceInstanceProperty(_context7 = _this6.moovingQueue).call(_context7, index, 1);
 	        }
 	      };
 	    }
@@ -11557,8 +11554,9 @@
 	    value: function flush() {
 	      var _context8,
 	        _context9,
-	        _this9 = this,
+	        _this7 = this,
 	        _context11;
+	      console.log('flush');
 	      _forEachInstanceProperty(_context8 = this.moovingQueue).call(_context8, function (data) {
 	        var _data$dom$parentNode;
 	        (_data$dom$parentNode = data.dom.parentNode) === null || _data$dom$parentNode === void 0 ? void 0 : _data$dom$parentNode.removeChild(data.dom);
@@ -11567,7 +11565,7 @@
 	      });
 	      _forEachInstanceProperty(_context9 = this.queue).call(_context9, function (data) {
 	        var _context10;
-	        if (_includesInstanceProperty(_context10 = _toConsumableArray(_this9.container.children)).call(_context10, data.dom)) {
+	        if (_includesInstanceProperty(_context10 = _toConsumableArray(_this7.container.children)).call(_context10, data.dom)) {
 	          var _data$dom$parentNode2;
 	          (_data$dom$parentNode2 = data.dom.parentNode) === null || _data$dom$parentNode2 === void 0 ? void 0 : _data$dom$parentNode2.removeChild(data.dom);
 	          data.dom.ontransitionstart = null;
@@ -11580,6 +11578,8 @@
 	      });
 	      this.moovingQueue = [];
 	      this.queue.clear();
+	      window.clearTimeout(this.timer);
+	      this.timer = null;
 	    }
 	    // 隐藏所有的弹幕
 	  }, {
@@ -11630,10 +11630,10 @@
 	    key: "setFontSize",
 	    value: function setFontSize(scale) {
 	      var _context17,
-	        _this10 = this;
+	        _this8 = this;
 	      this.fontSizeScale = scale;
 	      _forEachInstanceProperty(_context17 = this.moovingQueue).call(_context17, function (data) {
-	        data.dom.style.fontSize = data.fontSize * _this10.fontSizeScale + 'px';
+	        data.dom.style.fontSize = data.fontSize * _this8.fontSizeScale + 'px';
 	      });
 	    }
 	  }]);
@@ -15872,7 +15872,9 @@
 	    key: "initializeEvent",
 	    value: function initializeEvent() {
 	      var _this5 = this;
-	      this.video.addEventListener('seeking', function (e) {
+	      // seeking 事件在每次用户开始移动/跳跃视频音频（ audio/video）到新的位置时触发。
+	      // seeked 事件在用户完成移动/跳跃视频音频（ audio/video）到新的位置时触发。
+	      this.video.addEventListener('seeked', function (e) {
 	        _this5.onSeeking(e);
 	      });
 	      this.video.addEventListener('pause', function () {
@@ -25221,9 +25223,9 @@
 	    value: function initPCEvent() {
 	      var _this3 = this;
 	      this.el.onclick = function (e) {
-	        if (e.target === _this3.toolBar.el || e.target === _this3.toolBar.controller.el) {
-	          return;
-	        }
+	        // if (e.target === this.toolBar.el || e.target === this.toolBar.controller.el) {
+	        //   return
+	        // }
 	        if (_this3.video.paused) {
 	          _this3.video.play();
 	        } else if (_this3.video.played) {

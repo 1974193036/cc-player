@@ -88,7 +88,6 @@ export class Progress extends Component implements ComponentItem {
     }
 
     this.dot.addEventListener('mousedown', (e: MouseEvent) => {
-      e.preventDefault()
       e.stopPropagation()
       this.emit(EVENT.DOT_DOWN)
       this.mouseX = e.pageX

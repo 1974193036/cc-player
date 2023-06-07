@@ -169,7 +169,9 @@ export class DanmakuController {
   }
 
   initializeEvent() {
-    this.video.addEventListener('seeking', (e: Event) => {
+    // seeking 事件在每次用户开始移动/跳跃视频音频（ audio/video）到新的位置时触发。
+    // seeked 事件在用户完成移动/跳跃视频音频（ audio/video）到新的位置时触发。
+    this.video.addEventListener('seeked', (e: Event) => {
       this.onSeeking(e)
     })
 

@@ -209,9 +209,9 @@ class Player extends Component implements ComponentItem {
 
   initPCEvent(): void {
     this.el.onclick = (e) => {
-      if (e.target === this.toolBar.el || e.target === this.toolBar.controller.el) {
-        return
-      }
+      // if (e.target === this.toolBar.el || e.target === this.toolBar.controller.el) {
+      //   return
+      // }
       if (this.video.paused) {
         this.video.play()
       } else if (this.video.played) {
