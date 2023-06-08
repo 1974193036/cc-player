@@ -4,7 +4,7 @@ import { addClass, createSvg, removeClass } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
 import { fullPagePath, fullPageExitPath } from '@/svg'
 import { Options } from './Options'
-import { wrap } from 'ntouch.js'
+import { SingleTapEvent, wrap } from 'ntouch.js'
 
 export class FullPage extends Options {
   readonly id = 'FullPage'
@@ -40,14 +40,16 @@ export class FullPage extends Options {
   initEvent() {
     this.onClick = this.onClick.bind(this)
     if (this.player.env === 'Mobile') {
-      wrap(this.el).addEventListener('singleTap', this.onClick)
+      wrap(this.el).addEventListener('singleTap', this.onClick, { stopPropagation: true })
     } else {
       this.el.onclick = this.onClick
     }
   }
 
-  onClick(e: Event) {
-    e.stopPropagation()
+  onClick(e: Event | SingleTapEvent) {
+    if (e instanceof Event) {
+      e.stopPropagation()
+    }
     if (!this.isFullPage) {
       addClass(this.player.el, ['video-wrapper-fullpage'])
       this.iconBox.removeChild(this.icon)

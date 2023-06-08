@@ -5725,6 +5725,15 @@
 	  }, {
 	    key: "initBaseEvent",
 	    value: function initBaseEvent() {
+	      if (this.player.env === 'PC') {
+	        this.initBasePCEvent();
+	      } else {
+	        this.initBaseMobileEvent();
+	      }
+	    }
+	  }, {
+	    key: "initBasePCEvent",
+	    value: function initBasePCEvent() {
 	      var _this2 = this;
 	      this.el.onmouseenter = function (e) {
 	        var ctx = _this2;
@@ -5745,6 +5754,9 @@
 	        addClass(_this2.hideBox, ['video-set-hidden']);
 	      });
 	    }
+	  }, {
+	    key: "initBaseMobileEvent",
+	    value: function initBaseMobileEvent() {}
 	  }, {
 	    key: "handleMouseMove",
 	    value: function handleMouseMove(e) {
@@ -6269,14 +6281,18 @@
 	      if (this.player.env === 'PC') {
 	        this.el.onclick = this.onClick;
 	      } else {
-	        wrap(this.el).addEventListener('singleTap', this.onClick);
+	        wrap(this.el).addEventListener('singleTap', this.onClick, {
+	          stopPropagation: true
+	        });
 	      }
 	    }
 	  }, {
 	    key: "onClick",
 	    value: function onClick(e) {
 	      var _this2 = this;
-	      e.stopPropagation();
+	      if (e instanceof Event) {
+	        e.stopPropagation();
+	      }
 	      // 横屏全屏
 	      if (!main_min.isFull(this.player.container)) {
 	        // 调用浏览器提供的全屏API接口去请求元素的全屏，原生全屏分为  竖屏全屏 + 横屏全屏
@@ -6370,11 +6386,16 @@
 	  }, {
 	    key: "initMobileEvent",
 	    value: function initMobileEvent() {
-	      wrap(this.el).addEventListener('singleTap', this.onClick);
+	      wrap(this.el).addEventListener('singleTap', this.onClick, {
+	        stopPropagation: true
+	      });
 	    }
 	  }, {
 	    key: "onClick",
 	    value: function onClick(e) {
+	      if (e instanceof Event) {
+	        e.stopPropagation();
+	      }
 	      if (this.player.video.paused) {
 	        this.player.video.play();
 	      } else {
@@ -6703,7 +6724,9 @@
 	    value: function initEvent() {
 	      this.onClick = this.onClick.bind(this);
 	      if (this.player.env === 'Mobile') {
-	        wrap(this.el).addEventListener('singleTap', this.onClick);
+	        wrap(this.el).addEventListener('singleTap', this.onClick, {
+	          stopPropagation: true
+	        });
 	      } else {
 	        this.el.onclick = this.onClick;
 	      }
@@ -6711,7 +6734,9 @@
 	  }, {
 	    key: "onClick",
 	    value: function onClick(e) {
-	      e.stopPropagation();
+	      if (e instanceof Event) {
+	        e.stopPropagation();
+	      }
 	      if (!this.isFullPage) {
 	        addClass(this.player.el, ['video-wrapper-fullpage']);
 	        this.iconBox.removeChild(this.icon);
@@ -6764,7 +6789,9 @@
 	    value: function initEvent() {
 	      this.onClick = this.onClick.bind(this);
 	      if (this.player.env === 'Mobile') {
-	        wrap(this.el).addEventListener('singleTap', this.onClick);
+	        wrap(this.el).addEventListener('singleTap', this.onClick, {
+	          stopPropagation: true
+	        });
 	      } else {
 	        this.el.onclick = this.onClick;
 	      }
@@ -6772,7 +6799,9 @@
 	  }, {
 	    key: "onClick",
 	    value: function onClick(e) {
-	      e.stopPropagation();
+	      if (e instanceof Event) {
+	        e.stopPropagation();
+	      }
 	      // document.pictureInPictureElement: 当前画中画的元素
 	      if (document.pictureInPictureElement) {
 	        // 当前存在画中画的元素，则退出画中画
@@ -8655,14 +8684,18 @@
 	      if (this.player.env === 'PC') {
 	        this.el.addEventListener('click', this.onClick);
 	      } else {
-	        wrap(this.el).addEventListener('singleTap', this.onClick);
+	        wrap(this.el).addEventListener('singleTap', this.onClick, {
+	          stopPropagation: true
+	        });
 	      }
 	    }
 	  }, {
 	    key: "onClick",
 	    value: function onClick(e) {
 	      var _this2 = this;
-	      e.stopPropagation();
+	      if (e instanceof Event) {
+	        e.stopPropagation();
+	      }
 	      if (!includeClass(this.icon, 'video-screenshot-animate')) {
 	        addClass(this.icon, ['video-screenshot-animate']);
 	        this.icon.ontransitionend = function (e) {
@@ -8917,6 +8950,7 @@
 	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "subsetting", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", void 0);
+	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", 'click');
 	    _this.player = player;
 	    _this.subsetting = subsetting;
 	    _this.__proto__.constructor.instance = _assertThisInitialized(_this);
@@ -8931,6 +8965,16 @@
 	        _this2.registerSubsettingsItem(item);
 	        item.instance.el.dataset.SubsettingsSubtitleType = item.leftText;
 	      });
+	    }
+	  }, {
+	    key: "initPCEvent",
+	    value: function initPCEvent() {
+	      this.clickOrTap = 'click';
+	    }
+	  }, {
+	    key: "initMobileEvent",
+	    value: function initMobileEvent() {
+	      this.clickOrTap = 'singleTap';
 	    }
 	    // target表示点击你这个item，需要跳转到哪一个SubsettingsBase
 	  }, {
@@ -8962,14 +9006,23 @@
 	      var instance = new SubsettingItem(this.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
 	      item.instance = instance;
 	      this.el.appendChild(instance.el);
-	      instance.el.addEventListener('click', function (e) {
-	        e.stopPropagation();
+	      if (this.player.env === 'PC') {
+	        this.initPCEvent();
+	      } else {
+	        this.initMobileEvent();
+	      }
+	      wrap(instance.el).addEventListener(this.clickOrTap, function (e) {
+	        if (e instanceof MouseEvent) {
+	          e.stopPropagation();
+	        }
 	        if (item.target) {
 	          _this3.el.style.display = 'none';
 	          base.el.style.display = '';
 	          _this3.subsetting.hideBox.style.width = base.el.dataset.width ? base.el.dataset.width + 'px' : '200px';
 	        }
 	        if (item.click) item.click(item);
+	      }, {
+	        stopPropagation: true
 	      });
 	      return item;
 	    }
@@ -9069,6 +9122,7 @@
 	          } finally {
 	            _iterator.f();
 	          }
+	          _this2.subsetting.emit('PlayrateChange', item.leftText);
 	        };
 	      });
 	    }
@@ -9122,7 +9176,12 @@
 	    }
 	  }, {
 	    key: "initEvent",
-	    value: function initEvent() {}
+	    value: function initEvent() {
+	      var _this2 = this;
+	      this.subsetting.on('PlayrateChange', function (leftText) {
+	        _this2.SubsettingsItem[0].instance.rightTipBox.innerText = leftText;
+	      });
+	    }
 	  }]);
 	  return SubsettingsMain;
 	}(SubsettingsBase);
@@ -9185,7 +9244,9 @@
 	      }
 	      this.el.onmouseenter = null;
 	      wrap(this.iconBox).addEventListener(this.clickOrTap, function (e) {
-	        e.stopPropagation();
+	        if (e instanceof Event) {
+	          e.stopPropagation();
+	        }
 	        if (!includeClass(_this2.icon, 'video-subsettings-animate')) {
 	          addClass(_this2.icon, ['video-subsettings-animate']);
 	        } else {
@@ -9197,6 +9258,8 @@
 	          removeClass(_this2.hideBox, ['video-set-hidden']);
 	        }
 	        _this2.player.emit('oneControllerHover', _this2);
+	      }, {
+	        stopPropagation: true
 	      });
 	    }
 	  }, {
@@ -25079,7 +25142,7 @@
 	                ctx.subtitles[index].instance.leftIconBox.innerHTML = '';
 	                if (value.leftIcon) delete value.leftIcon;
 	                if (ctx.subtitles[index].instance === value.instance) {
-	                  value.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024');
+	                  value.leftIcon = createSvg(settingsConfirmPath);
 	                  ctx.subtitles[index].instance.leftIconBox.appendChild(value.leftIcon);
 	                }
 	              }

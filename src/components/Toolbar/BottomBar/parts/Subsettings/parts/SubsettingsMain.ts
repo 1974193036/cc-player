@@ -48,6 +48,8 @@ export class SubsettingsMain extends SubsettingsBase {
   }
 
   initEvent() {
-
+    this.subsetting.on('PlayrateChange', (leftText: string) => {
+      this.SubsettingsItem[0].instance.rightTipBox.innerText = leftText
+    })
   }
 }

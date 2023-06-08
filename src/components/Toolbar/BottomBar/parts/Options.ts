@@ -55,6 +55,14 @@ export class Options extends Component implements ComponentItem {
   }
 
   initBaseEvent() {
+    if (this.player.env === 'PC') {
+      this.initBasePCEvent()
+    } else {
+      this.initBaseMobileEvent()
+    }
+  }
+
+  initBasePCEvent() {
     this.el.onmouseenter = (e) => {
       let ctx = this
       removeClass(this.hideBox, ['video-set-hidden'])
@@ -76,6 +84,8 @@ export class Options extends Component implements ComponentItem {
       addClass(this.hideBox, ['video-set-hidden'])
     })
   }
+
+  initBaseMobileEvent() {}
 
   handleMouseMove(e: MouseEvent) {
     let pX = e.clientX,

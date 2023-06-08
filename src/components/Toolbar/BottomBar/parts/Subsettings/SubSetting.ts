@@ -3,7 +3,7 @@ import { Player } from '@/page/player'
 import { storeControlComponent } from '@/utils/store'
 import { subSettingPath } from '@/svg'
 import { $, addClass, createSvg, includeClass, removeClass } from '@/utils/domUtils'
-import { wrap } from 'ntouch.js'
+import { SingleTapEvent, wrap } from 'ntouch.js'
 import { SubsettingsMain } from './parts/SubsettingsMain'
 // import { SubsettingsPlayrate } from './parts/SubsettingsPlayrate'
 import { SubsettingsBaseConstructor, SubsettingsItem } from '@/types/Player'
@@ -59,20 +59,26 @@ export class SubSetting extends Options {
     }
 
     this.el.onmouseenter = null
-    wrap(this.iconBox).addEventListener(this.clickOrTap, (e) => {
-      e.stopPropagation()
-      if (!includeClass(this.icon, 'video-subsettings-animate')) {
-        addClass(this.icon, ['video-subsettings-animate'])
-      } else {
-        removeClass(this.icon, ['video-subsettings-animate'])
-      }
-      if (!includeClass(this.hideBox, 'video-set-hidden')) {
-        addClass(this.hideBox, ['video-set-hidden'])
-      } else {
-        removeClass(this.hideBox, ['video-set-hidden'])
-      }
-      this.player.emit('oneControllerHover', this)
-    })
+    wrap(this.iconBox).addEventListener(
+      this.clickOrTap,
+      (e: MouseEvent | SingleTapEvent) => {
+        if (e instanceof Event) {
+          e.stopPropagation()
+        }
+        if (!includeClass(this.icon, 'video-subsettings-animate')) {
+          addClass(this.icon, ['video-subsettings-animate'])
+        } else {
+          removeClass(this.icon, ['video-subsettings-animate'])
+        }
+        if (!includeClass(this.hideBox, 'video-set-hidden')) {
+          addClass(this.hideBox, ['video-set-hidden'])
+        } else {
+          removeClass(this.hideBox, ['video-set-hidden'])
+        }
+        this.player.emit('oneControllerHover', this)
+      },
+      { stopPropagation: true }
+    )
   }
 
   initPCEvent(): void {

@@ -4,7 +4,7 @@ import { addClass, createSvg } from '@/utils/domUtils'
 import { storeControlComponent } from '@/utils/store'
 import { picInPicPath } from '@/svg'
 import { Options } from './Options'
-import { wrap } from 'ntouch.js'
+import { SingleTapEvent, wrap } from 'ntouch.js'
 
 export class PicInPic extends Options {
   readonly id = 'PicInPic'
@@ -39,14 +39,16 @@ export class PicInPic extends Options {
   initEvent() {
     this.onClick = this.onClick.bind(this)
     if (this.player.env === 'Mobile') {
-      wrap(this.el).addEventListener('singleTap', this.onClick)
+      wrap(this.el).addEventListener('singleTap', this.onClick, { stopPropagation: true })
     } else {
       this.el.onclick = this.onClick
     }
   }
 
-  onClick(e: Event) {
-    e.stopPropagation()
+  onClick(e: Event | SingleTapEvent) {
+    if (e instanceof Event) {
+      e.stopPropagation()
+    }
     // document.pictureInPictureElement: 当前画中画的元素
 
     if (document.pictureInPictureElement) {

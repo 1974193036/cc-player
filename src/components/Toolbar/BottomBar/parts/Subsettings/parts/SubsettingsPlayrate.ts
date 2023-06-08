@@ -87,6 +87,8 @@ export class SubsettingsPlayrate extends SubsettingsBase {
             another.instance.leftIconBox.innerHTML = ''
           }
         }
+
+        this.subsetting.emit('PlayrateChange', item.leftText)
       }
     })
   }

@@ -4,7 +4,7 @@ import { ComponentItem, DOMProps, Node } from '@/types/Player'
 import { $, addClass, createSvg } from '@/utils/domUtils'
 import { pausePath, playPath } from '@/svg'
 import { storeControlComponent } from '@/utils/store'
-import { wrap } from 'ntouch.js'
+import { SingleTapEvent, wrap } from 'ntouch.js'
 import { EVENT } from '@/events'
 
 export class PlayButton extends Component implements ComponentItem {
@@ -73,10 +73,13 @@ export class PlayButton extends Component implements ComponentItem {
   }
 
   initMobileEvent(): void {
-    wrap(this.el).addEventListener('singleTap', this.onClick)
+    wrap(this.el).addEventListener('singleTap', this.onClick, { stopPropagation: true })
   }
 
-  onClick(e: Event) {
+  onClick(e: Event | SingleTapEvent) {
+    if (e instanceof Event) {
+      e.stopPropagation()
+    }
     if (this.player.video.paused) {
       this.player.video.play()
     } else {

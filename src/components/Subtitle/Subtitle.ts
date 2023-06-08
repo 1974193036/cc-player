@@ -121,7 +121,7 @@ export class Subtitle {
               ctx.subtitles[index].instance.leftIconBox.innerHTML = ''
               if (value.leftIcon) delete value.leftIcon
               if (ctx.subtitles[index].instance === value.instance) {
-                value.leftIcon = createSvg(settingsConfirmPath, '0 0 1024 1024')
+                value.leftIcon = createSvg(settingsConfirmPath)
                 ctx.subtitles[index].instance.leftIconBox.appendChild(value.leftIcon)
               }
             }
