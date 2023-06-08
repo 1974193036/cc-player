@@ -17,7 +17,7 @@ import { ErrorLoading } from '@/components/Loading/parts/ErrorLoading'
 import { TopBar } from '@/components/TopBar/TopBar'
 import { Env } from '@/utils/env'
 import { MobileVolume } from '@/components/Mobile/MobileVolume'
-import { MoveEvent, wrap } from 'ntouch.js'
+import { DoubleTapEvent, MoveEvent, SingleTapEvent, SwipeEvent, wrap } from 'ntouch.js'
 import { computeAngle } from '@/utils/math'
 import { EVENT } from '@/events'
 import { Subtitle } from '@/components/Subtitle/Subtitle'
@@ -233,8 +233,12 @@ class Player extends Component implements ComponentItem {
   }
 
   initMobileEvent(): void {
+    wrap(this.el).addEventListener('touchstart', () => {
+      this.emit(EVENT.DOT_DOWN)
+    })
+
     // 单击
-    wrap(this.video).addEventListener('singleTap', (e) => {
+    wrap(this.el).addEventListener('singleTap', (e: SingleTapEvent) => {
       // console.log(e, 'singletap')
       if (this.toolBar.status === 'hidden') {
         this.emit(EVENT.SHOW_TOOLBAR, e)
@@ -245,7 +249,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 双击
-    wrap(this.video).addEventListener('doubleTap', (e) => {
+    wrap(this.el).addEventListener('doubleTap', (e: DoubleTapEvent) => {
       // console.log(e, 'doubleTap')
       if (this.video.paused) {
         this.video.play()
@@ -255,7 +259,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 手势上下处于滑动中
-    wrap(this.video).addEventListener('move', (e) => {
+    wrap(this.el).addEventListener('move', (e: MoveEvent) => {
       // console.log(e, 'move')
       let dx = e.deltaX
       let dy = e.deltaY
@@ -267,7 +271,7 @@ class Player extends Component implements ComponentItem {
     })
 
     // 手势上下滑动结束
-    wrap(this.video).addEventListener('swipe', (e) => {
+    wrap(this.el).addEventListener('swipe', (e: SwipeEvent) => {
       // console.log(e, 'swipe')
       let dx = e.endPos.x - e.startPos.x
       let dy = e.endPos.y - e.startPos.y

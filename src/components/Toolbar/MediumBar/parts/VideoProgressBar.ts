@@ -3,6 +3,7 @@ import { Player } from '@/page/player'
 import { formatTime } from '@/utils'
 import { $, addClass, removeClass } from '@/utils/domUtils'
 import { Progress } from '@/components/Progress/progress'
+import { MoveEvent, SwipeEvent } from 'ntouch.js'
 
 export class VideoProgress extends Progress {
   readonly id = 'VideoProgress'
@@ -28,6 +29,52 @@ export class VideoProgress extends Progress {
   }
 
   initEvent(): void {
+    if (this.player.env === 'PC') {
+      this.initPCEvent()
+    } else {
+      this.initMobileEvent()
+    }
+
+    this.on(EVENT.DOT_DRAG, (dx: number, ctx: Progress) => {
+      let scale = (dx + this.dotLeft) / this.el.clientWidth
+      if (scale < 0) {
+        scale = 0
+      } else if (scale > 1) {
+        scale = 1
+      }
+
+      this.player.emit(EVENT.VIDEO_DOT_DRAG, scale)
+    })
+
+    // this.on(EVENT.PROGRESS_MOUSE_ENTER, () => {
+    //   removeClass(this.dot, ['video-progress-dot-hidden'])
+    // })
+
+    // this.on(EVENT.PROGRESS_MOUSE_LEAVE, () => {
+    //   addClass(this.dot, ['video-progress-dot-hidden'])
+    // })
+
+    this.on(EVENT.DOT_DOWN, () => {
+      this.dotLeft = (parseFloat(this.dot.style.left || '0') / 100) * this.el.clientWidth
+      this.player.emit(EVENT.DOT_DOWN)
+    })
+
+    this.on(EVENT.DOT_UP, (scale: number) => {
+      this.player.emit(EVENT.DOT_UP)
+      this.dotLeft = this.el.clientWidth * scale
+      this.player.video.currentTime = scale * this.player.video.duration
+    })
+
+    this.player.video.addEventListener('timeupdate', (e) => {
+      if (this.player.enableSeek) {
+        let scale = this.player.video.currentTime / this.player.video.duration
+        this.dot.style.left = scale * 100 + '%'
+        this.completedProgress.style.width = scale * 100 + '%'
+      }
+    })
+  }
+
+  initPCEvent(): void {
     this.el.addEventListener('mouseenter', (e: MouseEvent) => {
       this.preTime.style.display = 'block'
 
@@ -66,17 +113,6 @@ export class VideoProgress extends Progress {
       }
     })
 
-    this.on(EVENT.DOT_DRAG, (dx: number, ctx: Progress) => {
-      let scale = (dx + this.dotLeft) / this.el.clientWidth
-      if (scale < 0) {
-        scale = 0
-      } else if (scale > 1) {
-        scale = 1
-      }
-
-      this.player.emit(EVENT.VIDEO_DOT_DRAG, scale)
-    })
-
     this.on(EVENT.PROGRESS_MOUSE_ENTER, () => {
       removeClass(this.dot, ['video-progress-dot-hidden'])
     })
@@ -84,23 +120,23 @@ export class VideoProgress extends Progress {
     this.on(EVENT.PROGRESS_MOUSE_LEAVE, () => {
       addClass(this.dot, ['video-progress-dot-hidden'])
     })
+  }
 
-    this.on(EVENT.DOT_DOWN, () => {
-      this.player.emit(EVENT.DOT_DOWN)
+  initMobileEvent(): void {
+    // 手势左右处于滑动中
+    this.player.on(EVENT.MOVE_HORIZONTAL, (e: MoveEvent) => {
+      let dx = e.deltaX
+      this.emit(EVENT.DOT_DRAG, dx, this)
     })
 
-    this.on(EVENT.DOT_UP, (scale: number) => {
-      this.player.emit(EVENT.DOT_UP)
-
-      this.player.video.currentTime = scale * this.player.video.duration
-    })
-
-    this.player.video.addEventListener('timeupdate', (e) => {
-      if (this.player.enableSeek) {
-        let scale = this.player.video.currentTime / this.player.video.duration
-        this.dot.style.left = scale * 100 + '%'
-        this.completedProgress.style.width = scale * 100 + '%'
+    // 手势左右滑动结束
+    this.player.on(EVENT.SLIDE_HORIZONTAL, (e: SwipeEvent) => {
+      if (this.player.video.paused) {
+        this.player.video.play()
       }
+      let dx = e.endPos.x - e.startPos.x
+      let scale = (this.dotLeft + dx) / this.el.clientWidth
+      this.emit(EVENT.DOT_UP, scale)
     })
   }
 }

@@ -9399,6 +9399,60 @@
 	  return Controller;
 	}(Component);
 
+	var global$6 = global$o;
+	var fails$5 = fails$x;
+	var uncurryThis$2 = functionUncurryThis;
+	var toString$2 = toString$c;
+	var trim = stringTrim.trim;
+	var whitespaces = whitespaces$3;
+
+	var charAt = uncurryThis$2(''.charAt);
+	var $parseFloat$1 = global$6.parseFloat;
+	var Symbol$1 = global$6.Symbol;
+	var ITERATOR = Symbol$1 && Symbol$1.iterator;
+	var FORCED$1 = 1 / $parseFloat$1(whitespaces + '-0') !== -Infinity
+	  // MS Edge 18- broken with boxed symbols
+	  || (ITERATOR && !fails$5(function () { $parseFloat$1(Object(ITERATOR)); }));
+
+	// `parseFloat` method
+	// https://tc39.es/ecma262/#sec-parsefloat-string
+	var numberParseFloat = FORCED$1 ? function parseFloat(string) {
+	  var trimmedString = trim(toString$2(string));
+	  var result = $parseFloat$1(trimmedString);
+	  return result === 0 && charAt(trimmedString, 0) == '-' ? -0 : result;
+	} : $parseFloat$1;
+
+	var $$f = _export;
+	var $parseFloat = numberParseFloat;
+
+	// `parseFloat` method
+	// https://tc39.es/ecma262/#sec-parsefloat-string
+	$$f({ global: true, forced: parseFloat != $parseFloat }, {
+	  parseFloat: $parseFloat
+	});
+
+	var path$6 = path$m;
+
+	var _parseFloat$6 = path$6.parseFloat;
+
+	var parent$k = _parseFloat$6;
+
+	var _parseFloat$5 = parent$k;
+
+	var parent$j = _parseFloat$5;
+
+	var _parseFloat$4 = parent$j;
+
+	var parent$i = _parseFloat$4;
+
+	var _parseFloat$3 = parent$i;
+
+	var _parseFloat$2 = _parseFloat$3;
+
+	var _parseFloat = _parseFloat$2;
+
+	var _parseFloat$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseFloat);
+
 	var env = window.navigator.userAgent.toLowerCase();
 	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
 	var Env = {
@@ -9423,12 +9477,12 @@
 	};
 
 	var getBuiltIn$3 = getBuiltIn$h;
-	var uncurryThis$2 = functionUncurryThis;
+	var uncurryThis$1 = functionUncurryThis;
 	var getOwnPropertyNamesModule = objectGetOwnPropertyNames;
 	var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
 	var anObject$2 = anObject$f;
 
-	var concat = uncurryThis$2([].concat);
+	var concat = uncurryThis$1([].concat);
 
 	// all object keys, includes non-enumerable and symbols
 	var ownKeys$3 = getBuiltIn$3('Reflect', 'ownKeys') || function ownKeys(it) {
@@ -9465,10 +9519,10 @@
 	  }
 	};
 
-	var uncurryThis$1 = functionUncurryThis;
+	var uncurryThis = functionUncurryThis;
 
 	var $Error$1 = Error;
-	var replace = uncurryThis$1(''.replace);
+	var replace = uncurryThis(''.replace);
 
 	var TEST = (function (arg) { return String($Error$1(arg).stack); })('zxcasd');
 	// eslint-disable-next-line redos/no-vulnerable -- safe
@@ -9481,10 +9535,10 @@
 	  } return stack;
 	};
 
-	var fails$5 = fails$x;
+	var fails$4 = fails$x;
 	var createPropertyDescriptor$1 = createPropertyDescriptor$8;
 
-	var errorStackInstallable = !fails$5(function () {
+	var errorStackInstallable = !fails$4(function () {
 	  var error = Error('a');
 	  if (!('stack' in error)) return true;
 	  // eslint-disable-next-line es/no-object-defineproperty -- safe
@@ -9506,13 +9560,13 @@
 	  }
 	};
 
-	var toString$2 = toString$c;
+	var toString$1 = toString$c;
 
 	var normalizeStringArgument$1 = function (argument, $default) {
-	  return argument === undefined ? arguments.length < 2 ? '' : $default : toString$2(argument);
+	  return argument === undefined ? arguments.length < 2 ? '' : $default : toString$1(argument);
 	};
 
-	var $$f = _export;
+	var $$e = _export;
 	var isPrototypeOf = objectIsPrototypeOf;
 	var getPrototypeOf = objectGetPrototypeOf;
 	var setPrototypeOf = objectSetPrototypeOf;
@@ -9559,7 +9613,7 @@
 
 	// `AggregateError` constructor
 	// https://tc39.es/ecma262/#sec-aggregate-error-constructor
-	$$f({ global: true, constructor: true, arity: 2 }, {
+	$$e({ global: true, constructor: true, arity: 2 }, {
 	  AggregateError: $AggregateError
 	});
 
@@ -9587,12 +9641,12 @@
 	// eslint-disable-next-line redos/no-vulnerable -- safe
 	var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$2);
 
-	var global$6 = global$o;
+	var global$5 = global$o;
 	var apply = functionApply;
 	var bind$2 = functionBindContext;
 	var isCallable$3 = isCallable$p;
 	var hasOwn = hasOwnProperty_1;
-	var fails$4 = fails$x;
+	var fails$3 = fails$x;
 	var html = html$2;
 	var arraySlice = arraySlice$7;
 	var createElement = documentCreateElement$1;
@@ -9600,21 +9654,21 @@
 	var IS_IOS$1 = engineIsIos;
 	var IS_NODE$3 = engineIsNode;
 
-	var set = global$6.setImmediate;
-	var clear = global$6.clearImmediate;
-	var process$3 = global$6.process;
-	var Dispatch = global$6.Dispatch;
-	var Function$1 = global$6.Function;
-	var MessageChannel = global$6.MessageChannel;
-	var String$1 = global$6.String;
+	var set = global$5.setImmediate;
+	var clear = global$5.clearImmediate;
+	var process$3 = global$5.process;
+	var Dispatch = global$5.Dispatch;
+	var Function$1 = global$5.Function;
+	var MessageChannel = global$5.MessageChannel;
+	var String$1 = global$5.String;
 	var counter = 0;
 	var queue$2 = {};
 	var ONREADYSTATECHANGE = 'onreadystatechange';
 	var $location, defer, channel, port;
 
-	fails$4(function () {
+	fails$3(function () {
 	  // Deno throws a ReferenceError on `location` access without `--location` flag
-	  $location = global$6.location;
+	  $location = global$5.location;
 	});
 
 	var run = function (id) {
@@ -9637,7 +9691,7 @@
 
 	var globalPostMessageDefer = function (id) {
 	  // old engines have not location.origin
-	  global$6.postMessage(String$1(id), $location.protocol + '//' + $location.host);
+	  global$5.postMessage(String$1(id), $location.protocol + '//' + $location.host);
 	};
 
 	// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
@@ -9675,14 +9729,14 @@
 	  // Browsers with postMessage, skip WebWorkers
 	  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
 	  } else if (
-	    global$6.addEventListener &&
-	    isCallable$3(global$6.postMessage) &&
-	    !global$6.importScripts &&
+	    global$5.addEventListener &&
+	    isCallable$3(global$5.postMessage) &&
+	    !global$5.importScripts &&
 	    $location && $location.protocol !== 'file:' &&
-	    !fails$4(globalPostMessageDefer)
+	    !fails$3(globalPostMessageDefer)
 	  ) {
 	    defer = globalPostMessageDefer;
-	    global$6.addEventListener('message', eventListener, false);
+	    global$5.addEventListener('message', eventListener, false);
 	  // IE8-
 	  } else if (ONREADYSTATECHANGE in createElement('script')) {
 	    defer = function (id) {
@@ -9737,7 +9791,7 @@
 
 	var engineIsWebosWebkit = /web0s(?!.*chrome)/i.test(userAgent);
 
-	var global$5 = global$o;
+	var global$4 = global$o;
 	var bind$1 = functionBindContext;
 	var getOwnPropertyDescriptor$7 = objectGetOwnPropertyDescriptor.f;
 	var macrotask = task$1.set;
@@ -9747,12 +9801,12 @@
 	var IS_WEBOS_WEBKIT = engineIsWebosWebkit;
 	var IS_NODE$2 = engineIsNode;
 
-	var MutationObserver$1 = global$5.MutationObserver || global$5.WebKitMutationObserver;
-	var document$2 = global$5.document;
-	var process$2 = global$5.process;
-	var Promise$1 = global$5.Promise;
+	var MutationObserver$1 = global$4.MutationObserver || global$4.WebKitMutationObserver;
+	var document$2 = global$4.document;
+	var process$2 = global$4.process;
+	var Promise$1 = global$4.Promise;
 	// Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
-	var queueMicrotaskDescriptor = getOwnPropertyDescriptor$7(global$5, 'queueMicrotask');
+	var queueMicrotaskDescriptor = getOwnPropertyDescriptor$7(global$4, 'queueMicrotask');
 	var microtask$1 = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
 	var notify$1, toggle, node, promise$6, then;
 
@@ -9804,7 +9858,7 @@
 	  // - setTimeout
 	  } else {
 	    // `webpack` dev server bug on IE global methods - use bind(fn, global)
-	    macrotask = bind$1(macrotask, global$5);
+	    macrotask = bind$1(macrotask, global$4);
 	    notify$1 = function () {
 	      macrotask(flush);
 	    };
@@ -9833,9 +9887,9 @@
 	  }
 	};
 
-	var global$4 = global$o;
+	var global$3 = global$o;
 
-	var promiseNativeConstructor = global$4.Promise;
+	var promiseNativeConstructor = global$3.Promise;
 
 	/* global Deno -- Deno case */
 
@@ -9848,7 +9902,7 @@
 	  && typeof window == 'object'
 	  && typeof document == 'object';
 
-	var global$3 = global$o;
+	var global$2 = global$o;
 	var NativePromiseConstructor$5 = promiseNativeConstructor;
 	var isCallable$2 = isCallable$p;
 	var isForced = isForced_1;
@@ -9861,7 +9915,7 @@
 	var NativePromisePrototype$2 = NativePromiseConstructor$5 && NativePromiseConstructor$5.prototype;
 	var SPECIES = wellKnownSymbol('species');
 	var SUBCLASSING = false;
-	var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$2(global$3.PromiseRejectionEvent);
+	var NATIVE_PROMISE_REJECTION_EVENT$1 = isCallable$2(global$2.PromiseRejectionEvent);
 
 	var FORCED_PROMISE_CONSTRUCTOR$5 = isForced('Promise', function () {
 	  var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(NativePromiseConstructor$5);
@@ -9918,9 +9972,9 @@
 	  return new PromiseCapability(C);
 	};
 
-	var $$e = _export;
+	var $$d = _export;
 	var IS_NODE = engineIsNode;
-	var global$2 = global$o;
+	var global$1 = global$o;
 	var call$5 = functionCall;
 	var defineBuiltIn = defineBuiltIn$8;
 	var setToStringTag = setToStringTag$9;
@@ -9949,13 +10003,13 @@
 	var NativePromisePrototype$1 = NativePromiseConstructor$4 && NativePromiseConstructor$4.prototype;
 	var PromiseConstructor = NativePromiseConstructor$4;
 	var PromisePrototype = NativePromisePrototype$1;
-	var TypeError$1 = global$2.TypeError;
-	var document$1 = global$2.document;
-	var process$1 = global$2.process;
+	var TypeError$1 = global$1.TypeError;
+	var document$1 = global$1.document;
+	var process$1 = global$1.process;
 	var newPromiseCapability$1 = newPromiseCapabilityModule$6.f;
 	var newGenericPromiseCapability = newPromiseCapability$1;
 
-	var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$2.dispatchEvent);
+	var DISPATCH_EVENT = !!(document$1 && document$1.createEvent && global$1.dispatchEvent);
 	var UNHANDLED_REJECTION = 'unhandledrejection';
 	var REJECTION_HANDLED = 'rejectionhandled';
 	var PENDING = 0;
@@ -10028,14 +10082,14 @@
 	    event.promise = promise;
 	    event.reason = reason;
 	    event.initEvent(name, false, true);
-	    global$2.dispatchEvent(event);
+	    global$1.dispatchEvent(event);
 	  } else event = { promise: promise, reason: reason };
-	  if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$2['on' + name])) handler(event);
+	  if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = global$1['on' + name])) handler(event);
 	  else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
 	};
 
 	var onUnhandled = function (state) {
-	  call$5(task, global$2, function () {
+	  call$5(task, global$1, function () {
 	    var promise = state.facade;
 	    var value = state.value;
 	    var IS_UNHANDLED = isUnhandled(state);
@@ -10058,7 +10112,7 @@
 	};
 
 	var onHandleUnhandled = function (state) {
-	  call$5(task, global$2, function () {
+	  call$5(task, global$1, function () {
 	    var promise = state.facade;
 	    if (IS_NODE) {
 	      process$1.emit('rejectionHandled', promise);
@@ -10172,7 +10226,7 @@
 	  };
 	}
 
-	$$e({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
+	$$d({ global: true, constructor: true, wrap: true, forced: FORCED_PROMISE_CONSTRUCTOR$4 }, {
 	  Promise: PromiseConstructor
 	});
 
@@ -10187,7 +10241,7 @@
 	  NativePromiseConstructor$3.all(iterable).then(undefined, function () { /* empty */ });
 	});
 
-	var $$d = _export;
+	var $$c = _export;
 	var call$4 = functionCall;
 	var aCallable$3 = aCallable$h;
 	var newPromiseCapabilityModule$5 = newPromiseCapability$2;
@@ -10197,7 +10251,7 @@
 
 	// `Promise.all` method
 	// https://tc39.es/ecma262/#sec-promise.all
-	$$d({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
+	$$c({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$3 }, {
 	  all: function all(iterable) {
 	    var C = this;
 	    var capability = newPromiseCapabilityModule$5.f(C);
@@ -10226,7 +10280,7 @@
 	  }
 	});
 
-	var $$c = _export;
+	var $$b = _export;
 	var FORCED_PROMISE_CONSTRUCTOR$2 = promiseConstructorDetection.CONSTRUCTOR;
 	var NativePromiseConstructor$2 = promiseNativeConstructor;
 
@@ -10234,13 +10288,13 @@
 
 	// `Promise.prototype.catch` method
 	// https://tc39.es/ecma262/#sec-promise.prototype.catch
-	$$c({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
+	$$b({ target: 'Promise', proto: true, forced: FORCED_PROMISE_CONSTRUCTOR$2, real: true }, {
 	  'catch': function (onRejected) {
 	    return this.then(undefined, onRejected);
 	  }
 	});
 
-	var $$b = _export;
+	var $$a = _export;
 	var call$3 = functionCall;
 	var aCallable$2 = aCallable$h;
 	var newPromiseCapabilityModule$4 = newPromiseCapability$2;
@@ -10250,7 +10304,7 @@
 
 	// `Promise.race` method
 	// https://tc39.es/ecma262/#sec-promise.race
-	$$b({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
+	$$a({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$2 }, {
 	  race: function race(iterable) {
 	    var C = this;
 	    var capability = newPromiseCapabilityModule$4.f(C);
@@ -10266,14 +10320,14 @@
 	  }
 	});
 
-	var $$a = _export;
+	var $$9 = _export;
 	var call$2 = functionCall;
 	var newPromiseCapabilityModule$3 = newPromiseCapability$2;
 	var FORCED_PROMISE_CONSTRUCTOR$1 = promiseConstructorDetection.CONSTRUCTOR;
 
 	// `Promise.reject` method
 	// https://tc39.es/ecma262/#sec-promise.reject
-	$$a({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
+	$$9({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR$1 }, {
 	  reject: function reject(r) {
 	    var capability = newPromiseCapabilityModule$3.f(this);
 	    call$2(capability.reject, undefined, r);
@@ -10294,7 +10348,7 @@
 	  return promiseCapability.promise;
 	};
 
-	var $$9 = _export;
+	var $$8 = _export;
 	var getBuiltIn$2 = getBuiltIn$h;
 	var IS_PURE = isPure;
 	var NativePromiseConstructor$1 = promiseNativeConstructor;
@@ -10306,13 +10360,13 @@
 
 	// `Promise.resolve` method
 	// https://tc39.es/ecma262/#sec-promise.resolve
-	$$9({ target: 'Promise', stat: true, forced: IS_PURE  }, {
+	$$8({ target: 'Promise', stat: true, forced: IS_PURE  }, {
 	  resolve: function resolve(x) {
 	    return promiseResolve$1(CHECK_WRAPPER && this === PromiseConstructorWrapper ? NativePromiseConstructor$1 : this, x);
 	  }
 	});
 
-	var $$8 = _export;
+	var $$7 = _export;
 	var call$1 = functionCall;
 	var aCallable$1 = aCallable$h;
 	var newPromiseCapabilityModule$2 = newPromiseCapability$2;
@@ -10322,7 +10376,7 @@
 
 	// `Promise.allSettled` method
 	// https://tc39.es/ecma262/#sec-promise.allsettled
-	$$8({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
+	$$7({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION$1 }, {
 	  allSettled: function allSettled(iterable) {
 	    var C = this;
 	    var capability = newPromiseCapabilityModule$2.f(C);
@@ -10356,7 +10410,7 @@
 	  }
 	});
 
-	var $$7 = _export;
+	var $$6 = _export;
 	var call = functionCall;
 	var aCallable = aCallable$h;
 	var getBuiltIn$1 = getBuiltIn$h;
@@ -10369,7 +10423,7 @@
 
 	// `Promise.any` method
 	// https://tc39.es/ecma262/#sec-promise.any
-	$$7({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
+	$$6({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }, {
 	  any: function any(iterable) {
 	    var C = this;
 	    var AggregateError = getBuiltIn$1('AggregateError');
@@ -10404,9 +10458,9 @@
 	  }
 	});
 
-	var $$6 = _export;
+	var $$5 = _export;
 	var NativePromiseConstructor = promiseNativeConstructor;
-	var fails$3 = fails$x;
+	var fails$2 = fails$x;
 	var getBuiltIn = getBuiltIn$h;
 	var isCallable = isCallable$p;
 	var speciesConstructor = speciesConstructor$2;
@@ -10415,14 +10469,14 @@
 	var NativePromisePrototype = NativePromiseConstructor && NativePromiseConstructor.prototype;
 
 	// Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
-	var NON_GENERIC = !!NativePromiseConstructor && fails$3(function () {
+	var NON_GENERIC = !!NativePromiseConstructor && fails$2(function () {
 	  // eslint-disable-next-line unicorn/no-thenable -- required for testing
 	  NativePromisePrototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
 	});
 
 	// `Promise.prototype.finally` method
 	// https://tc39.es/ecma262/#sec-promise.prototype.finally
-	$$6({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
+	$$5({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
 	  'finally': function (onFinally) {
 	    var C = speciesConstructor(this, getBuiltIn('Promise'));
 	    var isFunction = isCallable(onFinally);
@@ -10437,27 +10491,27 @@
 	  }
 	});
 
-	var path$6 = path$m;
+	var path$5 = path$m;
 
-	var promise$5 = path$6.Promise;
+	var promise$5 = path$5.Promise;
 
-	var parent$k = promise$5;
+	var parent$h = promise$5;
 
 
-	var promise$4 = parent$k;
+	var promise$4 = parent$h;
 
-	var parent$j = promise$4;
+	var parent$g = promise$4;
 
-	var promise$3 = parent$j;
+	var promise$3 = parent$g;
 
 	// TODO: Remove from `core-js@4`
-	var $$5 = _export;
+	var $$4 = _export;
 	var newPromiseCapabilityModule = newPromiseCapability$2;
 	var perform = perform$6;
 
 	// `Promise.try` method
 	// https://github.com/tc39/proposal-promise-try
-	$$5({ target: 'Promise', stat: true, forced: true }, {
+	$$4({ target: 'Promise', stat: true, forced: true }, {
 	  'try': function (callbackfn) {
 	    var promiseCapability = newPromiseCapabilityModule.f(this);
 	    var result = perform(callbackfn);
@@ -10466,14 +10520,14 @@
 	  }
 	});
 
-	var parent$i = promise$3;
+	var parent$f = promise$3;
 
 	// TODO: Remove from `core-js@4`
 
 
 
 
-	var promise$2 = parent$i;
+	var promise$2 = parent$f;
 
 	var promise$1 = promise$2;
 
@@ -10504,60 +10558,6 @@
 	    });
 	  }
 	}
-
-	var global$1 = global$o;
-	var fails$2 = fails$x;
-	var uncurryThis = functionUncurryThis;
-	var toString$1 = toString$c;
-	var trim = stringTrim.trim;
-	var whitespaces = whitespaces$3;
-
-	var charAt = uncurryThis(''.charAt);
-	var $parseFloat$1 = global$1.parseFloat;
-	var Symbol$1 = global$1.Symbol;
-	var ITERATOR = Symbol$1 && Symbol$1.iterator;
-	var FORCED$1 = 1 / $parseFloat$1(whitespaces + '-0') !== -Infinity
-	  // MS Edge 18- broken with boxed symbols
-	  || (ITERATOR && !fails$2(function () { $parseFloat$1(Object(ITERATOR)); }));
-
-	// `parseFloat` method
-	// https://tc39.es/ecma262/#sec-parsefloat-string
-	var numberParseFloat = FORCED$1 ? function parseFloat(string) {
-	  var trimmedString = trim(toString$1(string));
-	  var result = $parseFloat$1(trimmedString);
-	  return result === 0 && charAt(trimmedString, 0) == '-' ? -0 : result;
-	} : $parseFloat$1;
-
-	var $$4 = _export;
-	var $parseFloat = numberParseFloat;
-
-	// `parseFloat` method
-	// https://tc39.es/ecma262/#sec-parsefloat-string
-	$$4({ global: true, forced: parseFloat != $parseFloat }, {
-	  parseFloat: $parseFloat
-	});
-
-	var path$5 = path$m;
-
-	var _parseFloat$6 = path$5.parseFloat;
-
-	var parent$h = _parseFloat$6;
-
-	var _parseFloat$5 = parent$h;
-
-	var parent$g = _parseFloat$5;
-
-	var _parseFloat$4 = parent$g;
-
-	var parent$f = _parseFloat$4;
-
-	var _parseFloat$3 = parent$f;
-
-	var _parseFloat$2 = _parseFloat$3;
-
-	var _parseFloat = _parseFloat$2;
-
-	var _parseFloat$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseFloat);
 
 	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -10646,7 +10646,7 @@
 	        _this3.emit(EVENT.DOT_DOWN);
 	        _this3.mouseX = e.pageX;
 	        // this.dot.style.left是一个百分比如"40.8%，变成px
-	        _this3.dotLeft = _parseFloat$1(_this3.dot.style.left || '0') / 100 * _this3.el.clientWidth;
+	        // this.dotLeft = (parseFloat(this.dot.style.left || '0') / 100) * this.el.clientWidth
 	        document.body.addEventListener('mousemove', ctx.onMouseMove);
 	        document.body.onmouseup = function (e) {
 	          _this3.emit(EVENT.DOT_UP, _this3.completedProgress.clientWidth / _this3.el.clientWidth, ctx);
@@ -10728,32 +10728,11 @@
 	    key: "initEvent",
 	    value: function initEvent() {
 	      var _this2 = this;
-	      this.el.addEventListener('mouseenter', function (e) {
-	        _this2.preTime.style.display = 'block';
-	        _this2.preTime.style.left = e.offsetX - _this2.preTime.clientWidth / 2 + 'px';
-	        var time = formatTime(e.offsetX / e.currentTarget.clientWidth * _this2.player.video.duration);
-	        _this2.preTime.innerText = time;
-	      });
-	      this.el.addEventListener('mousemove', function (e) {
-	        var time = formatTime(e.offsetX / e.currentTarget.clientWidth * _this2.player.video.duration);
-	        _this2.preTime.style.left = e.offsetX - _this2.preTime.clientWidth / 2 + 'px';
-	        _this2.preTime.innerText = time;
-	      });
-	      this.el.addEventListener('mouseleave', function () {
-	        _this2.preTime.style.display = '';
-	      });
-	      this.on(EVENT.PROGRESS_CLICK, function (dx, ctx) {
-	        var scale = dx / _this2.el.clientWidth;
-	        if (scale < 0) {
-	          scale = 0;
-	        } else if (scale > 1) {
-	          scale = 1;
-	        }
-	        _this2.player.video.currentTime = scale * _this2.player.video.duration;
-	        if (_this2.player.video.paused) {
-	          _this2.player.video.play();
-	        }
-	      });
+	      if (this.player.env === 'PC') {
+	        this.initPCEvent();
+	      } else {
+	        this.initMobileEvent();
+	      }
 	      this.on(EVENT.DOT_DRAG, function (dx, ctx) {
 	        var scale = (dx + _this2.dotLeft) / _this2.el.clientWidth;
 	        if (scale < 0) {
@@ -10763,17 +10742,19 @@
 	        }
 	        _this2.player.emit(EVENT.VIDEO_DOT_DRAG, scale);
 	      });
-	      this.on(EVENT.PROGRESS_MOUSE_ENTER, function () {
-	        removeClass(_this2.dot, ['video-progress-dot-hidden']);
-	      });
-	      this.on(EVENT.PROGRESS_MOUSE_LEAVE, function () {
-	        addClass(_this2.dot, ['video-progress-dot-hidden']);
-	      });
+	      // this.on(EVENT.PROGRESS_MOUSE_ENTER, () => {
+	      //   removeClass(this.dot, ['video-progress-dot-hidden'])
+	      // })
+	      // this.on(EVENT.PROGRESS_MOUSE_LEAVE, () => {
+	      //   addClass(this.dot, ['video-progress-dot-hidden'])
+	      // })
 	      this.on(EVENT.DOT_DOWN, function () {
+	        _this2.dotLeft = _parseFloat$1(_this2.dot.style.left || '0') / 100 * _this2.el.clientWidth;
 	        _this2.player.emit(EVENT.DOT_DOWN);
 	      });
 	      this.on(EVENT.DOT_UP, function (scale) {
 	        _this2.player.emit(EVENT.DOT_UP);
+	        _this2.dotLeft = _this2.el.clientWidth * scale;
 	        _this2.player.video.currentTime = scale * _this2.player.video.duration;
 	      });
 	      this.player.video.addEventListener('timeupdate', function (e) {
@@ -10782,6 +10763,62 @@
 	          _this2.dot.style.left = scale * 100 + '%';
 	          _this2.completedProgress.style.width = scale * 100 + '%';
 	        }
+	      });
+	    }
+	  }, {
+	    key: "initPCEvent",
+	    value: function initPCEvent() {
+	      var _this3 = this;
+	      this.el.addEventListener('mouseenter', function (e) {
+	        _this3.preTime.style.display = 'block';
+	        _this3.preTime.style.left = e.offsetX - _this3.preTime.clientWidth / 2 + 'px';
+	        var time = formatTime(e.offsetX / e.currentTarget.clientWidth * _this3.player.video.duration);
+	        _this3.preTime.innerText = time;
+	      });
+	      this.el.addEventListener('mousemove', function (e) {
+	        var time = formatTime(e.offsetX / e.currentTarget.clientWidth * _this3.player.video.duration);
+	        _this3.preTime.style.left = e.offsetX - _this3.preTime.clientWidth / 2 + 'px';
+	        _this3.preTime.innerText = time;
+	      });
+	      this.el.addEventListener('mouseleave', function () {
+	        _this3.preTime.style.display = '';
+	      });
+	      this.on(EVENT.PROGRESS_CLICK, function (dx, ctx) {
+	        var scale = dx / _this3.el.clientWidth;
+	        if (scale < 0) {
+	          scale = 0;
+	        } else if (scale > 1) {
+	          scale = 1;
+	        }
+	        _this3.player.video.currentTime = scale * _this3.player.video.duration;
+	        if (_this3.player.video.paused) {
+	          _this3.player.video.play();
+	        }
+	      });
+	      this.on(EVENT.PROGRESS_MOUSE_ENTER, function () {
+	        removeClass(_this3.dot, ['video-progress-dot-hidden']);
+	      });
+	      this.on(EVENT.PROGRESS_MOUSE_LEAVE, function () {
+	        addClass(_this3.dot, ['video-progress-dot-hidden']);
+	      });
+	    }
+	  }, {
+	    key: "initMobileEvent",
+	    value: function initMobileEvent() {
+	      var _this4 = this;
+	      // 手势左右处于滑动中
+	      this.player.on(EVENT.MOVE_HORIZONTAL, function (e) {
+	        var dx = e.deltaX;
+	        _this4.emit(EVENT.DOT_DRAG, dx, _this4);
+	      });
+	      // 手势左右滑动结束
+	      this.player.on(EVENT.SLIDE_HORIZONTAL, function (e) {
+	        if (_this4.player.video.paused) {
+	          _this4.player.video.play();
+	        }
+	        var dx = e.endPos.x - e.startPos.x;
+	        var scale = (_this4.dotLeft + dx) / _this4.el.clientWidth;
+	        _this4.emit(EVENT.DOT_UP, scale);
 	      });
 	    }
 	  }]);
@@ -25315,8 +25352,11 @@
 	    key: "initMobileEvent",
 	    value: function initMobileEvent() {
 	      var _this4 = this;
+	      wrap(this.el).addEventListener('touchstart', function () {
+	        _this4.emit(EVENT.DOT_DOWN);
+	      });
 	      // 单击
-	      wrap(this.video).addEventListener('singleTap', function (e) {
+	      wrap(this.el).addEventListener('singleTap', function (e) {
 	        // console.log(e, 'singletap')
 	        if (_this4.toolBar.status === 'hidden') {
 	          _this4.emit(EVENT.SHOW_TOOLBAR, e);
@@ -25326,7 +25366,7 @@
 	        _this4.emit(EVENT.VIDEO_CLICK);
 	      });
 	      // 双击
-	      wrap(this.video).addEventListener('doubleTap', function (e) {
+	      wrap(this.el).addEventListener('doubleTap', function (e) {
 	        // console.log(e, 'doubleTap')
 	        if (_this4.video.paused) {
 	          _this4.video.play();
@@ -25335,7 +25375,7 @@
 	        }
 	      });
 	      // 手势上下处于滑动中
-	      wrap(this.video).addEventListener('move', function (e) {
+	      wrap(this.el).addEventListener('move', function (e) {
 	        // console.log(e, 'move')
 	        var dx = e.deltaX;
 	        var dy = e.deltaY;
@@ -25346,7 +25386,7 @@
 	        }
 	      });
 	      // 手势上下滑动结束
-	      wrap(this.video).addEventListener('swipe', function (e) {
+	      wrap(this.el).addEventListener('swipe', function (e) {
 	        // console.log(e, 'swipe')
 	        var dx = e.endPos.x - e.startPos.x;
 	        var dy = e.endPos.y - e.startPos.y;

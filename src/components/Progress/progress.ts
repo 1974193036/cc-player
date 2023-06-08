@@ -92,7 +92,7 @@ export class Progress extends Component implements ComponentItem {
       this.emit(EVENT.DOT_DOWN)
       this.mouseX = e.pageX
       // this.dot.style.left是一个百分比如"40.8%，变成px
-      this.dotLeft = (parseFloat(this.dot.style.left || '0') / 100) * this.el.clientWidth
+      // this.dotLeft = (parseFloat(this.dot.style.left || '0') / 100) * this.el.clientWidth
 
       document.body.addEventListener('mousemove', ctx.onMouseMove)
 
