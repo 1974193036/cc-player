@@ -1,11 +1,13 @@
 import { EVENT } from '@/events'
 import { Player } from '@/page/player'
-import { addClass, removeClass } from '@/utils/domUtils'
+import { formatTime } from '@/utils'
+import { $, addClass, removeClass } from '@/utils/domUtils'
 import { Progress } from '@/components/Progress/progress'
 
 export class VideoProgress extends Progress {
   readonly id = 'VideoProgress'
   // el: div.video-progress
+  private preTime: HTMLElement
   constructor(player: Player, container?: HTMLElement, desc?: string) {
     super(player, container, desc)
 
@@ -18,12 +20,38 @@ export class VideoProgress extends Progress {
   }
 
   initTemplate(): void {
+    this.preTime = $('div.video-progress-pretime')
+    this.el.append(this.preTime)
     addClass(this.el, ['video-progress'])
     addClass(this.dot, ['video-progress-dot', 'video-progress-dot-hidden'])
     addClass(this.completedProgress, ['video-progress-completed'])
   }
 
   initEvent(): void {
+    this.el.addEventListener('mouseenter', (e: MouseEvent) => {
+      this.preTime.style.display = 'block'
+
+      this.preTime.style.left = e.offsetX - this.preTime.clientWidth / 2 + 'px'
+      let time = formatTime(
+        (e.offsetX / (e.currentTarget as HTMLElement).clientWidth) * this.player.video.duration
+      )
+
+      this.preTime.innerText = time
+    })
+
+    this.el.addEventListener('mousemove', (e: MouseEvent) => {
+      let time = formatTime(
+        (e.offsetX / (e.currentTarget as HTMLElement).clientWidth) * this.player.video.duration
+      )
+
+      this.preTime.style.left = e.offsetX - this.preTime.clientWidth / 2 + 'px'
+      this.preTime.innerText = time
+    })
+
+    this.el.addEventListener('mouseleave', () => {
+      this.preTime.style.display = ''
+    })
+
     this.on(EVENT.PROGRESS_CLICK, (dx: number, ctx: Progress) => {
       let scale = dx / this.el.clientWidth
       if (scale < 0) {
