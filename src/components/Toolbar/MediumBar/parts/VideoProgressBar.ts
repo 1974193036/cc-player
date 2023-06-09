@@ -1,6 +1,7 @@
 import { EVENT } from '@/events'
 import { Player } from '@/page/player'
-import { formatTime } from '@/utils'
+import { formatTime, getDOMPoint } from '@/utils'
+import { Thumbnails } from '@/types/Player'
 import { $, addClass, removeClass } from '@/utils/domUtils'
 import { Progress } from '@/components/Progress/progress'
 import { MoveEvent, SwipeEvent } from 'ntouch.js'
@@ -9,20 +10,41 @@ export class VideoProgress extends Progress {
   readonly id = 'VideoProgress'
   // el: div.video-progress
   private preTime: HTMLElement
+  private thumbnails: HTMLElement
+  private thumbnailsOptions: Thumbnails | null = null
+  private currentIndex: number | null = null
   constructor(player: Player, container?: HTMLElement, desc?: string) {
     super(player, container, desc)
-
     this.init()
   }
 
   init(): void {
     this.initTemplate()
     this.initEvent()
+
+    if (this.thumbnailsOptions) {
+      this.initThumbnails()
+    }
   }
 
   initTemplate(): void {
+    if (this.player.playerOptions.thumbnails) {
+      this.thumbnailsOptions = Object.assign(
+        {
+          width: 160,
+          height: 90,
+          margin: 0
+        },
+        this.player.playerOptions.thumbnails
+      )
+    }
     this.preTime = $('div.video-progress-pretime')
-    this.el.append(this.preTime)
+
+    this.thumbnails = $('div.video-progress-thumbnails')
+    this.thumbnails.style.height = this.thumbnailsOptions.height + 'px'
+    this.thumbnails.style.width = this.thumbnailsOptions.width + 'px'
+
+    this.el.append(this.preTime, this.thumbnails)
     addClass(this.el, ['video-progress'])
     addClass(this.dot, ['video-progress-dot', 'video-progress-dot-hidden'])
     addClass(this.completedProgress, ['video-progress-completed'])
@@ -77,26 +99,37 @@ export class VideoProgress extends Progress {
   initPCEvent(): void {
     this.el.addEventListener('mouseenter', (e: MouseEvent) => {
       this.preTime.style.display = 'block'
+      this.thumbnails.style.display = 'block'
 
-      this.preTime.style.left = e.offsetX - this.preTime.clientWidth / 2 + 'px'
+      let left = e.clientX - getDOMPoint(this.el).x
+
+      this.preTime.style.left = left - this.preTime.clientWidth / 2 + 'px'
       let time = formatTime(
-        (e.offsetX / (e.currentTarget as HTMLElement).clientWidth) * this.player.video.duration
+        (left / (e.currentTarget as HTMLElement).clientWidth) * this.player.video.duration
       )
 
       this.preTime.innerText = time
     })
 
     this.el.addEventListener('mousemove', (e: MouseEvent) => {
+      let left = e.clientX - getDOMPoint(this.el).x
       let time = formatTime(
-        (e.offsetX / (e.currentTarget as HTMLElement).clientWidth) * this.player.video.duration
+        (left / (e.currentTarget as HTMLElement).clientWidth) * this.player.video.duration
       )
 
-      this.preTime.style.left = e.offsetX - this.preTime.clientWidth / 2 + 'px'
+      this.preTime.style.left = left - this.preTime.clientWidth / 2 + 'px'
       this.preTime.innerText = time
+
+      if (left - this.thumbnails.clientWidth / 2 >= 0) {
+        this.thumbnails.style.left = left - this.thumbnails.clientWidth / 2 + 'px'
+      } else {
+        this.thumbnails.style.left = 0 + 'px'
+      }
     })
 
     this.el.addEventListener('mouseleave', () => {
-      this.preTime.style.display = ''
+      this.preTime.style.display = 'none'
+      this.thumbnails.style.display = 'none'
     })
 
     this.on(EVENT.PROGRESS_CLICK, (dx: number, ctx: Progress) => {
@@ -137,6 +170,35 @@ export class VideoProgress extends Progress {
       let dx = e.endPos.x - e.startPos.x
       let scale = (this.dotLeft + dx) / this.el.clientWidth
       this.emit(EVENT.DOT_UP, scale)
+    })
+  }
+
+  initThumbnails() {
+    this.el.addEventListener('mousemove', (e: MouseEvent) => {
+      let time =
+        ((e.clientX - getDOMPoint(this.el).x) / this.el.clientWidth) * this.player.video.duration
+      let index = Math.floor(time / this.thumbnailsOptions.interval) // 180 / 5
+
+      if (
+        this.currentIndex === null ||
+        this.currentIndex !== index ||
+        index >= this.thumbnailsOptions.total
+      ) {
+        this, (this.currentIndex = index)
+        
+        let y =
+          Math.floor(index / this.thumbnailsOptions.col) * this.thumbnailsOptions.margin * 2 +
+          this.thumbnailsOptions.margin +
+          index * this.thumbnailsOptions.height
+        let x =
+          Math.floor(index % this.thumbnailsOptions.col) * this.thumbnailsOptions.margin * 2 +
+          this.thumbnailsOptions.margin +
+          index * this.thumbnailsOptions.width
+
+        this.thumbnails.style.backgroundImage = `url(${this.thumbnailsOptions.source})`
+        this.thumbnails.style.backgroundPositionX = `-${x}px`
+        this.thumbnails.style.backgroundPositionY = `-${y}px`
+      }
     })
   }
 }

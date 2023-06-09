@@ -23,13 +23,6 @@ export type PlayerOptions = {
   post?: string
   autoplay?: boolean
   streamPlay?: boolean
-  leftBottomBarControllers?: ComponentConstructor[]
-  rightBottomBarControllers?: ComponentConstructor[]
-  leftTopBarControllers?: ComponentConstructor[]
-  rightTopBarController?: ComponentConstructor[]
-  leftMediumBarController?: ComponentConstructor[]
-  mediumMediumBarController?: ComponentConstructor[]
-  rightMediumBarController?: ComponentConstructor[]
   subtitles?: Subtitles[]
   danmaku?: DanmakuOptions
   plugins?: Plugin[]
@@ -40,6 +33,14 @@ export type PlayerOptions = {
         message: string
         style?: Partial<CSSStyleDeclaration>
       }
+  thumbnails?: Thumbnails
+  leftBottomBarControllers?: ComponentConstructor[]
+  rightBottomBarControllers?: ComponentConstructor[]
+  leftTopBarControllers?: ComponentConstructor[]
+  rightTopBarController?: ComponentConstructor[]
+  leftMediumBarController?: ComponentConstructor[]
+  mediumMediumBarController?: ComponentConstructor[]
+  rightMediumBarController?: ComponentConstructor[]
 }
 
 export type DanmakuOptions = {
@@ -54,6 +55,17 @@ export type Subtitles = {
   source: string
   lang: 'zh' | 'en' | 'jp'
   style?: Partial<CSSStyleDeclaration>
+}
+
+export interface Thumbnails {
+  row: number // 精灵图的行数
+  col: number // 列数
+  total: number // 精灵图的总数
+  margin: number // 距离上下左右的像素大小
+  source: string // 资源的地址
+  interval: number // 间隔时间
+  width: number
+  height: number
 }
 
 export type DOMProps = {
@@ -119,7 +131,7 @@ export interface ComponentConstructor {
     props?: DOMProps,
     children?: string | Node[]
   ): Component & ComponentItem
-}
+} // 组件的构造函数
 
 // 存储内置组件的ID，用于在用户注册组件时区分是自定义组件还是内置组件
 export type BuiltInComponentID =
