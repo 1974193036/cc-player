@@ -6,6 +6,7 @@ const babel = require('@rollup/plugin-babel')
 const { DEFAULT_EXTENSIONS } = require('@babel/core')
 const postcss = require('rollup-plugin-postcss')
 const autoprefixer = require('autoprefixer')
+const json = require('@rollup/plugin-json')
 const serve = require('rollup-plugin-serve')
 const livereload = require('rollup-plugin-livereload')
 const path = require('path')
@@ -40,6 +41,7 @@ module.exports = defineConfig([
         // babel 默认不支持 ts 需要手动添加
         extensions: [...DEFAULT_EXTENSIONS, '.ts']
       }),
+      json(),
       postcss({
         plugins: [autoprefixer()]
       }),
@@ -48,6 +50,10 @@ module.exports = defineConfig([
           {
             find: '@',
             replacement: path.resolve(__dirname, '../', 'src')
+          },
+          {
+            find: '@@',
+            replacement: path.resolve(__dirname, '../')
           }
         ]
       }),

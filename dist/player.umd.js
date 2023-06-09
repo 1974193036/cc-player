@@ -232,26 +232,26 @@
 	var Deno$1 = global$m.Deno;
 	var versions = process$4 && process$4.versions || Deno$1 && Deno$1.version;
 	var v8 = versions && versions.v8;
-	var match, version;
+	var match, version$1;
 
 	if (v8) {
 	  match = v8.split('.');
 	  // in old Chrome, versions of V8 isn't V8 = Chrome / 10
 	  // but their correct versions are not interesting for us
-	  version = match[0] > 0 && match[0] < 4 ? 1 : +(match[0] + match[1]);
+	  version$1 = match[0] > 0 && match[0] < 4 ? 1 : +(match[0] + match[1]);
 	}
 
 	// BrowserFS NodeJS `process` polyfill incorrectly set `.v8` to `0.0`
 	// so check `userAgent` even if `.v8` exists, but 0
-	if (!version && userAgent$3) {
+	if (!version$1 && userAgent$3) {
 	  match = userAgent$3.match(/Edge\/(\d+)/);
 	  if (!match || match[1] >= 74) {
 	    match = userAgent$3.match(/Chrome\/(\d+)/);
-	    if (match) version = +match[1];
+	    if (match) version$1 = +match[1];
 	  }
 	}
 
-	var engineV8Version = version;
+	var engineV8Version = version$1;
 
 	/* eslint-disable es/no-symbol -- required for testing */
 
@@ -3518,6 +3518,7 @@
 	  // console.log('22', { x: l, y: t })
 	  // return { x: l, y: t }
 	}
+
 	/**
 	 * @description 查看当前的鼠标位置是否在父元素和绝对定位的子元素的组合范围内，如果超出则返回false
 	 * @param parent
@@ -3541,6 +3542,7 @@
 	  return false;
 	}
 	var SELECTOR_REG = /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/;
+
 	/**
 	 * @description 根据desc的标签描述和props的属性描述来创建一个DOM对象，并且在实例上挂载各种属性
 	 * @param {string} desc
@@ -3646,6 +3648,7 @@
 	  //   })
 	  // }
 	  // return false
+
 	  if (parent !== child && parent.contains(child)) {
 	    return true;
 	  }
@@ -3698,6 +3701,7 @@
 	  }
 	  return svg;
 	}
+
 	/**
 	 * @description 合并两个组件的实例对象
 	 * @param target
@@ -3741,9 +3745,9 @@
 	            throw new Error("\u5C5E\u6027".concat(key, "\u5BF9\u5E94\u7684\u503C\u5E94\u8BE5\u4E3ADOM\u5143\u7D20\u6216\u8005\u5B57\u7B26\u4E32\u7C7B\u578B"));
 	          }
 	          if (typeof another[key] === 'string') ; else {
-	            var _target$key$parentNod, _target$key$parentNod2;
-	            (_target$key$parentNod = target[key].parentNode) === null || _target$key$parentNod === void 0 ? void 0 : _target$key$parentNod.insertBefore(another[key], target[key]);
-	            (_target$key$parentNod2 = target[key].parentNode) === null || _target$key$parentNod2 === void 0 ? void 0 : _target$key$parentNod2.removeChild(target[key]);
+	            var _parentNode, _parentNode2;
+	            (_parentNode = target[key].parentNode) === null || _parentNode === void 0 ? void 0 : _parentNode.insertBefore(another[key], target[key]);
+	            (_parentNode2 = target[key].parentNode) === null || _parentNode2 === void 0 ? void 0 : _parentNode2.removeChild(target[key]);
 	            target[key] = another[key];
 	          }
 	        }
@@ -4077,18 +4081,17 @@
 	  return BaseEvent;
 	}();
 
-	function _createSuper$w(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$w(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$w() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$x(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$x(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$x() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Component = /*#__PURE__*/function (_BaseEvent) {
 	  _inherits(Component, _BaseEvent);
-	  var _super = _createSuper$w(Component);
+	  var _super = _createSuper$x(Component);
+	  //el代表着该组件对应的整个HTML元素
+
 	  function Component(container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Component);
 	    _this = _super.call(this);
-	    _defineProperty(_assertThisInitialized(_this), "el", void 0);
-	    //el代表着该组件对应的整个HTML元素
-	    _defineProperty(_assertThisInitialized(_this), "container", void 0);
 	    if (!desc) {
 	      desc = 'div';
 	    }
@@ -4135,21 +4138,16 @@
 	  return Component;
 	}(BaseEvent);
 
-	function _createSuper$v(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$v(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$v() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$w(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$w(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$w() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Loading = /*#__PURE__*/function (_Component) {
 	  _inherits(Loading, _Component);
-	  var _super = _createSuper$v(Loading);
+	  var _super = _createSuper$w(Loading);
 	  function Loading(player, msg, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Loading);
 	    _this = _super.call(this, null, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'Loading');
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "loadingBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "messageBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "message", void 0);
 	    _this.props = props || {};
 	    _this.player = player;
 	    _this.container = container;
@@ -4196,8 +4194,7 @@
 	  return Loading;
 	}(Component);
 
-	var EVENT;
-	(function (EVENT) {
+	var EVENT = /*#__PURE__*/function (EVENT) {
 	  EVENT["LOADED_META_DATA"] = "loadedmetadata";
 	  EVENT["TIME_UPDATE"] = "timeupdate";
 	  EVENT["PLAY"] = "play";
@@ -4233,14 +4230,16 @@
 	  EVENT["VOLUME_PROGRESS_CLICK"] = "volume-progress-click";
 	  EVENT["REQUEST_DANMAKU_DATA"] = "RequestDanmakuData";
 	  EVENT["SEND_DANMAKU_DATA"] = "SendDanmakuData";
-	})(EVENT || (EVENT = {}));
+	  return EVENT;
+	}({});
 
-	function _createSuper$u(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$u(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$u() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$v(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$v(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$v() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ErrorLoading = /*#__PURE__*/function (_Loading) {
 	  _inherits(ErrorLoading, _Loading);
-	  var _super = _createSuper$u(ErrorLoading);
+	  var _super = _createSuper$v(ErrorLoading);
 	  // el: div.video-loading
+
 	  function ErrorLoading(player, msg, container) {
 	    var _this;
 	    _classCallCheck(this, ErrorLoading);
@@ -4258,6 +4257,7 @@
 	      this.player.on(EVENT.ERROR, function (e) {
 	        _this2.addLoading();
 	      });
+
 	      // 该视频已准备好开始播放
 	      this.player.on(EVENT.CAN_PLAY, function (e) {
 	        _this2.removeLoading();
@@ -4267,12 +4267,13 @@
 	  return ErrorLoading;
 	}(Loading);
 
-	function _createSuper$t(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$t(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$t() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$u(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$u(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$u() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var TimeLoading = /*#__PURE__*/function (_Loading) {
 	  _inherits(TimeLoading, _Loading);
-	  var _super = _createSuper$t(TimeLoading);
+	  var _super = _createSuper$u(TimeLoading);
 	  // el: div.video-loading
+
 	  function TimeLoading(player, msg, container) {
 	    var _this;
 	    _classCallCheck(this, TimeLoading);
@@ -4290,6 +4291,7 @@
 	      this.player.on(EVENT.WAITING, function () {
 	        _this2.addLoading();
 	      });
+
 	      // 该视频已准备好开始播放
 	      this.player.on(EVENT.CAN_PLAY, function () {
 	        _this2.removeLoading();
@@ -4488,20 +4490,16 @@
 
 	var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice$1);
 
-	function _createSuper$s(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$s(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$s() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$t(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$t(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$t() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Toast = /*#__PURE__*/function (_Component) {
 	  _inherits(Toast, _Component);
-	  var _super = _createSuper$s(Toast);
+	  var _super = _createSuper$t(Toast);
 	  function Toast(player, dom, props) {
 	    var _this;
 	    _classCallCheck(this, Toast);
 	    _this = _super.call(this, null, 'div', props, null);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'Toast');
-	    // el: div.video-toast-wrapper.video-toast-animate
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "dom", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
 	    _this.player = player;
 	    _this.props = props;
 	    _this.dom = dom || null;
@@ -5665,35 +5663,32 @@
 
 	// COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件
 	var COMPONENT_STORE = new _Map();
+
 	// ONCE_COMPONENT_STORE存储的是只要曾经在视图上展示过哪怕已经卸载，都会一直保留在此处，除非通过delete进行彻底删除
 	var ONCE_COMPONENT_STORE = new _Map();
+
 	// 存储需要隐藏的元素，但不进行卸载
 	var HIDEEN_COMPONENT_STORE = new _Map();
+
 	// 内置的原子组件
 	var BuiltInControllerComponent = ['DurationShow', 'FullPage', 'FullScreen', 'PicInPic', 'PlayButton', 'Playrate', 'ScreenShot', 'SubSetting', 'VideoShot', 'Toast'];
+
 	// 存储组件，包括用户自定义组件和内置组件
 	function storeControlComponent(item) {
 	  COMPONENT_STORE.set(item.id, item);
 	  ONCE_COMPONENT_STORE.set(item.id, item);
 	}
 
-	function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$s(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$s(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$s() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Options = /*#__PURE__*/function (_Component) {
 	  _inherits(Options, _Component);
-	  var _super = _createSuper$r(Options);
+	  var _super = _createSuper$s(Options);
 	  function Options(player, container, hideWidth, hideHeight, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Options);
 	    _this = _super.call(this, container, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'Options');
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "hideWidth", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "hideHeight", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "hideBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "icon", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "bottom", 48);
 	    _this.player = player;
 	    props ? _this.props = props : _this.props = {};
@@ -5743,6 +5738,7 @@
 	        document.body.onmousemove = ctx.handleMouseMove.bind(_this2);
 	        _this2.player.emit('oneControllerHover', _this2);
 	      };
+
 	      // 让当前控件显示，让其他的隐藏
 	      this.player.on('oneControllerHover', function (controller) {
 	        // console.log(this, controller, this === controller)
@@ -6246,11 +6242,11 @@
 	document$3.getElementsByTagName = getElementsByTagName;
 	Object.setPrototypeOf(document$3, Document.prototype);
 
-	function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullScreen = /*#__PURE__*/function (_Options) {
 	  _inherits(FullScreen, _Options);
-	  var _super = _createSuper$q(FullScreen);
+	  var _super = _createSuper$r(FullScreen);
 	  function FullScreen(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, FullScreen);
@@ -6321,23 +6317,18 @@
 	  return FullScreen;
 	}(Options);
 
-	function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PlayButton = /*#__PURE__*/function (_Component) {
 	  _inherits(PlayButton, _Component);
-	  var _super = _createSuper$p(PlayButton);
+	  var _super = _createSuper$q(PlayButton);
+	  // el: div.video-start-pause.video-controller
+
 	  function PlayButton(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, PlayButton);
 	    _this = _super.call(this, container, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'PlayButton');
-	    // el: div.video-start-pause.video-controller
-	    _defineProperty(_assertThisInitialized(_this), "pauseIcon", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "playIcon", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "button", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
 	    _this.player = player;
 	    _this.props = props || {};
 	    _this.init();
@@ -6507,22 +6498,17 @@
 
 	var _parseInt$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseInt);
 
-	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Volume = /*#__PURE__*/function (_Options) {
 	  _inherits(Volume, _Options);
-	  var _super = _createSuper$o(Volume);
+	  var _super = _createSuper$p(Volume);
 	  function Volume(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, Volume);
 	    _this = _super.call(this, player, container, 0, 0, desc);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'Volume');
-	    // el: div.video-volume video-controller
-	    _defineProperty(_assertThisInitialized(_this), "volumeProgress", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "volumeShow", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "volumeCompleted", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "volume", 0.5);
-	    _defineProperty(_assertThisInitialized(_this), "volumeDot", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "mouseY", 0);
 	    _this.init();
 	    return _this;
@@ -6630,11 +6616,11 @@
 	  return Math.round(Math.atan(Math.abs(dy) / Math.abs(dx)) * 180 / Math.PI);
 	}
 
-	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DutaionShow = /*#__PURE__*/function (_Component) {
 	  _inherits(DutaionShow, _Component);
-	  var _super = _createSuper$n(DutaionShow);
+	  var _super = _createSuper$o(DutaionShow);
 	  function DutaionShow(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, DutaionShow);
@@ -6643,8 +6629,6 @@
 	    // el: div.video-duration-time.video-controller
 	    _defineProperty(_assertThisInitialized(_this), "currentTime", '00:00');
 	    _defineProperty(_assertThisInitialized(_this), "totalTime", '00:00');
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
 	    _this.player = player;
 	    _this.props = props;
 	    _this.init();
@@ -6692,11 +6676,11 @@
 	  return DutaionShow;
 	}(Component);
 
-	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var FullPage = /*#__PURE__*/function (_Options) {
 	  _inherits(FullPage, _Options);
-	  var _super = _createSuper$m(FullPage);
+	  var _super = _createSuper$n(FullPage);
 	  function FullPage(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, FullPage);
@@ -6758,12 +6742,13 @@
 	  return FullPage;
 	}(Options);
 
-	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var PicInPic = /*#__PURE__*/function (_Options) {
 	  _inherits(PicInPic, _Options);
-	  var _super = _createSuper$l(PicInPic);
+	  var _super = _createSuper$m(PicInPic);
 	  // el: div.video-picInpic.video-controller
+
 	  function PicInPic(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, PicInPic);
@@ -6807,6 +6792,7 @@
 	        e.stopPropagation();
 	      }
 	      // document.pictureInPictureElement: 当前画中画的元素
+
 	      if (document.pictureInPictureElement) {
 	        // 当前存在画中画的元素，则退出画中画
 	        document.exitPictureInPicture();
@@ -8649,18 +8635,18 @@
 
 	var _URL = /*@__PURE__*/getDefaultExportFromCjs(url$1);
 
-	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ScreenShot = /*#__PURE__*/function (_Options) {
 	  _inherits(ScreenShot, _Options);
-	  var _super = _createSuper$k(ScreenShot);
+	  var _super = _createSuper$l(ScreenShot);
+	  // el: div.video-screenshot.video-controller
+
 	  function ScreenShot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, ScreenShot);
 	    _this = _super.call(this, player, container, 0, 0, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'ScreenShot');
-	    // el: div.video-screenshot.video-controller
-	    _defineProperty(_assertThisInitialized(_this), "confirmIcon", void 0);
 	    _this.init();
 	    return _this;
 	  }
@@ -8750,11 +8736,11 @@
 	  return ScreenShot;
 	}(Options);
 
-	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var VideoShot = /*#__PURE__*/function (_Options) {
 	  _inherits(VideoShot, _Options);
-	  var _super = _createSuper$j(VideoShot);
+	  var _super = _createSuper$k(VideoShot);
 	  function VideoShot(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, VideoShot);
@@ -8763,9 +8749,6 @@
 	    // el: div.video-videoshot.video-controller
 	    _defineProperty(_assertThisInitialized(_this), "countDown", 30);
 	    _defineProperty(_assertThisInitialized(_this), "timer", null);
-	    _defineProperty(_assertThisInitialized(_this), "warnIcon", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "successIcon", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "inProgressIcon", void 0);
 	    _this.init();
 	    return _this;
 	  }
@@ -8795,6 +8778,7 @@
 	        this.el.ontouchstart = this.onDown;
 	      }
 	    }
+
 	    // 当鼠标或者手指按下的时刻开始启动录屏
 	  }, {
 	    key: "onDown",
@@ -8810,6 +8794,7 @@
 	    value: function videoShot() {
 	      var _this2 = this;
 	      var inProgressToast = this.createInProgressToast();
+
 	      // MediaRecorder(stream[, options]) 构造函数会创建一个对指定的 MediaStream 进行录制的 MediaRecorder 对象
 	      var recorder = new MediaRecorder(this.player.video.captureStream(60));
 	      recorder.addEventListener('start', function (e) {
@@ -8818,9 +8803,11 @@
 	      recorder.addEventListener('stop', function (e) {
 	        console.log('结束录制视频');
 	      });
+
 	      // 当 MediaRecorder 将媒体数据传递到您的应用程序以供使用时，将触发该事件。数据在包含数据的Blob对象中提供
 	      recorder.addEventListener('dataavailable', function (e) {
 	        // console.log(e.data) // 是一个Blob
+
 	        var data = e.data;
 	        var a = document.createElement('a');
 	        // createObjectURL: 用于创建 URL 的 File 对象、Blob 对象或者 MediaSource 对象
@@ -8832,6 +8819,7 @@
 	        document.body.removeChild(a);
 	        a = null;
 	      });
+
 	      // 开始录制视频
 	      recorder.start();
 	      this.timer = window.setInterval(function () {
@@ -8913,17 +8901,10 @@
 	}(Options);
 
 	var SubsettingItem = /*#__PURE__*/function () {
+	  // el: div.video-subsettings-item
+
 	  function SubsettingItem(player, leftIcon, leftText, rightTip, rightIcon) {
 	    _classCallCheck(this, SubsettingItem);
-	    _defineProperty(this, "el", void 0);
-	    // el: div.video-subsettings-item
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "leftArea", void 0);
-	    _defineProperty(this, "rightArea", void 0);
-	    _defineProperty(this, "leftIconBox", void 0);
-	    _defineProperty(this, "leftTextBox", void 0);
-	    _defineProperty(this, "rightTipBox", void 0);
-	    _defineProperty(this, "rightIcon", void 0);
 	    this.player = player;
 	    this.init();
 	    if (leftIcon) this.leftIconBox.appendChild(leftIcon);
@@ -8949,24 +8930,20 @@
 	  return SubsettingItem;
 	}();
 
-	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubsettingsBase = /*#__PURE__*/function (_BaseEvent) {
 	  _inherits(SubsettingsBase, _BaseEvent);
-	  var _super = _createSuper$i(SubsettingsBase);
+	  var _super = _createSuper$j(SubsettingsBase);
 	  function SubsettingsBase(subsetting, player) {
 	    var _this;
 	    _classCallCheck(this, SubsettingsBase);
 	    _this = _super.call(this);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'SubsettingsBase');
-	    _defineProperty(_assertThisInitialized(_this), "el", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "subsetting", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "SubsettingsItem", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", 'click');
 	    _this.player = player;
 	    _this.subsetting = subsetting;
-	    _this.__proto__.constructor.instance = _assertThisInitialized(_this);
+	    _assertThisInitialized(_this).__proto__.constructor.instance = _assertThisInitialized(_this);
 	    return _this;
 	  }
 	  _createClass(SubsettingsBase, [{
@@ -8989,6 +8966,7 @@
 	    value: function initMobileEvent() {
 	      this.clickOrTap = 'singleTap';
 	    }
+
 	    // target表示点击你这个item，需要跳转到哪一个SubsettingsBase
 	  }, {
 	    key: "registerSubsettingsItem",
@@ -9015,7 +8993,9 @@
 	          this.subsetting.subsettingsBaseGraph.set(this, res);
 	        }
 	      }
+
 	      // if (!this.SubsettingsItem.includes(item)) this.SubsettingsItem.push(item)
+
 	      var instance = new SubsettingItem(this.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
 	      item.instance = instance;
 	      this.el.appendChild(instance.el);
@@ -9046,13 +9026,14 @@
 	function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 	function _unsupportedIterableToArray$2(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = _sliceInstanceProperty(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
 	function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	// import { SubsettingItem } from '../SubsettingItem'
 	// import { BaseEvent } from '@/class/BaseEvent'
+
 	var SubsettingsPlayrate = /*#__PURE__*/function (_SubsettingsBase) {
 	  _inherits(SubsettingsPlayrate, _SubsettingsBase);
-	  var _super = _createSuper$h(SubsettingsPlayrate);
+	  var _super = _createSuper$i(SubsettingsPlayrate);
 	  function SubsettingsPlayrate(subsetting, player) {
 	    var _this;
 	    _classCallCheck(this, SubsettingsPlayrate);
@@ -9143,11 +9124,11 @@
 	  return SubsettingsPlayrate;
 	}(SubsettingsBase);
 
-	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubsettingsMain = /*#__PURE__*/function (_SubsettingsBase) {
 	  _inherits(SubsettingsMain, _SubsettingsBase);
-	  var _super = _createSuper$g(SubsettingsMain);
+	  var _super = _createSuper$h(SubsettingsMain);
 	  function SubsettingsMain(subsetting, player) {
 	    var _this;
 	    _classCallCheck(this, SubsettingsMain);
@@ -9199,25 +9180,22 @@
 	  return SubsettingsMain;
 	}(SubsettingsBase);
 
-	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubSetting = /*#__PURE__*/function (_Options) {
 	  _inherits(SubSetting, _Options);
-	  var _super = _createSuper$f(SubSetting);
+	  var _super = _createSuper$g(SubSetting);
 	  // subsettingsMain: SubsettingsMain
 	  // subsettingsPlayrate: SubsettingsPlayrate
 	  // subsettingsSubtitle: SubsettingsSubtitle
 	  // currentShow: HTMLElement
+
 	  function SubSetting(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, SubSetting);
 	    _this = _super.call(this, player, container, 0, 0, desc);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'SubSetting');
-	    // el: div.video-subsettings.video-controllert
-	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mask", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "subsettingsBaseGraph", new _Map());
-	    _defineProperty(_assertThisInitialized(_this), "subsettingsMain", void 0);
 	    _this.init();
 	    return _this;
 	  }
@@ -9285,6 +9263,7 @@
 	    value: function initMobileEvent() {
 	      this.clickOrTap = 'singleTap';
 	    }
+
 	    // 注册基础的子设置项
 	  }, {
 	    key: "registerSubsettingsBase",
@@ -9300,18 +9279,16 @@
 	  return SubSetting;
 	}(Options);
 
-	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubsettingsSubtitle = /*#__PURE__*/function (_SubsettingsBase) {
 	  _inherits(SubsettingsSubtitle, _SubsettingsBase);
-	  var _super = _createSuper$e(SubsettingsSubtitle);
+	  var _super = _createSuper$f(SubsettingsSubtitle);
 	  function SubsettingsSubtitle(subsetting, player) {
 	    var _this;
 	    _classCallCheck(this, SubsettingsSubtitle);
 	    _this = _super.call(this, subsetting, player);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'SubsettingsSubtitle');
-	    // el: div.video-subsettings-subtitle
-	    _defineProperty(_assertThisInitialized(_this), "leadItem", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "switchOnIcon", createSvg(switchOffPath, '0 0 1024 1024'));
 	    _defineProperty(_assertThisInitialized(_this), "switchOffIcon", createSvg(switchOnPath, '0 0 1024 1024'));
 	    _defineProperty(_assertThisInitialized(_this), "status", 'show');
@@ -9381,32 +9358,29 @@
 	  return SubsettingsSubtitle;
 	}(SubsettingsBase);
 
-	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Controller = /*#__PURE__*/function (_Component) {
 	  _inherits(Controller, _Component);
-	  var _super = _createSuper$d(Controller);
+	  var _super = _createSuper$e(Controller);
+	  // fullscreen: FullScreen
+	  // playButton: PlayButton
+	  // playrate: Playrate
+	  // volume: Volume
+	  // subPlay: HTMLElement
+	  // settings: HTMLElement
+	  //代表着最左侧的区域
+
 	  //代表最右侧的区域
+
 	  function Controller(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, Controller);
 	    _this = _super.call(this, container, desc);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'Controller');
-	    // el: div.video-bottombar
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
 	    // 控件
 	    _defineProperty(_assertThisInitialized(_this), "leftControllers", [PlayButton, Volume, DutaionShow]);
 	    _defineProperty(_assertThisInitialized(_this), "rightControllers", [SubSetting, VideoShot, ScreenShot, PicInPic, FullPage, FullScreen]);
-	    // fullscreen: FullScreen
-	    // playButton: PlayButton
-	    // playrate: Playrate
-	    // volume: Volume
-	    // subPlay: HTMLElement
-	    // settings: HTMLElement
-	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
-	    //代表着最左侧的区域
-	    _defineProperty(_assertThisInitialized(_this), "mediumArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
 	    _this.player = player;
 	    _this.init();
 	    return _this;
@@ -9562,7 +9536,9 @@
 	var _parseFloat$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseFloat);
 
 	var env = window.navigator.userAgent.toLowerCase();
+
 	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
+
 	var Env = {
 	  isInWeixin: function isInWeixin() {
 	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
@@ -10667,21 +10643,16 @@
 	  }
 	}
 
-	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Progress = /*#__PURE__*/function (_Component) {
 	  _inherits(Progress, _Component);
-	  var _super = _createSuper$c(Progress);
+	  var _super = _createSuper$d(Progress);
 	  function Progress(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, Progress);
 	    _this = _super.call(this, container, desc);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'Progress');
-	    // el: div.video-progress
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "dot", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "completedProgress", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "bufferProgress", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "mouseX", 0);
 	    _defineProperty(_assertThisInitialized(_this), "dotLeft", 0);
 	    _this.player = player;
@@ -10755,6 +10726,7 @@
 	        _this3.mouseX = e.pageX;
 	        // this.dot.style.left是一个百分比如"40.8%，变成px
 	        // this.dotLeft = (parseFloat(this.dot.style.left || '0') / 100) * this.el.clientWidth
+
 	        document.body.addEventListener('mousemove', ctx.onMouseMove);
 	        document.body.onmouseup = function (e) {
 	          _this3.emit(EVENT.DOT_UP, _this3.completedProgress.clientWidth / _this3.el.clientWidth, ctx);
@@ -10802,19 +10774,16 @@
 	  return Progress;
 	}(Component);
 
-	function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var VideoProgress = /*#__PURE__*/function (_Progress) {
 	  _inherits(VideoProgress, _Progress);
-	  var _super = _createSuper$b(VideoProgress);
+	  var _super = _createSuper$c(VideoProgress);
 	  function VideoProgress(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, VideoProgress);
 	    _this = _super.call(this, player, container, desc);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'VideoProgress');
-	    // el: div.video-progress
-	    _defineProperty(_assertThisInitialized(_this), "preTime", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "thumbnails", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "thumbnailsOptions", null);
 	    _defineProperty(_assertThisInitialized(_this), "currentIndex", null);
 	    _this.init();
@@ -10866,12 +10835,15 @@
 	        }
 	        _this2.player.emit(EVENT.VIDEO_DOT_DRAG, scale);
 	      });
+
 	      // this.on(EVENT.PROGRESS_MOUSE_ENTER, () => {
 	      //   removeClass(this.dot, ['video-progress-dot-hidden'])
 	      // })
+
 	      // this.on(EVENT.PROGRESS_MOUSE_LEAVE, () => {
 	      //   addClass(this.dot, ['video-progress-dot-hidden'])
 	      // })
+
 	      this.on(EVENT.DOT_DOWN, function () {
 	        _this2.dotLeft = _parseFloat$1(_this2.dot.style.left || '0') / 100 * _this2.el.clientWidth;
 	        _this2.player.emit(EVENT.DOT_DOWN);
@@ -10944,6 +10916,7 @@
 	        var dx = e.deltaX;
 	        _this4.emit(EVENT.DOT_DRAG, dx, _this4);
 	      });
+
 	      // 手势左右滑动结束
 	      this.player.on(EVENT.SLIDE_HORIZONTAL, function (e) {
 	        if (_this4.player.video.paused) {
@@ -10961,6 +10934,7 @@
 	      this.el.addEventListener('mousemove', function (e) {
 	        var time = (e.clientX - getDOMPoint(_this5.el).x) / _this5.el.clientWidth * _this5.player.video.duration;
 	        var index = Math.floor(time / _this5.thumbnailsOptions.interval); // 180 / 5
+
 	        if (_this5.currentIndex === null || _this5.currentIndex !== index || index >= _this5.thumbnailsOptions.total) {
 	          _this5.currentIndex = index;
 	          var y = Math.floor(index / _this5.thumbnailsOptions.col) * _this5.thumbnailsOptions.margin * 2 + _this5.thumbnailsOptions.margin + index * _this5.thumbnailsOptions.height;
@@ -10975,22 +10949,18 @@
 	  return VideoProgress;
 	}(Progress);
 
-	function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var MediumBar = /*#__PURE__*/function (_Component) {
 	  _inherits(MediumBar, _Component);
-	  var _super = _createSuper$a(MediumBar);
+	  var _super = _createSuper$b(MediumBar);
+	  // el: div.video-mediumbar
+
 	  function MediumBar(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, MediumBar);
 	    _this = _super.call(this, container, desc);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'MediumBar');
-	    // el: div.video-mediumbar
-	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mediumArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "videoProgress", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
 	    _this.player = player;
 	    _this.init();
 	    return _this;
@@ -11020,21 +10990,16 @@
 	  return MediumBar;
 	}(Component);
 
-	function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var ToolBar = /*#__PURE__*/function (_Component) {
 	  _inherits(ToolBar, _Component);
-	  var _super = _createSuper$9(ToolBar);
+	  var _super = _createSuper$a(ToolBar);
 	  function ToolBar(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, ToolBar);
 	    _this = _super.call(this, container, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'ToolBar');
-	    // el: div.video-toolbar.video-toolbar-hidden
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mediumbar", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "controller", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "status", 'hidden');
 	    _defineProperty(_assertThisInitialized(_this), "timer", 0);
 	    _this.player = player;
@@ -11060,6 +11025,7 @@
 	    value: function initComponent() {
 	      // this.progress = new Progress(this.player, this.el, 'div.video-progress')
 	      // this.controller = new Controller(this.player, this.el, 'div.video-play')
+
 	      this.mediumbar = new MediumBar(this.player, this.el, 'div.video-mediumbar');
 	      this.controller = new Controller(this.player, this.el, 'div.video-bottombar');
 	    }
@@ -11112,25 +11078,18 @@
 	  return ToolBar;
 	}(Component);
 
-	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var TopBar = /*#__PURE__*/function (_Component) {
 	  _inherits(TopBar, _Component);
-	  var _super = _createSuper$8(TopBar);
+	  var _super = _createSuper$9(TopBar);
 	  // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
 	  function TopBar(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, TopBar);
 	    _this = _super.call(this, container, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'TopBar');
-	    // el: div.video-topbar.video-topbar-hidden
-	    _defineProperty(_assertThisInitialized(_this), "leftArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "rightArea", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "timer", null);
-	    _defineProperty(_assertThisInitialized(_this), "leftControllers", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "rightController", void 0);
 	    _this.player = player;
 	    _this.props = props || {};
 	    _this.init();
@@ -11143,6 +11102,7 @@
 	      this.initEvent();
 	      storeControlComponent(this);
 	    }
+
 	    /**
 	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
 	     */
@@ -11393,11 +11353,11 @@
 	var PriorityQueue = /*#__PURE__*/function () {
 	  function PriorityQueue() {
 	    _classCallCheck(this, PriorityQueue);
-	    _defineProperty(this, "queue", void 0);
 	    _defineProperty(this, "newestTime", 0);
 	    _defineProperty(this, "maxInterval", 5);
 	    this.queue = [];
 	  }
+
 	  // 清理过期数据
 	  _createClass(PriorityQueue, [{
 	    key: "removeOutTimeData",
@@ -11408,16 +11368,19 @@
 	        return _this.newestTime - value.timestamp <= _this.maxInterval;
 	      });
 	    }
+
 	    // 添加新的数据
 	  }, {
 	    key: "add",
 	    value: function add(data) {
 	      this.newestTime = data.timestamp;
 	      this.queue.unshift(data);
+
 	      // 清除过期的数据
 	      this.removeOutTimeData();
 	      return this;
 	    }
+
 	    // 直接将数据添加到缓冲队列的末尾
 	  }, {
 	    key: "push",
@@ -11425,6 +11388,7 @@
 	      this.queue.push(data);
 	      return this;
 	    }
+
 	    // 弹出队列的首个数据
 	  }, {
 	    key: "shift",
@@ -11449,8 +11413,8 @@
 	  }, {
 	    key: "forEach",
 	    value: function forEach(cb) {
-	      for (var index = 0; index < this.queue.length; index++) {
-	        cb(this.queue[index], index);
+	      for (var _index = 0; _index < this.queue.length; _index++) {
+	        cb(this.queue[_index], _index);
 	      }
 	    }
 	  }, {
@@ -11467,24 +11431,17 @@
 	var Danmaku = /*#__PURE__*/function () {
 	  function Danmaku(container, player) {
 	    _classCallCheck(this, Danmaku);
-	    _defineProperty(this, "queue", void 0);
 	    _defineProperty(this, "moovingQueue", []);
-	    // 正在运动中的弹幕
-	    _defineProperty(this, "container", void 0);
-	    _defineProperty(this, "player", void 0);
 	    _defineProperty(this, "timer", null);
 	    _defineProperty(this, "renderInterval", 100);
 	    // 每一条弹幕轨道的高度默认为10px
 	    _defineProperty(this, "trackHeight", 10);
-	    // 总共的轨道数目
-	    _defineProperty(this, "trackNumber", void 0);
 	    _defineProperty(this, "opacity", 1);
 	    _defineProperty(this, "fontSizeScale", 1);
 	    _defineProperty(this, "isHidden", false);
 	    _defineProperty(this, "isPaused", true);
 	    // 弹幕占据屏幕的尺寸，默认占据一半屏幕
 	    _defineProperty(this, "showScale", 1 / 2);
-	    _defineProperty(this, "tracks", void 0);
 	    _defineProperty(this, "defaultDanma", {
 	      message: 'default message',
 	      fontColor: '#fff',
@@ -11519,6 +11476,7 @@
 	        };
 	      }
 	    }
+
 	    // 暂停所有的弹幕
 	  }, {
 	    key: "pause",
@@ -11530,6 +11488,7 @@
 	        _this.pauseOneData(data);
 	      });
 	    }
+
 	    // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
 	  }, {
 	    key: "resume",
@@ -11544,6 +11503,7 @@
 	        _this2.resumeOneData(data);
 	      });
 	    }
+
 	    // 恢复单条弹幕的运动
 	  }, {
 	    key: "resumeOneData",
@@ -11553,6 +11513,7 @@
 	      data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
 	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
 	    }
+
 	    // 暂停单条弹幕的运动
 	  }, {
 	    key: "pauseOneData",
@@ -11567,11 +11528,13 @@
 	    value: function startDanmaku() {
 	      this.render();
 	    }
+
 	    // 向缓冲区添加正确格式的弹幕
 	  }, {
 	    key: "addData",
 	    value: function addData(data) {
 	      this.queue.push(this.parseData(data));
+
 	      // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
 	      // if (flag) return
 	      if (this.timer === null) {
@@ -11627,6 +11590,7 @@
 	        }, this.renderInterval);
 	      }
 	    }
+
 	    // 向指定的DOM元素上渲染一条弹幕
 	  }, {
 	    key: "renderToDOM",
@@ -11679,15 +11643,18 @@
 	      data.dom.ontransitionstart = function (e) {
 	        data.startTime = Date.now();
 	      };
+
 	      // data.dom.onmouseenter = () => {
 	      //   if (this.isStopped) return
 	      //   this.pauseOneData(data)
 	      // }
+
 	      // data.dom.onmouseleave = () => {
 	      //   if (this.isStopped) return
 	      //   this.resumeOneData(data)
 	      // }
 	    }
+
 	    // 将指定的data添加到弹幕轨道上
 	  }, {
 	    key: "addDataToTrack",
@@ -11767,6 +11734,7 @@
 	        }
 	      };
 	    }
+
 	    // 清空所有的弹幕，包括正在运动中的或者还在缓冲区未被释放的
 	  }, {
 	    key: "flush",
@@ -11800,6 +11768,7 @@
 	      this.moovingQueue = [];
 	      this.queue.clear();
 	    }
+
 	    // 隐藏所有的弹幕
 	  }, {
 	    key: "close",
@@ -11829,6 +11798,7 @@
 	        }
 	      });
 	    }
+
 	    //* 设置弹幕的透明度
 	  }, {
 	    key: "setOpacity",
@@ -11839,6 +11809,7 @@
 	        data.dom.style.opacity = opacity + '';
 	      });
 	    }
+
 	    //* 设置弹幕轨道是数目
 	  }, {
 	    key: "setTrackNumber",
@@ -11865,15 +11836,29 @@
 	    value: function setPaused(val) {
 	      this.isPaused = val;
 	    }
+
+	    // // 丢弃一部分没用或者过时的弹幕
+	    // disCard(start: number, end: number) {
+	    //   this.queue.splice(start, end - start + 1)
+	    // }
+
+	    // clearOutdatedDanmaku(currentTime: number, interval: number) {
+	    //   this.queue = this.queue.filter((item) => {
+	    //     if (currentTime - item.timestamp > interval) {
+	    //       return false
+	    //     }
+	    //     return true
+	    //   })
+	    // }
 	  }]);
 	  return Danmaku;
 	}();
 
-	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DanmakuOpenClose = /*#__PURE__*/function (_Options) {
 	  _inherits(DanmakuOpenClose, _Options);
-	  var _super = _createSuper$7(DanmakuOpenClose);
+	  var _super = _createSuper$8(DanmakuOpenClose);
 	  function DanmakuOpenClose(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, DanmakuOpenClose);
@@ -11929,11 +11914,11 @@
 	  return DanmakuOpenClose;
 	}(Options);
 
-	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubsettingsDanmakuOpacity = /*#__PURE__*/function (_SubsettingsBase) {
 	  _inherits(SubsettingsDanmakuOpacity, _SubsettingsBase);
-	  var _super = _createSuper$6(SubsettingsDanmakuOpacity);
+	  var _super = _createSuper$7(SubsettingsDanmakuOpacity);
 	  function SubsettingsDanmakuOpacity(subsetting, player) {
 	    var _this;
 	    _classCallCheck(this, SubsettingsDanmakuOpacity);
@@ -12004,11 +11989,11 @@
 	  return SubsettingsDanmakuOpacity;
 	}(SubsettingsBase);
 
-	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubsettingsDanmakuRange = /*#__PURE__*/function (_SubsettingsBase) {
 	  _inherits(SubsettingsDanmakuRange, _SubsettingsBase);
-	  var _super = _createSuper$5(SubsettingsDanmakuRange);
+	  var _super = _createSuper$6(SubsettingsDanmakuRange);
 	  function SubsettingsDanmakuRange(subsetting, player) {
 	    var _this;
 	    _classCallCheck(this, SubsettingsDanmakuRange);
@@ -12079,11 +12064,11 @@
 	  return SubsettingsDanmakuRange;
 	}(SubsettingsBase);
 
-	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubsettingsDanmakuSize = /*#__PURE__*/function (_SubsettingsBase) {
 	  _inherits(SubsettingsDanmakuSize, _SubsettingsBase);
-	  var _super = _createSuper$4(SubsettingsDanmakuSize);
+	  var _super = _createSuper$5(SubsettingsDanmakuSize);
 	  function SubsettingsDanmakuSize(subsetting, player) {
 	    var _this;
 	    _classCallCheck(this, SubsettingsDanmakuSize);
@@ -12157,11 +12142,11 @@
 	  return SubsettingsDanmakuSize;
 	}(SubsettingsBase);
 
-	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var SubsettingsDanmakuMain = /*#__PURE__*/function (_SubsettingsBase) {
 	  _inherits(SubsettingsDanmakuMain, _SubsettingsBase);
-	  var _super = _createSuper$3(SubsettingsDanmakuMain);
+	  var _super = _createSuper$4(SubsettingsDanmakuMain);
 	  function SubsettingsDanmakuMain(subsetting, player) {
 	    var _this;
 	    _classCallCheck(this, SubsettingsDanmakuMain);
@@ -12261,8 +12246,6 @@
 	  function DanmakuSettings(player) {
 	    _classCallCheck(this, DanmakuSettings);
 	    _defineProperty(this, "id", 'DanmakuSettings');
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "subsettingsMain", void 0);
 	    this.player = player;
 	    this.init();
 	  }
@@ -15897,7 +15880,6 @@
 	var Axios = /*#__PURE__*/function () {
 	  function Axios(config) {
 	    _classCallCheck(this, Axios);
-	    _defineProperty(this, "config", void 0);
 	    this.config = _Object$assign({
 	      baseURL: 'https://loaclhost:3000/',
 	      timeout: 10000,
@@ -15946,23 +15928,14 @@
 	 * @description 控制弹幕的类 Controller层
 	 */
 	var DanmakuController = /*#__PURE__*/function () {
+	  // el: div.video-danmaku-container
+
 	  function DanmakuController(player, options) {
 	    _classCallCheck(this, DanmakuController);
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "video", void 0);
-	    _defineProperty(this, "container", void 0);
-	    _defineProperty(this, "danmaku", void 0);
-	    _defineProperty(this, "danmakuInput", void 0);
-	    _defineProperty(this, "danmakuOpenClose", void 0);
-	    _defineProperty(this, "options", void 0);
-	    // el: div.video-danmaku-container
-	    _defineProperty(this, "el", void 0);
-	    _defineProperty(this, "danmakuLoading", void 0);
-	    _defineProperty(this, "instance", void 0);
-	    _defineProperty(this, "danmakuSettings", void 0);
 	    this.player = player;
 	    this.video = player.video;
 	    this.container = player.el; // div.Niplayer_video-wrapper
+
 	    this.options = _Object$assign({
 	      type: 'http'
 	    }, options);
@@ -15991,6 +15964,7 @@
 	        this.initHTTP();
 	      }
 	    }
+
 	    //TODO 初始化websocket连接
 	  }, {
 	    key: "initWebSocket",
@@ -16132,9 +16106,11 @@
 	      this.danmakuInput.on('sendData', function (data) {
 	        // 此处为发送弹幕的逻辑
 	      });
+
 	      // this.player.on(EVENT.DOT_DRAG, () => {
 	      //   this.danmaku.flush()
 	      // })
+
 	      this.player.on('closeDanmaku', function () {
 	        // 隐藏所有的弹幕
 	        _this5.danmaku.close();
@@ -16158,6 +16134,7 @@
 	      // for (let i = 0; i < 10; i++) {
 	      //   this.danmaku.addData(queue[i % queue.length])
 	      // }
+
 	      // TODO 时间更新
 	      // TODO 如果默认请求弹幕数据的方式为http请求，则需要进行轮询
 	      this.instance.get(this.options.api, {
@@ -16179,6 +16156,7 @@
 	        }
 	      });
 	    }
+
 	    // start() {
 	    //   this.timer = window.setInterval(() => {
 	    //     this.danmaku.addData(queue[this.index++ % queue.length])
@@ -16195,10 +16173,12 @@
 	    //   // }
 	    //   // send()
 	    // }
+
 	    // pause() {
 	    //   window.clearInterval(this.timer)
 	    //   this.timer = null
 	    // }
+
 	    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
 	  }, {
 	    key: "onSeeked",
@@ -16255,21 +16235,18 @@
 	var css_248z$2 = ".danmaku-input-wrapper {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  border-radius: 2px;\n}\n.danmaku-input-wrapper .danmaku-input {\n  background-color: transparent;\n  width: calc(100% - 40px);\n  height: 50%;\n  line-height: 100%;\n  color: #fff;\n  font-size: 13px;\n  outline: 0;\n  padding: 0;\n  border: 0;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.danmaku-input-wrapper .danmaku-send {\n  height: 100%;\n  width: 50px;\n  text-align: center;\n  line-height: 30px;\n  background-color: transparent;\n  color: #fff;\n  font-size: 13px;\n  vertical-align: middle;\n  cursor: pointer;\n}\n.danmaku-box {\n  cursor: pointer;\n}\n.video-danmaku-container {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background-color: transparent;\n  left: 0;\n  top: 0;\n  z-index: 3001;\n}\n.video-danmaku-container .video-danmaku-message {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  white-space: pre;\n  pointer-events: none;\n  -webkit-perspective: 500px;\n          perspective: 500px;\n  display: inline-block;\n  will-change: transform;\n  font-weight: normal;\n  line-height: 1.125;\n  font-family: SimHei, \"Microsoft JhengHei\", Arial, Helvetica, sans-serif;\n  text-shadow: #000000 1px 0px 1px, #000000 0px 1px 1px, #000000 0px -1px 1px, #000000 -1px 0px 1px;\n  opacity: 1;\n  margin-left: 0px;\n}\n.video-danmaku-container .video-danmaku-loading-base {\n  position: absolute;\n  z-index: 3001;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: hsla(0, 0%, 100%, 0.15);\n  padding: 10px 10px;\n  -webkit-box-sizing: content-box;\n          box-sizing: content-box;\n  color: #fff;\n  border-radius: 5px;\n  left: 5px;\n  bottom: 60px;\n  overflow: hidden;\n  -webkit-transition: all 1.5s ease;\n  transition: all 1.5s ease;\n  font-size: 14px;\n}\n.video-danmaku-container .video-danmaku-loading {\n  left: 50%;\n  bottom: 50%;\n  -webkit-transform: translate(-50%, 50%);\n          transform: translate(-50%, 50%);\n}\n.video-danmaku-container .video-danmaku-shaking {\n  -webkit-animation: shake 2.5s 0.15s linear infinite;\n          animation: shake 2.5s 0.15s linear infinite;\n}\n.video-danmaku-container .video-danmaku-loading-hide {\n  -webkit-transform: scale(0);\n          transform: scale(0);\n  opacity: 0;\n}\n@-webkit-keyframes shake {\n  10% {\n    -webkit-transform: rotate(15deg) translate(-50%, 50%);\n            transform: rotate(15deg) translate(-50%, 50%);\n  }\n  20% {\n    -webkit-transform: rotate(-10deg) translate(-50%, 50%);\n            transform: rotate(-10deg) translate(-50%, 50%);\n  }\n  30% {\n    -webkit-transform: rotate(5deg) translate(-50%, 50%);\n            transform: rotate(5deg) translate(-50%, 50%);\n  }\n  40% {\n    -webkit-transform: rotate(-5deg) translate(-50%, 50%);\n            transform: rotate(-5deg) translate(-50%, 50%);\n  }\n  50% {\n    -webkit-transform: rotate(10deg) translate(-50%, 50%);\n            transform: rotate(10deg) translate(-50%, 50%);\n  }\n  60% {\n    -webkit-transform: rotate(-15deg) translate(-50%, 50%);\n            transform: rotate(-15deg) translate(-50%, 50%);\n  }\n  70% {\n    -webkit-transform: rotate(10deg) translate(-50%, 50%);\n            transform: rotate(10deg) translate(-50%, 50%);\n  }\n  80% {\n    -webkit-transform: rotate(-5deg) translate(-50%, 50%);\n            transform: rotate(-5deg) translate(-50%, 50%);\n  }\n  90%,\n  100% {\n    -webkit-transform: rotate(0deg) translate(-50%, 50%);\n            transform: rotate(0deg) translate(-50%, 50%);\n  }\n}\n@keyframes shake {\n  10% {\n    -webkit-transform: rotate(15deg) translate(-50%, 50%);\n            transform: rotate(15deg) translate(-50%, 50%);\n  }\n  20% {\n    -webkit-transform: rotate(-10deg) translate(-50%, 50%);\n            transform: rotate(-10deg) translate(-50%, 50%);\n  }\n  30% {\n    -webkit-transform: rotate(5deg) translate(-50%, 50%);\n            transform: rotate(5deg) translate(-50%, 50%);\n  }\n  40% {\n    -webkit-transform: rotate(-5deg) translate(-50%, 50%);\n            transform: rotate(-5deg) translate(-50%, 50%);\n  }\n  50% {\n    -webkit-transform: rotate(10deg) translate(-50%, 50%);\n            transform: rotate(10deg) translate(-50%, 50%);\n  }\n  60% {\n    -webkit-transform: rotate(-15deg) translate(-50%, 50%);\n            transform: rotate(-15deg) translate(-50%, 50%);\n  }\n  70% {\n    -webkit-transform: rotate(10deg) translate(-50%, 50%);\n            transform: rotate(10deg) translate(-50%, 50%);\n  }\n  80% {\n    -webkit-transform: rotate(-5deg) translate(-50%, 50%);\n            transform: rotate(-5deg) translate(-50%, 50%);\n  }\n  90%,\n  100% {\n    -webkit-transform: rotate(0deg) translate(-50%, 50%);\n            transform: rotate(0deg) translate(-50%, 50%);\n  }\n}\n";
 	styleInject(css_248z$2);
 
-	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var DanmakuInput = /*#__PURE__*/function (_Component) {
 	  _inherits(DanmakuInput, _Component);
-	  var _super = _createSuper$2(DanmakuInput);
+	  var _super = _createSuper$3(DanmakuInput);
+	  // el: div.danmaku-input-wrapper
+
 	  function DanmakuInput(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, DanmakuInput);
 	    _this = _super.call(this, container, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'DanmakuInput');
-	    // el: div.danmaku-input-wrapper
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "inputBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "sendBox", void 0);
 	    _this.props = props || {};
 	    _this.player = player;
 	    _this.init();
@@ -16320,7 +16297,7 @@
 	  return DanmakuInput;
 	}(Component);
 
-	var css_248z$1 = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-texttrack-container-showtoolbar {\n  bottom: calc(50px + 5px) !important;\n}\n.Niplayer_video-wrapper .video-texttrack-container {\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n  position: absolute;\n  bottom: 5px;\n  color: #fe9200;\n  font-size: 20px;\n}\n.Niplayer_video-wrapper .video-texttrack-container p {\n  word-break: break-all;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  margin: 5px 0 0;\n  line-height: 1.2;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 4001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 4001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -28px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n  z-index: 4002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-thumbnails {\n  position: absolute;\n  left: 0;\n  bottom: 10px;\n  width: 160px;\n  height: 90px;\n  background-color: rgba(255, 255, 255, 0.5);\n  display: none;\n  overflow: hidden;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  z-index: 1001;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #f00;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 2002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #f00;\n  cursor: pointer;\n  z-index: 2003;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #f00;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #f00;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 1003;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-controller {\n  margin-left: 5px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  z-index: 0;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 1001;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.video-switch-on {\n  fill: #007aff !important;\n}\n.video-switch-off {\n  fill: #fff !important;\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  background-color: #000000e6;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 2001;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 2001;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
+	var css_248z$1 = ".Niplayer_video-wrapper {\n  width: 100%;\n  height: 100%;\n  background-color: #000;\n  position: relative;\n  overflow: hidden;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  resize: auto;\n  -webkit-transform: all 0.5s ease;\n          transform: all 0.5s ease;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper video {\n  max-width: 100%;\n  max-height: 100%;\n  outline: none;\n  -ms-touch-action: none;\n      touch-action: none;\n  -o-object-fit: cover;\n     object-fit: cover;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper video:focus {\n  outline: none;\n}\n.Niplayer_video-wrapper .video-context-menu {\n  display: none;\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 200px;\n  border-radius: 3px;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  padding: 5px 0;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  background-color: #000000b3 !important;\n  z-index: 4002;\n}\n.Niplayer_video-wrapper .video-context-menu:last-child {\n  border-bottom: none !important;\n}\n.Niplayer_video-wrapper .video-context-menu .video-context-menu-item {\n  cursor: pointer;\n  color: #fff;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  text-shadow: 0 0 2px #00000080;\n  border-bottom: 1px solid #ffffff1a;\n  padding: 10px 15px;\n  font-size: 12px;\n  display: block;\n  overflow: hidden;\n}\n.Niplayer_video-wrapper .video-context-menu .video-context-menu-item:hover {\n  background-color: #ffffff1a;\n  color: #f00;\n}\n.Niplayer_video-wrapper .video-texttrack-container-showtoolbar {\n  bottom: calc(50px + 5px) !important;\n}\n.Niplayer_video-wrapper .video-texttrack-container {\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n  position: absolute;\n  bottom: 5px;\n  color: #fe9200;\n  font-size: 20px;\n}\n.Niplayer_video-wrapper .video-texttrack-container p {\n  word-break: break-all;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  margin: 5px 0 0;\n  line-height: 1.2;\n}\n.Niplayer_video-wrapper .video-toast-wrapper {\n  position: absolute;\n  text-align: center;\n  top: 0;\n  opacity: 0;\n  background-color: rgba(0, 0, 0, 0.75);\n  -webkit-transition: all 0.5s ease;\n  transition: all 0.5s ease;\n  border-radius: 10px;\n}\n.Niplayer_video-wrapper .video-toast-animate {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-topbar {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 35px;\n  color: #fff;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 4001;\n  padding: 5px 5px 0px 5px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: row-reverse;\n      -ms-flex-direction: row-reverse;\n          flex-direction: row-reverse;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings .video-subsettings-set {\n  right: 0;\n  left: auto !important;\n  -webkit-transform: translateX(0) !important;\n          transform: translateX(0) !important;\n}\n.Niplayer_video-wrapper .video-topbar .video-topbar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-topbar-hidden {\n  display: none;\n}\n.Niplayer_video-wrapper .video-toolbar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  color: #fff;\n  height: 50px;\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  z-index: 4001;\n  background-image: -webkit-gradient(linear, left bottom, left top, from(#000), color-stop(#0006), to(#0000));\n  background-image: linear-gradient(to top, #000, #0006, #0000);\n  background-position: bottom;\n  background-repeat: repeat-x;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-left,\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-right {\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress {\n  width: calc(100% - 18px);\n  margin: 0 auto;\n  height: 3px;\n  -webkit-transition: width 0.5s ease;\n  transition: width 0.5s ease;\n  background-color: hsla(0, 0%, 100%, 0.2);\n  cursor: pointer;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-pretime {\n  position: absolute;\n  left: 0;\n  top: -28px;\n  height: 15px;\n  width: 35px;\n  background-color: rgba(0, 0, 0, 0.6);\n  color: #fff;\n  line-height: 15px;\n  text-align: center;\n  font-size: 10px;\n  display: none;\n  z-index: 4002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-thumbnails {\n  position: absolute;\n  left: 0;\n  bottom: 10px;\n  width: 160px;\n  height: 90px;\n  background-color: rgba(255, 255, 255, 0.5);\n  display: none;\n  overflow: hidden;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-buffered {\n  left: 0;\n  height: 100%;\n  width: 0;\n  position: absolute;\n  background-color: hsla(0, 0%, 100%, 0.3);\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-completed {\n  position: absolute;\n  background-color: #f00;\n  height: 100%;\n  border-top-right-radius: 3px;\n  border-bottom-right-radius: 3px;\n  left: 0;\n  width: 0;\n  z-index: 4002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot-hidden {\n  opacity: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-mediumbar .video-mediumbar-medium .video-progress .video-progress-dot {\n  position: absolute;\n  left: 0px;\n  height: 8px;\n  width: 8px;\n  border-radius: 100%;\n  background-color: #f00;\n  cursor: pointer;\n  z-index: 4002;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n          transform: translateY(-50%);\n  -webkit-transition: opacity 0.6s ease;\n  transition: opacity 0.6s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px 5px 0 5px;\n  position: relative;\n  height: 30px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-start-pause {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  height: 100%;\n  margin-right: 5px;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set {\n  position: absolute;\n  width: 32px;\n  height: 100px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-show {\n  width: 100%;\n  height: 15px;\n  line-height: 15px;\n  text-align: center;\n  font-size: 12px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress {\n  border-radius: 2px;\n  width: 3px;\n  padding-top: 5px;\n  height: calc(100% - 15px - 5px);\n  margin-left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  background-color: #fff;\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: reverse;\n  -webkit-flex-direction: column-reverse;\n      -ms-flex-direction: column-reverse;\n          flex-direction: column-reverse;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-completed {\n  height: 50%;\n  background-color: #f00;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-volume .video-volume-set .video-volume-progress .video-volume-dot {\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  background-color: #f00;\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 4002;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 12px;\n  opacity: 0.7;\n  margin-left: 5px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-left .video-duration-time:hover {\n  opacity: 1;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-medium {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n  height: 100%;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  position: relative;\n  margin-right: 10px;\n  height: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-controller {\n  margin-left: 5px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 5px;\n  position: relative;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set {\n  width: 70px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  list-style: none;\n  outline: none;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li {\n  color: #fff;\n  text-align: center;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  font-weight: 500;\n  cursor: pointer;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-playrate .video-playrate-set li:hover {\n  background-color: #c9ccd0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-playrate,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-subsettings-animate {\n  -webkit-transform: rotate(360deg);\n          transform: rotate(360deg);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot svg {\n  -webkit-transition: -webkit-transform 0.25s ease;\n  transition: -webkit-transform 0.25s ease;\n  transition: transform 0.25s ease;\n  transition: transform 0.25s ease, -webkit-transform 0.25s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-screenshot-animate {\n  -webkit-transform: scale(0.85);\n          transform: scale(0.85);\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot svg {\n  -webkit-transition: -webkit-transform 0.3s ease;\n  transition: -webkit-transform 0.3s ease;\n  transition: transform 0.3s ease;\n  transition: transform 0.3s ease, -webkit-transform 0.3s ease;\n}\n.Niplayer_video-wrapper .video-toolbar .video-bottombar .video-bottombar-right .video-videoshot-animate {\n  -webkit-transform: scale(0.75);\n          transform: scale(0.75);\n}\n.Niplayer_video-wrapper .video-mask {\n  position: absolute;\n  background: transparent;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n}\n.Niplayer_video-wrapper .video-loading {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 4000;\n  background-color: rgba(0, 0, 0, 0.4);\n  left: 0;\n  top: 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-loadingbox {\n  height: 30px;\n  width: 30px;\n  border: 2px solid #fff;\n  border-top-color: transparent;\n  border-radius: 100%;\n  -webkit-animation: circle infinite 0.75s linear;\n          animation: circle infinite 0.75s linear;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-errorbox {\n  height: 30px;\n  width: 30px;\n  background-color: red;\n}\n.Niplayer_video-wrapper .video-loading .video-loading-msgbox {\n  padding: 0px 5px;\n  color: #fff;\n  font-size: 13px;\n  margin-top: 10px;\n}\n@-webkit-keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes circle {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.video-switch-on {\n  fill: #007aff !important;\n}\n.video-switch-off {\n  fill: #fff !important;\n}\n.Nplayer_controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.Nplayer_controller:hover svg {\n  opacity: 1 !important;\n}\n.Nplayer_controller:hover .video-controller-span {\n  opacity: 1;\n}\n.Nplayer_controller .video-controller-span,\n.Nplayer_controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.Nplayer_controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.Nplayer_controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.Nplayer_controller .video-icon svg path {\n  fill: #fff;\n}\n.Nplayer_controller .video-set-hidden {\n  display: none !important;\n}\n.Nplayer_subsettings .video-subsettings-set {\n  height: auto;\n  max-height: 300px;\n  -webkit-backdrop-filter: saturate(180%) blur(20px);\n          backdrop-filter: saturate(180%) blur(20px);\n  border-radius: 3px;\n  font-size: 13px;\n  -webkit-transition: all 0.2s;\n  transition: all 0.2s;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-subtitle,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-playrate,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-main,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-opacity,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-range,\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-danmaku-size {\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 35px;\n  cursor: pointer;\n  color: #fffc;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  line-height: 1;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n  width: 100%;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item:hover {\n  color: #f00;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft {\n  white-space: nowrap;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon {\n  height: 24px;\n  width: 24px;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-right: 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-icon svg {\n  height: 100%;\n  width: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemleft .video-subsettings-itemleft-text {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright {\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-tip {\n  white-space: nowrap;\n  color: #ffffff80;\n  margin-right: 5px;\n  font-size: 12px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon {\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  height: 24px;\n}\n.Nplayer_subsettings .video-subsettings-set .video-subsettings-item .video-subsettings-itemright .video-subsettings-itemright-icon svg {\n  width: 100%;\n  height: 100%;\n  fill: #fff;\n}\n.Nplayer_subsettings svg {\n  -webkit-transition: -webkit-transform 0.5s ease;\n  transition: -webkit-transform 0.5s ease;\n  transition: transform 0.5s ease;\n  transition: transform 0.5s ease, -webkit-transform 0.5s ease;\n}\n.video-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n}\n.video-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-controller .video-controller-span,\n.video-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-controller .video-set-hidden {\n  display: none !important;\n}\n.video-controller .video-set {\n  bottom: 48px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n@-webkit-keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n@keyframes slideIn {\n  from {\n    -webkit-transform: translate(-50%, 10px);\n            transform: translate(-50%, 10px);\n  }\n  to {\n    -webkit-transform: translate(-50%, 0);\n            transform: translate(-50%, 0);\n  }\n}\n.video-topbar-controller {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  min-width: 30px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 4px;\n  height: 100%;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: pointer;\n  color: #fff;\n  opacity: 0.9;\n  position: relative;\n  width: 30px;\n}\n.video-topbar-controller:hover svg {\n  opacity: 1 !important;\n}\n.video-topbar-controller:hover .video-controller-span {\n  opacity: 1;\n}\n.video-topbar-controller .video-controller-span,\n.video-topbar-controller span {\n  width: 100%;\n  height: 100%;\n  font-weight: 550;\n  color: #fff;\n  padding: 0 5px;\n  font-size: 14px;\n  line-height: 22px;\n  opacity: 0.85;\n}\n.video-topbar-controller .video-icon {\n  height: 100%;\n  width: 100%;\n}\n.video-topbar-controller .video-icon svg {\n  height: 100%;\n  width: 100%;\n  opacity: 0.8;\n}\n.video-topbar-controller .video-icon svg path {\n  fill: #fff;\n}\n.video-topbar-controller .video-set-hidden {\n  display: none !important;\n}\n.video-topbar-controller .video-set {\n  top: 32px;\n  position: absolute;\n  background: rgba(21, 21, 21, 0.9);\n  text-align: center;\n  border-radius: 2px;\n  padding: 5px 5px;\n  left: 50%;\n  white-space: nowrap;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n  -webkit-animation: slideIn 0.5s ease;\n          animation: slideIn 0.5s ease;\n}\n.flex-vertical-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.flex-vertical-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.flex-horizontal-center {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.toast-icon {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.toast-content {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.toast-content svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-wrapper-fullpage {\n  position: fixed !important;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  z-index: 4000;\n}\n.fullscreen-mask {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  z-index: 4000;\n}\n.video-cross-screen {\n  position: fixed;\n  top: -375px;\n  left: 50%;\n  background: #000;\n  -webkit-transform-origin: 0;\n          transform-origin: 0;\n  -webkit-transform: rotate(90deg) translate3d(0, 0, 0);\n          transform: rotate(90deg) translate3d(0, 0, 0);\n}\n.video-screenshot-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-screenshot-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast,\n.video-videoshot-success-toast {\n  text-align: center;\n  color: #fff;\n  font-size: 14px;\n  border-radius: 5px;\n  padding: 10px 20px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.video-videoshot-inprogress-toast svg,\n.video-videoshot-success-toast svg {\n  width: 24px;\n  height: 24px;\n  fill: #fff;\n  margin-right: 10px;\n}\n.video-videoshot-inprogress-toast svg {\n  -webkit-animation: countdown 0.5s ease infinite;\n          animation: countdown 0.5s ease infinite;\n}\n@-webkit-keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n@keyframes countdown {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n  }\n  50% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n  100% {\n    -webkit-transform: rotate(180deg);\n            transform: rotate(180deg);\n  }\n}\n";
 	styleInject(css_248z$1);
 
 	var mp4box_all = {};
@@ -24510,13 +24487,7 @@
 
 	var HTTPRequest = /*#__PURE__*/_createClass(function HTTPRequest(config) {
 	  _classCallCheck(this, HTTPRequest);
-	  _defineProperty(this, "sendRequestTime", void 0);
-	  _defineProperty(this, "getResponseTime", void 0);
-	  _defineProperty(this, "header", void 0);
-	  _defineProperty(this, "method", void 0);
 	  _defineProperty(this, "url", '');
-	  _defineProperty(this, "responseType", void 0);
-	  _defineProperty(this, "xhr", void 0);
 	  this.url = config.url;
 	  this.header = config.header;
 	  this.method = config.method;
@@ -24587,10 +24558,10 @@
 	    _defineProperty(this, "url", '');
 	    _defineProperty(this, "callback", null);
 	    _defineProperty(this, "eof", false);
-	    _defineProperty(this, "loader", void 0);
 	    this.url = url || '';
 	    this.loader = new XHRLoader();
 	  }
+
 	  // 从开头去请求文件，也就是初始化文件的请求过程直到所有文件都请求完成
 	  _createClass(DownLoader, [{
 	    key: "start",
@@ -24616,6 +24587,7 @@
 	      this.isActive = false;
 	      return this;
 	    }
+
 	    // resume和start不同的是resume可能是在文件的请求暂停后重新设置了chunkStart之后再去重新请求新的chunk
 	  }, {
 	    key: "resume",
@@ -24697,6 +24669,7 @@
 	      });
 	      return request;
 	    }
+
 	    /**
 	     * @description 发送网络请求，请求对应的媒体文件
 	     * @returns
@@ -24763,12 +24736,6 @@
 	var MediaPlayer = /*#__PURE__*/function () {
 	  function MediaPlayer(url, player) {
 	    _classCallCheck(this, MediaPlayer);
-	    _defineProperty(this, "url", void 0);
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "mp4boxfile", void 0);
-	    _defineProperty(this, "mediaSource", void 0);
-	    _defineProperty(this, "mediaInfo", void 0);
-	    _defineProperty(this, "downloader", void 0);
 	    _defineProperty(this, "lastSeekTime", 0);
 	    this.url = url;
 	    this.player = player;
@@ -24791,6 +24758,7 @@
 	      this.mediaSource.addEventListener('sourceopen', function (e) {
 	        _this.loadFile();
 	      });
+
 	      // 在'moov box'开始被解析时被调用，根据下载速度，下载整个“moov box”可能需要一段时间，解析结束的信号是onReady回调函数
 	      // 在解析 MP4 文件时，通常需要先解析 moov box（moov box 是 MP4 文件中的一个重要 box，包含了 MP4 文件的元数据信息），以获取 MP4 文件的元数据信息。
 	      this.mp4boxfile.onMoovStart = function () {
@@ -24816,6 +24784,7 @@
 	        ctx.stop();
 	        ctx.initializeAllSourceBuffers();
 	      };
+
 	      // 根据setSegmentOptions中传递的选项，在段准备好时调用回调。
 	      // user是片段的调用者，对于这个轨道，buffer是一个ArrayBuffer，包含这个片段的Movie Fragments。
 	      // mp4boxfile.start()时、mp4boxfile.appendBuffer()足够多 时被触发
@@ -24830,6 +24799,7 @@
 	        });
 	        ctx.onUpdateEnd.call(sb, true, false, ctx);
 	      };
+
 	      // 当用户开始移动/跳跃到新的视频播放位置时触发
 	      this.player.on('seeking', function (e) {
 	        var i, start, end;
@@ -24908,6 +24878,7 @@
 	        throw new Error("\u4F60\u7684\u6D4F\u89C8\u5668\u4E0D\u652F\u6301".concat(mime, "\u5A92\u4F53\u7C7B\u578B"));
 	      }
 	    }
+
 	    // 开始加载视频文件
 	  }, {
 	    key: "loadFile",
@@ -24975,6 +24946,7 @@
 	          sb.ms.pendingInits = 0;
 	        }
 	        this.onInitAppended = this.onInitAppended.bind(this);
+
 	        // 在 SourceBuffer.appendBuffer() 或 SourceBuffer.remove() 结束后触发。这个事件在 update 后触发。
 	        // 缓冲区状态已更新，可以继续追加更多数据
 	        // sb.addEventListener('updateend', this.onInitAppended)
@@ -25031,23 +25003,16 @@
 	var css_248z = ".video-mobile-medium-wrapper {\n  position: absolute;\n  height: 40px;\n  width: 40%;\n  padding: 5px;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 100;\n  border-radius: 5px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n          transform: translateX(-50%) translateY(-50%);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox {\n  height: 100%;\n  min-width: 30px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg {\n  height: 100%;\n  width: 100%;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-iconbox svg path {\n  fill: #fff;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox {\n  height: 3px;\n  background-color: #fff;\n  -webkit-box-flex: 0.9;\n  -webkit-flex-grow: 0.9;\n      -ms-flex-positive: 0.9;\n          flex-grow: 0.9;\n  margin-left: 5px;\n  border-radius: 3px;\n}\n.video-mobile-medium-wrapper .video-mobile-medium-progressbox .video-mobile-medium-completed {\n  background-color: #007aff;\n  height: 100%;\n  width: 0;\n}\n";
 	styleInject(css_248z);
 
-	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+	function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var MobileVolume = /*#__PURE__*/function (_Component) {
 	  _inherits(MobileVolume, _Component);
-	  var _super = _createSuper$1(MobileVolume);
+	  var _super = _createSuper$2(MobileVolume);
 	  function MobileVolume(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, MobileVolume);
 	    _this = _super.call(this, container, desc, props, children);
 	    _defineProperty(_assertThisInitialized(_this), "id", 'MobileVolume');
-	    // el: div.video-mobile-medium-wrapper
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "player", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "iconBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "progressBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "completedBox", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "icon", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "timer", 0);
 	    _this.player = player;
 	    _this.props = props || {};
@@ -25120,22 +25085,13 @@
 	function _unsupportedIterableToArray(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 	function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 	var Subtitle = /*#__PURE__*/function () {
+	  // readonly id = 'Subtitle'
+	  // el: div.video-texttrack-container
+
+	  // 一个textTrack对应一个字幕文件
+
 	  function Subtitle(player, subtitles) {
 	    _classCallCheck(this, Subtitle);
-	    // readonly id = 'Subtitle'
-	    // el: div.video-texttrack-container
-	    _defineProperty(this, "el", void 0);
-	    _defineProperty(this, "player", void 0);
-	    _defineProperty(this, "subtitles", void 0);
-	    _defineProperty(this, "defaultSubtitle", void 0);
-	    _defineProperty(this, "trackElement", void 0);
-	    _defineProperty(this, "textTrack", void 0);
-	    // 一个textTrack对应一个字幕文件
-	    _defineProperty(this, "xhrLoader", void 0);
-	    _defineProperty(this, "subsettingsSubtitle", void 0);
-	    _defineProperty(this, "subsettingsMain", void 0);
-	    _defineProperty(this, "leadItem", void 0);
-	    _defineProperty(this, "currentSource", void 0);
 	    this.player = player;
 	    this.subtitles = subtitles;
 	    this.init();
@@ -25163,6 +25119,7 @@
 	        target: SubsettingsSubtitle
 	      });
 	    }
+
 	    // 调整字幕的样式
 	  }, {
 	    key: "adjustSubtitleStyle",
@@ -25209,6 +25166,7 @@
 	      this.player.on('ShowSubtitle', function () {
 	        _this.trackElement.src = _this.currentSource;
 	      });
+
 	      // 初始化设置栏中的字幕设置选项
 	      nextTick$1(function () {
 	        var _context;
@@ -25253,6 +25211,7 @@
 	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
 	        removeClass(_this2.el, ['video-texttrack-container-showtoolbar']);
 	      });
+
 	      // textTracks 属性返回 TextTrackList 对象。TextTrackList 对象代表视频的可用文本轨道。
 	      // 每个可用的文本轨道都由一个 TextTrack 对象表示。
 	      this.textTrack = this.player.video.textTracks[0];
@@ -25274,6 +25233,7 @@
 	        }
 	      });
 	    }
+
 	    // 加载字幕文件
 	  }, {
 	    key: "loadVTTFile",
@@ -25303,6 +25263,180 @@
 	  return Subtitle;
 	}();
 
+	var ContextMenuItem = /*#__PURE__*/function () {
+	  // el: div.video-context-menu-item
+
+	  function ContextMenuItem(container, content) {
+	    _classCallCheck(this, ContextMenuItem);
+	    _defineProperty(this, "id", 'ContextMenuItem');
+	    this.container = container;
+	    this.content = content;
+	    this.init();
+	  }
+	  _createClass(ContextMenuItem, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initEvent();
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      this.el = $$M('div.video-context-menu-item');
+	      this.container.append(this.el);
+	      if (typeof this.content === 'string') {
+	        this.el.innerHTML = this.content;
+	      } else {
+	        this.el.append(this.content);
+	      }
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {}
+	  }]);
+	  return ContextMenuItem;
+	}();
+
+	var name = "niplayer";
+	var version = "1.3.3";
+	var description = "This is a TS library for video player";
+	var main = "./dist/player.umd.js";
+	var module = "./dist/player.esm.js";
+	var types = "./dist/index.d.ts";
+	var scripts = {
+		"clean:dist": "rimraf dist",
+		server: "node server.js",
+		dev: "rollup -c script/rollup.config.dev.js --watch",
+		start: "run-p server dev",
+		build: "rollup -c script/rollup.config.prod.js",
+		"build:tsc": "tsc",
+		"build:dts": "dts-bundle-generator -o ./dist/index.d.ts ./src/index.ts --project tsconfig.json  --no-check",
+		test: "vitest",
+		coverage: "vitest run --coverage"
+	};
+	var author = "";
+	var license = "ISC";
+	var devDependencies = {
+		"@babel/core": "^7.21.8",
+		"@babel/plugin-transform-runtime": "^7.21.4",
+		"@babel/preset-env": "^7.21.5",
+		"@babel/preset-typescript": "^7.22.5",
+		"@babel/runtime-corejs3": "^7.21.5",
+		"@rollup/plugin-alias": "^5.0.0",
+		"@rollup/plugin-babel": "^6.0.3",
+		"@rollup/plugin-commonjs": "^24.1.0",
+		"@rollup/plugin-json": "^6.0.0",
+		"@rollup/plugin-node-resolve": "^15.0.2",
+		"@rollup/plugin-terser": "^0.4.1",
+		"@rollup/plugin-typescript": "^11.1.1",
+		"@types/babel__core": "^7.20.0",
+		"@types/node": "^20.2.5",
+		"@vitest/coverage-c8": "^0.31.0",
+		autoprefixer: "^10.4.14",
+		"core-js": "^3.30.1",
+		"dts-bundle-generator": "^8.0.1",
+		express: "^4.18.2",
+		less: "^4.1.3",
+		"npm-run-all": "^4.1.5",
+		postcss: "^8.4.23",
+		rimraf: "^5.0.0",
+		rollup: "^3.24.0",
+		"rollup-plugin-livereload": "^2.0.5",
+		"rollup-plugin-node-builtins": "^2.1.2",
+		"rollup-plugin-node-globals": "^1.4.0",
+		"rollup-plugin-postcss": "^4.0.2",
+		"rollup-plugin-serve": "^2.0.2",
+		typescript: "^4.9.5",
+		vitest: "^0.31.0"
+	};
+	var browserslist = [
+		"defaults",
+		"not ie < 8",
+		"last 2 versions",
+		"> 1%",
+		"iOS 7",
+		"last 3 iOS versions"
+	];
+	var dependencies = {
+		"be-full": "^0.1.4",
+		mp4box: "^0.5.2",
+		"ntouch.js": "^1.1.0",
+		"socket.io": "^4.6.2",
+		"socket.io-client": "^4.6.2"
+	};
+	var pkg = {
+		name: name,
+		version: version,
+		description: description,
+		main: main,
+		module: module,
+		types: types,
+		scripts: scripts,
+		author: author,
+		license: license,
+		devDependencies: devDependencies,
+		browserslist: browserslist,
+		dependencies: dependencies
+	};
+
+	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+	// 右击菜单部分
+	var ContextMenu = /*#__PURE__*/function (_Component) {
+	  _inherits(ContextMenu, _Component);
+	  var _super = _createSuper$1(ContextMenu);
+	  // el: div.video-context-menu
+
+	  function ContextMenu(player, container, desc) {
+	    var _this;
+	    _classCallCheck(this, ContextMenu);
+	    _this = _super.call(this, container, desc);
+	    _defineProperty(_assertThisInitialized(_this), "id", 'ContextMenu');
+	    _this.player = player;
+	    _this.init();
+	    return _this;
+	  }
+	  _createClass(ContextMenu, [{
+	    key: "init",
+	    value: function init() {
+	      this.initTemplate();
+	      this.initComponent();
+	      storeControlComponent(this);
+	    }
+	  }, {
+	    key: "initTemplate",
+	    value: function initTemplate() {
+	      addClass(this.el, ['video-context-menu']);
+	    }
+
+	    // 初始化基础的菜单选项
+	  }, {
+	    key: "initComponent",
+	    value: function initComponent() {
+	      this.registerContextMenu('统计信息');
+	      this.registerContextMenu("NiPlayer ".concat(pkg.version));
+	      this.registerContextMenu('关闭', function (item) {
+	        this.el.style.display = '';
+	      });
+	    }
+	  }, {
+	    key: "registerContextMenu",
+	    value: function registerContextMenu(content, click) {
+	      var _this2 = this;
+	      var item = new ContextMenuItem(this.el, content);
+	      item.el.addEventListener('click', function (e) {
+	        e.stopPropagation();
+	        if (e.target === item.el) {
+	          _this2.el.style.display = '';
+	          click && click.call(_this2, item, e);
+	        }
+	      });
+	    }
+	  }]);
+	  return ContextMenu;
+	}(Component);
+
 	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Player = /*#__PURE__*/function (_Component) {
@@ -25313,23 +25447,10 @@
 	    _classCallCheck(this, Player);
 	    _this = _super.call(this, options.container, 'div.Niplayer_video-wrapper');
 	    _defineProperty(_assertThisInitialized(_this), "id", 'Player');
-	    // el: div.Niplayer_video-wrapper
-	    // 播放器的默认配置
-	    _defineProperty(_assertThisInitialized(_this), "playerOptions", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "isFullscreen", false);
 	    _defineProperty(_assertThisInitialized(_this), "enableSeek", true);
 	    _defineProperty(_assertThisInitialized(_this), "env", Env.env);
 	    _defineProperty(_assertThisInitialized(_this), "fullScreenMode", 'Horizontal');
-	    _defineProperty(_assertThisInitialized(_this), "video", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "props", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "toolBar", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "topbar", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "loading", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "error", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "mask", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "containerWidth", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "containerHeight", void 0);
-	    _defineProperty(_assertThisInitialized(_this), "danmakuController", void 0);
 	    _defineProperty(_assertThisInitialized(_this), "mediaProportion", 9 / 16);
 	    _this.playerOptions = _Object$assign({
 	      autoPlay: false,
@@ -25357,6 +25478,7 @@
 
 	      this.video.crossOrigin = 'anonymous';
 	      this.el.appendChild(this.video);
+
 	      // 初始化媒体的播放源
 	      ((_this$playerOptions = this.playerOptions) === null || _this$playerOptions === void 0 ? void 0 : _this$playerOptions.url) && this.attachSource(this.playerOptions.url);
 	      this.initComponent();
@@ -25382,6 +25504,7 @@
 	      this.error = new ErrorLoading(this, '视频加载发送错误', this.el);
 	      this.toolBar = new ToolBar(this, this.el, 'div');
 	      this.topbar = new TopBar(this, this.el, 'div');
+	      this.contextMenu = new ContextMenu(this, this.el, 'div');
 	      if (this.playerOptions.subtitles && this.playerOptions.subtitles.length > 0) {
 	        new Subtitle(this, this.playerOptions.subtitles);
 	      }
@@ -25414,6 +25537,7 @@
 	      this.video.addEventListener('pause', function (e) {
 	        _this2.emit(EVENT.PAUSE, e);
 	      });
+
 	      // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
 	      this.video.addEventListener('seeking', function (e) {
 	        // 防抖效果：针对Dot按下并且拖动时不触发seeking，拖完鼠标抬起时再触发seeking
@@ -25424,22 +25548,27 @@
 	      this.video.addEventListener('seeked', function (e) {
 	        _this2.emit(EVENT.SEEKED, e);
 	      });
+
 	      // waiting 事件在视频由于需要缓冲下一帧而停止时触发
 	      this.video.addEventListener('waiting', function (e) {
 	        _this2.emit(EVENT.WAITING, e);
 	      });
+
 	      // canplay 该视频已准备好开始播放
 	      this.video.addEventListener('canplay', function (e) {
 	        _this2.emit(EVENT.CAN_PLAY, e);
 	      });
+
 	      // error 视频加载发生错误时
 	      this.video.addEventListener('error', function (e) {
 	        _this2.emit(EVENT.ERROR);
 	      });
+
 	      // abort 视频终止加载时
 	      this.video.addEventListener('abort', function (e) {
 	        _this2.emit(EVENT.ERROR);
 	      });
+
 	      // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
 	      this.video.addEventListener('ratechange', function (e) {
 	        _this2.emit(EVENT.RATE_CHANGE);
@@ -25507,6 +25636,7 @@
 	      this.el.onmouseleave = function (e) {
 	        if (!_this3.video.paused) _this3.emit(EVENT.HIDE_TOOLBAR, e);
 	      };
+
 	      // 键盘事件
 	      document.addEventListener('keyup', function (e) {
 	        // console.log(e.key)
@@ -25540,6 +25670,25 @@
 	            }
 	        }
 	      });
+
+	      // // 鼠标左键事件 单击 隐藏contextMenu
+	      // this.el.addEventListener('mousedown', (e: MouseEvent) => {
+	      //   if (
+	      //     this.contextMenu.el.style.display &&
+	      //     this.contextMenu.el.style.display !== '' &&
+	      //     e.button === 0
+	      //   ) {
+	      //     this.contextMenu.el.style.display = ''
+	      //   }
+	      // })
+
+	      // 鼠标右键事件 打开contextMenu
+	      this.el.addEventListener('contextmenu', function (e) {
+	        e.preventDefault();
+	        _this3.contextMenu.el.style.display = 'block';
+	        _this3.contextMenu.el.style.top = e.offsetY + 'px';
+	        _this3.contextMenu.el.style.left = e.offsetX + 'px';
+	      });
 	    }
 	  }, {
 	    key: "initMobileEvent",
@@ -25548,6 +25697,7 @@
 	      wrap(this.el).addEventListener('touchstart', function () {
 	        _this4.emit(EVENT.DOT_DOWN);
 	      });
+
 	      // 单击
 	      wrap(this.el).addEventListener('singleTap', function (e) {
 	        // console.log(e, 'singletap')
@@ -25558,6 +25708,7 @@
 	        }
 	        _this4.emit(EVENT.VIDEO_CLICK);
 	      });
+
 	      // 双击
 	      wrap(this.el).addEventListener('doubleTap', function (e) {
 	        // console.log(e, 'doubleTap')
@@ -25567,6 +25718,7 @@
 	          _this4.video.pause();
 	        }
 	      });
+
 	      // 手势上下处于滑动中
 	      wrap(this.el).addEventListener('move', function (e) {
 	        // console.log(e, 'move')
@@ -25578,6 +25730,7 @@
 	          _this4.emit(EVENT.MOVE_HORIZONTAL, e);
 	        }
 	      });
+
 	      // 手势上下滑动结束
 	      wrap(this.el).addEventListener('swipe', function (e) {
 	        // console.log(e, 'swipe')
@@ -25614,6 +25767,7 @@
 	        this.video.src = url;
 	      }
 	    }
+
 	    /**
 	     * @@description 监听视频播放器大小的变化
 	     */
@@ -25629,6 +25783,7 @@
 	        ResizeObserver
 	          可以监听到 Element 的内容区域或SVGElement的边界框改变
 	       */
+
 	      // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
 	      var _STORE = new _Map(COMPONENT_STORE);
 	      var resizeObserver = new ResizeObserver(function (entries) {
@@ -25687,6 +25842,7 @@
 	      // 开始观察
 	      resizeObserver.observe(this.el);
 	    }
+
 	    // 调整video的尺寸
 	  }, {
 	    key: "adjustMediaSize",
@@ -25707,6 +25863,7 @@
 	  }, {
 	    key: "checkFullScreenMode",
 	    value: function checkFullScreenMode() {}
+
 	    // 注册/挂载自己的组件,其中的id为组件实例的名称，分为内置和用户自定义这两种情况；注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
 	  }, {
 	    key: "mountComponent",
@@ -25762,6 +25919,7 @@
 	        component.container = component.el.parentElement;
 	      }
 	    }
+
 	    // 更新一个已经挂载到视图层上的组件
 	  }, {
 	    key: "updateComponent",
@@ -25771,6 +25929,7 @@
 	      }
 	      patchComponent(COMPONENT_STORE.get(id), component, options);
 	    }
+
 	    // 隐藏某一个已经挂载到视图上的组件
 	  }, {
 	    key: "hideComponent",
@@ -25785,6 +25944,7 @@
 	      instance.el.style.display = 'none';
 	      HIDEEN_COMPONENT_STORE.set(id, instance);
 	    }
+
 	    // 展示一个隐藏的组件
 	  }, {
 	    key: "showComponent",
@@ -25799,6 +25959,7 @@
 	      instance.el.style.display = '';
 	      HIDEEN_COMPONENT_STORE.delete(id);
 	    }
+
 	    // 卸载某一个component组件，所谓卸载一个组件指的是仅仅将其DOM元素从视图上移除，但是不会删除其实例对象，还可以继续挂载
 	    // 注意：卸载一个组件会清除该组件上挂载的class和id，意味着之后用户可以将组件挂载到任何位置
 	  }, {
@@ -25812,6 +25973,7 @@
 	      removeClass(instance.el, _toConsumableArray(instance.el.classList));
 	      COMPONENT_STORE.delete(id);
 	    }
+
 	    // 彻底删除一个组件，也就是直接销毁组件实例，卸载组件仅仅是将其el元素从视图上移除，但任然保留组建的实例对象
 	  }, {
 	    key: "deleteComponent",
@@ -25821,6 +25983,19 @@
 	      }
 	      ONCE_COMPONENT_STORE.delete(id);
 	    }
+
+	    // 注册一个右击菜单项
+	  }, {
+	    key: "registerContextMenu",
+	    value: function registerContextMenu(content, click) {
+	      this.contextMenu.registerContextMenu(content, click);
+	    }
+
+	    // 注册一个设置选项
+	  }, {
+	    key: "registerSubsetting",
+	    value: function registerSubsetting() {}
+
 	    /**
 	     * @description 注册对应的组件
 	     * @param plugin

@@ -22,6 +22,8 @@ import { DoubleTapEvent, MoveEvent, SingleTapEvent, SwipeEvent, wrap } from 'nto
 import { computeAngle } from '@/utils/math'
 import { EVENT } from '@/events'
 import { Subtitle } from '@/components/Subtitle/Subtitle'
+import { ContextMenu } from '@/components/ContextMenu/ContextMenu'
+import { ContextMenuItem } from '@/components/ContextMenu/ContextMenuItem'
 
 class Player extends Component implements ComponentItem {
   readonly id = 'Player'
@@ -35,6 +37,7 @@ class Player extends Component implements ComponentItem {
   fullScreenMode: 'Vertical' | 'Horizontal' = 'Horizontal'
   video: HTMLVideoElement
   props: DOMProps
+  contextMenu: ContextMenu
   toolBar: ToolBar
   topbar: TopBar
   loading: TimeLoading
@@ -99,6 +102,7 @@ class Player extends Component implements ComponentItem {
     this.error = new ErrorLoading(this, '视频加载发送错误', this.el)
     this.toolBar = new ToolBar(this, this.el, 'div')
     this.topbar = new TopBar(this, this.el, 'div')
+    this.contextMenu = new ContextMenu(this, this.el, 'div')
 
     if (this.playerOptions.subtitles && this.playerOptions.subtitles.length > 0) {
       new Subtitle(this, this.playerOptions.subtitles)
@@ -272,6 +276,25 @@ class Player extends Component implements ComponentItem {
             }
           }
       }
+    })
+
+    // // 鼠标左键事件 单击 隐藏contextMenu
+    // this.el.addEventListener('mousedown', (e: MouseEvent) => {
+    //   if (
+    //     this.contextMenu.el.style.display &&
+    //     this.contextMenu.el.style.display !== '' &&
+    //     e.button === 0
+    //   ) {
+    //     this.contextMenu.el.style.display = ''
+    //   }
+    // })
+
+    // 鼠标右键事件 打开contextMenu
+    this.el.addEventListener('contextmenu', (e) => {
+      e.preventDefault()
+      this.contextMenu.el.style.display = 'block'
+      this.contextMenu.el.style.top = e.offsetY + 'px'
+      this.contextMenu.el.style.left = e.offsetX + 'px'
     })
   }
 
@@ -547,6 +570,14 @@ class Player extends Component implements ComponentItem {
     }
     ONCE_COMPONENT_STORE.delete(id)
   }
+
+  // 注册一个右击菜单项
+  registerContextMenu(content: string | HTMLElement, click?: (item: ContextMenuItem) => any) {
+    this.contextMenu.registerContextMenu(content, click)
+  }
+
+  // 注册一个设置选项
+  registerSubsetting() {}
 
   /**
    * @description 注册对应的组件

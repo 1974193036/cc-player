@@ -9,7 +9,7 @@ import * as io from 'socket.io-client'
 import '@/utils/polyfill'
 import { $, addClass, removeClass } from '@/utils/domUtils'
 import { Axios } from '../utils/net'
-import { DanmakuData } from '../types/danmaku'
+import { DanmakuData } from '@/types/danmaku'
 
 /**
  * @description 控制弹幕的类 Controller层
