@@ -1,4 +1,4 @@
-import { ComponentItem } from '../types/Player'
+import { ComponentItem, ComponentMap } from '../types/Player'
 
 // COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件
 export const COMPONENT_STORE = new Map<string, ComponentItem>()
@@ -23,6 +23,7 @@ export const BuiltInControllerComponent = [
   'Toast'
 ]
 
+// 存储组件，包括用户自定义组件和内置组件
 export function storeControlComponent(item: ComponentItem) {
   COMPONENT_STORE.set(item.id, item)
   ONCE_COMPONENT_STORE.set(item.id, item)

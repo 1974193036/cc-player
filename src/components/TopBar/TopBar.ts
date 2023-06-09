@@ -1,9 +1,8 @@
 import { Component } from '@/class/Component'
-import { Node, ComponentItem, DOMProps } from '@/types/Player'
+import { Node, ComponentItem, DOMProps, ComponentConstructor } from '@/types/Player'
 import { Player } from '@/page/player'
 import { $, addClass, includeClass, removeClass } from '@/utils/domUtils'
-import { storeControlComponent } from '../../utils/store'
-import { SingleTapEvent } from 'ntouch.js'
+import { ONCE_COMPONENT_STORE, storeControlComponent } from '../../utils/store'
 import { EVENT } from '@/events'
 
 export class TopBar extends Component implements ComponentItem {
@@ -14,6 +13,8 @@ export class TopBar extends Component implements ComponentItem {
   props: DOMProps
   player: Player
   private timer: number | null = null
+  private leftControllers: ComponentConstructor[]
+  private rightController: ComponentConstructor[]
 
   // 先初始化播放器的默认样式，暂时不考虑用户的自定义样式
   constructor(
@@ -44,6 +45,40 @@ export class TopBar extends Component implements ComponentItem {
     this.rightArea = $('div.video-topbar-right')
     this.el.appendChild(this.leftArea)
     this.el.appendChild(this.rightArea)
+
+    if (this.player.playerOptions.title) {
+      let title = this.player.playerOptions.title
+      let titleBox = $('div')
+      if (typeof title === 'object') {
+        titleBox.innerText = title.message
+        if (title.style) {
+          for (let key in title.style) {
+            titleBox[key] = title.style[key]
+          }
+        }
+      } else {
+        titleBox.innerText = title
+      }
+
+      this.leftArea.appendChild(titleBox)
+    }
+  }
+
+  initComponent(): void {
+    this.leftControllers = this.player.playerOptions.leftTopBarControllers || []
+    this.rightController = this.player.playerOptions.rightTopBarController || []
+
+    this.leftControllers.forEach((ControlConstructor) => {
+      let instance = new ControlConstructor(this.player, this.leftArea, 'div')
+      if (!ONCE_COMPONENT_STORE.get(instance.id)) storeControlComponent(instance)
+      this[instance.id] = instance
+    })
+
+    this.rightController.forEach((ControlConstructor) => {
+      let instance = new ControlConstructor(this.player, this.rightArea, 'div')
+      if (!ONCE_COMPONENT_STORE.get(instance.id)) storeControlComponent(instance)
+      this[instance.id] = instance
+    })
   }
 
   initEvent() {

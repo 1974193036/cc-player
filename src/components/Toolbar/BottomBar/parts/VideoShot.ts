@@ -109,7 +109,16 @@ export class VideoShot extends Options {
 
     if (this.player.env === 'Mobile') {
       this.el.ontouchend = (e) => {
+        removeClass(this.icon, ['video-videoshot-animate'])
         this.stop(recorder)
+        // 销毁toast组件
+        inProgressToast.dispose()
+        inProgressToast = null
+        let successToast = this.createSuccessToast()
+        window.setTimeout(() => {
+          successToast.dispose()
+          successToast = null
+        }, 2000)
       }
     } else {
       // 结束录制视频，手动抬起鼠标结束录制

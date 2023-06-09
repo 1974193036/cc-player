@@ -8,6 +8,7 @@ import {
 } from '@/types/Player'
 import { Component } from '@/class/Component'
 import { ToolBar } from '@/components/ToolBar/toolbar'
+import { FullScreen } from '@/components/ToolBar'
 import { $, addClass, patchComponent, removeClass } from '@/utils/domUtils'
 import { COMPONENT_STORE, HIDEEN_COMPONENT_STORE, ONCE_COMPONENT_STORE } from '@/utils/store'
 import Mp4MediaPlayer from '../mp4/MediaPlayer'
@@ -28,6 +29,7 @@ class Player extends Component implements ComponentItem {
 
   // 播放器的默认配置
   readonly playerOptions: PlayerOptions
+  private isFullscreen = false
   enableSeek = true
   env = Env.env
   fullScreenMode: 'Vertical' | 'Horizontal' = 'Horizontal'
@@ -41,7 +43,7 @@ class Player extends Component implements ComponentItem {
   containerWidth: number
   containerHeight: number
   danmakuController: DanmakuController
-  mediaProportion: number = 9 / 16 // 视频比例 原始高度/原始宽度，默认16:9
+  private mediaProportion: number = 9 / 16 // 视频比例 原始高度/原始宽度，默认16:9
   static player = this
 
   constructor(options: PlayerOptions) {
@@ -64,6 +66,7 @@ class Player extends Component implements ComponentItem {
       this.video = this.playerOptions.video
       this.video.parentNode && this.video.parentNode.removeChild(this.video)
     } else {
+      // 兼容移动端设置的属性
       this.video = $('video')
       this.video['playsinline'] = true // IOS微信浏览器支持小窗内播放,也就是不是全屏播放
       this.video['x5-video-player-type'] = 'h5' // 启用H5播放器,是wechat安卓版特性
@@ -141,6 +144,10 @@ class Player extends Component implements ComponentItem {
       }
     })
 
+    this.video.addEventListener('seeked', (e) => {
+      this.emit(EVENT.SEEKED, e)
+    })
+
     // waiting 事件在视频由于需要缓冲下一帧而停止时触发
     this.video.addEventListener('waiting', (e) => {
       this.emit(EVENT.WAITING, e)
@@ -195,6 +202,7 @@ class Player extends Component implements ComponentItem {
       document.querySelectorAll('.video-topbar-controller').forEach((el) => {
         ;(el as HTMLElement).style.marginRight = '15px'
       })
+      this.isFullscreen = true
     })
 
     this.on(EVENT.LEAVE_FULLSCREEN, () => {
@@ -204,6 +212,7 @@ class Player extends Component implements ComponentItem {
       document.querySelectorAll('.video-topbar-controller').forEach((el) => {
         ;(el as HTMLElement).style.marginRight = ''
       })
+      this.isFullscreen = false
     })
   }
 
@@ -228,8 +237,42 @@ class Player extends Component implements ComponentItem {
     }
 
     this.el.onmouseleave = (e) => {
-      this.emit(EVENT.HIDE_TOOLBAR, e)
+      if (!this.video.paused) this.emit(EVENT.HIDE_TOOLBAR, e)
     }
+
+    // 键盘事件
+    document.addEventListener('keyup', (e) => {
+      // console.log(e.key)
+      switch (e.key) {
+        case 'f':
+          ;(ONCE_COMPONENT_STORE.get('FullScreen') as FullScreen).requestFullScreen()
+          break
+        case 'ArrowRight':
+          if (this.video.paused) this.video.play()
+          if (this.video.currentTime + 5 <= this.video.duration) {
+            this.video.currentTime += 5
+          }
+          break
+        case 'ArrowLeft':
+          if (this.video.paused) this.video.play()
+          if (this.video.currentTime - 5 >= 0) {
+            this.video.currentTime -= 5
+          }
+          break
+        case 'ArrowUp':
+        case 'ArrowDown':
+        case ' ':
+          // 按空格
+          // console.log(this.isFullscreen)
+          if (this.isFullscreen) {
+            if (this.video.paused) {
+              this.video.play()
+            } else if (this.video.played) {
+              this.video.pause()
+            }
+          }
+      }
+    })
   }
 
   initMobileEvent(): void {
@@ -286,7 +329,7 @@ class Player extends Component implements ComponentItem {
     })
   }
 
-  initPlugin() {
+  private initPlugin() {
     if (this.playerOptions.plugins) {
       this.playerOptions.plugins.forEach((plugin) => {
         this.use(plugin)
@@ -306,7 +349,7 @@ class Player extends Component implements ComponentItem {
   /**
    * @@description 监听视频播放器大小的变化
    */
-  initResizeObserver() {
+  private initResizeObserver() {
     /**
       window.resize弊端
         reize事件会在一秒内触发将近60次，所以很容易在改变窗口大小时导致性能问题

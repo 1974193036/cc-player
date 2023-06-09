@@ -1,7 +1,17 @@
 import { Player } from '../page/player'
 import { Component } from '../class/Component'
+import {
+  DutaionShow,
+  FullPage,
+  FullScreen,
+  PicInPic,
+  PlayButton,
+  ScreenShot,
+  SubSetting,
+  VideoShot,
+  Volume
+} from '../components'
 import { SubsettingItem } from '@/components/ToolBar/BottomBar/parts/Subsettings/SubsettingItem'
-import { SubSetting } from '../components'
 import { SubsettingsBase } from '../components/ToolBar/BottomBar/parts/Subsettings/parts/SubsettingsBase'
 import { RequestHeader } from './mp4'
 
@@ -23,6 +33,13 @@ export type PlayerOptions = {
   subtitles?: Subtitles[]
   danmaku?: DanmakuOptions
   plugins?: Plugin[]
+  bilibiliMode?: boolean
+  title?:
+    | string
+    | {
+        message: string
+        style?: Partial<CSSStyleDeclaration>
+      }
 }
 
 export type DanmakuOptions = {
@@ -107,7 +124,6 @@ export interface ComponentConstructor {
 // 存储内置组件的ID，用于在用户注册组件时区分是自定义组件还是内置组件
 export type BuiltInComponentID =
   | 'PlayButton'
-  | 'Playrate'
   | 'Volume'
   | 'DutaionShow'
   | 'SubSetting'
@@ -116,6 +132,19 @@ export type BuiltInComponentID =
   | 'PicInPic'
   | 'FullPage'
   | 'FullScreen'
+
+export type ComponentMap = {
+  PlayButton: PlayButton
+  Volume: Volume
+  FullScreen: FullScreen
+  DutaionShow: DutaionShow
+  SubSetting: SubSetting
+  VideoShot: VideoShot
+  ScreenShot: ScreenShot
+  PicInPic: PicInPic
+  FullPage: FullPage
+  [props: string]: ComponentItem
+}
 
 // 对应最顶层的ToolBar的注册选项
 export type TopToolBarOptions = {

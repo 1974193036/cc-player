@@ -1,5 +1,4 @@
 import { DanmakuData, Track } from '@/types/danmaku'
-import { nextTick } from '@/utils/nextTick'
 import { Player } from '@/page/player'
 import { PriorityQueue } from './utils/PriorityQueue'
 import { $ } from '@/utils/domUtils'
@@ -286,10 +285,9 @@ export class Danmaku {
       this.removeDataFromTrack(data)
       return
     }
-    // if (this.player.video.paused) {
-    //   this.queue.add(data)
-    //   return
-    // }
+    if (this.isHidden) {
+      data.dom.style.visibility = 'hidden'
+    }
     // moovingQueue中存储的都是在运动中的弹幕
     this.moovingQueue.push(data)
     data.dom.style.transform = `translateX(-${data.totalDistance}px)`
