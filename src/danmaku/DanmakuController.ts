@@ -40,7 +40,8 @@ export class DanmakuController {
       options
     )
     this.instance = new Axios({
-      baseURL: ''
+      baseURL: '',
+      timeout: this.options.timeout ?? 2000
     })
     this.init()
   }
@@ -176,7 +177,7 @@ export class DanmakuController {
     })
 
     this.video.addEventListener('pause', () => {
-      console.log('pause')
+      // console.log('pause')
       // 暂停所有的弹幕
       this.danmaku.pause()
     })
@@ -190,17 +191,17 @@ export class DanmakuController {
     })
 
     this.video.addEventListener('play', () => {
-      console.log('play')
+      // console.log('play')
       this.danmaku.resume()
     })
 
     this.video.addEventListener('canplay', () => {
-      console.log('canplay')
+      // console.log('canplay')
       this.danmaku.resume()
     })
 
     this.video.addEventListener('timeupdate', () => {
-      console.log('timeupdate')
+      // console.log('timeupdate')
       this.danmaku.setPaused(false)
     })
 

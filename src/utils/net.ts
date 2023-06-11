@@ -7,16 +7,20 @@ export class Axios {
     this.config = Object.assign(
       {
         baseURL: 'https://loaclhost:3000/',
-        timeout: 10000,
+        timeout: 2000,
         header: {}
       },
       config
     )
   }
 
-  get(url: string, options: AxiosOptions): Promise<any[]> {
+  get(url: string, options: AxiosOptions): Promise<any> {
     return new Promise((res, rej) => {
+      let controller = new AbortController() //设置超时控制器
       let path = `${this.config.baseURL}${url}`
+      let id = setTimeout(() => {
+        controller.abort()
+      }, this.config.timeout)
       if (options.query) {
         path += '?'
         for (let key in options.query) {
@@ -28,25 +32,26 @@ export class Axios {
       fetch(path, {
         method: 'GET',
         mode: 'cors',
-        headers: this.config.header
+        headers: this.config.header,
+        signal: controller.signal
       })
         .then(
-          (response: Response) => {
-            if (response.ok === false) rej('fail')
-            return response.json()
+          (res: Response) => {
+            if (res.ok === false) {
+              window.clearTimeout(id)
+              rej('error')
+            }
+            return res.json()
           },
-          (err) => {
+          (err: Error) => {
+            window.clearTimeout(id)
             rej('fail')
           }
         )
-        .then(
-          (value) => {
-            res(value)
-          },
-          (err) => {
-            rej('fail')
-          }
-        )
+        .then((value: any) => {
+          window.clearTimeout(id)
+          res(value)
+        })
     })
   }
 }

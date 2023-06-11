@@ -4,7 +4,8 @@ import {
   DOMProps,
   RegisterComponentOptions,
   UpdateComponentOptions,
-  Plugin
+  Plugin,
+  Video
 } from '@/types/Player'
 import { Component } from '@/class/Component'
 import { ToolBar } from '@/components/ToolBar/toolbar'
@@ -24,6 +25,7 @@ import { EVENT } from '@/events'
 import { Subtitle } from '@/components/Subtitle/Subtitle'
 import { ContextMenu } from '@/components/ContextMenu/ContextMenu'
 import { ContextMenuItem } from '@/components/ContextMenu/ContextMenuItem'
+import { Mp4Parser } from '@/mp4/Mp4Parser'
 
 class Player extends Component implements ComponentItem {
   readonly id = 'Player'
@@ -32,6 +34,7 @@ class Player extends Component implements ComponentItem {
   // 播放器的默认配置
   readonly playerOptions: PlayerOptions
   private isFullscreen = false
+  private videoInfo: Video
   enableSeek = true
   env = Env.env
   fullScreenMode: 'Vertical' | 'Horizontal' = 'Horizontal'
@@ -278,16 +281,10 @@ class Player extends Component implements ComponentItem {
       }
     })
 
-    // // 鼠标左键事件 单击 隐藏contextMenu
-    // this.el.addEventListener('mousedown', (e: MouseEvent) => {
-    //   if (
-    //     this.contextMenu.el.style.display &&
-    //     this.contextMenu.el.style.display !== '' &&
-    //     e.button === 0
-    //   ) {
-    //     this.contextMenu.el.style.display = ''
-    //   }
-    // })
+    // 鼠标左键事件 单击 隐藏contextMenu
+    this.el.addEventListener('click', (e: MouseEvent) => {
+      this.contextMenu.el.style.display = ''
+    })
 
     // 鼠标右键事件 打开contextMenu
     this.el.addEventListener('contextmenu', (e) => {
@@ -360,8 +357,10 @@ class Player extends Component implements ComponentItem {
     }
   }
 
+  // 给video添加媒体资源，开始初始化媒体资源的解析
   attachSource(url: string) {
     // 是否启动流式播放
+    // new Mp4Parser(url, this)
     if (this.playerOptions.streamPlay) {
       new Mp4MediaPlayer(url, this)
     } else {
@@ -458,6 +457,7 @@ class Player extends Component implements ComponentItem {
     }
   }
 
+  // 查询移动端的全屏方式
   checkFullScreenMode() {}
 
   // 注册/挂载自己的组件,其中的id为组件实例的名称，分为内置和用户自定义这两种情况；注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
@@ -578,6 +578,16 @@ class Player extends Component implements ComponentItem {
 
   // 注册一个设置选项
   registerSubsetting() {}
+
+  // 获取视频信息
+  getVideoInfo(): Video {
+    return this.videoInfo
+  }
+
+  // 设置视频信息
+  setVideoInfo(info: Video): void {
+    this.videoInfo = info
+  }
 
   /**
    * @description 注册对应的组件

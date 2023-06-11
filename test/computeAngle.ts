@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import { computeAngle } from '../src/utils/play'
+import { computeAngle } from '../src/utils/math'
 
 test('computeAngle', () => {
   expect(computeAngle(30, 30)).toBe(45)

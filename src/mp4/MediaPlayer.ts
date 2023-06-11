@@ -3,6 +3,7 @@ import { Player } from '@/page/player'
 import { MoovBoxInfo, MediaTrack } from '../types/mp4'
 import { DownLoader } from './net/DownLoader'
 
+// 使用MediaPlayer来接管对mp4视频文件的流式播放
 class MediaPlayer {
   url: string
   player: Player
@@ -35,14 +36,16 @@ class MediaPlayer {
 
     // 在'moov box'开始被解析时被调用，根据下载速度，下载整个“moov box”可能需要一段时间，解析结束的信号是onReady回调函数
     // 在解析 MP4 文件时，通常需要先解析 moov box（moov box 是 MP4 文件中的一个重要 box，包含了 MP4 文件的元数据信息），以获取 MP4 文件的元数据信息。
+    // 开始解析moov box时触发该事件
     this.mp4boxfile.onMoovStart = function () {
       Log.info('Application', 'Starting to parse movie information')
     }
     // 首次mp4boxfile.appendBuffer()时被触发
     // appendBuffer 是 MP4Box.js 中的一个方法，用于向【MP4Box 对象】添加 MP4 文件的数据
     // 当【MP4Box 对象】准备好处理 MP4 文件时执行 onReady
+    // MP4的moov box解析成功后触发该事件
     this.mp4boxfile.onReady = function (info: MoovBoxInfo) {
-      Log.info('Application', 'Movie information received')
+      // Log.info('Application', 'Movie information received')
       ctx.mediaInfo = info
       // mediaSource.duration：获取并设置当前呈现的媒体的持续时间，以秒为单位
       // isFragmented：表示文件是否已经分片
@@ -70,7 +73,7 @@ class MediaPlayer {
     }
 
     // 当用户开始移动/跳跃到新的视频播放位置时触发
-    this.player.on('seeking', (e) => {
+    this.player.on('seeking', (e: Event) => {
       var i, start, end
       var seek_info
       var video = this.player.video
