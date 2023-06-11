@@ -232,6 +232,7 @@ export class DanmakuController {
 
     this.player.on(EVENT.RESIZE, () => {
       this.setTrackNumber()
+      this.setRollDistance()
     })
   }
 
@@ -284,6 +285,10 @@ export class DanmakuController {
   // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
   onSeeked(e: Event) {
     this.danmaku.flush()
+  }
+
+  setRollDistance() {
+    this.danmaku.setRollDistance()
   }
 
   //* 设置弹幕轨道是数目

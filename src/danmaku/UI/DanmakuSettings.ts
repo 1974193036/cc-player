@@ -23,6 +23,7 @@ export class DanmakuSettings {
     this.subsettingsMain = (SubsettingsMain as SubsettingsBaseConstructor)
       .instance as SubsettingsMain
 
+    // 在设置栏注册一个subsetting 选项
     this.subsettingsMain.registerSubsettingsItem({
       leftIcon: createSvgs([danmakuPath$1, danmakuPath$2], '0 0 1024 1024'),
       leftText: '弹幕设置',
