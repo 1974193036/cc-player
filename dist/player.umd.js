@@ -5754,6 +5754,8 @@
 	        addClass(_this2.hideBox, ['video-set-hidden']);
 	      });
 	    }
+
+	    // 初始化基本的移动端事件
 	  }, {
 	    key: "initBaseMobileEvent",
 	    value: function initBaseMobileEvent() {}
@@ -8765,7 +8767,7 @@
 	    key: "initTemplate",
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-videoshot', 'video-controller']);
-	      this.icon = createSvg(videoShotPath$1, "0 0 1024 1024");
+	      this.icon = createSvg(videoShotPath$1, '0 0 1024 1024');
 	      this.iconBox.appendChild(this.icon);
 	      this.hideBox.innerText = '视频录制';
 	      this.hideBox.style.fontSize = '13px';
@@ -10809,12 +10811,13 @@
 	          height: 90,
 	          margin: 0
 	        }, this.player.playerOptions.thumbnails);
+	        this.thumbnails = $$M('div.video-progress-thumbnails');
+	        this.thumbnails.style.height = this.thumbnailsOptions.height + 'px';
+	        this.thumbnails.style.width = this.thumbnailsOptions.width + 'px';
 	      }
 	      this.preTime = $$M('div.video-progress-pretime');
-	      this.thumbnails = $$M('div.video-progress-thumbnails');
-	      this.thumbnails.style.height = this.thumbnailsOptions.height + 'px';
-	      this.thumbnails.style.width = this.thumbnailsOptions.width + 'px';
-	      this.el.append(this.preTime, this.thumbnails);
+	      this.el.append(this.preTime);
+	      this.thumbnails && this.el.append(this.thumbnails);
 	      addClass(this.el, ['video-progress']);
 	      addClass(this.dot, ['video-progress-dot', 'video-progress-dot-hidden']);
 	      addClass(this.completedProgress, ['video-progress-completed']);
@@ -10869,7 +10872,7 @@
 	      var _this3 = this;
 	      this.el.addEventListener('mouseenter', function (e) {
 	        _this3.preTime.style.display = 'block';
-	        _this3.thumbnails.style.display = 'block';
+	        if (_this3.thumbnails) _this3.thumbnails.style.display = 'block';
 	        var left = e.clientX - getDOMPoint(_this3.el).x;
 	        _this3.preTime.style.left = left - _this3.preTime.clientWidth / 2 + 'px';
 	        var time = formatTime(left / e.currentTarget.clientWidth * _this3.player.video.duration);
@@ -10880,15 +10883,17 @@
 	        var time = formatTime(left / e.currentTarget.clientWidth * _this3.player.video.duration);
 	        _this3.preTime.style.left = left - _this3.preTime.clientWidth / 2 + 'px';
 	        _this3.preTime.innerText = time;
-	        if (left - _this3.thumbnails.clientWidth / 2 >= 0) {
-	          _this3.thumbnails.style.left = left - _this3.thumbnails.clientWidth / 2 + 'px';
-	        } else {
-	          _this3.thumbnails.style.left = 0 + 'px';
+	        if (_this3.thumbnails) {
+	          if (left - _this3.thumbnails.clientWidth / 2 >= 0) {
+	            _this3.thumbnails.style.left = left - _this3.thumbnails.clientWidth / 2 + 'px';
+	          } else {
+	            _this3.thumbnails.style.left = 0 + 'px';
+	          }
 	        }
 	      });
 	      this.el.addEventListener('mouseleave', function () {
 	        _this3.preTime.style.display = 'none';
-	        _this3.thumbnails.style.display = 'none';
+	        if (_this3.thumbnails) _this3.thumbnails.style.display = 'none';
 	      });
 	      this.on(EVENT.PROGRESS_CLICK, function (dx, ctx) {
 	        var scale = dx / _this3.el.clientWidth;
@@ -25313,7 +25318,7 @@
 	}();
 
 	var name = "niplayer";
-	var version = "1.3.4";
+	var version = "1.4.1";
 	var description = "This is a TS library for video player";
 	var main = "./dist/player.umd.js";
 	var module = "./dist/player.esm.js";

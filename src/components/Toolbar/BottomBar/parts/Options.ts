@@ -85,6 +85,7 @@ export class Options extends Component implements ComponentItem {
     })
   }
 
+  // 初始化基本的移动端事件
   initBaseMobileEvent() {}
 
   handleMouseMove(e: MouseEvent) {

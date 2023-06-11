@@ -5,6 +5,7 @@ import { storeControlComponent } from '@/utils/store'
 import { confirmPath, countdownPath, videoShotPath$1, videoShotPath$2 } from '@/svg'
 import { Toast } from '@/components/Toast/Toast'
 import { Options } from './Options'
+import { HTMLMediaElementWithCaputreStream } from '@/class/HTMLMediaElementWithCaputreStream'
 
 export class VideoShot extends Options {
   readonly id = 'VideoShot'
@@ -34,7 +35,7 @@ export class VideoShot extends Options {
 
   initTemplate() {
     addClass(this.el, ['video-videoshot', 'video-controller'])
-    this.icon = createSvg(videoShotPath$1,"0 0 1024 1024")
+    this.icon = createSvg(videoShotPath$1, '0 0 1024 1024')
     this.iconBox.appendChild(this.icon)
 
     this.hideBox.innerText = '视频录制'
