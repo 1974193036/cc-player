@@ -80,7 +80,7 @@ export class ToolBar extends Component implements ComponentItem {
     }
 
     this.timer = window.setTimeout(() => {
-      if(!this.player.video.paused) this.hideToolBar()
+      if (!this.player.video.paused) this.hideToolBar()
     }, 3000)
   }
 

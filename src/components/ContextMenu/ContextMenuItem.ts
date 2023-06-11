@@ -6,7 +6,7 @@ export class ContextMenuItem {
   el: HTMLElement
   container: HTMLElement
   content: HTMLElement | string
-  
+
   constructor(container: HTMLElement, content: HTMLElement | string) {
     this.container = container
     this.content = content

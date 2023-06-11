@@ -2,20 +2,14 @@
 import sh from 'shelljs'
 import ora from 'ora'
 import fs from 'fs-extra'
-import { fileURLToPath } from 'url'
-import { createRequire } from 'module'
 import { compareVersion } from './compare.mjs'
-
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-// 在esm模块中自定义使用cjs才存在的模块导入方法 -- require
-const require = createRequire(import.meta.url)
 
 const cwd = process.cwd()
 const { argv } = process
 // 获取到命令行中传入的版本参数
 const version = argv[2].split('=')[1]
 
-// TODO 开始发布包的最新版本
+//TODO 开始发布包的最新版本
 const publish = () => {
   let pkg = fs.readJSONSync(`${cwd}/package.json`)
   const currentVersion = pkg.version

@@ -10,7 +10,6 @@ export function formatTime(seconds: number): string {
   return addZero(minute) + ':' + addZero(second)
 }
 
-
 export function computeAngle(dx: number, dy: number): number {
   if (dx === 0) return 90
   if (dy === 0) return 0

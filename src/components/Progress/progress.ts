@@ -54,7 +54,7 @@ export class Progress extends Component implements ComponentItem {
       } else if (scale > 1) {
         scale = 1
       }
-      this.dot.style.left = `calc(${scale * 100}% - 6px)`;
+      this.dot.style.left = `calc(${scale * 100}% - 6px)`
       this.completedProgress.style.width = scale * 100 + '%'
     })
 
@@ -65,7 +65,7 @@ export class Progress extends Component implements ComponentItem {
       } else if (scale > 1) {
         scale = 1
       }
-      this.dot.style.left = `calc(${scale * 100}% - 6px)`;
+      this.dot.style.left = `calc(${scale * 100}% - 6px)`
       this.completedProgress.style.width = scale * 100 + '%'
     })
   }
