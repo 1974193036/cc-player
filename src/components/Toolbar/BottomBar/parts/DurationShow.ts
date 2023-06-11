@@ -39,7 +39,7 @@ export class DutaionShow extends Component implements ComponentItem {
   }
 
   initEvent() {
-    this.player.on(EVENT.LOADED_META_DATA, (e) => {
+    this.player.on(EVENT.LOADED_META_DATA, (e: Event) => {
       let video = e.target as HTMLVideoElement
       // console.log(video.duration) // 12.612
       this.totalTime = formatTime(video.duration)
@@ -53,7 +53,7 @@ export class DutaionShow extends Component implements ComponentItem {
       this.el.innerText = `${this.currentTime}/${this.totalTime}`
     })
 
-    this.player.on(EVENT.VIDEO_DOT_DRAG, (scale: number, e: MouseEvent) => {
+    this.player.on(EVENT.VIDEO_DOT_DRAG, (scale: number) => {
       this.currentTime = formatTime(this.player.video.duration * scale)
       this.el.innerText = `${this.currentTime}/${this.totalTime}`
     })

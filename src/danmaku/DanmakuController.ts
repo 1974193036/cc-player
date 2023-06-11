@@ -6,7 +6,6 @@ import { DanmakuOpenClose } from './UI/DanmakuOpenClose'
 import { DanmakuSettings } from './UI/DanmakuSettings'
 import { DanmakuOptions } from '@/types/Player'
 import * as io from 'socket.io-client'
-// import '@/utils/polyfill'
 import { $, addClass, removeClass } from '@/utils/domUtils'
 import { Axios } from '../utils/net'
 import { DanmakuData } from '@/types/danmaku'
@@ -182,13 +181,6 @@ export class DanmakuController {
       this.onSeeked(e)
     })
 
-    this.video.addEventListener('pause', () => {
-      // console.log('pause')
-      if (this.video.seeking) return
-      // 暂停所有的弹幕
-      this.danmaku.pause()
-    })
-
     this.video.addEventListener('waiting', () => {
       this.danmaku.pause()
     })
@@ -201,6 +193,13 @@ export class DanmakuController {
       // console.log('play')
       if (this.video.seeking) return
       this.danmaku.resume()
+    })
+
+    this.video.addEventListener('pause', () => {
+      // console.log('pause')
+      if (this.video.seeking) return
+      // 暂停所有的弹幕
+      this.danmaku.pause()
     })
 
     this.video.addEventListener('canplay', () => {
@@ -287,15 +286,18 @@ export class DanmakuController {
     this.danmaku.flush()
   }
 
+  //* 设置弹幕轨道是数目
   setTrackNumber(num?: number) {
     this.danmaku.setTrackNumber(num || null)
   }
 
+  //* 设置弹幕的透明度
   setOpacity(opacity: number) {
     // 1/2 3/4
     this.danmaku.setOpacity(opacity)
   }
 
+  //* 设置字体的大小
   setFontSize(scale: number) {
     this.danmaku.setFontSize(scale)
   }
