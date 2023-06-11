@@ -37,7 +37,6 @@ export class ScreenShot extends Options {
     this.iconBox.appendChild(this.icon)
 
     this.hideBox.innerText = '截图'
-    this.hideBox.style.fontSize = '13px'
   }
 
   initEvent() {

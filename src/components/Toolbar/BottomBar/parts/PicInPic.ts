@@ -33,7 +33,6 @@ export class PicInPic extends Options {
     this.iconBox.appendChild(this.icon)
 
     this.hideBox.innerText = '画中画'
-    this.hideBox.style.fontSize = '13px'
   }
 
   initEvent() {

@@ -14,6 +14,7 @@ const path = require('path')
 // 因此需要导入 'rollup-plugin-node-builtins' 和 "rollup-plugin-node-globals"进行Polyfill
 const builtins = require('rollup-plugin-node-builtins')
 const globals = require('rollup-plugin-node-globals')
+const px2rem = require('postcss-pxtorem')
 
 module.exports = defineConfig([
   {
@@ -75,7 +76,14 @@ module.exports = defineConfig([
         ]
       }),
       postcss({
-        plugins: [autoprefixer()]
+        plugins: [
+          autoprefixer(),
+          px2rem({
+            rootValue: 16, // 设计稿宽度的1/10
+            propList: ['margin-left', 'min-width', 'height', 'font-size', 'bottom', 'width', 'padding', 'transform'] // 需要做转化处理的属性
+            // selectorBlackList: [/^video-controller$/,/^video-bottombar$/, /^video-set$/, /^video-duration-time$/, /^video-topbar$/, /^danmaku-send$/]
+          })
+        ]
       })
     ]
   }

@@ -36,7 +36,6 @@ export class FullScreen extends Options {
     this.iconBox.appendChild(this.icon)
 
     this.hideBox.innerText = '全屏'
-    this.hideBox.style.fontSize = '13px'
   }
 
   initEvent() {

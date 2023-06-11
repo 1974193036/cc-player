@@ -78,23 +78,27 @@ export class SubsettingsBase extends BaseEvent {
       this.initMobileEvent()
     }
 
-    wrap(instance.el).addEventListener(this.clickOrTap, (e: MouseEvent | SingleTapEvent) => {
-      if(e instanceof MouseEvent) {
-        e.stopPropagation()
-      }
-      if (item.target) {
-        this.el.style.display = 'none'
-        base.el.style.display = ''
+    wrap(instance.el).addEventListener(
+      this.clickOrTap,
+      (e: MouseEvent | SingleTapEvent) => {
+        if (e instanceof MouseEvent) {
+          e.stopPropagation()
+        }
+        if (item.target) {
+          this.el.style.display = 'none'
+          base.el.style.display = ''
 
-        this.subsetting.hideBox.style.width = base.el.dataset.width
-          ? base.el.dataset.width + 'px'
-          : '200px'
-      }
+          this.subsetting.hideBox.style.width = base.el.dataset.width
+            ? base.el.dataset.width / this.player.baseSize + 'rem'
+            : 200 / this.player.baseSize + 'rem'
+        }
 
-      if (item.click) item.click(item)
-    }, {
-      stopPropagation: true
-    })
+        if (item.click) item.click(item)
+      },
+      {
+        stopPropagation: true
+      }
+    )
 
     return item
   }

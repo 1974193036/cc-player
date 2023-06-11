@@ -11,6 +11,7 @@ const serve = require('rollup-plugin-serve')
 const livereload = require('rollup-plugin-livereload')
 const path = require('path')
 const alias = require('@rollup/plugin-alias')
+const px2rem = require('postcss-pxtorem')
 
 module.exports = defineConfig([
   {
@@ -43,7 +44,14 @@ module.exports = defineConfig([
       }),
       json(),
       postcss({
-        plugins: [autoprefixer()]
+        plugins: [
+          autoprefixer(),
+          px2rem({
+            rootValue: 16, // 设计稿宽度的1/10
+            propList: ['margin-left', 'min-width', 'height', 'font-size', 'bottom', 'width',  'padding', 'transform'] // 需要做转化处理的属性
+            // selectorBlackList: [/^video-controller$/,/^video-bottombar$/, /^video-set$/, /^video-duration-time$/, /^video-topbar$/, /^danmaku-send$/]
+          })
+        ]
       }),
       alias({
         entries: [

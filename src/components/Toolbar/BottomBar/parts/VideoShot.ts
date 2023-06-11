@@ -39,7 +39,6 @@ export class VideoShot extends Options {
     this.iconBox.appendChild(this.icon)
 
     this.hideBox.innerText = '视频录制'
-    this.hideBox.style.fontSize = '13px'
   }
 
   initEvent() {
