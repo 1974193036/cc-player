@@ -1,5 +1,5 @@
 {
-  "name": "cc-niplayer",
+  "name": "cc-player",
   "version": "1.4.4",
   "description": "This is a TS library for video player",
   "main": "./dist/player.umd.js",
