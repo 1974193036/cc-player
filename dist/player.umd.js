@@ -4232,6 +4232,7 @@
 	  EVENT["REQUEST_DANMAKU_DATA"] = "RequestDanmakuData";
 	  EVENT["SEND_DANMAKU_DATA"] = "SendDanmakuData";
 	  EVENT["MOOV_PARSE_READY"] = "MoovParseReady";
+	  EVENT["SOURCE_ATTACHED"] = "sourceAttached";
 	  return EVENT;
 	}({});
 
@@ -10645,6 +10646,15 @@
 	      return cb();
 	    });
 	  }
+	}
+
+	function getExtension(url) {
+	  for (var i = url.length - 1; i--; i >= 0) {
+	    if (url[i] === '.') {
+	      return _sliceInstanceProperty(url).call(url, i + 1);
+	    }
+	  }
+	  return url;
 	}
 
 	function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -25318,7 +25328,7 @@
 	}();
 
 	var name = "niplayer";
-	var version = "1.4.1";
+	var version = "1.4.2";
 	var description = "This is a TS library for video player";
 	var main = "./dist/player.umd.js";
 	var module = "./dist/player.esm.js";
@@ -25367,6 +25377,7 @@
 		"rollup-plugin-postcss": "^4.0.2",
 		"rollup-plugin-serve": "^2.0.2",
 		typescript: "^4.9.5",
+		vite: "^4.3.9",
 		vitest: "^0.31.0"
 	};
 	var browserslist = [
@@ -25658,13 +25669,15 @@
 
 	      // 初始化媒体的播放源
 	      ((_this$playerOptions = this.playerOptions) === null || _this$playerOptions === void 0 ? void 0 : _this$playerOptions.url) && this.attachSource(this.playerOptions.url);
+	      this.initPlugin();
 	      this.initComponent();
 	      this.initTemplate();
 	      this.initEvent();
-	      this.initPlugin();
 	      this.initResizeObserver();
 	      this.checkFullScreenMode();
 	    }
+
+	    // 在所有组件初始化完成之后对player的整体模板进行初始化
 	  }, {
 	    key: "initTemplate",
 	    value: function initTemplate() {
@@ -25674,6 +25687,8 @@
 	        new MobileVolume(this, this.el, 'div');
 	      }
 	    }
+
+	    // 对包含的所有组件进行初始化
 	  }, {
 	    key: "initComponent",
 	    value: function initComponent() {
@@ -25689,6 +25704,8 @@
 	        this.danmakuController = new DanmakuController(this, this.playerOptions.danmaku);
 	      }
 	    }
+
+	    // 初始化公有的事件
 	  }, {
 	    key: "initEvent",
 	    value: function initEvent() {
@@ -25790,6 +25807,8 @@
 	        _this2.isFullscreen = false;
 	      });
 	    }
+
+	    // 初始化PC端事件
 	  }, {
 	    key: "initPCEvent",
 	    value: function initPCEvent() {
@@ -25861,6 +25880,8 @@
 	        _this3.contextMenu.el.style.left = e.offsetX + 'px';
 	      });
 	    }
+
+	    // 初始化移动端事件
 	  }, {
 	    key: "initMobileEvent",
 	    value: function initMobileEvent() {
@@ -25917,6 +25938,8 @@
 	        }
 	      });
 	    }
+
+	    // 初始化插件
 	  }, {
 	    key: "initPlugin",
 	    value: function initPlugin() {
@@ -25934,11 +25957,15 @@
 	    key: "attachSource",
 	    value: function attachSource(url) {
 	      // 是否启动流式播放
-	      new Mp4Parser(url, this);
-	      if (this.playerOptions.streamPlay) {
-	        new MediaPlayer(url, this);
-	      } else {
-	        this.video.src = url;
+	      var extension = getExtension(url);
+	      this.emit(EVENT.SOURCE_ATTACHED, url); // 触发资源加载完毕事件
+	      if (extension === 'mp4') {
+	        new Mp4Parser(url, this); // 解析mp4文件，配合contextMenu获取视频统计信息
+	        if (this.playerOptions.streamPlay) {
+	          new MediaPlayer(url, this);
+	        } else {
+	          this.video.src = url;
+	        }
 	      }
 	    }
 
@@ -26173,13 +26200,13 @@
 	    value: function registerControllers(component, pos) {
 	      if (pos === 'left') {
 	        if (!this.playerOptions.leftBottomBarControllers) this.playerOptions.leftBottomBarControllers = [];
-	        this.playerOptions.leftBottomBarControllers.push(component);
+	        this.playerOptions.leftBottomBarControllers.unshift(component);
 	      } else if (pos === 'medium') {
 	        if (!this.playerOptions.mediumMediumBarController) this.playerOptions.mediumMediumBarController = [];
-	        this.playerOptions.mediumMediumBarController.push(component);
+	        this.playerOptions.mediumMediumBarController.unshift(component);
 	      } else {
 	        if (!this.playerOptions.rightBottomBarControllers) this.playerOptions.rightBottomBarControllers = [];
-	        this.playerOptions.rightBottomBarControllers.push(component);
+	        this.playerOptions.rightBottomBarControllers.unshift(component);
 	      }
 	    }
 
@@ -26227,6 +26254,7 @@
 	exports.DanmakuOpenClose = DanmakuOpenClose;
 	exports.DanmakuSettings = DanmakuSettings;
 	exports.DutaionShow = DutaionShow;
+	exports.EVENT = EVENT;
 	exports.Env = Env;
 	exports.ErrorLoading = ErrorLoading;
 	exports.FullPage = FullPage;
@@ -26264,6 +26292,7 @@
 	exports.getDOMPoint = getDOMPoint;
 	exports.getEl = getEl;
 	exports.getElementSize = getElementSize;
+	exports.getExtension = getExtension;
 	exports.includeClass = includeClass;
 	exports.nextTick = nextTick$1;
 	exports.patchComponent = patchComponent;

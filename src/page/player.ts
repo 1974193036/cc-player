@@ -22,6 +22,7 @@ import { Env } from '@/utils/env'
 import { MobileVolume } from '@/components/Mobile/MobileVolume'
 import { DoubleTapEvent, MoveEvent, SingleTapEvent, SwipeEvent, wrap } from 'ntouch.js'
 import { computeAngle } from '@/utils/math'
+import { getExtension } from '@/utils/getExtension'
 import { EVENT } from '@/events'
 import { Subtitle } from '@/components/Subtitle/Subtitle'
 import { ContextMenu } from '@/components/ContextMenu/ContextMenu'
@@ -86,14 +87,15 @@ class Player extends Component implements ComponentItem {
     // 初始化媒体的播放源
     this.playerOptions?.url && this.attachSource(this.playerOptions.url)
 
+    this.initPlugin()
     this.initComponent()
     this.initTemplate()
     this.initEvent()
-    this.initPlugin()
     this.initResizeObserver()
     this.checkFullScreenMode()
   }
 
+  // 在所有组件初始化完成之后对player的整体模板进行初始化
   initTemplate(): void {
     if (this.env === 'Mobile') {
       // 如果是在移动端，则音量的调节使用手势决定的
@@ -102,6 +104,7 @@ class Player extends Component implements ComponentItem {
     }
   }
 
+  // 对包含的所有组件进行初始化
   initComponent(): void {
     this.loading = new TimeLoading(this, '视频姬正在努力加载中(⑅˃◡˂⑅)', this.el)
     this.error = new ErrorLoading(this, '视频加载发送错误', this.el)
@@ -118,6 +121,7 @@ class Player extends Component implements ComponentItem {
     }
   }
 
+  // 初始化公有的事件
   initEvent() {
     if (this.env === 'Mobile') {
       this.initMobileEvent()
@@ -225,6 +229,7 @@ class Player extends Component implements ComponentItem {
     })
   }
 
+  // 初始化PC端事件
   initPCEvent(): void {
     this.el.onclick = (e) => {
       // if (e.target === this.toolBar.el || e.target === this.toolBar.controller.el) {
@@ -297,6 +302,7 @@ class Player extends Component implements ComponentItem {
     })
   }
 
+  // 初始化移动端事件
   initMobileEvent(): void {
     wrap(this.el).addEventListener('touchstart', () => {
       this.emit(EVENT.DOT_DOWN)
@@ -351,6 +357,7 @@ class Player extends Component implements ComponentItem {
     })
   }
 
+  // 初始化插件
   private initPlugin() {
     if (this.playerOptions.plugins) {
       this.playerOptions.plugins.forEach((plugin) => {
@@ -362,11 +369,15 @@ class Player extends Component implements ComponentItem {
   // 给video添加媒体资源，开始初始化媒体资源的解析
   attachSource(url: string) {
     // 是否启动流式播放
-    new Mp4Parser(url, this)
-    if (this.playerOptions.streamPlay) {
-      new Mp4MediaPlayer(url, this)
-    } else {
-      this.video.src = url
+    let extension = getExtension(url)
+    this.emit(EVENT.SOURCE_ATTACHED, url) // 触发资源加载完毕事件
+    if (extension === 'mp4') {
+      new Mp4Parser(url, this) // 解析mp4文件，配合contextMenu获取视频统计信息
+      if (this.playerOptions.streamPlay) {
+        new Mp4MediaPlayer(url, this)
+      } else {
+        this.video.src = url
+      }
     }
   }
 
@@ -583,15 +594,15 @@ class Player extends Component implements ComponentItem {
     if (pos === 'left') {
       if (!this.playerOptions.leftBottomBarControllers)
         this.playerOptions.leftBottomBarControllers = []
-      this.playerOptions.leftBottomBarControllers.push(component)
+      this.playerOptions.leftBottomBarControllers.unshift(component)
     } else if (pos === 'medium') {
       if (!this.playerOptions.mediumMediumBarController)
         this.playerOptions.mediumMediumBarController = []
-      this.playerOptions.mediumMediumBarController.push(component)
+      this.playerOptions.mediumMediumBarController.unshift(component)
     } else {
       if (!this.playerOptions.rightBottomBarControllers)
         this.playerOptions.rightBottomBarControllers = []
-      this.playerOptions.rightBottomBarControllers.push(component)
+      this.playerOptions.rightBottomBarControllers.unshift(component)
     }
   }
 
