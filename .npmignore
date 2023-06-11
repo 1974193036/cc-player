@@ -4,6 +4,7 @@
 /assets/
 /.vscode/
 /script/
+/config/
 /dist/index.html
 index.html
 index2.html

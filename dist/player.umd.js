@@ -3518,7 +3518,6 @@
 	  // console.log('22', { x: l, y: t })
 	  // return { x: l, y: t }
 	}
-
 	/**
 	 * @description 查看当前的鼠标位置是否在父元素和绝对定位的子元素的组合范围内，如果超出则返回false
 	 * @param parent
@@ -3542,7 +3541,6 @@
 	  return false;
 	}
 	var SELECTOR_REG = /([\w-]+)?(?:#([\w-]+))?(?:\.([\w-]+))?/;
-
 	/**
 	 * @description 根据desc的标签描述和props的属性描述来创建一个DOM对象，并且在实例上挂载各种属性
 	 * @param {string} desc
@@ -3648,7 +3646,6 @@
 	  //   })
 	  // }
 	  // return false
-
 	  if (parent !== child && parent.contains(child)) {
 	    return true;
 	  }
@@ -3701,7 +3698,6 @@
 	  }
 	  return svg;
 	}
-
 	/**
 	 * @description 合并两个组件的实例对象
 	 * @param target
@@ -3745,9 +3741,9 @@
 	            throw new Error("\u5C5E\u6027".concat(key, "\u5BF9\u5E94\u7684\u503C\u5E94\u8BE5\u4E3ADOM\u5143\u7D20\u6216\u8005\u5B57\u7B26\u4E32\u7C7B\u578B"));
 	          }
 	          if (typeof another[key] === 'string') ; else {
-	            var _parentNode, _parentNode2;
-	            (_parentNode = target[key].parentNode) === null || _parentNode === void 0 ? void 0 : _parentNode.insertBefore(another[key], target[key]);
-	            (_parentNode2 = target[key].parentNode) === null || _parentNode2 === void 0 ? void 0 : _parentNode2.removeChild(target[key]);
+	            var _target$key$parentNod, _target$key$parentNod2;
+	            (_target$key$parentNod = target[key].parentNode) === null || _target$key$parentNod === void 0 ? void 0 : _target$key$parentNod.insertBefore(another[key], target[key]);
+	            (_target$key$parentNod2 = target[key].parentNode) === null || _target$key$parentNod2 === void 0 ? void 0 : _target$key$parentNod2.removeChild(target[key]);
 	            target[key] = another[key];
 	          }
 	        }
@@ -4066,7 +4062,6 @@
 	        });
 	      }
 	    }
-
 	    // 取消事件监听
 	  }, {
 	    key: "off",
@@ -4197,7 +4192,8 @@
 	  return Loading;
 	}(Component);
 
-	var EVENT = /*#__PURE__*/function (EVENT) {
+	exports.EVENT = void 0;
+	(function (EVENT) {
 	  EVENT["LOADED_META_DATA"] = "loadedmetadata";
 	  EVENT["TIME_UPDATE"] = "timeupdate";
 	  EVENT["PLAY"] = "play";
@@ -4237,8 +4233,7 @@
 	  EVENT["SEND_DANMAKU_DATA"] = "SendDanmakuData";
 	  EVENT["MOOV_PARSE_READY"] = "MoovParseReady";
 	  EVENT["SOURCE_ATTACHED"] = "sourceAttached";
-	  return EVENT;
-	}({});
+	})(exports.EVENT || (exports.EVENT = {}));
 
 	function _createSuper$v(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$v(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$v() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -4246,7 +4241,6 @@
 	  _inherits(ErrorLoading, _Loading);
 	  var _super = _createSuper$v(ErrorLoading);
 	  // el: div.video-loading
-
 	  function ErrorLoading(player, msg, container) {
 	    var _this;
 	    _classCallCheck(this, ErrorLoading);
@@ -4261,12 +4255,11 @@
 	    value: function initEvent() {
 	      var _this2 = this;
 	      // 视频加载发生错误时
-	      this.player.on(EVENT.ERROR, function (e) {
+	      this.player.on(exports.EVENT.ERROR, function (e) {
 	        _this2.addLoading();
 	      });
-
 	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function (e) {
+	      this.player.on(exports.EVENT.CAN_PLAY, function (e) {
 	        _this2.removeLoading();
 	      });
 	    }
@@ -4280,7 +4273,6 @@
 	  _inherits(TimeLoading, _Loading);
 	  var _super = _createSuper$u(TimeLoading);
 	  // el: div.video-loading
-
 	  function TimeLoading(player, msg, container) {
 	    var _this;
 	    _classCallCheck(this, TimeLoading);
@@ -4295,12 +4287,11 @@
 	    value: function initEvent() {
 	      var _this2 = this;
 	      // 在视频由于需要缓冲下一帧而停止时触发
-	      this.player.on(EVENT.WAITING, function () {
+	      this.player.on(exports.EVENT.WAITING, function () {
 	        _this2.addLoading();
 	      });
-
 	      // 该视频已准备好开始播放
-	      this.player.on(EVENT.CAN_PLAY, function () {
+	      this.player.on(exports.EVENT.CAN_PLAY, function () {
 	        _this2.removeLoading();
 	      });
 	    }
@@ -5670,16 +5661,12 @@
 
 	// COMPONENT_STORE存储目前还展示在视图上的组件，也就是没用卸载或者删除的组件
 	var COMPONENT_STORE = new _Map();
-
 	// ONCE_COMPONENT_STORE存储的是只要曾经在视图上展示过哪怕已经卸载，都会一直保留在此处，除非通过delete进行彻底删除
 	var ONCE_COMPONENT_STORE = new _Map();
-
 	// 存储需要隐藏的元素，但不进行卸载
 	var HIDEEN_COMPONENT_STORE = new _Map();
-
 	// 内置的原子组件
 	var BuiltInControllerComponent = ['DurationShow', 'FullPage', 'FullScreen', 'PicInPic', 'PlayButton', 'Playrate', 'ScreenShot', 'SubSetting', 'VideoShot', 'Toast'];
-
 	// 存储组件，包括用户自定义组件和内置组件
 	function storeControlComponent(item) {
 	  COMPONENT_STORE.set(item.id, item);
@@ -5745,7 +5732,6 @@
 	        document.body.onmousemove = ctx.handleMouseMove.bind(_this2);
 	        _this2.player.emit('oneControllerHover', _this2);
 	      };
-
 	      // 让当前控件显示，让其他的隐藏
 	      this.player.on('oneControllerHover', function (controller) {
 	        // console.log(this, controller, this === controller)
@@ -5755,11 +5741,10 @@
 	          }
 	        }
 	      });
-	      this.player.on(EVENT.VIDEO_CLICK, function () {
+	      this.player.on(exports.EVENT.VIDEO_CLICK, function () {
 	        addClass(_this2.hideBox, ['video-set-hidden']);
 	      });
 	    }
-
 	    // 初始化基本的移动端事件
 	  }, {
 	    key: "initBaseMobileEvent",
@@ -5791,6 +5776,33 @@
 	(function (exports) {
 	Object.defineProperty(exports,"__esModule",{value:!0}),exports.toggleFull=exports.isFull=exports.exitFull=exports.beFull=void 0;var e=document.documentElement,l=e.querySelector("head"),n=document.createElement("style"),t="requestFullscreen",u="exitFullscreen",r="fullscreenElement";if("webkitRequestFullScreen"in e)t="webkitRequestFullScreen",u="webkitExitFullscreen",r="webkitFullscreenElement";else if("msRequestFullscreen"in e)t="msRequestFullscreen",u="msExitFullscreen",r="msFullscreenElement";else if("mozRequestFullScreen"in e)t="mozRequestFullScreen",u="mozCancelFullScreen",r="mozFullScreenElement";else if(!("requestFullscreen"in e))throw "当前浏览器不支持Fullscreen API !";function c(l){return l instanceof HTMLElement?l:e}function o(e,u){return u&&(null===l&&(l=document.createElement("head")),n.innerHTML=":fullscreen{background-color:"+u+";}",l.appendChild(n)),c(e)[t]()}function i(){return e.contains(n)&&(null==l||l.removeChild(n)),document[u]()}function F(e){return c(e)===document[r]}function m(e,l){return F(e)?(i(),!1):(o(e,l),!0)}exports.beFull=o,exports.exitFull=i,exports.isFull=F,exports.toggleFull=m; 
 	} (main_min));
+
+	function enterFull(el) {
+	  if (el.mozRequestFullScreen) {
+	    return el.mozRequestFullScreen();
+	  } else if (el.webkitRequestFullscreen) {
+	    return el.webkitRequestFullscreen();
+	  } else if (el.msRequestFullscreen) {
+	    return el.msRequestFullscreen();
+	  } else if (el.requestFullscreen) {
+	    return el.requestFullscreen();
+	  } else {
+	    throw new Error('你的浏览器不支持任何全屏请求');
+	  }
+	}
+	function exitFull() {
+	  if (document['mozCancelFullScreen']) {
+	    return document['mozCancelFullScreen']();
+	  } else if (document['webkitExitFullscreen']) {
+	    return document['webkitExitFullscreen']();
+	  } else if (document['msExitFullscreen']) {
+	    return document['msExitFullscreen']();
+	  } else if (document.exitFullscreen) {
+	    return document.exitFullscreen();
+	  } else {
+	    throw new Error('你的浏览器无法退出全屏');
+	  }
+	}
 
 	let fn1 = Document.prototype.createElement;
 	// 此函数为重载实现
@@ -6295,9 +6307,9 @@
 	      document.addEventListener('fullscreenchange', function (e) {
 	        // console.log('fullscreenchange', document.fullscreenElement)
 	        if (document.fullscreenElement) {
-	          _this2.player.emit(EVENT.ENTER_FULLSCREEN);
+	          _this2.player.emit(exports.EVENT.ENTER_FULLSCREEN);
 	        } else {
-	          _this2.player.emit(EVENT.LEAVE_FULLSCREEN);
+	          _this2.player.emit(exports.EVENT.LEAVE_FULLSCREEN);
 	        }
 	      });
 	    }
@@ -6310,12 +6322,14 @@
 	      }
 	      if (!main_min.isFull(this.player.container)) {
 	        // 调用浏览器提供的全屏API接口去请求元素的全屏，原生全屏分为  竖屏全屏 + 横屏全屏
-	        this.player.container.requestFullscreen();
+	        enterFull(this.player.container);
+	        // this.player.container.requestFullscreen()
 	        this.iconBox.removeChild(this.icon);
 	        this.icon = createSvg(fullscreenExitPath, '0 0 1024 1024');
 	        this.iconBox.appendChild(this.icon);
 	      } else if (main_min.isFull(this.player.container)) {
-	        document.exitFullscreen();
+	        exitFull();
+	        // document.exitFullscreen()
 	        this.iconBox.removeChild(this.icon);
 	        this.icon = createSvg(fullscreenPath, '0 0 1024 1024');
 	        this.iconBox.appendChild(this.icon);
@@ -6364,12 +6378,12 @@
 	    key: "initEvent",
 	    value: function initEvent() {
 	      var _this2 = this;
-	      this.player.on(EVENT.PLAY, function (e) {
+	      this.player.on(exports.EVENT.PLAY, function (e) {
 	        _this2.iconBox.removeChild(_this2.button);
 	        _this2.button = _this2.pauseIcon;
 	        _this2.iconBox.appendChild(_this2.button);
 	      });
-	      this.player.on(EVENT.PAUSE, function (e) {
+	      this.player.on(exports.EVENT.PAUSE, function (e) {
 	        _this2.iconBox.removeChild(_this2.button);
 	        _this2.button = _this2.playIcon;
 	        _this2.iconBox.appendChild(_this2.button);
@@ -6560,7 +6574,7 @@
 	    key: "initEvent",
 	    value: function initEvent() {
 	      var _this2 = this;
-	      this.player.on(EVENT.VOLUME_PROGRESS_CLICK, function (e, ctx) {
+	      this.player.on(exports.EVENT.VOLUME_PROGRESS_CLICK, function (e, ctx) {
 	        var eoffsetY = e.clientY - getDOMPoint(_this2.volumeProgress).y;
 	        var offsetY = _this2.volumeProgress.clientHeight - eoffsetY;
 	        var scale = offsetY / _this2.volumeProgress.clientHeight;
@@ -6577,7 +6591,7 @@
 	      });
 	      this.volumeProgress.onclick = function (e) {
 	        e.stopPropagation();
-	        _this2.player.emit(EVENT.VOLUME_PROGRESS_CLICK, e, _this2);
+	        _this2.player.emit(exports.EVENT.VOLUME_PROGRESS_CLICK, e, _this2);
 	      };
 	      this.volumeDot.onmousedown = function (e) {
 	        e.stopPropagation();
@@ -6660,7 +6674,7 @@
 	    key: "initEvent",
 	    value: function initEvent() {
 	      var _this2 = this;
-	      this.player.on(EVENT.LOADED_META_DATA, function (e) {
+	      this.player.on(exports.EVENT.LOADED_META_DATA, function (e) {
 	        var _context2;
 	        var video = e.target;
 	        // console.log(video.duration) // 12.612
@@ -6668,13 +6682,13 @@
 	        // console.log(this.totalTime) // 00:12
 	        _this2.el.innerText = _concatInstanceProperty(_context2 = "".concat(_this2.currentTime, "/")).call(_context2, _this2.totalTime);
 	      });
-	      this.player.on(EVENT.TIME_UPDATE, function (e) {
+	      this.player.on(exports.EVENT.TIME_UPDATE, function (e) {
 	        var _context3;
 	        var video = e.target;
 	        _this2.currentTime = formatTime(video.currentTime);
 	        _this2.el.innerText = _concatInstanceProperty(_context3 = "".concat(_this2.currentTime, "/")).call(_context3, _this2.totalTime);
 	      });
-	      this.player.on(EVENT.VIDEO_DOT_DRAG, function (scale) {
+	      this.player.on(exports.EVENT.VIDEO_DOT_DRAG, function (scale) {
 	        var _context4;
 	        _this2.currentTime = formatTime(_this2.player.video.duration * scale);
 	        _this2.el.innerText = _concatInstanceProperty(_context4 = "".concat(_this2.currentTime, "/")).call(_context4, _this2.totalTime);
@@ -6738,13 +6752,13 @@
 	        this.iconBox.removeChild(this.icon);
 	        this.icon = createSvg(fullPageExitPath, '0 0 1024 1024');
 	        this.iconBox.appendChild(this.icon);
-	        this.player.emit(EVENT.ENTER_FULLPAGE);
+	        this.player.emit(exports.EVENT.ENTER_FULLPAGE);
 	      } else {
 	        removeClass(this.player.el, ['video-wrapper-fullpage']);
 	        this.iconBox.removeChild(this.icon);
 	        this.icon = createSvg(fullPagePath, '0 0 1024 1024');
 	        this.iconBox.appendChild(this.icon);
-	        this.player.emit(EVENT.LEAVE_FULLPAGE);
+	        this.player.emit(exports.EVENT.LEAVE_FULLPAGE);
 	      }
 	      this.isFullPage = !this.isFullPage;
 	    }
@@ -6758,7 +6772,6 @@
 	  _inherits(PicInPic, _Options);
 	  var _super = _createSuper$m(PicInPic);
 	  // el: div.video-picInpic.video-controller
-
 	  function PicInPic(player, container, desc, props, children) {
 	    var _this;
 	    _classCallCheck(this, PicInPic);
@@ -6801,7 +6814,6 @@
 	        e.stopPropagation();
 	      }
 	      // document.pictureInPictureElement: 当前画中画的元素
-
 	      if (document.pictureInPictureElement) {
 	        // 当前存在画中画的元素，则退出画中画
 	        document.exitPictureInPicture();
@@ -8785,7 +8797,6 @@
 	        this.el.ontouchstart = this.onDown;
 	      }
 	    }
-
 	    // 当鼠标或者手指按下的时刻开始启动录屏
 	  }, {
 	    key: "onDown",
@@ -8801,7 +8812,6 @@
 	    value: function videoShot() {
 	      var _this2 = this;
 	      var inProgressToast = this.createInProgressToast();
-
 	      // MediaRecorder(stream[, options]) 构造函数会创建一个对指定的 MediaStream 进行录制的 MediaRecorder 对象
 	      var recorder = new MediaRecorder(this.player.video.captureStream(60));
 	      recorder.addEventListener('start', function (e) {
@@ -8810,11 +8820,9 @@
 	      recorder.addEventListener('stop', function (e) {
 	        console.log('结束录制视频');
 	      });
-
 	      // 当 MediaRecorder 将媒体数据传递到您的应用程序以供使用时，将触发该事件。数据在包含数据的Blob对象中提供
 	      recorder.addEventListener('dataavailable', function (e) {
 	        // console.log(e.data) // 是一个Blob
-
 	        var data = e.data;
 	        var a = document.createElement('a');
 	        // createObjectURL: 用于创建 URL 的 File 对象、Blob 对象或者 MediaSource 对象
@@ -8826,7 +8834,6 @@
 	        document.body.removeChild(a);
 	        a = null;
 	      });
-
 	      // 开始录制视频
 	      recorder.start();
 	      this.timer = window.setInterval(function () {
@@ -8950,7 +8957,7 @@
 	    _defineProperty(_assertThisInitialized(_this), "clickOrTap", 'click');
 	    _this.player = player;
 	    _this.subsetting = subsetting;
-	    _assertThisInitialized(_this).__proto__.constructor.instance = _assertThisInitialized(_this);
+	    _this.__proto__.constructor.instance = _assertThisInitialized(_this);
 	    return _this;
 	  }
 	  _createClass(SubsettingsBase, [{
@@ -8973,7 +8980,6 @@
 	    value: function initMobileEvent() {
 	      this.clickOrTap = 'singleTap';
 	    }
-
 	    // target表示点击你这个item，需要跳转到哪一个SubsettingsBase
 	  }, {
 	    key: "registerSubsettingsItem",
@@ -9000,9 +9006,7 @@
 	          this.subsetting.subsettingsBaseGraph.set(this, res);
 	        }
 	      }
-
 	      // if (!this.SubsettingsItem.includes(item)) this.SubsettingsItem.push(item)
-
 	      var instance = new SubsettingItem(this.player, item.leftIcon, item.leftText, item.rightTip, item.rightIcon);
 	      item.instance = instance;
 	      this.el.appendChild(instance.el);
@@ -9037,7 +9041,6 @@
 	function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	// import { SubsettingItem } from '../SubsettingItem'
 	// import { BaseEvent } from '@/class/BaseEvent'
-
 	var SubsettingsPlayrate = /*#__PURE__*/function (_SubsettingsBase) {
 	  _inherits(SubsettingsPlayrate, _SubsettingsBase);
 	  var _super = _createSuper$i(SubsettingsPlayrate);
@@ -9196,7 +9199,6 @@
 	  // subsettingsPlayrate: SubsettingsPlayrate
 	  // subsettingsSubtitle: SubsettingsSubtitle
 	  // currentShow: HTMLElement
-
 	  function SubSetting(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, SubSetting);
@@ -9270,7 +9272,6 @@
 	    value: function initMobileEvent() {
 	      this.clickOrTap = 'singleTap';
 	    }
-
 	    // 注册基础的子设置项
 	  }, {
 	    key: "registerSubsettingsBase",
@@ -9379,7 +9380,6 @@
 	  //代表着最左侧的区域
 
 	  //代表最右侧的区域
-
 	  function Controller(player, container, desc) {
 	    var _this;
 	    _classCallCheck(this, Controller);
@@ -9543,9 +9543,7 @@
 	var _parseFloat$1 = /*@__PURE__*/getDefaultExportFromCjs(_parseFloat);
 
 	var env = window.navigator.userAgent.toLowerCase();
-
 	// 'mozilla/5.0 (macintosh; intel mac os x 10_15_7) applewebkit/537.36 (khtml, like gecko) chrome/113.0.0.0 safari/537.36'
-
 	var Env = {
 	  isInWeixin: function isInWeixin() {
 	    return _indexOfInstanceProperty(env).call(env, 'micromessenger') !== -1;
@@ -10629,7 +10627,6 @@
 	function isNative(Ctor) {
 	  return typeof Ctor === 'function' && /native code/.test(Ctor.toString());
 	}
-
 	// 优雅降级实现Vue中的nextTick功能
 	function nextTick$1(cb) {
 	  if (typeof _Promise !== 'undefined' && isNative(_Promise)) {
@@ -10701,7 +10698,7 @@
 	      } else {
 	        this.initBaseMobileEvent();
 	      }
-	      this.on(EVENT.PROGRESS_CLICK, function (dx, ctx) {
+	      this.on(exports.EVENT.PROGRESS_CLICK, function (dx, ctx) {
 	        var scale = dx / _this2.el.clientWidth;
 	        if (scale < 0) {
 	          scale = 0;
@@ -10711,7 +10708,7 @@
 	        _this2.dot.style.left = "calc(".concat(scale * 100, "% - 6px)");
 	        _this2.completedProgress.style.width = scale * 100 + '%';
 	      });
-	      this.on(EVENT.DOT_DRAG, function (dx, ctx) {
+	      this.on(exports.EVENT.DOT_DRAG, function (dx, ctx) {
 	        var scale = (dx + _this2.dotLeft) / _this2.el.clientWidth;
 	        if (scale < 0) {
 	          scale = 0;
@@ -10729,27 +10726,26 @@
 	      var ctx = this;
 	      this.el.onmouseenter = function (e) {
 	        _this3.el.style.height = '8px';
-	        _this3.emit(EVENT.PROGRESS_MOUSE_ENTER, e, ctx);
+	        _this3.emit(exports.EVENT.PROGRESS_MOUSE_ENTER, e, ctx);
 	      };
 	      this.el.onmouseleave = function (e) {
 	        _this3.el.style.height = '';
-	        _this3.emit(EVENT.PROGRESS_MOUSE_LEAVE, e, ctx);
+	        _this3.emit(exports.EVENT.PROGRESS_MOUSE_LEAVE, e, ctx);
 	      };
 	      this.el.onclick = function (e) {
 	        e.stopPropagation();
 	        if (e.target === _this3.dot) return;
-	        _this3.emit(EVENT.PROGRESS_CLICK, e.offsetX, ctx);
+	        _this3.emit(exports.EVENT.PROGRESS_CLICK, e.offsetX, ctx);
 	      };
 	      this.dot.addEventListener('mousedown', function (e) {
 	        e.stopPropagation();
-	        _this3.emit(EVENT.DOT_DOWN);
+	        _this3.emit(exports.EVENT.DOT_DOWN);
 	        _this3.mouseX = e.pageX;
 	        // this.dot.style.left是一个百分比如"40.8%，变成px
 	        // this.dotLeft = (parseFloat(this.dot.style.left || '0') / 100) * this.el.clientWidth
-
 	        document.body.addEventListener('mousemove', ctx.onMouseMove);
 	        document.body.onmouseup = function (e) {
-	          _this3.emit(EVENT.DOT_UP, _this3.completedProgress.clientWidth / _this3.el.clientWidth, ctx);
+	          _this3.emit(exports.EVENT.DOT_UP, _this3.completedProgress.clientWidth / _this3.el.clientWidth, ctx);
 	          document.body.removeEventListener('mousemove', ctx.onMouseMove);
 	          document.body.onmouseup = null;
 	        };
@@ -10762,18 +10758,18 @@
 	      var ctx = this;
 	      wrap(this.el).addEventListener('singleTap', function (e) {
 	        var dx = e.e.changedTouches[0].clientX - getDOMPoint(_this4.el).x;
-	        _this4.emit(EVENT.PROGRESS_CLICK, dx, ctx);
+	        _this4.emit(exports.EVENT.PROGRESS_CLICK, dx, ctx);
 	      });
 	      wrap(this.dot).addEventListener('touchstart', function (e) {
 	        e.preventDefault();
-	        _this4.emit(EVENT.DOT_DOWN);
+	        _this4.emit(exports.EVENT.DOT_DOWN);
 	        _this4.mouseX = e.touches[0].clientX;
 	        // this.dotLeft = this.el.style.left ? parseInt(this.el.style.left) : 0
 	        // this.dot.style.left是一个百分比如"40.8%，变成px
 	        _this4.dotLeft = _parseFloat$1(_this4.dot.style.left || '0') / 100 * _this4.el.clientWidth;
 	        document.body.addEventListener('touchmove', _this4.onMouseMove);
 	        document.body.ontouchend = function (e) {
-	          _this4.emit(EVENT.DOT_UP, _this4.completedProgress.clientWidth / _this4.el.clientWidth, ctx);
+	          _this4.emit(exports.EVENT.DOT_UP, _this4.completedProgress.clientWidth / _this4.el.clientWidth, ctx);
 	          document.body.removeEventListener('touchmove', _this4.onMouseMove);
 	          document.body.ontouchend = null;
 	        };
@@ -10784,10 +10780,10 @@
 	    value: function onMouseMove(e) {
 	      if (e instanceof MouseEvent) {
 	        var dx = e.pageX - this.mouseX;
-	        this.emit(EVENT.DOT_DRAG, dx, this);
+	        this.emit(exports.EVENT.DOT_DRAG, dx, this);
 	      } else {
 	        var _dx = e.touches[0].clientX - this.mouseX;
-	        this.emit(EVENT.DOT_DRAG, _dx, this);
+	        this.emit(exports.EVENT.DOT_DRAG, _dx, this);
 	      }
 	    }
 	  }]);
@@ -10847,30 +10843,27 @@
 	      } else {
 	        this.initMobileEvent();
 	      }
-	      this.on(EVENT.DOT_DRAG, function (dx, ctx) {
+	      this.on(exports.EVENT.DOT_DRAG, function (dx, ctx) {
 	        var scale = (dx + _this2.dotLeft) / _this2.el.clientWidth;
 	        if (scale < 0) {
 	          scale = 0;
 	        } else if (scale > 1) {
 	          scale = 1;
 	        }
-	        _this2.player.emit(EVENT.VIDEO_DOT_DRAG, scale);
+	        _this2.player.emit(exports.EVENT.VIDEO_DOT_DRAG, scale);
 	      });
-
 	      // this.on(EVENT.PROGRESS_MOUSE_ENTER, () => {
 	      //   removeClass(this.dot, ['video-progress-dot-hidden'])
 	      // })
-
 	      // this.on(EVENT.PROGRESS_MOUSE_LEAVE, () => {
 	      //   addClass(this.dot, ['video-progress-dot-hidden'])
 	      // })
-
-	      this.on(EVENT.DOT_DOWN, function () {
+	      this.on(exports.EVENT.DOT_DOWN, function () {
 	        _this2.dotLeft = _parseFloat$1(_this2.dot.style.left || '0') / 100 * _this2.el.clientWidth;
-	        _this2.player.emit(EVENT.DOT_DOWN);
+	        _this2.player.emit(exports.EVENT.DOT_DOWN);
 	      });
-	      this.on(EVENT.DOT_UP, function (scale) {
-	        _this2.player.emit(EVENT.DOT_UP);
+	      this.on(exports.EVENT.DOT_UP, function (scale) {
+	        _this2.player.emit(exports.EVENT.DOT_UP);
 	        _this2.dotLeft = _this2.el.clientWidth * scale;
 	        _this2.player.video.currentTime = scale * _this2.player.video.duration;
 	      });
@@ -10911,7 +10904,7 @@
 	        _this3.preTime.style.display = 'none';
 	        if (_this3.thumbnails) _this3.thumbnails.style.display = 'none';
 	      });
-	      this.on(EVENT.PROGRESS_CLICK, function (dx, ctx) {
+	      this.on(exports.EVENT.PROGRESS_CLICK, function (dx, ctx) {
 	        var scale = dx / _this3.el.clientWidth;
 	        if (scale < 0) {
 	          scale = 0;
@@ -10923,10 +10916,10 @@
 	          _this3.player.video.play();
 	        }
 	      });
-	      this.on(EVENT.PROGRESS_MOUSE_ENTER, function () {
+	      this.on(exports.EVENT.PROGRESS_MOUSE_ENTER, function () {
 	        removeClass(_this3.dot, ['video-progress-dot-hidden']);
 	      });
-	      this.on(EVENT.PROGRESS_MOUSE_LEAVE, function () {
+	      this.on(exports.EVENT.PROGRESS_MOUSE_LEAVE, function () {
 	        addClass(_this3.dot, ['video-progress-dot-hidden']);
 	      });
 	    }
@@ -10935,19 +10928,18 @@
 	    value: function initMobileEvent() {
 	      var _this4 = this;
 	      // 手势左右处于滑动中
-	      this.player.on(EVENT.MOVE_HORIZONTAL, function (e) {
+	      this.player.on(exports.EVENT.MOVE_HORIZONTAL, function (e) {
 	        var dx = e.deltaX;
-	        _this4.emit(EVENT.DOT_DRAG, dx, _this4);
+	        _this4.emit(exports.EVENT.DOT_DRAG, dx, _this4);
 	      });
-
 	      // 手势左右滑动结束
-	      this.player.on(EVENT.SLIDE_HORIZONTAL, function (e) {
+	      this.player.on(exports.EVENT.SLIDE_HORIZONTAL, function (e) {
 	        if (_this4.player.video.paused) {
 	          _this4.player.video.play();
 	        }
 	        var dx = e.endPos.x - e.startPos.x;
 	        var scale = (_this4.dotLeft + dx) / _this4.el.clientWidth;
-	        _this4.emit(EVENT.DOT_UP, scale);
+	        _this4.emit(exports.EVENT.DOT_UP, scale);
 	      });
 	    }
 	  }, {
@@ -10957,7 +10949,6 @@
 	      this.el.addEventListener('mousemove', function (e) {
 	        var time = (e.clientX - getDOMPoint(_this5.el).x) / _this5.el.clientWidth * _this5.player.video.duration;
 	        var index = Math.floor(time / _this5.thumbnailsOptions.interval); // 180 / 5
-
 	        if (_this5.currentIndex === null || _this5.currentIndex !== index || index >= _this5.thumbnailsOptions.total) {
 	          _this5.currentIndex = index;
 	          var y = Math.floor(index / _this5.thumbnailsOptions.col) * _this5.thumbnailsOptions.margin * 2 + _this5.thumbnailsOptions.margin + index * _this5.thumbnailsOptions.height;
@@ -11048,7 +11039,6 @@
 	    value: function initComponent() {
 	      // this.progress = new Progress(this.player, this.el, 'div.video-progress')
 	      // this.controller = new Controller(this.player, this.el, 'div.video-play')
-
 	      this.mediumbar = new MediumBar(this.player, this.el, 'div.video-mediumbar');
 	      this.controller = new Controller(this.player, this.el, 'div.video-bottombar');
 	    }
@@ -11056,10 +11046,10 @@
 	    key: "initEvent",
 	    value: function initEvent() {
 	      var _this2 = this;
-	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
+	      this.player.on(exports.EVENT.SHOW_TOOLBAR, function () {
 	        _this2.onShowToolBar();
 	      });
-	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
+	      this.player.on(exports.EVENT.HIDE_TOOLBAR, function () {
 	        _this2.onHideToolBar();
 	      });
 	    }
@@ -11125,7 +11115,6 @@
 	      this.initEvent();
 	      storeControlComponent(this);
 	    }
-
 	    /**
 	     * @description 需要注意的是此处元素的class名字是官方用于控制整体toolbar一栏的显示和隐藏
 	     */
@@ -11176,10 +11165,10 @@
 	    key: "initEvent",
 	    value: function initEvent() {
 	      var _this3 = this;
-	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
+	      this.player.on(exports.EVENT.SHOW_TOOLBAR, function () {
 	        _this3.onShowToolBar();
 	      });
-	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
+	      this.player.on(exports.EVENT.HIDE_TOOLBAR, function () {
 	        _this3.onHideToolBar();
 	      });
 	    }
@@ -11380,7 +11369,6 @@
 	    _defineProperty(this, "maxInterval", 5);
 	    this.queue = [];
 	  }
-
 	  // 清理过期数据
 	  _createClass(PriorityQueue, [{
 	    key: "removeOutTimeData",
@@ -11391,19 +11379,16 @@
 	        return _this.newestTime - value.timestamp <= _this.maxInterval;
 	      });
 	    }
-
 	    // 添加新的数据
 	  }, {
 	    key: "add",
 	    value: function add(data) {
 	      this.newestTime = data.timestamp;
 	      this.queue.unshift(data);
-
 	      // 清除过期的数据
 	      this.removeOutTimeData();
 	      return this;
 	    }
-
 	    // 直接将数据添加到缓冲队列的末尾
 	  }, {
 	    key: "push",
@@ -11411,7 +11396,6 @@
 	      this.queue.push(data);
 	      return this;
 	    }
-
 	    // 弹出队列的首个数据
 	  }, {
 	    key: "shift",
@@ -11436,8 +11420,8 @@
 	  }, {
 	    key: "forEach",
 	    value: function forEach(cb) {
-	      for (var _index = 0; _index < this.queue.length; _index++) {
-	        cb(this.queue[_index], _index);
+	      for (var index = 0; index < this.queue.length; index++) {
+	        cb(this.queue[index], index);
 	      }
 	    }
 	  }, {
@@ -11499,7 +11483,6 @@
 	        };
 	      }
 	    }
-
 	    // 暂停所有的弹幕
 	  }, {
 	    key: "pause",
@@ -11511,7 +11494,6 @@
 	        _this.pauseOneData(data);
 	      });
 	    }
-
 	    // 恢复弹幕的运动,恢复弹幕运动此处的逻辑有问题(已修复)
 	  }, {
 	    key: "resume",
@@ -11526,7 +11508,6 @@
 	        _this2.resumeOneData(data);
 	      });
 	    }
-
 	    // 恢复单条弹幕的运动
 	  }, {
 	    key: "resumeOneData",
@@ -11536,7 +11517,6 @@
 	      data.rollTime = (data.totalDistance - data.rollDistance) / data.rollSpeed;
 	      data.dom.style.transition = "transform ".concat(data.rollTime, "s linear");
 	    }
-
 	    // 暂停单条弹幕的运动
 	  }, {
 	    key: "pauseOneData",
@@ -11551,13 +11531,11 @@
 	    value: function startDanmaku() {
 	      this.render();
 	    }
-
 	    // 向缓冲区添加正确格式的弹幕
 	  }, {
 	    key: "addData",
 	    value: function addData(data) {
 	      this.queue.push(this.parseData(data));
-
 	      // 如果检测到缓冲区弹幕为0,也就是定时器被关闭的话就重新开启定时器
 	      // if (flag) return
 	      if (this.timer === null) {
@@ -11613,7 +11591,6 @@
 	        }, this.renderInterval);
 	      }
 	    }
-
 	    // 向指定的DOM元素上渲染一条弹幕
 	  }, {
 	    key: "renderToDOM",
@@ -11666,18 +11643,15 @@
 	      data.dom.ontransitionstart = function (e) {
 	        data.startTime = Date.now();
 	      };
-
 	      // data.dom.onmouseenter = () => {
 	      //   if (this.isStopped) return
 	      //   this.pauseOneData(data)
 	      // }
-
 	      // data.dom.onmouseleave = () => {
 	      //   if (this.isStopped) return
 	      //   this.resumeOneData(data)
 	      // }
 	    }
-
 	    // 将指定的data添加到弹幕轨道上
 	  }, {
 	    key: "addDataToTrack",
@@ -11757,7 +11731,6 @@
 	        }
 	      };
 	    }
-
 	    // 清空所有的弹幕，包括正在运动中的或者还在缓冲区未被释放的
 	  }, {
 	    key: "flush",
@@ -11791,7 +11764,6 @@
 	      this.moovingQueue = [];
 	      this.queue.clear();
 	    }
-
 	    // 隐藏所有的弹幕
 	  }, {
 	    key: "close",
@@ -11821,7 +11793,6 @@
 	        }
 	      });
 	    }
-
 	    //* 设置弹幕的透明度
 	  }, {
 	    key: "setOpacity",
@@ -11832,7 +11803,6 @@
 	        data.dom.style.opacity = opacity + '';
 	      });
 	    }
-
 	    //* 设置弹幕轨道是数目
 	  }, {
 	    key: "setTrackNumber",
@@ -11859,20 +11829,6 @@
 	    value: function setPaused(val) {
 	      this.isPaused = val;
 	    }
-
-	    // // 丢弃一部分没用或者过时的弹幕
-	    // disCard(start: number, end: number) {
-	    //   this.queue.splice(start, end - start + 1)
-	    // }
-
-	    // clearOutdatedDanmaku(currentTime: number, interval: number) {
-	    //   this.queue = this.queue.filter((item) => {
-	    //     if (currentTime - item.timestamp > interval) {
-	    //       return false
-	    //     }
-	    //     return true
-	    //   })
-	    // }
 	  }]);
 	  return Danmaku;
 	}();
@@ -15965,7 +15921,6 @@
 	    this.player = player;
 	    this.video = player.video;
 	    this.container = player.el; // div.Niplayer_video-wrapper
-
 	    this.options = _Object$assign({
 	      type: 'http'
 	    }, options);
@@ -15995,7 +15950,6 @@
 	        this.initHTTP();
 	      }
 	    }
-
 	    //TODO 初始化websocket连接
 	  }, {
 	    key: "initWebSocket",
@@ -16009,11 +15963,11 @@
 	        //* 当播放器时间更新时需要请求新的弹幕数据
 	        _this.player.video.addEventListener('timeupdate', function (e) {
 	          // console.log(this.player.video.currentTime)
-	          socket.emit(EVENT.REQUEST_DANMAKU_DATA, {
+	          socket.emit(exports.EVENT.REQUEST_DANMAKU_DATA, {
 	            time: _this.player.video.currentTime
 	          });
 	        });
-	        socket.on(EVENT.SEND_DANMAKU_DATA, function (data) {
+	        socket.on(exports.EVENT.SEND_DANMAKU_DATA, function (data) {
 	          // console.log(`接受到数据${JSON.stringify(data)},当前时间${this.player.video.currentTime}`)
 	          var _iterator = _createForOfIteratorHelper$1(data),
 	            _step;
@@ -16034,7 +15988,6 @@
 	      });
 	      socket.connect();
 	    }
-
 	    // TODO  初始化http短轮询连接
 	  }, {
 	    key: "initHTTP",
@@ -16051,7 +16004,6 @@
 	        _this2.setDanmakuFail();
 	      });
 	    }
-
 	    // 弹幕加载成功
 	  }, {
 	    key: "setDanmakuSuccess",
@@ -16064,7 +16016,6 @@
 	        addClass(_this3.danmakuLoading, ['video-danmaku-loading-hide']);
 	      }, 3000);
 	    }
-
 	    // 弹幕加载失败
 	  }, {
 	    key: "setDanmakuFail",
@@ -16114,7 +16065,6 @@
 	      this.video.addEventListener('seeking', function (e) {
 	        _this5.onSeeked(e);
 	      });
-
 	      // seeking 事件在每次用户开始移动/跳跃视频音频（ audio/video）到新的位置时触发
 	      // seeked 事件在用户完成移动/跳跃视频音频（ audio/video）到新的位置时触发
 	      this.video.addEventListener('seeked', function (e) {
@@ -16148,11 +16098,9 @@
 	      this.danmakuInput.on('sendData', function (data) {
 	        // 此处为发送弹幕的逻辑
 	      });
-
 	      // this.player.on(EVENT.DOT_DRAG, () => {
 	      //   this.danmaku.flush()
 	      // })
-
 	      this.player.on('closeDanmaku', function () {
 	        // 隐藏所有的弹幕
 	        _this5.danmaku.close();
@@ -16161,7 +16109,7 @@
 	        // 打开所有隐藏的弹幕
 	        _this5.danmaku.open();
 	      });
-	      this.player.on(EVENT.RESIZE, function () {
+	      this.player.on(exports.EVENT.RESIZE, function () {
 	        _this5.setTrackNumber();
 	      });
 	    }
@@ -16176,7 +16124,6 @@
 	      // for (let i = 0; i < 10; i++) {
 	      //   this.danmaku.addData(queue[i % queue.length])
 	      // }
-
 	      // TODO 时间更新
 	      // TODO 如果默认请求弹幕数据的方式为http请求，则需要进行轮询
 	      this.instance.get(this.options.api, {
@@ -16198,7 +16145,6 @@
 	        }
 	      });
 	    }
-
 	    // start() {
 	    //   this.timer = window.setInterval(() => {
 	    //     this.danmaku.addData(queue[this.index++ % queue.length])
@@ -16215,26 +16161,22 @@
 	    //   // }
 	    //   // send()
 	    // }
-
 	    // pause() {
 	    //   window.clearInterval(this.timer)
 	    //   this.timer = null
 	    // }
-
 	    // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
 	  }, {
 	    key: "onSeeked",
 	    value: function onSeeked(e) {
 	      this.danmaku.flush();
 	    }
-
 	    //* 设置弹幕轨道是数目
 	  }, {
 	    key: "setTrackNumber",
 	    value: function setTrackNumber(num) {
 	      this.danmaku.setTrackNumber(num || null);
 	    }
-
 	    //* 设置弹幕的透明度
 	  }, {
 	    key: "setOpacity",
@@ -16242,7 +16184,6 @@
 	      // 1/2 3/4
 	      this.danmaku.setOpacity(opacity);
 	    }
-
 	    //* 设置字体的大小
 	  }, {
 	    key: "setFontSize",
@@ -16331,11 +16272,11 @@
 	      };
 	      this.inputBox.addEventListener('focus', function (e) {
 	        e.stopPropagation();
-	        _this2.player.emit(EVENT.DANMAKU_INPUT_FOCUS);
+	        _this2.player.emit(exports.EVENT.DANMAKU_INPUT_FOCUS);
 	      });
 	      this.inputBox.addEventListener('blur', function (e) {
 	        e.stopPropagation();
-	        _this2.player.emit(EVENT.DANMAKU_INPUT_BLUR);
+	        _this2.player.emit(exports.EVENT.DANMAKU_INPUT_BLUR);
 	      });
 	      this.inputBox.addEventListener('click', function (e) {
 	        e.stopPropagation();
@@ -24609,7 +24550,6 @@
 	    this.url = url || '';
 	    this.loader = new XHRLoader();
 	  }
-
 	  // 从开头去请求文件，也就是初始化文件的请求过程直到所有文件都请求完成
 	  _createClass(DownLoader, [{
 	    key: "start",
@@ -24635,7 +24575,6 @@
 	      this.isActive = false;
 	      return this;
 	    }
-
 	    // resume和start不同的是resume可能是在文件的请求暂停后重新设置了chunkStart之后再去重新请求新的chunk
 	  }, {
 	    key: "resume",
@@ -24717,7 +24656,6 @@
 	      });
 	      return request;
 	    }
-
 	    /**
 	     * @description 发送网络请求，请求对应的媒体文件
 	     * @returns
@@ -24807,7 +24745,6 @@
 	      this.mediaSource.addEventListener('sourceopen', function (e) {
 	        _this.loadFile();
 	      });
-
 	      // 在'moov box'开始被解析时被调用，根据下载速度，下载整个“moov box”可能需要一段时间，解析结束的信号是onReady回调函数
 	      // 在解析 MP4 文件时，通常需要先解析 moov box（moov box 是 MP4 文件中的一个重要 box，包含了 MP4 文件的元数据信息），以获取 MP4 文件的元数据信息。
 	      // 开始解析moov box时触发该事件
@@ -24835,7 +24772,6 @@
 	        ctx.stop();
 	        ctx.initializeAllSourceBuffers();
 	      };
-
 	      // 根据setSegmentOptions中传递的选项，在段准备好时调用回调。
 	      // user是片段的调用者，对于这个轨道，buffer是一个ArrayBuffer，包含这个片段的Movie Fragments。
 	      // mp4boxfile.start()时、mp4boxfile.appendBuffer()足够多 时被触发
@@ -24850,7 +24786,6 @@
 	        });
 	        ctx.onUpdateEnd.call(sb, true, false, ctx);
 	      };
-
 	      // 当用户开始移动/跳跃到新的视频播放位置时触发
 	      this.player.on('seeking', function (e) {
 	        var i, start, end;
@@ -24930,7 +24865,6 @@
 	        throw new Error("\u4F60\u7684\u6D4F\u89C8\u5668\u4E0D\u652F\u6301".concat(mime, "\u5A92\u4F53\u7C7B\u578B"));
 	      }
 	    }
-
 	    // 开始加载视频文件
 	  }, {
 	    key: "loadFile",
@@ -24998,7 +24932,6 @@
 	          sb.ms.pendingInits = 0;
 	        }
 	        this.onInitAppended = this.onInitAppended.bind(this);
-
 	        // 在 SourceBuffer.appendBuffer() 或 SourceBuffer.remove() 结束后触发。这个事件在 update 后触发。
 	        // 缓冲区状态已更新，可以继续追加更多数据
 	        // sb.addEventListener('updateend', this.onInitAppended)
@@ -25100,7 +25033,7 @@
 	    value: function initEvent() {
 	      var _this2 = this;
 	      var width = this.completedBox.clientWidth;
-	      this.player.on(EVENT.MOVE_VERTICAL, function (e) {
+	      this.player.on(exports.EVENT.MOVE_VERTICAL, function (e) {
 	        // console.log('正在滑动')
 	        if (_this2.timer) {
 	          window.clearInterval(_this2.timer);
@@ -25118,14 +25051,14 @@
 	        _this2.completedBox.style.width = scale * 100 + '%';
 	        _this2.player.video.volume = scale;
 	      });
-	      this.player.on(EVENT.SLIDE_VERTICAL, function (e) {
+	      this.player.on(exports.EVENT.SLIDE_VERTICAL, function (e) {
 	        // console.log('滑动结束')
 	        width = _this2.completedBox.clientWidth;
 	        _this2.timer = window.setTimeout(function () {
 	          _this2.el.style.display = 'none';
 	        }, 600);
 	      });
-	      this.player.on(EVENT.VIDEO_CLICK, function () {
+	      this.player.on(exports.EVENT.VIDEO_CLICK, function () {
 	        _this2.el.style.display = 'none';
 	      });
 	    }
@@ -25171,7 +25104,6 @@
 	        target: SubsettingsSubtitle
 	      });
 	    }
-
 	    // 调整字幕的样式
 	  }, {
 	    key: "adjustSubtitleStyle",
@@ -25218,7 +25150,6 @@
 	      this.player.on('ShowSubtitle', function () {
 	        _this.trackElement.src = _this.currentSource;
 	      });
-
 	      // 初始化设置栏中的字幕设置选项
 	      nextTick$1(function () {
 	        var _context;
@@ -25257,13 +25188,12 @@
 	    key: "initEvent",
 	    value: function initEvent() {
 	      var _this2 = this;
-	      this.player.on(EVENT.SHOW_TOOLBAR, function () {
+	      this.player.on(exports.EVENT.SHOW_TOOLBAR, function () {
 	        addClass(_this2.el, ['video-texttrack-container-showtoolbar']);
 	      });
-	      this.player.on(EVENT.HIDE_TOOLBAR, function () {
+	      this.player.on(exports.EVENT.HIDE_TOOLBAR, function () {
 	        removeClass(_this2.el, ['video-texttrack-container-showtoolbar']);
 	      });
-
 	      // textTracks 属性返回 TextTrackList 对象。TextTrackList 对象代表视频的可用文本轨道。
 	      // 每个可用的文本轨道都由一个 TextTrack 对象表示。
 	      this.textTrack = this.player.video.textTracks[0];
@@ -25285,7 +25215,6 @@
 	        }
 	      });
 	    }
-
 	    // 加载字幕文件
 	  }, {
 	    key: "loadVTTFile",
@@ -25349,7 +25278,7 @@
 	  return ContextMenuItem;
 	}();
 
-	var name = "niplayer";
+	var name = "cc-niplayer";
 	var version = "1.4.4";
 	var description = "This is a TS library for video player";
 	var main = "./dist/player.umd.js";
@@ -25358,14 +25287,28 @@
 	var scripts = {
 		"clean:dist": "rimraf dist",
 		server: "node server.js",
-		dev: "rollup -c script/rollup.config.dev.js --watch",
+		dev: "rollup -c config/rollup.config.dev.js --watch",
 		start: "run-p server dev",
-		build: "rollup -c script/rollup.config.prod.js",
+		build: "rimraf dist && rollup -c config/rollup.config.prod.js",
 		"build:tsc": "tsc",
 		"build:dts": "dts-bundle-generator -o ./dist/index.d.ts ./src/index.ts --project tsconfig.json  --no-check",
+		publish: "node ./script/publish.mjs",
+		deploy: "node ./script/deploy.mjs",
 		test: "vitest",
 		coverage: "vitest run --coverage"
 	};
+	var keywords = [
+		"player",
+		"typescript",
+		"library",
+		"danmaku",
+		"stream media protocol",
+		"dash",
+		"hls",
+		"flv",
+		"mp4",
+		"bilibili mode"
+	];
 	var author = "";
 	var license = "ISC";
 	var devDependencies = {
@@ -25388,17 +25331,21 @@
 		"core-js": "^3.30.1",
 		"dts-bundle-generator": "^8.0.1",
 		express: "^4.18.2",
+		"fs-extra": "^11.1.1",
+		inquirer: "^9.2.7",
 		less: "^4.1.3",
 		"npm-run-all": "^4.1.5",
+		ora: "^6.3.1",
 		postcss: "^8.4.23",
 		"postcss-pxtorem": "^6.0.0",
-		rimraf: "^5.0.0",
+		rimraf: "^5.0.1",
 		rollup: "^3.24.0",
 		"rollup-plugin-livereload": "^2.0.5",
 		"rollup-plugin-node-builtins": "^2.1.2",
 		"rollup-plugin-node-globals": "^1.4.0",
 		"rollup-plugin-postcss": "^4.0.2",
 		"rollup-plugin-serve": "^2.0.2",
+		shelljs: "^0.8.5",
 		"socket.io": "^4.6.2",
 		"socket.io-client": "^4.6.2",
 		typescript: "^4.9.5",
@@ -25426,6 +25373,7 @@
 		module: module,
 		types: types,
 		scripts: scripts,
+		keywords: keywords,
 		author: author,
 		license: license,
 		devDependencies: devDependencies,
@@ -25504,7 +25452,6 @@
 
 	function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 	// 右击菜单部分
 	var ContextMenu = /*#__PURE__*/function (_Component) {
 	  _inherits(ContextMenu, _Component);
@@ -25532,14 +25479,13 @@
 	    value: function initTemplate() {
 	      addClass(this.el, ['video-context-menu']);
 	    }
-
 	    // 初始化基础的菜单选项
 	  }, {
 	    key: "initComponent",
 	    value: function initComponent() {
 	      var _this2 = this;
 	      var ctx = this;
-	      this.player.on(EVENT.MOOV_PARSE_READY, function () {
+	      this.player.on(exports.EVENT.MOOV_PARSE_READY, function () {
 	        _this2.contextMenuInfo = new ContextMenuInfo(ctx.player, ctx.player.el, ctx.player.getVideoInfo());
 	      });
 	      this.registerContextMenu('统计信息', function (item) {
@@ -25551,7 +25497,6 @@
 	        this.el.style.display = '';
 	      });
 	    }
-
 	    // 注册右击菜单选项
 	  }, {
 	    key: "registerContextMenu",
@@ -25601,10 +25546,9 @@
 	          height: info.tracks[0].track_height
 	        };
 	        _this.player.setVideoInfo(videoInfo);
-	        _this.player.emit(EVENT.MOOV_PARSE_READY);
+	        _this.player.emit(exports.EVENT.MOOV_PARSE_READY);
 	      };
 	    }
-
 	    //停止当前还在发送中的http请求
 	  }, {
 	    key: "stop",
@@ -25613,7 +25557,6 @@
 	        this.downloader.stop();
 	      }
 	    }
-
 	    /**
 	     * @description 开始请求加载mp4文件
 	     */
@@ -25692,7 +25635,6 @@
 
 	      this.video.crossOrigin = 'anonymous';
 	      this.el.appendChild(this.video);
-
 	      // 初始化媒体的播放源
 	      ((_this$playerOptions = this.playerOptions) === null || _this$playerOptions === void 0 ? void 0 : _this$playerOptions.url) && this.attachSource(this.playerOptions.url);
 	      this.initPlugin();
@@ -25702,7 +25644,6 @@
 	      this.initResizeObserver();
 	      this.checkFullScreenMode();
 	    }
-
 	    // 在所有组件初始化完成之后对player的整体模板进行初始化
 	  }, {
 	    key: "initTemplate",
@@ -25719,7 +25660,6 @@
 	      this.pauseIcon.style.display = 'none';
 	      this.el.append(this.pauseIcon);
 	    }
-
 	    // 对包含的所有组件进行初始化
 	  }, {
 	    key: "initComponent",
@@ -25736,7 +25676,6 @@
 	        this.danmakuController = new DanmakuController(this, this.playerOptions.danmaku);
 	      }
 	    }
-
 	    // 初始化公有的事件
 	  }, {
 	    key: "initEvent",
@@ -25748,96 +25687,89 @@
 	        this.initPCEvent();
 	      }
 	      this.video.addEventListener('loadedmetadata', function (e) {
-	        _this2.emit(EVENT.LOADED_META_DATA, e);
+	        _this2.emit(exports.EVENT.LOADED_META_DATA, e);
 	        // videoWidth: 视频原始宽度
 	        // videoHeight: 视频原始高度
 	        _this2.mediaProportion = _this2.video.videoHeight / _this2.video.videoWidth;
 	        _this2.adjustMediaSize();
 	      });
 	      this.video.addEventListener('timeupdate', function (e) {
-	        _this2.emit(EVENT.TIME_UPDATE, e);
+	        _this2.emit(exports.EVENT.TIME_UPDATE, e);
 	      });
 	      this.video.addEventListener('play', function (e) {
 	        _this2.pauseIcon.style.display = 'none';
-	        _this2.emit(EVENT.PLAY, e);
+	        _this2.emit(exports.EVENT.PLAY, e);
 	      });
 	      this.video.addEventListener('pause', function (e) {
 	        _this2.pauseIcon.style.display = 'block';
-	        _this2.emit(EVENT.PAUSE, e);
+	        _this2.emit(exports.EVENT.PAUSE, e);
 	      });
-
 	      // 寻址中（Seeking）指的是用户在音频/视频中移动/跳跃到新的位置
 	      this.video.addEventListener('seeking', function (e) {
 	        // 防抖效果：针对Dot按下并且拖动时不触发seeking，拖完鼠标抬起时再触发seeking
 	        if (_this2.enableSeek) {
-	          _this2.emit(EVENT.SEEKING, e);
+	          _this2.emit(exports.EVENT.SEEKING, e);
 	        }
 	      });
 	      this.video.addEventListener('seeked', function (e) {
-	        _this2.emit(EVENT.SEEKED, e);
+	        _this2.emit(exports.EVENT.SEEKED, e);
 	      });
-
 	      // waiting 事件在视频由于需要缓冲下一帧而停止时触发
 	      this.video.addEventListener('waiting', function (e) {
-	        _this2.emit(EVENT.WAITING, e);
+	        _this2.emit(exports.EVENT.WAITING, e);
 	      });
-
 	      // canplay 该视频已准备好开始播放
 	      this.video.addEventListener('canplay', function (e) {
-	        _this2.emit(EVENT.CAN_PLAY, e);
+	        _this2.emit(exports.EVENT.CAN_PLAY, e);
 	      });
-
 	      // error 视频加载发生错误时
 	      this.video.addEventListener('error', function (e) {
-	        _this2.emit(EVENT.ERROR);
+	        _this2.emit(exports.EVENT.ERROR);
 	      });
-
 	      // abort 视频终止加载时
 	      this.video.addEventListener('abort', function (e) {
-	        _this2.emit(EVENT.ERROR);
+	        _this2.emit(exports.EVENT.ERROR);
 	      });
-
 	      // ratechange 事件在音频/视频(audio/video)播放速度发生改变时触发(如用户切换到慢速或快速播放模式)。
 	      this.video.addEventListener('ratechange', function (e) {
-	        _this2.emit(EVENT.RATE_CHANGE);
+	        _this2.emit(exports.EVENT.RATE_CHANGE);
 	      });
-	      this.on(EVENT.DANMAKU_INPUT_FOCUS, function () {
+	      this.on(exports.EVENT.DANMAKU_INPUT_FOCUS, function () {
 	        _this2.el.onmouseleave = null;
 	      });
-	      this.on(EVENT.DANMAKU_INPUT_BLUR, function () {
+	      this.on(exports.EVENT.DANMAKU_INPUT_BLUR, function () {
 	        _this2.el.onmouseleave = function (e) {
-	          _this2.emit(EVENT.HIDE_TOOLBAR, e);
+	          _this2.emit(exports.EVENT.HIDE_TOOLBAR, e);
 	        };
 	      });
-	      this.on(EVENT.DOT_DOWN, function () {
+	      this.on(exports.EVENT.DOT_DOWN, function () {
 	        // console.log('dotdown')
 	        _this2.enableSeek = false;
 	      });
-	      this.on(EVENT.DOT_UP, function () {
+	      this.on(exports.EVENT.DOT_UP, function () {
 	        // console.log('dotup')
 	        _this2.enableSeek = true;
 	      });
-	      this.on(EVENT.VIDEO_DOT_DRAG, function (val, e) {
-	        _this2.emit(EVENT.SHOW_TOOLBAR, e);
+	      this.on(exports.EVENT.VIDEO_DOT_DRAG, function (val, e) {
+	        _this2.emit(exports.EVENT.SHOW_TOOLBAR, e);
 	      });
-	      this.on(EVENT.ENTER_FULLSCREEN, function () {
+	      this.on(exports.EVENT.ENTER_FULLSCREEN, function () {
 	        _this2.isFullscreen = true;
 	        _this2.adjustRem(_this2.el.clientWidth);
 	      });
-	      this.on(EVENT.LEAVE_FULLSCREEN, function () {
+	      this.on(exports.EVENT.LEAVE_FULLSCREEN, function () {
 	        _this2.isFullscreen = false;
 	        _this2.adjustRem();
 	      });
-	      this.on(EVENT.ENTER_FULLPAGE, function () {
+	      this.on(exports.EVENT.ENTER_FULLPAGE, function () {
 	        // console.log('enter fullpage')
 	        _this2.adjustRem(_this2.el.clientWidth);
 	      });
-	      this.on(EVENT.LEAVE_FULLPAGE, function () {
+	      this.on(exports.EVENT.LEAVE_FULLPAGE, function () {
 	        // console.log('leave fullpage')
 	        _this2.adjustRem();
 	      });
 	    }
-
 	    // 初始化PC端事件
 	  }, {
 	    key: "initPCEvent",
@@ -25854,15 +25786,14 @@
 	        }
 	      };
 	      this.el.onmouseenter = function (e) {
-	        _this3.emit(EVENT.SHOW_TOOLBAR, e);
+	        _this3.emit(exports.EVENT.SHOW_TOOLBAR, e);
 	      };
 	      this.el.onmousemove = function (e) {
-	        _this3.emit(EVENT.SHOW_TOOLBAR, e);
+	        _this3.emit(exports.EVENT.SHOW_TOOLBAR, e);
 	      };
 	      this.el.onmouseleave = function (e) {
-	        if (!_this3.video.paused) _this3.emit(EVENT.HIDE_TOOLBAR, e);
+	        if (!_this3.video.paused) _this3.emit(exports.EVENT.HIDE_TOOLBAR, e);
 	      };
-
 	      // 键盘事件
 	      document.addEventListener('keyup', function (e) {
 	        // console.log(e.key)
@@ -25896,12 +25827,10 @@
 	            }
 	        }
 	      });
-
 	      // 鼠标左键事件 单击 隐藏contextMenu
 	      this.el.addEventListener('click', function (e) {
 	        _this3.contextMenu.el.style.display = '';
 	      });
-
 	      // 鼠标右键事件 打开contextMenu
 	      this.el.addEventListener('contextmenu', function (e) {
 	        e.preventDefault();
@@ -25910,27 +25839,24 @@
 	        _this3.contextMenu.el.style.left = e.offsetX + 'px';
 	      });
 	    }
-
 	    // 初始化移动端事件
 	  }, {
 	    key: "initMobileEvent",
 	    value: function initMobileEvent() {
 	      var _this4 = this;
 	      wrap(this.el).addEventListener('touchstart', function () {
-	        _this4.emit(EVENT.DOT_DOWN);
+	        _this4.emit(exports.EVENT.DOT_DOWN);
 	      });
-
 	      // 单击
 	      wrap(this.el).addEventListener('singleTap', function (e) {
 	        // console.log(e, 'singletap')
 	        if (_this4.toolBar.status === 'hidden') {
-	          _this4.emit(EVENT.SHOW_TOOLBAR, e);
+	          _this4.emit(exports.EVENT.SHOW_TOOLBAR, e);
 	        } else {
-	          _this4.emit(EVENT.HIDE_TOOLBAR, e);
+	          _this4.emit(exports.EVENT.HIDE_TOOLBAR, e);
 	        }
-	        _this4.emit(EVENT.VIDEO_CLICK);
+	        _this4.emit(exports.EVENT.VIDEO_CLICK);
 	      });
-
 	      // 双击
 	      wrap(this.el).addEventListener('doubleTap', function (e) {
 	        // console.log(e, 'doubleTap')
@@ -25940,19 +25866,17 @@
 	          _this4.video.pause();
 	        }
 	      });
-
 	      // 手势上下处于滑动中
 	      wrap(this.el).addEventListener('move', function (e) {
 	        // console.log(e, 'move')
 	        var dx = e.deltaX;
 	        var dy = e.deltaY;
 	        if (computeAngle(dx, dy) >= 75) {
-	          _this4.emit(EVENT.MOVE_VERTICAL, e);
+	          _this4.emit(exports.EVENT.MOVE_VERTICAL, e);
 	        } else if (computeAngle(dx, dy) <= 15) {
-	          _this4.emit(EVENT.MOVE_HORIZONTAL, e);
+	          _this4.emit(exports.EVENT.MOVE_HORIZONTAL, e);
 	        }
 	      });
-
 	      // 手势上下滑动结束
 	      wrap(this.el).addEventListener('swipe', function (e) {
 	        // console.log(e, 'swipe')
@@ -25962,13 +25886,12 @@
 	        //   this.emit('slideVertical', e)
 	        // }
 	        if (computeAngle(dx, dy) >= 75) {
-	          _this4.emit(EVENT.SLIDE_VERTICAL, e);
+	          _this4.emit(exports.EVENT.SLIDE_VERTICAL, e);
 	        } else if (computeAngle(dx, dy) <= 15) {
-	          _this4.emit(EVENT.SLIDE_HORIZONTAL, e);
+	          _this4.emit(exports.EVENT.SLIDE_HORIZONTAL, e);
 	        }
 	      });
 	    }
-
 	    // 初始化插件
 	  }, {
 	    key: "initPlugin",
@@ -25981,13 +25904,12 @@
 	        });
 	      }
 	    }
-
 	    // 给video添加媒体资源，开始初始化媒体资源的解析
 	  }, {
 	    key: "attachSource",
 	    value: function attachSource(url) {
 	      var extension = getExtension(url);
-	      this.emit(EVENT.SOURCE_ATTACHED, url); // 触发资源加载完毕事件
+	      this.emit(exports.EVENT.SOURCE_ATTACHED, url); // 触发资源加载完毕事件
 	      if (extension === 'mp4') {
 	        new Mp4Parser(url, this); // 解析mp4文件，配合contextMenu获取视频统计信息
 	        if (this.playerOptions.streamPlay) {
@@ -25998,7 +25920,6 @@
 	        }
 	      }
 	    }
-
 	    /**
 	     * @@description 监听视频播放器大小的变化
 	     */
@@ -26014,18 +25935,16 @@
 	        ResizeObserver
 	          可以监听到 Element 的内容区域或SVGElement的边界框改变
 	       */
-
 	      // 避免`COMPONENT_STORE.set(id, component)`的操作，让`COMPONENT_STORE.forEach`一直死循环
 	      var _STORE = new _Map(COMPONENT_STORE);
 	      var resizeObserver = new ResizeObserver(function (entries) {
 	        // console.log('监听到了尺寸变化了...')
 	        // 触发尺寸变化事件
-	        _this6.emit(EVENT.RESIZE, {
+	        _this6.emit(exports.EVENT.RESIZE, {
 	          width: entries[0].contentRect.width,
 	          height: entries[0].contentRect.height
 	        });
 	        _this6.adjustMediaSize();
-
 	        // 获取到容器的宽高
 	        var width = entries[0].contentRect.width;
 	        entries[0].contentRect.height;
@@ -26076,7 +25995,6 @@
 	      // 开始观察
 	      resizeObserver.observe(this.el);
 	    }
-
 	    // 设置根节点的fontsize大小以便于做移动端适配 -> rem
 	  }, {
 	    key: "adjustRem",
@@ -26089,7 +26007,6 @@
 	      }
 	      document.documentElement.style.fontSize = this.baseSize * number + 'px';
 	    }
-
 	    // 调整video的尺寸
 	  }, {
 	    key: "adjustMediaSize",
@@ -26107,12 +26024,10 @@
 	        }
 	      }
 	    }
-
 	    // 查询移动端的全屏方式
 	  }, {
 	    key: "checkFullScreenMode",
 	    value: function checkFullScreenMode() {}
-
 	    // 注册/挂载自己的组件,其中的id为组件实例的名称，分为内置和用户自定义这两种情况；注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
 	    // 注意，id是唯一的，不能存在两个具有相同id的组件实例!!!
 	  }, {
@@ -26169,7 +26084,6 @@
 	        component.container = component.el.parentElement;
 	      }
 	    }
-
 	    // 更新一个已经挂载到视图层上的组件
 	  }, {
 	    key: "updateComponent",
@@ -26179,7 +26093,6 @@
 	      }
 	      patchComponent(COMPONENT_STORE.get(id), component, options);
 	    }
-
 	    // 隐藏某一个已经挂载到视图上的组件
 	  }, {
 	    key: "hideComponent",
@@ -26194,7 +26107,6 @@
 	      instance.el.style.display = 'none';
 	      HIDEEN_COMPONENT_STORE.set(id, instance);
 	    }
-
 	    // 展示一个隐藏的组件
 	  }, {
 	    key: "showComponent",
@@ -26209,7 +26121,6 @@
 	      instance.el.style.display = '';
 	      HIDEEN_COMPONENT_STORE.delete(id);
 	    }
-
 	    // 卸载某一个component组件，所谓卸载一个组件指的是仅仅将其DOM元素从视图上移除，但是不会删除其实例对象，还可以继续挂载
 	    // 注意：卸载一个组件会清除该组件上挂载的class和id，意味着之后用户可以将组件挂载到任何位置
 	  }, {
@@ -26223,7 +26134,6 @@
 	      removeClass(instance.el, _toConsumableArray(instance.el.classList));
 	      COMPONENT_STORE.delete(id);
 	    }
-
 	    // 彻底删除一个组件，也就是直接销毁组件实例，卸载组件仅仅是将其el元素从视图上移除，但任然保留组建的实例对象
 	  }, {
 	    key: "deleteComponent",
@@ -26233,14 +26143,12 @@
 	      }
 	      ONCE_COMPONENT_STORE.delete(id);
 	    }
-
 	    // 注册一个右击菜单项
 	  }, {
 	    key: "registerContextMenu",
 	    value: function registerContextMenu(content, click) {
 	      this.contextMenu.registerContextMenu(content, click);
 	    }
-
 	    // 注册一个底部的Controller类型的组件
 	  }, {
 	    key: "registerControllers",
@@ -26256,26 +26164,22 @@
 	        this.playerOptions.rightBottomBarControllers.unshift(component);
 	      }
 	    }
-
 	    // 注册一个设置选项
 	  }, {
 	    key: "registerSubsetting",
 	    value: function registerSubsetting() {}
-
 	    // 获取视频信息
 	  }, {
 	    key: "getVideoInfo",
 	    value: function getVideoInfo() {
 	      return this.videoInfo;
 	    }
-
 	    // 设置视频信息
 	  }, {
 	    key: "setVideoInfo",
 	    value: function setVideoInfo(info) {
 	      this.videoInfo = info;
 	    }
-
 	    /**
 	     * @description 注册对应的组件
 	     * @param plugin
@@ -26301,7 +26205,6 @@
 	exports.DanmakuOpenClose = DanmakuOpenClose;
 	exports.DanmakuSettings = DanmakuSettings;
 	exports.DutaionShow = DutaionShow;
-	exports.EVENT = EVENT;
 	exports.Env = Env;
 	exports.ErrorLoading = ErrorLoading;
 	exports.FullPage = FullPage;
