@@ -18,6 +18,7 @@ export class BaseEvent {
     }
   }
 
+  // 取消事件监听
   off(event: string, cb: Function) {
     if (this.$events[event]) {
       this.$events[event] = this.$events[event].filter((fn) => {

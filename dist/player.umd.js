@@ -4066,6 +4066,8 @@
 	        });
 	      }
 	    }
+
+	    // 取消事件监听
 	  }, {
 	    key: "off",
 	    value: function off(event, cb) {
@@ -15892,8 +15894,6 @@
 	    connect: lookup,
 	});
 
-	window.global = window;
-
 	var Axios = /*#__PURE__*/function () {
 	  function Axios(config) {
 	    _classCallCheck(this, Axios);
@@ -16030,11 +16030,12 @@
 	      });
 	      socket.connect();
 	    }
+
+	    // TODO  初始化http短轮询连接
 	  }, {
 	    key: "initHTTP",
 	    value: function initHTTP() {
 	      var _this2 = this;
-	      // TODO  初始化http轮询连接
 	      this.instance.get(this.options.api, {
 	        query: {
 	          time: 0
@@ -16046,6 +16047,8 @@
 	        _this2.setDanmakuFail();
 	      });
 	    }
+
+	    // 弹幕加载成功
 	  }, {
 	    key: "setDanmakuSuccess",
 	    value: function setDanmakuSuccess() {
@@ -16057,6 +16060,8 @@
 	        addClass(_this3.danmakuLoading, ['video-danmaku-loading-hide']);
 	      }, 3000);
 	    }
+
+	    // 弹幕加载失败
 	  }, {
 	    key: "setDanmakuFail",
 	    value: function setDanmakuFail() {
@@ -16102,13 +16107,18 @@
 	    key: "initializeEvent",
 	    value: function initializeEvent() {
 	      var _this5 = this;
-	      // seeking 事件在每次用户开始移动/跳跃视频音频（ audio/video）到新的位置时触发。
-	      // seeked 事件在用户完成移动/跳跃视频音频（ audio/video）到新的位置时触发。
+	      this.video.addEventListener('seeking', function (e) {
+	        _this5.onSeeked(e);
+	      });
+
+	      // seeking 事件在每次用户开始移动/跳跃视频音频（ audio/video）到新的位置时触发
+	      // seeked 事件在用户完成移动/跳跃视频音频（ audio/video）到新的位置时触发
 	      this.video.addEventListener('seeked', function (e) {
 	        _this5.onSeeked(e);
 	      });
 	      this.video.addEventListener('pause', function () {
 	        // console.log('pause')
+	        if (_this5.video.seeking) return;
 	        // 暂停所有的弹幕
 	        _this5.danmaku.pause();
 	      });
@@ -16120,6 +16130,7 @@
 	      });
 	      this.video.addEventListener('play', function () {
 	        // console.log('play')
+	        if (_this5.video.seeking) return;
 	        _this5.danmaku.resume();
 	      });
 	      this.video.addEventListener('canplay', function () {
@@ -25328,7 +25339,7 @@
 	}();
 
 	var name = "niplayer";
-	var version = "1.4.2";
+	var version = "1.4.3";
 	var description = "This is a TS library for video player";
 	var main = "./dist/player.umd.js";
 	var module = "./dist/player.esm.js";
