@@ -1,4 +1,5 @@
 import {
+  ComponentConstructor,
   ComponentItem,
   PlayerOptions,
   DOMProps,
@@ -37,6 +38,7 @@ class Player extends Component implements ComponentItem {
   private videoInfo: Video
   enableSeek = true
   env = Env.env
+  // 保存当前运行环境的全屏模式，主要用于移动端-- 竖版全屏和横板全屏
   fullScreenMode: 'Vertical' | 'Horizontal' = 'Horizontal'
   video: HTMLVideoElement
   props: DOMProps
@@ -360,7 +362,7 @@ class Player extends Component implements ComponentItem {
   // 给video添加媒体资源，开始初始化媒体资源的解析
   attachSource(url: string) {
     // 是否启动流式播放
-    // new Mp4Parser(url, this)
+    new Mp4Parser(url, this)
     if (this.playerOptions.streamPlay) {
       new Mp4MediaPlayer(url, this)
     } else {
@@ -574,6 +576,23 @@ class Player extends Component implements ComponentItem {
   // 注册一个右击菜单项
   registerContextMenu(content: string | HTMLElement, click?: (item: ContextMenuItem) => any) {
     this.contextMenu.registerContextMenu(content, click)
+  }
+
+  // 注册一个底部的Controller类型的组件
+  registerControllers(component: ComponentConstructor, pos: 'left' | 'medium' | 'right') {
+    if (pos === 'left') {
+      if (!this.playerOptions.leftBottomBarControllers)
+        this.playerOptions.leftBottomBarControllers = []
+      this.playerOptions.leftBottomBarControllers.push(component)
+    } else if (pos === 'medium') {
+      if (!this.playerOptions.mediumMediumBarController)
+        this.playerOptions.mediumMediumBarController = []
+      this.playerOptions.mediumMediumBarController.push(component)
+    } else {
+      if (!this.playerOptions.rightBottomBarControllers)
+        this.playerOptions.rightBottomBarControllers = []
+      this.playerOptions.rightBottomBarControllers.push(component)
+    }
   }
 
   // 注册一个设置选项

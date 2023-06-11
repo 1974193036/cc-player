@@ -4131,6 +4131,7 @@
 	  }, {
 	    key: "resetEvent",
 	    value: function resetEvent() {}
+	    // 销毁组件
 	  }, {
 	    key: "dispose",
 	    value: function dispose() {}
@@ -25529,6 +25530,84 @@
 	  return ContextMenu;
 	}(Component);
 
+	var Mp4Parser = /*#__PURE__*/function () {
+	  function Mp4Parser(url, player) {
+	    _classCallCheck(this, Mp4Parser);
+	    this.url = url;
+	    this.player = player;
+	    this.mp4boxfile = MP4Box.createFile();
+	    this.downloader = new DownLoader(url);
+	    this.init();
+	  }
+	  _createClass(Mp4Parser, [{
+	    key: "init",
+	    value: function init() {
+	      this.initEvent();
+	      this.loadFile();
+	    }
+	  }, {
+	    key: "initEvent",
+	    value: function initEvent() {
+	      var _this = this;
+	      // MP4的moov box解析成功后触发该事件
+	      this.mp4boxfile.onReady = function (info) {
+	        _this.stop();
+	        var videoInfo = {
+	          url: _this.url,
+	          lastUpdateTime: info.modified,
+	          videoCodec: info.tracks[0].codec,
+	          audioCodec: info.tracks[1].codec,
+	          isFragmented: info.isFragmented,
+	          width: info.tracks[0].track_width,
+	          height: info.tracks[0].track_height
+	        };
+	        _this.player.setVideoInfo(videoInfo);
+	        _this.player.emit(EVENT.MOOV_PARSE_READY);
+	      };
+	    }
+
+	    //停止当前还在发送中的http请求
+	  }, {
+	    key: "stop",
+	    value: function stop() {
+	      if (!this.downloader.isStopped()) {
+	        this.downloader.stop();
+	      }
+	    }
+
+	    /**
+	     * @description 开始请求加载mp4文件
+	     */
+	  }, {
+	    key: "loadFile",
+	    value: function loadFile() {
+	      var ctx = this;
+	      // 先写死，之后在修改
+	      this.downloader.setInterval(500);
+	      this.downloader.setChunkSize(1000000);
+	      this.downloader.setUrl(this.url);
+	      this.downloader.setCallback(
+	      // end表示这一次的请求是否已经将整个视频文件加载过来
+	      function (response, end, error) {
+	        var nextStart = 0;
+	        if (response) {
+	          // 设置文件加载的进度条
+	          // console.log(response)
+	          nextStart = ctx.mp4boxfile.appendBuffer(response, end);
+	        }
+	        if (end) {
+	          // 如果存在end的话则意味着所有的chunk已经加载完毕
+	          ctx.mp4boxfile.flush();
+	        } else {
+	          ctx.downloader.setChunkStart(nextStart);
+	        }
+	      });
+	      this.downloader.start();
+	    }
+	  }]);
+	  return Mp4Parser;
+	}();
+
 	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 	var Player = /*#__PURE__*/function (_Component) {
@@ -25542,6 +25621,7 @@
 	    _defineProperty(_assertThisInitialized(_this), "isFullscreen", false);
 	    _defineProperty(_assertThisInitialized(_this), "enableSeek", true);
 	    _defineProperty(_assertThisInitialized(_this), "env", Env.env);
+	    // 保存当前运行环境的全屏模式，主要用于移动端-- 竖版全屏和横板全屏
 	    _defineProperty(_assertThisInitialized(_this), "fullScreenMode", 'Horizontal');
 	    _defineProperty(_assertThisInitialized(_this), "mediaProportion", 9 / 16);
 	    _this.playerOptions = _Object$assign({
@@ -25849,7 +25929,7 @@
 	    key: "attachSource",
 	    value: function attachSource(url) {
 	      // 是否启动流式播放
-	      // new Mp4Parser(url, this)
+	      new Mp4Parser(url, this);
 	      if (this.playerOptions.streamPlay) {
 	        new MediaPlayer(url, this);
 	      } else {
@@ -26080,6 +26160,22 @@
 	    key: "registerContextMenu",
 	    value: function registerContextMenu(content, click) {
 	      this.contextMenu.registerContextMenu(content, click);
+	    }
+
+	    // 注册一个底部的Controller类型的组件
+	  }, {
+	    key: "registerControllers",
+	    value: function registerControllers(component, pos) {
+	      if (pos === 'left') {
+	        if (!this.playerOptions.leftBottomBarControllers) this.playerOptions.leftBottomBarControllers = [];
+	        this.playerOptions.leftBottomBarControllers.push(component);
+	      } else if (pos === 'medium') {
+	        if (!this.playerOptions.mediumMediumBarController) this.playerOptions.mediumMediumBarController = [];
+	        this.playerOptions.mediumMediumBarController.push(component);
+	      } else {
+	        if (!this.playerOptions.rightBottomBarControllers) this.playerOptions.rightBottomBarControllers = [];
+	        this.playerOptions.rightBottomBarControllers.push(component);
+	      }
 	    }
 
 	    // 注册一个设置选项

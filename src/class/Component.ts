@@ -34,5 +34,6 @@ export class Component extends BaseEvent {
   initMobileTemplate() {}
   initComponent() {}
   resetEvent() {}
+  // 销毁组件
   dispose() {}
 }
