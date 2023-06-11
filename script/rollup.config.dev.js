@@ -48,8 +48,17 @@ module.exports = defineConfig([
           autoprefixer(),
           px2rem({
             rootValue: 16, // 设计稿宽度的1/10
-            propList: ['margin-left', 'min-width', 'height', 'font-size', 'bottom', 'width',  'padding', 'transform'] // 需要做转化处理的属性
-            // selectorBlackList: [/^video-controller$/,/^video-bottombar$/, /^video-set$/, /^video-duration-time$/, /^video-topbar$/, /^danmaku-send$/]
+            propList: [
+              'margin-left',
+              'min-width',
+              'height',
+              'font-size',
+              'bottom',
+              'width',
+              'padding',
+              'transform'
+            ], // 需要做转化处理的属性
+            selectorBlackList: ['video-progress-thumbnails', /.+-thumbnails$/]
           })
         ]
       }),

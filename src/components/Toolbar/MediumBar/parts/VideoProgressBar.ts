@@ -131,7 +131,7 @@ export class VideoProgress extends Progress {
 
     this.el.addEventListener('mouseleave', () => {
       this.preTime.style.display = 'none'
-      if(this.thumbnails) this.thumbnails.style.display = 'none'
+      if (this.thumbnails) this.thumbnails.style.display = 'none'
     })
 
     this.on(EVENT.PROGRESS_CLICK, (dx: number, ctx: Progress) => {

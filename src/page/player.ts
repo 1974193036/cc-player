@@ -223,23 +223,23 @@ class Player extends Component implements ComponentItem {
     })
 
     this.on(EVENT.ENTER_FULLSCREEN, () => {
-      document.querySelectorAll('.video-controller').forEach((el) => {
-        ;(el as HTMLElement).style.marginRight = '15px'
-      })
-      document.querySelectorAll('.video-topbar-controller').forEach((el) => {
-        ;(el as HTMLElement).style.marginRight = '15px'
-      })
       this.isFullscreen = true
+      this.adjustRem(this.el.clientWidth)
     })
 
     this.on(EVENT.LEAVE_FULLSCREEN, () => {
-      document.querySelectorAll('.video-controller').forEach((el) => {
-        ;(el as HTMLElement).style.marginRight = ''
-      })
-      document.querySelectorAll('.video-topbar-controller').forEach((el) => {
-        ;(el as HTMLElement).style.marginRight = ''
-      })
       this.isFullscreen = false
+      this.adjustRem()
+    })
+
+    this.on(EVENT.ENTER_FULLPAGE, () => {
+      // console.log('enter fullpage')
+      this.adjustRem(this.el.clientWidth)
+    })
+
+    this.on(EVENT.LEAVE_FULLPAGE, () => {
+      // console.log('leave fullpage')
+      this.adjustRem()
     })
   }
 
@@ -423,7 +423,6 @@ class Player extends Component implements ComponentItem {
       // 获取到容器的宽高
       let width = entries[0].contentRect.width
       let height = entries[0].contentRect.height
-      this.adjustRem(width, height)
 
       let subsetting
       // 当尺寸发生变化的时候视频库只调整基本的内置组件，其余用户自定义的组件响应式需要自己实现
@@ -473,15 +472,11 @@ class Player extends Component implements ComponentItem {
   }
 
   // 设置根节点的fontsize大小以便于做移动端适配 -> rem
-  private adjustRem(width: number, height: number = 0) {
+  private adjustRem(width: number = 600) {
     const scale = width / 600
     let number = 1
-    if (scale > 1.25) {
+    if (scale > 1.75) {
       number = 1.25
-    } else if (scale < 1) {
-      number = 1
-    } else {
-      number = scale
     }
     document.documentElement.style.fontSize = this.baseSize * number + 'px'
   }
