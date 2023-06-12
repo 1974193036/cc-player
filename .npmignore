@@ -21,3 +21,5 @@ tsconfig.json
 .prettierrc.js
 server.js
 server2.js
+/.idea/
+/niplayer-plugin-dash/

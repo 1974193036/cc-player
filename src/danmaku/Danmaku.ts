@@ -34,7 +34,7 @@ export class Danmaku {
     track: Track
     datas: DanmakuData[]
   }>
-  private defaultDanma: DanmakuData = {
+  private defaultDanmaku: DanmakuData = {
     message: 'default message',
     fontColor: '#fff',
     fontSize: this.trackHeight,
@@ -139,7 +139,7 @@ export class Danmaku {
       if (!data.message || data.message === '') {
         throw new Error(`传入的弹幕数据${data}不合法`)
       }
-      return Object.assign({ ...this.defaultDanma, timestamp: this.player.video.currentTime }, data)
+      return Object.assign({ ...this.defaultDanmaku, timestamp: this.player.video.currentTime }, data)
     }
     throw new Error(`传入的弹幕数据${data}不合法`)
   }

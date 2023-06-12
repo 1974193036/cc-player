@@ -90,7 +90,7 @@ export class VideoProgress extends Progress {
     this.player.video.addEventListener('timeupdate', (e) => {
       if (this.player.enableSeek) {
         let scale = this.player.video.currentTime / this.player.video.duration
-        this.dot.style.left = scale * 100 + '%'
+        this.dot.style.left = `calc(${scale * 100}% - ${this.dot.clientWidth / 2}px)`
         this.completedProgress.style.width = scale * 100 + '%'
       }
     })

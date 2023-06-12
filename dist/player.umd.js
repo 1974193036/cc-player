@@ -5778,27 +5778,27 @@
 	} (main_min));
 
 	function enterFull(el) {
-	  if (el.mozRequestFullScreen) {
+	  if (el.requestFullscreen) {
+	    return el.requestFullscreen();
+	  } else if (el.mozRequestFullScreen) {
 	    return el.mozRequestFullScreen();
 	  } else if (el.webkitRequestFullscreen) {
 	    return el.webkitRequestFullscreen();
 	  } else if (el.msRequestFullscreen) {
 	    return el.msRequestFullscreen();
-	  } else if (el.requestFullscreen) {
-	    return el.requestFullscreen();
 	  } else {
 	    throw new Error('你的浏览器不支持任何全屏请求');
 	  }
 	}
 	function exitFull() {
-	  if (document['mozCancelFullScreen']) {
+	  if (document.exitFullscreen) {
+	    return document.exitFullscreen();
+	  } else if (document['mozCancelFullScreen']) {
 	    return document['mozCancelFullScreen']();
 	  } else if (document['webkitExitFullscreen']) {
 	    return document['webkitExitFullscreen']();
 	  } else if (document['msExitFullscreen']) {
 	    return document['msExitFullscreen']();
-	  } else if (document.exitFullscreen) {
-	    return document.exitFullscreen();
 	  } else {
 	    throw new Error('你的浏览器无法退出全屏');
 	  }
@@ -10869,8 +10869,9 @@
 	      });
 	      this.player.video.addEventListener('timeupdate', function (e) {
 	        if (_this2.player.enableSeek) {
+	          var _context;
 	          var scale = _this2.player.video.currentTime / _this2.player.video.duration;
-	          _this2.dot.style.left = scale * 100 + '%';
+	          _this2.dot.style.left = _concatInstanceProperty(_context = "calc(".concat(scale * 100, "% - ")).call(_context, _this2.dot.clientWidth / 2, "px)");
 	          _this2.completedProgress.style.width = scale * 100 + '%';
 	        }
 	      });
@@ -11449,7 +11450,7 @@
 	    _defineProperty(this, "isPaused", true);
 	    // 弹幕占据屏幕的尺寸，默认占据一半屏幕
 	    _defineProperty(this, "showScale", 1 / 2);
-	    _defineProperty(this, "defaultDanma", {
+	    _defineProperty(this, "defaultDanmaku", {
 	      message: 'default message',
 	      fontColor: '#fff',
 	      fontSize: this.trackHeight,
@@ -11563,7 +11564,7 @@
 	        if (!data.message || data.message === '') {
 	          throw new Error("\u4F20\u5165\u7684\u5F39\u5E55\u6570\u636E".concat(data, "\u4E0D\u5408\u6CD5"));
 	        }
-	        return _Object$assign(_objectSpread(_objectSpread({}, this.defaultDanma), {}, {
+	        return _Object$assign(_objectSpread(_objectSpread({}, this.defaultDanmaku), {}, {
 	          timestamp: this.player.video.currentTime
 	        }), data);
 	      }
@@ -24866,7 +24867,7 @@
 	      }
 	    }
 	    /**
-	     * @description 根据传入的媒体轨道的类型构建对应的SourceBuffer
+	     * @description 根据传入的媒体轨道的类型构建对应的SourceBuffer, 编码方式和对应的解码规范是一一对应的，尽管可能不是使用相同的字符串来表示它们
 	     * @param mp4track
 	     */
 	  }, {
@@ -25312,8 +25313,8 @@
 	  return ContextMenuItem;
 	}();
 
-	var name = "cc-niplayer";
-	var version = "1.4.4";
+	var name = "cc-player";
+	var version = "1.4.6";
 	var description = "This is a TS library for video player";
 	var main = "./dist/player.umd.js";
 	var module = "./dist/player.esm.js";

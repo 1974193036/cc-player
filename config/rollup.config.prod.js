@@ -50,6 +50,7 @@ module.exports = defineConfig([
         plugins: [terser()]
       }
     ],
+    treeshake: true,
     plugins: [
       ts(),
       nodeResolve({
